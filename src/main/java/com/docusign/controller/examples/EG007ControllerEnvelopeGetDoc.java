@@ -1,122 +1,125 @@
 package com.docusign.controller.examples;
 
-import com.docusign.DSConfiguration;
-import com.docusign.common.DocumentType;
 import com.docusign.esign.api.EnvelopesApi;
+import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
-import com.docusign.model.EnvelopeDocumentInfo;
 import com.docusign.model.OptionItem;
-import com.docusign.model.Session;
-import com.docusign.model.User;
-
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.io.IOException;
-import java.net.URLConnection;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
-
-/**
- * Download a document from an envelope.<br />
- * An envelope's documents can be downloaded one by one or as a complete set.
- */
 @Controller
 @RequestMapping("/eg007")
-public class EG007ControllerEnvelopeGetDoc extends AbstractController {
-
-    private static final String MODEL_DOCUMENTS_OK = "documentsOk";
-    private static final String MODEL_DOCUMENT_OPTIONS = "documentOptions";
-    private static final String HTTP_CONTENT_DISPOSITION_VALUE = "inline;filename=";
-    private static final String ZIP_EXTENSION = "zip";
-
-    private final Session session;
-    private final User user;
-
-
+public class EG007ControllerEnvelopeGetDoc extends EGController {
     @Autowired
-    public EG007ControllerEnvelopeGetDoc(DSConfiguration config, Session session, User user) {
-        super(config, "eg007", "Download a document");
-        this.session = session;
-        this.user = user;
-    }
+    HttpSession session;
 
     @Override
-    protected void onInitModel(WorkArguments args, ModelMap model) throws ApiException {
-        super.onInitModel(args, model);
-        model.addAttribute(MODEL_ENVELOPE_OK, StringUtils.isNotBlank(session.getEnvelopeId()));
-        List<EnvelopeDocumentInfo> envelopeDocuments = session.getEnvelopeDocuments();
-        boolean documentsOk = envelopeDocuments != null;
-        model.addAttribute(MODEL_DOCUMENTS_OK, documentsOk);
-        if (!documentsOk) {
+    protected void addSpecialAttributes(ModelMap model) {
+        model.addAttribute("envelopeOk", session.getAttribute("envelopeId") != null);
+        boolean documentsOk = session.getAttribute("envelopeDocuments") != null;
+        model.addAttribute("documentsOk", documentsOk);
+        if (documentsOk == false) {
             return;
         }
+        JSONObject envelopeDocuments = (JSONObject) session.getAttribute("envelopeDocuments");
+        JSONArray documents = (JSONArray) envelopeDocuments.get("documents");
 
         ArrayList<OptionItem> documentOptions = new ArrayList<>();
-        for (EnvelopeDocumentInfo docInfo : envelopeDocuments) {
-            OptionItem doc = new OptionItem(docInfo.getName(), docInfo.getDocumentId());
+        for (int i = 0; i < documents.length(); i++) {
+            OptionItem doc = new OptionItem();
+
+            doc.setText(documents.getJSONObject(i).getString("name"));
+            doc.setDocumentId(documents.getJSONObject(i).getString("documentId"));
             documentOptions.add(doc);
         }
 
-        model.addAttribute(MODEL_DOCUMENT_OPTIONS, documentOptions);
+        model.addAttribute("documentOptions", documentOptions);
+    }
+
+    @Override
+    protected String getEgName() {
+        return "eg007";
+    }
+
+    @Override
+    protected String getTitle() {
+        return "Download a document";
+    }
+
+    @Override
+    protected String getResponseTitle() {
+        return null;
     }
 
     @Override
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
-            HttpServletResponse response) throws ApiException, IOException {
-        EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
+                            String accessToken, String basePath) throws ApiException {
+        // Data for this method
+        // accessToken    (argument)
+        // basePath       (argument)
+        String accountId = args.getAccountId();
+        String envelopeId = args.getEnvelopeId();
+        String documentId = args.getDocumentId();
+        JSONObject envelopeDocuments = args.getEnvelopeDocuments(); // stored by EG006ControllerEnvelopeDocs
+
+
+        ApiClient apiClient = new ApiClient(basePath);
+        apiClient.addDefaultHeader("Authorization", "Bearer " + accessToken);
+        EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
 
         // Step 1. EnvelopeDocuments::get.
         // Exceptions will be caught by the calling function
-        String documentId = args.getDocSelect();
-        byte[] results = envelopesApi.getDocument(session.getAccountId(), session.getEnvelopeId(), documentId);
+        byte[] results = envelopesApi.getDocument(accountId, envelopeId, documentId);
 
         // Step 2. process results
-        List<EnvelopeDocumentInfo> envelopeDocuments = session.getEnvelopeDocuments();
-        EnvelopeDocumentInfo docItem = find(envelopeDocuments, documentId);
+        JSONArray documents = envelopeDocuments.getJSONArray("documents");
+        JSONObject docItem = find(documents, documentId);
 
-        String docName = docItem.getName();
-        String docType = docItem.getType();
-        String pdfExtention = DocumentType.PDF.getDefaultFileExtention();
-        if (StringUtils.equalsAny(docType, "content", "summary", pdfExtention)) {
-            docName = addExtension(docName, pdfExtention);
+        String docName = docItem.getString("name");
+        boolean hasPDFsuffix = docName.toUpperCase().endsWith(".PDF");
+        boolean pdfFile = hasPDFsuffix;
+        // Add .pdf if it's a content or summary doc and doesn't already end in .pdf
+        String docType = docItem.getString("type");
+        if (("content".equals(docType) || "summary".equals(docType)) && !hasPDFsuffix) {
+            docName += ".pdf";
+            pdfFile = true;
         }
-        if (ZIP_EXTENSION.equals(docType)) {
-            docName = addExtension(docName, ZIP_EXTENSION);
+        // Add .zip as appropriate
+        if ("zip".equals(docType)) {
+            docName += ".zip";
         }
-
-        response.setContentType(URLConnection.guessContentTypeFromName(docName));
-        response.setContentLength(results.length);
-        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, HTTP_CONTENT_DISPOSITION_VALUE + docName);
-        response.getOutputStream().write(results);
-        response.flushBuffer();
-        return null;
+        // Return the file information
+        // See https://stackoverflow.com/a/30625085/64904
+        String mimetype;
+        if (pdfFile) {
+            mimetype = "application/pdf";
+        } else if ("zip".equals(docType)) {
+            mimetype = "application/zip";
+        } else {
+            mimetype = "application/octet-stream";
+        }
+        args.setRedirectUrl(null);
+        return new JSONObject()
+                .put("mimetype", mimetype)
+                .put("docName", docName)
+                .put("fileBytes", results);
     }
 
-    private static String addExtension(String fileName, String extension) {
-        if (FilenameUtils.isExtension(fileName, extension)) {
-            return fileName;
-        }
-        return String.join(".", fileName, extension);
-    }
-
-    private static EnvelopeDocumentInfo find(List<EnvelopeDocumentInfo> documents, String documentId) {
-        for (EnvelopeDocumentInfo docInfo : documents) {
-            if (StringUtils.equalsIgnoreCase(docInfo.getDocumentId(), documentId)) {
-                return docInfo;
+    private JSONObject find(JSONArray documents, String documentId) {
+        for (int i = 0; i < documents.length(); i++) {
+            JSONObject item = documents.getJSONObject(i);
+            if (item.getString("documentId").equalsIgnoreCase(documentId)) {
+                return item;
             }
         }
-
-        throw new ExampleException("Requested document is not found.", null);
+        return null;
     }
     // ***DS.snippet.0.end
 }

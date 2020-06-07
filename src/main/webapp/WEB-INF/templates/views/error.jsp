@@ -1,15 +1,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="./partials/head.jsp"/>
 
-<h2>${done.title}. ${done.name}</h2>
-<p>The example <em>"${done.name}"</em> is failed. Error information:</p>
-<p><strong>Message:</strong><br />${done.message}</p>
-<p><strong>Stack trace:</strong><br /></p>
-<ul id="stacktrace" style="list-style-type:none;font-size:smaller;">
-    <c:forEach items="${done.stackTrace}" var="item">
-        <li>${item.className}.${item.methodName}(${item.fileName}:${item.lineNumber})</li>
-    </c:forEach>
-</ul>
+<h2>Problem: an error occurred</h2>
+<p>Error information:</p>
+
+<c:choose>
+    <c:when test="${not empty status}">
+        <p>${status}: ${message}
+        </p>
+    </c:when>
+    <c:otherwise>
+        <p>
+        <pre>${error}</pre>
+        </p>
+        <h3>Stack trace</h3>
+        <p>
+        <pre>${trace}</pre>
+        </p>
+    </c:otherwise>
+</c:choose>
+
 
 <p><a href="/">Continue</a></p>
 

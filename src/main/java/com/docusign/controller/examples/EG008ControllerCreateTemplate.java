@@ -1,163 +1,179 @@
 package com.docusign.controller.examples;
 
-import com.docusign.DSConfiguration;
 import com.docusign.esign.api.TemplatesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.CarbonCopy;
-import com.docusign.esign.model.Checkbox;
-import com.docusign.esign.model.Document;
-import com.docusign.esign.model.EnvelopeTemplate;
-import com.docusign.esign.model.EnvelopeTemplateResults;
-import com.docusign.esign.model.List;
-import com.docusign.esign.model.ListItem;
-import com.docusign.esign.model.Radio;
-import com.docusign.esign.model.RadioGroup;
-import com.docusign.esign.model.SignHere;
-import com.docusign.esign.model.Signer;
-import com.docusign.esign.model.Tabs;
-import com.docusign.esign.model.TemplateSummary;
-import com.docusign.esign.model.Text;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
+import com.docusign.esign.model.*;
+import com.sun.jersey.core.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Locale;
 
-import javax.servlet.http.HttpServletResponse;
-
-
-/**
- * Create a template.<br />
- * Create a template with two roles, <b>signer</b> and <b>cc</b>. The template
- * includes three documents.
- */
 @Controller
 @RequestMapping("/eg008")
-public class EG008ControllerCreateTemplate extends AbstractController {
-
-    private static final String TEMPLATE_NAME = "Example Signer and CC template";
-    private static final String PDF_DOCUMENT_FILE_NAME = "World_Wide_Corp_fields.pdf";
-    private static final String PDF_DOCUMENT_NAME = "Lorem Ipsum";
-    private static final String DOCUMENT_ID = "1";
-    private static final String PAGE_NUMBER = "1";
-    private static final String FALSE = "false";
-
-    private final Session session;
-    private final User user;
-
+public class EG008ControllerCreateTemplate extends EGController {
 
     @Autowired
-    public EG008ControllerCreateTemplate(DSConfiguration config, Session session, User user) {
-        super(config, "eg008", "Create a template");
-        this.session = session;
-        this.user = user;
+    protected HttpSession session;
+
+    @Override
+    protected void addSpecialAttributes(ModelMap model) {
+    }
+
+    @Override
+    protected String getEgName() {
+        return "eg008";
+    }
+
+    @Override
+    protected String getTitle() {
+        return "Create a template";
+    }
+
+    @Override
+    protected String getResponseTitle() {
+        return "Template results";
     }
 
     @Override
     // ***DS.snippet.0.start
-    protected Object doWork(WorkArguments args, ModelMap model,
-            HttpServletResponse response) throws ApiException, IOException {
+    protected EnvelopeDocumentsResult doWork(WorkArguments args, ModelMap model,
+                                             String accessToken, String basePath) throws ApiException, IOException {
+        // Data for this method
+        // accessToken    (argument)
+        // basePath       (argument)
+        // config.appUrl  (url of the application itself)
+        String accountId = args.getAccountId();
+        String templateName = "Example Signer and CC template";
+
+
         // Step 1. list existing templates
-        ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
+        ApiClient apiClient = new ApiClient(basePath);
+        apiClient.addDefaultHeader("Authorization", "Bearer " + accessToken);
         TemplatesApi templatesApi = new TemplatesApi(apiClient);
         TemplatesApi.ListTemplatesOptions options = templatesApi.new ListTemplatesOptions();
-        options.setSearchText(TEMPLATE_NAME);
-        String accountId = session.getAccountId();
+        options.setSearchText(templateName);
+        // get the results
         EnvelopeTemplateResults results = templatesApi.listTemplates(accountId, options);
 
-        // Step 2. Process results. If template do not exist, create one
+        // Step 2. process results. Template found?
+        String templateId;
+        String resultsTemplateName;
+        boolean createdNewTemplate;
         if (Integer.parseInt(results.getResultSetSize()) > 0) {
-            EnvelopeTemplate template = results.getEnvelopeTemplates().get(0);
-            DoneExample.createDefault(title)
-                    .withMessage(String.format(
-                            "The template already exists in your account. <br/>Template name: %s, ID %s.",
-                             template.getName(), template.getTemplateId()))
-                    .addToModel(model);
+            // Yes. Save the template id and name
+            EnvelopeTemplateResult template = results.getEnvelopeTemplates().get(0);
+            templateId = template.getTemplateId();
+            resultsTemplateName = template.getName();
+            createdNewTemplate = false;
         } else {
-            session.setTemplateName(TEMPLATE_NAME);
-            TemplateSummary template = templatesApi.createTemplate(accountId, makeTemplate());
-            DoneExample.createDefault(title)
-                    .withMessage(String.format(
-                            "The template has been created!<br/>Template name: %s, ID %s.",
-                            template.getName(), template.getTemplateId()))
-                    .addToModel(model);
+            // No. Make a new template
+            // Prepare request
+            args.setTemplateName("Example Signer and CC template");
+            EnvelopeTemplate templateReqObject = makeTemplate(args);
+            // Call DocuSign
+            TemplateSummary template = templatesApi.createTemplate(accountId, templateReqObject);
+            // process result
+            templateId = template.getTemplateId();
+            resultsTemplateName = template.getName();
+            createdNewTemplate = true;
         }
 
-        return DONE_EXAMPLE_PAGE;
+        // Save templateId
+        session.setAttribute("templateId", templateId);
+        String msg = createdNewTemplate ?
+                "The template has been created!" :
+                "The template already exists in your account.";
+
+        setMessage(msg + "<br/>Template name: " + resultsTemplateName + ", ID " + templateId + ".");
+
+        return null;
     }
 
-    // document 1 (pdf) has tag /sn1/
-    //
-    // The template has two recipient roles.
-    // recipient 1 - signer
-    // recipient 2 - cc
-    // The template will be sent first to the signer.
-    // After it is signed, a copy is sent to the cc person.
-    private EnvelopeTemplate makeTemplate() throws IOException {
-        Document doc = EnvelopeHelpers.createDocumentFromFile(PDF_DOCUMENT_FILE_NAME, PDF_DOCUMENT_NAME, "1");
-
-        // Tabs are set per recipient / signer
-        Tabs signer1Tabs = new Tabs();
-        signer1Tabs.setCheckboxTabs(Arrays.asList(
-                createCheckbox("ckAuthorization", "75", "417"),
-                createCheckbox("ckAuthentication", "75", "447"),
-                createCheckbox("ckAgreement", "75", "478"),
-                createCheckbox("ckAcknowledgement", "75", "508")));
-        signer1Tabs.setListTabs(Arrays.asList(createList()));
-        signer1Tabs.setRadioGroupTabs(Arrays.asList(createRadioGroup()));
-        signer1Tabs.setSignHereTabs(Arrays.asList(createSignHere()));
-        signer1Tabs.textTabs(Arrays.asList(
-                createText("text", "153", "230"),
-                createText("numbersOnly", "153", "260")));
+    private EnvelopeTemplate makeTemplate(WorkArguments args) throws IOException {
+        // document 1 (pdf) has tag /sn1/
+        //
+        // The template has two recipient roles.
+        // recipient 1 - signer
+        // recipient 2 - cc
+        // The template will be sent first to the signer.
+        // After it is signed, a copy is sent to the cc person.
+        // read file from a local directory
+        // The reads could raise an exception if the file is not available!
+        byte[] docPdfBytes = readFile("World_Wide_Corp_fields.pdf");
+        // add the documents
+        Document doc = new Document();
+        String docB64 = new String(Base64.encode(docPdfBytes));
+        doc.setDocumentBase64(docB64);
+        doc.setName("Lorem Ipsum"); // can be different from actual file name
+        doc.setFileExtension("pdf");
+        doc.setDocumentId("1");
 
         // create a signer recipient to sign the document, identified by name and email
+        // We're setting the parameters via the object creation
+        Signer signer1 = new Signer();
+        signer1.setRoleName("signer");
+        signer1.setRecipientId("1");
+        signer1.setRoutingOrder("1");
         // routingOrder (lower means earlier) determines the order of deliveries
         // to the recipients. Parallel routing order is supported by using the
         // same integer as the order for two or more recipients.
-        Signer signer = new Signer();
-        signer.setRoleName(EnvelopeHelpers.SIGNER_ROLE_NAME);
-        signer.setRecipientId("1");
-        signer.setRoutingOrder("1");
-        signer.setTabs(signer1Tabs);
 
         // create a cc recipient to receive a copy of the documents, identified by name and email
+        // We're setting the parameters via setters
         CarbonCopy cc1 = new CarbonCopy();
-        cc1.setRoleName(EnvelopeHelpers.CC_ROLE_NAME);
+        cc1.setRoleName("cc");
         cc1.setRoutingOrder("2");
         cc1.setRecipientId("2");
+        // Create fields using absolute positioning:
+        SignHere signHere = new SignHere();
+        signHere.setDocumentId("1");
+        signHere.setPageNumber("1");
+        signHere.setXPosition("191");
+        signHere.setYPosition("148");
 
-        // Create the overall template definition. The order in the docs array
-        // determines the order in the envelope.
-        EnvelopeTemplate template = new EnvelopeTemplate();
-        template.setDocuments(Arrays.asList(doc));
-        template.setEmailSubject("Please sign this document");
-        template.setName(session.getTemplateName());
-        template.setDescription("Example template created via the API");
-        template.setShared(FALSE);
-        template.setRecipients(EnvelopeHelpers.createRecipients(signer, cc1));
-        template.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_CREATED);
+        Checkbox check1 = new Checkbox();
+        check1.setDocumentId("1");
+        check1.setPageNumber("1");
+        check1.setXPosition("75");
+        check1.setYPosition("417");
+        check1.setTabLabel("ckAuthorization");
 
-        return template;
-    }
+        Checkbox check2 = new Checkbox();
+        check2.setDocumentId("1");
+        check2.setPageNumber("1");
+        check2.setXPosition("75");
+        check2.setYPosition("447");
+        check2.setTabLabel("ckAuthentication");
 
-    private static List createList() {
-        List list = new List();
-        list.setDocumentId(DOCUMENT_ID);
-        list.setPageNumber(PAGE_NUMBER);
-        list.setXPosition("142");
-        list.setYPosition("291");
-        list.setFont("helvetica");
-        list.setFontSize("size14");
-        list.setTabLabel("list");
-        list.setRequired(FALSE);
-        list.setListItems(Arrays.asList(
+        Checkbox check3 = new Checkbox();
+        check3.setDocumentId("1");
+        check3.setPageNumber("1");
+        check3.setXPosition("75");
+        check3.setYPosition("478");
+        check3.setTabLabel("ckAgreement");
+
+        Checkbox check4 = new Checkbox();
+        check4.setDocumentId("1");
+        check4.setPageNumber("1");
+        check4.setXPosition("75");
+        check4.setYPosition("508");
+        check4.setTabLabel("ckAcknowledgement");
+
+        List list1 = new List();
+        list1.setDocumentId("1");
+        list1.setPageNumber("1");
+        list1.setXPosition("142");
+        list1.setYPosition("291");
+        list1.setFont("helvetica");
+        list1.setFontSize("size14");
+        list1.setTabLabel("list");
+        list1.setRequired("false");
+        list1.setListItems(Arrays.asList(
                 createListItem("Red"),
                 createListItem("Orange"),
                 createListItem("Yellow"),
@@ -166,19 +182,26 @@ public class EG008ControllerCreateTemplate extends AbstractController {
                 createListItem("Indigo"),
                 createListItem("Violet")
         ));
-        return list;
-    }
+        // The SDK can't create a number tab at this time. Bug DCM-2732
+        // Until it is fixed, use a text tab instead.
+        //   , number = docusign.Number.constructFromObject({
+        //         documentId: "1", pageNumber: "1", xPosition: "163", yPosition: "260",
+        //         font: "helvetica", fontSize: "size14", tabLabel: "numbersOnly",
+        //         height: "23", width: "84", required: "false"})
+        Text textInsteadOfNumber = new Text();
+        textInsteadOfNumber.setDocumentId("1");
+        textInsteadOfNumber.setPageNumber("1");
+        textInsteadOfNumber.setXPosition("153");
+        textInsteadOfNumber.setYPosition("260");
+        textInsteadOfNumber.setFont("helvetica");
+        textInsteadOfNumber.setFontSize("size14");
+        textInsteadOfNumber.setTabLabel("numbersOnly");
+        textInsteadOfNumber.setHeight(23);
+        textInsteadOfNumber.setWidth(84);
+        textInsteadOfNumber.required("false");
 
-    private static ListItem createListItem(String color) {
-        ListItem item = new ListItem();
-        item.setText(color);
-        item.setValue(color.toLowerCase(Locale.ENGLISH));
-        return item;
-    }
-
-    private static RadioGroup createRadioGroup() {
         RadioGroup radioGroup = new RadioGroup();
-        radioGroup.setDocumentId(DOCUMENT_ID);
+        radioGroup.setDocumentId("1");
         radioGroup.setGroupName("radio1");
 
         radioGroup.setRadios(Arrays.asList(
@@ -186,51 +209,68 @@ public class EG008ControllerCreateTemplate extends AbstractController {
                 createRadio("red", "74"),
                 createRadio("blue", "220")
         ));
-        return radioGroup;
+
+        Text text = new Text();
+        text.setDocumentId("1");
+        text.setPageNumber("1");
+        text.setXPosition("153");
+        text.setYPosition("230");
+        text.setFont("helvetica");
+        text.setFontSize("size14");
+        text.setTabLabel("text");
+        text.setHeight(23);
+        text.setWidth(84);
+        text.required("false");
+
+        // Tabs are set per recipient / signer
+        Tabs signer1Tabs = new Tabs();
+        signer1Tabs.setCheckboxTabs(Arrays.asList(check1, check2, check3, check4));
+        signer1Tabs.setListTabs(Arrays.asList(list1));
+        // numberTabs: [number],
+        signer1Tabs.setRadioGroupTabs(Arrays.asList(radioGroup));
+        signer1Tabs.setSignHereTabs(Arrays.asList(signHere));
+        signer1Tabs.textTabs(Arrays.asList(text, textInsteadOfNumber));
+
+        signer1.setTabs(signer1Tabs);
+
+        // Add the recipients to the env object
+        Recipients recipients = new Recipients();
+        recipients.setSigners(Arrays.asList(signer1));
+        recipients.setCarbonCopies(Arrays.asList(cc1));
+
+        // create the envelope template definition object
+        EnvelopeTemplateDefinition envelopeTemplateDefinition = new EnvelopeTemplateDefinition();
+        envelopeTemplateDefinition.setDescription("Example template created via the API");
+        envelopeTemplateDefinition.setName(args.getTemplateName());
+        envelopeTemplateDefinition.setShared("false");
+
+        // create the overall template definition
+        EnvelopeTemplate template = new EnvelopeTemplate();
+        // The order in the docs array determines the order in the env
+        template.setDocuments(Arrays.asList(doc));
+        template.setEmailSubject("Please sign this document");
+        template.setEnvelopeTemplateDefinition(envelopeTemplateDefinition);
+        template.setRecipients(recipients);
+        template.setStatus("created");
+
+        return template;
     }
 
-    private static Radio createRadio(String value, String xPosition) {
+    private ListItem createListItem(String color) {
+        ListItem item = new ListItem();
+        item.setText(color);
+        item.setValue(color.toLowerCase());
+        return item;
+    }
+
+    private Radio createRadio(String value, String xPosition) {
         Radio radio = new Radio();
-        radio.setPageNumber(PAGE_NUMBER);
+        radio.setPageNumber("1");
         radio.setValue(value);
         radio.setXPosition(xPosition);
         radio.setYPosition("384");
-        radio.setRequired(FALSE);
+        radio.setRequired("false");
         return radio;
-    }
-
-    private static Checkbox createCheckbox(String label, String xPosition, String yPosition) {
-        Checkbox check = new Checkbox();
-        check.setDocumentId(DOCUMENT_ID);
-        check.setPageNumber(PAGE_NUMBER);
-        check.setXPosition(xPosition);
-        check.setYPosition(yPosition);
-        check.setTabLabel(label);
-        return check;
-    }
-
-    private static Text createText(String label, String xPosition, String yPosition) {
-        Text text = new Text();
-        text.setDocumentId(DOCUMENT_ID);
-        text.setPageNumber(PAGE_NUMBER);
-        text.setXPosition(xPosition);
-        text.setYPosition(yPosition);
-        text.setFont("helvetica");
-        text.setFontSize("size14");
-        text.setTabLabel(label);
-        text.setHeight("23");
-        text.setWidth("84");
-        text.setRequired(FALSE);
-        return text;
-    }
-
-    private static SignHere createSignHere() {
-        SignHere signHere = new SignHere();
-        signHere.setDocumentId(DOCUMENT_ID);
-        signHere.setPageNumber(PAGE_NUMBER);
-        signHere.setXPosition("191");
-        signHere.setYPosition("148");
-        return signHere;
     }
     // ***DS.snippet.0.end
 }

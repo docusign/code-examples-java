@@ -1,83 +1,94 @@
 package com.docusign.controller.examples;
 
-import com.docusign.DSConfiguration;
 import com.docusign.esign.api.EnvelopesApi;
+import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeDocument;
 import com.docusign.esign.model.EnvelopeDocumentsResult;
-import com.docusign.model.DoneExample;
-import com.docusign.model.EnvelopeDocumentInfo;
-import com.docusign.model.Session;
-import com.docusign.model.User;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import javax.servlet.http.HttpSession;
 
-
-/**
- * List an envelope's documents.<br />
- * A <em>Certificate of Completion</em> document is also associated with every
- * envelope. This method is often used to dynamically create a list of an
- * envelope's documents in preparation for enabling your user to download one
- * or more of the documents.
- */
 @Controller
 @RequestMapping("/eg006")
-public class EG006ControllerEnvelopeDocs extends AbstractController {
-
-    private final Session session;
-    private final User user;
+public class EG006ControllerEnvelopeDocs extends EGController {
 
     @Autowired
-    public EG006ControllerEnvelopeDocs(DSConfiguration config, Session session, User user) {
-        super(config, "eg006", "List envelope documents");
-        this.session = session;
-        this.user = user;
+    HttpSession session;
+
+    @Override
+    protected void addSpecialAttributes(ModelMap model) {
+        model.addAttribute("envelopeOk", null != session.getAttribute("envelopeId"));
     }
 
     @Override
-    protected void onInitModel(WorkArguments args, ModelMap model) throws ApiException {
-        super.onInitModel(args, model);
-        model.addAttribute(MODEL_ENVELOPE_OK, StringUtils.isNotBlank(session.getEnvelopeId()));
+    protected String getEgName() {
+        return "eg006";
+    }
+
+    @Override
+    protected String getTitle() {
+        return "List envelope documents";
+    }
+
+    @Override
+    protected String getResponseTitle() {
+        return "List envelope documents result";
     }
 
     @Override
     // ***DS.snippet.0.start
-    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
-        EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
+    protected Object doWork(WorkArguments args, ModelMap model,
+                            String accessToken, String basePath) throws ApiException {
+        // Data for this method
+        // accessToken    (argument)
+        // basePath       (argument)
+        String accountId = args.getAccountId();
+        String envelopeId = args.getEnvelopeId();
 
+
+        ApiClient apiClient = new ApiClient(basePath);
+        apiClient.addDefaultHeader("Authorization", "Bearer " + accessToken);
+        EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
         // Step 1. List the envelope's documents
-        EnvelopeDocumentsResult result = envelopesApi.listDocuments(session.getAccountId(), session.getEnvelopeId());
+        EnvelopeDocumentsResult result = envelopesApi.listDocuments(accountId, envelopeId);
 
         // Step 2. Process results
         // Save the envelopeId and its list of documents in the session so
         // they can be used in example 7 (download a document)
-        List<EnvelopeDocumentInfo> envelopeDocItems = new ArrayList<>();
-        session.setEnvelopeDocuments(envelopeDocItems);
-        envelopeDocItems.add(new EnvelopeDocumentInfo("Combined", "content", "combined"));
-        envelopeDocItems.add(new EnvelopeDocumentInfo("Zip archive", "zip", "archive"));
+        JSONArray envelopeDocItems = new JSONArray();
+        envelopeDocItems.put(createStandardDoc("Combined", "content", "combined"));
+        envelopeDocItems.put(createStandardDoc("Zip archive", "zip", "archive"));
 
         for (EnvelopeDocument doc : result.getEnvelopeDocuments()) {
-            String documentName = doc.getName();
-            if (StringUtils.equals(doc.getDocumentId(), "certificate")) {
-                documentName = "Certificate of completion";
-            }
-            envelopeDocItems.add(new EnvelopeDocumentInfo(documentName, doc.getType(), doc.getDocumentId()));
+            JSONObject o = new JSONObject()
+            .put("documentId", doc.getDocumentId())
+            .put("name", doc.getDocumentId() == "certificate" ? "Certificate of completion" : doc.getName())
+            .put("type", doc.getType());
+
+            envelopeDocItems.put(o);
         }
 
-        DoneExample.createDefault(title)
-            .withJsonObject(result)
-            .withMessage("Results from the EnvelopeDocuments::list method:")
-            .addToModel(model);
-        return DONE_EXAMPLE_PAGE;
+        JSONObject envelopeDocuments = new JSONObject();
+        envelopeDocuments.put("envelopeId", envelopeId);
+        envelopeDocuments.put("documents", envelopeDocItems);
+
+        session.setAttribute("envelopeDocuments", envelopeDocuments);
+        setMessage("Results from the EnvelopeDocuments::list method:");
+
+        return result;
+    }
+
+    private JSONObject createStandardDoc(String name, String type, String documentId) {
+        JSONObject o = new JSONObject();
+        o.put("name", name);
+        o.put("type", type);
+        o.put("documentId", documentId);
+        return o;
     }
     // ***DS.snippet.0.end
 }

@@ -1,211 +1,283 @@
 package com.docusign.controller.examples;
 
-import com.docusign.DSConfiguration;
-import com.docusign.common.DocumentType;
-import com.docusign.esign.model.CarbonCopy;
-import com.docusign.esign.model.Signer;
-import com.docusign.esign.model.Tabs;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
-
-import lombok.Value;
-
+import com.docusign.esign.model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.net.ssl.HttpsURLConnection;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.MediaType;
-
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
+import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 
-
-/**
- * Send an envelope using binary document transfer.<br />
- * The envelope includes a pdf, doc, and HTML document. Multipart data transfer
- * is used to send the documents in binary format to DocuSign.
- */
 @Controller
 @RequestMapping("/eg010")
-public class EG010ControllerSendBinaryDocs extends AbstractController {
+public class EG010ControllerSendBinaryDocs extends EGController {
 
-    private static final String HYPHENS = "--";
-    private static final String LINE_DELIMITER = "\r\n";
-    private static final String BOUNDARY_DELIMITER = "multipartboundary_multipartboundary";
+    @Override
+    protected void addSpecialAttributes(ModelMap model) {
+    }
 
-    private static final String HTML_DOCUMENT_FILE_NAME = "templates/candy-bonbon.ftl";
-    private static final String HTML_DOCUMENT_NAME = "Order acknowledgement";
-    private static final String PDF_DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
-    private static final String PDF_DOCUMENT_NAME = "Lorem Ipsum";
-    private static final String DOCX_DOCUMENT_FILE_NAME = "World_Wide_Corp_Battle_Plan_Trafalgar.docx";
-    private static final String DOCX_DOCUMENT_NAME = "Battle Plan";
-    private static final int ANCHOR_OFFSET_Y = 10;
-    private static final int ANCHOR_OFFSET_X = 20;
+    @Override
+    protected String getEgName() {
+        return "eg010";
+    }
 
-    private final Session session;
-    private final User user;
+    @Override
+    protected String getTitle() {
+        return "Send envelope with multipart mime";
+    }
 
-
-    @Autowired
-    public EG010ControllerSendBinaryDocs(DSConfiguration config, Session session, User user) {
-        super(config, "eg010", "Send envelope with multipart mime");
-        this.session = session;
-        this.user = user;
+    @Override
+    protected String getResponseTitle() {
+        return "Envelope sent";
     }
 
     @Override
     // ***DS.snippet.0.start
-    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws IOException {
-        // Step 1. Gather documents and their headers
-        List<DocumentInfo> documents = List.of(
-                new DocumentInfo(HTML_DOCUMENT_NAME, "1", DocumentType.HTML,
-                        EnvelopeHelpers.createHtmlFromTemplateFile(HTML_DOCUMENT_FILE_NAME, "args", args)),
-                new DocumentInfo(DOCX_DOCUMENT_NAME, "2", DocumentType.DOCX,
-                        EnvelopeHelpers.readFile(DOCX_DOCUMENT_FILE_NAME)),
-                new DocumentInfo(PDF_DOCUMENT_NAME, "3", DocumentType.PDF,
-                        EnvelopeHelpers.readFile(PDF_DOCUMENT_FILE_NAME))
-                );
+    protected EnvelopeDocumentsResult doWork(WorkArguments args, ModelMap model,
+                                             String accessToken, String basePath) throws IOException {
+        // Data for this method
+        // accessToken    (argument)
+        // basePath       (argument)
+        // config.docDocx (filename for the docx source doc)
+        // config.docPdf  (filename for the pdf source doc)
+        String accountId = args.getAccountId();
 
-        // Step 2. Make the envelope JSON request body
-        JSONObject envelopeJSON = makeEnvelopeJSON(args, documents);
+
+        // Step 1. Make the envelope JSON request body
+        JSONObject envelopeJSON = makeEnvelopeJSON(args);
+        Object results = null;
+
+        // Step 2. Gather documents and their headers
+        // Read files from a local directory
+        // The reads could raise an exception if the file is not available!
+        List<JSONObject> documents = Arrays.asList(
+                createDocumentObject(envelopeJSON, "text/html",
+                        document1(args).getBytes(), 0),
+                createDocumentObject(envelopeJSON,
+                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                        readFile(config.docDocx), 1),
+                createDocumentObject(envelopeJSON, "application/pdf",
+                        readFile(config.docPdf), 2)
+        );
 
         // Step 3. Create the multipart body
-        URL uri = new URL(String.format("%s/v2.1/accounts/%s/envelopes", session.getBasePath(), session.getAccountId()));
-        String contentType = String.join("",MediaType.MULTIPART_FORM_DATA, "; boundary=", BOUNDARY_DELIMITER);
+        String CRLF = "\r\n", boundary = "multipartboundary_multipartboundary", hyphens = "--";
+
+        URL uri = new URL(basePath
+                + "/v2/accounts/" + accountId + "/envelopes");
+
         HttpsURLConnection connection = (HttpsURLConnection) uri.openConnection();
-        connection.setRequestMethod(HttpMethod.POST);
-        connection.setRequestProperty(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON);
-        connection.setRequestProperty(HttpHeaders.CONTENT_TYPE, contentType);
-        connection.setRequestProperty(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + user.getAccessToken());
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Accept", "application/json");
+        connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+        connection.setRequestProperty("Authorization", "Bearer " + accessToken);
         connection.setDoOutput(true);
 
-        // See https://developers.docusign.com/esign-rest-api/guides/requests-and-responses
         DataOutputStream buffer = new DataOutputStream(connection.getOutputStream());
-        writeBoundaryHeader(buffer, MediaType.APPLICATION_JSON, "form-data");
-        buffer.writeBytes(envelopeJSON.toString(DoneExample.JSON_INDENT_FACTOR));
+        buffer.writeBytes(hyphens);
+        buffer.writeBytes(boundary);
+        buffer.writeBytes(CRLF);
+        buffer.writeBytes("Content-Type: application/json");
+        buffer.writeBytes(CRLF);
+        buffer.writeBytes("Content-Disposition: form-data");
+        buffer.writeBytes(CRLF);
+        buffer.writeBytes(CRLF);
+        buffer.writeBytes(envelopeJSON.toString(4));
 
-        for (DocumentInfo docInfo : documents) {
-            String content = String.format("file; filename=\"%s\";documentid=%s", docInfo.getName(), docInfo.getId());
-            buffer.writeBytes(LINE_DELIMITER);
-            writeBoundaryHeader(buffer, docInfo.getDocType().getMime(), content);
-            buffer.write(docInfo.getData());
+        // Loop to add the documents.
+        // See section Multipart Form Requests on page https://developers.docusign.com/esign-rest-api/guides/requests-and-responses
+        for (JSONObject d : documents) {
+            buffer.writeBytes(CRLF);
+            buffer.writeBytes(hyphens);
+            buffer.writeBytes(boundary);
+            buffer.writeBytes(CRLF);
+            buffer.writeBytes("Content-Type:" + d.getString("mime"));
+            buffer.writeBytes(CRLF);
+            buffer.writeBytes("Content-Disposition: file; filename=\"" + d.getString("filename") + ";documentid=" + d.getString("documentId"));
+            buffer.writeBytes(CRLF);
+            buffer.writeBytes(CRLF);
+            buffer.write((byte[]) d.get("bytes"));
         }
 
-        writeClosingBoundary(buffer);
+        // Add closing boundary
+        buffer.writeBytes(CRLF);
+        buffer.writeBytes(hyphens);
+        buffer.writeBytes(boundary);
+        buffer.writeBytes(hyphens);
+        buffer.writeBytes(CRLF);
+
+        buffer.flush();
 
         int responseCode = connection.getResponseCode();
-        if (responseCode < HttpURLConnection.HTTP_OK || responseCode >= HttpURLConnection.HTTP_MULT_CHOICE) {
-            String error = StreamUtils.copyToString(connection.getErrorStream(), StandardCharsets.UTF_8);
-            throw new ExampleException(error, null);
+        System.out.println("Response Code : " + responseCode);
+
+        BufferedReader in;
+        if (responseCode >= 200 && responseCode < 300) {
+            in = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream()));
+        } else {
+            in = new BufferedReader(
+                    new InputStreamReader(connection.getErrorStream()));
         }
 
-        String responseString = StreamUtils.copyToString(connection.getInputStream(), StandardCharsets.UTF_8);
-        JSONObject obj = new JSONObject(responseString);
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+        JSONObject obj = new JSONObject(response.toString());
         String envelopeId = obj.getString("envelopeId");
-        session.setEnvelopeId(envelopeId);
+        session.setAttribute("envelopeId", envelopeId);
+        setMessage("The envelope has been created and sent!<br/>Envelope ID " + envelopeId+".");
 
-        DoneExample.createDefault(title)
-                .withMessage("The envelope has been created and sent!<br/>Envelope ID " + envelopeId + ".")
-                .addToModel(model);
-        return DONE_EXAMPLE_PAGE;
+        return null;
     }
 
-    private static void writeBoundaryHeader(DataOutputStream buffer,
-            String contentType, String contentDisposition) throws IOException {
-        buffer.writeBytes(HYPHENS);
-        buffer.writeBytes(BOUNDARY_DELIMITER);
-        buffer.writeBytes(LINE_DELIMITER);
-        buffer.writeBytes(String.join(": ", HttpHeaders.CONTENT_TYPE, contentType));
-        buffer.writeBytes(LINE_DELIMITER);
-        buffer.writeBytes(String.join(": ", HttpHeaders.CONTENT_DISPOSITION, contentDisposition));
-        buffer.writeBytes(LINE_DELIMITER);
-        buffer.writeBytes(LINE_DELIMITER);
+    private JSONObject createDocumentObject(JSONObject envelopeJSON, String mime, byte[] bytes, int index) {
+
+        JSONObject doc = envelopeJSON.getJSONArray("documents").getJSONObject(index);
+
+        return new JSONObject()
+                .put("mime", mime)
+                .put("filename", doc.getString("name"))
+                .put("documentId", doc.getString("documentId"))
+                .put("bytes", bytes);
     }
 
-    private static void writeClosingBoundary(DataOutputStream buffer) throws IOException {
-        buffer.writeBytes(LINE_DELIMITER);
-        buffer.writeBytes(HYPHENS);
-        buffer.writeBytes(BOUNDARY_DELIMITER);
-        buffer.writeBytes(HYPHENS);
-        buffer.writeBytes(LINE_DELIMITER);
-        buffer.flush();
-    }
+    private JSONObject makeEnvelopeJSON(WorkArguments args) {
+        // Data for this method
+        String signerEmail = args.getSignerEmail();
+        String signerName = args.getSignerName();
+        String ccEmail = args.getCcEmail();
+        String ccName = args.getCcName();
 
-    // document 1 (html) has tag **signature_1**
-    // document 2 (docx) has tag /sn1/
-    // document 3 (pdf) has tag /sn1/
-    //
-    // The envelope has two recipients.
-    // recipient 1 - signer
-    // recipient 2 - cc
-    // The envelope will be sent first to the signer.
-    // After it is signed, a copy is sent to the cc person.
-    private static JSONObject makeEnvelopeJSON(WorkArguments args, List<DocumentInfo> documents) {
-        // The DocuSign platform searches throughout your envelope's documents for
-        // matching anchor strings. So the signHere2 tab will be used in both document
-        // 2 and 3 since they use the same anchor string for their "signer 1" tabs.
-        Tabs signerTabs = EnvelopeHelpers.createSignerTabs(
-                EnvelopeHelpers.createSignHere("**signature_1**", ANCHOR_OFFSET_Y, ANCHOR_OFFSET_X),
-                EnvelopeHelpers.createSignHere("/sn1/", ANCHOR_OFFSET_Y, ANCHOR_OFFSET_X));
+
+        // document 1 (html) has tag **signature_1**
+        // document 2 (docx) has tag /sn1/
+        // document 3 (pdf) has tag /sn1/
+        //
+        // The envelope has two recipients.
+        // recipient 1 - signer
+        // recipient 2 - cc
+        // The envelope will be sent first to the signer.
+        // After it is signed, a copy is sent to the cc person.
+
+        // create the envelope definition
+        JSONObject envJSON = new JSONObject();
+        envJSON.put("emailSubject", "Please sign this document set");
+
+        // add the documents
+        JSONObject doc1 = new JSONObject(), doc2 = new JSONObject(), doc3 = new JSONObject();
+
+        doc1.put("name", "Order acknowledgement"); // can be different from actual file name
+        doc1.put("fileExtension", "html"); // Source data format. Signed docs are always pdf.
+        doc1.put("documentId", "1"); // a label used to reference the doc
+        doc2.put("name", "Battle Plan"); // can be different from actual file name
+        doc2.put("fileExtension", "docx");
+        doc2.put("documentId", "2");
+        doc3.put("name", "Lorem Ipsum"); // can be different from actual file name
+        doc3.put("fileExtension", "pdf");
+        doc3.put("documentId", "3");
+
+        // The order in the docs array determines the order in the envelope
+        envJSON.put("documents", new JSONArray()
+                .put(doc1)
+                .put(doc2)
+                .put(doc3));
 
         // create a signer recipient to sign the document, identified by name and email
-        // RoutingOrder (lower means earlier) determines the order of deliveries
+        // We're setting the parameters via the object creation
+        Signer signer1 = new Signer();
+        signer1.setEmail(signerEmail);
+        signer1.setName(signerName);
+        signer1.setRecipientId("1");
+        signer1.setRoutingOrder("1");
+        // routingOrder (lower means earlier) determines the order of deliveries
         // to the recipients. Parallel routing order is supported by using the
         // same integer as the order for two or more recipients.
-        Signer signer = new Signer();
-        signer.setEmail(args.getSignerEmail());
-        signer.setName(args.getSignerName());
-        signer.setRecipientId("1");
-        signer.setRoutingOrder("1");
-        signer.setTabs(signerTabs);
 
         // create a cc recipient to receive a copy of the documents, identified by name and email
-        CarbonCopy cc = new CarbonCopy();
-        cc.setEmail(args.getCcEmail());
-        cc.setName(args.getCcName());
-        cc.setRecipientId("2");
-        cc.setRoutingOrder("2");
+        // We're setting the parameters via setters
+        CarbonCopy cc1 = new CarbonCopy();
+        cc1.setEmail(ccEmail);
+        cc1.setName(ccName);
+        cc1.setRoutingOrder("2");
+        cc1.recipientId("2");
+        // Create signHere fields (also known as tabs) on the documents,
+        // We're using anchor (autoPlace) positioning
+        //
+        // The DocuSign platform searches throughout your envelope's
+        // documents for matching anchor strings. So the
+        // signHere2 tab will be used in both document 2 and 3 since they
+        // use the same anchor string for their "signer 1" tabs.
+        SignHere signHere1 = new SignHere();
+        signHere1.setAnchorString("**signature_1**");
+        signHere1.setAnchorYOffset("10");
+        signHere1.setAnchorUnits("pixels");
+        signHere1.setAnchorXOffset("20");
+        SignHere signHere2 = new SignHere();
+        signHere2.setAnchorString("/sn1/");
+        signHere2.setAnchorYOffset("10");
+        signHere2.setAnchorUnits("pixels");
+        signHere2.setAnchorXOffset("20");
 
-        // The order in the documents array determines the order in the envelope
-        JSONArray jsonDocuments = new JSONArray();
-        for (DocumentInfo docInfo : documents) {
-            JSONObject jsonDoc = new JSONObject();
-            jsonDoc.put("name", docInfo.getName());
-            jsonDoc.put("fileExtension", docInfo.getDocType().getDefaultFileExtention());
-            jsonDoc.put("documentId", docInfo.getId());
-            jsonDocuments.put(jsonDoc);
-        }
+        // Tabs are set per recipient / signer
+        Tabs signer1Tabs = new Tabs();
+        signer1Tabs.setSignHereTabs(Arrays.asList(signHere1, signHere2));
+        signer1.setTabs(signer1Tabs);
 
-        // Create the envelope definition. Request that the envelope be sent by
-        // setting |status| to "sent". To request that the envelope be created
-        // as a draft, set to "created"
-        JSONObject envelopeJSON = new JSONObject();
-        envelopeJSON.put("emailSubject", "Please sign this document set");
-        envelopeJSON.put("documents", jsonDocuments);
-        envelopeJSON.put("recipients", new JSONObject(EnvelopeHelpers.createRecipients(signer, cc)));
-        envelopeJSON.put("status", EnvelopeHelpers.ENVELOPE_STATUS_SENT);
+        // Add the recipients to the envelope object
+        Recipients recipients = new Recipients();
+        recipients.setSigners(Arrays.asList(signer1));
+        recipients.setCarbonCopies(Arrays.asList(cc1));
 
-        return envelopeJSON;
+        envJSON.put("recipients", new JSONObject(recipients));
+
+        // Request that the envelope be sent by setting |status| to "sent".
+        // To request that the envelope be created as a draft, set to "created"
+        envJSON.put("status", "sent");
+
+        return envJSON;
     }
 
-    @Value
-    private static class DocumentInfo {
-        private String name;
-        private String id;
-        private DocumentType docType;
-        private byte[] data;
+    private String document1(WorkArguments args) {
+        // Data for this method
+        String signerEmail = args.getSignerEmail();
+        String signerName = args.getSignerName();
+        String ccEmail = args.getCcEmail();
+        String ccName = args.getCcName();
+
+
+        return " <!DOCTYPE html>\n" +
+                "    <html>\n" +
+                "        <head>\n" +
+                "          <meta charset=\"UTF-8\">\n" +
+                "        </head>\n" +
+                "        <body style=\"font-family:sans-serif;margin-left:2em;\">\n" +
+                "        <h1 style=\"font-family: 'Trebuchet MS', Helvetica, sans-serif;\n" +
+                "            color: darkblue;margin-bottom: 0;\">World Wide Corp</h1>\n" +
+                "        <h2 style=\"font-family: 'Trebuchet MS', Helvetica, sans-serif;\n" +
+                "          margin-top: 0px;margin-bottom: 3.5em;font-size: 1em;\n" +
+                "          color: darkblue;\">Order Processing Division</h2>\n" +
+                "        <h4>Ordered by " + signerName + "</h4>\n" +
+                "        <p style=\"margin-top:0em; margin-bottom:0em;\">Email: " + signerEmail + "</p>\n" +
+                "        <p style=\"margin-top:0em; margin-bottom:0em;\">Copy to: " + ccName + ", " + ccEmail + "</p>\n" +
+                "        <p style=\"margin-top:3em;\">\n" +
+                "  Candy bonbon pastry jujubes lollipop wafer biscuit biscuit. Topping brownie sesame snaps sweet roll pie. Croissant danish biscuit soufflé caramels jujubes jelly. Dragée danish caramels lemon drops dragée. Gummi bears cupcake biscuit tiramisu sugar plum pastry. Dragée gummies applicake pudding liquorice. Donut jujubes oat cake jelly-o. Dessert bear claw chocolate cake gummies lollipop sugar plum ice cream gummies cheesecake.\n" +
+                "        </p>\n" +
+                "        <!-- Note the anchor tag for the signature field is in white. -->\n" +
+                "        <h3 style=\"margin-top:3em;\">Agreed: <span style=\"color:white;\">**signature_1**/</span></h3>\n" +
+                "        </body>\n" +
+                "    </html>";
     }
     // ***DS.snippet.0.end
 }

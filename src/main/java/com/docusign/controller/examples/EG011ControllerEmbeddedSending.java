@@ -1,74 +1,89 @@
 package com.docusign.controller.examples;
 
-import com.docusign.DSConfiguration;
 import com.docusign.esign.api.EnvelopesApi;
+import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.EnvelopeDefinition;
+import com.docusign.esign.model.EnvelopeDocumentsResult;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.ReturnUrlRequest;
 import com.docusign.esign.model.ViewUrl;
-import com.docusign.model.Session;
-import com.docusign.model.User;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.view.RedirectView;
-
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletResponse;
-
-
-/**
- * Embedded Sending<br />
- * An envelope will be created in draft mode. A browser will then be redirected
- * to the DocuSign web tool where the envelope can be (optionally) updated and
- * then sent. The envelope includes a pdf, Word, and HTML document.
- */
 @Controller
 @RequestMapping("/eg011")
-public class EG011ControllerEmbeddedSending extends AbstractController {
+public class EG011ControllerEmbeddedSending extends EGController {
+    @Override
+    protected void addSpecialAttributes(ModelMap model) {
 
-    private final Session session;
-    private final User user;
-
-
-    @Autowired
-    public EG011ControllerEmbeddedSending(DSConfiguration config, Session session, User user) {
-        super(config, "eg011", "Signing request by email");
-        this.session = session;
-        this.user = user;
     }
 
     @Override
+    protected String getEgName() {
+        return "eg011";
+    }
+
+    @Override
+    protected String getTitle() {
+        return "Signing request by email";
+    }
+
+    @Override
+    protected String getResponseTitle() {
+        return null;
+    }
+
+    @Autowired
+    EG002ControllerSigningViaEmail controller2;
+
+    @Override
     // ***DS.snippet.0.start
-    protected Object doWork(WorkArguments args, ModelMap model,
-            HttpServletResponse response) throws ApiException, IOException {
-        String accountId = session.getAccountId();
-        EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
+    protected EnvelopeDocumentsResult doWork(WorkArguments args, ModelMap model,
+                                             String accessToken, String basePath) throws ApiException, IOException {
+        // Data for this method
+        // accessToken    (argument)
+        // basePath       (argument)
+        // config.appUrl  (url of the application itself)
+        String startingView = args.getStartingView();
+        String accountId = args.getAccountId();
+
+
+        ApiClient apiClient = new ApiClient(basePath);
+        apiClient.addDefaultHeader("Authorization", "Bearer " + accessToken);
+        EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
 
         // Step 1. Make the envelope with "created" (draft) status
-        args.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_CREATED);
-        EnvelopeDefinition env = EG002ControllerSigningViaEmail.makeEnvelope(args);
-        EnvelopeSummary results = envelopesApi.createEnvelope(accountId, env);
+        args.setStatus("created");
+        EnvelopeSummary results = (EnvelopeSummary) controller2.doWork(args, model, accessToken, basePath);
         String envelopeId = results.getEnvelopeId();
 
-        // Step 2. Create the sender view.
-        // Set the url where you want the recipient to go once they are done
-        // signing should typically be a callback route somewhere in your app.
+        // Step 2. create the sender view
+        // Call the CreateSenderView API
+        // Exceptions will be caught by the calling function
+        //
+        // Prepare the request
+        String returnUrl = config.appUrl + "/ds-return";
         ReturnUrlRequest viewRequest = new ReturnUrlRequest();
-        viewRequest.setReturnUrl(config.getDsReturnUrl());
-        ViewUrl viewUrl = envelopesApi.createSenderView(accountId, envelopeId, viewRequest);
+        // Set the url where you want the recipient to go once they are done signing
+        // should typically be a callback route somewhere in your app.
+        viewRequest.setReturnUrl(returnUrl);
+        // Call the API
+        ViewUrl result1 = envelopesApi.createSenderView(accountId, envelopeId, viewRequest);
 
+        // Process result
         // Switch to Recipient and Documents view if requested by the user
-        String url = viewUrl.getUrl();
-        if ("recipient".equalsIgnoreCase(args.getStartingView())) {
+        String url = result1.getUrl();
+        System.out.println("startingView: " + startingView);
+        if ("recipient".equalsIgnoreCase(startingView)) {
             url = url.replace("send=1", "send=0");
         }
 
-        return new RedirectView(url);
+        System.out.println("Sender view URL: " + url);
+        args.setRedirectUrl("redirect:" + url);
+        return null;
     }
     // ***DS.snippet.0.end
 }

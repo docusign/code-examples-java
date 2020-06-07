@@ -1,61 +1,58 @@
 package com.docusign.controller.examples;
 
-import com.docusign.DSConfiguration;
 import com.docusign.esign.api.EnvelopesApi;
+import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import javax.servlet.http.HttpSession;
 
-
-/**
- * Get an envelope's basic information and status.<br />
- * List the basic information about an envelope, including its overall status.
- * Additional API/SDK methods may be used to get additional information about
- * the envelope, its documents, recipients, etc. This example demonstrates
- * how to obtain the latest information about an envelope from DocuSign. Often
- * an alternative is to use Connect to enable DocuSign to proactively send your
- * application updates when the status of an envelope changes.
- */
 @Controller
 @RequestMapping("/eg004")
-public class EG004ControllerEnvelopeInfo extends AbstractController {
-
-    private final Session session;
-    private final User user;
-
+public class EG004ControllerEnvelopeInfo extends EGController {
 
     @Autowired
-    public EG004ControllerEnvelopeInfo(DSConfiguration config, Session session, User user) {
-        super(config, "eg004", "Get envelope information");
-        this.session = session;
-        this.user = user;
+    HttpSession session;
+
+    @Override
+    protected void addSpecialAttributes(ModelMap model) {
+        model.addAttribute("envelopeOk", session.getAttribute("envelopeId") != null);
     }
 
     @Override
-    protected void onInitModel(WorkArguments args, ModelMap model) throws ApiException {
-        super.onInitModel(args, model);
-        model.addAttribute(MODEL_ENVELOPE_OK, StringUtils.isNotBlank(session.getEnvelopeId()));
+    protected String getEgName() {
+        return "eg004";
+    }
+
+    @Override
+    protected String getTitle() {
+        return "Get envelope information";
+    }
+
+    @Override
+    protected String getResponseTitle() {
+        return "Get envelope status results";
     }
 
     @Override
     // ***DS.snippet.0.start
-    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
+    protected Object doWork(WorkArguments args, ModelMap model,
+                            String accessToken, String basePath) throws ApiException {
+        // Data for this method
+        // accessToken    (argument)
+        // basePath       (argument)
+        String accountId = args.getAccountId();
+        String envelopeId = args.getEnvelopeId();
+
+
         // Step 1. get envelope info
-        EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
-        DoneExample.createDefault(title)
-                .withJsonObject(envelopesApi.getEnvelope(session.getAccountId(), session.getEnvelopeId()))
-                .withMessage("Results from the Envelopes::get method:")
-                .addToModel(model);
-        return DONE_EXAMPLE_PAGE;
+        ApiClient apiClient = new ApiClient(basePath);
+        apiClient.addDefaultHeader("Authorization", "Bearer " + accessToken);
+        EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
+        setMessage("Results from the Envelopes::get method:");
+        return envelopesApi.getEnvelope(accountId, envelopeId);
     }
     // ***DS.snippet.0.end
 }

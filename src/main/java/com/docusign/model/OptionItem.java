@@ -1,12 +1,22 @@
 package com.docusign.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-
-@Data
-@AllArgsConstructor
 public class OptionItem {
     private String text;
     private String documentId;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
 }

@@ -40,7 +40,7 @@
                 </c:when>
                 <c:otherwise>
                     <li>
-                        <a class="nav-link" href="/ds/mustAuthenticate" id="login"
+                        <a class="nav-link" href="/login" id="login"
                            data-busy="href">Login <span class="sr-only">(current)</span></a>
                     </li>
                 </c:otherwise>

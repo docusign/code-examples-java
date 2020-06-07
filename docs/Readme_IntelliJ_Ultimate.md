@@ -13,7 +13,7 @@ required due to its support for Spring Boot and JSP view pages.
 ![IntelliJ Import project](install_fig_1.png)
 
 **Step 3.** Use the popup file chooser to select the
-**code-examples-java** directory.
+**eg-03-java-auth-code-grant** directory.
 
 **Step 4.** The **Import Project** wizard will open. It's a
 series of screens. On the first screen, select
@@ -21,7 +21,23 @@ series of screens. On the first screen, select
 
 ![IntelliJ Import Maven project](install_fig_2.png)
 
-**Step 5.** Click **Finish** and the project will
+**Step 5.** Check the **Import Maven projects automatically** line.
+
+![Import Maven projects automatically](install_fig_3.png)
+
+**Step 6.** Select the example project.
+
+![Choose the example project](install_fig_4.png)
+
+**Step 7.** Select Java 1.8 or later.
+
+![Choose Java version](install_fig_5.png)
+
+**Step 8.** Enter the project's name.
+
+![Enter the project name](install_fig_6.png)
+
+**Step 9.** Click **Finish** and the project will
 be displayed in the IDE.
 
 ## Configuring the project

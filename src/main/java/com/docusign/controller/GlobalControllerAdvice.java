@@ -2,17 +2,12 @@ package com.docusign.controller;
 
 import com.docusign.DSConfiguration;
 import com.docusign.esign.client.auth.OAuth;
-import com.docusign.model.AuthType;
-import com.docusign.model.AuthTypeItem;
 import com.docusign.model.Locals;
 import com.docusign.model.Session;
 import com.docusign.model.User;
-
-import com.docusign.utils.AccountsConverter;
-import java.util.stream.Collectors;
-import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,59 +15,46 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
-
-/**
- * This class provides common model attributes for all pages. If you want to
- * refresh tokens use the next code to access to expiration time:
- * <pre>
- * {@literal @}Autowired
- * private TokenStore tokenStore;
- * ....
- * Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
- * OAuth2Authentication oauth = (OAuth2Authentication) authentication;
- * OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) oauth.getDetails();
- * String accessToken = details.getTokenValue();
- * OAuth2AccessToken token = tokenStore.readAccessToken(accessToken);
- * </pre>
- * Object <code>token</code> contains all necessary information.
- */
 @ControllerAdvice
-@Scope(WebApplicationContext.SCOPE_SESSION)
+@Scope("session")
 public class GlobalControllerAdvice {
 
     private static final String BASE_URI_SUFFIX = "/restapi";
     private static final String ERROR_ACCOUNT_NOT_FOUND = "Could not find account information for the user";
 
-    private final DSConfiguration config;
-    private final Session session;
-    private final User user;
-    private Optional<OAuth.Account> account;
-    private AuthType authTypeSelected = AuthType.AGC;
+    @Value("${DS_TARGET_ACCOUNT_ID:}")
+    private String TargetAccountId;
 
     @Autowired
-    public GlobalControllerAdvice(DSConfiguration config, Session session, User user, Optional<OAuth.Account> account) {
-        this.config = config;
-        this.session = session;
-        this.user = user;
-        this.account = account;
+    DSConfiguration config;
+
+    @Autowired
+    private HttpSession httpSession;
+
+    @Autowired
+    Session session;
+
+    @Autowired
+    User user;
+
+    @Autowired(required = false)
+    private OAuth.Account Account;
+
+    @ModelAttribute("accessToken")
+    public String getAccessToken() {
+        return (String) httpSession.getAttribute("accessToken");
     }
 
-    @ModelAttribute("authTypes")
-    public List<AuthTypeItem> authTypes() {
-        return AuthTypeItem.list();
-    }
-
-    @ModelAttribute("authTypeSelected")
-    public AuthTypeItem authTypeSelected() {
-        return AuthTypeItem.convert(authTypeSelected);
+    @ModelAttribute("basePath")
+    public String getBaseUri() {
+        return (String) httpSession.getAttribute("basePath");
     }
 
     @ModelAttribute("documentOptions")
@@ -80,72 +62,109 @@ public class GlobalControllerAdvice {
         return new ArrayList<>();
     }
 
+    @ModelAttribute("envelopeId")
+    public String populateEnvelopeId() {
+        return (String) httpSession.getAttribute("envelopeId");
+    }
+
     @ModelAttribute("showDoc")
     public boolean populateShowDoc() {
-        return StringUtils.isNotBlank(config.getDocumentationPath());
+        return (config.documentation != null);
     }
 
     @ModelAttribute("locals")
-    public Locals populateLocals() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public Locals populateLocals(HttpServletRequest request) throws Exception {
+        Authentication authentication = SecurityContextHolder
+                .getContext().getAuthentication();
+
+
+        Locals locals = new Locals();
+        locals.setDsConfig(config);
+        locals.setSession(session);
+        locals.setMessages("");
+        locals.setUser(null);
 
         if (!(authentication instanceof OAuth2Authentication)) {
-            return new Locals(config, session, null, "");
+            return locals;
         }
 
         OAuth2Authentication oauth = (OAuth2Authentication) authentication;
         OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) oauth.getDetails();
-        Authentication oauthUser = oauth.getUserAuthentication();
+        Authentication user1 = oauth.getUserAuthentication();
 
-        if (oauthUser != null && oauthUser.isAuthenticated()) {
-            user.setName(oauthUser.getName());
+        if (user1 != null && user1.isAuthenticated()) {
+            user.setName(user1.getName());
+            locals.setUser(user);
             user.setAccessToken(details.getTokenValue());
+            httpSession.setAttribute("accessToken", details.getTokenValue());
+//                user.refreshToken = accessToken.getRefreshToken().getValue();
+//                user.tokenExpirationTimestamp = ((30 * 60 * 1000) + System.currentTimeMillis());
 
-            if (account.isEmpty()) {
-                account = Optional.of(getDefaultAccountInfo(getOAuthAccounts(oauth)));
+            if (Account == null) {
+                LinkedHashMap list = (LinkedHashMap) oauth.getUserAuthentication().getDetails();
+                ArrayList accounts = (ArrayList) list.get("accounts");
+                Account = getDefaultAccountInfo(this.convetToAccounts(accounts));
+                httpSession.setAttribute("Account", Account);
             }
 
-            OAuth.Account oauthAccount = account.orElseThrow(() -> new NoSuchElementException(ERROR_ACCOUNT_NOT_FOUND));
-            session.setAccountId(oauthAccount.getAccountId());
-            session.setAccountName(oauthAccount.getAccountName());
-            session.setBasePath(oauthAccount.getBaseUri() + BASE_URI_SUFFIX);
+            session.setAccountId(Account.getAccountId());
+            session.setAccountName(Account.getAccountName());
+            session.setBasePath(Account.getBaseUri() + BASE_URI_SUFFIX);
+
+            httpSession.setAttribute("accountId", Account.getAccountId());
+            httpSession.setAttribute("accountName", Account.getAccountName());
+            httpSession.setAttribute("basePath", Account.getBaseUri() + BASE_URI_SUFFIX);
         }
 
-        return new Locals(config, session, user, "");
+
+        return locals;
     }
 
-    @SuppressWarnings("unchecked")
-    private static List<OAuth.Account> getOAuthAccounts(OAuth2Authentication oauth) {
-        Map<?, ?> userAuthenticationDetails = (Map<?, ?>) oauth.getUserAuthentication().getDetails();
-        List<Map<String, Object>> oauthAccounts = (ArrayList<Map<String, Object>>) userAuthenticationDetails.get("accounts");
-        return oauthAccounts.stream()
-            .map(AccountsConverter::convert)
-            .collect(Collectors.toList());
-    }
-
-    private OAuth.Account getDefaultAccountInfo(List<OAuth.Account> accounts) {
-        if (StringUtils.isBlank(config.getTargetAccountId())) {
-            return getDefaultAccount(accounts);
+    private List<OAuth.Account> convetToAccounts(ArrayList accounts) {
+        List<OAuth.Account> accts = new ArrayList<>();
+        for (Object account : accounts) {
+            LinkedHashMap acct = (LinkedHashMap) account;
+            OAuth.Account acct1 = new OAuth.Account();
+            acct1.setAccountId((String) acct.get("account_id"));
+            acct1.setIsDefault(String.valueOf(acct.get("is_default")));
+            acct1.setAccountName((String) acct.get("account_name"));
+            acct1.setBaseUri((String) acct.get("base_uri"));
+            accts.add(acct1);
         }
 
-        return getAccountById(accounts);
+        return accts;
     }
 
-    private static OAuth.Account getDefaultAccount(List<OAuth.Account> accounts) {
-        for (OAuth.Account oauthAccount : accounts) {
-            if ("true".equals(oauthAccount.getIsDefault())) {
-                return oauthAccount;
-            }
+    private OAuth.Account getDefaultAccountInfo(List<OAuth.Account> accounts) throws Exception {
+
+        OAuth.Account account;
+
+        if (!TargetAccountId.isEmpty()) {
+            account = getAccountById(accounts);
+            if (account == null)
+                throw new Exception(ERROR_ACCOUNT_NOT_FOUND);
+        } else {
+            account = getDefaultAccount(accounts);
+        }
+
+        return account;
+    }
+
+    private OAuth.Account getDefaultAccount(List<OAuth.Account> accounts) {
+        for (OAuth.Account account : accounts) {
+            if (account.getIsDefault() == "true")
+                return account;
         }
         return null;
     }
 
     private OAuth.Account getAccountById(List<OAuth.Account> accounts) {
-        for (OAuth.Account oauthAccount : accounts) {
-            if (StringUtils.equals(oauthAccount.getAccountId(), config.getTargetAccountId())) {
-                return oauthAccount;
-            }
+
+        for (OAuth.Account account : accounts) {
+            if (account.getAccountId() == TargetAccountId)
+                return account;
         }
+
         return null;
     }
 }

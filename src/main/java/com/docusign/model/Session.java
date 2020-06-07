@@ -1,31 +1,47 @@
 package com.docusign.model;
 
 import lombok.Data;
-
-import java.io.Serializable;
-import java.util.List;
-
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.io.Serializable;
 
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION,
         proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Data
 public class Session implements Serializable {
-    private static final long serialVersionUID = 2695379118371574037L;
 
-    private String accountId;
-    private String accountName;
-    private String basePath;
-    private String envelopeId;
-    private String templateName;
-    private List<EnvelopeDocumentInfo> envelopeDocuments;
-    private String permissionProfileId;
-    private String permissionProfileName;
-    private AuthType authTypeSelected =  AuthType.AGC;
-    private boolean refreshToken = false;
+    public String accountId;
+    public String accountName;
+    public String basePath;
+
+    public Session() {
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    public String getBasePath() {
+        return basePath;
+    }
+
+    public void setBasePath(String basePath) {
+        this.basePath = basePath;
+    }
 }

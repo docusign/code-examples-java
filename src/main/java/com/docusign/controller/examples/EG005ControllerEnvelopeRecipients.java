@@ -1,56 +1,58 @@
 package com.docusign.controller.examples;
 
-import com.docusign.DSConfiguration;
 import com.docusign.esign.api.EnvelopesApi;
+import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-/**
- * List an envelope's recipients and their status.<br />
- * List the envelope's recipients, including their current status.
- */
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 @Controller
 @RequestMapping("/eg005")
-public class EG005ControllerEnvelopeRecipients extends AbstractController {
-
-    private final Session session;
-    private final User user;
-
+public class EG005ControllerEnvelopeRecipients extends EGController {
 
     @Autowired
-    public EG005ControllerEnvelopeRecipients(DSConfiguration config, Session session, User user) {
-        super(config, "eg005", "List envelope recipients");
-        this.session = session;
-        this.user = user;
+    HttpSession session;
+
+    @Override
+    protected void addSpecialAttributes(ModelMap model) {
+        model.addAttribute("envelopeOk", session.getAttribute("envelopeId") != null);
     }
 
     @Override
-    protected void onInitModel(WorkArguments args, ModelMap model) throws ApiException {
-        super.onInitModel(args, model);
-        model.addAttribute(MODEL_ENVELOPE_OK, StringUtils.isNotBlank(session.getEnvelopeId()));
+    protected String getEgName() {
+        return "eg005";
+    }
+
+    @Override
+    protected String getTitle() {
+        return "List envelope recipients";
+    }
+
+    @Override
+    protected String getResponseTitle() {
+        return "List envelope recipients result";
     }
 
     @Override
     // ***DS.snippet.0.start
-    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
+    protected Object doWork(WorkArguments args, ModelMap model,
+                            String accessToken, String basePath) throws ApiException {
+        // Data for this method
+        // accessToken    (argument)
+        // basePath       (argument)
+        String accountId = args.getAccountId();
+        String envelopeId = args.getEnvelopeId();
+
         // Step 1. get envelope recipients
-        EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
-        DoneExample.createDefault(title)
-                .withJsonObject(envelopesApi.listRecipients(session.getAccountId(), session.getEnvelopeId()))
-                .withMessage("Results from the EnvelopeRecipients::list method:")
-                .addToModel(model);
-        return DONE_EXAMPLE_PAGE;
+        ApiClient apiClient = new ApiClient(basePath);
+        apiClient.addDefaultHeader("Authorization", "Bearer " + accessToken);
+        EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
+        setMessage("Results from the EnvelopeRecipients::list method:");
+        return envelopesApi.listRecipients(accountId, envelopeId);
     }
     // ***DS.snippet.0.end
 }

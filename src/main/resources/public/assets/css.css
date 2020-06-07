@@ -67,16 +67,7 @@ pre.json-display {
   color: olive;
   }
 
-table, th, td {
-  background-color: #f4f4fb;
-  padding-left: 7px;
-  padding-right: 7px;
-  caption-side: top;
-}
 
-th {
-  border-bottom: 1px solid black;
-}
 
 
 /* From http://tobiasahlin.com/spinkit/ */

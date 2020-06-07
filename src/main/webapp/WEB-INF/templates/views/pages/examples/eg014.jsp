@@ -19,7 +19,7 @@
 </c:if>
 
 <p>API method used:
-    <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/esign-rest-api/reference/Envelopes/Envelopes/create">Envelopes::create</a>.
+    <a target='_blank' href="https://developers.docusign.com/esign-rest-api/reference/Envelopes/Envelopes/create">Envelopes::create</a>.
 </p>
 
 <p>
@@ -44,7 +44,7 @@
             <div class="form-group">
                 <label for="ccEmail">CC Email</label>
                 <input type="email" class="form-control" id="ccEmail" name="ccEmail"
-                       aria-describedby="emailHelp" placeholder="pat@example.com" required>
+                       aria-describedby="emailHelp" placeholder="pat@example.com" required
                 <small id="emailHelp" class="form-text text-muted">The email for the cc recipient must be different from the signer's email.</small>
             </div>
             <div class="form-group">
@@ -57,7 +57,7 @@
         </form>
     </c:when>
     <c:otherwise>
-        <p>Problem: please set the <strong>DS_PAYMENT_GATEWAY_ID</strong> value in the configuration file.</p>
+        <p>Problem: please set the <b>DS_PAYMENT_GATEWAY_ID</b> value in the configuration file.</p>
     </c:otherwise>
 </c:choose>
 
