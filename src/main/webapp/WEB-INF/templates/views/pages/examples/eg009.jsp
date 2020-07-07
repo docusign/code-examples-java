@@ -63,7 +63,7 @@
                        required>
             </div>
             <input type="hidden" name="_csrf" value="${csrfToken}">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-docu">Submit</button>
         </form>
     </c:when>
     <c:otherwise>
@@ -71,7 +71,7 @@
             Thank you.</p>
 
         <form class="eg" action="eg008" method="get">
-            <button type="submit" class="btn btn-primary">Continue</button>
+            <button type="submit" class="btn btn-docu">Continue</button>
         </form>
     </c:otherwise>
 </c:choose>

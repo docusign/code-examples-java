@@ -102,7 +102,7 @@ public class GlobalControllerAdvice {
             user.setAccessToken(details.getTokenValue());
 
             if (account.isEmpty()) {
-                account = Optional.of(getDefaultAccountInfo(getOAuthAccounts(oauth)));
+                account = Optional.ofNullable(getDefaultAccountInfo(getOAuthAccounts(oauth)));
             }
 
             OAuth.Account oauthAccount = account.orElseThrow(() -> new NoSuchElementException(ERROR_ACCOUNT_NOT_FOUND));
@@ -124,11 +124,14 @@ public class GlobalControllerAdvice {
     }
 
     private OAuth.Account getDefaultAccountInfo(List<OAuth.Account> accounts) {
-        if (StringUtils.isBlank(config.getTargetAccountId())) {
-            return getDefaultAccount(accounts);
+        String targetAccountId = config.getTargetAccountId();
+        if (StringUtils.isNotBlank(targetAccountId)) {
+            OAuth.Account account = getAccountById(accounts, targetAccountId);
+            if(account != null) {
+                return account;
+            }
         }
-
-        return getAccountById(accounts);
+        return getDefaultAccount(accounts);
     }
 
     private static OAuth.Account getDefaultAccount(List<OAuth.Account> accounts) {
@@ -140,9 +143,9 @@ public class GlobalControllerAdvice {
         return null;
     }
 
-    private OAuth.Account getAccountById(List<OAuth.Account> accounts) {
+    private static OAuth.Account getAccountById(List<OAuth.Account> accounts, String accountId) {
         for (OAuth.Account oauthAccount : accounts) {
-            if (StringUtils.equals(oauthAccount.getAccountId(), config.getTargetAccountId())) {
+            if (StringUtils.equals(oauthAccount.getAccountId(), accountId)) {
                 return oauthAccount;
             }
         }

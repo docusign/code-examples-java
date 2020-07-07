@@ -1,0 +1,39 @@
+{
+  "DS_SIGNER_NAME": "{SIGNER_NAME}",
+  "DS_SIGNER_EMAIL": "{SIGNER_EMAIL}",
+  "DS_APP_URL": "http://localhost:8080",
+  "DS_TARGET_ACCOUNT_ID": "{IMPERSONATED_USER_GUID}",
+
+  "Gateway_Name": "{DS_PAYMENT_GATEWAY_NAME}",
+  "Gateway_Account_Id": "{DS_PAYMENT_GATEWAY_ID}",
+  "Gateway_Display_Name": "{DS_PAYMENT_GATEWAY_DISPLAY_NAME}",
+
+  "authorization.code.grant.client.scope": "signature",
+  "authorization.code.grant.sso.redirect-url": "&type=acg",
+  "authorization.code.grant.client.client-id": "{INTEGRATION_ID}",
+  "authorization.code.grant.client.client-secret": "{INTEGRATION_SECRET}",
+  "authorization.code.grant.client.access-token-uri": "https://account-d.docusign.com/oauth/token",
+  "authorization.code.grant.client.user-authorization-uri": "https://account-d.docusign.com/oauth/auth?prompt=login",
+
+  "jwt.grant.sso.redirect-url": "&type=jwt",
+  "jwt.grant.client.scope": "signature impersonation",
+  "jwt.grant.client.base-url": "account-d.docusign.com",
+  "jwt.grant.client.client-id": "{JWT_API_ACCOUNT_ID}",
+  "jwt.grant.client.private-key-path": "src/main/resources/private.key",
+  "jwt.grant.client.impersonated-user-guid": "{JWT_USER_IMPERSONATED_GUID}",
+
+  "common.client.resource.user-info-uri": "https://account-d.docusign.com/oauth/userinfo",
+  "com.docusign.github.example-uri": "https://github.com/docusign/code-examples-java/blob/master/src/main/java/",
+  "com.docusign.documentation-path": "",
+
+  "server.tomcat.additional-tld-skip-patterns": "*jaxb*.jar",
+  "server.servlet.session.tracking-modes": "cookie",
+  "server.servlet.session.persistent": false,
+  "server.error.include-stacktrace": "always",
+  "server.error.whitelabel.enabled": false,
+
+  "spring.session.store-type": "none",
+  "spring.mvc.view.prefix": "/WEB-INF/templates/views/",
+  "spring.mvc.view.suffix": ".jsp",
+  "spring.jmx.enabled": false
+}

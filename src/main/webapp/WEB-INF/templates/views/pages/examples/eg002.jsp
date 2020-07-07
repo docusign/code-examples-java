@@ -47,7 +47,7 @@
                required>
     </div>
     <input type="hidden" name="_csrf" value="${csrfToken}">
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-docu">Submit</button>
 </form>
 
 <jsp:include page="../../partials/foot.jsp"/>

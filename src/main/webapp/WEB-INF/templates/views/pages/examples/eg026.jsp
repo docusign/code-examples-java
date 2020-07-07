@@ -50,7 +50,7 @@ with the eSignature REST API.
 <%--        </c:forEach>--%>
 <%--    </table>--%>
     <input type="hidden" name="_csrf" value="${csrfToken}">
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-docu">Submit</button>
 </form>
 
 <script type="text/javascript">

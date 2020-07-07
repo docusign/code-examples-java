@@ -49,7 +49,7 @@
                required >
     </div>
     <input type="hidden" name="csrfToken" value="${csrfToken}"/>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-docu">Submit</button>
 </form>
 
 

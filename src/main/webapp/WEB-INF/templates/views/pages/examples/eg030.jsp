@@ -76,7 +76,7 @@
                 </select>
             </div>
             <input type="hidden" name="_csrf" value="${csrfToken}">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-docu">Submit</button>
         </form>
     </c:when>
     <c:otherwise>
@@ -88,12 +88,12 @@
         </c:if>
         <c:if test="${empty listTemplates}">
             <form class="eg" action="eg008" method="get">
-                <button type="submit" class="btn btn-primary">Continue</button>
+                <button type="submit" class="btn btn-docu">Continue</button>
             </form>
         </c:if>
         <c:if test="${not empty listTemplates}">
             <form class="eg" action="eg024" method="get">
-                <button type="submit" class="btn btn-primary">Continue</button>
+                <button type="submit" class="btn btn-docu">Continue</button>
             </form>
         </c:if>
     </c:otherwise>

@@ -31,7 +31,7 @@
 
         <form class="eg" action="" method="post" data-busy="form">
             <input type="hidden" name="_csrf" value="${csrfToken}">
-            <button type="submit" class="btn btn-primary">Continue</button>
+            <button type="submit" class="btn btn-docu">Continue</button>
         </form>
     </c:when>
     <c:otherwise>
@@ -39,7 +39,7 @@
             Thank you.</p>
 
         <form class="eg" action="eg002" method="get">
-            <button type="submit" class="btn btn-primary">Continue</button>
+            <button type="submit" class="btn btn-docu">Continue</button>
         </form>
     </c:otherwise>
 </c:choose>
