@@ -20,7 +20,7 @@
 
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="/">DocuSign Example</a>
+    <a class="navbar-brand"  target="_blank" href="https://developers.docusign.com">DocuSign Developer</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -54,13 +54,12 @@
     </div>
 </nav>
 
-<div class="container">
-    <!-- The closing div is in foot.ejs -->
-    <c:if test="${locals.session.accountName != null}">
+
+    <!-- <c:if test="${locals.session.accountName != null}">
     <p>
         DocuSign Account: ${locals.session.accountName}.
     </p>
-    </c:if>
+    </c:if> -->
 
 
     <div class="col-md-12 feedback" id="feedback">
@@ -79,4 +78,13 @@
 
     <p id="download-continue" class="feedback"><a href="/">Continue</a></p>
 
-    <section id="content">
+    <c:choose>
+        <c:when test="${locals.user == null}">
+            <div class="container-full-bg">
+            <section id="content" style="margin-top:-60px!important; padding-top:30px!important;">
+        </c:when>
+        <c:otherwise>
+            <div class="container">
+            <section id="content">
+            </c:otherwise>
+    </c:choose>

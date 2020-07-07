@@ -3,14 +3,24 @@
 
 <c:if test="${locals.user == null}">
   <!-- IF not signed in -->
-  <div class="jumbotron">
-    <h1 class="display-4">Welcome!</h1>
-    <p class="Xlead">Welcome to the DocuSign Java Example Launcher
-      using OAuth2.</p>
-  </div>
+  <div>
+  <div class="jumbotron jumbotron-fluid"> <table>
+    <tbody>
+    <tr>
+    <td>
+      <h1 class="display-4">Java Launcher</h1>
+    <p class="Xlead">Welcome to the DocuSign Java examples using multiple OAuth flows (JWT and Authorization Code Grant).</p>
+    </td>
+    <td>
+        <img src="/assets/banner-code.png" />
+    </td>
+  </tr>
+  </tbody>
+  </table>
+</div>
 </c:if>
 
-<div id="index-page">
+<div class="container" style="margin-top: 40px" id="index-page">
   <h2>Welcome</h2>
   <p>This launcher both demonstrates use of common OAuth2 grant flows and multiple usage examples from the DocuSign eSignature REST API.</p>
     <c:if test="${showDoc == true}">

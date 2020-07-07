@@ -30,6 +30,28 @@ public class DoneExample {
     private Iterable<DiffField> diff;
 
 
+
+    /**
+     * Creates DoneExample object with title. This method initializes title.
+     * @param String title
+     * @return created instance of this class
+     */
+    public DoneExample withTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    /**
+     * Creates DoneExample object with name. This method initializes name.
+     * @param String name
+     * @return created instance of this class
+     */
+    public DoneExample withName(String name) {
+        this.name = name;
+        return this;
+    }
+
+
     /**
      * Creates default DoneExample object. This method initializes title and
      * name members by the same value.
@@ -40,6 +62,26 @@ public class DoneExample {
         return new DoneExample()
                 .withTitle(title)
                 .withName(title);
+    }
+
+  /**
+     * Creates DoneExample object with message. This method initializes message.
+     * @param String message
+     * @return created instance of this class
+     */
+    public DoneExample withMessage(String message) {
+        this.message = message;
+        return this;
+    }
+
+    /**
+     * Creates DoneExample object with stackTrace. This method initializes error stack trace.
+     * @param StackTraceElement[] stackTrace
+     * @return created instance of this class
+     */
+    public DoneExample withStackTrace(StackTraceElement[] stackTrace) {
+        this.stackTrace = stackTrace;
+        return this;
     }
 
     /**
