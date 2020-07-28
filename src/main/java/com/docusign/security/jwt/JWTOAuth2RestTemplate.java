@@ -5,10 +5,12 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.client.auth.OAuth;
 import com.docusign.esign.client.auth.OAuth.OAuthToken;
 import com.docusign.exception.LauncherException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
@@ -17,6 +19,7 @@ import org.springframework.security.oauth2.client.http.AccessTokenRequiredExcept
 import org.springframework.security.oauth2.client.resource.UserRedirectRequiredException;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.web.servlet.view.RedirectView;
 
 public class JWTOAuth2RestTemplate extends OAuth2RestTemplate {
 
@@ -44,16 +47,20 @@ public class JWTOAuth2RestTemplate extends OAuth2RestTemplate {
                 context.setAccessToken(accessToken);
             } catch (Exception e) {
                 context.setAccessToken(null);
-                throw e;
+                try {
+                    throw e;
+                } catch (LauncherException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
         return accessToken;
     }
 
-    private OAuth2AccessToken accessToken() {
+    private OAuth2AccessToken accessToken() throws LauncherException {
         logger.info("Fetching an access token via JWT grant...");
         List<String> scopes = new ArrayList<>();
-        // Only signature scope is needed. Impersonation scope is implied.
+// Only signature scope is needed. Impersonation scope is implied.
         scopes.add(OAuth.Scope_SIGNATURE);
         byte[] privateKeyBytes;
         try {
@@ -71,11 +78,32 @@ public class JWTOAuth2RestTemplate extends OAuth2RestTemplate {
                     privateKeyBytes,
                     TOKEN_EXPIRATION_IN_SECONDS);
         } catch (IOException | ApiException e) {
+// Special handling for consent_required
+            String message = e.getMessage();
+            String consent_url = "";
+            if (message != null && message.contains("consent_required")) {
+                consent_url = String.format("https://%s/oauth/auth?prompt=login&response_type=code&scope=%s" +
+                    "&client_id=%s" +
+                    "&redirect_uri=%s",
+                    resource.getBaseUrl(),
+                    "signature%20impersonation",
+                    resource.getClientId(),
+                    "http://localhost:8080/login%26type%3Djwt");
+                System.err.println("\nC O N S E N T   R E Q U I R E D" +
+                        "\nAsk the user who will be impersonated to run the following url: " +
+                        "\n" + consent_url +
+                        "\n\nIt will ask the user to login and to approve access by your application." +
+                        "\nAlternatively, an Administrator can use Organization Administration to" +
+                        "\npre-approve one or more users.");
+                        throw new AccessTokenRequiredException(consent_url, resource);
+            }
+
             throw new AccessTokenRequiredException(e.getMessage(), resource);
+
         }
         apiClient.setAccessToken(oAuthToken.getAccessToken(), oAuthToken.getExpiresIn());
         logger.info("Done. Continuing...");
-       return convert(oAuthToken);
+        return convert(oAuthToken);
     }
 
     private static OAuth2AccessToken convert(OAuthToken oAuthToken) {
