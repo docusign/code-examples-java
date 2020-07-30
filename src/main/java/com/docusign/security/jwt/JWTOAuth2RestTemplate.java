@@ -19,7 +19,7 @@ import org.springframework.security.oauth2.client.http.AccessTokenRequiredExcept
 import org.springframework.security.oauth2.client.resource.UserRedirectRequiredException;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.web.servlet.view.RedirectView;
+
 
 public class JWTOAuth2RestTemplate extends OAuth2RestTemplate {
 
@@ -68,6 +68,7 @@ public class JWTOAuth2RestTemplate extends OAuth2RestTemplate {
         } catch (LauncherException e) {
             throw new AccessTokenRequiredException(e.getMessage(), resource);
         }
+
         apiClient.setOAuthBasePath(resource.getBaseUrl());
         OAuthToken oAuthToken;
         try {
@@ -90,7 +91,7 @@ public class JWTOAuth2RestTemplate extends OAuth2RestTemplate {
                     resource.getClientId(),
                     "http://localhost:8080/login%26type%3Djwt");
                 System.err.println("\nC O N S E N T   R E Q U I R E D" +
-                        "\nAsk the user who will be impersonated to run the following url: " +
+                        "\nAsk the user who will be impersonated to run the following URL: " +
                         "\n" + consent_url +
                         "\n\nIt will ask the user to login and to approve access by your application." +
                         "\nAlternatively, an Administrator can use Organization Administration to" +

@@ -16,7 +16,7 @@
 
 <p><em>Error information: </em>${message}</p>
 
-<p>Please check your account configuration. If you are unable to resolve the problem, file an issue on github.</p>
+<p>Please check your account configuration. If you are unable to resolve the problem, <a href="https://github.com/docusign/code-examples-java/issues/new" target="_blank" rel="nofollow noopener noreferrer">open a new issue on GitHub</a>.</p>
 
 
 <p><a href="/">Continue</a></p>
