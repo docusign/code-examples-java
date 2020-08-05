@@ -2,6 +2,7 @@ package com.docusign.controller.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.esign.api.EnvelopesApi;
+import com.docusign.esign.api.TemplatesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
@@ -27,10 +28,8 @@ import java.util.Arrays;
 @RequestMapping("/eg017")
 public class EG017ControllerSetTemplateTabValues extends AbstractController {
 
-    private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_salary.pdf";
-    private static final String DOCUMENT_NAME = "Lorem Ipsum";
-    private static final int ANCHOR_OFFSET_Y = 20;
-    private static final int ANCHOR_OFFSET_X = 10;
+
+    private static final String MODEL_LIST_TEMPLATE = "listTemplates";
     private static final String SIGNER_CLIENT_ID = "1000";
 
     private final Session session;
@@ -45,6 +44,15 @@ public class EG017ControllerSetTemplateTabValues extends AbstractController {
     }
 
     @Override
+    protected void onInitModel(WorkArguments args, ModelMap model) throws ApiException {
+        super.onInitModel(args, model);
+        ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
+        TemplatesApi templatesApi = new TemplatesApi(apiClient);
+        EnvelopeTemplateResults templates = templatesApi.listTemplates(session.getAccountId());
+        model.addAttribute(MODEL_LIST_TEMPLATE, templates.getEnvelopeTemplates());
+    }
+
+    @Override
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws ApiException, IOException {
         String signerName = args.getSignerName();
@@ -55,7 +63,7 @@ public class EG017ControllerSetTemplateTabValues extends AbstractController {
         String templateId = args.getTemplateId();
 
         // Step 1. Create the envelope definition
-        EnvelopeDefinition envelope = makeEnvelope(signerEmail, signerName, ccName, ccEmail, templateId);
+        EnvelopeDefinition envelope = makeEnvelope(signerEmail, signerName, ccEmail,  ccName, templateId);
 
         // Step 2. Call DocuSign to create the envelope
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());

@@ -208,11 +208,18 @@
     API method used:
     <a target ='_blank' href="https://developers.docusign.com/esign-rest-api/reference/Envelopes/Envelopes/create">Envelopes::create</a>.
   </p>
-  
-    <h4 id="example024">24. Creating a Permission Profile</h4>
+
+  <h2>Permissions</h2>
+  <h4 id="example024">24. <a href="eg024">Create a new permission profile</a></h4>
+
   <p>
-    Coming Soon
+    Creating new permission profile.
   </p>
+  <p>
+    API method used:
+    <a target='_blank' href="https://developers.docusign.com/esign-rest-api/reference/Accounts/AccountPermissionProfiles/create">AccountPermissionProfiles::create</a>.
+  </p>
+
  
   <h4 id="example025">25. <a href="eg025">Setting a permission profile</a></h4>
   <p>This example allows you to set a permission profile on an existing user group.</p>
@@ -220,11 +227,16 @@
     <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/esign-rest-api/reference/UserGroups/Groups/update">Groups::update</a>.
   </p>
 
-    <h4 id="example026">26. Modify a Permission Profile</h4>
+  <h4 id="example026">26. <a href="eg026">Updating individual permission profile settings</a></h4>
+
   <p>
-    Coming Soon
+    This example will update individual permission settings for a given account.
   </p>
-  
+  <p>
+    API method used:
+    <a target='_blank' href="https://developers.docusign.com/esign-rest-api/reference/Accounts/AccountPermissionProfiles/update">AccountPermissionProfiles::update</a>.
+  </p>
+
   <h4 id="example027">27. <a href="eg027">Deleting a permission profile</a></h4>
   <p>This example lists all available permissions profiles and allows you to delete any without associated users. Please note that you cannot remove "Everyone" nor "Administrator" permission profiles.</p>
   <p>API method used:
@@ -249,10 +261,23 @@
     <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/esign-rest-api/reference/Envelopes/Envelopes/create">Envelopes::create</a>.
   </p>
 
-  <h4 id="example031">31. Bulk sending envelopes to multiple recipients</h4>
+  <h2>Bulk operations</h2>
+
+  <h4 id="example031">31. <a href="eg031">Bulk sending envelopes to multiple recipients</a></h4>
+
   <p>
-	Coming Soon
+    This example will show you how to bulk send envelopes to multiple recipients.
   </p>
+  <p>
+    API methods used:
+    <a target="_blank" href="https://developers.docusign.com/esign-rest-api/reference/Envelopes/EnvelopeRecipients/create">EnvelopeRecipients::create</a>,
+    <a target="_blank" href="https://developers.docusign.com/esign-rest-api/reference/Envelopes/Envelopes/create">Envelopes::create</a>,
+    <a target="_blank" href="https://developers.docusign.com/esign-rest-api/reference/BulkEnvelopes/BulkEnvelopes/get">BulkEnvelopes::get</a>,
+    <a target="_blank" href="https://developers.docusign.com/esign-rest-api/reference/Envelopes/EnvelopeCustomFields/create">EnvelopeCustomFields::create</a>,
+    <a target="_blank" href="https://developers.docusign.com/esign-rest-api/reference/BulkEnvelopes/BulkSend/createBulkSendList">BulkSend::createBulkSendList</a>
+    <a target="_blank" href="https://developers.docusign.com/esign-rest-api/reference/Envelopes/EnvelopeRecipients/create">EnvelopeRecipients::create</a>.
+  </p>
+
 </div>
 
 <!-- anchor-js is only for the index page -->

@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/eg016")
 public class EG016ControllerSetTabValues extends AbstractController {
 
-    private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_salary.pdf";
+    private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_salary.docx";
     private static final String DOCUMENT_NAME = "Lorem Ipsum";
     private static final int ANCHOR_OFFSET_Y = 20;
     private static final int ANCHOR_OFFSET_X = 10;
@@ -157,7 +157,7 @@ public class EG016ControllerSetTabValues extends AbstractController {
         textSalary.setFont("helvetica");
         textSalary.setFontSize("size11");
         textSalary.setBold("true");
-        textSalary.setValue(String.format("$ %,.2d", salary));
+        textSalary.setValue(String.format("$ %d", salary));
         textSalary.setLocked("true");
         textSalary.setTabId("salary");
         textSalary.setTabLabel("salary");
