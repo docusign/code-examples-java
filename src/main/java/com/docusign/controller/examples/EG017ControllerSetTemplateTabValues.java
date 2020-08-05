@@ -118,7 +118,7 @@ public class EG017ControllerSetTemplateTabValues extends AbstractController {
         return viewRequest;
     }
 
-    private static EnvelopeDefinition makeEnvelope(String signerEmail, String signerName, String ccEmail, String ccName, String templateId) throws IOException {
+    private static EnvelopeDefinition makeEnvelope(String signerEmail, String signerName, String ccEmail, String ccName, String templateId){
         // Create a signer recipient to sign the document, identified by name and email
         // We set the clientUserId to enable embedded signing for the recipient
 
