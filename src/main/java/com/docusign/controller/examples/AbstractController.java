@@ -41,7 +41,7 @@ public abstract class AbstractController {
     protected static final String BEARER_AUTHENTICATION = "Bearer ";
     protected static final String DONE_EXAMPLE_PAGE = "pages/example_done";
     protected static final String DONE_EXAMPLE_PAGE_COMPARE = "pages/example_done_compare";
-    protected static final String ERROR_PAGE = "error.jsp";
+    protected static final String ERROR_PAGE = "error";
 
     @Autowired
     private OAuth2ClientContext oAuth2ClientContext;
@@ -130,8 +130,8 @@ public abstract class AbstractController {
     protected static ApiClient createApiClient(String basePath, String userAccessToken) {
         ApiClient apiClient = new ApiClient(basePath);
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + userAccessToken);
-        // it is a workaround to NPE, see DSPW-61
-        apiClient.addAuthorization("docusignAccessCode", null);
+//        // it is a workaround to NPE, see DSPW-61
+//        apiClient.addAuthorization("docusignAccessCode", null);
         return apiClient;
     }
 

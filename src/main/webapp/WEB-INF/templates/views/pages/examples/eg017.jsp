@@ -23,30 +23,43 @@
 <c:choose>
     <c:when test="${not empty listTemplates}">
         <p>The template you created via example 8 will be used.</p>
+
         <form class="eg" action="" method="post" data-busy="form">
             <div class="form-group">
-                <label for="signer_email">Signer Email</label>
-                <input type="email" class="form-control" id="signer_email" name="signer_email"
+                <label for="templateId">Envelope template</label> <select
+                    id="templateId" name="templateId" class="form-control">
+                <c:forEach items="${listTemplates}" var="template">
+                    <option value="${template.templateId}">${template.name}</option>
+                </c:forEach>
+            </select>
+            </div>
+            <div class="form-group">
+                <label for="signerEmail">Signer Email</label>
+                <input type="email" class="form-control" id="signerEmail" name="signerEmail"
                        aria-describedby="emailHelp" placeholder="pat@example.com" required
-                       value="${signerEmail}">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                       value="${locals.dsConfig.signerEmail}">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.
+                </small>
             </div>
             <div class="form-group">
-                <label for="signer_name">Signer Name</label>
-                <input type="text" class="form-control" id="signer_name" placeholder="Pat Johnson" name="signer_name"
-                       value="${signerName}" required>
+                <label for="signerName">Signer Name</label>
+                <input type="text" class="form-control" id="signerName" placeholder="Pat Johnson" name="signerName"
+                       value="${locals.dsConfig.signerName}" required>
             </div>
             <div class="form-group">
-                <label for="cc_email">CC Email</label>
-                <input type="email" class="form-control" id="cc_email" name="cc_email"
-                       aria-describedby="ccHelp" placeholder="pat@example.com" required/>
-                <small id="ccHelp" class="form-text text-muted">The email for the cc recipient must be different from the signer's email.</small>
+                <label for="ccEmail">CC Email</label>
+                <input type="email" class="form-control" id="ccEmail" name="ccEmail"
+                       aria-describedby="emailHelp" placeholder="pat@example.com" required>
+                <small id="emailHelp" class="form-text text-muted">The email and/or name for the cc recipient must be
+                    different from the signer.
+                </small>
             </div>
             <div class="form-group">
-                <label for="cc_name">CC Name</label>
-                <input type="text" class="form-control" id="cc_name" placeholder="Pat Johnson" name="cc_name" required />
+                <label for="ccName">CC Name</label>
+                <input type="text" class="form-control" id="ccName" placeholder="Pat Johnson" name="ccName"
+                       required>
             </div>
-            <input type="hidden" name="csrf_token" value="${csrfToken}"/>
+            <input type="hidden" name="_csrf" value="${csrfToken}">
             <button type="submit" class="btn btn-docu">Submit</button>
         </form>
 
@@ -62,3 +75,4 @@
 </c:choose>
 
 <jsp:include page="../../partials/foot.jsp"/>
+
