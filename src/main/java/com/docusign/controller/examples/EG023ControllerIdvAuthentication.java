@@ -131,8 +131,7 @@ public class EG023ControllerIdvAuthentication extends AbstractController {
         recipients.setSigners(Collections.singletonList(signer1));
 
         envelopeDefinition.setRecipients(recipients);
-        //TODO: Uncomment
-        //envelopeDefinition.setDocuments(Collections.singletonList(doc1));
+        envelopeDefinition.setDocuments(Collections.singletonList(doc1));
         return envelopeDefinition;
     }
 }
