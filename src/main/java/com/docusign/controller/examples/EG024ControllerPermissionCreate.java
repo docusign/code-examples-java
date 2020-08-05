@@ -1,5 +1,5 @@
 package com.docusign.controller.examples;
-
+import java.util.Objects;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -8,15 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import com.docusign.model.AccountRoleSettingsPatch;
 import com.docusign.DSConfiguration;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.client.ApiException;
+import com.docusign.esign.model.AccountRoleSettings;
 import com.docusign.esign.model.PermissionProfile;
 import com.docusign.model.DoneExample;
 import com.docusign.model.Session;
 import com.docusign.model.User;
-
+import com.google.gson.Gson;
 /**
  * Permission profiles are collections of account settings that determine the
  * behavior and actions available to the user groups to which they're applied.
@@ -42,11 +43,15 @@ public class EG024ControllerPermissionCreate extends AbstractController{
             throws ApiException, IOException {
         // Step 2. Construct your API headers
         AccountsApi accountsApi = createAccountsApi(session.getBasePath(), user.getAccessToken());
-
+        AccountRoleSettings settings = DsModelUtils.createDefaultRoleSettings();
         // Step 3. Construct your request body
+        Gson gson = new Gson();
+        AccountRoleSettings newSettings = gson.fromJson(gson.toJson(settings), AccountRoleSettingsPatch.class);
+        // we're casting as the overload class type and filling in the defualt setting for sending version to fix a gap in the swagger spec.
+        ((AccountRoleSettingsPatch) newSettings).signingUiVersion("1");
         PermissionProfile profile = new PermissionProfile()
                 .permissionProfileName(args.getPermissionProfileName())
-                .settings(DsModelUtils.createDefaultRoleSettings());
+                .settings(newSettings);
                 
         // Step 4. Call the eSignature REST API
         PermissionProfile newProfile = accountsApi.createPermissionProfile(session.getAccountId(), profile);
