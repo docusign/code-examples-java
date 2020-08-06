@@ -31,8 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/eg020")
 public class EG020ControllerSmsAuthentication extends AbstractController {
-
-    private static final List<String> RECIPIENT_PHONE_NUMBERS = List.of("415-555-1212", "415-555-3434");
+    // For List.of you could even do groups of numbers such as List.of("415-555-1212", "415-555-3434");
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
     private static final String DOCUMENT_NAME = "Lorem";
 
@@ -57,7 +56,7 @@ public class EG020ControllerSmsAuthentication extends AbstractController {
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
         // Step 3: Construct your envelope JSON body
-        EnvelopeDefinition envelope = createEnvelope(args.getSignerName(), args.getSignerEmail());
+        EnvelopeDefinition envelope = createEnvelope(args.getSignerName(), args.getSignerEmail(), args.getPhoneNumber());
 
         // Step 4: Call the eSignature REST API
         EnvelopeSummary results = envelopesApi.createEnvelope(accountId, envelope);
@@ -72,7 +71,7 @@ public class EG020ControllerSmsAuthentication extends AbstractController {
         return DONE_EXAMPLE_PAGE;
     }
 
-    private static EnvelopeDefinition createEnvelope(String signerName, String signerEmail) throws IOException {
+    private static EnvelopeDefinition createEnvelope(String signerName, String signerEmail, String phoneNumber) throws IOException {
         Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
 
         SignHere signHere = new SignHere();
@@ -85,7 +84,7 @@ public class EG020ControllerSmsAuthentication extends AbstractController {
         // A 1- to 8-digit integer or 32-character GUID to match recipient IDs on your own systems.
         // This value is referenced in the Tabs element below to assign tabs on a per-recipient basis.
         signHere.setRecipientId("1");
-
+        List<String> RECIPIENT_PHONE_NUMBERS = List.of(phoneNumber);
         RecipientSMSAuthentication smsAuth = new RecipientSMSAuthentication();
         smsAuth.setSenderProvidedNumbers(RECIPIENT_PHONE_NUMBERS);
 

@@ -164,12 +164,12 @@ $ java -Dspring.profiles.active=dev -jar code-examples-java-1.0-SNAPSHOT.war
 
 ### IntelliJ Ultimate installation
 
-See the [IntelliJ Ultimate instructions](https://github.com/docusign/eg-03-java-auth-code-grant/blob/master/docs/Readme_IntelliJ_Ultimate.md).
+See the [IntelliJ Ultimate instructions](https://github.com/docusign/code-examples-java/blob/master/docs/Readme_IntelliJ_Ultimate.md).
 
 ## Configure the example
 
 Configure the example via the properties file:
-`eg-03-java-auth-code-grant/src/main/resources/application-dev.properties`.
+`code-examples-java/src/main/resources/application-dev.properties`.
 
 Add the client id, secret, signer name and email to the file.
 Also add the URL that the application will use (the **DS_APP_URL** setting).
@@ -184,7 +184,7 @@ To use the payments example, create a
 test payments gateway for your developer sandbox account.
 
 See the
-[PAYMENTS_INSTALLATION.md](https://github.com/docusign/eg-03-java-auth-code-grant/blob/master/PAYMENTS_INSTALLATION.md)
+[PAYMENTS_INSTALLATION.md](https://github.com/docusign/code-examples-java/blob/master/PAYMENTS_INSTALLATION.md)
 file for instructions.
 
 Then add the payment gateway account id to the **application.properties** file.
