@@ -113,7 +113,9 @@ public class EG026ControllerPermissionChangeSingleSetting extends AbstractContro
         // Change this value back to: gson.fromJson(gson.toJson(settings),
         // AccountRoleSettings.class);
         // as soon as the signinguiversion is added back to the swagger spec.
-        AccountRoleSettings newSettings = gson.fromJson(gson.toJson(settings), AccountRoleSettingsPatch.class);
+        // Also change the type back from AccountRoleSettingsPatch to AccountRoleSettings
+        AccountRoleSettingsPatch newSettings = gson.fromJson(gson.toJson(settings), AccountRoleSettingsPatch.class);
+        newSettings.signingUiVersion("1");
         Random random = new Random(System.currentTimeMillis());
 
         return newSettings.canCreateWorkspaces(randomBool(random)).allowEnvelopeSending(randomBool(random))
