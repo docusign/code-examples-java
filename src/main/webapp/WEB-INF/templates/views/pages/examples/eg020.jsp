@@ -18,6 +18,11 @@
 
 <form class="eg" action="" method="post" data-busy="form">
     <div class="form-group">
+        <label for="phoneNumber">Signer SMS Phone Number</label>
+        <input type="text" class="form-control" id="phoneNumber" placeholder="415-555-1212" name="phoneNumber"
+               value="" required>
+    </div>
+    <div class="form-group">
         <label for="signerEmail">Signer Email</label>
         <input type="email" class="form-control" id="signerEmail" name="signerEmail"
                aria-describedby="emailHelp" placeholder="pat@example.com" required
@@ -29,6 +34,7 @@
         <input type="text" class="form-control" id="signerName" placeholder="Pat Johnson" name="signerName"
                value="${locals.dsConfig.signerName}" required>
     </div>
+
     <input type="hidden" name="_csrf" value="${csrfToken}">
     <button type="submit" class="btn btn-docu">Submit</button>
 </form>

@@ -35,4 +35,5 @@ public class WorkArguments {
     private String profileId;
     private String groupId;
     private String permissionProfileName;
+    private String phoneNumber;
 }
