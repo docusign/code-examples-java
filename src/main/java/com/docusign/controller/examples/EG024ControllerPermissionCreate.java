@@ -41,7 +41,7 @@ public class EG024ControllerPermissionCreate extends AbstractController{
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response)
             throws ApiException, IOException {
-        
+
         // Step 2. Construct your API headers
         AccountsApi accountsApi = createAccountsApi(session.getBasePath(), user.getAccessToken());
 
@@ -49,8 +49,8 @@ public class EG024ControllerPermissionCreate extends AbstractController{
         // We're Overloading the AccountSettings class with AccountSettingsPatch to include the signingUIVersion which is missing in the swagger spec at this time.
         Gson gson = new Gson();
         AccountRoleSettings settings = DsModelUtils.createDefaultRoleSettings();
-        AccountRoleSettings newSettings = gson.fromJson(gson.toJson(settings), AccountRoleSettingsPatch.class);
-        ((AccountRoleSettingsPatch) newSettings).signingUiVersion("1");
+        AccountRoleSettingsPatch newSettings = gson.fromJson(gson.toJson(settings), AccountRoleSettingsPatch.class);
+        newSettings.signingUiVersion("1");
         PermissionProfile profile = new PermissionProfile()
                 .permissionProfileName(args.getPermissionProfileName())
                 .settings(newSettings);
