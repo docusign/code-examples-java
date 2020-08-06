@@ -1,6 +1,6 @@
 # Java Launcher Code Examples
 
-### Github repo: [code-examples-java](./)
+### Github repo: code-examples-java
 ## Introduction
 This repo is a Java Spring Boot application that demonstrates:
 
