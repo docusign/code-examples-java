@@ -20,7 +20,7 @@
         <java.version>11</java.version>
         <oauth2.version>2.1.1.RELEASE</oauth2.version>
         <commonsio.version>2.6</commonsio.version>
-        <docusign.version>3.6.0</docusign.version>
+        <docusign.version>3.7.0-BETA</docusign.version>
     </properties>
 
     <dependencies>
