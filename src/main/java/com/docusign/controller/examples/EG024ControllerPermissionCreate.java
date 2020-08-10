@@ -46,7 +46,7 @@ public class EG024ControllerPermissionCreate extends AbstractController{
         AccountsApi accountsApi = createAccountsApi(session.getBasePath(), user.getAccessToken());
 
         // Step 3. Construct your request body
-        // We're Overloading the AccountSettings class with AccountSettingsPatch to include the signingUIVersion which is missing in the swagger spec at this time.
+        // We're extending the AccountSettings class with AccountSettingsPatch to include the signingUIVersion which is missing in the swagger spec at this time.
         Gson gson = new Gson();
         AccountRoleSettings settings = DsModelUtils.createDefaultRoleSettings();
         AccountRoleSettingsPatch newSettings = gson.fromJson(gson.toJson(settings), AccountRoleSettingsPatch.class);
