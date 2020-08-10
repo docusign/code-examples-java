@@ -130,8 +130,7 @@ public abstract class AbstractController {
     protected static ApiClient createApiClient(String basePath, String userAccessToken) {
         ApiClient apiClient = new ApiClient(basePath);
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + userAccessToken);
-       // it is a workaround to NPE that occurs on versions before 3.7.0-BETA
-        apiClient.addAuthorization("docusignAccessCode", null);
+
         return apiClient;
     }
 
