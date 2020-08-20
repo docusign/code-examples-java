@@ -62,23 +62,23 @@ public class EG017ControllerSetTemplateTabValues extends AbstractController {
         String ccEmail = args.getCcEmail();
         String templateId = args.getTemplateId();
 
-        // Step 1. Create the envelope definition
+
         EnvelopeDefinition envelope = makeEnvelope(signerEmail, signerName, ccEmail,  ccName, templateId);
 
-        // Step 2. Call DocuSign to create the envelope
+        // Step 2. Construct your API headers
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
+
+        // Step 5. Call the eSignature REST API
         EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
 
         String envelopeId = envelopeSummary.getEnvelopeId();
         session.setEnvelopeId(envelopeId);
 
-        // Step 3. create the recipient view, the Signing Ceremony
+        // Step 6. Create the view request
         RecipientViewRequest viewRequest = makeRecipientViewRequest(signerEmail, signerName);
         ViewUrl viewUrl = envelopesApi.createRecipientView(accountId, envelopeId, viewRequest);
 
-        // Step 4. Redirect the user to the Signing Ceremony
-        // Don't use an iFrame!
         // State can be stored/recovered using the framework's session or a
         // query parameter on the returnUrl (see the makeRecipientViewRequest method)
         return new RedirectView(viewUrl.getUrl());
@@ -118,10 +118,12 @@ public class EG017ControllerSetTemplateTabValues extends AbstractController {
         return viewRequest;
     }
 
+    // Step 4. Construct your request body
     private static EnvelopeDefinition makeEnvelope(String signerEmail, String signerName, String ccEmail, String ccName, String templateId){
         // Create a signer recipient to sign the document, identified by name and email
         // We set the clientUserId to enable embedded signing for the recipient
 
+        // Step 3. Create tabs and CustomFields
         List list1 = new List();
         list1.setValue("green");
         list1.setDocumentId("1");

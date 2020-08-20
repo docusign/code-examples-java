@@ -50,23 +50,23 @@ public class EG016ControllerSetTabValues extends AbstractController {
         String signerEmail = args.getSignerEmail();
         String accountId = session.getAccountId();
 
-        // Step 1. Create the envelope definition
+
         EnvelopeDefinition envelope = makeEnvelope(signerEmail, signerName);
 
-        // Step 2. Call DocuSign to create the envelope
+        // Step 2. Construct your API headers
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
+
+        // Step 5. Call the eSignature REST API
         EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
 
         String envelopeId = envelopeSummary.getEnvelopeId();
         session.setEnvelopeId(envelopeId);
 
-        // Step 3. create the recipient view, the Signing Ceremony
+        // Step 6. Create the view request
         RecipientViewRequest viewRequest = makeRecipientViewRequest(signerEmail, signerName);
         ViewUrl viewUrl = envelopesApi.createRecipientView(accountId, envelopeId, viewRequest);
 
-        // Step 4. Redirect the user to the Signing Ceremony
-        // Don't use an iFrame!
         // State can be stored/recovered using the framework's session or a
         // query parameter on the returnUrl (see the makeRecipientViewRequest method)
         return new RedirectView(viewUrl.getUrl());
@@ -106,6 +106,7 @@ public class EG016ControllerSetTabValues extends AbstractController {
         return viewRequest;
     }
 
+    // Step 4. Construct your request body
     private static EnvelopeDefinition makeEnvelope(String signerEmail, String signerName) throws IOException {
         // Create a signer recipient to sign the document, identified by name and email
         // We set the clientUserId to enable embedded signing for the recipient
@@ -115,6 +116,7 @@ public class EG016ControllerSetTabValues extends AbstractController {
         signer.clientUserId(SIGNER_CLIENT_ID);
         signer.recipientId("1");
 
+        // Step 3. Create tabs and CustomFields
         SignHere signHere = new SignHere();
         signHere.setAnchorString("/sn1");
         signHere.setAnchorUnits("pixels");
@@ -176,7 +178,6 @@ public class EG016ControllerSetTabValues extends AbstractController {
         tabs.setTextTabs(Arrays.asList(textLegal, textFamiliar, textSalary));
 
         signer.setTabs(tabs);
-
 
         // Add the recipient to the envelope object
         Recipients recipients = new Recipients();
