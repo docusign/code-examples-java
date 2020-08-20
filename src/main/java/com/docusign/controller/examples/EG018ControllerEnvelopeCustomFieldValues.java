@@ -43,10 +43,13 @@ public class EG018ControllerEnvelopeCustomFieldValues extends AbstractController
     @Override
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
-        // Step 1. get envelope recipients
+        // Step 2. Construct your API headers
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
         DoneExample.createDefault(title)
-                .withJsonObject(envelopesApi.listCustomFields(session.getAccountId(), session.getEnvelopeId()))
+                .withJsonObject(
+                        // Step 3. Call the eSignature REST API
+                        envelopesApi.listCustomFields(session.getAccountId(), session.getEnvelopeId())
+                )
                 .withMessage("Results from the Envelope::GetFormData method:")
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
