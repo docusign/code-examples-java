@@ -20,6 +20,22 @@
 </div>
 </c:if>
 
+
+
+<c:if test="${locals.dsConfig.quickstart == 'true' && locals.user == null}">
+
+  <%
+
+
+        // New location to be redirected
+        String site = new String("/eg001");
+        response.setStatus(response.SC_MOVED_TEMPORARILY);
+        response.setHeader("Location", site);
+   %>
+</c:if>
+
+
+
 <div class="container" style="margin-top: 40px" id="index-page">
   <h2>Welcome</h2>
   <p>This launcher both demonstrates use of common OAuth2 grant flows and multiple usage examples from the DocuSign eSignature REST API.</p>
