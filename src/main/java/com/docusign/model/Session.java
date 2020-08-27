@@ -28,4 +28,5 @@ public class Session implements Serializable {
     private String permissionProfileName;
     private AuthType authTypeSelected =  AuthType.AGC;
     private boolean refreshToken = false;
+
 }
