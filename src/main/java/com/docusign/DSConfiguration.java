@@ -36,6 +36,11 @@ public class DSConfiguration {
     @Value("${Gateway_Display_Name}")
     private String gatewayDisplayName;
 
+    @Value("${quickstart:{quickstart}}")
+    private String quickstart;
+
+
+
     public String getDsReturnUrl() {
         return appUrl + "/ds-return";
     }
@@ -43,4 +48,6 @@ public class DSConfiguration {
     public String getDsPingUrl() {
         return appUrl + "/";
     }
+
+
 }
