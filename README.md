@@ -146,7 +146,8 @@ When the token expires, it updates automatically.
 
 ### Short installation instructions
 * Download or clone this repository.
-* The project includes a Maven pom file.
+* The project includes a Maven pom file.   
+
 **Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip the next step as it was automatically performed for you.**
 * Configure the project by overriding necessary properties from the `src\main\resources\application.example.json` and saving this file as `application.json` file. **Don't add this file into the Git index.**.
 * Add VM argument `-Dspring.profiles.active=dev` to your IDE
