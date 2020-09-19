@@ -39,3 +39,7 @@ hs_err_pid*
 private.key
 application.properties
 /target/
+src/main/resources/application.json
+
+# according to gitignore.io this shouldnt be shared
+.factorypath

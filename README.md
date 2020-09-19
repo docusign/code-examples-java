@@ -161,6 +161,20 @@ Run:
 $ cd target
 $ java -Dspring.profiles.active=dev -jar code-examples-java-1.0-SNAPSHOT.war
 ```
+### Eclipse instructions
+* Download or clone this repository.
+* Open Eclipse and select import. When the window appears, click the Maven folder, then click `Existing Maven Project` and choose `Next`.
+* For the Root directory, Browse for and select this same repo `code-examples-java`.
+* Once selected, click `Finish` at the bottom center to save the project link to your eclipse workspace.
+* Next, click the menu item `Run->Run Configurations` and choose a new Maven configuration with the following:
+  * Name the configuration `code-examples-java`.
+  * Put in the following value for your workspace in the Base Directory: `${workspace_loc:/code-examples-java}`.
+  * Put in the following value for the Goals field: `spring-boot::run`.
+* Click the JRE tab in the Run Configurations menu and make sure your have a Runtime JRE set to jdk-11 or higher.
+* Under VM arguments, paste the following value: `Dspring.profiles.active=dev`
+* Click apply to save. Finally, click `Run` to run it!
+* Open a browser and navigate to http://localhost:8080 to see the examples running.
+
 
 ### IntelliJ Ultimate installation
 
