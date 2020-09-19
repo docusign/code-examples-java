@@ -60,15 +60,16 @@ public class EG017ControllerSetTemplateTabValues extends AbstractController {
         String templateId = args.getTemplateId();
 
 
-        EnvelopeDefinition envelope = makeEnvelope(signerEmail, signerName, ccEmail,  ccName, templateId);
-
         // Step 2. Construct your API headers
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
+        
+        // Step 3. is shown in the makeEnvelope method below
+        // Step 4. Construct your request body
+        EnvelopeDefinition envelope = makeEnvelope(signerEmail, signerName, ccEmail,  ccName, templateId);
 
         // Step 5. Call the eSignature REST API
         EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
-
         String envelopeId = envelopeSummary.getEnvelopeId();
         session.setEnvelopeId(envelopeId);
 
@@ -115,7 +116,7 @@ public class EG017ControllerSetTemplateTabValues extends AbstractController {
         return viewRequest;
     }
 
-    // Step 4. Construct your request body
+
     private static EnvelopeDefinition makeEnvelope(String signerEmail, String signerName, String ccEmail, String ccName, String templateId){
         // Create a signer recipient to sign the document, identified by name and email
         // We set the clientUserId to enable embedded signing for the recipient
