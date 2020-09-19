@@ -71,7 +71,30 @@ public final class Languages {
 
     @Value
     public static class Lang {
-        private String code;
+		private String code;
         private String name;
+    	
+    	public Lang(String entry, String longName) {
+    		setCode(entry);
+    		setName(longName);
+    	
+    	}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getCode() {
+			return code;
+		}
+
+		public void setCode(String code) {
+			this.code = code;
+		}
+
     }
 }

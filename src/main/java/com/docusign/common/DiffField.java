@@ -20,7 +20,9 @@ public class DiffField {
     private String leftValue;
     private String rightValue;
 
-    /**
+   
+
+	/**
      * Creates an instance of the DiffField by a {@link Field} and two objects.
      * @param field the object which provides information about a single field of a class
      * @param left the first comparing object, can be <code>null</code>
@@ -66,4 +68,6 @@ public class DiffField {
         }
         return "" + field.get(object);
     }
+
+
 }
