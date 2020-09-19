@@ -69,7 +69,7 @@ public class JWTOAuth2RestTemplate extends OAuth2RestTemplate {
             throw new AccessTokenRequiredException(e.getMessage(), resource);
         }
 
-        apiClient.setOAuthBasePath(resource.getBaseUrl());
+        apiClient.setOAuthBasePath((String) resource.getBaseUrl());
         OAuthToken oAuthToken;
         try {
             oAuthToken = apiClient.requestJWTUserToken(

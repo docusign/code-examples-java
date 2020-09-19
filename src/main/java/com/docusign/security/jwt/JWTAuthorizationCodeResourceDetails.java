@@ -34,4 +34,5 @@ public class JWTAuthorizationCodeResourceDetails extends AbstractRedirectResourc
     public ApiClient getApiClient() {
         return apiClient;
     }
+
 }
