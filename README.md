@@ -109,17 +109,19 @@ This repo is a Java Spring Boot application that demonstrates:
 
 ## Included OAuth grant types:
 
-* Authentication with Docusign via [Authorization Code Grant flow](https://developers.docusign.com/esign-rest-api/guides/authentication/oauth2-code-grant) .
+* Authentication with Docusign via [Authorization Code Grant flow](https://developers.docusign.com/platform/auth/authcode) .
 When the token expires, the user is asked to re-authenticate.
 The **refresh token** is not used in this example.
 
-* Authentication with DocuSign via the [JSON Web Token (JWT) Grant](https://developers.docusign.com/esign-rest-api/guides/authentication/oauth2-jsonwebtoken).
+* Authentication with DocuSign via the [JSON Web Token (JWT) Grant](https://developers.docusign.com/platform/auth/jwt/).
 When the token expires, it updates automatically.
 
 
 ## Installation
 
 ### Prerequisites
+**Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip steps 1 and 2 below as they're automatically performed for you.**
+
 1. A DocuSign Developer Sandbox account (email and password) on [demo.docusign.net](https://demo.docusign.net).
    Create a [free account](https://go.docusign.com/sandbox/productshot/?elqCampaignId=16533).
 1. A DocuSign Integration Key (a client ID) that is configured to use the
@@ -144,7 +146,9 @@ When the token expires, it updates automatically.
 
 ### Short installation instructions
 * Download or clone this repository.
-* The project includes a Maven pom file.
+* The project includes a Maven pom file.   
+
+**Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip the next step as it was automatically performed for you.**
 * Configure the project by overriding necessary properties from the `src\main\resources\application.example.json` and saving this file as `application.json` file. **Don't add this file into the Git index.**.
 * Add VM argument `-Dspring.profiles.active=dev` to your IDE
 * Note that IntelliJ Community Edition does not directly support
