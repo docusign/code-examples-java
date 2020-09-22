@@ -5,7 +5,7 @@ can be used with the example. The IntelliJ Ultimate edition is
 required due to its support for Spring Boot and JSP view pages.
 
 **Step 1.** Download or clone the
-[code-exaples-java](https://github.com/docusign/code-examples-java)
+[code-examples-java](https://github.com/docusign/code-examples-java)
    repository
 
 **Step 2.** Start IntelliJ Ultimate and choose the **Import Project** option.
