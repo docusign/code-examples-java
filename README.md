@@ -175,7 +175,6 @@ $ java -Dspring.profiles.active=dev -jar code-examples-java-1.0-SNAPSHOT.war
   * Put in the following value for your workspace in the Base Directory: `${workspace_loc:/code-examples-java}`.
   * Put in the following value for the Goals field: `spring-boot::run`.
 * Click the JRE tab in the Run Configurations menu and make sure your have a Runtime JRE set to jdk-11 or higher.
-* Under VM arguments, paste the following value: `Dspring.profiles.active=dev`
 * Click apply to save. Finally, click `Run` to run it!
 * Open a browser and navigate to http://localhost:8080 to see the examples running.
 
