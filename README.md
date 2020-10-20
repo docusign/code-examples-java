@@ -4,10 +4,10 @@
 ## Introduction
 This repo is a Java Spring Boot application that demonstrates:
 
-1. **Embedded Signing Ceremony.**
+1. **Embedded Signing.**
    [Source.](./src/main/java/com/docusign/EG001ControllerEmbeddedSigning.java)
-   This example sends an envelope, and then uses an embedded signing ceremony for the first signer.
-   With embedded signing, the DocuSign signing ceremony is initiated from your website.
+   This example sends an envelope, and then uses embedded signing for the first signer.
+   With embedded signing, DocuSign signing is initiated from your website.
 1. **Send an envelope with a remote (email) signer and cc recipient.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG002ControllerSigningViaEmail.java)
    The envelope includes a pdf, Word, and HTML document.
@@ -139,10 +139,11 @@ When the token expires, it updates automatically.
    use the appropriate DNS name and port instead of `localhost:8080`.
    An example Redirect URI: http://myserver.it.mycompany.com/login
 
-1. Java 11.
+1. Java 11
+1. [Maven](https://maven.apache.org/download.cgi)
 1. A name and email for a signer, and a name and email for a cc recipient.
    The signer and the cc email cannot be the same.
-1. Maven
+
 
 ### Short installation instructions
 * Download or clone this repository.
