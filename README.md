@@ -139,7 +139,7 @@ When the token expires, it updates automatically.
    use the appropriate DNS name and port instead of `localhost:8080`.
    An example Redirect URI: http://myserver.it.mycompany.com/login
 
-1. Java 11
+1. [JDK 11](https://jdk.java.net/14/) or later
 1. [Maven](https://maven.apache.org/download.cgi)
 1. A name and email for a signer, and a name and email for a cc recipient.
    The signer and the cc email cannot be the same.
