@@ -180,12 +180,12 @@ required due to its support for Spring Boot and JSP view pages.
 [code-examples-java](https://github.com/docusign/code-examples-java)
    repository
 
-**Step 2.** Start IntelliJ Ultimate and choose the **Import Project** option.
+**Step 2.** Start IntelliJ Ultimate and choose the **Open or Import** option.
 
 ![IntelliJ Import project](https://github.com/docusign/code-examples-java/blob/master/docs/install_fig_1.png)
 
-**Step 3.** Use the popup file chooser to select the
-**code-examples-java** directory.
+**Step 3.** Use the popup file chooser to select 
+**code-examples-java** or your unzipped Quickstart directory.
 
 **Step 4.** The **Import Project** wizard will open. It's a
 series of screens. On the first screen, select
@@ -197,12 +197,12 @@ series of screens. On the first screen, select
 be displayed in the IDE.
 
 ### Configuring IntelliJ's *Run/Debug Configuration*
-IntelliJ uses **Run/Debug Configurations** to manage
+IntelliJ uses **Run/Debug Configuration** to manage
 settings for running the launcher.
 
 Set up a Run/Debug Configuration for the launcher:
 
-Step 1. Use the menu command **Run / Edit configurations...**
+Step 1. Use the menu command **Run > Edit configurations...**
 to open the configuration manager.
 
 Step 2. Click the **+** (plus) sign to add a new configuration.
@@ -210,10 +210,10 @@ The configuration type is **Spring Boot**. You may need to
 open the additional templates section of the template chooser.
 
 Step 3. Update the form with the **Name** of the
-configuration and the **Main class** for the configuration,
+configuration to `code-examples-java` and the **Main class** for the configuration,
 `com.docusign.App` **Tip:** use the **...** (ellipses) button next to the field to choose the Main class.
 
-Tip: check the **Enable debug output** checkbox.
+Under **Spring Boot** select the `Enable debug output` checkbox.
 
 ![Configure a Run configuration](https://github.com/docusign/code-examples-java/blob/master/docs/install_fig_7.png)
 
@@ -221,7 +221,7 @@ Tip: check the **Enable debug output** checkbox.
 
 Use a **Run** menu option to run or debug the launcher.
 
-After the application is ready for requests, open your
+After the application finishes building, open your
 browser to http://localhost:8080
 
 
