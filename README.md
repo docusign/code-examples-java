@@ -182,7 +182,7 @@ required due to its support for Spring Boot and JSP view pages.
 
 **Step 2.** Start IntelliJ Ultimate and choose the **Open or Import** option.
 
-![IntelliJ Import project](https://github.com/docusign/code-examples-java/blob/master/docs/install_fig_1.png)
+![IntelliJ Import project](https://github.com/docusign/code-examples-java/blob/master/docs/IntelliJ_import_highlight.jpg)
 
 **Step 3.** Use the popup file chooser to select 
 **code-examples-java** or your unzipped Quickstart directory.
