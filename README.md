@@ -182,7 +182,7 @@ required due to its support for Spring Boot and JSP view pages.
 
 **Step 2.** Start IntelliJ Ultimate and choose the **Open or Import** option.
 
-![IntelliJ Import project](https://github.com/docusign/code-examples-java/blob/master/docs/IntelliJ_import_highlight.jpg)
+![IntelliJ Import project](./docs/IntelliJ_import_highlight.jpg)
 
 **Step 3.** Use the popup file chooser to select 
 **code-examples-java** or your unzipped Quickstart directory.
@@ -191,7 +191,7 @@ required due to its support for Spring Boot and JSP view pages.
 series of screens. On the first screen, select
 **Import project from external model** and **Maven**.
 
-![IntelliJ Import Maven project](https://github.com/docusign/code-examples-java/blob/master/docs/install_fig_2.png)
+![IntelliJ Import Maven project](./docs/install_fig_2.png)
 
 **Step 5.** Click **Finish** and the project will
 be displayed in the IDE.
@@ -215,7 +215,7 @@ configuration to `code-examples-java` and the **Main class** for the configurati
 
 Under **Spring Boot** select the `Enable debug output` checkbox.
 
-![Configure a Run configuration](https://github.com/docusign/code-examples-java/blob/master/docs/install_fig_7.png)
+![Configure a Run configuration](./docs/install_fig_7.png)
 
 ### Running or debugging the launcher
 
