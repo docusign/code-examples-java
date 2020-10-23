@@ -4,10 +4,10 @@
 ## Introduction
 This repo is a Java Spring Boot application that demonstrates:
 
-1. **Embedded Signing Ceremony.**
+1. **Embedded Signing.**
    [Source.](./src/main/java/com/docusign/EG001ControllerEmbeddedSigning.java)
-   This example sends an envelope, and then uses an embedded signing ceremony for the first signer.
-   With embedded signing, the DocuSign signing ceremony is initiated from your website.
+   This example sends an envelope, and then uses embedded signing for the first signer.
+   With embedded signing, DocuSign signing is initiated from your website.
 1. **Send an envelope with a remote (email) signer and cc recipient.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG002ControllerSigningViaEmail.java)
    The envelope includes a pdf, Word, and HTML document.
@@ -35,7 +35,7 @@ This repo is a Java Spring Boot application that demonstrates:
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG011ControllerEmbeddedSending.java)
 1. **Embedded DocuSign web tool (NDSE).**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG012ControllerEmbeddedConsole.java)
-1. **Embedded Signing Ceremony from a template with an added document.**
+1. **Embedded Signing from a template with an added document.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG013ControllerAddDocToTemplate.java)
    This example sends an envelope based on a template.
    In addition to the template's document(s), the example adds an
@@ -122,7 +122,7 @@ When the token expires, it updates automatically.
 ### Prerequisites
 **Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip steps 1 and 2 below as they're automatically performed for you.**
 
-1. A DocuSign Developer Sandbox account (email and password) on [demo.docusign.net](https://demo.docusign.net).
+1. A DocuSign developer account (email and password) on [demo.docusign.net](https://demo.docusign.net).
    Create a [free account](https://go.docusign.com/sandbox/productshot/?elqCampaignId=16533).
 1. A DocuSign Integration Key (a client ID) that is configured to use the
    OAuth Authorization Code flow.
@@ -139,17 +139,18 @@ When the token expires, it updates automatically.
    use the appropriate DNS name and port instead of `localhost:8080`.
    An example Redirect URI: http://myserver.it.mycompany.com/login
 
-1. Java 11.
+1. [JDK 11](https://jdk.java.net/14/) or later
+1. [Maven](https://maven.apache.org/download.cgi)
 1. A name and email for a signer, and a name and email for a cc recipient.
    The signer and the cc email cannot be the same.
-1. Maven
+
 
 ### Short installation instructions
 * Download or clone this repository.
 * The project includes a Maven pom file.   
 
 **Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip the next step as it was automatically performed for you.**
-* Configure the project by overriding necessary properties from the `src\main\resources\application.example.json` and saving this file as `application.json` file. **Don't add this file into the Git index.**.
+* Configure the project by overriding necessary properties from the `src\main\resources\application.example.json` and saving this file as `application.json` file. **Don't add this file into the Git index.**
 * Add VM argument `-Dspring.profiles.active=dev` to your IDE
 * Note that IntelliJ Community Edition does not directly support
   Spring Boot applications.  
@@ -165,7 +166,65 @@ Run:
 $ cd target
 $ java -Dspring.profiles.active=dev -jar code-examples-java-1.0-SNAPSHOT.war
 ```
-### Eclipse instructions
+
+
+## IntelliJ Ultimate instructions
+
+The [IntelliJ IDE Ultimate edition](https://www.jetbrains.com/idea/)
+can be used with the example. The IntelliJ Ultimate edition is
+required due to its support for Spring Boot and JSP view pages.
+
+**Step 1.** Download or clone the
+[code-examples-java](https://github.com/docusign/code-examples-java)
+   repository
+
+**Step 2.** Start IntelliJ Ultimate and choose the **Import Project** option.
+
+![IntelliJ Import project](https://github.com/docusign/code-examples-java/blob/master/docs/install_fig_1.png)
+
+**Step 3.** Use the popup file chooser to select the
+**code-examples-java** directory.
+
+**Step 4.** The **Import Project** wizard will open. It's a
+series of screens. On the first screen, select
+**Import project from external model** and **Maven**.
+
+![IntelliJ Import Maven project](https://github.com/docusign/code-examples-java/blob/master/docs/install_fig_2.png)
+
+**Step 5.** Click **Finish** and the project will
+be displayed in the IDE.
+
+### Configuring the IDE's *Run/Debug Configuration*
+IntelliJ uses **Run/Debug Configurations** to manage
+settings for running the example.
+
+**One time:** setup a Run/Debug Configuration for the example:
+
+Step 1. Use the menu command **Run / Edit configurations...**
+to open the configuration manager.
+
+Step 2. Click the **+** (plus) sign to add a new configuration.
+The configuration type is **Spring Boot**. You may need to
+open the additional templates section of the template chooser.
+
+Step 3. Update the form with the **Name** of the
+configuration and the **Main class** for the configuration,
+`com.docusign.App` **Tip:** use the **...** (ellipses) button next to the field to choose the Main class.
+
+Tip: check the **Enable debug output** checkbox.
+
+![Configure a Run configuration](https://github.com/docusign/code-examples-java/blob/master/docs/install_fig_7.png)
+
+### Running or debugging the example
+
+Use a **Run** menu option to run or debug the example.
+
+After the application is ready for requests, open your
+browser to http://localhost:8080
+
+
+
+## Eclipse instructions
 * Download or clone this repository.
 * Open Eclipse and select import. When the window appears, click the Maven folder, then click `Existing Maven Project` and choose `Next`.
 * For the Root directory, Browse for and select this same repo `code-examples-java`.
@@ -175,31 +234,13 @@ $ java -Dspring.profiles.active=dev -jar code-examples-java-1.0-SNAPSHOT.war
   * Put in the following value for your workspace in the Base Directory: `${workspace_loc:/code-examples-java}`.
   * Put in the following value for the Goals field: `spring-boot::run`.
 * Click the JRE tab in the Run Configurations menu and make sure your have a Runtime JRE set to jdk-11 or higher.
-* Under VM arguments, paste the following value: `Dspring.profiles.active=dev`
 * Click apply to save. Finally, click `Run` to run it!
 * Open a browser and navigate to http://localhost:8080 to see the examples running.
 
 
-### IntelliJ Ultimate installation
-
-See the [IntelliJ Ultimate instructions](https://github.com/docusign/code-examples-java/blob/master/docs/Readme_IntelliJ_Ultimate.md).
-
-## Configure the example
-
-Configure the example via the properties file:
-`code-examples-java/src/main/resources/application-dev.properties`.
-
-Add the client id, secret, signer name and email to the file.
-Also add the URL that the application will use (the **DS_APP_URL** setting).
-By default, this is http://localhost:8080
-
-You must also add a **Redirect URI** to the client id's settings in
-DocuSign. The Redirect URIs are `/login&type=acg` and `/login&type=jwt` appended to the DS_APP_URL setting.
-Eg http://localhost:8080/login&type=acg
-
 ### Payments code example
 To use the payments example, create a
-test payments gateway for your developer sandbox account.
+test payments gateway for your developer account.
 
 See the
 [PAYMENTS_INSTALLATION.md](https://github.com/docusign/code-examples-java/blob/master/PAYMENTS_INSTALLATION.md)
