@@ -130,14 +130,14 @@ When the token expires, it updates automatically.
    use JSON Web token, you will need the **Integration Key** itself, the
    **RSA Secret Key** and an API user ID for the user you are impersonating.  
 
-   If you use this example on your own workstation,
+   If you use this launcher on your own workstation,
    the Integration key must include following **Redirect URI**s:
    * http://localhost:8080/login&type=acg
    * http://localhost:8080/login&type=jwt
 
-   If you will not be running the example on your own workstation,
+   If you will not be running the launcher on your own workstation,
    use the appropriate DNS name and port instead of `localhost:8080`.
-   An example Redirect URI: http://myserver.it.mycompany.com/login
+   A sample Redirect URI: http://myserver.it.mycompany.com/login
 
 1. [JDK 11](https://jdk.java.net/14/) or later
 1. [Maven](https://maven.apache.org/download.cgi)
@@ -156,7 +156,7 @@ When the token expires, it updates automatically.
   Spring Boot applications.  
 
 ### Build and run
-Examples are built as a dedicated application with embedded TomCat server. Build:  
+Launchers are built as a dedicated application with embedded TomCat server. Build:  
 ``` bash
 $ cd code-examples-java
 $ mvn package
@@ -171,8 +171,10 @@ $ java -Dspring.profiles.active=dev -jar code-examples-java-1.0-SNAPSHOT.war
 ## IntelliJ Ultimate instructions
 
 The [IntelliJ IDE Ultimate edition](https://www.jetbrains.com/idea/)
-can be used with the example. The IntelliJ Ultimate edition is
+can be used with the launcher. The IntelliJ Ultimate edition is
 required due to its support for Spring Boot and JSP view pages.
+
+**Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip Step 1 as it was automatically performed for you.**
 
 **Step 1.** Download or clone the
 [code-examples-java](https://github.com/docusign/code-examples-java)
@@ -194,11 +196,11 @@ series of screens. On the first screen, select
 **Step 5.** Click **Finish** and the project will
 be displayed in the IDE.
 
-### Configuring the IDE's *Run/Debug Configuration*
+### Configuring IntelliJ's *Run/Debug Configuration*
 IntelliJ uses **Run/Debug Configurations** to manage
-settings for running the example.
+settings for running the launcher.
 
-**One time:** setup a Run/Debug Configuration for the example:
+Set up a Run/Debug Configuration for the launcher:
 
 Step 1. Use the menu command **Run / Edit configurations...**
 to open the configuration manager.
@@ -215,9 +217,9 @@ Tip: check the **Enable debug output** checkbox.
 
 ![Configure a Run configuration](https://github.com/docusign/code-examples-java/blob/master/docs/install_fig_7.png)
 
-### Running or debugging the example
+### Running or debugging the launcher
 
-Use a **Run** menu option to run or debug the example.
+Use a **Run** menu option to run or debug the launcher.
 
 After the application is ready for requests, open your
 browser to http://localhost:8080
@@ -225,6 +227,9 @@ browser to http://localhost:8080
 
 
 ## Eclipse instructions
+
+**Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip the first step as it was automatically performed for you.**
+
 * Download or clone this repository.
 * Open Eclipse and select import. When the window appears, click the Maven folder, then click `Existing Maven Project` and choose `Next`.
 * For the Root directory, Browse for and select this same repo `code-examples-java`.
@@ -235,7 +240,7 @@ browser to http://localhost:8080
   * Put in the following value for the Goals field: `spring-boot::run`.
 * Click the JRE tab in the Run Configurations menu and make sure your have a Runtime JRE set to jdk-11 or higher.
 * Click apply to save. Finally, click `Run` to run it!
-* Open a browser and navigate to http://localhost:8080 to see the examples running.
+* Open a browser to http://localhost:8080
 
 
 ### Payments code example
@@ -248,12 +253,6 @@ file for instructions.
 
 Then add the payment gateway account id to the **application.properties** file.
 
-## Using the examples with other authentication flows
-
-The examples in this repository can also be used with the
-JWT OAuth flow.
-See the [Authentication guide](https://developers.docusign.com/esign-rest-api/guides/authentication)
-for information on choosing the right authentication flow for your application.
 
 ## License and additional information
 
