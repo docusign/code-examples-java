@@ -35,7 +35,7 @@ This repo is a Java Spring Boot application that demonstrates:
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG011ControllerEmbeddedSending.java)
 1. **Embedded DocuSign web tool (NDSE).**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG012ControllerEmbeddedConsole.java)
-1. **Embedded Signing Ceremony from a template with an added document.**
+1. **Embedded Signing from a template with an added document.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG013ControllerAddDocToTemplate.java)
    This example sends an envelope based on a template.
    In addition to the template's document(s), the example adds an
@@ -166,7 +166,65 @@ Run:
 $ cd target
 $ java -Dspring.profiles.active=dev -jar code-examples-java-1.0-SNAPSHOT.war
 ```
-### Eclipse instructions
+
+
+## IntelliJ Ultimate instructions
+
+The [IntelliJ IDE Ultimate edition](https://www.jetbrains.com/idea/)
+can be used with the example. The IntelliJ Ultimate edition is
+required due to its support for Spring Boot and JSP view pages.
+
+**Step 1.** Download or clone the
+[code-examples-java](https://github.com/docusign/code-examples-java)
+   repository
+
+**Step 2.** Start IntelliJ Ultimate and choose the **Import Project** option.
+
+![IntelliJ Import project](https://github.com/docusign/code-examples-java/blob/master/docs/install_fig_1.png)
+
+**Step 3.** Use the popup file chooser to select the
+**code-examples-java** directory.
+
+**Step 4.** The **Import Project** wizard will open. It's a
+series of screens. On the first screen, select
+**Import project from external model** and **Maven**.
+
+![IntelliJ Import Maven project](https://github.com/docusign/code-examples-java/blob/master/docs/install_fig_2.png)
+
+**Step 5.** Click **Finish** and the project will
+be displayed in the IDE.
+
+### Configuring the IDE's *Run/Debug Configuration*
+IntelliJ uses **Run/Debug Configurations** to manage
+settings for running the example.
+
+**One time:** setup a Run/Debug Configuration for the example:
+
+Step 1. Use the menu command **Run / Edit configurations...**
+to open the configuration manager.
+
+Step 2. Click the **+** (plus) sign to add a new configuration.
+The configuration type is **Spring Boot**. You may need to
+open the additional templates section of the template chooser.
+
+Step 3. Update the form with the **Name** of the
+configuration and the **Main class** for the configuration,
+`com.docusign.App` **Tip:** use the **...** (ellipses) button next to the field to choose the Main class.
+
+Tip: check the **Enable debug output** checkbox.
+
+![Configure a Run configuration](https://github.com/docusign/code-examples-java/blob/master/docs/install_fig_7.png)
+
+### Running or debugging the example
+
+Use a **Run** menu option to run or debug the example.
+
+After the application is ready for requests, open your
+browser to http://localhost:8080
+
+
+
+## Eclipse instructions
 * Download or clone this repository.
 * Open Eclipse and select import. When the window appears, click the Maven folder, then click `Existing Maven Project` and choose `Next`.
 * For the Root directory, Browse for and select this same repo `code-examples-java`.
@@ -179,23 +237,6 @@ $ java -Dspring.profiles.active=dev -jar code-examples-java-1.0-SNAPSHOT.war
 * Click apply to save. Finally, click `Run` to run it!
 * Open a browser and navigate to http://localhost:8080 to see the examples running.
 
-
-### IntelliJ Ultimate installation
-
-See the [IntelliJ Ultimate instructions](https://github.com/docusign/code-examples-java/blob/master/docs/Readme_IntelliJ_Ultimate.md).
-
-## Configure the example
-
-Configure the example via the properties file:
-`code-examples-java/src/main/resources/application-dev.properties`.
-
-Add the client id, secret, signer name and email to the file.
-Also add the URL that the application will use (the **DS_APP_URL** setting).
-By default, this is http://localhost:8080
-
-You must also add a **Redirect URI** to the client id's settings in
-DocuSign. The Redirect URIs are `/login&type=acg` and `/login&type=jwt` appended to the DS_APP_URL setting.
-Eg http://localhost:8080/login&type=acg
 
 ### Payments code example
 To use the payments example, create a
