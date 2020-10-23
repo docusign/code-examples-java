@@ -122,7 +122,7 @@ When the token expires, it updates automatically.
 ### Prerequisites
 **Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip steps 1 and 2 below as they're automatically performed for you.**
 
-1. A DocuSign Developer Sandbox account (email and password) on [demo.docusign.net](https://demo.docusign.net).
+1. A DocuSign developer account (email and password) on [demo.docusign.net](https://demo.docusign.net).
    Create a [free account](https://go.docusign.com/sandbox/productshot/?elqCampaignId=16533).
 1. A DocuSign Integration Key (a client ID) that is configured to use the
    OAuth Authorization Code flow.
@@ -240,7 +240,7 @@ browser to http://localhost:8080
 
 ### Payments code example
 To use the payments example, create a
-test payments gateway for your developer sandbox account.
+test payments gateway for your developer account.
 
 See the
 [PAYMENTS_INSTALLATION.md](https://github.com/docusign/code-examples-java/blob/master/PAYMENTS_INSTALLATION.md)
