@@ -2,7 +2,7 @@
 <jsp:include page="../../partials/head.jsp"/>
 
 <h4>1. Embedded Signing</h4>
-<p>This example sends an envelope, and then uses embedded signing for the first signer.</p>
+<p>This example sends an envelope, and then uses Embedded signing for the first signer.</p>
 <p>Embedded signing provides a smoother user experience for the signer: DocuSign signing is initiated from
     your website.</p>
 <c:if test="${showDoc}">
