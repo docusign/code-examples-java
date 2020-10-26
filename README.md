@@ -199,7 +199,7 @@ Set up a Run/Debug Configuration for the launcher:
 Step 1. Use the menu command **Run > Edit configurations...**
 to open the configuration manager.
 
-Step 2. Under Templates in the left sidebar, select **Spring Boot**.
+Step 2. Under **Templates** in the left sidebar, select **Spring Boot**.
 
 Step 3. Update the form with the **Name** of the
 configuration to `code-examples-java` and the **Main class** for the configuration,
