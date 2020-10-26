@@ -187,13 +187,7 @@ required due to its support for Spring Boot and JSP view pages.
 **Step 3.** Use the popup file chooser to select 
 **code-examples-java** or your unzipped Quickstart directory.
 
-**Step 4.** The **Import Project** wizard will open. It's a
-series of screens. On the first screen, select
-**Import project from external model** and **Maven**.
-
-![IntelliJ Import Maven project](./docs/install_fig_2.png)
-
-**Step 5.** Click **Finish** and the project will
+**Step 4.** Click **Finish** and the project will
 be displayed in the IDE.
 
 ### Configuring IntelliJ's *Run/Debug Configuration*
@@ -205,13 +199,11 @@ Set up a Run/Debug Configuration for the launcher:
 Step 1. Use the menu command **Run > Edit configurations...**
 to open the configuration manager.
 
-Step 2. Click the **+** (plus) sign to add a new configuration.
-The configuration type is **Spring Boot**. You may need to
-open the additional templates section of the template chooser.
+Step 2. Under Templates in the left sidebar, select **Spring Boot**.
 
 Step 3. Update the form with the **Name** of the
 configuration to `code-examples-java` and the **Main class** for the configuration,
-`com.docusign.App` **Tip:** use the **...** (ellipses) button next to the field to choose the Main class.
+`com.docusign.App` **Tip:** Use the **...** (ellipses) button next to the field to choose the Main class.
 
 Under **Spring Boot** select the `Enable debug output` checkbox.
 
