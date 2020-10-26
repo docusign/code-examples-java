@@ -187,7 +187,7 @@ required due to its support for Spring Boot and JSP view pages.
 **Step 3.** Use the popup file chooser to select 
 **code-examples-java** or your unzipped Quickstart directory.
 
-**Step 4.** Click **Finish** and the project will
+**Step 4.** Click **OK** and the project will
 be displayed in the IDE.
 
 ### Configuring IntelliJ's *Run/Debug Configuration*
