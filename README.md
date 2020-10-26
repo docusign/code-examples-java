@@ -152,7 +152,7 @@ When the token expires, it updates automatically.
 **Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip the next step as it was automatically performed for you.**
 * Configure the project by overriding necessary properties from the `src\main\resources\application.example.json` and saving this file as `application.json` file. **Don't add this file into the Git index.**
 * Add VM argument `-Dspring.profiles.active=dev` to your IDE
-* Note that IntelliJ Community Edition does not directly support
+* Note that IntelliJ IDEA Community Edition does not directly support
   Spring Boot applications.  
 
 ### Build and run
@@ -168,10 +168,10 @@ $ java -Dspring.profiles.active=dev -jar code-examples-java-1.0-SNAPSHOT.war
 ```
 
 
-## IntelliJ Ultimate instructions
+## IntelliJ IDEA Ultimate instructions
 
-The [IntelliJ IDE Ultimate edition](https://www.jetbrains.com/idea/)
-can be used with the launcher. The IntelliJ Ultimate edition is
+The [IntelliJ IDEA Ultimate](https://www.jetbrains.com/idea/)
+can be used with the launcher. The IntelliJ IDEA Ultimate is
 required due to its support for Spring Boot and JSP view pages.
 
 **Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip Step 1 as it was automatically performed for you.**
@@ -180,7 +180,7 @@ required due to its support for Spring Boot and JSP view pages.
 [code-examples-java](https://github.com/docusign/code-examples-java)
    repository
 
-**Step 2.** Start IntelliJ Ultimate and choose the **Open or Import** option.
+**Step 2.** Start IntelliJ IDEA Ultimate and choose the **Open or Import** option.
 
 ![IntelliJ Import project](./docs/IntelliJ_import_highlight.jpg)
 
