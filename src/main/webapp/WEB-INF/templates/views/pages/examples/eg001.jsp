@@ -1,9 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../partials/head.jsp"/>
 
-<h4>1. Embedded Signing Ceremony</h4>
-<p>This example sends an envelope, and then uses an embedded signing ceremony for the first signer.</p>
-<p>Embedded signing provides a smoother user experience for the signer: the DocuSign signing ceremony is initiated from
+<h4>1. Embedded Signing</h4>
+<p>This example sends an envelope, and then uses an embedded signing for the first signer.</p>
+<p>Embedded signing provides a smoother user experience for the signer: DocuSign signing is initiated from
     your website.</p>
 <c:if test="${showDoc}">
     <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
