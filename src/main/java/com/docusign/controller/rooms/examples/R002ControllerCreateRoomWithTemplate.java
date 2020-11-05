@@ -60,10 +60,10 @@ public class R002ControllerCreateRoomWithTemplate extends AbstractRoomsControlle
         // Step 2: Construct your API headers
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
-        // Step 3: Construct the request body for your room
+        // Step 4: Construct the request body for your room
         RoomForCreate roomForCreate = this.createRoom(adminRole.getRoleId(), args.getRoomName(), args.getRoomTemplateId());
 
-        // Step 4: Call the v2 Rooms API
+        // Step 5: Call the v2 Rooms API
         Room createdRoom = roomsApi.createRoom(this.session.getAccountId(), roomForCreate);
 
 
