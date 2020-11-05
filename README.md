@@ -168,10 +168,10 @@ $ java -Dspring.profiles.active=dev -jar code-examples-java-1.0-SNAPSHOT.war
 ```
 
 
-## IntelliJ IDEA Ultimate instructions
+## IntelliJ Ultimate instructions
 
-The [IntelliJ IDEA Ultimate](https://www.jetbrains.com/idea/)
-can be used with the launcher. The IntelliJ IDEA Ultimate is
+The [IntelliJ IDE Ultimate edition](https://www.jetbrains.com/idea/)
+can be used with the launcher. The IntelliJ Ultimate edition is
 required due to its support for Spring Boot and JSP view pages.
 
 **Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip Step 1 as it was automatically performed for you.**
@@ -180,14 +180,20 @@ required due to its support for Spring Boot and JSP view pages.
 [code-examples-java](https://github.com/docusign/code-examples-java)
    repository
 
-**Step 2.** Start IntelliJ IDEA Ultimate and choose the **Open or Import** option.
+**Step 2.** Start IntelliJ Ultimate and choose the **Open or Import** option.
 
 ![IntelliJ Import project](./docs/IntelliJ_import_highlight.jpg)
 
 **Step 3.** Use the popup file chooser to select 
 **code-examples-java** or your unzipped Quickstart directory.
 
-**Step 4.** Click **OK** and the project will
+**Step 4.** The **Import Project** wizard will open. It's a
+series of screens. On the first screen, select
+**Import project from external model** and **Maven**.
+
+![IntelliJ Import Maven project](./docs/install_fig_2.png)
+
+**Step 5.** Click **Finish** and the project will
 be displayed in the IDE.
 
 ### Configuring IntelliJ's *Run/Debug Configuration*
@@ -199,11 +205,13 @@ Set up a Run/Debug Configuration for the launcher:
 Step 1. Use the menu command **Run > Edit configurations...**
 to open the configuration manager.
 
-Step 2. Under **Templates** in the left sidebar, select **Spring Boot**.
+Step 2. Click the **+** (plus) sign to add a new configuration.
+The configuration type is **Spring Boot**. You may need to
+open the additional templates section of the template chooser.
 
 Step 3. Update the form with the **Name** of the
 configuration to `code-examples-java` and the **Main class** for the configuration,
-`com.docusign.App` **Tip:** Use the **...** (ellipses) button next to the field to choose the Main class.
+`com.docusign.App` **Tip:** use the **...** (ellipses) button next to the field to choose the Main class.
 
 Under **Spring Boot** select the `Enable debug output` checkbox.
 
