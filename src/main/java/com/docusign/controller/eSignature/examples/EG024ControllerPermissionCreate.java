@@ -3,19 +3,20 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.docusign.common.WorkArguments;
+import com.docusign.core.model.AccountRoleSettingsPatch;
+import com.docusign.core.model.DoneExample;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.docusign.model.AccountRoleSettingsPatch;
 import com.docusign.DSConfiguration;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.AccountRoleSettings;
 import com.docusign.esign.model.PermissionProfile;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 import com.google.gson.Gson;
 /**
  * Permission profiles are collections of account settings that determine the
@@ -25,7 +26,7 @@ import com.google.gson.Gson;
  */
 @Controller
 @RequestMapping("/eg024")
-public class EG024ControllerPermissionCreate extends AbstractController{
+public class EG024ControllerPermissionCreate extends AbstractEsignatureController{
 
     private final Session session;
     private final User user;

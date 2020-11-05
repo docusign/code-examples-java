@@ -1,13 +1,11 @@
 package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
-import com.docusign.common.DocumentType;
+import com.docusign.common.WorkArguments;
+import com.docusign.core.common.DocumentType;
+import com.docusign.core.model.*;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
-import com.docusign.model.EnvelopeDocumentInfo;
-import com.docusign.model.OptionItem;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -31,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping("/eg007")
-public class EG007ControllerEnvelopeGetDoc extends AbstractController {
+public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController {
 
     private static final String MODEL_DOCUMENTS_OK = "documentsOk";
     private static final String MODEL_DOCUMENT_OPTIONS = "documentOptions";
@@ -50,7 +48,7 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractController {
     }
 
     @Override
-    protected void onInitModel(WorkArguments args, ModelMap model) throws ApiException {
+    protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
         model.addAttribute(MODEL_ENVELOPE_OK, StringUtils.isNotBlank(session.getEnvelopeId()));
         List<EnvelopeDocumentInfo> envelopeDocuments = session.getEnvelopeDocuments();

@@ -1,14 +1,15 @@
 package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
+import com.docusign.common.WorkArguments;
+import com.docusign.core.model.DoneExample;
+import com.docusign.core.model.EnvelopeDocumentInfo;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeDocument;
 import com.docusign.esign.model.EnvelopeDocumentsResult;
-import com.docusign.model.DoneExample;
-import com.docusign.model.EnvelopeDocumentInfo;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/eg006")
-public class EG006ControllerEnvelopeDocs extends AbstractController {
+public class EG006ControllerEnvelopeDocs extends AbstractEsignatureController {
 
     private final Session session;
     private final User user;
@@ -44,7 +45,7 @@ public class EG006ControllerEnvelopeDocs extends AbstractController {
     }
 
     @Override
-    protected void onInitModel(WorkArguments args, ModelMap model) throws ApiException {
+    protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
         model.addAttribute(MODEL_ENVELOPE_OK, StringUtils.isNotBlank(session.getEnvelopeId()));
     }

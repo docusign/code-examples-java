@@ -1,7 +1,11 @@
 package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
-import com.docusign.common.DocumentType;
+import com.docusign.common.WorkArguments;
+import com.docusign.core.common.DocumentType;
+import com.docusign.core.model.DoneExample;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.CarbonCopy;
@@ -9,9 +13,6 @@ import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.Signer;
 import com.docusign.esign.model.Tabs;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping("/eg002")
-public class EG002ControllerSigningViaEmail extends AbstractController {
+public class EG002ControllerSigningViaEmail extends AbstractEsignatureController {
 
     private static final String HTML_DOCUMENT_FILE_NAME = "templates/candy-bonbon.ftl";
     private static final String HTML_DOCUMENT_NAME = "Order acknowledgement";
@@ -53,7 +54,7 @@ public class EG002ControllerSigningViaEmail extends AbstractController {
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model,
-            HttpServletResponse response) throws ApiException, IOException {
+                            HttpServletResponse response) throws ApiException, IOException {
         // Set status for the makeEnvelope method
         if (!EnvelopeHelpers.ENVELOPE_STATUS_CREATED.equalsIgnoreCase(args.getStatus())) {
             args.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);

@@ -1,12 +1,13 @@
 package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
+import com.docusign.common.WorkArguments;
+import com.docusign.core.model.DoneExample;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.api.EnvelopesApi.ListStatusChangesOptions;
 import com.docusign.esign.client.ApiException;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/eg003")
-public class EG003ControllerListEnvelopes extends AbstractController {
+public class EG003ControllerListEnvelopes extends AbstractEsignatureController {
 
     private static final int FROM_DATE_OFFSET_DAYS = 30;
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");

@@ -1,12 +1,13 @@
 package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
+import com.docusign.common.WorkArguments;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.ConsoleViewRequest;
 import com.docusign.esign.model.ViewUrl;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,7 +28,7 @@ import org.springframework.web.servlet.view.RedirectView;
  */
 @Controller
 @RequestMapping("/eg012")
-public class EG012ControllerEmbeddedConsole extends AbstractController {
+public class EG012ControllerEmbeddedConsole extends AbstractEsignatureController {
 
     private final Session session;
     private final User user;
@@ -41,7 +42,7 @@ public class EG012ControllerEmbeddedConsole extends AbstractController {
     }
 
     @Override
-    protected void onInitModel(WorkArguments args, ModelMap model) throws ApiException {
+    protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
         model.addAttribute(MODEL_ENVELOPE_OK, StringUtils.isNotBlank(session.getEnvelopeId()));
     }

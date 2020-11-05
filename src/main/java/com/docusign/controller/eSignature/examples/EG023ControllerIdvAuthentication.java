@@ -1,6 +1,10 @@
 package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
+import com.docusign.common.WorkArguments;
+import com.docusign.core.model.DoneExample;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
@@ -15,9 +19,6 @@ import com.docusign.esign.model.Recipients;
 import com.docusign.esign.model.SignHere;
 import com.docusign.esign.model.Signer;
 import com.docusign.esign.model.Tabs;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping("/eg023")
-public class EG023ControllerIdvAuthentication extends AbstractController {
+public class EG023ControllerIdvAuthentication extends AbstractEsignatureController {
 
     private static final Logger logger = LoggerFactory.getLogger(EG023ControllerIdvAuthentication.class);
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";

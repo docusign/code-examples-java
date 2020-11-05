@@ -1,13 +1,14 @@
 package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
-import com.docusign.common.DocumentType;
+import com.docusign.common.WorkArguments;
+import com.docusign.core.common.DocumentType;
+import com.docusign.core.model.DoneExample;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import com.docusign.esign.model.CarbonCopy;
 import com.docusign.esign.model.Signer;
 import com.docusign.esign.model.Tabs;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 
 import lombok.Value;
 
@@ -39,7 +40,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/eg010")
-public class EG010ControllerSendBinaryDocs extends AbstractController {
+public class EG010ControllerSendBinaryDocs extends AbstractEsignatureController {
 
     private static final String HYPHENS = "--";
     private static final String LINE_DELIMITER = "\r\n";

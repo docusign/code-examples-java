@@ -5,20 +5,21 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.docusign.common.WorkArguments;
+import com.docusign.core.common.Languages;
+import com.docusign.core.model.DoneExample;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.docusign.DSConfiguration;
-import com.docusign.common.Languages;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.Brand;
 import com.docusign.esign.model.BrandsResponse;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 
 
 /**
@@ -27,7 +28,7 @@ import com.docusign.model.User;
  */
 @Controller
 @RequestMapping("/eg028")
-public class EG028ControllerCreateBrand extends AbstractController{
+public class EG028ControllerCreateBrand extends AbstractEsignatureController{
 
     private static final String MODEL_LIST_LANGUAGE = "listLanguage";
 
@@ -43,7 +44,7 @@ public class EG028ControllerCreateBrand extends AbstractController{
     }
 
     @Override
-    protected void onInitModel(WorkArguments args, ModelMap model) throws ApiException {
+    protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
         model.addAttribute(MODEL_LIST_LANGUAGE, Languages.getSupportedLanguages());
     }

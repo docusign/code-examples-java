@@ -1,6 +1,9 @@
 # Java Launcher Code Examples
 
-### Github repo: code-examples-java
+This GitHub repo includes code example for both the DocuSign eSignature REST API as well as the DocuSign Rooms API. To use the Rooms API code example, modify the **exampleAPI** settings at the end of the appsettings.json file from eSignature to rooms.
+
+**Note:** to use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). 
+
 ## Introduction
 This repo is a Java Spring Boot application that demonstrates:
 
@@ -104,6 +107,30 @@ This repo is a Java Spring Boot application that demonstrates:
 1. **Bulk sending envelopes to multiple recipients**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG031ControllerBulkSendEnvelopes.java)
    This example creates and sends a bulk envelope by generating a bulk recipient list and initiating a bulk send.
+
+## Rooms API 
+**Note:** to use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). 
+
+
+1. **Create room with Data.**
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R001CreateRoomWithData.js)
+   This example creates a new room in your DocuSign Rooms account to be used for a transaction.
+1. **Create a room from a template.**
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R002CreateRoomFromTemplate.js)
+   This example creates a new room using a template.
+1. **Create room with Data.**
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R003ExportDataFromRoom.js)
+   This example exports all the avialalble data from a specific room in your DocuSign Rooms account.
+1. **Add forms to a room.**
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R004AddingFormToRoom.js)
+   This example adds a standard real estate related form to a specific room in your DocuSign Rooms account.
+1. **How to search for rooms with filters.**
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R005GetRoomsWithFilters.js)
+   This example searches for rooms in your DocuSign Rooms account using a specific filter. 
+1. **Create an external form fillable session.**
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R006CreateExternalFormFillSession.js)
+   This example create an external form that can be filled using DocuSign for a specific room in your DocuSign Rooms account.
+
 
 
 
