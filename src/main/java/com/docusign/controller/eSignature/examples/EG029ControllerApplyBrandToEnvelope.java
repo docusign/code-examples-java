@@ -6,6 +6,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.docusign.common.WorkArguments;
+import com.docusign.core.model.DoneExample;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,9 +26,6 @@ import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.Recipients;
 import com.docusign.esign.model.Signer;
 import com.docusign.esign.model.Tabs;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 
 
 /**
@@ -34,7 +35,7 @@ import com.docusign.model.User;
  */
 @Controller
 @RequestMapping("/eg029")
-public class EG029ControllerApplyBrandToEnvelope extends AbstractController {
+public class EG029ControllerApplyBrandToEnvelope extends AbstractEsignatureController {
 
     private static final String MODEL_LIST_BRAND = "listBrands";
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
@@ -54,7 +55,7 @@ public class EG029ControllerApplyBrandToEnvelope extends AbstractController {
     }
 
     @Override
-    protected void onInitModel(WorkArguments args, ModelMap model) throws ApiException {
+    protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
         AccountsApi accountsApi = createAccountsApi(session.getBasePath(), user.getAccessToken());
         BrandsResponse brands = accountsApi.listBrands(session.getAccountId());

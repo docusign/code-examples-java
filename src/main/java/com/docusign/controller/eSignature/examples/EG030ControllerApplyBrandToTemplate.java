@@ -5,6 +5,10 @@ import java.util.Arrays;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.docusign.common.WorkArguments;
+import com.docusign.core.model.DoneExample;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,9 +25,6 @@ import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.EnvelopeTemplateResults;
 import com.docusign.esign.model.TemplateRole;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 
 
 /**
@@ -38,7 +39,7 @@ import com.docusign.model.User;
  */
 @Controller
 @RequestMapping("/eg030")
-public class EG030ControllerApplyBrandToTemplate extends AbstractController {
+public class EG030ControllerApplyBrandToTemplate extends AbstractEsignatureController {
 
     private static final String MODEL_LIST_BRAND = "listBrands";
     private static final String MODEL_LIST_TEMPLATE = "listTemplates";
@@ -55,7 +56,7 @@ public class EG030ControllerApplyBrandToTemplate extends AbstractController {
     }
 
     @Override
-    protected void onInitModel(WorkArguments args, ModelMap model) throws ApiException {
+    protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
         String accountId = session.getAccountId();
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());

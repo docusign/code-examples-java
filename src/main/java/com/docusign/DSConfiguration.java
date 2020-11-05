@@ -21,6 +21,12 @@ public class DSConfiguration {
     @Value("${DS_APP_URL}")
     private String appUrl;
 
+    @Value("${DS_API_NAME}")
+    private String apiName;
+
+    @Value("${DS_API_BASE_URL}")
+    private String apiBaseUrl;
+
     @Value("${DS_SIGNER_EMAIL:{USER_EMAIL}}")
     private String signerEmail;
 
@@ -48,6 +54,11 @@ public class DSConfiguration {
     public String getDsPingUrl() {
         return appUrl + "/";
     }
-
-
+    public String getApiName(){
+        if(apiName.contains("{")){
+            apiName = "ESIGNATURE";
+            apiBaseUrl = "https://demo.docusign.net";
+        }
+        return apiName;
+    }
 }

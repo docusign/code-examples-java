@@ -2,6 +2,10 @@ package com.docusign.controller.eSignature.examples;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.docusign.common.WorkArguments;
+import com.docusign.core.model.DoneExample;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,9 +15,6 @@ import com.docusign.DSConfiguration;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.PermissionProfileInformation;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 
 
 /**
@@ -24,7 +25,7 @@ import com.docusign.model.User;
  */
 @Controller
 @RequestMapping("/eg027")
-public class EG027ControllerPermissionDelete extends AbstractController {
+public class EG027ControllerPermissionDelete extends AbstractEsignatureController {
 
     private static final String MODEL_LIST_PROFILES = "listProfiles";
 
@@ -40,7 +41,7 @@ public class EG027ControllerPermissionDelete extends AbstractController {
     }
 
     @Override
-    protected void onInitModel(WorkArguments args, ModelMap model) throws ApiException {
+    protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
         AccountsApi accountsApi = createAccountsApi(session.getBasePath(), user.getAccessToken());
 

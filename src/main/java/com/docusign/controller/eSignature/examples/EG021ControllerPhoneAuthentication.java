@@ -1,6 +1,10 @@
 package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
+import com.docusign.common.WorkArguments;
+import com.docusign.core.model.DoneExample;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.Document;
@@ -10,9 +14,6 @@ import com.docusign.esign.model.RecipientPhoneAuthentication;
 import com.docusign.esign.model.Recipients;
 import com.docusign.esign.model.SignHere;
 import com.docusign.esign.model.Signer;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping("/eg021")
-public class EG021ControllerPhoneAuthentication extends AbstractController {
+public class EG021ControllerPhoneAuthentication extends AbstractEsignatureController {
 
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
     private static final String DOCUMENT_NAME = "Lorem";
@@ -48,7 +49,7 @@ public class EG021ControllerPhoneAuthentication extends AbstractController {
     @Override
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
-            HttpServletResponse response) throws ApiException, IOException {
+                            HttpServletResponse response) throws ApiException, IOException {
         // Step 1: Construct your API headers
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 

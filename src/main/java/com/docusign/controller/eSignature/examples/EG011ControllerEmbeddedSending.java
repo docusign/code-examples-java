@@ -1,14 +1,15 @@
 package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
+import com.docusign.common.WorkArguments;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.ReturnUrlRequest;
 import com.docusign.esign.model.ViewUrl;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping("/eg011")
-public class EG011ControllerEmbeddedSending extends AbstractController {
+public class EG011ControllerEmbeddedSending extends AbstractEsignatureController {
 
     private final Session session;
     private final User user;

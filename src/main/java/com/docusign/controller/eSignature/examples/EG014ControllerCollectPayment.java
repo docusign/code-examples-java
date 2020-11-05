@@ -1,7 +1,11 @@
 package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
-import com.docusign.common.DocumentType;
+import com.docusign.common.WorkArguments;
+import com.docusign.core.common.DocumentType;
+import com.docusign.core.model.DoneExample;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.CarbonCopy;
@@ -14,9 +18,6 @@ import com.docusign.esign.model.PaymentDetails;
 import com.docusign.esign.model.PaymentLineItem;
 import com.docusign.esign.model.Signer;
 import com.docusign.esign.model.Tabs;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,7 +46,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping("/eg014")
-public class EG014ControllerCollectPayment extends AbstractController {
+public class EG014ControllerCollectPayment extends AbstractEsignatureController {
 
     private static final String MODEL_GATEWAY_OK = "gatewayOk";
     private static final String HTML_DOCUMENT_FILE_NAME = "templates/order-form.ftl";
@@ -73,7 +74,7 @@ public class EG014ControllerCollectPayment extends AbstractController {
     }
 
     @Override
-    protected void onInitModel(WorkArguments args, ModelMap model) throws ApiException {
+    protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
         model.addAttribute(MODEL_GATEWAY_OK, null != config.getGatewayAccountId());
     }

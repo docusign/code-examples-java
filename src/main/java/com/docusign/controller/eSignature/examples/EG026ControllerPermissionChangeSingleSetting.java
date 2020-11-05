@@ -9,7 +9,11 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.docusign.model.AccountRoleSettingsPatch;
+import com.docusign.common.WorkArguments;
+import com.docusign.core.model.AccountRoleSettingsPatch;
+import com.docusign.core.model.DoneExample;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,9 +27,6 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.AccountRoleSettings;
 import com.docusign.esign.model.PermissionProfile;
 import com.docusign.esign.model.PermissionProfileInformation;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 import com.google.gson.Gson;
 
 /**
@@ -34,7 +35,7 @@ import com.google.gson.Gson;
  */
 @Controller
 @RequestMapping("/eg026")
-public class EG026ControllerPermissionChangeSingleSetting extends AbstractController {
+public class EG026ControllerPermissionChangeSingleSetting extends AbstractEsignatureController {
 
     private static final String MODEL_PERMISSIONS = "permissions";
     private static final String MODEL_CUR_PROFILE_NAME = "permissionProfileName";
@@ -58,7 +59,7 @@ public class EG026ControllerPermissionChangeSingleSetting extends AbstractContro
     }
 
     @Override
-    protected void onInitModel(WorkArguments args, ModelMap model) throws ApiException {
+    protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
         AccountsApi accountsApi = createAccountsApi(session.getBasePath(), user.getAccessToken());
 

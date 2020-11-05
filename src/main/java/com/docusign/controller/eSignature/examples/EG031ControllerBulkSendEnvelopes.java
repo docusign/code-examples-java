@@ -7,6 +7,10 @@ import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.docusign.common.WorkArguments;
+import com.docusign.core.model.DoneExample;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,9 +32,6 @@ import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.Recipients;
 import com.docusign.esign.model.Signer;
 import com.docusign.esign.model.TextCustomField;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 
 /**
  * This code example demonstrates how to send envelopes in bulk to multiple
@@ -40,7 +41,7 @@ import com.docusign.model.User;
  */
 @Controller
 @RequestMapping("/eg031")
-public class EG031ControllerBulkSendEnvelopes extends AbstractController {
+public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureController {
 
     private static final long BULK_REQUEST_DELAY = 15L;
     private static final String BULK_SIGNER_EMAIL_PLACEHOLDER = "MultiBulkRecipients-%s@docusign.com";

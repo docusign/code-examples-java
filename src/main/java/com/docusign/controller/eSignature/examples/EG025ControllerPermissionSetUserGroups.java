@@ -4,6 +4,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.docusign.common.WorkArguments;
+import com.docusign.core.model.DoneExample;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,9 +22,6 @@ import com.docusign.esign.model.ErrorDetails;
 import com.docusign.esign.model.Group;
 import com.docusign.esign.model.GroupInformation;
 import com.docusign.esign.model.PermissionProfileInformation;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 
 
 /**
@@ -31,7 +32,7 @@ import com.docusign.model.User;
  */
 @Controller
 @RequestMapping("/eg025")
-public class EG025ControllerPermissionSetUserGroups extends AbstractController {
+public class EG025ControllerPermissionSetUserGroups extends AbstractEsignatureController {
 
     private static final String MODEL_LIST_PROFILES = "listProfiles";
     private static final String MODEL_LIST_GROUPS = "listGroups";
@@ -48,7 +49,7 @@ public class EG025ControllerPermissionSetUserGroups extends AbstractController {
     }
 
     @Override
-    protected void onInitModel(WorkArguments args, ModelMap model) throws ApiException {
+    protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
         String accountId = session.getAccountId();
 

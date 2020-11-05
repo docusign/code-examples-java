@@ -1,6 +1,9 @@
 package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
+import com.docusign.common.WorkArguments;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.api.TemplatesApi;
 import com.docusign.esign.client.ApiClient;
@@ -8,8 +11,6 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 import com.docusign.esign.model.Checkbox;
 import com.docusign.esign.model.List;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,7 +24,7 @@ import java.util.Arrays;
 
 @Controller
 @RequestMapping("/eg017")
-public class EG017ControllerSetTemplateTabValues extends AbstractController {
+public class EG017ControllerSetTemplateTabValues extends AbstractEsignatureController {
 
 
     private static final String MODEL_LIST_TEMPLATE = "listTemplates";
@@ -41,7 +42,7 @@ public class EG017ControllerSetTemplateTabValues extends AbstractController {
     }
 
     @Override
-    protected void onInitModel(WorkArguments args, ModelMap model) throws ApiException {
+    protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
         TemplatesApi templatesApi = new TemplatesApi(apiClient);

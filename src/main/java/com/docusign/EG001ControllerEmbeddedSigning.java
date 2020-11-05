@@ -1,9 +1,9 @@
 package com.docusign;
 
 import com.docusign.DSConfiguration;
-import com.docusign.controller.eSignature.examples.AbstractController;
-import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
-import com.docusign.controller.eSignature.examples.WorkArguments;
+import com.docusign.common.WorkArguments;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
@@ -14,8 +14,6 @@ import com.docusign.esign.model.RecipientViewRequest;
 import com.docusign.esign.model.Recipients;
 import com.docusign.esign.model.Signer;
 import com.docusign.esign.model.ViewUrl;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +35,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping("/eg001")
-public class EG001ControllerEmbeddedSigning extends AbstractController {
+public class EG001ControllerEmbeddedSigning extends AbstractEsignatureController {
 
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
     private static final String DOCUMENT_NAME = "Lorem Ipsum";

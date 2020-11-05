@@ -1,6 +1,10 @@
 package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
+import com.docusign.common.WorkArguments;
+import com.docusign.core.model.DoneExample;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import com.docusign.esign.api.TemplatesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
@@ -18,9 +22,6 @@ import com.docusign.esign.model.Signer;
 import com.docusign.esign.model.Tabs;
 import com.docusign.esign.model.TemplateSummary;
 import com.docusign.esign.model.Text;
-import com.docusign.model.DoneExample;
-import com.docusign.model.Session;
-import com.docusign.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -40,7 +41,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping("/eg008")
-public class EG008ControllerCreateTemplate extends AbstractController {
+public class EG008ControllerCreateTemplate extends AbstractEsignatureController {
 
     private static final String TEMPLATE_NAME = "Example Signer and CC template";
     private static final String PDF_DOCUMENT_FILE_NAME = "World_Wide_Corp_fields.pdf";
@@ -63,7 +64,7 @@ public class EG008ControllerCreateTemplate extends AbstractController {
     @Override
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
-            HttpServletResponse response) throws ApiException, IOException {
+                            HttpServletResponse response) throws ApiException, IOException {
         // Step 1. list existing templates
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
         TemplatesApi templatesApi = new TemplatesApi(apiClient);
