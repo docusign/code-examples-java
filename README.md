@@ -113,22 +113,22 @@ This repo is a Java Spring Boot application that demonstrates:
 
 
 1. **Create room with Data.**
-   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R001CreateRoomWithData.java)
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R001ControllerCreateRoom.java)
    This example creates a new room in your DocuSign Rooms account to be used for a transaction.
 1. **Create a room from a template.**
-   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R002CreateRoomFromTemplate.java)
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R002ControllerCreateRoomWithTemplate.java)
    This example creates a new room using a template.
 1. **Create room with Data.**
-   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R003ExportDataFromRoom.java)
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R003ControllerExportDataFromRoom.java)
    This example exports all the avialalble data from a specific room in your DocuSign Rooms account.
 1. **Add forms to a room.**
-   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R004AddingFormToRoom.java)
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R004ControllerAddingFormsToRoom.java)
    This example adds a standard real estate related form to a specific room in your DocuSign Rooms account.
 1. **How to search for rooms with filters.**
-   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R005GetRoomsWithFilters.java)
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R005ControllerGetRoomsWithFilters.java)
    This example searches for rooms in your DocuSign Rooms account using a specific filter. 
 1. **Create an external form fillable session.**
-   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R006CreateExternalFormFillSession.java)
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R006ControllerCreateExternalFormFillSession.java)
    This example create an external form that can be filled using DocuSign for a specific room in your DocuSign Rooms account.
 
 
