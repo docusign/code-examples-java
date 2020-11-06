@@ -1,7 +1,8 @@
 package com.docusign;
 
-import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.eSignature.examples.AbstractEsignatureController;
+import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;

@@ -1,5 +1,6 @@
 package com.docusign.core.controller;
 
+import com.docusign.DSConfiguration;
 import com.docusign.core.model.AuthType;
 import com.docusign.core.model.Session;
 import com.docusign.core.security.OAuthProperties;
