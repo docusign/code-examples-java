@@ -113,22 +113,22 @@ This repo is a Java Spring Boot application that demonstrates:
 
 
 1. **Create room with Data.**
-   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R001CreateRoomWithData.js)
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R001CreateRoomWithData.java)
    This example creates a new room in your DocuSign Rooms account to be used for a transaction.
 1. **Create a room from a template.**
-   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R002CreateRoomFromTemplate.js)
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R002CreateRoomFromTemplate.java)
    This example creates a new room using a template.
 1. **Create room with Data.**
-   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R003ExportDataFromRoom.js)
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R003ExportDataFromRoom.java)
    This example exports all the avialalble data from a specific room in your DocuSign Rooms account.
 1. **Add forms to a room.**
-   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R004AddingFormToRoom.js)
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R004AddingFormToRoom.java)
    This example adds a standard real estate related form to a specific room in your DocuSign Rooms account.
 1. **How to search for rooms with filters.**
-   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R005GetRoomsWithFilters.js)
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R005GetRoomsWithFilters.java)
    This example searches for rooms in your DocuSign Rooms account using a specific filter. 
 1. **Create an external form fillable session.**
-   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R006CreateExternalFormFillSession.js)
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R006CreateExternalFormFillSession.java)
    This example create an external form that can be filled using DocuSign for a specific room in your DocuSign Rooms account.
 
 
@@ -262,7 +262,7 @@ browser to http://localhost:8080
 * For the Root directory, Browse for and select this same repo `code-examples-java`.
 * Once selected, click `Finish` at the bottom center to save the project link to your eclipse workspace.
 * Next, click the menu item `Run->Run Configurations` and choose a new Maven configuration with the following:
-  * Name the configuration `code-examples-java`.
+  * Name the configuration `code-examples-java` (If You have downloaded the launcher via Quickstart, skip this step).
   * Put in the following value for your workspace in the Base Directory: `${workspace_loc:/code-examples-java}`.
   * Put in the following value for the Goals field: `spring-boot::run`.
 * Click the JRE tab in the Run Configurations menu and make sure your have a Runtime JRE set to jdk-11 or higher.
