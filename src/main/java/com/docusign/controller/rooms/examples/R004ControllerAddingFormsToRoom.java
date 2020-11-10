@@ -58,13 +58,13 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
-        // Step 2: Construct your API headers
+        // Step 2. Construct your API headers
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
-        // Step 3: Construct the request body for adding a form
+        // Step 3. Construct the request body for adding a form
         FormForAdd formForAdd = new FormForAdd().formId(args.getFormId());
 
-        // Step 3: Call the v2 Rooms API
+        // Step 4. Call the v2 Rooms API
         RoomDocument roomDocument = roomsApi.addFormToRoom(this.session.getAccountId(), args.getRoomId(), formForAdd);
 
         DoneExample.createDefault(this.title)
