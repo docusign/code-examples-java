@@ -51,7 +51,6 @@ public class R005ControllerGetRoomsWithFilters extends AbstractRoomsController {
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
 
-        // Step 3. Set your filtering parameters
         LocalDateTime current = LocalDateTime.now().plusDays(FROM_DATE_FORWARD_DAYS);
         LocalDateTime past = LocalDateTime.now().minusDays(FROM_DATE_OFFSET_DAYS);
 
@@ -66,11 +65,12 @@ public class R005ControllerGetRoomsWithFilters extends AbstractRoomsController {
         // Step 2: Construct your API headers
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
+        // Step 3. Prepare your request parameters
         RoomsApi.GetRoomsOptions options = roomsApi.new GetRoomsOptions();
         options.setFieldDataChangedStartDate(args.getStartDate());
         options.setFieldDataChangedEndDate(args.getEndDate());
 
-        // Step 3: Call the v2 Rooms API
+        // Step 4. Call the v2 Rooms API
         RoomSummaryList rooms = roomsApi.getRooms(this.session.getAccountId(), options);
 
         DoneExample.createDefault(this.title)
