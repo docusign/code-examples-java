@@ -45,8 +45,9 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
-        RoomSummaryList roomSummaryList = roomsApi.getRooms(this.session.getAccountId());
 
+        // Step 3. Obtain the desired form ID
+        RoomSummaryList roomSummaryList = roomsApi.getRooms(this.session.getAccountId());
         List<FormSummary> forms = getFormSummaryList(this.session.getBasePath(), this.user.getAccessToken(), this.session.getAccountId());
 
         model.addAttribute(MODEL_ROOM_LIST, roomSummaryList.getRooms());
@@ -60,11 +61,9 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
                             HttpServletResponse response) throws IOException, ApiException {
         // Step 2. Construct your API headers
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
-
-        // Step 3. Construct the request body for adding a form
-        FormForAdd formForAdd = new FormForAdd().formId(args.getFormId());
-
+        
         // Step 4. Call the v2 Rooms API
+        FormForAdd formForAdd = new FormForAdd().formId(args.getFormId());
         RoomDocument roomDocument = roomsApi.addFormToRoom(this.session.getAccountId(), args.getRoomId(), formForAdd);
 
         DoneExample.createDefault(this.title)
