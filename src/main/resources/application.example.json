@@ -3,10 +3,11 @@
   "DS_SIGNER_NAME": "{SIGNER_NAME}",
   "DS_SIGNER_EMAIL": "{SIGNER_EMAIL}",
   "DS_APP_URL": "http://localhost:8080",
-  "DS_TARGET_ACCOUNT_ID": "{IMPERSONATED_USER_GUID}",
+  "DS_TARGET_ACCOUNT_ID": "{IMPERSONATED_USER_ID}",
   "DS_API_NAME": "{API_NAME:(ESIGNATURE|ROOMS)}",
-  "DS_API_BASE_URL": "{API_BASE_URL:(https://demo.docusign.net|https://demo.rooms.docusign.com)}",
-
+  "DS_API_BASE_PATH": "https://demo.docusign.net",
+  "DS_ROOMS_BASE_PATH": "https://demo.rooms.docusign.com",
+        
   "Gateway_Name": "{DS_PAYMENT_GATEWAY_NAME}",
   "Gateway_Account_Id": "{GATEWAY_ACCOUNT_ID}",
   "Gateway_Display_Name": "{DS_PAYMENT_GATEWAY_DISPLAY_NAME}",
@@ -21,7 +22,7 @@
   "jwt.grant.sso.redirect-url": "&type=jwt",
   "jwt.grant.client.scope": "signature impersonation",
   "jwt.grant.client.base-url": "account-d.docusign.com",
-  "jwt.grant.client.client-id": "{JWT_API_ACCOUNT_ID}",
+  "jwt.grant.client.client-id": "{INTEGRATION_KEY_JWT}",
   "jwt.grant.client.private-key-path": "src/main/resources/private.key",
   "jwt.grant.client.impersonated-user-guid": "{IMPERSONATED_USER_ID}",
 

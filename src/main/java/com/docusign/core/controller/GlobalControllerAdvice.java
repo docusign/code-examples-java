@@ -112,8 +112,8 @@ public class GlobalControllerAdvice {
             OAuth.Account oauthAccount = account.orElseThrow(() -> new NoSuchElementException(ERROR_ACCOUNT_NOT_FOUND));
             session.setAccountId(oauthAccount.getAccountId());
             session.setAccountName(oauthAccount.getAccountName());
-
-            String baseUrl = !config.getApiBaseUrl().isEmpty() ? config.getApiBaseUrl() : oauthAccount.getBaseUri();
+            //TODO set this more efficiently with more APIs as they're added in
+            String baseUrl = config.getApiName().equalsIgnoreCase("rooms") ? config.getRoomsBasePath() : oauthAccount.getBaseUri();
             session.setBasePath(baseUrl + BASE_URI_SUFFIX);
         }
 

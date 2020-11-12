@@ -1,5 +1,4 @@
 package com.docusign;
-
 import com.docusign.core.security.OAuthProperties;
 import com.docusign.core.security.jwt.JWTAuthorizationCodeResourceDetails;
 import com.docusign.core.security.jwt.JWTOAuth2RestTemplate;
@@ -35,7 +34,13 @@ import javax.servlet.Filter;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	public String roomScopes[] = new String[] {"signature", "dtr.rooms.read", "dtr.rooms.write", "dtr.documents.read", "dtr.documents.write", "dtr.profile.read", "dtr.profile.write", "dtr.company.read", "dtr.company.write", "room_forms"};
+    
     @Autowired
+    private DSConfiguration dsConfiguration;
+
+
+	@Autowired
     private OAuth2ClientContext oAuth2ClientContext;
 
     @Bean
@@ -53,6 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @ConfigurationProperties("authorization.code.grant.client")
     public AuthorizationCodeResourceDetails authCodeGrantClient() {
+    
         return new AuthorizationCodeResourceDetails();
     }
 
@@ -79,6 +85,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private OAuth2ClientAuthenticationProcessingFilter authCodeGrantFilter() {
         OAuth2SsoProperties authCodeGrantSso = authCodeGrantSso();
         AuthorizationCodeResourceDetails authCodeGrantClient = authCodeGrantClient();
+        
+    	
+      	if (this.dsConfiguration.getApiName().equalsIgnoreCase("rooms")) {
+      	      		authCodeGrantClient.setScope(Arrays.asList(roomScopes));
+    	} 
+        
+        
         ResourceServerProperties userInfoResource = userInfoResource();
         OAuth2ClientAuthenticationProcessingFilter filter =
             new OAuth2ClientAuthenticationProcessingFilter(authCodeGrantSso.getLoginPath());
@@ -93,6 +106,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private OAuth2ClientAuthenticationProcessingFilter jwtGrantFilter() {
         OAuth2SsoProperties authCodeGrantSso = jwtGrantSso();
         JWTAuthorizationCodeResourceDetails jwtCodeGrantClient = jwtCodeGrantClient();
+        
+      	if (this.dsConfiguration.getApiName().equalsIgnoreCase("rooms")) {
+      		jwtCodeGrantClient.setScope(Arrays.asList(roomScopes));
+    		 
+    	} 
+        
         OAuth2ClientAuthenticationProcessingFilter filter =
             new OAuth2ClientAuthenticationProcessingFilter(authCodeGrantSso.getLoginPath());
         OAuth2RestTemplate restTemplate = new JWTOAuth2RestTemplate(jwtCodeGrantClient, oAuth2ClientContext);
