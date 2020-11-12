@@ -21,6 +21,7 @@ public class Session implements Serializable {
     private String accountId;
     private String accountName;
     private String basePath;
+    private String roomsBasePath;
     private String envelopeId;
     private String templateName;
     private List<EnvelopeDocumentInfo> envelopeDocuments;

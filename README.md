@@ -1,6 +1,6 @@
 # Java Launcher Code Examples
 
-This GitHub repo includes code example for both the DocuSign eSignature REST API as well as the DocuSign Rooms API. To use the Rooms API code example, modify the **exampleAPI** settings at the end of the appsettings.json file from eSignature to rooms.
+This GitHub repo includes code example for both the DocuSign eSignature REST API as well as the DocuSign Rooms API. To use the Rooms API code examples, change the **DS_API_NAME** value to `ROOMS` in the application.json config file.
 
 **Note:** to use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). 
 
@@ -265,6 +265,7 @@ browser to http://localhost:8080
   * Name the configuration `code-examples-java` (If You have downloaded the launcher via Quickstart, skip this step).
   * Put in the following value for your workspace in the Base Directory: `${workspace_loc:/code-examples-java}`.
   * Put in the following value for the Goals field: `spring-boot::run`.
+  * Click the JRE tab and add in the paste in the following VM argument: `-Dfork=false` (This will allow Eclipse to gracefully terminate the Tomcat Webserver when also terminating the output console in Eclipse). 
 * Click the JRE tab in the Run Configurations menu and make sure your have a Runtime JRE set to jdk-11 or higher.
 * Click apply to save. Finally, click `Run` to run it!
 * Open a browser to http://localhost:8080
