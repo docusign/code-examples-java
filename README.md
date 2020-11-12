@@ -265,7 +265,6 @@ browser to http://localhost:8080
   * Name the configuration `code-examples-java` (If You have downloaded the launcher via Quickstart, skip this step).
   * Put in the following value for your workspace in the Base Directory: `${workspace_loc:/code-examples-java}`.
   * Put in the following value for the Goals field: `spring-boot::run`.
-  * Click the JRE tab and add in the paste in the following VM argument: `-Dfork=false` (This will allow Eclipse to gracefully terminate the Tomcat Webserver when also terminating the output console in Eclipse). 
 * Click the JRE tab in the Run Configurations menu and make sure your have a Runtime JRE set to jdk-11 or higher.
 * Click apply to save. Finally, click `Run` to run it!
 * Open a browser to http://localhost:8080
