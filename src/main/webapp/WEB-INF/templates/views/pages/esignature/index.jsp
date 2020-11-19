@@ -294,6 +294,47 @@
     <a target="_blank" href="https://developers.docusign.com/esign-rest-api/reference/Envelopes/EnvelopeRecipients/create">EnvelopeRecipients::create</a>.
   </p>
 
+  <h2>Advanced recipient routing</h2>
+
+  <h4 id="example032">32. <a href="eg032">Pause a signature workflow</a></h4>
+
+  <p>
+    This topic demonstrates how to create an envelope where the workflow is paused before the
+    envelope is sent to a second recipient. For information on resuming a workflow see
+    <a href="https://developers.docusign.com/docs/esign-rest-api/how-to/unpause-workflow">
+      How to unpause a signature workflow
+    </a>.
+  </p>
+  <p>
+    API methods used:
+    <a target="_blank" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create">Envelopes::create</a>.
+  </p>
+
+  <h4 id="example033">33. <a href="eg033">Unpause a signature workflow</a></h4>
+
+  <p>
+    This topic demonstrates how to resume an envelope workflow that has been paused.
+    For information on creating an envelope with a paused workflow, see
+    <a href="https://developers.docusign.com/docs/esign-rest-api/how-to/pause-workflow">
+      How to pause a signature workflow
+    </a>.
+  </p>
+  <p>
+    API methods used:
+    <a target="_blank" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/update">Envelopes::update</a>.
+  </p>
+
+  <h4 id="example034">34. <a href="eg034">Use conditional recipients</a></h4>
+
+  <p>
+    This topic demonstrates how to create an envelope where the workflow is routed to
+    different recipients based on the value of a transaction.
+  </p>
+  <p>
+    API methods used:
+    <a target="_blank" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create">Envelopes::create</a>.
+  </p>
+
 </div>
 
 <!-- anchor-js is only for the index page -->
