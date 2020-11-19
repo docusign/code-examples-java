@@ -4,10 +4,11 @@
   "DS_SIGNER_EMAIL": "{SIGNER_EMAIL}",
   "DS_APP_URL": "http://localhost:8080",
   "DS_TARGET_ACCOUNT_ID": "{IMPERSONATED_USER_ID}",
-  "DS_API_NAME": "{API_NAME:(ESIGNATURE|ROOMS)}",
+  "DS_API_NAME": "{API_NAME:(ESIGNATURE|ROOMS|CLICK)}",
   "DS_BASE_PATH": "https://demo.docusign.net",
   "DS_ROOMS_BASE_PATH": "https://demo.rooms.docusign.com",
-        
+  "DS_CLICK_BASE_PATH": "https://demo.rooms.docusign.com",
+
   "Gateway_Name": "{DS_PAYMENT_GATEWAY_NAME}",
   "Gateway_Account_Id": "{GATEWAY_ACCOUNT_ID}",
   "Gateway_Display_Name": "{DS_PAYMENT_GATEWAY_DISPLAY_NAME}",

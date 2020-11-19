@@ -2,7 +2,8 @@ package com.docusign.common;
 
 public enum ApiIndex {
     ESIGNATURE("/pages/esignature/index"),
-    ROOMS("/pages/rooms/index");
+    ROOMS("/pages/rooms/index"),
+    CLICK("/pages/click/index");
 
     private final String indexPath;
 

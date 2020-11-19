@@ -22,6 +22,7 @@
         <commonsio.version>2.6</commonsio.version>
         <docusign.version>3.8.0</docusign.version>
         <rooms.version>1.0.0</rooms.version>
+        <click.version>1.0.0-alpha</click.version>
     </properties>
 
     <dependencies>
@@ -90,6 +91,12 @@
             <groupId>com.docusign</groupId>
             <artifactId>docusign-rooms-java</artifactId>
             <version>${rooms.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.docusign</groupId>
+            <artifactId>docusign-click-java</artifactId>
+            <version>${click.version}</version>
         </dependency>
     </dependencies>
 
