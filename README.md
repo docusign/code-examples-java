@@ -7,7 +7,7 @@ This GitHub repo includes code example for both the DocuSign eSignature REST API
 ## Introduction
 This repo is a Java Spring Boot application that demonstrates:
 
-1. **Embedded Signing.**
+1. **Use embedded signing.**
    [Source.](./src/main/java/com/docusign/EG001ControllerEmbeddedSigning.java)
    This example sends an envelope, and then uses embedded signing for the first signer.
    With embedded signing, DocuSign signing is initiated from your website.
@@ -34,11 +34,11 @@ This repo is a Java Spring Boot application that demonstrates:
 1. **Send an envelope and upload its documents with multipart binary transfer.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG010ControllerSendBinaryDocs.java)
    Binary transfer is 33% more efficient than using Base64 encoding.
-1. **Embedded sending.**
+1. **Use embedded sending.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG011ControllerEmbeddedSending.java)
 1. **Embedded DocuSign web tool (NDSE).**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG012ControllerEmbeddedConsole.java)
-1. **Embedded Signing from a template with an added document.**
+1. **Use embedded signing from a template with an added document.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG013ControllerAddDocToTemplate.java)
    This example sends an envelope based on a template.
    In addition to the template's document(s), the example adds an

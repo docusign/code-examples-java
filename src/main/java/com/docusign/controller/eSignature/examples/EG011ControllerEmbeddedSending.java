@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /**
- * Embedded Sending<br />
+ * Use embedded sending<br />
  * An envelope will be created in draft mode. A browser will then be redirected
  * to the DocuSign web tool where the envelope can be (optionally) updated and
  * then sent. The envelope includes a pdf, Word, and HTML document.

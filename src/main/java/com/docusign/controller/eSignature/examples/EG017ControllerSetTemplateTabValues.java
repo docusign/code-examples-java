@@ -89,7 +89,7 @@ public class EG017ControllerSetTemplateTabValues extends AbstractEsignatureContr
         // should typically be a callback route somewhere in your app.
         // The query parameter is included as an example of how
         // to save/recover state information during the redirect to
-        // the DocuSign signing ceremony. It's usually better to use
+        // the DocuSign signing. It's usually better to use
         // the session mechanism of your web framework. Query parameters
         // can be changed/spoofed very easily.
         viewRequest.setReturnUrl(config.getDsReturnUrl() + "?state=123");
@@ -106,9 +106,9 @@ public class EG017ControllerSetTemplateTabValues extends AbstractEsignatureContr
         viewRequest.setClientUserId(SIGNER_CLIENT_ID);
 
         // DocuSign recommends that you redirect to DocuSign for the
-        // Signing Ceremony. There are multiple ways to save state.
+        // embedded signing. There are multiple ways to save state.
         // To maintain your application's session, use the pingUrl
-        // parameter. It causes the DocuSign Signing Ceremony web page
+        // parameter. It causes the DocuSign signing web page
         // (not the DocuSign server) to send pings via AJAX to your app.
         // NOTE: The pings will only be sent if the pingUrl is an https address
         viewRequest.setPingFrequency("600"); // seconds

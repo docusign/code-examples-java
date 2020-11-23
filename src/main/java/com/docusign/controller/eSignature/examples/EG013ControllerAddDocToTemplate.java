@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /**
- * Embedded Signing Ceremony from a template with an added document. <br/>
+ * Use embedded signing from a template with an added document. <br/>
  * This example sends an envelope based on a template. In addition to the
  * template's document(s), the example adds an additional document to the
  * envelope by using the Composite Templates.
@@ -56,7 +56,7 @@ public class EG013ControllerAddDocToTemplate extends AbstractEsignatureControlle
 
     @Autowired
     public EG013ControllerAddDocToTemplate(DSConfiguration config, Session session, User user) {
-        super(config, "eg013", "Embedded Signing Ceremony from template and extra doc");
+        super(config, "eg013", "Use embedded signing from template and extra doc");
         this.session = session;
         this.user = user;
     }
@@ -86,7 +86,7 @@ public class EG013ControllerAddDocToTemplate extends AbstractEsignatureControlle
         // Step 2. call Envelopes::create API method
         EnvelopeSummary results = envelopesApi.createEnvelope(accountId, envelope);
 
-        // Step 3. create the recipient view, the Signing Ceremony
+        // Step 3. create the recipient view, the embedded signing
         RecipientViewRequest viewRequest = makeRecipientViewRequest(args);
         ViewUrl viewUrl = envelopesApi.createRecipientView(accountId, results.getEnvelopeId(), viewRequest);
         return new RedirectView(viewUrl.getUrl());
@@ -108,9 +108,9 @@ public class EG013ControllerAddDocToTemplate extends AbstractEsignatureControlle
         viewRequest.setClientUserId(args.getSignerClientId());
 
         // DocuSign recommends that you redirect to DocuSign for the
-        // Signing Ceremony. There are multiple ways to save state.
+        // embedded signing. There are multiple ways to save state.
         // To maintain your application's session, use the pingUrl
-        // parameter. It causes the DocuSign Signing Ceremony web page
+        // parameter. It causes the DocuSign signing web page
         // (not the DocuSign server) to send pings via AJAX to your app.
         // NOTE: The pings will only be sent if the pingUrl is an https address
         viewRequest.setPingFrequency("600");
