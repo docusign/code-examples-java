@@ -30,6 +30,7 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
     private static final String DOCUMENT_FILE_NAME = "Welcome1.txt";
     private static final String DOCUMENT_ID = "1";
     private static final String DOCUMENT_NAME = "Welcome";
+    private static final String NOT_ALLOWED_ERROR_MESSAGE = "Update to the workflow with recipient routing is not allowed";
 
     private final Session session;
     private final User user;
@@ -52,16 +53,26 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
         EnvelopeDefinition envelope = createEnvelope(args);
 
         // Step 3: Call the eSignature REST API
-        EnvelopeSummary results = envelopesApi.createEnvelope(this.session.getAccountId(), envelope);
-
-        this.session.setEnvelopeId(results.getEnvelopeId());
-        DoneExample.createDefault(this.title)
-                .withJsonObject(results)
-                .withMessage(
-                        "An envelope where the workflow is routed to different recipients based on the value of a transaction " +
-                        "has been created and sent!<br />Envelope ID "
-                        + this.session.getEnvelopeId() + ".")
-                .addToModel(model);
+        try {
+            EnvelopeSummary results = envelopesApi.createEnvelope(this.session.getAccountId(), envelope);
+            this.session.setEnvelopeId(results.getEnvelopeId());
+            DoneExample.createDefault(this.title)
+                    .withJsonObject(results)
+                    .withMessage(
+                            "An envelope where the workflow is routed to different recipients based on the value of a transaction " +
+                                    "has been created and sent!<br/>Envelope ID "
+                                    + this.session.getEnvelopeId() + ".")
+                    .addToModel(model);
+        } catch (ApiException apiException) {
+            if (!apiException.getMessage().contains(NOT_ALLOWED_ERROR_MESSAGE)) {
+                throw apiException;
+            }
+            DoneExample.createDefault(this.title)
+                    .withMessage(NOT_ALLOWED_ERROR_MESSAGE + " for your account!<br/> " +
+                            "Please contact with our <a target='_blank' href='https://developers.docusign.com/support'> support team </a> " +
+                            "to resolve this issue.")
+                    .addToModel(model);
+        }
 
         return DONE_EXAMPLE_PAGE;
     }
