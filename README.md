@@ -103,10 +103,19 @@ This repo is a Java Spring Boot application that demonstrates:
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG030ControllerApplyBrandToTemplate.java)
    This code example demonstrates how to apply a brand you've created to a template using using the [Create Envelope](https://developers.docusign.com/esign-rest-api/reference/Envelopes/Envelopes/create) method. 
    You must have at least one created template and brand.
- 
 1. **Bulk sending envelopes to multiple recipients**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG031ControllerBulkSendEnvelopes.java)
    This example creates and sends a bulk envelope by generating a bulk recipient list and initiating a bulk send.
+1. **Pausing a signature workflow Source.**
+   [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG032ControllerPauseSignatureWorkflow.java)
+   This code example demonstrates how to create an envelope where the workflow is paused before the envelope is sent to a second recipient.
+1. **Unpausing a signature workflow**
+   [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG033ControllerUnpauseSignatureWorkflow.java)
+   This code example demonstrates how to resume an envelope workflow that has been paused
+1. **Using conditional recipients**
+   [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG034ControllerUseConditionalRecipients.java)
+   This code example demonstrates how to create an envelope where the workflow is routed to different recipients based on the value of a transaction.
+
 
 ## Rooms API 
 **Note:** to use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). 
