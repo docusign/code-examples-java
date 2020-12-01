@@ -44,15 +44,16 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
     }
 
     @Override
+    // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException, IOException {
 
-        // Step 1: Construct your API headers
+        // Step 2: Construct your API headers
         EnvelopesApi envelopesApi = createEnvelopesApi(this.session.getBasePath(), this.user.getAccessToken());
 
-        // Step 2: Construct your envelope JSON body
+        // Step 3: Construct your envelope JSON body
         EnvelopeDefinition envelope = createEnvelope(args);
 
-        // Step 3: Call the eSignature REST API
+        // Step 4: Call the eSignature REST API
         try {
             EnvelopeSummary results = envelopesApi.createEnvelope(this.session.getAccountId(), envelope);
             this.session.setEnvelopeId(results.getEnvelopeId());
@@ -225,4 +226,6 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
         recipientRouting.setRules(recipientRules);
         return recipientRouting;
     }
+
+    // ***DS.snippet.0.end
 }
