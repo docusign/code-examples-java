@@ -40,10 +40,10 @@ public class EG033ControllerUnpauseSignatureWorkflow extends AbstractEsignatureC
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
 
-        // Step 1: Construct your API headers
+        // Step 2: Construct your API headers
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
-        // Step 2: Construct your envelope JSON body
+        // Step 3: Construct your envelope JSON body
         Workflow workflow = new Workflow();
         workflow.setWorkflowStatus(EnvelopeHelpers.WORKFLOW_STATUS_IN_PROGRESS);
 
@@ -53,7 +53,7 @@ public class EG033ControllerUnpauseSignatureWorkflow extends AbstractEsignatureC
         EnvelopesApi.UpdateOptions updateOptions = envelopesApi. new UpdateOptions();
         updateOptions.setResendEnvelope("true");
 
-        // Step 3: Call the eSignature REST API
+        // Step 4: Call the eSignature REST API
         EnvelopeUpdateSummary results = envelopesApi.update(
                 this.session.getAccountId(),
                 this.session.getEnvelopeId(),
