@@ -188,11 +188,10 @@ When the token expires, it updates automatically.
    A sample Redirect URI: http://myserver.it.mycompany.com/login
 
 1. [JDK 11](https://jdk.java.net/14/) or later
-1. [Lombok Annotations Processing](https://www.baeldung.com/lombok-ide) configured for your IDE
 1. [Maven](https://maven.apache.org/download.cgi)
 1. A name and email for a signer, and a name and email for a cc recipient.
    The signer and the cc email cannot be the same.
-
+1. (Optional) [Lombok Annotations Processing](https://www.baeldung.com/lombok-ide) configured for your IDE
 
 ### Short installation instructions
 * Download or clone this repository.
@@ -201,10 +200,9 @@ When the token expires, it updates automatically.
 **Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip the next step as it was automatically performed for you.**
 * Configure the project by overriding necessary properties from the `src\main\resources\application.example.json` and saving this file as `application.json` file. **Don't add this file into the Git index.**
 * Add VM argument `-Dspring.profiles.active=dev` to your IDE
-* If using VS Code or Intellij, search for and install the Lombok Annotations Plugin. If using Eclipse, install the lombok.jar file `java -jar lombok.jar` in the terminal.
 * Note that IntelliJ IDEA Community Edition does not directly support
   Spring Boot applications.  
-
+* If you wish to add Lombok, search for and install the Lombok Annotations Plugin. If using Eclipse, download the [lombok.jar](https://projectlombok.org/downloads/lombok.jar) itself to your local machine, open a terminal or command prompt window and install by typing in  `java -jar lombok.jar` then pressing **Enter**.
 ### Build and run
 Launchers are built as a dedicated application with embedded TomCat server. Build:  
 ``` bash
