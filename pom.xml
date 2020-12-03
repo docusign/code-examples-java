@@ -19,7 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <start-class>com.docusign.App</start-class>
         <java.version>1.8</java.version>
-        <lombok.version>1.14.8</lombok.version>
+        <lombok.version>1.18.6</lombok.version>
         <log4jdbc.log4j2.version>1.16</log4jdbc.log4j2.version>
         <rest.assured.version>2.3.3</rest.assured.version>
     </properties>
