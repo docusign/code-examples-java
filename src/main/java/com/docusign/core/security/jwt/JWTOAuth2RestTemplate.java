@@ -81,12 +81,13 @@ public class JWTOAuth2RestTemplate extends OAuth2RestTemplate {
 // Special handling for consent_required
             String message = e.getMessage();
             String consent_url = "";
+            String consent_scopes = String.join(" ", scopes) + " impersonation";
             if (message != null && message.contains("consent_required")) {
                 consent_url = String.format("https://%s/oauth/auth?prompt=login&response_type=code&scope=%s" +
                     "&client_id=%s" +
                     "&redirect_uri=%s",
                     resource.getBaseUrl(),
-                    "signature%20impersonation",
+                    consent_scopes,
                     resource.getClientId(),
                     "http://localhost:8080/login%26type%3Djwt");
                 System.err.println("\nC O N S E N T   R E Q U I R E D" +
