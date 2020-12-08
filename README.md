@@ -7,6 +7,10 @@ This GitHub repo includes code example for both the DocuSign eSignature REST API
 ## Introduction
 This repo is a Java Spring Boot application that demonstrates:
 
+## eSignature API
+
+For more information about the scopes used for obtaining authorization to use the eSignature API, see the [Required Scopes section](https://developers.docusign.com/docs/esign-rest-api/esign101/auth)
+
 1. **Use embedded signing.**
    [Source.](./src/main/java/com/docusign/EG001ControllerEmbeddedSigning.java)
    This example sends an envelope, and then uses embedded signing for the first signer.
@@ -130,6 +134,9 @@ This repo is a Java Spring Boot application that demonstrates:
    This topic demonstrates how to create an envelope where the workflow is paused before the envelope is sent to a second recipient. 
 
 ## Rooms API 
+
+For more information about the scopes used for obtaining authorization to use the Rooms API, see the [Required Scopes section](https://developers.docusign.com/docs/rooms-api/rooms101/auth/)
+
 **Note:** to use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). 
 
 
@@ -163,6 +170,8 @@ The **refresh token** is not used in this example.
 
 * Authentication with DocuSign via the [JSON Web Token (JWT) Grant](https://developers.docusign.com/platform/auth/jwt/).
 When the token expires, it updates automatically.
+
+   **Note:** Before you can make any API calls using JWT Grant, you must get your user’s consent for your app to impersonate them. To do this, the `impersonation` scope is added when requesting a JSON Web Token.
 
 
 ## Installation
