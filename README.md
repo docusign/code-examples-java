@@ -1,11 +1,25 @@
 # Java Launcher Code Examples
 
-This GitHub repo includes code example for both the DocuSign eSignature REST API as well as the DocuSign Rooms API. To use the Rooms API code examples, change the **DS_API_NAME** value to `ROOMS` in the application.json config file.
+Github repo: https://github.com/docusign/code-examples-java
+
+This GitHub repo includes code example for both the DocuSign eSignature REST API as well as the DocuSign Rooms API. 
+
+To use the Rooms API code examples, modify the **DS_API_NAME** setting at the end of the application.json file. Set the vlue to `ROOMS`.
 
 **Note:** to use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). 
 
 ## Introduction
-This repo is a Java Spring Boot application that demonstrates:
+This repo is a Java Spring Boot application that demonstrates how to authenticate with DocuSign via the
+[Authorization Code Grant flow](https://developers.docusign.com/esign-rest-api/guides/authentication/oauth2-code-grant). When the token expires, the user is asked to reauthenticate. The refresh token is not used.
+
+The [Spring Boot security Oauth2 boot autoconfigure package](https://github.com/spring-projects/spring-security-oauth2-boot/blob/master/spring-security-oauth2-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/oauth2/resource/UserInfoRestTemplateCustomizer.java) is used for authentication.
+
+The OAuth library is used in the file [WebSecurityConfig.java](https://github.com/docusign/code-examples-java/blob/master/src/main/java/com/docusign/WebSecurityConfig.java).
+
+## eSignature API
+
+For more information about the scopes used for obtaining authorization to use the eSignature API, see the [Required Scopes section](https://developers.docusign.com/docs/esign-rest-api/esign101/auth).
+
 
 1. **Use embedded signing.**
    [Source.](./src/main/java/com/docusign/EG001ControllerEmbeddedSigning.java)
@@ -116,7 +130,6 @@ This repo is a Java Spring Boot application that demonstrates:
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG034ControllerUseConditionalRecipients.java)
    This code example demonstrates how to create an envelope where the workflow is routed to different recipients based on the value of a transaction.
 
-
 1. **Сreating an envelope where the workflow is paused**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG032ControllerPauseSignatureWorkflow.java)
    This code example demonstrates how to create an envelope where the workflow is paused before the envelope is sent to a second recipient. 
@@ -130,7 +143,10 @@ This repo is a Java Spring Boot application that demonstrates:
    This code example demonstrates how to create an envelope where the workflow is paused before the envelope is sent to a second recipient. 
 
 ## Rooms API 
-**Note:** to use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). 
+
+For more information about the scopes used for obtaining authorization to use the Rooms API, see the [Required Scopes section](https://developers.docusign.com/docs/rooms-api/rooms101/auth/).
+
+**Note:** To use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). Examples 4 and 6 require that you have the DocuSign Forms feature enabled in your Rooms for Real Estate account.
 
 
 1. **Create room with Data.**
@@ -151,18 +167,6 @@ This repo is a Java Spring Boot application that demonstrates:
 1. **Create an external form fillable session.**
    [Source.](./src/main/java/com/docusign/controller/rooms/examples/R006ControllerCreateExternalFormFillSession.java)
    This code example create an external form that can be filled using DocuSign for a specific room in your DocuSign Rooms account.
-
-
-
-
-## Included OAuth grant types:
-
-* Authentication with Docusign via [Authorization Code Grant flow](https://developers.docusign.com/platform/auth/authcode) .
-When the token expires, the user is asked to re-authenticate.
-The **refresh token** is not used in this example.
-
-* Authentication with DocuSign via the [JSON Web Token (JWT) Grant](https://developers.docusign.com/platform/auth/jwt/).
-When the token expires, it updates automatically.
 
 
 ## Installation
@@ -187,22 +191,45 @@ When the token expires, it updates automatically.
    use the appropriate DNS name and port instead of `localhost:8080`.
    A sample Redirect URI: http://myserver.it.mycompany.com/login
 
-1. [JDK 11](https://jdk.java.net/14/) or later
+1. [JDK 11](https://jdk.java.net/java-se-ri/11) or later
 1. [Maven](https://maven.apache.org/download.cgi)
 1. A name and email for a signer, and a name and email for a cc recipient.
    The signer and the cc email cannot be the same.
 1. (Optional) [Lombok Annotations Processing](https://www.baeldung.com/lombok-ide) configured for your IDE
 
-### Short installation instructions
-* Download or clone this repository.
-* The project includes a Maven pom file.   
+#### Authorization Code Grant specifics:
+   You will need the integration key and its secret. The integration key must include a redirect URI of
+
+   {app_url}/login&type=acg
+
+   where {app_url} is the URL you have associated with the folder where the source files are located.
+
+   For example, if you have created a web server that enables the URL
+
+   http://localhost:8080/
+
+   to execute files on the /public folder of this example, then you must add a redirect URI to your integration key with the value
+
+   http://localhost:8080/login&type=acg
+
+#### JWT (JSON Web Token) specifics:
+   You will need the integration key, an RSA private key, and the user ID (GUID) of the impersonated user.
+
+   The private part of the RSA key pair must be copied over and stored in a private.key file located in `src\main\resources\private.key`.
+
+   **Note:** Before you can make any API calls using JWT Grant, you must get your user’s consent for your app to impersonate them. To do this, the `impersonation` scope is added when requesting a JSON Web Token.
+
+
+### Installation steps
+1. Download or clone this repository.
+1. The project includes a Maven pom file.   
 
 **Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip the next step as it was automatically performed for you.**
-* Configure the project by overriding necessary properties from the `src\main\resources\application.example.json` and saving this file as `application.json` file. **Don't add this file into the Git index.**
-* Add VM argument `-Dspring.profiles.active=dev` to your IDE
-* Note that IntelliJ IDEA Community Edition does not directly support
+1.  Configure the project by overriding necessary properties from the `src\main\resources\application.example.json` and saving this file as `application.json` file. **Don't add this file into the Git index.**
+1. Add VM argument `-Dspring.profiles.active=dev` to your IDE
+1. Note that IntelliJ IDEA Community Edition does not directly support
   Spring Boot applications.  
-* If you wish to add Lombok, search for and install the Lombok Annotations Plugin. If using Eclipse, download the [lombok.jar](https://projectlombok.org/downloads/lombok.jar) itself to your local machine, open a terminal or command prompt window and install by typing in  `java -jar lombok.jar` then pressing **Enter**.
+1. If you wish to add Lombok, search for and install the Lombok Annotations Plugin. If using Eclipse, download the [lombok.jar](https://projectlombok.org/downloads/lombok.jar) itself to your local machine, open a terminal or command prompt window and install by typing in  `java -jar lombok.jar` then pressing **Enter**.
 ### Build and run
 Launchers are built as a dedicated application with embedded TomCat server. Build:  
 ``` bash
@@ -292,14 +319,9 @@ browser to http://localhost:8080
 
 
 ### Payments code example
-To use the payments example, create a
-test payments gateway for your developer account.
+To use the payments example, create a test payments gateway for your developer account. See the [PAYMENTS_INSTALLATION.md](https://github.com/docusign/code-examples-java/blob/master/PAYMENTS_INSTALLATION.md) file for instructions.
 
-See the
-[PAYMENTS_INSTALLATION.md](https://github.com/docusign/code-examples-java/blob/master/PAYMENTS_INSTALLATION.md)
-file for instructions.
-
-Then add the payment gateway account id to the **application.properties** file.
+Then add the payment gateway account id to the **application.json** file.
 
 
 ## License and additional information
