@@ -195,26 +195,23 @@ For more information about the scopes used for obtaining authorization to use th
 1. [Maven](https://maven.apache.org/download.cgi)
 1. A name and email for a signer, and a name and email for a cc recipient.
    The signer and the cc email cannot be the same.
-1. (Optional) [Lombok Annotations Processing](https://www.baeldung.com/lombok-ide) configured for your IDE
+### Nice to have
+1. [Lombok Annotations Processing](https://www.baeldung.com/lombok-ide) configured for your IDE
 
 #### Authorization Code Grant specifics:
    You will need the integration key and its secret. The integration key must include a redirect URI of
 
    {app_url}/login&type=acg
-
    where {app_url} is the URL you have associated with the folder where the source files are located.
-
    For example, if you have created a web server that enables the URL
 
    http://localhost:8080/
 
    to execute files on the /public folder of this example, then you must add a redirect URI to your integration key with the value
-
    http://localhost:8080/login&type=acg
 
 #### JWT (JSON Web Token) specifics:
    You will need the integration key, an RSA private key, and the user ID (GUID) of the impersonated user.
-
    The private part of the RSA key pair must be copied over and stored in a private.key file located in `src\main\resources\private.key`.
 
    **Note:** Before you can make any API calls using JWT Grant, you must get your user’s consent for your app to impersonate them. To do this, the `impersonation` scope is added when requesting a JSON Web Token.
@@ -229,7 +226,7 @@ For more information about the scopes used for obtaining authorization to use th
 1. Add VM argument `-Dspring.profiles.active=dev` to your IDE
 1. Note that IntelliJ IDEA Community Edition does not directly support
   Spring Boot applications.  
-1. If you wish to add Lombok, search for and install the Lombok Annotations Plugin. If using Eclipse, download the [lombok.jar](https://projectlombok.org/downloads/lombok.jar) itself to your local machine, open a terminal or command prompt window and install by typing in  `java -jar lombok.jar` then pressing **Enter**.
+1. [Optional] If you wish to add Lombok, search for and install the Lombok Annotations Plugin. If using Eclipse, download the [lombok.jar](https://projectlombok.org/downloads/lombok.jar) itself to your local machine, open a terminal or command prompt window and install by typing in  `java -jar lombok.jar` then pressing **Enter**.
 ### Build and run
 Launchers are built as a dedicated application with embedded TomCat server. Build:  
 ``` bash
