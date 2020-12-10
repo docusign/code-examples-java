@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 
@@ -19,6 +18,7 @@ public class WorkArguments {
     private String signerName;
     private String ccEmail;
     private String ccName;
+    private String clickwrapName;
     private String signerEmail2;
     private String signerName2;
     private String ccEmail2;

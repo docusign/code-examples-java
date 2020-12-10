@@ -3,8 +3,11 @@ package com.docusign.controller.click.examples;
 import com.docusign.DSConfiguration;
 import com.docusign.click.api.AccountsApi;
 import com.docusign.click.client.ApiClient;
+import com.docusign.click.client.ApiException;
 import com.docusign.click.client.auth.OAuth;
+import com.docusign.click.model.ClickwrapResponse;
 import com.docusign.core.controller.AbstractController;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 
@@ -50,6 +53,30 @@ public abstract class AbstractClickController extends AbstractController {
     protected static AccountsApi createAccountsApiClient(String basePath, String userAccessToken) {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         return new AccountsApi(apiClient);
+    }
+
+    /**
+     * Determine if clickwrap is exists and is active.
+     * @param basePath URL to Rooms REST API
+     * @param userAccessToken user's access token
+     * @param accountId user's account id
+     * @param clickwrapId clickwrap's id
+     * @return an boolean value
+     */
+    protected boolean isClickwrapExistsAndActive(String basePath, String userAccessToken,
+                                                 String accountId, String clickwrapId) throws ApiException {
+        boolean isClickwrapOk = false;
+
+        if (StringUtils.isNotBlank(clickwrapId)) {
+
+            AccountsApi accountsApi = this.createAccountsApiClient(basePath, userAccessToken);
+            ClickwrapResponse clickwrapResponse = accountsApi.getClickwrap(accountId, clickwrapId);
+
+            isClickwrapOk = clickwrapResponse.getClickwrapId().equals(clickwrapId) &&
+                    clickwrapResponse.getStatus().equals(ClickwrapHelper.STATUS_ACTIVE);
+        }
+
+        return isClickwrapOk;
     }
 }
 
