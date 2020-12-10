@@ -36,6 +36,9 @@ public final class EnvelopeHelpers {
     public static final String DELIVERY_METHOD_EMAIL = "Email";
     public static final String SIGNER_ROLE_NAME = "signer";
     public static final String CC_ROLE_NAME = "cc";
+    public static final String WORKFLOW_STEP_ACTION_PAUSE = "pause_before";
+    public static final String WORKFLOW_TRIGGER_ROUTING_ORDER = "routing_order";
+    public static final String WORKFLOW_STATUS_IN_PROGRESS = "in_progress";
 
 
     private EnvelopeHelpers() {}

@@ -1,13 +1,17 @@
 # Java Launcher Code Examples
 
-This GitHub repo includes code example for both the DocuSign eSignature REST API as well as the DocuSign Rooms API. To use the Rooms API code examples, change the **DS_API_NAME** value to `ROOMS` in the application.json config file.
+This GitHub repo includes code example for the DocuSign eSignature REST API, for the DocuSign Rooms API and for the Click API. To use the Rooms API code examples, change the **DS_API_NAME** value to `ROOMS` in the application.json config file, to use the Click API, change the **DS_API_NAME** value to `CLICK` in the application.json config file.
 
 **Note:** to use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). 
 
 ## Introduction
 This repo is a Java Spring Boot application that demonstrates:
 
-1. **Embedded Signing.**
+## eSignature API
+
+For more information about the scopes used for obtaining authorization to use the eSignature API, see the [Required Scopes section](https://developers.docusign.com/docs/esign-rest-api/esign101/auth)
+
+1. **Use embedded signing.**
    [Source.](./src/main/java/com/docusign/EG001ControllerEmbeddedSigning.java)
    This example sends an envelope, and then uses embedded signing for the first signer.
    With embedded signing, DocuSign signing is initiated from your website.
@@ -34,11 +38,11 @@ This repo is a Java Spring Boot application that demonstrates:
 1. **Send an envelope and upload its documents with multipart binary transfer.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG010ControllerSendBinaryDocs.java)
    Binary transfer is 33% more efficient than using Base64 encoding.
-1. **Embedded sending.**
+1. **Use embedded sending.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG011ControllerEmbeddedSending.java)
 1. **Embedded DocuSign web tool (NDSE).**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG012ControllerEmbeddedConsole.java)
-1. **Embedded Signing from a template with an added document.**
+1. **Use embedded signing from a template with an added document.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG013ControllerAddDocToTemplate.java)
    This example sends an envelope based on a template.
    In addition to the template's document(s), the example adds an
@@ -103,12 +107,36 @@ This repo is a Java Spring Boot application that demonstrates:
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG030ControllerApplyBrandToTemplate.java)
    This code example demonstrates how to apply a brand you've created to a template using using the [Create Envelope](https://developers.docusign.com/esign-rest-api/reference/Envelopes/Envelopes/create) method. 
    You must have at least one created template and brand.
- 
 1. **Bulk sending envelopes to multiple recipients**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG031ControllerBulkSendEnvelopes.java)
    This example creates and sends a bulk envelope by generating a bulk recipient list and initiating a bulk send.
+1. **Pausing a signature workflow Source.**
+   [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG032ControllerPauseSignatureWorkflow.java)
+   This code example demonstrates how to create an envelope where the workflow is paused before the envelope is sent to a second recipient.
+1. **Unpausing a signature workflow**
+   [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG033ControllerUnpauseSignatureWorkflow.java)
+   This code example demonstrates how to resume an envelope workflow that has been paused
+1. **Using conditional recipients**
+   [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG034ControllerUseConditionalRecipients.java)
+   This code example demonstrates how to create an envelope where the workflow is routed to different recipients based on the value of a transaction.
+
+
+1. **Сreating an envelope where the workflow is paused**
+   [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG032ControllerPauseSignatureWorkflow.java)
+   This topic demonstrates how to create an envelope where the workflow is paused before the envelope is sent to a second recipient. 
+
+1. **Resuming an envelope workflow that has been paused**
+   [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG033ControllerUnpauseSignatureWorkflow.java)
+   This topic demonstrates how to resume an envelope workflow that has been paused. 
+
+1. **Use conditional recipients**
+   [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG034ControllerUseConditionalRecipients.java)
+   This topic demonstrates how to create an envelope where the workflow is paused before the envelope is sent to a second recipient. 
 
 ## Rooms API 
+
+For more information about the scopes used for obtaining authorization to use the Rooms API, see the [Required Scopes section](https://developers.docusign.com/docs/rooms-api/rooms101/auth/)
+
 **Note:** to use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). 
 
 
@@ -165,6 +193,8 @@ The **refresh token** is not used in this example.
 
 * Authentication with DocuSign via the [JSON Web Token (JWT) Grant](https://developers.docusign.com/platform/auth/jwt/).
 When the token expires, it updates automatically.
+
+   **Note:** Before you can make any API calls using JWT Grant, you must get your user’s consent for your app to impersonate them. To do this, the `impersonation` scope is added when requesting a JSON Web Token.
 
 
 ## Installation
