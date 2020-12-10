@@ -132,7 +132,30 @@ This repo is a Java Spring Boot application that demonstrates:
    This example create an external form that can be filled using DocuSign for a specific room in your DocuSign Rooms account.
 
 
+## Click API 
+**Note:** to use the Click API you must also be ready authenticate with one of the workflows (https://developers.docusign.com/docs/click-api/click101/auth). 
 
+1. **Create Clickwraps.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C001ControllerCreateClickwrap.java)
+   This example shows how to create a clickwrap.
+1. **Activate Clickwrap.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C002ControllerActivateClickwrap.java)
+   This example shows how to activate a new clickwrap that you have already created..
+1. **Test Clickwrap.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C003ControllerTestClickwrap.java)
+   This example shows how to test a newly create clickwrap.
+1. **Clickwrap Embeding.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C004ControllerEmbedClickwrap.java)
+   This example shows how to embed a clickwrap into a page.
+1. **Clickwrap Versioning.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C005ControllerCreateNewVersionClickwrap.java)
+   This example shows how to create a new clickwrap version.
+1. **Get a list of Clickwraps.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C006ControllerGetListClickwraps.java)
+   This example shows how to get a list of clickwraps.
+1. **Get Clickwrap Responses.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C007ControllerGetClickwrapResponses.java)
+   This example shows how to get clickwrap responses.
 
 ## Included OAuth grant types:
 

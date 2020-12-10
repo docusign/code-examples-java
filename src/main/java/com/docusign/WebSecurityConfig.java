@@ -26,16 +26,17 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.web.filter.CompositeFilter;
 
+import javax.servlet.Filter;
 import java.util.Arrays;
 import java.util.List;
-import javax.servlet.Filter;
 
 @EnableOAuth2Client
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	public String roomScopes[] = new String[] {"signature", "dtr.rooms.read", "dtr.rooms.write", "dtr.documents.read", "dtr.documents.write", "dtr.profile.read", "dtr.profile.write", "dtr.company.read", "dtr.company.write", "room_forms"};
-    
+	public String clickScopes[] = new String[] {"signature", "click.manage", "click.send"};
+
     @Autowired
     private DSConfiguration dsConfiguration;
 
@@ -82,16 +83,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return registration;
     }
 
+    private List<String> getScopes() {
+        List<String> scopes = null;
+        if (this.dsConfiguration.getApiName().equalsIgnoreCase("rooms")) {
+            scopes = Arrays.asList(this.roomScopes);
+        } else if (this.dsConfiguration.getApiName().equalsIgnoreCase("click")) {
+            scopes = Arrays.asList(this.clickScopes);
+        }
+
+        return scopes;
+    }
+
     private OAuth2ClientAuthenticationProcessingFilter authCodeGrantFilter() {
         OAuth2SsoProperties authCodeGrantSso = authCodeGrantSso();
         AuthorizationCodeResourceDetails authCodeGrantClient = authCodeGrantClient();
-        
     	
-      	if (this.dsConfiguration.getApiName().equalsIgnoreCase("rooms")) {
-      	      		authCodeGrantClient.setScope(Arrays.asList(roomScopes));
-    	} 
-        
-        
+        List<String> scopes = this.getScopes();
+        if (scopes != null) {
+            authCodeGrantClient.setScope(scopes);
+        }
+
         ResourceServerProperties userInfoResource = userInfoResource();
         OAuth2ClientAuthenticationProcessingFilter filter =
             new OAuth2ClientAuthenticationProcessingFilter(authCodeGrantSso.getLoginPath());
@@ -106,12 +117,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private OAuth2ClientAuthenticationProcessingFilter jwtGrantFilter() {
         OAuth2SsoProperties authCodeGrantSso = jwtGrantSso();
         JWTAuthorizationCodeResourceDetails jwtCodeGrantClient = jwtCodeGrantClient();
-        
-      	if (this.dsConfiguration.getApiName().equalsIgnoreCase("rooms")) {
-      		jwtCodeGrantClient.setScope(Arrays.asList(roomScopes));
-    		 
-    	} 
-        
+
+        List<String> scopes = this.getScopes();
+        if (scopes != null) {
+            jwtCodeGrantClient.setScope(scopes);
+        }
+
         OAuth2ClientAuthenticationProcessingFilter filter =
             new OAuth2ClientAuthenticationProcessingFilter(authCodeGrantSso.getLoginPath());
         OAuth2RestTemplate restTemplate = new JWTOAuth2RestTemplate(jwtCodeGrantClient, oAuth2ClientContext);
