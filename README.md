@@ -161,7 +161,8 @@ For more information about the scopes used for obtaining authorization to use th
 
 
 ## Click API 
-**Note:** to use the Click API you must also be ready authenticate with one of the workflows (https://developers.docusign.com/docs/click-api/click101/auth). 
+
+For more information about the scopes used for obtaining authorization to use the Click API, see the [Required Scopes section](https://developers.docusign.com/docs/click-api/click101/auth/)
 
 1. **Create Clickwraps.**
    [Source.](./src/main/java/com/docusign/controller/click/examples/C001ControllerCreateClickwrap.java)
