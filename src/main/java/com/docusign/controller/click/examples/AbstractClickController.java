@@ -44,9 +44,9 @@ public abstract class AbstractClickController extends AbstractController {
     }
 
     /**
-     * Creates a new instance of the RoomsApi. This method
+     * Creates a new instance of the ClickApi. This method
      * creates an instance of the ApiClient class silently.
-     * @param basePath URL to Rooms REST API
+     * @param basePath URL to Click REST API
      * @param userAccessToken user's access token
      * @return an instance of the {@link AccountsApi}
      */
@@ -57,7 +57,7 @@ public abstract class AbstractClickController extends AbstractController {
 
     /**
      * Determine if clickwrap is exists and is active.
-     * @param basePath URL to Rooms REST API
+     * @param basePath URL to Click API
      * @param userAccessToken user's access token
      * @param accountId user's account id
      * @param clickwrapId clickwrap's id
