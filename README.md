@@ -195,6 +195,7 @@ For more information about the scopes used for obtaining authorization to use th
 1. [Maven](https://maven.apache.org/download.cgi)
 1. A name and email for a signer, and a name and email for a cc recipient.
    The signer and the cc email cannot be the same.
+   
 ### Nice to have
 1. [Lombok Annotations Processing](https://www.baeldung.com/lombok-ide) configured for your IDE
 
@@ -226,7 +227,8 @@ For more information about the scopes used for obtaining authorization to use th
 1. Add VM argument `-Dspring.profiles.active=dev` to your IDE
 1. Note that IntelliJ IDEA Community Edition does not directly support
   Spring Boot applications.  
-1. [Optional] If you wish to add Lombok, search for and install the Lombok Annotations Plugin. If using Eclipse, download the [lombok.jar](https://projectlombok.org/downloads/lombok.jar) itself to your local machine, open a terminal or command prompt window and install by typing in  `java -jar lombok.jar` then pressing **Enter**.
+1. [Optional] Install Lombok for your IDE (See below for details).
+
 ### Build and run
 Launchers are built as a dedicated application with embedded TomCat server. Build:  
 ``` bash
@@ -241,10 +243,7 @@ $ java -Dspring.profiles.active=dev -jar code-examples-java-1.0-SNAPSHOT.war
 
 
 ## IntelliJ Ultimate instructions
-
-The [IntelliJ IDE Ultimate edition](https://www.jetbrains.com/idea/)
-can be used with the launcher. The IntelliJ Ultimate edition is
-required due to its support for Spring Boot and JSP view pages.
+The [IntelliJ IDE Ultimate edition](https://www.jetbrains.com/idea/) can be used with the launcher. The IntelliJ Ultimate edition is required due to its support for Spring Boot and JSP view pages.
 
 **Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip Step 1 as it was automatically performed for you.**
 
@@ -293,13 +292,15 @@ Under **Spring Boot** select the `Enable debug output` checkbox.
 
 Use a **Run** menu option to run or debug the launcher.
 
-After the application finishes building, open your
-browser to http://localhost:8080
+After the application finishes building, open your browser to http://localhost:8080
 
+
+### [Optional] Installing Lombok
+
+Click File, then Settings. From there select `Plugins`. Open the Marketplace tab and type **Lombok**. It should have an author named Michail Plushnikov. Click install then restart IntelliJ.  
 
 
 ## Eclipse instructions
-
 **Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip the first step as it was automatically performed for you.**
 
 * Download or clone this repository.
@@ -317,6 +318,7 @@ browser to http://localhost:8080
   * Put in the following value for project: `code-examples-java`.
   * Put in the following value into the Main class: `com.docusign.App`.
 * Run the application by using Run dropdown shortcut then choosing build then choosing run. Open your browser to http://localhost:8080
+* [Optional] Install Lombok by downloading the [lombok.jar](https://projectlombok.org/downloads/lombok.jar) itself to your local machine, open a terminal or command prompt window and install by typing in  `java -jar lombok.jar` then pressing **Enter**
 
 ### Payments code example
 To use the payments example, create a test payments gateway for your developer account. See the [PAYMENTS_INSTALLATION.md](https://github.com/docusign/code-examples-java/blob/master/PAYMENTS_INSTALLATION.md) file for instructions.
