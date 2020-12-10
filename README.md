@@ -306,14 +306,17 @@ browser to http://localhost:8080
 * Open Eclipse and select import. When the window appears, click the Maven folder, then click `Existing Maven Project` and choose `Next`.
 * For the Root directory, Browse for and select this same repo `code-examples-java`.
 * Once selected, click `Finish` at the bottom center to save the project link to your eclipse workspace.
-* Next, click the menu item `Run->Run Configurations` and choose a new Maven configuration with the following:
-  * Name the configuration `code-examples-java` (If You have downloaded the launcher via Quickstart, skip this step).
+* Next, click the menu item `Run->Run Configurations` and choose a new Maven configuration to clean and compile with the following:
+  * Name the configuration `build` (If You have downloaded the launcher via Quickstart, skip this step).
   * Put in the following value for your workspace in the Base Directory: `${workspace_loc:/code-examples-java}`.
-  * Put in the following value for the Goals field: `spring-boot::run`.
+  * Put in the following values into the Goals field: `clean package`.
 * Click the JRE tab in the Run Configurations menu and make sure your have a Runtime JRE set to jdk-11 or higher.
-* Click apply to save. Finally, click `Run` to run it!
-* Open a browser to http://localhost:8080
-
+* Click apply to save.
+* Finally, create another configuration by again using `Run->Run Configurations`, choosing Java Application Configuration with the following:  
+  * Name the configuration `run` (If You have downloaded the launcher via Quickstart, skip this step).
+  * Put in the following value for project: `code-examples-java`.
+  * Put in the following value into the Main class: `com.docusign.App`.
+* Run the application by using Run dropdown shortcut then choosing build then choosing run. Open your browser to http://localhost:8080
 
 ### Payments code example
 To use the payments example, create a test payments gateway for your developer account. See the [PAYMENTS_INSTALLATION.md](https://github.com/docusign/code-examples-java/blob/master/PAYMENTS_INSTALLATION.md) file for instructions.
