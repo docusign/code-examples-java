@@ -28,6 +28,10 @@ public class WorkArguments {
     private String dsReturnUrl;
     private String dsPingUrl;
     private String signerClientId;
+    private String signerCheckedEmail;
+    private String signerCheckedName;
+    private String signerNotCheckedEmail;
+    private String signerNotCheckedName;
     private String docSelect;
     private String accessCode;
     private String brandName;

@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>13. Embedded Signing Ceremony from a template with an added document</h4>
+<h4>13. Use embedded signing from a template with an added document</h4>
 <c:if test="${templateOk}">
     <p>This example sends an envelope based on a template.</p>
     <p>In addition to the template's document(s), the example adds an
@@ -15,7 +15,7 @@
     <p>This example then enables you to sign the envelope using embedded signing.</p>
     <p>Embedded signing provides a smoother user experience for a signer who is
         already logged into your web application since the DocuSign
-        signing ceremony is initiated from your website.</p>
+        signing is initiated from your website.</p>
 </c:if>
 
 <c:if test="${showDoc}">
