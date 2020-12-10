@@ -227,7 +227,7 @@ For more information about the scopes used for obtaining authorization to use th
 1. Add VM argument `-Dspring.profiles.active=dev` to your IDE
 1. Note that IntelliJ IDEA Community Edition does not directly support
   Spring Boot applications.  
-1. [Optional] Install Lombok for your IDE (See below for details).
+1. [Optional] Install Lombok for your IDE (See the IntelliJ or Eclipse instructions below for specific details).
 
 ### Build and run
 Launchers are built as a dedicated application with embedded TomCat server. Build:  
