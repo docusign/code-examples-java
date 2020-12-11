@@ -26,7 +26,6 @@ public class C007ControllerGetClickwrapResponses extends AbstractClickController
     private final Session session;
     private final User user;
 
-
     @Autowired
     public C007ControllerGetClickwrapResponses(DSConfiguration config, Session session, User user) {
         super(config, "c007", "Get clickwrap responses");

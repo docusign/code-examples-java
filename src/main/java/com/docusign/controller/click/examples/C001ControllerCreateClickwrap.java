@@ -33,7 +33,6 @@ public class C001ControllerCreateClickwrap extends AbstractClickController {
     private final Session session;
     private final User user;
 
-
     @Autowired
     public C001ControllerCreateClickwrap(DSConfiguration config, Session session, User user) {
         super(config, "c001", "Create a clickwrap");
