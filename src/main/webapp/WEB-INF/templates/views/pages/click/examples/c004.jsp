@@ -19,7 +19,7 @@
 
 <c:choose>
     <c:when test="${clickwrapOk == true}">
-        <p>The clickwrap you created via example 1 will be embeded.</p>
+        <p>The clickwrap you created via example 1 will be embedded.</p>
         <div id="ds-click"
              data-account-id="${locals.session.accountId}"
              data-user-id="${locals.dsConfig.signerEmail}"

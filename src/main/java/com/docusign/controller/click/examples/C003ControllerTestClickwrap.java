@@ -24,7 +24,6 @@ public class C003ControllerTestClickwrap extends AbstractClickController {
     private final Session session;
     private final User user;
 
-
     @Autowired
     public C003ControllerTestClickwrap(DSConfiguration config, Session session, User user) {
         super(config, "c003", "Embed a clickwrap");

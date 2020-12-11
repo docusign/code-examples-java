@@ -29,7 +29,6 @@ public class C002ControllerActivateClickwrap extends AbstractClickController {
     private final Session session;
     private final User user;
 
-
     @Autowired
     public C002ControllerActivateClickwrap(DSConfiguration config, Session session, User user) {
         super(config, "c002", "Activate a clickwrap");

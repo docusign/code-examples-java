@@ -28,14 +28,12 @@ import java.io.IOException;
 public class C005ControllerCreateNewVersionClickwrap extends AbstractClickController {
 
     private static final String MODEL_CLICKWRAP_OK = "clickwrapOk";
-
     private static final String DOCUMENT_FILE_NAME = "TermsOfService.pdf";
     private static final Integer DOCUMENT_ORDER = 0;
     private static final String DOCUMENT_NAME = "Terms of Service";
 
     private final Session session;
     private final User user;
-
 
     @Autowired
     public C005ControllerCreateNewVersionClickwrap(DSConfiguration config, Session session, User user) {

@@ -26,7 +26,6 @@ public class C006ControllerGetListClickwraps extends AbstractClickController {
     private final Session session;
     private final User user;
 
-
     @Autowired
     public C006ControllerGetListClickwraps(DSConfiguration config, Session session, User user) {
         super(config, "c006", "Get a list of clickwraps");
