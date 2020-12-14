@@ -8,7 +8,7 @@
     By default, new clickwraps are inactive. You must activate your clickwrap before you can use it.
 </p>
 <p>API methods used:
-    <a target ="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/updateclickwrapversion">ClickWraps:updateClickwrapVersion</a>.
+    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/updateclickwrapversion">ClickWraps:updateClickwrapVersion</a>.
 </p>
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
@@ -24,7 +24,7 @@
     </c:when>
     <c:otherwise>
         <p>Cannot find any clickwrap. Please first create a clickwrap using
-            <a target='_blank' href='/c001'>example 1</a>.
+            <a target="_blank" href="/c001">example 1</a>.
         </p>
     </c:otherwise>
 </c:choose>

@@ -24,7 +24,7 @@
     </c:when>
     <c:otherwise>
         <p>Cannot find any clickwrap. Please first create a clickwrap using
-            <a target='_blank' href='/c001'>example 1</a>.
+            <a target="_blank" href="/c001">example 1</a>.
         </p>
     </c:otherwise>
 </c:choose>
