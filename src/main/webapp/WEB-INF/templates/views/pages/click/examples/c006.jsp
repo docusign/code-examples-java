@@ -7,7 +7,7 @@
     associated with a specific DocuSign user.
 </p>
 <p>API methods used:
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/getclickwraps">ClickWraps:getClickwraps</a>
+    <a target ="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/getclickwraps">ClickWraps:getClickwraps</a>
 </p>
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.

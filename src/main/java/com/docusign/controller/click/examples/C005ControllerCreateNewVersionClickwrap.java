@@ -86,6 +86,7 @@ public class C005ControllerCreateNewVersionClickwrap extends AbstractClickContro
                 .mustView(true)
                 .requireAccept(true)
                 .documentDisplay("document");
+
         return new ClickwrapRequest()
                 .addDocumentsItem(document)
                 .clickwrapName("Terms of Service")
