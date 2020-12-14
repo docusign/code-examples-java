@@ -73,6 +73,7 @@ public class C001ControllerCreateClickwrap extends AbstractClickController {
                 .mustView(true)
                 .requireAccept(true).
                 documentDisplay("document");
+
         return new ClickwrapRequest()
                 .addDocumentsItem(document)
                 .clickwrapName(clickwrapName)

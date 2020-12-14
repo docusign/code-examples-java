@@ -3,15 +3,15 @@
 
 <h4>4. Embeding a clickwrap.</h4>
 
-<p>This topic describes how to use <a target ='_blank' rel="noopener noreferrer" href="https://www.docusign.com/products/click">DocuSign Click</a>
+<p>This topic describes how to use <a target ="_blank" rel="noopener noreferrer" href="https://www.docusign.com/products/click">DocuSign Click</a>
     to embed an existing clickwrap in your website. It walks you through the process of
     creating the JavaScript code you use to embed the clickwrap.
 
     You perform this step after you follow the steps in
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/how-to/create-clickwraps">How to create a clickwrap</a> and
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/how-to/activate-clickwrap">How to activate a clickwrap</a>.
+    <a target ="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/how-to/create-clickwraps">How to create a clickwrap</a> and
+    <a target ="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/how-to/activate-clickwrap">How to activate a clickwrap</a>.
     To learn how to automatically generate a clickwrap and its embed code by using the UI,
-    see the <a target ='_blank' rel="noopener noreferrer" href="https://support.docusign.com/en/guides/click-user-guide">Click User Guide</a>.
+    see the <a target ="_blank" rel="noopener noreferrer" href="https://support.docusign.com/en/guides/click-user-guide">Click User Guide</a>.
 </p>
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
