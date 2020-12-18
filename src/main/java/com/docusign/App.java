@@ -18,7 +18,7 @@ public class App {
     private static void openHomePage() throws IOException {
         if (OSDetector.isMac()){
             Runtime rt = Runtime.getRuntime();
-            String[] arguments = { "osascript", "-e", "open location \"" + "http://localhost:5000" + "\"" };
+            String[] arguments = { "osascript", "-e", "open location \"" + "http://localhost:8080" + "\"" };
             rt.exec(arguments);
         }
         else {
