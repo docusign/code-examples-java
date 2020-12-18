@@ -1,5 +1,9 @@
 package com.docusign;
 
+/*
+ * This class can be used to determine the user's operating system so that the
+ * application can successfully open a web browser to run the examples.
+ */
 public class OSDetector
 {
     private static boolean isWindows;
