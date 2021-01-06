@@ -22,7 +22,7 @@
         <commonsio.version>2.6</commonsio.version>
         <docusign.version>3.8.0</docusign.version>
         <rooms.version>1.0.0</rooms.version>
-        <click.version>1.0.0-alpha</click.version>
+        <click.version>1.0.0-BETA</click.version>
     </properties>
 
     <dependencies>

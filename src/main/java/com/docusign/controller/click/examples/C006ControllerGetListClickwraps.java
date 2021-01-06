@@ -41,7 +41,7 @@ public class C006ControllerGetListClickwraps extends AbstractClickController {
         AccountsApi accountsApi = this.createAccountsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
         // Step 3: Call the v1 Click API
-        ClickwrapsResponse clickwrapsResponse = accountsApi.getClickwraps(this.session.getAccountId());
+        ClickwrapVersionsResponse clickwrapsResponse = accountsApi.getClickwraps(this.session.getAccountId());
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(clickwrapsResponse)

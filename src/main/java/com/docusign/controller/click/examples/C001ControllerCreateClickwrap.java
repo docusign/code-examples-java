@@ -4,7 +4,7 @@ import com.docusign.DSConfiguration;
 import com.docusign.click.api.AccountsApi;
 import com.docusign.click.client.ApiException;
 import com.docusign.click.model.ClickwrapRequest;
-import com.docusign.click.model.ClickwrapSummaryResponse;
+import com.docusign.click.model.ClickwrapVersionSummaryResponse;
 import com.docusign.click.model.DisplaySettings;
 import com.docusign.click.model.Document;
 import com.docusign.common.WorkArguments;
@@ -51,7 +51,7 @@ public class C001ControllerCreateClickwrap extends AbstractClickController {
         ClickwrapRequest clickwrapRequest = this.createClickwrapRequest(args.getClickwrapName());
 
         // Step 4: Call the v1 Click API
-        ClickwrapSummaryResponse createdClickwrap = accountsApi.createClickwrap(this.session.getAccountId(), clickwrapRequest);
+        ClickwrapVersionSummaryResponse createdClickwrap = accountsApi.createClickwrap(this.session.getAccountId(), clickwrapRequest);
 
         this.session.setClickwrapId(createdClickwrap.getClickwrapId());
         this.session.setClickwrapVersionNumber(createdClickwrap.getVersionNumber().toString());

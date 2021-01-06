@@ -5,7 +5,7 @@ import com.docusign.click.api.AccountsApi;
 import com.docusign.click.client.ApiClient;
 import com.docusign.click.client.ApiException;
 import com.docusign.click.client.auth.OAuth;
-import com.docusign.click.model.ClickwrapResponse;
+import com.docusign.click.model.ClickwrapVersionResponse;
 import com.docusign.core.controller.AbstractController;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
@@ -69,7 +69,7 @@ public abstract class AbstractClickController extends AbstractController {
         if (StringUtils.isNotBlank(clickwrapId)) {
 
             AccountsApi accountsApi = this.createAccountsApiClient(basePath, userAccessToken);
-            ClickwrapResponse clickwrapResponse = accountsApi.getClickwrap(accountId, clickwrapId);
+            ClickwrapVersionResponse clickwrapResponse = accountsApi.getClickwrap(accountId, clickwrapId);
 
             isClickwrapOk = clickwrapResponse.getClickwrapId().equals(clickwrapId) &&
                     clickwrapResponse.getStatus().equals(ClickwrapHelper.STATUS_ACTIVE);
