@@ -2,9 +2,10 @@
 
 Github repo: https://github.com/docusign/code-examples-java
 
-This GitHub repo includes code example for both the DocuSign eSignature REST API as well as the DocuSign Rooms API. 
+This GitHub repo includes code example for the DocuSign eSignature REST API, for the DocuSign Rooms API and for the Click API. 
 
-To use the Rooms API code examples, modify the **DS_API_NAME** setting at the end of the application.json file. Set the vlue to `ROOMS`.
+To use the Rooms API code examples, modify the **DS_API_NAME** setting at the end of the application.json file. Set the value to `ROOMS`.
+To use the Click API code examples, modify the **DS_API_NAME** setting at the end of the application.json file. Set the value to `CLICK`.
 
 **Note:** to use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). 
 
@@ -167,6 +168,45 @@ For more information about the scopes used for obtaining authorization to use th
 1. **Create an external form fillable session.**
    [Source.](./src/main/java/com/docusign/controller/rooms/examples/R006ControllerCreateExternalFormFillSession.java)
    This code example create an external form that can be filled using DocuSign for a specific room in your DocuSign Rooms account.
+   This example create an external form that can be filled using DocuSign for a specific room in your DocuSign Rooms account.
+
+
+## Click API 
+
+For more information about the scopes used for obtaining authorization to use the Click API, see the [Required Scopes section](https://developers.docusign.com/docs/click-api/click101/auth/)
+
+1. **Create Clickwraps.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C001ControllerCreateClickwrap.java)
+   This example shows how to create a clickwrap.
+1. **Activate Clickwrap.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C002ControllerActivateClickwrap.java)
+   This example shows how to activate a new clickwrap that you have already created..
+1. **Test Clickwrap.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C003ControllerTestClickwrap.java)
+   This example shows how to test a newly create clickwrap.
+1. **Clickwrap Embeding.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C004ControllerEmbedClickwrap.java)
+   This example shows how to embed a clickwrap into a page.
+1. **Clickwrap Versioning.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C005ControllerCreateNewVersionClickwrap.java)
+   This example shows how to create a new clickwrap version.
+1. **Get a list of Clickwraps.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C006ControllerGetListClickwraps.java)
+   This example shows how to get a list of clickwraps.
+1. **Get Clickwrap Responses.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C007ControllerGetClickwrapResponses.java)
+   This example shows how to get clickwrap responses.
+
+## Included OAuth grant types:
+
+* Authentication with Docusign via [Authorization Code Grant flow](https://developers.docusign.com/platform/auth/authcode) .
+When the token expires, the user is asked to re-authenticate.
+The **refresh token** is not used in this example.
+
+* Authentication with DocuSign via the [JSON Web Token (JWT) Grant](https://developers.docusign.com/platform/auth/jwt/).
+When the token expires, it updates automatically.
+
+   **Note:** Before you can make any API calls using JWT Grant, you must get your user’s consent for your app to impersonate them. To do this, the `impersonation` scope is added when requesting a JSON Web Token.
 
 
 ## Installation
