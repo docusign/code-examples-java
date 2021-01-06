@@ -181,20 +181,14 @@ For more information about the scopes used for obtaining authorization to use th
 1. **Activate Clickwrap.**
    [Source.](./src/main/java/com/docusign/controller/click/examples/C002ControllerActivateClickwrap.java)
    This example shows how to activate a new clickwrap that you have already created..
-1. **Test Clickwrap.**
-   [Source.](./src/main/java/com/docusign/controller/click/examples/C003ControllerTestClickwrap.java)
-   This example shows how to test a newly create clickwrap.
-1. **Clickwrap Embeding.**
-   [Source.](./src/main/java/com/docusign/controller/click/examples/C004ControllerEmbedClickwrap.java)
-   This example shows how to embed a clickwrap into a page.
 1. **Clickwrap Versioning.**
-   [Source.](./src/main/java/com/docusign/controller/click/examples/C005ControllerCreateNewVersionClickwrap.java)
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C003ControllerCreateNewVersionClickwrap.java)
    This example shows how to create a new clickwrap version.
 1. **Get a list of Clickwraps.**
-   [Source.](./src/main/java/com/docusign/controller/click/examples/C006ControllerGetListClickwraps.java)
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C004ControllerGetListClickwraps.java)
    This example shows how to get a list of clickwraps.
 1. **Get Clickwrap Responses.**
-   [Source.](./src/main/java/com/docusign/controller/click/examples/C007ControllerGetClickwrapResponses.java)
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C005ControllerGetClickwrapResponses.java)
    This example shows how to get clickwrap responses.
 
 ## Included OAuth grant types:

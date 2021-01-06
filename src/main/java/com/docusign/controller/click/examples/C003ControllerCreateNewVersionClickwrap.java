@@ -24,8 +24,8 @@ import java.io.IOException;
  * Create a clickwrap.
  */
 @Controller
-@RequestMapping("/c005")
-public class C005ControllerCreateNewVersionClickwrap extends AbstractClickController {
+@RequestMapping("/c003")
+public class C003ControllerCreateNewVersionClickwrap extends AbstractClickController {
 
     private static final String MODEL_CLICKWRAP_OK = "clickwrapOk";
     private static final String DOCUMENT_FILE_NAME = "TermsOfService.pdf";
@@ -36,8 +36,8 @@ public class C005ControllerCreateNewVersionClickwrap extends AbstractClickContro
     private final User user;
 
     @Autowired
-    public C005ControllerCreateNewVersionClickwrap(DSConfiguration config, Session session, User user) {
-        super(config, "c005", "Create a new clickwrap version");
+    public C003ControllerCreateNewVersionClickwrap(DSConfiguration config, Session session, User user) {
+        super(config, "c003", "Create a new clickwrap version");
         this.session = session;
         this.user = user;
     }

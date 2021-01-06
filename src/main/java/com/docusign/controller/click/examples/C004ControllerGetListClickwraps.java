@@ -20,15 +20,15 @@ import java.io.IOException;
  * Get a list of clickwraps.
  */
 @Controller
-@RequestMapping("/c006")
-public class C006ControllerGetListClickwraps extends AbstractClickController {
+@RequestMapping("/c004")
+public class C004ControllerGetListClickwraps extends AbstractClickController {
 
     private final Session session;
     private final User user;
 
     @Autowired
-    public C006ControllerGetListClickwraps(DSConfiguration config, Session session, User user) {
-        super(config, "c006", "Get a list of clickwraps");
+    public C004ControllerGetListClickwraps(DSConfiguration config, Session session, User user) {
+        super(config, "c004", "Get a list of clickwraps");
         this.session = session;
         this.user = user;
     }
