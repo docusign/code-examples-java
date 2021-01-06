@@ -29,15 +29,13 @@ public abstract class AbstractClickController extends AbstractController {
 
     /**
      * Creates new instance of the Click API client.
-     * @param basePath URL to eSignature REST API
+     * @param basePath URL to Click REST API
      * @param userAccessToken user's access token
      * @return an instance of the {@link ApiClient}
      */
     protected static ApiClient createApiClient(String basePath, String userAccessToken) {
         ApiClient apiClient = new ApiClient(basePath);
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + userAccessToken);
-        // it is a workaround to NPE, see DSPW-61
-        // apiClient.addAuthorization("docusignAccessCode", null);
         apiClient.addAuthorization("docusignAccessCode", new OAuth());
         return apiClient;
     }
@@ -55,7 +53,7 @@ public abstract class AbstractClickController extends AbstractController {
     }
 
     /**
-     * Determine if clickwrap is exists and is active.
+     * Checks a clickwrap and return true IF clickwrap exists and is activated.
      * @param basePath URL to Click API
      * @param userAccessToken user's access token
      * @param accountId user's account id
