@@ -180,7 +180,7 @@ For more information about the scopes used for obtaining authorization to use th
    This code example shows how to create a clickwrap.
 1. **Activate Clickwrap.**
    [Source.](./src/main/java/com/docusign/controller/click/examples/C002ControllerActivateClickwrap.java)
-   This code example shows how to activate a new clickwrap that you have already created..
+   This code example shows how to activate a new clickwrap that you have already created.
 1. **Clickwrap Versioning.**
    [Source.](./src/main/java/com/docusign/controller/click/examples/C003ControllerCreateNewVersionClickwrap.java)
    This code example shows how to create a new clickwrap version.
