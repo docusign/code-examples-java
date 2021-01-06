@@ -7,7 +7,8 @@
   "DS_API_NAME": "ESIGNATURE",
   "DS_BASE_PATH": "https://demo.docusign.net",
   "DS_ROOMS_BASE_PATH": "https://demo.rooms.docusign.com",
-        
+  "DS_CLICK_BASE_PATH": "https://demo.docusign.net",
+
   "Gateway_Name": "{DS_PAYMENT_GATEWAY_NAME}",
   "Gateway_Account_Id": "{GATEWAY_ACCOUNT_ID}",
   "Gateway_Display_Name": "{DS_PAYMENT_GATEWAY_DISPLAY_NAME}",

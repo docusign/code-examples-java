@@ -1,14 +1,13 @@
 package com.docusign.core.model;
 
 import lombok.Data;
-
-import java.io.Serializable;
-import java.util.List;
-
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.io.Serializable;
+import java.util.List;
 
 
 @Component
@@ -30,5 +29,7 @@ public class Session implements Serializable {
     private String apiIndexPath;
     private AuthType authTypeSelected =  AuthType.AGC;
     private boolean refreshToken = false;
+    private String clickwrapId;
+    private String clickwrapVersionNumber;
 
 }
