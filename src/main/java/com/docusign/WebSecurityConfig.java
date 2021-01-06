@@ -35,7 +35,7 @@ import java.util.List;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	public String roomScopes[] = new String[] {"signature", "dtr.rooms.read", "dtr.rooms.write", "dtr.documents.read", "dtr.documents.write", "dtr.profile.read", "dtr.profile.write", "dtr.company.read", "dtr.company.write", "room_forms"};
-	public String clickScopes[] = new String[] {"signature", "click.manage", "click.send"};
+	public String clickScopes[] = new String[] {"click.manage", "click.send"};
 
     @Autowired
     private DSConfiguration dsConfiguration;
