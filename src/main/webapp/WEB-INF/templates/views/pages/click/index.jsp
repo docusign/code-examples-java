@@ -47,27 +47,7 @@
         <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/updateclickwrapversion">ClickWraps:updateClickwrapVersion</a>
     </p>
 
-    <h4 id="example003">3. <a href="c003">Test a clickwrap</a></h4>
-    <p>Before you embed a clickwrap in your website or app, you should preview it to make sure
-        it appears and behaves the way you want. However, the web page in which you test your
-        clickwrap cannot be a local file that you open in a browser. The page must be hosted
-        on a web server. The DocuSign Clickwrap Tester takes care of this for you, making it easy
-        to preview the behavior and appearance of your clickwrap.
-    </p>
-
-    <h4 id="example004">4. <a href="c004">Embed a clickwrap</a></h4>
-    <p>This topic describes how to use <a target ='_blank' rel="noopener noreferrer" href="https://www.docusign.com/products/click">DocuSign Click</a>
-        to embed an existing clickwrap in your website. It walks you through the process of
-        creating the JavaScript code you use to embed the clickwrap.
-
-        You perform this step after you follow the steps in
-        <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/how-to/create-clickwraps">How to create a clickwrap</a> and
-        <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/how-to/activate-clickwrap">How to activate a clickwrap</a>.
-        To learn how to automatically generate a clickwrap and its embed code by using the UI,
-        see the <a target ='_blank' rel="noopener noreferrer" href="https://support.docusign.com/en/guides/click-user-guide">Click User Guide</a>.
-    </p>
-
-    <h4 id="example005">5. <a href="c005">How to create a new clickwrap version</a></h4>
+    <h4 id="example003">3. <a href="c003">How to create a new clickwrap version</a></h4>
     <p>This topic demonstrates how to use the Click API to create a new version of a clickwrap.
         You can specify whether you require users who have previously accepted the clickwrap
         to accept the new version when they return to your website.
@@ -76,7 +56,7 @@
         <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/updateclickwrapversion">ClickWraps:updateClickwrapVersion</a>
     </p>
 
-    <h4 id="example006">6. <a href="c006">Get a list of clickwraps</a></h4>
+    <h4 id="example004">4. <a href="c004">Get a list of clickwraps</a></h4>
     <p>This topic demonstrates how to use the Click API to get a list of clickwraps
         associated with a specific DocuSign user.
     </p>
@@ -84,7 +64,7 @@
         <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/getclickwraps">ClickWraps:getClickwraps</a>
     </p>
 
-    <h4 id="example007">7. <a href="c007">Get clickwrap responses</a></h4>
+    <h4 id="example005">5. <a href="c005">Get clickwrap responses</a></h4>
     <p>This topic demonstrates how to use the Click API to get user responses to
         your clickwrap agreements.
     </p>
