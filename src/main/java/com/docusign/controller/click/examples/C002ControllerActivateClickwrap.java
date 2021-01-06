@@ -53,7 +53,7 @@ public class C002ControllerActivateClickwrap extends AbstractClickController {
         ClickwrapRequest clickwrapRequest = new ClickwrapRequest().status(ClickwrapHelper.STATUS_ACTIVE);
 
         // Step 4: Call the v1 Click API
-        ClickwrapSummaryResponse updatedClickwrap = accountsApi.updateClickwrapVersion(
+        ClickwrapVersionSummaryResponse updatedClickwrap = accountsApi.updateClickwrapVersion(
                 this.session.getAccountId(),
                 this.session.getClickwrapId(),
                 this.session.getClickwrapVersionNumber(),
