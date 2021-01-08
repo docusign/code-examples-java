@@ -49,7 +49,6 @@ import java.util.Optional;
 @Scope(WebApplicationContext.SCOPE_SESSION)
 public class GlobalControllerAdvice {
 
-    private static final String BASE_URI_SUFFIX = "/restapi";
     private static final String ERROR_ACCOUNT_NOT_FOUND = "Could not find account information for the user";
 
     private final DSConfiguration config;
@@ -113,11 +112,21 @@ public class GlobalControllerAdvice {
             session.setAccountId(oauthAccount.getAccountId());
             session.setAccountName(oauthAccount.getAccountName());
             //TODO set this more efficiently with more APIs as they're added in
-            String baseUrl = config.getApiName().equalsIgnoreCase("rooms") ? config.getRoomsBasePath() : oauthAccount.getBaseUri();
-            session.setBasePath(baseUrl + BASE_URI_SUFFIX);
+            String basePath = this.getBaseUrl(apiIndex, oauthAccount) + apiIndex.getBaseUrlSuffix();
+            session.setBasePath(basePath);
         }
 
         return new Locals(config, session, user, "");
+    }
+
+    private String getBaseUrl(ApiIndex apiIndex, OAuth.Account oauthAccount) {
+        if (apiIndex.equals(ApiIndex.ROOMS)) {
+            return this.config.getRoomsBasePath();
+        } else if (apiIndex.equals(ApiIndex.CLICK)) {
+            return this.config.getClickBasePath();
+        } else {
+            return oauthAccount.getBaseUri();
+        }
     }
 
     @SuppressWarnings("unchecked")
