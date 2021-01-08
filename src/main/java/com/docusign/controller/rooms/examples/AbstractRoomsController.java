@@ -41,8 +41,6 @@ public abstract class AbstractRoomsController extends AbstractController {
     protected static ApiClient createApiClient(String basePath, String userAccessToken) {
         ApiClient apiClient = new ApiClient(basePath);
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + userAccessToken);
-        // it is a workaround to NPE, see DSPW-61
-        // apiClient.addAuthorization("docusignAccessCode", null);
         apiClient.addAuthorization("docusignAccessCode", new OAuth());
         return apiClient;
     }
