@@ -5,7 +5,7 @@ import com.docusign.click.api.AccountsApi;
 import com.docusign.click.client.ApiClient;
 import com.docusign.click.client.ApiException;
 import com.docusign.click.client.auth.OAuth;
-import com.docusign.click.model.ClickwrapResponse;
+import com.docusign.click.model.ClickwrapVersionResponse;
 import com.docusign.core.controller.AbstractController;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
@@ -29,15 +29,13 @@ public abstract class AbstractClickController extends AbstractController {
 
     /**
      * Creates new instance of the Click API client.
-     * @param basePath URL to eSignature REST API
+     * @param basePath URL to Click REST API
      * @param userAccessToken user's access token
      * @return an instance of the {@link ApiClient}
      */
     protected static ApiClient createApiClient(String basePath, String userAccessToken) {
         ApiClient apiClient = new ApiClient(basePath);
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + userAccessToken);
-        // it is a workaround to NPE, see DSPW-61
-        // apiClient.addAuthorization("docusignAccessCode", null);
         apiClient.addAuthorization("docusignAccessCode", new OAuth());
         return apiClient;
     }
@@ -55,7 +53,7 @@ public abstract class AbstractClickController extends AbstractController {
     }
 
     /**
-     * Determine if clickwrap is exists and is active.
+     * Checks a clickwrap and return true IF clickwrap exists and is activated.
      * @param basePath URL to Click API
      * @param userAccessToken user's access token
      * @param accountId user's account id
@@ -69,7 +67,7 @@ public abstract class AbstractClickController extends AbstractController {
         if (StringUtils.isNotBlank(clickwrapId)) {
 
             AccountsApi accountsApi = this.createAccountsApiClient(basePath, userAccessToken);
-            ClickwrapResponse clickwrapResponse = accountsApi.getClickwrap(accountId, clickwrapId);
+            ClickwrapVersionResponse clickwrapResponse = accountsApi.getClickwrap(accountId, clickwrapId);
 
             isClickwrapOk = clickwrapResponse.getClickwrapId().equals(clickwrapId) &&
                     clickwrapResponse.getStatus().equals(ClickwrapHelper.STATUS_ACTIVE);
