@@ -26,7 +26,7 @@ For more information about the scopes used for obtaining authorization to use th
    [Source.](./src/main/java/com/docusign/EG001ControllerEmbeddedSigning.java)
    This example sends an envelope, and then uses embedded signing for the first signer.
    With embedded signing, DocuSign signing is initiated from your website.
-1. **Send an envelope with a remote (email) signer and cc recipient.**
+1. **Request a signature by email (Remote Signing).**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG002ControllerSigningViaEmail.java)
    The envelope includes a pdf, Word, and HTML document.
    Anchor text ([AutoPlace](https://support.docusign.com/en/guides/AutoPlace-New-DocuSign-Experience)) is used to position the signing fields in the documents.
@@ -44,7 +44,7 @@ For more information about the scopes used for obtaining authorization to use th
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG007ControllerEnvelopeGetDoc.java)
 1. **Programmatically create a template.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG008ControllerCreateTemplate.java)
-1. **Send an envelope using a template.**
+1. **Request a signature by email using a template.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG009ControllerUseTemplate.java)
 1. **Send an envelope and upload its documents with multipart binary transfer.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG010ControllerSendBinaryDocs.java)
