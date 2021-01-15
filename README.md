@@ -7,7 +7,9 @@ This GitHub repo includes code example for the DocuSign eSignature REST API, for
 To use the Rooms API code examples, modify the **DS_API_NAME** setting at the end of the application.json file. Set the value to `ROOMS`.
 To use the Click API code examples, modify the **DS_API_NAME** setting at the end of the application.json file. Set the value to `CLICK`.
 
-**Note:** to use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). 
+**Note:** to use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account).
+
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/XGpb861XQuA&t=3s/0.jpg)](http://www.youtube.com/watch?v=XGpb861XQuA&t=3s "Java Quickstart")
 
 ## Introduction
 This repo is a Java Spring Boot application that demonstrates how to authenticate with DocuSign via the
