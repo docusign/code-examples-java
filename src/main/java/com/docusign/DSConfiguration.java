@@ -30,6 +30,9 @@ public class DSConfiguration {
     @Value("${DS_ROOMS_BASE_PATH}")
     private String roomsBasePath;
 
+    @Value("${DS_CLICK_BASE_PATH}")
+    private String clickBasePath;
+
     @Value("${DS_SIGNER_EMAIL:{USER_EMAIL}}")
     private String signerEmail;
 

@@ -335,6 +335,8 @@
     <a target="_blank" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create">Envelopes::create</a>.
   </p>
 
+  <h2>Premium Features</h2>
+
   <h4 id="example035">35. <a href="eg035">Send with SMS Delivery</a></h4>
 
   <p>
