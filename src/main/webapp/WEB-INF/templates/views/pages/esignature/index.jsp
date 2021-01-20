@@ -335,6 +335,16 @@
     <a target="_blank" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create">Envelopes::create</a>.
   </p>
 
+  <h4 id="example035">35. <a href="eg035">Send with SMS Delivery</a></h4>
+
+  <p>
+    This topic demonstrates how to send an envelope using SMS delivery.
+  </p>
+  <p>
+    API methods used:
+    <a target="_blank" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create">Envelopes::create</a>.
+  </p>
+
 </div>
 
 <!-- anchor-js is only for the index page -->
