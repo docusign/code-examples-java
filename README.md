@@ -2,9 +2,10 @@
 
 Github repo: https://github.com/docusign/code-examples-java
 
-This GitHub repo includes code example for both the DocuSign eSignature REST API as well as the DocuSign Rooms API. 
+This GitHub repo includes code example for the DocuSign eSignature REST API, for the DocuSign Rooms API and for the Click API. 
 
-To use the Rooms API code examples, modify the **DS_API_NAME** setting at the end of the application.json file. Set the vlue to `ROOMS`.
+To use the Rooms API code examples, modify the **DS_API_NAME** setting at the end of the application.json file. Set the value to `ROOMS`.
+To use the Click API code examples, modify the **DS_API_NAME** setting at the end of the application.json file. Set the value to `CLICK`.
 
 **Note:** to use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). 
 
@@ -25,7 +26,7 @@ For more information about the scopes used for obtaining authorization to use th
    [Source.](./src/main/java/com/docusign/EG001ControllerEmbeddedSigning.java)
    This example sends an envelope, and then uses embedded signing for the first signer.
    With embedded signing, DocuSign signing is initiated from your website.
-1. **Send an envelope with a remote (email) signer and cc recipient.**
+1. **Request a signature by email (Remote Signing).**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG002ControllerSigningViaEmail.java)
    The envelope includes a pdf, Word, and HTML document.
    Anchor text ([AutoPlace](https://support.docusign.com/en/guides/AutoPlace-New-DocuSign-Experience)) is used to position the signing fields in the documents.
@@ -43,7 +44,7 @@ For more information about the scopes used for obtaining authorization to use th
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG007ControllerEnvelopeGetDoc.java)
 1. **Programmatically create a template.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG008ControllerCreateTemplate.java)
-1. **Send an envelope using a template.**
+1. **Request a signature by email using a template.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG009ControllerUseTemplate.java)
 1. **Send an envelope and upload its documents with multipart binary transfer.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG010ControllerSendBinaryDocs.java)
@@ -140,11 +141,11 @@ For more information about the scopes used for obtaining authorization to use th
 
 1. **Use conditional recipients**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG034ControllerUseConditionalRecipients.java)
-   This code example demonstrates how to create an envelope where the workflow is paused before the envelope is sent to a second recipient. 
-   
+   This code example demonstrates how to create an envelope where the workflow is paused before the envelope is sent to a second recipient.
+
 1. **Request a signature by SMS**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG035SMSDelivery.java)
-   This code example demonstrates how to send a signature request for a signer to read and sign via an SMS message.
+   This code example demonstrates how to send a signature request for a signer to read and sign via an SMS message. 
 
 ## Rooms API 
 
@@ -171,6 +172,39 @@ For more information about the scopes used for obtaining authorization to use th
 1. **Create an external form fillable session.**
    [Source.](./src/main/java/com/docusign/controller/rooms/examples/R006ControllerCreateExternalFormFillSession.java)
    This code example create an external form that can be filled using DocuSign for a specific room in your DocuSign Rooms account.
+   This example create an external form that can be filled using DocuSign for a specific room in your DocuSign Rooms account.
+
+
+## Click API 
+
+For more information about the scopes used for obtaining authorization to use the Click API, see the [Required Scopes section](https://developers.docusign.com/docs/click-api/click101/auth/)
+
+1. **Create Clickwraps.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C001ControllerCreateClickwrap.java)
+   This code example shows how to create a clickwrap.
+1. **Activate Clickwrap.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C002ControllerActivateClickwrap.java)
+   This code example shows how to activate a new clickwrap that you have already created.
+1. **Clickwrap Versioning.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C003ControllerCreateNewVersionClickwrap.java)
+   This code example shows how to create a new clickwrap version.
+1. **Get a list of Clickwraps.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C004ControllerGetListClickwraps.java)
+   This code example shows how to get a list of clickwraps.
+1. **Get Clickwrap Responses.**
+   [Source.](./src/main/java/com/docusign/controller/click/examples/C005ControllerGetClickwrapResponses.java)
+   This code example shows how to get clickwrap responses.
+
+## Included OAuth grant types:
+
+* Authentication with Docusign via [Authorization Code Grant flow](https://developers.docusign.com/platform/auth/authcode) .
+When the token expires, the user is asked to re-authenticate.
+The **refresh token** is not used in this example.
+
+* Authentication with DocuSign via the [JSON Web Token (JWT) Grant](https://developers.docusign.com/platform/auth/jwt/).
+When the token expires, it updates automatically.
+
+   **Note:** Before you can make any API calls using JWT Grant, you must get your user’s consent for your app to impersonate them. To do this, the `impersonation` scope is added when requesting a JSON Web Token.
 
 
 ## Installation
