@@ -31,6 +31,7 @@
         <label for="phoneNumber">Signer Phone Number</label>
         <input type="text" class="form-control" id="phoneNumber" placeholder="415-555-1212" name="phoneNumber"
                value="" required>
+        <small id="emailHelp" class="form-text text-muted">We'll never share your phone number with anyone else.</small>
     </div>
     <div class="form-group">
         <label for="signerEmail">Signer Email</label>
@@ -54,6 +55,7 @@
         <label for="ccPhoneNumber">CC Phone Number</label>
         <input type="text" class="form-control" id="ccPhoneNumber" placeholder="415-555-1212" name="ccPhoneNumber"
                value="" required>
+        <small id="emailHelp" class="form-text text-muted">We'll never share your phone number with anyone else.</small>
     </div>
     <div class="form-group">
         <label for="ccEmail">CC Email</label>
