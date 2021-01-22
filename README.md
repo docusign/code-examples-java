@@ -278,7 +278,7 @@ $ java -Dspring.profiles.active=dev -jar code-examples-java-1.0-SNAPSHOT.war
 ```
 
 
-## IntelliJ Ultimate instructions
+## IntelliJ Ultimate instructions for Windows
 The [IntelliJ IDE Ultimate edition](https://www.jetbrains.com/idea/) can be used with the launcher. The IntelliJ Ultimate edition is required due to its support for Spring Boot and JSP view pages.
 
 **Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip Step 1 as it was automatically performed for you.**
@@ -321,6 +321,8 @@ configuration to `code-examples-java` and the **Main class** for the configurati
 `com.docusign.App` **Tip:** use the **...** (ellipses) button next to the field to choose the Main class.
 
 Under **Spring Boot** select the `Enable debug output` checkbox.
+
+Select the **OK** button.
 
 ![Configure a Run configuration](./docs/install_fig_7.png)
 
