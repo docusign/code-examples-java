@@ -49,4 +49,7 @@ public class WorkArguments {
     private UUID formId;
     private String startDate;
     private String endDate;
+    private String ccPhoneNumber;
+    private String countryCode;
+    private String ccCountryCode;
 }
