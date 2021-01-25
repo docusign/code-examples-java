@@ -143,7 +143,11 @@ For more information about the scopes used for obtaining authorization to use th
 
 1. **Use conditional recipients**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG034ControllerUseConditionalRecipients.java)
-   This code example demonstrates how to create an envelope where the workflow is paused before the envelope is sent to a second recipient. 
+   This code example demonstrates how to create an envelope where the workflow is paused before the envelope is sent to a second recipient.
+
+1. **Request a signature by SMS**
+   [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG035SMSDelivery.java)
+   This code example demonstrates how to send a signature request for a signer to read and sign via an SMS message. 
 
 ## Rooms API 
 
