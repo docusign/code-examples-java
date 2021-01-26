@@ -21,7 +21,7 @@ import com.docusign.esign.api.BulkEnvelopesApi;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.BulkEnvelopeStatus;
+import com.docusign.esign.model.BulkSendBatchStatus;
 import com.docusign.esign.model.BulkSendRequest;
 import com.docusign.esign.model.BulkSendingCopy;
 import com.docusign.esign.model.BulkSendingCopyRecipient;
