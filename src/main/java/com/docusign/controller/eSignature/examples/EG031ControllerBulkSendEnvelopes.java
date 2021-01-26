@@ -21,7 +21,7 @@ import com.docusign.esign.api.BulkEnvelopesApi;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.BulkEnvelopeStatus;
+import com.docusign.esign.model.BulkSendBatchStatus;
 import com.docusign.esign.model.BulkSendRequest;
 import com.docusign.esign.model.BulkSendingCopy;
 import com.docusign.esign.model.BulkSendingCopyRecipient;
@@ -93,10 +93,10 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
         try {
             TimeUnit.SECONDS.sleep(BULK_REQUEST_DELAY);
             // For 2000 recipients, it can take about an hour
-            BulkEnvelopeStatus status = bulkEnvelopesApi.get(accountId, batchId);
+            BulkSendBatchStatus status = bulkEnvelopesApi.getBulkSendBatchStatus(accountId, batchId);
             DoneExample.createDefault(title)
                     .withJsonObject(status)
-                    .withMessage(String.join("", "Bulk request was sent to ", status.getSent(), " user lists."))
+                    .withMessage(String.join("", "Bulk request queued to ", status.getQueued(), " user lists."))
                     .addToModel(model);
         } catch (InterruptedException exception) {
             Thread.currentThread().interrupt();
