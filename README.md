@@ -129,18 +129,6 @@ For more information about the scopes used for obtaining authorization to use th
 1. **Unpausing a signature workflow**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG033ControllerUnpauseSignatureWorkflow.java)
    This code example demonstrates how to resume an envelope workflow that has been paused
-1. **Using conditional recipients**
-   [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG034ControllerUseConditionalRecipients.java)
-   This code example demonstrates how to create an envelope where the workflow is routed to different recipients based on the value of a transaction.
-
-1. **Сreating an envelope where the workflow is paused**
-   [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG032ControllerPauseSignatureWorkflow.java)
-   This code example demonstrates how to create an envelope where the workflow is paused before the envelope is sent to a second recipient. 
-
-1. **Resuming an envelope workflow that has been paused**
-   [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG033ControllerUnpauseSignatureWorkflow.java)
-   This code example demonstrates how to resume an envelope workflow that has been paused. 
-
 1. **Use conditional recipients**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG034ControllerUseConditionalRecipients.java)
    This code example demonstrates how to create an envelope where the workflow is paused before the envelope is sent to a second recipient.
