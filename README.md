@@ -41,9 +41,10 @@ For more information about the scopes used for obtaining authorization to use th
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG005ControllerEnvelopeRecipients.java)
 1. **List an envelope's documents.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG006ControllerEnvelopeDocs.java)
-1. **Download an envelope's documents.** The example can download individual
-   documents, the documents concatenated together, or a zip file of the documents.
+1. **Download an envelope's documents.**  
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG007ControllerEnvelopeGetDoc.java)
+   This example can download individual
+   documents, the documents concatenated together, or a zip file of the documents.
 1. **Programmatically create a template.**
    [Source.](./src/main/java/com/docusign/controller/eSignature/examples/EG008ControllerCreateTemplate.java)
 1. **Request a signature by email using a template.**
