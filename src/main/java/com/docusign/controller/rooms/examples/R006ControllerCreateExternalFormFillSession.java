@@ -28,7 +28,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/r006")
-public class R006ControllerCreatExternalFormFillSession extends AbstractRoomsController {
+public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsController {
 
     private static final String MODEL_FORM_LIST = "formList";
     private static final String MODEL_ROOM_LIST = "roomList";
@@ -37,7 +37,7 @@ public class R006ControllerCreatExternalFormFillSession extends AbstractRoomsCon
     private final User user;
 
     @Autowired
-    public R006ControllerCreatExternalFormFillSession(DSConfiguration config, Session session, User user) {
+    public R006ControllerCreateExternalFormFillSession(DSConfiguration config, Session session, User user) {
         super(config, "r006", "Creating an external form fill session");
         this.session = session;
         this.user = user;
