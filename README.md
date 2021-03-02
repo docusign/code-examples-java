@@ -130,7 +130,18 @@ For more information about the scopes used for obtaining authorization to use th
    [Source](./src/main/java/com/docusign/controller/rooms/examples/R006ControllerCreateExternalFormFillSession.java)
    This code example create an external form that can be filled using DocuSign for a specific room in your DocuSign Rooms account.
    This example create an external form that can be filled using DocuSign for a specific room in your DocuSign Rooms account.
-
+1. **Create a form group.**
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R007ControllerCreateFormGroup.java)
+   This code example create a form group for your DocuSign Rooms for Real Estate account.
+1. **Grant office access to a form group.**
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R008ControllerGrantOfficeAccessToFormGroup.java)
+   This code example assign an office to a form group for your DocuSign Rooms for Real Estate account. 
+   Granting office access to a form group will enable you to filter which form groups are available based on that office.
+1. **Assign a form to a form group.**
+   [Source.](./src/main/java/com/docusign/controller/rooms/examples/R009ControllerAssignFormToFormGroup.java)
+   This example demonstrates how to assign a form to a form group for your DocuSign Rooms for Real 
+   Estate account. As a prerequisite, ensure that you have created a form group and set the 
+   office ID on this form group before proceeding.
 
 ## Click API  
 For more information about the scopes used for obtaining authorization to use the Click API, see the [Required Scopes section](https://developers.docusign.com/docs/click-api/click101/auth/)  

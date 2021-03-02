@@ -46,7 +46,10 @@ public class WorkArguments {
     private String roomName;
     private Integer roomTemplateId;
     private Integer roomId;
+    private Integer officeId;
     private UUID formId;
+    private String formGroupName;
+    private UUID formGroupId;
     private String startDate;
     private String endDate;
     private String ccPhoneNumber;
