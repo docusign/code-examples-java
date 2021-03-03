@@ -8,11 +8,11 @@ import com.docusign.rooms.client.ApiClient;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.client.auth.OAuth;
 import com.docusign.rooms.model.*;
-import lombok.SneakyThrows;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -76,7 +76,7 @@ public abstract class AbstractRoomsController extends AbstractController {
      * @param userAccessToken user's access token
      * @return an instance of the {@link OfficesApi}
      */
-    protected static OfficesApi createOfficeApiClient(String basePath, String userAccessToken) {
+    protected static OfficesApi createOfficesApiClient(String basePath, String userAccessToken) {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         return new OfficesApi(apiClient);
     }
@@ -115,6 +115,18 @@ public abstract class AbstractRoomsController extends AbstractController {
     protected static FormLibrariesApi createFormLibrariesApi(String basePath, String userAccessToken) {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         return new FormLibrariesApi(apiClient);
+    }
+
+    /**
+     * Creates a new instance of the FormGroupsApi. This method
+     * creates an instance of the ApiClient class silently.
+     * @param basePath URL to Rooms REST API
+     * @param userAccessToken user's access token
+     * @return an instance of the {@link RoomsApi}
+     */
+    protected static FormGroupsApi createFormGroupsApi(String basePath, String userAccessToken) {
+        ApiClient apiClient = createApiClient(basePath, userAccessToken);
+        return new FormGroupsApi(apiClient);
     }
 
     protected static RoleSummary getAdminRole(String basePath, String userAccessToken, String accountId) throws ApiException {
