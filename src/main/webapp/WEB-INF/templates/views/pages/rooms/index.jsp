@@ -89,6 +89,40 @@
     <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Forms/FormLibraries/GetFormLibraries">FormLibraries::GetFormLibraries</a> and
     <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Forms/ExternalFormFillSessions/CreateExternalFormFillSession">ExternalFormFillSessions::CreateExternalFormFillSession</a>,
   </p>
+
+  <h4 id="example007">7. <a href="r007">Creating a form group</a></h4>
+  <p>This example demonstrates creating a form group for your DocuSign
+    Rooms for Real Estate account.
+  </p>
+  <p>API method used:
+    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/reference/forms/formgroups/createformgroup">FormGroups:CreateFormGroup</a>.
+  </p>
+
+  <h4 id="example008">8. <a href="r008">Granting office access to a form group</a></h4>
+  <p>This example demonstrates how to assign an office to
+    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/rooms101/forms/managing-forms-rooms/">a form group</a>
+    for your DocuSign Rooms for Real Estate account. Granting office access to a form group will
+    enable you to filter which form groups are available based on that office.
+  </p>
+  <p>API method used:
+    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/reference/forms/formgroups/grantofficeaccesstoformgroup">FormGroups:GrantOfficeAccessToFormGroup</a>,
+    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/reference/forms/formgroups/getformgroups">FormGroups:GetFormGroups</a> and
+    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/reference/offices/offices/getoffices">Offices:GetOffices</a>.
+  </p>
+
+  <h4 id="example009">9. <a href="r009">Assigning a form to a form group</a></h4>
+  <p>This example demonstrates how to assign a form to
+    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/rooms101/forms/managing-forms-rooms/">a form group</a>
+    for your DocuSign Rooms for Real Estate account. As a prerequisite, ensure that you have
+    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/how-to/create-form-group/">created a form group</a>
+    and <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/how-to/access-form-group/">set the office ID on this form group</a>
+    before proceeding.
+  </p>
+  <p>API method used:
+    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/reference/forms/formgroups/assignformgroupform">FormGroups:AssignFormGroupForm</a>,
+    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/reference/forms/formgroups/getformgroups">FormGroups:GetFormGroups</a> and
+    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Forms/FormLibraries/GetFormLibraries">FormLibraries::GetFormLibraryForms</a>.
+  </p>
 </div>
 
 <!-- anchor-js is only for the index page -->
