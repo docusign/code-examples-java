@@ -46,13 +46,10 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
 
-        // Step 2 Start
+        // Step 3 Start
         this.formGroupsApi = createFormGroupsApi(
                 this.session.getBasePath(), this.user.getAccessToken()
         );
-        // Step 2 End
-
-        // Step 3 Start
         FormGroupSummaryList formGroupSummaryList = formGroupsApi.getFormGroups(this.session.getAccountId());
         // Step 3 End 
 
