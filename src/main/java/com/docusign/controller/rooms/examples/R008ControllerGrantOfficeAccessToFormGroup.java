@@ -44,11 +44,9 @@ public class R008ControllerGrantOfficeAccessToFormGroup extends AbstractRoomsCon
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
 
-        // Step 2 Start
         this.formGroupsApi = createFormGroupsApi(
                 this.session.getBasePath(), this.user.getAccessToken()
         );
-        // Step 2 End
 
         // Step 3 Start
         OfficesApi officesApi = createOfficesApiClient(this.session.getBasePath(), this.user.getAccessToken());
