@@ -269,8 +269,8 @@ jwt.grant.client.client-id (**Integration Key**),
 wt.grant.client.impersonated-user-guid (**API Username**).  
 Save this file as `application.json`.  
 **Don't add this application.json file to your GitHub repo since it contains personal information.**  
-1.   Start IntelliJ Ultimate and choose the **Open or Import** option.
-![IntelliJ Import project](./docs/IntelliJ_import_highlight.jpg)
+1.   Start IntelliJ Ultimate and choose the **Open or Import** option.  
+![IntelliJ Import project](./docs/IntelliJ_import_highlight.jpg)  
 1.   Use the popup file chooser to select 
 **code-examples-java** or your unzipped Quickstart directory.
 1.   The **Import Project** wizard will open. It's a
