@@ -276,10 +276,9 @@ Save this file as `application.json`.
    1. In the far left corner, select **+** > **Spring Boot**.  
    1. In the **Name** field, input: `App`.  
    1. To the right of the **Main class** field, select **...** > **App (com.docusign)   code-examples-java** > **OK**.  
-   1. Select the **JRE** tab. Under **Runtime JRE**, ensure it lists jdk-11 or higher. Select **Apply** to save.  
-   1. Select **Run** to run the launcher. A browser window should automatically open to the consent page.  
    1. Under **Spring Boot**, select the **Enable debug output** checkbox > **OK**.  
-   1. In the top navigation bar, select **Run 'App'** to run the launcher. A browser window should automatically open to the consent page.  
+
+1. In the top navigation bar, select **Run 'App'** to run the launcher. A browser window should automatically open to the consent page.  
 1. [Optional] To install Lombok, select **File** > **Settings...** > **Plugins** > **Marketplace** tab > search for **Lombok**. It should have an author named Michail Plushnikov. Select **Install**, then restart IntelliJ.  
 
 
@@ -303,7 +302,7 @@ Save this file as `application.json`.
 1. Open Eclipse and select **Import**. In the dialog box, select the **Maven** folder, then select **Existing Maven Project** > **Next**, then **Browse** for your unzipped Quickstart folder or code-examples-java. 
    1. Under **Projects**, check to make sure the **pom.xml** file is selected.  
    1. Select the **Add project(s) to working set** checkbox. Select **Finish**.
-3. Next, select **Run** > **Run Configurations**, right-click **Maven Build** > **New Configuration** to clean and compile the Maven build:
+3. In the top navigation bar, select **Run** > **Run Configurations**, right-click **Maven Build** > **New Configuration** to clean and compile the Maven build:
    1. In the **Name** field, input: `build`.
    1. In **Base Directory**, input: `${workspace_loc:/code-examples-java}`.
    1. In **Goals**, input: `clean package`.
@@ -312,8 +311,9 @@ Save this file as `application.json`.
    1. In the **Name** field, input: `App`.
    1. In the **Project** field, input: `code-examples-java`.
    1. In the **Main class** field, input: `com.docusign.App`.
-   1. Select the **JRE** tab. Under **Runtime JRE**, ensure it lists jdk-11 or higher. Select **Apply** to save.
-   1. Select **Run** to run the launcher. A browser window should automatically open to the consent page.
+   1. Select the **JRE** tab. Under **Runtime JRE**, ensure it lists jdk-11 or higher. Select **Apply** to save.  
+
+1. In the top navigation bar, select **Run** to run the launcher. A browser window should automatically open to the consent page.
 5. [Optional] Download the [lombok.jar](https://projectlombok.org/downloads/lombok.jar) to your local machine. To install Lombok, open a terminal or command line. Run `java -jar lombok.jar`.  
 
 
