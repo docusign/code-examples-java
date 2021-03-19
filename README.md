@@ -258,47 +258,28 @@ The [IntelliJ IDE Ultimate edition](https://www.jetbrains.com/idea/) can be used
 [code-examples-java](https://github.com/docusign/code-examples-java)
    repository.  
 1.  Open the src\main\resources\application.example.json file.  
-Configure the launcher by pasting the following data from your DocuSign developer account [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page:  
+Configure the launcher by pasting the following data from your DocuSign developer account's [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page:  
 `DS_SIGNER_NAME` (a string value for the Signer's name)  
 `DS_SIGNER_EMAIL` (a string value for the Signer's email address)  
 `DS_TARGET_ACCOUNT_ID` (the **API Username** in the **Apps and Keys** page)  
 `authorization.code.grant.client.client-id` (**Integration Key**)   
-`authorization.code.grant.client.client-secret` (Select the **Actions** button to the right of your **Integration Key** > **Edit** > **Authentication** > **+ ADD SECRET KEY** > **Secret Key**)   
+`authorization.code.grant.client.client-secret` (To the right of your **Integration Key**, select **Actions** > **Edit** > **Authentication** > **+ ADD SECRET KEY** > **Secret Key**)   
 `jwt.grant.client.client-id` (**Integration Key**)   
 `wt.grant.client.impersonated-user-guid` (**API Username**)   
 Save this file as `application.json`.  
-**Don't add this application.json file to your GitHub repo since it contains personal information.**  
-1.   Start IntelliJ Ultimate and choose the **Open or Import** option.  
-![IntelliJ Import project](./docs/IntelliJ_import_highlight.jpg)  
-1.   Use the popup file chooser to select 
-**code-examples-java** or your unzipped Quickstart directory.
-1.   The **Import Project** wizard will open. It's a
-series of screens. On the first screen, select
-**Import project from external model** and **Maven**.
-![IntelliJ Import Maven project](./docs/install_fig_2.png)
-1.   Click **Finish** and the project will
-be displayed in the IDE.
+**Don't add this application.json file to your GitHub repo since it contains personal information.**   
+1. Start IntelliJ Ultimate and choose the **Open** option.  
+   1. In the dialog box, select your unzipped Quickstart folder or code-examples-java > **OK**
+   1. In the **Open or Import Project** dialog box, select **Maven project** > **OK**.
 
-### Configuring IntelliJ's *Run/Debug Configuration*
-IntelliJ uses **Run/Debug Configuration** to manage
-settings for running the launcher.
-
-Set up a Run/Debug Configuration for the launcher:
-
-1. Use the menu command **Run > Edit configurations...**  
-to open the configuration manager.
-
-1. Click the **+** (plus) sign to add a new configuration.
-The configuration type is **Spring Boot**. You may need to
-open the additional templates section of the template chooser.
-
-1. Update the form with the **Name** of the
-configuration to `code-examples-java` and the **Main class** for the configuration,
-`com.docusign.App` **Tip:** use the **...**   (ellipses) button next to the field to choose the Main class.
-
-Under **Spring Boot** select the `Enable debug output` checkbox.
-
-Select the **OK** button.
+1. In the top navigation bar, select **Run** > **Edit configurations...** to create a Java application configuration.  
+   1. In the far left corner, select **+** > **Spring Boot**  
+   1. In the **Name** field, input: `App`.
+   1. To the right of the **Main class** field, select **...** > **App (com.docusign)   code-examples-java** > **OK**.
+   1. Select the **JRE** tab. Under **Runtime JRE**, ensure it lists jdk-11 or higher. Select **Apply** to save.
+   1. Select **Run** to run the launcher. A browser window should automatically open to the consent page.
+   1. Under **Spring Boot**, select the **Enable debug output** checkbox > **OK**.
+   1. Select **Run 'App'** to run the launcher. A browser window should automatically open to the consent page.  
 
 ![Configure a Run configuration](./docs/install_fig_7.png)
 
@@ -315,31 +296,31 @@ Click File, then Settings. From there select `Plugins`. Open the Marketplace tab
 
 
 ## Eclipse instructions
-**Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip Steps 1, 2, and 4.** 
+**Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip Steps 1, 2, and 4.**  
 1.  Download or clone the
 [code-examples-java](https://github.com/docusign/code-examples-java)
    repository.  
 1.  Open the src\main\resources\application.example.json file.  
-Configure the launcher by pasting the following data from your DocuSign developer account [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page:  
+Configure the launcher by pasting the following data from your DocuSign developer account's [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page:  
 `DS_SIGNER_NAME` (a string value for the Signer's name)  
 `DS_SIGNER_EMAIL` (a string value for the Signer's email address)  
 `DS_TARGET_ACCOUNT_ID` (the **API Username** in the **Apps and Keys** page)  
 `authorization.code.grant.client.client-id` (**Integration Key**)   
-`authorization.code.grant.client.client-secret` (Select the **Actions** button to the right of your **Integration Key** > **Edit** > **Authentication** > **+ ADD SECRET KEY** > **Secret Key**)   
+`authorization.code.grant.client.client-secret` (To the right of your **Integration Key**, select **Actions** > **Edit** > **Authentication** > **+ ADD SECRET KEY** > **Secret Key**)   
 `jwt.grant.client.client-id` (**Integration Key**)   
 `wt.grant.client.impersonated-user-guid` (**API Username**)   
 Save this file as `application.json`.  
 **Don't add this application.json file to your GitHub repo since it contains personal information.**  
 
-1. Open Eclipse and select import. When the window appears, select the Maven folder, then select **Existing Maven Project**, and **Browse** for your Quickstart folder name or code-examples-java. 
-   1. Under **Projects**, the **pom.xml** file should be selected. 
-   1. Select the **Add project(s) to working set** checkbox to save the project link to your Eclipse workspace. Select **Finish**.
-3. Next, select **Run**, then **Run Configurations**, and right-click **Maven Build**, then **New Configuration** to clean and compile:
+1. Open Eclipse and select **Import**. In the dialog box, select the **Maven** folder, then select **Existing Maven Project** > **Next**, then **Browse** for your unzipped Quickstart folder or code-examples-java. 
+   1. Under **Projects**, check to make sure the **pom.xml** file is selected.  
+   1. Select the **Add project(s) to working set** checkbox. Select **Finish**.
+3. Next, select **Run** > **Run Configurations**, right-click **Maven Build** > **New Configuration** to clean and compile the Maven build:
    1. In the **Name** field, input: `build`.
    1. In **Base Directory**, input: `${workspace_loc:/code-examples-java}`.
    1. In **Goals**, input: `clean package`.
    1. Select the **JRE** tab. Under **Runtime JRE**, ensure it lists jdk-11 or higher. Select **Apply** to save.
-4. In the **Run Configurations** dialog box, in the left sidebar, right-click **Java Application**, then **New Configuration**:  
+4. In the **Run Configurations** dialog box, in the left sidebar, right-click **Java Application** > **New Configuration** to create a Java application configuration:  
    1. In the **Name** field, input: `App`.
    1. In the **Project** field, input: `code-examples-java`.
    1. In the **Main class** field, input: `com.docusign.App`.
