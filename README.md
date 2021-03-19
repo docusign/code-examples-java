@@ -279,20 +279,8 @@ Save this file as `application.json`.
    1. Select the **JRE** tab. Under **Runtime JRE**, ensure it lists jdk-11 or higher. Select **Apply** to save.
    1. Select **Run** to run the launcher. A browser window should automatically open to the consent page.
    1. Under **Spring Boot**, select the **Enable debug output** checkbox > **OK**.
-   1. Select **Run 'App'** to run the launcher. A browser window should automatically open to the consent page.  
-
-![Configure a Run configuration](./docs/install_fig_7.png)
-
-### Running or debugging the launcher
-
-Use a **Run** menu option to run or debug the launcher.
-
-After the application finishes building, open your browser to http://localhost:8080
-
-
-### [Optional] Installing Lombok
-
-Click File, then Settings. From there select `Plugins`. Open the Marketplace tab and type **Lombok**. It should have an author named Michail Plushnikov. Click install then restart IntelliJ.  
+   1. In the top navigation bar, select **Run 'App'** to run the launcher. A browser window should automatically open to the consent page.  
+1. [Optional] To install Lombok, select **File** > **Settings...** > **Plugins** > **Marketplace** tab > search for **Lombok**. It should have an author named Michail Plushnikov. Select **Install**, then restart IntelliJ.  
 
 
 ## Eclipse instructions
