@@ -307,12 +307,12 @@ Click File, then Settings. From there select `Plugins`. Open the Marketplace tab
 
 
 ## Eclipse instructions
-**Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip the Steps 1 and 2 as they were automatically performed for you.** 
+**Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip Steps 1, 2, and 5.** 
 1.  Download or clone the
 [code-examples-java](https://github.com/docusign/code-examples-java)
    repository
 
-1.  Open the `src\main\resources\application.example.json` file. Configure the launcher by pasting the following data from your DocuSign developer account [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page. The DS_SIGNER_NAME, DS_SIGNER_EMAIL, DS_TARGET_ACCOUNT_ID (the *API Username* in the *Apps and Keys* page), authorization.code.grant.client.client-id (*Integration Key*), authorization.code.grant.client.client-secret (Select the *Actions* button to the right of your *Integration Key* > *Edit* > *Authentication* > *+ ADD SECRET KEY* > *Secret Key*), jwt.grant.client.client-id (*Integration Key*), wt.grant.client.impersonated-user-guid (*API Username*). Save this file as `application.json`. **Don't add this application.json file to your GitHub repo since it contains personal information.**  
+1.  Open the `src\main\resources\application.example.json` file. Configure the launcher by pasting the following data from your DocuSign developer account [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page. The DS_SIGNER_NAME, DS_SIGNER_EMAIL, DS_TARGET_ACCOUNT_ID (the **API Username** in the **Apps and Keys** page), authorization.code.grant.client.client-id (**Integration Key**), authorization.code.grant.client.client-secret (Select the **Actions** button to the right of your **Integration Key** > **Edit** > **Authentication** > **+ ADD SECRET KEY** > **Secret Key**), jwt.grant.client.client-id (**Integration Key**), wt.grant.client.impersonated-user-guid (**API Username**). Save this file as `application.json`. **Don't add this application.json file to your GitHub repo since it contains personal information.**  
 
 1. Open Eclipse and select import. When the window appears, click the Maven folder, then click `Existing Maven Project`, and `Browse` for your code-examples-java repo. Under `Projects`, the `pom.xml` file should be selected.
 1. Select the `Add project(s) to working set` checkbox to save the project link to your Eclipse workspace. Select `Finish`.
@@ -320,11 +320,12 @@ Click File, then Settings. From there select `Plugins`. Open the Marketplace tab
    1. Name the configuration `build`.
    1. Put in the following value for your workspace in the Base Directory: `${workspace_loc:/code-examples-java}`.
    1. Put in the following values into the Goals field: `clean package`.
-1. Select the JRE tab in the Run Configurations menu and make sure you have a Runtime JRE set to jdk-11 or higher. Select `Apply` to save.
+   1. Select the JRE tab in the Run Configurations menu and make sure you have a Runtime JRE set to jdk-11 or higher. Select `Apply` to save.
 1. Create a Java Application Configuration in the Run Configurations dialog box, right-clicking Java Application > New Configuration with the following:  
    1. Name the configuration `App`.
    1. Put in the following value for Project: `code-examples-java`.
    1. Put in the following value into the Main class: `com.docusign.App`.
+   1. Select the JRE tab in the Run Configurations menu and make sure you have a Runtime JRE set to jdk-11 or higher. Select `Apply` to save.
    1. Select `Run` to run the launcher. A browser window should automatically open to the consent page.
 1. [Optional] Install Lombok by downloading the [lombok.jar](https://projectlombok.org/downloads/lombok.jar) itself to your local machine. Open a terminal or command prompt window and install by typing in `java -jar lombok.jar` then pressing **Enter**.  
 
