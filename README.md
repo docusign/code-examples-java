@@ -317,8 +317,6 @@ Click File, then Settings. From there select `Plugins`. Open the Marketplace tab
 1.  Download or clone the
 [code-examples-java](https://github.com/docusign/code-examples-java)
    repository
-
-1.  Open the src\main\resources\application.example.json file.  
 1.  Open the src\main\resources\application.example.json file.  
 Configure the launcher by pasting the following data from your DocuSign developer account [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page:  
 `DS_SIGNER_NAME` (a string value for the Signer's name)  
