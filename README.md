@@ -251,7 +251,7 @@ $ java -Dspring.profiles.active=dev -jar code-examples-java-1.0-SNAPSHOT.war
 
 
 ## IntelliJ Ultimate instructions for Windows
-The [IntelliJ IDE Ultimate edition](https://www.jetbrains.com/idea/) can be used with the launcher. The IntelliJ Ultimate edition is required due to its support for Spring Boot and JSP view pages.
+The [IntelliJ Ultimate edition](https://www.jetbrains.com/idea/) can be used with the launcher. The IntelliJ Ultimate edition is required due to its support for Spring Boot and JSP view pages.
 
 **Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip Steps 1 and 2 as they were automatically performed for you.**  
 1.  Download or clone the
@@ -268,17 +268,17 @@ Configure the launcher by pasting the following data from your DocuSign develope
 `wt.grant.client.impersonated-user-guid` (**API Username**)   
 Save this file as `application.json`.  
 **Don't add this application.json file to your GitHub repo since it contains personal information.**   
-1. Start IntelliJ Ultimate and choose the **Open** option.  
-   1. In the dialog box, select your unzipped Quickstart folder or code-examples-java > **OK**
-   1. In the **Open or Import Project** dialog box, select **Maven project** > **OK**.
+1. Start IntelliJ Ultimate, and select **Open**.  
+   1. In the dialog box, select your unzipped Quickstart folder or code-examples-java > **OK**.  
+   1. In the **Open or Import Project** dialog box, select **Maven project** > **OK**.  
 
 1. In the top navigation bar, select **Run** > **Edit configurations...** to create a Java application configuration.  
-   1. In the far left corner, select **+** > **Spring Boot**  
-   1. In the **Name** field, input: `App`.
-   1. To the right of the **Main class** field, select **...** > **App (com.docusign)   code-examples-java** > **OK**.
-   1. Select the **JRE** tab. Under **Runtime JRE**, ensure it lists jdk-11 or higher. Select **Apply** to save.
-   1. Select **Run** to run the launcher. A browser window should automatically open to the consent page.
-   1. Under **Spring Boot**, select the **Enable debug output** checkbox > **OK**.
+   1. In the far left corner, select **+** > **Spring Boot**.  
+   1. In the **Name** field, input: `App`.  
+   1. To the right of the **Main class** field, select **...** > **App (com.docusign)   code-examples-java** > **OK**.  
+   1. Select the **JRE** tab. Under **Runtime JRE**, ensure it lists jdk-11 or higher. Select **Apply** to save.  
+   1. Select **Run** to run the launcher. A browser window should automatically open to the consent page.  
+   1. Under **Spring Boot**, select the **Enable debug output** checkbox > **OK**.  
    1. In the top navigation bar, select **Run 'App'** to run the launcher. A browser window should automatically open to the consent page.  
 1. [Optional] To install Lombok, select **File** > **Settings...** > **Plugins** > **Marketplace** tab > search for **Lombok**. It should have an author named Michail Plushnikov. Select **Install**, then restart IntelliJ.  
 
