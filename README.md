@@ -313,7 +313,7 @@ Click File, then Settings. From there select `Plugins`. Open the Marketplace tab
 
 
 ## Eclipse instructions
-**Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip Steps 1, 2, and 5.** 
+**Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip Steps 1, 2, and 4.** 
 1.  Download or clone the
 [code-examples-java](https://github.com/docusign/code-examples-java)
    repository
@@ -329,20 +329,21 @@ Configure the launcher by pasting the following data from your DocuSign develope
 Save this file as `application.json`.  
 **Don't add this application.json file to your GitHub repo since it contains personal information.**  
 
-1. Open Eclipse and select import. When the window appears, select the Maven folder, then select **Existing Maven Project**, and **Browse** for your Quickstart folder name or code-examples-java. Under **Projects**, the **pom.xml** file should be selected.
-1. Select the **Add project(s) to working set** checkbox to save the project link to your Eclipse workspace. Select **Finish**.
-1. Next, select **Run**, then **Run Configurations**, and right-click **Maven Build**, then **New Configuration** to clean and compile:
+1. Open Eclipse and select import. When the window appears, select the Maven folder, then select **Existing Maven Project**, and **Browse** for your Quickstart folder name or code-examples-java. 
+   1. Under **Projects**, the **pom.xml** file should be selected. 
+   1. Select the **Add project(s) to working set** checkbox to save the project link to your Eclipse workspace. Select **Finish**.
+3. Next, select **Run**, then **Run Configurations**, and right-click **Maven Build**, then **New Configuration** to clean and compile:
    1. In the **Name** field, input: `build`.
    1. In **Base Directory**, input: `${workspace_loc:/code-examples-java}`.
    1. In **Goals**, input: `clean package`.
    1. Select the **JRE** tab. Under **Runtime JRE**, ensure it lists jdk-11 or higher. Select **Apply** to save.
-1. In the **Run Configurations** dialog box, in the left sidebar, right-click **Java Application**, then **New Configuration**:  
+4. In the **Run Configurations** dialog box, in the left sidebar, right-click **Java Application**, then **New Configuration**:  
    1. In the **Name** field, input: `App`.
    1. In the **Project** field, input: `code-examples-java`.
    1. In the **Main class** field, input: `com.docusign.App`.
    1. Select the **JRE** tab. Under **Runtime JRE**, ensure it lists jdk-11 or higher. Select **Apply** to save.
    1. Select **Run** to run the launcher. A browser window should automatically open to the consent page.
-1. [Optional] Download the [lombok.jar](https://projectlombok.org/downloads/lombok.jar) to your local machine. To install Lombok, open a terminal or command line. Run `java -jar lombok.jar`.  
+5. [Optional] Download the [lombok.jar](https://projectlombok.org/downloads/lombok.jar) to your local machine. To install Lombok, open a terminal or command line. Run `java -jar lombok.jar`.  
 
 
 ### Payments code example  
