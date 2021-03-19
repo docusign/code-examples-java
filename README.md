@@ -329,7 +329,7 @@ Configure the launcher by pasting the following data from your DocuSign develope
 Save this file as `application.json`.  
 **Don't add this application.json file to your GitHub repo since it contains personal information.**  
 
-1. Open Eclipse and select import. When the window appears, select the Maven folder, then select **Existing Maven Project**, and **Browse** for your <Quickstart folder name> or code-examples-java. Under **Projects**, the **pom.xml** file should be selected.
+1. Open Eclipse and select import. When the window appears, select the Maven folder, then select **Existing Maven Project**, and **Browse** for your Quickstart folder name or code-examples-java. Under **Projects**, the **pom.xml** file should be selected.
 1. Select the **Add project(s) to working set** checkbox to save the project link to your Eclipse workspace. Select **Finish**.
 1. Next, select **Run**, then **Run Configurations**, and right-click **Maven Build**, then **New Configuration** to clean and compile:
    1. In the **Name** field, input: `build`.
