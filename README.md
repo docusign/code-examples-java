@@ -255,11 +255,20 @@ The [IntelliJ IDE Ultimate edition](https://www.jetbrains.com/idea/) can be used
 
 
 
-**Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip the next 2 steps as they were automatically performed for you.**  
+**Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip Steps 1 and 2 as they were automatically performed for you.**  
 1.  Download or clone the
 [code-examples-java](https://github.com/docusign/code-examples-java)
    repository
-1.  Configure the project by overriding necessary properties from the `src\main\resources\application.example.json` and saving this file as `application.json` file. **Don't add this file into the Git index.**  
+1.  Open the `src\main\resources\application.example.json` file.  
+Configure the launcher by pasting the following data from your DocuSign developer account [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page.  
+The DS_SIGNER_NAME, DS_SIGNER_EMAIL,  
+DS_TARGET_ACCOUNT_ID (the **API Username** in the **Apps and Keys** page),  
+authorization.code.grant.client.client-id (**Integration Key**),  
+authorization.code.grant.client.client-secret (Select the **Actions** button to the right of your **Integration Key** > **Edit** > **Authentication** > **+ ADD SECRET KEY** > **Secret Key**),  
+jwt.grant.client.client-id (**Integration Key**),  
+wt.grant.client.impersonated-user-guid (**API Username**).  
+Save this file as `application.json`.  
+**Don't add this application.json file to your GitHub repo since it contains personal information.**  
 1.   Start IntelliJ Ultimate and choose the **Open or Import** option.
 ![IntelliJ Import project](./docs/IntelliJ_import_highlight.jpg)
 1.   Use the popup file chooser to select 
