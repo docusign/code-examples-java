@@ -322,17 +322,17 @@ jwt.grant.client.client-id (**Integration Key**),
 wt.grant.client.impersonated-user-guid (**API Username**).  
 Save this file as `application.json`. **Don't add this application.json file to your GitHub repo since it contains personal information.**  
 
-1. Open Eclipse and select import. When the window appears, click the Maven folder, then click `Existing Maven Project`, and `Browse` for your code-examples-java repo. Under `Projects`, the `pom.xml` file should be selected.
+1. Open Eclipse and select import. When the window appears, click the Maven folder, then click `Existing Maven Project`, and `Browse` for your Quickstart folder name or code-examples-java repo. Under `Projects`, the `pom.xml` file should be selected.
 1. Select the `Add project(s) to working set` checkbox to save the project link to your Eclipse workspace. Select `Finish`.
 1. Next, select `Run > Run Configurations` and right-click `Maven Build` then `New Configuration` to clean and compile with the following:
    1. Name the configuration: `build`.
    1. Put in the following value for your workspace in the Base Directory: `${workspace_loc:/code-examples-java}`.
    1. Put in the following values into the Goals field: `clean package`.
    1. Select the JRE tab in the Run Configurations menu and make sure you have a Runtime JRE set to jdk-11 or higher. Select `Apply` to save.
-1. Create a Java Application Configuration in the Run Configurations dialog box, right-clicking Java Application > New Configuration with the following:  
+1. Create a Java Application Configuration in the `Run >  Run Configurations` dialog box, right-clicking `Java Application > New Configuration` with the following:  
    1. Name the configuration: `App`.
-   1. Put in the following value for Project: `code-examples-java`.
-   1. Put in the following value into the Main class: `com.docusign.App`.
+   1. Name the Project: `code-examples-java`.
+   1. Name the Main class: `com.docusign.App`.
    1. Select the JRE tab in the Run Configurations menu and make sure you have a Runtime JRE set to jdk-11 or higher. Select `Apply` to save.
    1. Select `Run` to run the launcher. A browser window should automatically open to the consent page.
 1. [Optional] Install Lombok by downloading the [lombok.jar](https://projectlombok.org/downloads/lombok.jar) itself to your local machine. Open a terminal or command prompt window and install by typing in `java -jar lombok.jar` then pressing **Enter**.  
