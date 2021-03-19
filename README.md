@@ -254,7 +254,7 @@ The [IntelliJ IDE Ultimate edition](https://www.jetbrains.com/idea/) can be used
 **Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip Steps 1 and 2 as they were automatically performed for you.**  
 1.  Download or clone the
 [code-examples-java](https://github.com/docusign/code-examples-java)
-   repository
+   repository.  
 1.  Open the src\main\resources\application.example.json file.  
 Configure the launcher by pasting the following data from your DocuSign developer account [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page:  
 `DS_SIGNER_NAME` (a string value for the Signer's name)  
@@ -316,7 +316,7 @@ Click File, then Settings. From there select `Plugins`. Open the Marketplace tab
 **Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip Steps 1, 2, and 4.** 
 1.  Download or clone the
 [code-examples-java](https://github.com/docusign/code-examples-java)
-   repository
+   repository.  
 1.  Open the src\main\resources\application.example.json file.  
 Configure the launcher by pasting the following data from your DocuSign developer account [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page:  
 `DS_SIGNER_NAME` (a string value for the Signer's name)  
