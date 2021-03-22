@@ -264,7 +264,7 @@ Configure the launcher by pasting the following data from your DocuSign develope
 `authorization.code.grant.client.client-secret` (Select the **Actions** button to the right of your **Integration Key** > **Edit** > **Authentication** > **+ ADD SECRET KEY** > **Secret Key**)   
 `jwt.grant.client.client-id` (**Integration Key**)   
 `wt.grant.client.impersonated-user-guid` (**API Username**)   
-Save this file as `application.json`.  
+Save this file as `application.json`  
 **Don't add this application.json file to your GitHub repo since it contains personal information.**  
 1.   Start IntelliJ Ultimate and choose the **Open or Import** option.  
 ![IntelliJ Import project](./docs/IntelliJ_import_highlight.jpg)  
@@ -326,24 +326,24 @@ Configure the launcher by pasting the following data from your DocuSign develope
 `authorization.code.grant.client.client-secret` (Select the **Actions** button to the right of your **Integration Key** > **Edit** > **Authentication** > **+ ADD SECRET KEY** > **Secret Key**)   
 `jwt.grant.client.client-id` (**Integration Key**)   
 `wt.grant.client.impersonated-user-guid` (**API Username**)   
-Save this file as `application.json`.  
+Save this file as `application.json`  
 **Don't add this application.json file to your GitHub repo since it contains personal information.**  
 
 1. Open Eclipse and select import. When the window appears, select the Maven folder, then select **Existing Maven Project**, and **Browse** for your Quickstart folder name or code-examples-java. 
    1. Under **Projects**, the **pom.xml** file should be selected. 
    1. Select the **Add project(s) to working set** checkbox to save the project link to your Eclipse workspace. Select **Finish**.
 3. Next, select **Run**, then **Run Configurations**, and right-click **Maven Build**, then **New Configuration** to clean and compile:
-   1. In the **Name** field, input: `build`.
-   1. In **Base Directory**, input: `${workspace_loc:/code-examples-java}`.
-   1. In **Goals**, input: `clean package`.
+   1. In the **Name** field, input: `build`
+   1. In **Base Directory**, input: `${workspace_loc:/code-examples-java}`
+   1. In **Goals**, input: `clean package`
    1. Select the **JRE** tab. Under **Runtime JRE**, ensure it lists jdk-11 or higher. Select **Apply** to save.
 4. In the **Run Configurations** dialog box, in the left sidebar, right-click **Java Application**, then **New Configuration**:  
-   1. In the **Name** field, input: `App`.
-   1. In the **Project** field, input: `code-examples-java`.
-   1. In the **Main class** field, input: `com.docusign.App`.
+   1. In the **Name** field, input: `App`
+   1. In the **Project** field, input: `code-examples-java`
+   1. In the **Main class** field, input: `com.docusign.App`
    1. Select the **JRE** tab. Under **Runtime JRE**, ensure it lists jdk-11 or higher. Select **Apply** to save.
    1. Select **Run** to run the launcher. A browser window should automatically open to the consent page.
-5. [Optional] Download the [lombok.jar](https://projectlombok.org/downloads/lombok.jar) to your local machine. To install Lombok, open a terminal or command line. Run `java -jar lombok.jar`.  
+5. [Optional] Download the [lombok.jar](https://projectlombok.org/downloads/lombok.jar) to your local machine. To install Lombok, open a terminal or command line. Run `java -jar lombok.jar`  
 
 
 ### Payments code example  
