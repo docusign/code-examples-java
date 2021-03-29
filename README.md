@@ -244,8 +244,7 @@ $ mvn package
 ```
 Run:  
 ``` bash
-$ cd target
-$ java -Dspring.profiles.active=dev -jar code-examples-java-1.0-SNAPSHOT.war
+$ java -Dspring.profiles.active=dev -jar target/code-examples-java-1.0-SNAPSHOT.war
 ```
 
 
