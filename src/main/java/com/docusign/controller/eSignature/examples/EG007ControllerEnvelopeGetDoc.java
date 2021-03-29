@@ -68,17 +68,20 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController 
     }
 
     @Override
-    // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
             HttpServletResponse response) throws ApiException, IOException {
+        // Step 2 start
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
-
-        // Step 1. EnvelopeDocuments::get.
-        // Exceptions will be caught by the calling function
+        // Step 2 end
+        
+        // EnvelopeDocuments::get.
+        // Exceptions will be caught by the calling function 
         String documentId = args.getDocSelect();
+        // Step 3 start       
         byte[] results = envelopesApi.getDocument(session.getAccountId(), session.getEnvelopeId(), documentId);
+        // Step 3 end 
 
-        // Step 2. process results
+        // Process results
         List<EnvelopeDocumentInfo> envelopeDocuments = session.getEnvelopeDocuments();
         EnvelopeDocumentInfo docItem = find(envelopeDocuments, documentId);
 
@@ -115,6 +118,5 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController 
         }
 
         throw new ExampleException("Requested document is not found.", null);
-    }
-    // ***DS.snippet.0.end
+    }  
 }

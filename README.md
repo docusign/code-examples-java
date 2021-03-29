@@ -247,38 +247,68 @@ Run:
 $ java -Dspring.profiles.active=dev -jar target/code-examples-java-1.0-SNAPSHOT.war
 ```
 
-
-
 ## IntelliJ Ultimate instructions for Windows
-The [IntelliJ Ultimate edition](https://www.jetbrains.com/idea/) can be used with the launcher. The IntelliJ Ultimate edition is required due to its support for Spring Boot and JSP view pages.
+The [IntelliJ IDE Ultimate edition](https://www.jetbrains.com/idea/) can be used with the launcher. The IntelliJ Ultimate edition is required due to its support for Spring Boot and JSP view pages.
 
 **Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip Steps 1 and 2 as they were automatically performed for you.**  
 1.  Download or clone the
 [code-examples-java](https://github.com/docusign/code-examples-java)
    repository.  
 1.  Open the src\main\resources\application.example.json file.  
-Configure the launcher by pasting the following data from your DocuSign developer account's [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page:  
+Configure the launcher by pasting the following data from your DocuSign developer account [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page:  
 `DS_SIGNER_NAME` (a string value for the Signer's name)  
 `DS_SIGNER_EMAIL` (a string value for the Signer's email address)  
 `DS_TARGET_ACCOUNT_ID` (the **API Username** in the **Apps and Keys** page)  
 `authorization.code.grant.client.client-id` (**Integration Key**)   
-`authorization.code.grant.client.client-secret` (To the right of your **Integration Key**, select **Actions** > **Edit** > **Authentication** > **+ ADD SECRET KEY** > **Secret Key**)   
+`authorization.code.grant.client.client-secret` (Select the **Actions** button to the right of your **Integration Key** > **Edit** > **Authentication** > **+ ADD SECRET KEY** > **Secret Key**)   
 `jwt.grant.client.client-id` (**Integration Key**)   
 `wt.grant.client.impersonated-user-guid` (**API Username**)   
 Save this file as `application.json`  
-**Don't add this application.json file to your GitHub repo since it contains personal information.**   
-1. Start IntelliJ Ultimate, and select **Open**.  
-   1. In the dialog box, select your unzipped Quickstart folder or code-examples-java > **OK**.  
-   1. In the **Open or Import Project** dialog box, select **Maven project** > **OK**.  
+**Don't add this application.json file to your GitHub repo since it contains personal information.**  
+1.   Start IntelliJ Ultimate and choose the **Open or Import** option.  
+![IntelliJ Import project](./docs/IntelliJ_import_highlight.jpg)  
+1.   Use the popup file chooser to select 
+**code-examples-java** or your unzipped Quickstart directory.
+1.   The **Import Project** wizard will open. It's a
+series of screens. On the first screen, select
+**Import project from external model** and **Maven**.
+![IntelliJ Import Maven project](./docs/install_fig_2.png)
+1.   Click **Finish** and the project will
+be displayed in the IDE.
 
-1. In the top navigation bar, select **Run** > **Edit configurations...** to create a Java application configuration.  
-   1. In the far left corner, select **+** > **Spring Boot**.  
-   1. In the **Name** field, input: `App`.  
-   1. To the right of the **Main class** field, select **...** > **App (com.docusign)   code-examples-java** > **OK**.  
-   1. Under **Spring Boot**, select the **Enable debug output** checkbox > **OK**.  
+### Configuring IntelliJ's *Run/Debug Configuration*
+IntelliJ uses **Run/Debug Configuration** to manage
+settings for running the launcher.
 
-1. In the top navigation bar, select **Run 'App'** to run the launcher. A browser window should automatically open to the consent page.  
-1. [Optional] To install Lombok, select **File** > **Settings...** > **Plugins** > **Marketplace** tab > search for **Lombok**. It should have an author named Michail Plushnikov. Select **Install**, then restart IntelliJ.  
+Set up a Run/Debug Configuration for the launcher:
+
+1. Use the menu command **Run > Edit configurations...**  
+to open the configuration manager.
+
+1. Click the **+** (plus) sign to add a new configuration.
+The configuration type is **Spring Boot**. You may need to
+open the additional templates section of the template chooser.
+
+1. Update the form with the **Name** of the
+configuration to `code-examples-java` and the **Main class** for the configuration,
+`com.docusign.App` **Tip:** use the **...**   (ellipses) button next to the field to choose the Main class.
+
+Under **Spring Boot** select the `Enable debug output` checkbox.
+
+Select the **OK** button.
+
+![Configure a Run configuration](./docs/install_fig_7.png)
+
+### Running or debugging the launcher
+
+Use a **Run** menu option to run or debug the launcher.
+
+After the application finishes building, open your browser to http://localhost:8080
+
+
+### [Optional] Installing Lombok
+
+Click File, then Settings. From there select `Plugins`. Open the Marketplace tab and type **Lombok**. It should have an author named Michail Plushnikov. Click install then restart IntelliJ.  
 
 
 ## Eclipse instructions
