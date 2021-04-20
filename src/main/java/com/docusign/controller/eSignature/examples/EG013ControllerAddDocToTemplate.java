@@ -140,7 +140,7 @@ public class EG013ControllerAddDocToTemplate extends AbstractEsignatureControlle
 
         // Add the roles via an inlineTemplate
         InlineTemplate inlineTemplate = new InlineTemplate();
-        inlineTemplate.setSequence("1");
+        inlineTemplate.setSequence("2");
         inlineTemplate.setRecipients(EnvelopeHelpers.createRecipients(createSigner(args), cc1));
         compTemplate1.setInlineTemplates(Arrays.asList(inlineTemplate));
 
@@ -156,7 +156,7 @@ public class EG013ControllerAddDocToTemplate extends AbstractEsignatureControlle
         CompositeTemplate compTemplate2 = new CompositeTemplate();
         compTemplate2.setCompositeTemplateId("2");
         InlineTemplate inlineTemplate2 = new InlineTemplate();
-        inlineTemplate2.setSequence("2");
+        inlineTemplate2.setSequence("1");
         inlineTemplate2.setRecipients(EnvelopeHelpers.createRecipients(signer1AddedDoc, cc1));
         compTemplate2.setInlineTemplates(Arrays.asList(inlineTemplate2));
         compTemplate2.setDocument(EnvelopeHelpers.createDocument(htmlDoc, HTML_DOCUMENT_NAME,
