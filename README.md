@@ -9,7 +9,6 @@ To use the Click API code examples, modify the **DS_API_NAME** setting at the en
 
 **Note:** to use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account).
 
-[![Java Quickstart video](https://img.youtube.com/vi/XGpb861XQuA/0.jpg)](http://www.youtube.com/watch?v=XGpb861XQuA&t=3s "Java Quickstart")
 
 ## Introduction
 This repo is a Java Spring Boot application that demonstrates how to authenticate with DocuSign via the
@@ -19,10 +18,10 @@ The [Spring Boot security Oauth2 boot autoconfigure package](https://github.com/
 
 The OAuth library is used in the file [WebSecurityConfig.java](https://github.com/docusign/code-examples-java/blob/master/src/main/java/com/docusign/WebSecurityConfig.java).
 
+
 ## eSignature API
 
 For more information about the scopes used for obtaining authorization to use the eSignature API, see the [Required Scopes section](https://developers.docusign.com/docs/esign-rest-api/esign101/auth).
-
 
 1. **Use embedded signing.**  
    [Source](./src/main/java/com/docusign/EG001ControllerEmbeddedSigning.java)
@@ -104,12 +103,12 @@ For more information about the scopes used for obtaining authorization to use th
 1. **Request a signature by SMS delivery**  
    [Source](./src/main/java/com/docusign/controller/eSignature/examples/EG035ControllerSMSDelivery.java) This code example demonstrates how to send a signature request via an SMS message using the [Envelopes: create](https://developers.docusign.com/esign-rest-api/reference/Envelopes/Envelopes/create) method. 
 
+
 ## Rooms API 
 
 For more information about the scopes used for obtaining authorization to use the Rooms API, see the [Required Scopes section](https://developers.docusign.com/docs/rooms-api/rooms101/auth/).
 
 **Note:** To use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). Examples 4 and 6 require that you have the DocuSign Forms feature enabled in your Rooms for Real Estate account.
-
 
 1. **Create room with Data.**  
    [Source](./src/main/java/com/docusign/controller/rooms/examples/R001ControllerCreateRoom.java)
@@ -143,6 +142,7 @@ For more information about the scopes used for obtaining authorization to use th
    Estate account. As a prerequisite, ensure that you have created a form group and set the 
    office ID on this form group before proceeding.
 
+
 ## Click API  
 For more information about the scopes used for obtaining authorization to use the Click API, see the [Required Scopes section](https://developers.docusign.com/docs/click-api/click101/auth/)  
   
@@ -161,91 +161,79 @@ For more information about the scopes used for obtaining authorization to use th
    [Source](./src/main/java/com/docusign/controller/click/examples/C005ControllerGetClickwrapResponses.java)
    This code example shows how to get clickwrap responses.
 
-## Included OAuth grant types:
-
-* Authentication with Docusign via [Authorization Code Grant flow](https://developers.docusign.com/platform/auth/authcode) .
-When the token expires, the user is asked to re-authenticate.
-The **refresh token** is not used in this example.
-
-* Authentication with DocuSign via the [JSON Web Token (JWT) Grant](https://developers.docusign.com/platform/auth/jwt/).
-When the token expires, it updates automatically.
-
-   **Note:** Before you can make any API calls using JWT Grant, you must get your user’s consent for your app to impersonate them. To do this, the `impersonation` scope is added when requesting a JSON Web Token.
-
 
 ## Installation
 
 ### Prerequisites
-**Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip step 2 below as it is automatically performed for you.**  
+**Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, item step 2 as it was automatically performed for you.
 
-1. A DocuSign developer account (email and password) on [demo.docusign.net](https://demo.docusign.net).
-   Create a [free account](https://go.docusign.com/sandbox/productshot/?elqCampaignId=16533).
-1. A DocuSign Integration Key (a client ID) that is configured to use the
-   OAuth Authorization Code flow.
-   You will need the **Integration Key** itself, and its **secret**. To
-   use JSON Web token, you will need the **Integration Key** itself, the
-   **RSA Secret Key** and an API user ID for the user you are impersonating.  
+1. A free [DocuSign developer account](https://go.docusign.com/o/sandbox/); create one if you don't already have one.
+1. A DocuSign app and integration key that is configured to use either [Authorization Code Grant](https://developers.docusign.com/platform/auth/authcode/) or [JWT Grant](https://developers.docusign.com/platform/auth/jwt/) authentication.
 
-   If you use this launcher on your own workstation,
-   the Integration key must include following **Redirect URI**s:
+   This [video](https://www.youtube.com/watch?v=eiRI4fe5HgM) demonstrates how to obtain an integration key.  
+   
+   To use [Authorization Code Grant](https://developers.docusign.com/platform/auth/authcode/), you will need an integration key and a secret key. See [Installation steps](#installation-steps) for details.  
+
+   To use [JWT Grant](https://developers.docusign.com/platform/auth/jwt/), you will need an integration key, an RSA key pair, and the API Username GUID of the impersonated user. See [Installation steps for JWT Grant authentication](#installation-steps-for-jwt-grant-authentication) for details.  
+
+   For both authentication flows:  
+   
+   If you use this launcher on your own workstation, the integration key must include a redirect URIs of     
+
    * http://localhost:8080/login&type=acg
    * http://localhost:8080/login&type=jwt
 
-   If you will not be running the launcher on your own workstation,
-   use the appropriate DNS name and port instead of `localhost:8080`.
-   A sample Redirect URI: http://myserver.it.mycompany.com/login
+   If you host this launcher on a remote web server, set your redirect URI as   
+   
+   {base_url}/login
+   
+   where {base_url} is the URL for the web app.  
 
 1. [JDK 11](https://jdk.java.net/java-se-ri/11) or later
 1. [Maven](https://maven.apache.org/download.cgi)
-1. A name and email for a signer, and a name and email for a cc recipient.
-   The signer and the cc email cannot be the same.
-1. **Optional** [Lombok Annotations Processing](https://www.baeldung.com/lombok-ide) configured for your IDE. 
-
-
-#### Authorization Code Grant specifics:
-   You will need the integration key and its secret. The integration key must include a redirect URI of
-
-   {app_url}/login&type=acg
-   where {app_url} is the URL you have associated with the folder where the source files are located.
-   For example, if you have created a web server that enables the URL
-
-   http://localhost:8080/
-
-   to execute files on the /public folder of this example, then you must add a redirect URI to your integration key with the value
-   http://localhost:8080/login&type=acg
-
-#### JWT (JSON Web Token) specifics:
-   You will need the integration key, an RSA private key, and the user ID (GUID) of the impersonated user.
-   The private part of the RSA key pair must be copied over and stored in a private.key file located in `src\main\resources\private.key`.
-
-   **Note:** Before you can make any API calls using JWT Grant, you must get your user’s consent for your app to impersonate them. To do this, the `impersonation` scope is added when requesting a JSON Web Token.
 
 
 ### Installation steps
-1. Download or clone this repository.
-1. The project includes a Maven pom file.   
 
-**Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip the next step as it was automatically performed for you.**  
-1.  Configure the project by overriding necessary properties from the `src\main\resources\application.example.json` and saving this file as `application.json` file. **Don't add this file into the Git index.**  
-1. Add VM argument `-Dspring.profiles.active=dev` to your IDE
-1. Note that IntelliJ IDEA Community Edition does not directly support
-  Spring Boot applications.  
-1. [Optional] Install Lombok for your IDE (See the IntelliJ or Eclipse instructions below for specific details). 
+**Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, step 4 as it was automatically performed for you.
 
-**NOTE:** If Lombok Annotations Processing is not installed in your IDE, you will see several errors regarding undefined methods. These methods are generated at compile time and do not otherwise impact the functionality of the launcher.
+1. Extract the Quickstart ZIP file or download or clone the code-examples-java repository.
+1. In your command-line environment, switch to the folder:  
+   `cd <Quickstart folder>` or `cd code-examples-java`
+1. Package the code: `mvn package`
+1. To configure the launcher for [Authorization Code Grant](https://developers.docusign.com/platform/auth/authcode/) authentication, create a copy of the file src/main/resources/application.example.json and save the copy as src/main/resources/application.json.
+   1. Add your API Username. On the [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page, under **My Account Information**, copy the **API Username** GUID and save it in application.json as your `DS_TARGET_ACCOUNT_ID`.
+   1. Add your integration key. On the [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page, under **Apps and Integration Keys**, choose the app to use, then select **Actions** > **Edit**. Under **General Info**, copy the **Integration Key** GUID and save it in application.json as your `authorization.code.grant.client.client-id`.
+   1. Generate a secret key, if you don’t already have one. Under **Authentication**, select **+ ADD SECRET KEY**. Copy the secret key and save it in application.json as your `authorization.code.grant.client.client-secret`.
+   1. Add the launcher’s redirect URI. Under **Additional settings**, select **+ ADD URI**, and set a redirect URI of http://localhost:8080/login&type=acg. Select **SAVE**.   
+   1. Set a name and email address for the signer. In application.json, save an email address as `DS_SIGNER_EMAIL` and a name as `DS_SIGNER_NAME`.  
+**Note:** Protect your personal information. Please make sure that application.json will not be stored in your source code repository.  
+1. Run the launcher: `java -Dspring.profiles.active=dev -jar target/code-examples-java-1.0-SNAPSHOT.war`
 
-![Lombok Errors Example](./docs/lombok_errors.png)  
   
-### Build and run
-Launchers are built as a dedicated application with embedded TomCat server. Build:  
-``` bash
-$ cd code-examples-java
-$ mvn package
-```
-Run:  
-``` bash
-$ java -Dspring.profiles.active=dev -jar target/code-examples-java-1.0-SNAPSHOT.war
-```
+### Installation steps for JWT Grant authentication
+
+**Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, step 4 as it was automatically performed for you.  
+Also, in order to select JSON Web Token authentication in the launcher, in src/main/resources/application.json, change `quickstart` to `false`.
+
+1. Extract the Quickstart ZIP file or download or clone the code-examples-java repository.
+1. In your command-line environment, switch to the folder:  
+   `cd <Quickstart folder>` or `cd code-examples-java`
+1. Package the code: `mvn package`
+1. To configure the launcher for [JWT Grant](https://developers.docusign.com/platform/auth/jwt/) authentication, create a copy of the file src/main/resources/application.example.json and save the copy as src/main/resources/application.json.
+   1. Add your API Username. On the [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page, under **My Account Information**, copy the **API Username** GUID and save it in application.json as your `DS_TARGET_ACCOUNT_ID` and as your `jwt.grant.client.impersonated-user-guid`.
+   1. Add your integration key. On the [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page, under **Apps and Integration Keys**, choose the app to use, then select **Actions** > **Edit**. Under **General Info**, copy the **Integration Key** GUID and save it in application.json as your `jwt.grant.client.client-id`.
+   1. Generate an RSA key pair, if you don’t already have one. Under **Authentication**, select **+ GENERATE RSA**. Copy the private key and save it in a new file named src/main/resources/private.key.   
+   1. Add the launcher’s redirect URI. Under **Additional settings**, select **+ ADD URI**, and set a redirect URI of http://localhost:8080/login&type=jwt. Select **SAVE**.   
+   1. Set a name and email address for the signer. In application.json, save an email address as `DS_SIGNER_EMAIL` and a name as `DS_SIGNER_NAME`.  
+**Note:** Protect your personal information. Please make sure that application.json will not be stored in your source code repository.  
+1. Run the launcher: `java -Dspring.profiles.active=dev -jar target/code-examples-java-1.0-SNAPSHOT.war`  
+   The launcher automatically opens.  
+1. On the black navigation bar, select **Login**.
+1. From the picklist, select **JSON Web Token (JWT) grant** > **Authenticate with DocuSign**.
+1. When prompted, log in to your DocuSign developer account. If this is your first time using the app, select **ACCEPT** at the consent window. 
+3. Select your desired code example.
+
 
 ## IntelliJ Ultimate instructions for Windows
 The [IntelliJ IDE Ultimate edition](https://www.jetbrains.com/idea/) can be used with the launcher. The IntelliJ Ultimate edition is required due to its support for Spring Boot and JSP view pages.
