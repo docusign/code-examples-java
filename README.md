@@ -165,7 +165,7 @@ For more information about the scopes used for obtaining authorization to use th
 ## Installation
 
 ### Prerequisites
-**Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, item step 2 as it was automatically performed for you.
+**Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, skip item 2 as it was automatically performed for you.
 
 1. A free [DocuSign developer account](https://go.docusign.com/o/sandbox/); create one if you don't already have one.
 1. A DocuSign app and integration key that is configured to use either [Authorization Code Grant](https://developers.docusign.com/platform/auth/authcode/) or [JWT Grant](https://developers.docusign.com/platform/auth/jwt/) authentication.
@@ -195,7 +195,7 @@ For more information about the scopes used for obtaining authorization to use th
 
 ### Installation steps
 
-**Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, step 4 as it was automatically performed for you.
+**Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, skip step 4 as it was automatically performed for you.
 
 1. Extract the Quickstart ZIP file or download or clone the code-examples-java repository.
 1. In your command-line environment, switch to the folder:  
@@ -213,7 +213,7 @@ For more information about the scopes used for obtaining authorization to use th
   
 ### Installation steps for JWT Grant authentication
 
-**Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, step 4 as it was automatically performed for you.  
+**Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, skip step 4 as it was automatically performed for you.  
 Also, in order to select JSON Web Token authentication in the launcher, in src/main/resources/application.json, change `quickstart` to `false`.
 
 1. Extract the Quickstart ZIP file or download or clone the code-examples-java repository.
