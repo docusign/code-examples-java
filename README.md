@@ -248,16 +248,18 @@ IntelliJ IDEA can be used with the launcher. The [IntelliJ IDEA Ultimate edition
    1. Add the launcher’s redirect URI. Under **Additional settings**, select **+ ADD URI**, and set a redirect URI of http://localhost:8080/login&type=acg. Select **SAVE**.   
    1. Set a name and email address for the signer. In application.json, save an email address as `DS_SIGNER_EMAIL` and a name as `DS_SIGNER_NAME`.  
 **Note:** Protect your personal information. Please make sure that application.json will not be stored in your source code repository.  
-1.   Start IntelliJ IDEA Ultimate and select **Open**.  
-   1. Set a name and email address for the signer. In application.json, save an email address as `DS_SIGNER_EMAIL` and a name as `DS_SIGNER_NAME`. 
-3.   Use the popup file chooser to select 
-**code-examples-java** or your unzipped Quickstart directory.
-1.   The **Import Project** wizard will open. It's a
-series of screens. On the first screen, select
-**Import project from external model** and **Maven**.
-![IntelliJ Import Maven project](./docs/install_fig_2.png)
-1.   Click **Finish** and the project will
-be displayed in the IDE.
+1. Start IntelliJ IDEA Ultimate. In the **Welcome to IntelliJ IDEA** dialog box, select **Open**.  
+   1. In the **Open File or Project** dialog box, select your Quickstart folder or code-examples-java, then select **OK**.
+   1. In **Open or Import Project** dialog box, select **Maven project**, then select **OK**. 
+1. Create a Java application configuration: In the top navigation bar, select **Run** > **Edit configurations**.  
+   1. In the far left corner, select **+** > **Spring Boot**.
+   1. To the right of **Main class**, select **... > App (com.docusign) code-examples-java**, then select **OK**.
+   1. Under **Spring Boot**, select the **Enable debug output** checkbox, then select **OK**.
+1. Run the launcher: In the top navigation bar, select **Run 'App'**.  
+   The launcher automatically opens.
+1. [Optional] To install Lombok, select **File > Settings > Plugins > Marketplace** tab. To the right of the magnifying glass icon, input: `Lombok`  
+   It should have an author named Michail Plushnikov. Select **Install**, then restart IntelliJ.
+   
 
 ### Configuring IntelliJ's *Run/Debug Configuration*
 IntelliJ uses **Run/Debug Configuration** to manage
