@@ -236,26 +236,21 @@ Also, in order to select JSON Web Token authentication in the launcher, in src/m
 
 
 ## IntelliJ Ultimate instructions for Windows
-The [IntelliJ IDE Ultimate edition](https://www.jetbrains.com/idea/) can be used with the launcher. The IntelliJ Ultimate edition is required due to its support for Spring Boot and JSP view pages.
+IntelliJ IDEA can be used with the launcher. The [IntelliJ IDEA Ultimate edition](https://www.jetbrains.com/idea/download/#section=windows) is required due to its support for Spring Boot and JSP view pages.
 
-**Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip Steps 1 and 2 as they were automatically performed for you.**  
-1.  Download or clone the
-[code-examples-java](https://github.com/docusign/code-examples-java)
-   repository.  
-1.  Open the src\main\resources\application.example.json file.  
-Configure the launcher by pasting the following data from your DocuSign developer account [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page:  
-`DS_SIGNER_NAME` (a string value for the Signer's name)  
-`DS_SIGNER_EMAIL` (a string value for the Signer's email address)  
-`DS_TARGET_ACCOUNT_ID` (the **API Username** in the **Apps and Keys** page)  
-`authorization.code.grant.client.client-id` (**Integration Key**)   
-`authorization.code.grant.client.client-secret` (Select the **Actions** button to the right of your **Integration Key** > **Edit** > **Authentication** > **+ ADD SECRET KEY** > **Secret Key**)   
-`jwt.grant.client.client-id` (**Integration Key**)   
-`wt.grant.client.impersonated-user-guid` (**API Username**)   
-Save this file as `application.json`  
-**Don't add this application.json file to your GitHub repo since it contains personal information.**  
-1.   Start IntelliJ Ultimate and choose the **Open or Import** option.  
-![IntelliJ Import project](./docs/IntelliJ_import_highlight.jpg)  
-1.   Use the popup file chooser to select 
+**Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, skip steps 1 and 2 as they were automatically performed for you.
+
+1. Extract the Quickstart ZIP file or download or clone the code-examples-java repository. 
+1. To configure the launcher for [Authorization Code Grant](https://developers.docusign.com/platform/auth/authcode/) authentication, create a copy of the file src/main/resources/application.example.json and save the copy as src/main/resources/application.json.
+   1. Add your API Username. On the [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page, under **My Account Information**, copy the **API Username** GUID and save it in application.json as your `DS_TARGET_ACCOUNT_ID`.
+   1. Add your integration key. On the [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page, under **Apps and Integration Keys**, choose the app to use, then select **Actions** > **Edit**. Under **General Info**, copy the **Integration Key** GUID and save it in application.json as your `authorization.code.grant.client.client-id`.
+   1. Generate a secret key, if you don’t already have one. Under **Authentication**, select **+ ADD SECRET KEY**. Copy the secret key and save it in application.json as your `authorization.code.grant.client.client-secret`.
+   1. Add the launcher’s redirect URI. Under **Additional settings**, select **+ ADD URI**, and set a redirect URI of http://localhost:8080/login&type=acg. Select **SAVE**.   
+   1. Set a name and email address for the signer. In application.json, save an email address as `DS_SIGNER_EMAIL` and a name as `DS_SIGNER_NAME`.  
+**Note:** Protect your personal information. Please make sure that application.json will not be stored in your source code repository.  
+1.   Start IntelliJ IDEA Ultimate and select **Open**.  
+   1. Set a name and email address for the signer. In application.json, save an email address as `DS_SIGNER_EMAIL` and a name as `DS_SIGNER_NAME`. 
+3.   Use the popup file chooser to select 
 **code-examples-java** or your unzipped Quickstart directory.
 1.   The **Import Project** wizard will open. It's a
 series of screens. On the first screen, select
