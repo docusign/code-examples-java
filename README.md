@@ -238,7 +238,7 @@ Also, in order to select JSON Web Token authentication in the launcher, in src/m
 ## IntelliJ Ultimate instructions for Windows
 IntelliJ IDEA can be used with the launcher. The [IntelliJ IDEA Ultimate edition](https://www.jetbrains.com/idea/download/#section=windows) is required due to its support for Spring Boot and JSP view pages.
 
-**Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, skip steps 1 and 2 as they were automatically performed for you.
+**Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, skip step 2 as it was automatically performed for you.
 
 1. Extract the Quickstart ZIP file or download or clone the code-examples-java repository. 
 1. To configure the launcher for [Authorization Code Grant](https://developers.docusign.com/platform/auth/authcode/) authentication, create a copy of the file src/main/resources/application.example.json and save the copy as src/main/resources/application.json.
@@ -256,90 +256,52 @@ IntelliJ IDEA can be used with the launcher. The [IntelliJ IDEA Ultimate edition
    1. To the right of **Main class**, select **... > App (com.docusign) code-examples-java**, then select **OK**.
    1. Under **Spring Boot**, select the **Enable debug output** checkbox, then select **OK**.
 1. Run the launcher: In the top navigation bar, select **Run > Run 'App'**.  
-   The launcher automatically opens.
+   When prompted, log in to your DocuSign developer account. If this is your first time using the app, select **ACCEPT** at the consent window. 
 1. [Optional] To install Lombok, select **File > Settings > Plugins > Marketplace** tab. To the right of the magnifying glass icon, input: `Lombok`  
    It should have an author named Michail Plushnikov. Select **Install**, then restart IntelliJ.
    
 
-### Configuring IntelliJ's *Run/Debug Configuration*
-IntelliJ uses **Run/Debug Configuration** to manage
-settings for running the launcher.
-
-Set up a Run/Debug Configuration for the launcher:
-
-1. Use the menu command **Run > Edit configurations...**  
-to open the configuration manager.
-
-1. Click the **+** (plus) sign to add a new configuration.
-The configuration type is **Spring Boot**. You may need to
-open the additional templates section of the template chooser.
-
-1. Update the form with the **Name** of the
-configuration to `code-examples-java` and the **Main class** for the configuration,
-`com.docusign.App` **Tip:** use the **...**   (ellipses) button next to the field to choose the Main class.
-
-Under **Spring Boot** select the `Enable debug output` checkbox.
-
-Select the **OK** button.
-
-![Configure a Run configuration](./docs/install_fig_7.png)
-
-### Running or debugging the launcher
-
-Use a **Run** menu option to run or debug the launcher.
-
-After the application finishes building, open your browser to http://localhost:8080
-
-
-### [Optional] Installing Lombok
-
-Click File, then Settings. From there select `Plugins`. Open the Marketplace tab and type **Lombok**. It should have an author named Michail Plushnikov. Click install then restart IntelliJ.  
-
-
 ## Eclipse instructions
-**Note: If you downloaded this code using Quickstart from the DocuSign Developer Center, skip Steps 1, 2, and 4.** 
-1.  Download or clone the
-[code-examples-java](https://github.com/docusign/code-examples-java)
-   repository.  
-1.  Open the src\main\resources\application.example.json file.  
-Configure the launcher by pasting the following data from your DocuSign developer account [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page:  
-`DS_SIGNER_NAME` (a string value for the Signer's name)  
-`DS_SIGNER_EMAIL` (a string value for the Signer's email address)  
-`DS_TARGET_ACCOUNT_ID` (the **API Username** in the **Apps and Keys** page)  
-`authorization.code.grant.client.client-id` (**Integration Key**)   
-`authorization.code.grant.client.client-secret` (Select the **Actions** button to the right of your **Integration Key** > **Edit** > **Authentication** > **+ ADD SECRET KEY** > **Secret Key**)   
-`jwt.grant.client.client-id` (**Integration Key**)   
-`wt.grant.client.impersonated-user-guid` (**API Username**)   
-Save this file as `application.json`  
-**Don't add this application.json file to your GitHub repo since it contains personal information.**  
 
-1. Open Eclipse and select import. When the window appears, select the Maven folder, then select **Existing Maven Project**, and **Browse** for your Quickstart folder name or code-examples-java. 
-   1. Under **Projects**, the **pom.xml** file should be selected. 
-   1. Select the **Add project(s) to working set** checkbox to save the project link to your Eclipse workspace. Select **Finish**.
-3. Next, select **Run**, then **Run Configurations**, and right-click **Maven Build**, then **New Configuration** to clean and compile:
+**Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, skip step 2 as it was automatically performed for you.
+
+1. Extract the Quickstart ZIP file or download or clone the code-examples-java repository.  
+1. To configure the launcher for [Authorization Code Grant](https://developers.docusign.com/platform/auth/authcode/) authentication, create a copy of the file src/main/resources/application.example.json and save the copy as src/main/resources/application.json.
+   1. Add your API Username. On the [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page, under **My Account Information**, copy the **API Username** GUID and save it in application.json as your `DS_TARGET_ACCOUNT_ID`.
+   1. Add your integration key. On the [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page, under **Apps and Integration Keys**, choose the app to use, then select **Actions > Edit**. Under **General Info**, copy the **Integration Key** GUID and save it in application.json as your `authorization.code.grant.client.client-id`.
+   1. Generate a secret key, if you don’t already have one. Under **Authentication**, select **+ ADD SECRET KEY**. Copy the secret key and save it in application.json as your `authorization.code.grant.client.client-secret`.
+   1. Add the launcher’s redirect URI. Under **Additional settings**, select **+ ADD URI**, and set a redirect URI of http://localhost:8080/login&type=acg. Select **SAVE**.   
+   1. Set a name and email address for the signer. In application.json, save an email address as `DS_SIGNER_EMAIL` and a name as `DS_SIGNER_NAME`.  
+**Note:** Protect your personal information. Please make sure that application.json will not be stored in your source code repository.  
+
+1. Open Eclipse and select **File > Import**. In the **Import** dialog box, select **Existing Maven Project > Next > Browse**, browse for your Quickstart folder or code-examples-java, then **Select Folder**. 
+   1. Under **Projects**, the `pom.xml` file should be selected. 
+   1. To save the project link to your Eclipse workspace, select the **Add project(s) to working set** checkbox. Select **Finish**.
+1. Next, select **Run**, then **Run Configurations**, and right-click **Maven Build**, then **New Configuration** to clean and compile the package.
    1. In the **Name** field, input: `build`
-   1. In **Base Directory**, input: `${workspace_loc:/code-examples-java}`
+   1. In **Base directory**, input: `${workspace_loc:/code-examples-java}`
    1. In **Goals**, input: `clean package`
    1. Select the **JRE** tab. Under **Runtime JRE**, ensure it lists jdk-11 or higher. Select **Apply** to save.
-4. In the **Run Configurations** dialog box, in the left sidebar, right-click **Java Application**, then **New Configuration**:  
+1. In the **Run Configurations** dialog box, in the left sidebar, right-click **Java Application**, then **New Configuration**.  
    1. In the **Name** field, input: `App`
    1. In the **Project** field, input: `code-examples-java`
    1. In the **Main class** field, input: `com.docusign.App`
    1. Select the **JRE** tab. Under **Runtime JRE**, ensure it lists jdk-11 or higher. Select **Apply** to save.
-   1. Select **Run** to run the launcher. A browser window should automatically open to the consent page.
-5. [Optional] Download the [lombok.jar](https://projectlombok.org/downloads/lombok.jar) to your local machine. To install Lombok, open a terminal or command line. Run `java -jar lombok.jar`  
+   1. Select **Run** to run the launcher.  
+   When prompted, log in to your DocuSign developer account. If this is your first time using the app, select **ACCEPT** at the consent window. 
+1. [Optional] Download [lombok.jar](https://projectlombok.org/downloads/lombok.jar) to your local machine, then run the following command to install Lombok: `java -jar lombok.jar`  
 
 
 ### Payments code example  
-To use the payments example, create a test payments gateway for your developer account. See the [PAYMENTS_INSTALLATION.md](https://github.com/docusign/code-examples-java/blob/master/PAYMENTS_INSTALLATION.md) file for instructions.
+To use the payments code example, create a test payment gateway on the [**Payments**](https://admindemo.docusign.com/authenticate?goTo=payments) page in your developer account. See [Configure a payment gateway](./PAYMENTS_INSTALLATION.md) for details.
 
-Then add the payment gateway account id to the **application.json** file.
+Once you've created a payment gateway, save the **Gateway Account ID** GUID to application.json.
 
 
 ## License and additional information  
 
 ### License  
-This repository uses the MIT License. See the LICENSE file for more information.
+This repository uses the MIT License. See [LICENSE](./LICENSE) for details.
 
 ### Pull Requests
 Pull requests are welcomed. Pull requests will only be considered if their content
