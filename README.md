@@ -165,7 +165,7 @@ For more information about the scopes used for obtaining authorization to use th
 ## Installation
 
 ### Prerequisites
-**Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, skip item 2 as it was automatically performed for you.
+**Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, skip items 1 and 2 as they were automatically performed for you.
 
 1. A free [DocuSign developer account](https://go.docusign.com/o/sandbox/); create one if you don't already have one.
 1. A DocuSign app and integration key that is configured to use either [Authorization Code Grant](https://developers.docusign.com/platform/auth/authcode/) or [JWT Grant](https://developers.docusign.com/platform/auth/jwt/) authentication.
@@ -178,7 +178,7 @@ For more information about the scopes used for obtaining authorization to use th
 
    For both authentication flows:  
    
-   If you use this launcher on your own workstation, the integration key must include a redirect URIs of     
+   If you use this launcher on your own workstation, the integration key must include redirect URIs of     
 
    * http://localhost:8080/login&type=acg
    * http://localhost:8080/login&type=jwt
@@ -203,7 +203,7 @@ For more information about the scopes used for obtaining authorization to use th
 1. Package the code: `mvn package`
 1. To configure the launcher for [Authorization Code Grant](https://developers.docusign.com/platform/auth/authcode/) authentication, create a copy of the file src/main/resources/application.example.json and save the copy as src/main/resources/application.json.
    1. Add your API Username. On the [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page, under **My Account Information**, copy the **API Username** GUID and save it in application.json as your `DS_TARGET_ACCOUNT_ID`.
-   1. Add your integration key. On the [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page, under **Apps and Integration Keys**, choose the app to use, then select **Actions** > **Edit**. Under **General Info**, copy the **Integration Key** GUID and save it in application.json as your `authorization.code.grant.client.client-id`.
+   1. Add your integration key. On the [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page, under **Apps and Integration Keys**, choose the app to use, then select **Actions > Edit**. Under **General Info**, copy the **Integration Key** GUID and save it in application.json as your `authorization.code.grant.client.client-id`.
    1. Generate a secret key, if you don’t already have one. Under **Authentication**, select **+ ADD SECRET KEY**. Copy the secret key and save it in application.json as your `authorization.code.grant.client.client-secret`.
    1. Add the launcher’s redirect URI. Under **Additional settings**, select **+ ADD URI**, and set a redirect URI of http://localhost:8080/login&type=acg. Select **SAVE**.   
    1. Set a name and email address for the signer. In application.json, save an email address as `DS_SIGNER_EMAIL` and a name as `DS_SIGNER_NAME`.  
@@ -214,16 +214,15 @@ For more information about the scopes used for obtaining authorization to use th
 ### Installation steps for JWT Grant authentication
 
 **Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, skip step 4 as it was automatically performed for you.  
-Also, in order to select JSON Web Token authentication in the launcher, in src/main/resources/application.json, change `quickstart` to `false`.
+Also, in order to select JSON Web Token authentication in the launcher, in src/main/resources/application.json, change the `quickstart` setting to `false`.
 
 1. Extract the Quickstart ZIP file or download or clone the code-examples-java repository.
-1. In your command-line environment, switch to the folder:  
-   `cd <Quickstart folder>` or `cd code-examples-java`
+1. In your command-line environment, switch to the folder: `cd <Quickstart folder>` or `cd code-examples-java`
 1. Package the code: `mvn package`
 1. To configure the launcher for [JWT Grant](https://developers.docusign.com/platform/auth/jwt/) authentication, create a copy of the file src/main/resources/application.example.json and save the copy as src/main/resources/application.json.
    1. Add your API Username. On the [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page, under **My Account Information**, copy the **API Username** GUID and save it in application.json as your `DS_TARGET_ACCOUNT_ID` and as your `jwt.grant.client.impersonated-user-guid`.
-   1. Add your integration key. On the [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page, under **Apps and Integration Keys**, choose the app to use, then select **Actions** > **Edit**. Under **General Info**, copy the **Integration Key** GUID and save it in application.json as your `jwt.grant.client.client-id`.
-   1. Generate an RSA key pair, if you don’t already have one. Under **Authentication**, select **+ GENERATE RSA**. Copy the private key and save it in a new file named src/main/resources/private.key.   
+   1. Add your integration key. On the [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page, under **Apps and Integration Keys**, choose the app to use, then select **Actions > Edit**. Under **General Info**, copy the **Integration Key** GUID and save it in application.json as your `jwt.grant.client.client-id`.
+   1. Generate an RSA key pair, if you don’t already have one. Under **Authentication**, select **+ GENERATE RSA**. Copy the private key, and save it in a new file named src/main/resources/private.key.   
    1. Add the launcher’s redirect URI. Under **Additional settings**, select **+ ADD URI**, and set a redirect URI of http://localhost:8080/login&type=jwt. Select **SAVE**.   
    1. Set a name and email address for the signer. In application.json, save an email address as `DS_SIGNER_EMAIL` and a name as `DS_SIGNER_NAME`.  
 **Note:** Protect your personal information. Please make sure that application.json will not be stored in your source code repository.  
@@ -255,7 +254,7 @@ IntelliJ IDEA can be used with the launcher. The [IntelliJ IDEA Ultimate edition
    1. In the far left corner, select **+** > **Spring Boot**.
    1. To the right of **Main class**, select **... > App (com.docusign) code-examples-java**, then select **OK**.
    1. Under **Spring Boot**, select the **Enable debug output** checkbox, then select **OK**.
-1. Run the launcher: In the top navigation bar, select **Run > Run 'App'**.  
+1. Run the launcher: In the top navigation bar, select **Run > Run 'App'**. The launcher automatically opens.   
    When prompted, log in to your DocuSign developer account. If this is your first time using the app, select **ACCEPT** at the consent window. 
 1. [Optional] To install Lombok, select **File > Settings > Plugins > Marketplace** tab. To the right of the magnifying glass icon, input: `Lombok`  
    It should have an author named Michail Plushnikov. Select **Install**, then restart IntelliJ.
@@ -287,7 +286,7 @@ IntelliJ IDEA can be used with the launcher. The [IntelliJ IDEA Ultimate edition
    1. In the **Project** field, input: `code-examples-java`
    1. In the **Main class** field, input: `com.docusign.App`
    1. Select the **JRE** tab. Under **Runtime JRE**, ensure it lists jdk-11 or higher. Select **Apply** to save.
-   1. Select **Run** to run the launcher.  
+   1. Select **Run** to run the launcher.  The launcher automatically opens.   
    When prompted, log in to your DocuSign developer account. If this is your first time using the app, select **ACCEPT** at the consent window. 
 1. [Optional] Download [lombok.jar](https://projectlombok.org/downloads/lombok.jar) to your local machine, then run the following command to install Lombok: `java -jar lombok.jar`  
 
