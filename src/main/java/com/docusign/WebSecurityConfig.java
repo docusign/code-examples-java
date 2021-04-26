@@ -36,6 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	public String roomScopes[] = new String[] {"signature", "dtr.rooms.read", "dtr.rooms.write", "dtr.documents.read", "dtr.documents.write", "dtr.profile.read", "dtr.profile.write", "dtr.company.read", "dtr.company.write", "room_forms"};
 	public String clickScopes[] = new String[] {"click.manage", "click.send"};
+    public String monitorScopes[] = new String[] {"signature", "impersonation"};
 
     @Autowired
     private DSConfiguration dsConfiguration;
@@ -89,6 +90,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             scopes = Arrays.asList(this.roomScopes);
         } else if (this.dsConfiguration.getApiName().equalsIgnoreCase("click")) {
             scopes = Arrays.asList(this.clickScopes);
+        } else if (this.dsConfiguration.getApiName().equalsIgnoreCase("monitor")) {
+            scopes = Arrays.asList(this.monitorScopes);
         }
 
         return scopes;

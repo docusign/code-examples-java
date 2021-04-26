@@ -43,6 +43,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -94,8 +95,21 @@
 
         <dependency>
             <groupId>com.docusign</groupId>
+            <artifactId>docusign-monitor-java</artifactId>
+            <version>1.0.0-ALPHA</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.docusign</groupId>
             <artifactId>docusign-click-java</artifactId>
             <version>${click.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
