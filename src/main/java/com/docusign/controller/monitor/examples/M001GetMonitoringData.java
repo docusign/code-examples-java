@@ -1,21 +1,13 @@
 package com.docusign.controller.monitor.examples;
 
 import com.docusign.DSConfiguration;
-import com.docusign.WebSecurityConfig;
 import com.docusign.common.WorkArguments;
-import com.docusign.core.model.AuthType;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.core.security.jwt.JWTAuthorizationCodeResourceDetails;
-import com.docusign.core.security.jwt.JWTOAuth2RestTemplate;
-import com.docusign.monitor.client.ApiException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.oauth2.client.OAuth2ClientContext;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,10 +32,6 @@ public class M001GetMonitoringData extends AbstractMonitorController {
     private final Session session;
     private final User user;
 
-    @Qualifier("oauth2ClientContext")
-    @Autowired
-    private OAuth2ClientContext oAuth2ClientContext;
-
     @Autowired
     public M001GetMonitoringData(DSConfiguration config, Session session, User user) {
         super(config, "m001", "Get monitoring data");
@@ -52,18 +40,12 @@ public class M001GetMonitoringData extends AbstractMonitorController {
     }
 
     @Override
-    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException, IOException {
+    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws IOException {
         String accessToken = this.user.getAccessToken();
 
         // Check, if you are using the JWT authentication
         // step 1 start
-        if (session.getAuthTypeSelected() != AuthType.JWT || accessToken.isEmpty()){
-            WebSecurityConfig securityConfig = new WebSecurityConfig();
-            JWTAuthorizationCodeResourceDetails jwtCodeGrantClient = securityConfig.jwtCodeGrantClient();
-
-            OAuth2RestTemplate restTemplate = new JWTOAuth2RestTemplate(jwtCodeGrantClient, oAuth2ClientContext);
-            accessToken = restTemplate.getAccessToken().toString();
-        }
+        ensureUsageOfJWTToken(accessToken, this.session);
         // step 1 end
 
         String requestPath = "https://lens-d.docusign.net/api/v2.0/datasets/monitor/";
