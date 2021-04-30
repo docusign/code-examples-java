@@ -95,12 +95,6 @@
 
         <dependency>
             <groupId>com.docusign</groupId>
-            <artifactId>docusign-monitor-java</artifactId>
-            <version>1.0.0-ALPHA</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.docusign</groupId>
             <artifactId>docusign-click-java</artifactId>
             <version>${click.version}</version>
         </dependency>
