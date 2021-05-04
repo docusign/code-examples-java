@@ -281,7 +281,7 @@ IntelliJ IDEA can be used with the launcher. The [IntelliJ IDEA Ultimate edition
    1. In **Base directory**, input: `${workspace_loc:/code-examples-java}`
    1. In **Goals**, input: `clean package`
    1. Select the **JRE** tab. Under **Runtime JRE**, ensure it lists jdk-11 or higher. Select **Apply** to save.
-1. In the **Run Configurations** dialog box, in the left sidebar, right-click **Java Application**, then **New Configuration**.  
+1. In the **Run Configurations** dialog box, in the left sidebar, right-click **Java Application**, then select **New Configuration**.  
    1. In the **Name** field, input: `App`
    1. In the **Project** field, input: `code-examples-java`
    1. In the **Main class** field, input: `com.docusign.App`
