@@ -229,7 +229,8 @@ Also, in order to select JSON Web Token authentication in the launcher, in src/m
 3. Select your desired code example.
 
 
-## IntelliJ Ultimate instructions for Windows
+## IntelliJ Ultimate instructions for Windows  
+
 IntelliJ IDEA can be used with the launcher. The [IntelliJ IDEA Ultimate edition](https://www.jetbrains.com/idea/download/#section=windows) is required due to its support for Spring Boot and JSP view pages.
 
 **Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, skip step 2 as it was automatically performed for you.
@@ -255,7 +256,7 @@ IntelliJ IDEA can be used with the launcher. The [IntelliJ IDEA Ultimate edition
    It should have an author named Michail Plushnikov. Select **Install**, then restart IntelliJ.
    
 
-## Eclipse instructions
+## Eclipse instructions for Windows    
 
 **Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, skip step 2 as it was automatically performed for you.
 
@@ -286,7 +287,8 @@ IntelliJ IDEA can be used with the launcher. The [IntelliJ IDEA Ultimate edition
 1. [Optional] Download [lombok.jar](https://projectlombok.org/downloads/lombok.jar) to your local machine, then run the following command to install Lombok: `java -jar lombok.jar`  
 
 
-### Payments code example  
+## Payments code example  
+
 To use the payments code example, create a test payment gateway on the [**Payments**](https://admindemo.docusign.com/authenticate?goTo=payments) page in your developer account. See [Configure a payment gateway](./PAYMENTS_INSTALLATION.md) for details.
 
 Once you've created a payment gateway, save the **Gateway Account ID** GUID to application.json.
