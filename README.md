@@ -2,15 +2,11 @@
 
 Github repo: https://github.com/docusign/code-examples-java
 
-This GitHub repo includes code example for the DocuSign eSignature REST API, for the DocuSign Rooms API and for the Click API. 
-
-To use the Rooms API code examples, modify the **DS_API_NAME** setting at the end of the application.json file. Set the value to `ROOMS`.
-To use the Click API code examples, modify the **DS_API_NAME** setting at the end of the application.json file. Set the value to `CLICK`.
-
-**Note:** to use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account).
+This GitHub repo includes code examples for the DocuSign eSignature REST API, Rooms API, and Click API. To switch between API code examples, in the application.json file, change the `DS_API_NAME` setting from `ESIGNATURE` to `ROOMS` or `CLICK`.  
 
 
 ## Introduction
+
 This repo is a Java Spring Boot application that demonstrates how to authenticate with DocuSign via the
 [Authorization Code Grant flow](https://developers.docusign.com/esign-rest-api/guides/authentication/oauth2-code-grant). When the token expires, the user is asked to reauthenticate. The refresh token is not used.
 
@@ -106,9 +102,8 @@ For more information about the scopes used for obtaining authorization to use th
 
 ## Rooms API 
 
+**Note:** To use the Rooms API you must also [create your Rooms developer account](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). Examples 4 and 6 require that you have the DocuSign Forms feature enabled in your Rooms for Real Estate account.  
 For more information about the scopes used for obtaining authorization to use the Rooms API, see the [Required Scopes section](https://developers.docusign.com/docs/rooms-api/rooms101/auth/).
-
-**Note:** To use the Rooms API you must also [create your DocuSign Developer Account for Rooms](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). Examples 4 and 6 require that you have the DocuSign Forms feature enabled in your Rooms for Real Estate account.
 
 1. **Create room with Data.**  
    [Source](./src/main/java/com/docusign/controller/rooms/examples/R001ControllerCreateRoom.java)
@@ -234,7 +229,8 @@ Also, in order to select JSON Web Token authentication in the launcher, in src/m
 3. Select your desired code example.
 
 
-## IntelliJ Ultimate instructions for Windows
+## IntelliJ Ultimate instructions for Windows  
+
 IntelliJ IDEA can be used with the launcher. The [IntelliJ IDEA Ultimate edition](https://www.jetbrains.com/idea/download/#section=windows) is required due to its support for Spring Boot and JSP view pages.
 
 **Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, skip step 2 as it was automatically performed for you.
@@ -260,7 +256,7 @@ IntelliJ IDEA can be used with the launcher. The [IntelliJ IDEA Ultimate edition
    It should have an author named Michail Plushnikov. Select **Install**, then restart IntelliJ.
    
 
-## Eclipse instructions
+## Eclipse instructions for Windows    
 
 **Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, skip step 2 as it was automatically performed for you.
 
@@ -281,7 +277,7 @@ IntelliJ IDEA can be used with the launcher. The [IntelliJ IDEA Ultimate edition
    1. In **Base directory**, input: `${workspace_loc:/code-examples-java}`
    1. In **Goals**, input: `clean package`
    1. Select the **JRE** tab. Under **Runtime JRE**, ensure it lists jdk-11 or higher. Select **Apply** to save.
-1. In the **Run Configurations** dialog box, in the left sidebar, right-click **Java Application**, then **New Configuration**.  
+1. In the **Run Configurations** dialog box, in the left sidebar, right-click **Java Application**, then select **New Configuration**.  
    1. In the **Name** field, input: `App`
    1. In the **Project** field, input: `code-examples-java`
    1. In the **Main class** field, input: `com.docusign.App`
@@ -291,7 +287,8 @@ IntelliJ IDEA can be used with the launcher. The [IntelliJ IDEA Ultimate edition
 1. [Optional] Download [lombok.jar](https://projectlombok.org/downloads/lombok.jar) to your local machine, then run the following command to install Lombok: `java -jar lombok.jar`  
 
 
-### Payments code example  
+## Payments code example  
+
 To use the payments code example, create a test payment gateway on the [**Payments**](https://admindemo.docusign.com/authenticate?goTo=payments) page in your developer account. See [Configure a payment gateway](./PAYMENTS_INSTALLATION.md) for details.
 
 Once you've created a payment gateway, save the **Gateway Account ID** GUID to application.json.
