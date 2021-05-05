@@ -51,7 +51,8 @@ public class DSConfiguration {
     @Value("${quickstart:{quickstart}}")
     private String quickstart;
 
-
+    @Value("${DS_MONITOR_BASE_PATH}")
+    private String monitorBasePath;
 
     public String getDsReturnUrl() {
         return appUrl + "/ds-return";

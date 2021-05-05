@@ -4,7 +4,7 @@ public enum ApiIndex {
     ESIGNATURE("/pages/esignature/index", "/restapi"),
     ROOMS("/pages/rooms/index", "/restapi"),
     CLICK("/pages/click/index", "/clickapi"),
-    MONITOR("/pages/monitor/index", "/restapi");
+    MONITOR("/pages/monitor/index", "/api");
 
     private final String indexPath;
     private final String baseUrlSuffix;
