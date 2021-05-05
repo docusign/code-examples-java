@@ -8,11 +8,14 @@ import com.docusign.core.model.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.MediaType;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,9 +24,8 @@ import java.net.URL;
 
 
 /**
- * List envelopes in the user's account.<br />
- * List the envelopes created in the last 30 days. This example demonstrates
- * how to query DocuSign about envelopes sent by the current user.
+ * Get monitoring data<br />
+ * This example demonstrates how to get monitoring data from the Monitor API.
  */
 @Controller
 @RequestMapping("/m001")
@@ -31,6 +33,7 @@ public class M001GetMonitoringData extends AbstractMonitorController {
 
     private final Session session;
     private final User user;
+    private static final String PROBLEMS_WITH_CONNECTION_ERROR_MESSAGE = "The connection string may be corrupt, please ensure that you are using a right link.";
 
     @Autowired
     public M001GetMonitoringData(DSConfiguration config, Session session, User user) {
@@ -40,17 +43,17 @@ public class M001GetMonitoringData extends AbstractMonitorController {
     }
 
     @Override
-    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws IOException {
+    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
         String accessToken = this.user.getAccessToken();
 
         // Check, if you are using the JWT authentication
         // step 1 start
-        ensureUsageOfJWTToken(accessToken, this.session);
+        accessToken = ensureUsageOfJWTToken(accessToken, this.session);
         // step 1 end
 
-        String requestPath = "https://lens-d.docusign.net/api/v2.0/datasets/monitor/";
+        String requestPath = session.getBasePath() + apiUrl;
 
-        JSONArray result =  getMonitoringData(requestPath, accessToken);
+        JSONArray result =  getMonitoringData(requestPath, accessToken, model);
 
         // Process results
         DoneExample.createDefault(title)
@@ -61,9 +64,9 @@ public class M001GetMonitoringData extends AbstractMonitorController {
         return DONE_EXAMPLE_PAGE;
     }
 
-    protected JSONArray getMonitoringData(String requestPath, String accessToken) throws IOException {
+    protected JSONArray getMonitoringData(String requestPath, String accessToken, ModelMap model) throws Exception {
         // Declare variables
-        Boolean complete = false;
+        boolean complete = false;
         String cursorValue = "";
         Integer limit = 1; // Amount of records you want to read in one request
         JSONArray result = new JSONArray();
@@ -74,30 +77,43 @@ public class M001GetMonitoringData extends AbstractMonitorController {
             String cursorValueFormatted = (cursorValue.isEmpty()) ? cursorValue : String.format("=%s", cursorValue);
 
             // Add cursor value and amount of records to read to the request
-            String requestParameters = String.format("stream?cursor%s&limit=%d",
+            String requestParameters = String.format("/stream?cursor%s&limit=%d",
                     cursorValueFormatted, limit);
 
             URL fullRequestPath = new URL(requestPath + requestParameters);
             HttpURLConnection httpConnection = (HttpURLConnection) fullRequestPath.openConnection();
-            httpConnection.setRequestMethod("GET");
+            httpConnection.setRequestMethod(HttpMethod.GET.toString());
 
             //  Construct API headers
             // step 2 start
-            httpConnection.setRequestProperty("Content-Type", "application/json");
-            httpConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
+            httpConnection.setRequestProperty(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
+            httpConnection.setRequestProperty(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + accessToken);
             // step 2 end
 
+            int responseCode = httpConnection.getResponseCode();
+            if (responseCode < HttpURLConnection.HTTP_OK || responseCode >= HttpURLConnection.HTTP_BAD_REQUEST) {
+                if (httpConnection.getResponseMessage() != PROBLEMS_WITH_CONNECTION_ERROR_MESSAGE){
+                    throw new Exception(httpConnection.getResponseMessage());
+                }
+
+                DoneExample.createDefault(this.title)
+                        .withMessage(PROBLEMS_WITH_CONNECTION_ERROR_MESSAGE)
+                        .addToModel(model);
+            }
+
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
-            String temp = "";
-            StringBuffer stringBuffer = new StringBuffer();
+            String temp;
+            StringBuilder stringBuilder = new StringBuilder();
             while ((temp = bufferedReader.readLine()) != null) {
-                stringBuffer.append(temp);
+                stringBuilder.append(temp);
             }
             bufferedReader.close();
 
+
+
             httpConnection.disconnect();
             // Cleaning the data from wrong symbols
-            String responseData = stringBuffer.toString().replaceAll("'", "");
+            String responseData = stringBuilder.toString().replaceAll("'", "");
 
             JSONObject object = new JSONObject(responseData);
             String endCursor = object.getString("endCursor");
