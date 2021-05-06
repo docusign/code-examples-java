@@ -16,8 +16,6 @@ import org.springframework.stereotype.Controller;
 public abstract class AbstractMonitorController extends AbstractController {
 
     private static final String EXAMPLE_PAGES_PATH = "pages/monitor/examples/";
-    private static final String REDIRECT_PREFIX = "redirect:";
-    private static final String REDIRECT_AUTHENTICATION_PAGE = REDIRECT_PREFIX + "/ds/mustAuthenticate";
 
     protected static String apiUrl = "/v2.0/datasets/monitor";
 
