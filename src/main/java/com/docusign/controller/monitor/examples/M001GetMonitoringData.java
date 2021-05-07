@@ -57,7 +57,7 @@ public class M001GetMonitoringData extends AbstractMonitorController {
 
         // Process results
         DoneExample.createDefault(title)
-                .withMessage("Monitor data response output:")
+                .withMessage("Results from the DataSet:GetStreamForDataset method:")
                 .withJsonObject(result.toString())
                 .addToModel(model);
 

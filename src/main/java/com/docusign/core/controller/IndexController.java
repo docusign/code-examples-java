@@ -48,8 +48,12 @@ public class IndexController {
         if (session.isRefreshToken() || config.getQuickstart().equals("true")) {
             return new ModelAndView(getRedirectView(session.getAuthTypeSelected()));
         }
-
-        return new ModelAndView("pages/ds_must_authenticate");
+        else if (config.getApiName().equals("MONITOR")) {
+            return new ModelAndView(getRedirectView(AuthType.JWT));
+        }
+        else {
+            return new ModelAndView("pages/ds_must_authenticate");
+        }
     }
 
     @RequestMapping(path = "/ds/authenticate", method = RequestMethod.POST)
