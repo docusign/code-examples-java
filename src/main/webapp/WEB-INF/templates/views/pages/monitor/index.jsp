@@ -27,11 +27,11 @@
         <p><a target='_blank' href='${documentation}'>Documentation</a> on using OAuth Authorization Code Grant from a Java application.</p>
     </c:if>
 
-    <h2>Basic Monitor API Examples</h2>
+    <h2>Monitor API Code Examples</h2>
 
     <h4 id='example001'>1. <a href='m001'>Get monitoring data</a></h4>
     <p> Demonstrates how to get and display all of your organization's monitoring data.</p>
-    <p>API methods used:
+    <p>API method used:
         <a target ='_blank' rel='noopener noreferrer' href='https://developers.docusign.com/docs/monitor-api/reference/monitor/dataset/getstreamfordataset/'>DataSet:GetStreamForDataset</a>
     </p>
 </div>
