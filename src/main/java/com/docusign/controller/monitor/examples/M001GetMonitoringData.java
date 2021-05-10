@@ -47,9 +47,7 @@ public class M001GetMonitoringData extends AbstractMonitorController {
         String accessToken = this.user.getAccessToken();
 
         // Check, if you are using the JWT authentication
-        // step 1 start
         accessToken = ensureUsageOfJWTToken(accessToken, this.session);
-        // step 1 end
 
         String requestPath = session.getBasePath() + apiUrl;
 
@@ -101,6 +99,7 @@ public class M001GetMonitoringData extends AbstractMonitorController {
                         .addToModel(model);
             }
 
+            // step 3 start
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
             String temp;
             StringBuilder stringBuilder = new StringBuilder();
@@ -131,7 +130,8 @@ public class M001GetMonitoringData extends AbstractMonitorController {
             }
         }
         while (!complete);
-
+        //step 3 end
+        
         return result;
     }
 }
