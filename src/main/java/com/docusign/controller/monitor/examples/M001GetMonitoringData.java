@@ -33,7 +33,7 @@ public class M001GetMonitoringData extends AbstractMonitorController {
 
     private final Session session;
     private final User user;
-    private static final String PROBLEMS_WITH_CONNECTION_ERROR_MESSAGE = "The connection string may be corrupt, please ensure that you are using a right link.";
+    private static final String PROBLEMS_WITH_CONNECTION_ERROR_MESSAGE = "The connection string may be corrupt, please ensure that you are using the right URL.";
 
     @Autowired
     public M001GetMonitoringData(DSConfiguration config, Session session, User user) {
@@ -46,7 +46,7 @@ public class M001GetMonitoringData extends AbstractMonitorController {
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
         String accessToken = this.user.getAccessToken();
 
-        // Check, if you are using the JWT authentication
+        // Check if you are using the JWT authentication
         accessToken = ensureUsageOfJWTToken(accessToken, this.session);
 
         String requestPath = session.getBasePath() + apiUrl;
@@ -111,7 +111,7 @@ public class M001GetMonitoringData extends AbstractMonitorController {
 
 
             httpConnection.disconnect();
-            // Cleaning the data from wrong symbols
+            // Removing invalid symbols from the data
             String responseData = stringBuilder.toString().replaceAll("'", "");
 
             JSONObject object = new JSONObject(responseData);
@@ -131,7 +131,7 @@ public class M001GetMonitoringData extends AbstractMonitorController {
         }
         while (!complete);
         //step 3 end
-        
+
         return result;
     }
 }
