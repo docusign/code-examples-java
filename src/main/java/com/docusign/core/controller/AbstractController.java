@@ -30,7 +30,7 @@ import java.util.Objects;
 public abstract class AbstractController {
 
     private static final String REDIRECT_PREFIX = "redirect:";
-    private static final String REDIRECT_AUTHENTICATION_PAGE = REDIRECT_PREFIX + "/ds/mustAuthenticate";
+    protected static final String REDIRECT_AUTHENTICATION_PAGE = REDIRECT_PREFIX + "/ds/mustAuthenticate";
     protected static final String BEARER_AUTHENTICATION = "Bearer ";
     protected static final String DONE_EXAMPLE_PAGE = "pages/example_done";
     protected static final String DONE_EXAMPLE_PAGE_COMPARE = "pages/example_done_compare";
