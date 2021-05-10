@@ -124,6 +124,8 @@ public class GlobalControllerAdvice {
             return this.config.getRoomsBasePath();
         } else if (apiIndex.equals(ApiIndex.CLICK)) {
             return this.config.getClickBasePath();
+        }  else if (apiIndex.equals(ApiIndex.MONITOR)) {
+            return this.config.getMonitorBasePath();
         } else {
             return oauthAccount.getBaseUri();
         }
