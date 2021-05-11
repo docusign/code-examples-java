@@ -156,6 +156,13 @@ For more information about the scopes used for obtaining authorization to use th
    [Source](./src/main/java/com/docusign/controller/click/examples/C005ControllerGetClickwrapResponses.java)
    This code example shows how to get clickwrap responses.
 
+## Monitor API
+
+**Note:** To use the Monitor API, you must also [enable DocuSign Monitor for your organization](https://developers.docusign.com/docs/monitor-api/how-to/enable-monitor/).  
+For information about the scopes used for obtaining authorization to use the Monitor API, see the [scopes section](https://developers.docusign.com/docs/monitor-api/monitor101/auth/).
+
+1. **Get monitoring data.** [Source](./src/main/java/com/docusign/controller/monitor/examples/M001GetMonitoringData.java)   
+   Demonstrates how to get and display all of your organization’s monitoring data.
 
 ## Installation
 
