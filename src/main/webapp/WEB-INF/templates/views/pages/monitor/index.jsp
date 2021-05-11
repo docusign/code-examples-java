@@ -9,7 +9,7 @@
         <tr>
             <td>
                 <h1 class='display-4'>Java Launcher</h1>
-                <p class='Xlead'>Welcome to the DocuSign Java examples using JWT OAuth flow.</p>
+                <p class='Xlead'>Welcome to the Java code examples for DocuSign Monitor API with JWT Grant authentication</p>
             </td>
             <td>
                 <img src='/assets/banner-code.png' />
@@ -21,8 +21,6 @@
 </c:if>
 
 <div class='container' style='margin-top: 40px' id='index-page'>
-    <h2>Java Launcher</h2>
-    <p>Welcome to the Java code examples for DocuSign Monitor API with JWT Grant authentication</p>
     <c:if test="${showDoc == true}">
         <p><a target='_blank' href='${documentation}'>Documentation</a> on using OAuth Authorization Code Grant from a Java application.</p>
     </c:if>
