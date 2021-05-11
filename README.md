@@ -2,7 +2,7 @@
 
 Github repo: https://github.com/docusign/code-examples-java
 
-This GitHub repo includes code examples for the DocuSign eSignature REST API, Rooms API, and Click API. To switch between API code examples, in the application.json file, change the `DS_API_NAME` setting from `ESIGNATURE` to `ROOMS` or `CLICK`.  
+This GitHub repo includes code examples for the DocuSign eSignature REST API, Rooms API, Click API, and Monitor API. To switch between API code examples, in the application.json file, change the `DS_API_NAME` setting from `ESIGNATURE` to `ROOMS`, `CLICK`, or `MONITOR`.  
 
 
 ## Introduction
