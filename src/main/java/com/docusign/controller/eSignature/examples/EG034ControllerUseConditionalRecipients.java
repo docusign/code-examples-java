@@ -167,6 +167,7 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
         filter1.setTabId("ApprovalTab");
         filter1.setOperator("equals");
         filter1.setValue("false");
+        filter1.setTabType("checkbox");
         filter1.setTabLabel("ApproveWhenChecked");
 
         ConditionalRecipientRuleFilter filter2 = new ConditionalRecipientRuleFilter();
@@ -175,6 +176,7 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
         filter2.setTabId("ApprovalTab");
         filter2.setOperator("equals");
         filter2.setValue("true");
+        filter2.setTabType("checkbox");
         filter2.setTabLabel("ApproveWhenChecked");
 
         ConditionalRecipientRuleCondition condition1 = new ConditionalRecipientRuleCondition();
