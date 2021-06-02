@@ -84,7 +84,7 @@ public class EG029ControllerApplyBrandToEnvelope extends AbstractEsignatureContr
 
     // Creates an envelope. The envelope has one recipient who should sign an
     // attached document. Attached document is read from a local directory.
-    // Also the envelope contains a brand Id which is created on EG024 example.
+    // Also the envelope contains a brand Id which is created on EG028 example.
     private static EnvelopeDefinition makeEnvelope(WorkArguments args) throws IOException {
         // Reads a file from a local directory and create Document object.
         Document document = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
@@ -104,7 +104,7 @@ public class EG029ControllerApplyBrandToEnvelope extends AbstractEsignatureContr
         // Return envelope definition using created objects: the document,
         // the recipients and obtained brand Id.
         return new EnvelopeDefinition()
-                .emailSubject("EG025. Please complete your order")
+                .emailSubject("EG029. Please Sign")
                 .documents(List.of(document))
                 .recipients(recipients)
                 .brandId(args.getBrandId())
