@@ -71,25 +71,27 @@ public class EG013ControllerAddDocToTemplate extends AbstractEsignatureControlle
     }
 
     @Override
-    // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
             HttpServletResponse response) throws ApiException, IOException {
         String accountId = session.getAccountId();
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
-        // Step 1. Make the envelope request body
+        // Step 2 start
         args.setDsReturnUrl(config.getDsReturnUrl());
         args.setDsPingUrl(config.getDsPingUrl());
         args.setSignerClientId(SIGNER_CLIENT_ID);
         EnvelopeDefinition envelope = makeEnvelope(args);
-
-        // Step 2. call Envelopes::create API method
+        // Step 2 end
+        
+        // Step 3 start
         EnvelopeSummary results = envelopesApi.createEnvelope(accountId, envelope);
-
-        // Step 3. create the recipient view, the embedded signing
+        // Step 3 end
+        
+        // Step 4 start
         RecipientViewRequest viewRequest = makeRecipientViewRequest(args);
         ViewUrl viewUrl = envelopesApi.createRecipientView(accountId, results.getEnvelopeId(), viewRequest);
         return new RedirectView(viewUrl.getUrl());
+        // Step 4 end
     }
 
     private static RecipientViewRequest makeRecipientViewRequest(WorkArguments args) {
@@ -179,5 +181,4 @@ public class EG013ControllerAddDocToTemplate extends AbstractEsignatureControlle
         signer.setClientUserId(args.getSignerClientId());
         return signer;
     }
-    // ***DS.snippet.0.end
 }
