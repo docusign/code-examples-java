@@ -1,14 +1,19 @@
 # Java Launcher Code Examples
 
-### Github repo: [code-examples-java](./)
+### GitHub repo: [code-examples-java](./README.md)
 
 This GitHub repo includes code examples for the DocuSign eSignature REST API, Rooms API, Click API, and Monitor API. To switch between API code examples, in the application.json file, change the `DS_API_NAME` setting from `ESIGNATURE` to `ROOMS`, `CLICK`, or `MONITOR`.  
 
 
 ## Introduction
 
-This repo is a Java Spring Boot application that demonstrates how to authenticate with DocuSign via the
-[Authorization Code Grant flow](https://developers.docusign.com/esign-rest-api/guides/authentication/oauth2-code-grant). When the token expires, the user is asked to reauthenticate. The refresh token is not used.
+This repo is a Java Spring Boot application that supports the following authentication workflows:
+
+* Authentication with DocuSign via [Authorization Code Grant](https://developers.docusign.com/platform/auth/authcode).
+When the token expires, the user is asked to re-authenticate. The refresh token is not used.
+
+* Authentication with DocuSign via [JSON Web Token (JWT) Grant](https://developers.docusign.com/platform/auth/jwt/).
+When the token expires, it updates automatically.
 
 The [Spring Boot security Oauth2 boot autoconfigure package](https://github.com/spring-projects/spring-security-oauth2-boot/blob/master/spring-security-oauth2-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/oauth2/resource/UserInfoRestTemplateCustomizer.java) is used for authentication.
 
@@ -17,31 +22,33 @@ The OAuth library is used in the file [WebSecurityConfig.java](https://github.co
 
 ## eSignature API
 
-For more information about the scopes used for obtaining authorization to use the eSignature API, see the [Required Scopes section](https://developers.docusign.com/docs/esign-rest-api/esign101/auth).
+For more information about the scopes used for obtaining authorization to use the eSignature API, see [Required scopes](https://developers.docusign.com/docs/esign-rest-api/esign101/auth#required-scopes).
 
 
-For a list of code examples that use the eSignature API, select the Python tab under [Examples and languages](https://developers.docusign.com/docs/esign-rest-api/how-to/code-launchers#examples-and-languages) on the DocuSign Developer Center.
+For a list of code examples that use the eSignature API, select the Java tab under [Examples and languages](https://developers.docusign.com/docs/esign-rest-api/how-to/code-launchers#examples-and-languages) on the DocuSign Developer Center.
 
 
 ## Rooms API 
 
-**Note:** To use the Rooms API you must also [create your Rooms developer account](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). Examples 4 and 6 require that you have the DocuSign Forms feature enabled in your Rooms for Real Estate account.  
-For more information about the scopes used for obtaining authorization to use the Rooms API, see the [Required Scopes section](https://developers.docusign.com/docs/rooms-api/rooms101/auth/).
+**Note:** To use the Rooms API, you must also [create your Rooms developer account](https://developers.docusign.com/docs/rooms-api/rooms101/create-account). Examples 4 and 6 require that you have the DocuSign Forms feature enabled in your Rooms for Real Estate account.  
+For more information about the scopes used for obtaining authorization to use the Rooms API, see [Required scopes](https://developers.docusign.com/docs/rooms-api/rooms101/auth/).
 
-For a list of code examples that use the Rooms API, select the Python tab under [Examples and languages](https://developers.docusign.com/docs/rooms-api/how-to/code-launchers#examples-and-languages) on the DocuSign Developer Center.
+For a list of code examples that use the Rooms API, select the Java tab under [Examples and languages](https://developers.docusign.com/docs/rooms-api/how-to/code-launchers#examples-and-languages) on the DocuSign Developer Center.
+
 
 ## Click API  
-For more information about the scopes used for obtaining authorization to use the Click API, see the [Required Scopes section](https://developers.docusign.com/docs/click-api/click101/auth/)  
+For more information about the scopes used for obtaining authorization to use the Click API, see [Required scopes](https://developers.docusign.com/docs/click-api/click101/auth/#required-scopes)  
 
 
-For a list of code examples that use the Click API, select the Python tab under [Examples and languages](https://developers.docusign.com/docs/click-api/how-to/code-launchers#examples-and-languages) on the DocuSign Developer Center.
+For a list of code examples that use the Click API, select the Java tab under [Examples and languages](https://developers.docusign.com/docs/click-api/how-to/code-launchers#examples-and-languages) on the DocuSign Developer Center.
+
 
 ## Monitor API
 
 **Note:** To use the Monitor API, you must also [enable DocuSign Monitor for your organization](https://developers.docusign.com/docs/monitor-api/how-to/enable-monitor/).  
 For information about the scopes used for obtaining authorization to use the Monitor API, see the [scopes section](https://developers.docusign.com/docs/monitor-api/monitor101/auth/).
 
-For a list of code examples that use the Click API, select the Python tab under [Examples and languages](https://developers.docusign.com/docs/monitor-api/how-to/code-launchers#examples-and-languages) on the DocuSign Developer Center.
+For a list of code examples that use the Click API, select the Java tab under [Examples and languages](https://developers.docusign.com/docs/monitor-api/how-to/code-launchers#examples-and-languages) on the DocuSign Developer Center.
 
 ## Installation
 
