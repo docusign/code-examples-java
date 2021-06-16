@@ -23,6 +23,7 @@
         <docusign.version>3.13.0-RC1</docusign.version>
         <rooms.version>1.1.0-RC1</rooms.version>
         <click.version>1.0.0-BETA</click.version>
+        <monitor.version>1.0.0-BETA</monitor.version>
     </properties>
 
     <dependencies>
@@ -97,6 +98,12 @@
             <groupId>com.docusign</groupId>
             <artifactId>docusign-click-java</artifactId>
             <version>${click.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.docusign</groupId>
+            <artifactId>docusign-monitor-java</artifactId>
+            <version>${monitor.version}</version>
         </dependency>
 
         <dependency>
