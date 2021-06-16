@@ -5,22 +5,17 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.monitor.api.DataSetApi;
+import com.docusign.monitor.api.DataSetApi.GetStreamOptions;
+import com.docusign.monitor.model.CursoredResult;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.MediaType;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 
 /**
@@ -33,11 +28,10 @@ public class M001GetMonitoringData extends AbstractMonitorController {
 
     private final Session session;
     private final User user;
-    private static final String PROBLEMS_WITH_CONNECTION_ERROR_MESSAGE = "The connection string may be corrupt, please ensure that you are using the right URL.";
 
     @Autowired
     public M001GetMonitoringData(DSConfiguration config, Session session, User user) {
-        super(config, "m001", "Get monitoring data");
+        super(config, "m001", "Monitoring data result");
         this.session = session;
         this.user = user;
     }
@@ -46,76 +40,48 @@ public class M001GetMonitoringData extends AbstractMonitorController {
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
         String accessToken = this.user.getAccessToken();
 
-        // Check if you are using the JWT authentication
+        // Check, if you are using the JWT authentication
+        // step 1 start
         accessToken = ensureUsageOfJWTToken(accessToken, this.session);
+        // step 1 end
 
-        String requestPath = session.getBasePath() + apiUrl;
+        JSONArray result =  getMonitoringData(accessToken);
 
-        JSONArray result =  getMonitoringData(requestPath, accessToken, model);
+        // Cleaning the data from wrong symbols
+        String resultCleaned = result.toString().replaceAll("'", "");
 
         // Process results
         DoneExample.createDefault(title)
-                .withMessage("Results from the DataSet:GetStreamForDataset method:")
-                .withJsonObject(result.toString())
+                .withMessage("Results from DataSet:getStream method:")
+                .withJsonObject(resultCleaned)
                 .addToModel(model);
 
         return DONE_EXAMPLE_PAGE;
     }
 
-    protected JSONArray getMonitoringData(String requestPath, String accessToken, ModelMap model) throws Exception {
+    protected JSONArray getMonitoringData(String accessToken) throws Exception {
         // Declare variables
         boolean complete = false;
         String cursorValue = "";
-        Integer limit = 1; // Amount of records you want to read in one request
+//        Integer limit = 1; // Amount of records you want to read in one request
         JSONArray result = new JSONArray();
 
-        // Get monitoring data
+        DataSetApi datasetApi = this.createDataSetApi(accessToken, this.session);
+        GetStreamOptions options = datasetApi.new GetStreamOptions();
+//        options.setLimit(limit);
+
+        // First call the endpoint with no cursor to get the first records.
+        // After each call, save the cursor and use it to make the next
+        // call from the point where the previous one left off when iterating through
+        // the monitoring records
         do
         {
-            String cursorValueFormatted = (cursorValue.isEmpty()) ? cursorValue : String.format("=%s", cursorValue);
+            if(!cursorValue.isEmpty())
+                options.setCursor(cursorValue);
 
-            // Add cursor value and amount of records to read to the request
-            String requestParameters = String.format("/stream?cursor%s&limit=%d",
-                    cursorValueFormatted, limit);
+            CursoredResult cursoredResult = datasetApi.getStream("2.0", "monitor", options);
 
-            URL fullRequestPath = new URL(requestPath + requestParameters);
-            HttpURLConnection httpConnection = (HttpURLConnection) fullRequestPath.openConnection();
-            httpConnection.setRequestMethod(HttpMethod.GET.toString());
-
-            //  Construct API headers
-            // step 2 start
-            httpConnection.setRequestProperty(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
-            httpConnection.setRequestProperty(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + accessToken);
-            // step 2 end
-
-            int responseCode = httpConnection.getResponseCode();
-            if (responseCode < HttpURLConnection.HTTP_OK || responseCode >= HttpURLConnection.HTTP_BAD_REQUEST) {
-                if (httpConnection.getResponseMessage() != PROBLEMS_WITH_CONNECTION_ERROR_MESSAGE){
-                    throw new Exception(httpConnection.getResponseMessage());
-                }
-
-                DoneExample.createDefault(this.title)
-                        .withMessage(PROBLEMS_WITH_CONNECTION_ERROR_MESSAGE)
-                        .addToModel(model);
-            }
-
-            // step 3 start
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
-            String temp;
-            StringBuilder stringBuilder = new StringBuilder();
-            while ((temp = bufferedReader.readLine()) != null) {
-                stringBuilder.append(temp);
-            }
-            bufferedReader.close();
-
-
-
-            httpConnection.disconnect();
-            // Removing invalid symbols from the data
-            String responseData = stringBuilder.toString().replaceAll("'", "");
-
-            JSONObject object = new JSONObject(responseData);
-            String endCursor = object.getString("endCursor");
+            String endCursor = cursoredResult.getEndCursor();
 
             // If the endCursor from the response is the same as the one that you already have,
             // it means that you have reached the end of the records
@@ -126,11 +92,10 @@ public class M001GetMonitoringData extends AbstractMonitorController {
             else
             {
                 cursorValue = endCursor;
-                result.put(new JSONObject(responseData));
+                result.put(new JSONObject(cursoredResult));
             }
         }
         while (!complete);
-        //step 3 end
 
         return result;
     }
