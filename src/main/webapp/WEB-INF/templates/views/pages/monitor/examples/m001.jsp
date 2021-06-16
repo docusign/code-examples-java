@@ -10,7 +10,7 @@
 
 <p>API method used:
     <a target='_blank' rel='noopener noreferrer'
-       href='https://developers.docusign.com/docs/monitor-api/reference/monitor/dataset/getstreamfordataset/'>DataSet:GetStreamForDataset</a>.
+       href='https://developers.docusign.com/docs/monitor-api/reference/monitor/dataset/getstream/'>DataSet:getStream</a>.
 </p>
 <p>
     View source file <a target='_blank' href='${sourceUrl}'>${sourceFile}</a> on GitHub.
