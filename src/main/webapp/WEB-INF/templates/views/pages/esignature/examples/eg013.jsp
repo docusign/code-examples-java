@@ -7,7 +7,7 @@
     <p>In addition to the template's document(s), the example adds an
         additional document to the envelope by using the
         <a target='_blank' rel="noopener noreferrer" 
-           href='https://developers.docusign.com/esign-rest-api/guides/features/templates#composite-templates'>Composite
+           href='https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/templates/composite/'>Composite
             Templates</a>
         feature.</p>
     <p>In this example, the additional document is an HTML document that
@@ -24,10 +24,10 @@
 
 
 <p>API methods used:
-    <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/esign-rest-api/reference/Envelopes/Envelopes/create">Envelopes::create</a>
+    <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>
     and
     <a target='_blank' rel="noopener noreferrer"
-       href="https://developers.docusign.com/esign-rest-api/reference/Envelopes/EnvelopeViews/createRecipient">EnvelopeViews::createRecipient</a>.
+       href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createrecipient/">EnvelopeViews::createRecipient</a>.
 </p>
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
