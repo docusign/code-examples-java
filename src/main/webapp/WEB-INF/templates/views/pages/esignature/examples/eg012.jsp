@@ -18,7 +18,7 @@
 
 <p>API method used:
     <a target='_blank' rel="noopener noreferrer"
-       href="https://developers.docusign.com/esign-rest-api/reference/Envelopes/EnvelopeViews/createConsole">EnvelopeViews::createConsole</a>.
+       href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createconsole/">EnvelopeViews::createConsole</a>.
 </p>
 
 <p>
