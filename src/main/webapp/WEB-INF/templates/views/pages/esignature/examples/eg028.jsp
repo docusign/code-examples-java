@@ -18,7 +18,7 @@
 </c:if>
 
 <p>API method used:
-    <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/esign-rest-api/reference/Accounts/AccountBrands/create">AccountBrands::create</a>.
+    <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/accounts/accountbrands/create/">AccountBrands::create</a>.
 </p>
 
 <p>
