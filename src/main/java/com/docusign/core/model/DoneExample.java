@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.google.gson.Gson;
-import org.codehaus.jackson.map.SerializationConfig;
+import com.fasterxml.jackson.databind.SerializationConfig;
 import org.json.JSONObject;
 import org.springframework.ui.ModelMap;
 
