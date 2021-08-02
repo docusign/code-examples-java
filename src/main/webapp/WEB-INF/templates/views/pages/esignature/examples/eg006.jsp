@@ -14,7 +14,7 @@
 
 
 <p>API method used:
-    <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/esign-rest-api/reference/Envelopes/EnvelopeDocuments/list">EnvelopeDocuments::list</a>.
+    <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopedocuments/list/">EnvelopeDocuments::list</a>.
 </p>
 
 <p>

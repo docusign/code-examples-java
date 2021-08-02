@@ -23,7 +23,7 @@
 
 <p>
     API method used: <a target='_blank' rel="noopener noreferrer"
-        href="https://developers.docusign.com/esign-rest-api/reference/Envelopes/Envelopes/create">Envelopes::create</a>.
+        href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
 </p>
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.

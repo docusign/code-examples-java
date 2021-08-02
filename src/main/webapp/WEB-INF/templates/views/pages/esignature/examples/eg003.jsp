@@ -11,7 +11,7 @@
 
 <p>API method used:
     <a target='_blank' rel="noopener noreferrer"
-       href="https://developers.docusign.com/esign-rest-api/reference/Envelopes/Envelopes/listStatusChanges">Envelopes::listStatusChanges</a>.
+       href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/liststatuschanges/">Envelopes::listStatusChanges</a>.
 </p>
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
