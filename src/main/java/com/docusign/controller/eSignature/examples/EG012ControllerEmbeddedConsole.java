@@ -11,6 +11,7 @@ import com.docusign.esign.model.ViewUrl;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.docusign.services.eSignature.examples.EmbeddedConsoleService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,19 +55,14 @@ public class EG012ControllerEmbeddedConsole extends AbstractEsignatureController
 
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
-        // Step 1. Create the Console / Web UI view.
-        // Set the URL where you want the recipient to go once they are finished in
-        // the Web UI. There are cases where a user will never click "FINISH" within
-        // the Web UI, you cannot assume control will be passed back to your application.
-        ConsoleViewRequest viewRequest = new ConsoleViewRequest();
-        viewRequest.setReturnUrl(config.getDsReturnUrl());
-        String envelopeId = session.getEnvelopeId();
-        if ("envelope".equalsIgnoreCase(args.getStartingView()) && envelopeId != null) {
-            viewRequest.setEnvelopeId(envelopeId);
-        }
-
         // Step 2. Call the CreateSenderView API
-        ViewUrl viewUrl = envelopesApi.createConsoleView(session.getAccountId(), viewRequest);
+        ViewUrl viewUrl = EmbeddedConsoleService.createConsoleView(
+                envelopesApi,
+                config.getDsReturnUrl(),
+                session.getEnvelopeId(),
+                args.getStartingView(),
+                session.getAccountId());
+
         return new RedirectView(viewUrl.getUrl());
     }
     // ***DS.snippet.0.end

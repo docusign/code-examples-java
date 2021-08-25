@@ -11,6 +11,8 @@ import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.ReturnUrlRequest;
 import com.docusign.esign.model.ViewUrl;
 
+import com.docusign.services.eSignature.examples.EmbeddedSendingService;
+import com.docusign.services.eSignature.examples.SigningViaEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -51,17 +53,13 @@ public class EG011ControllerEmbeddedSending extends AbstractEsignatureController
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
         // Step 1. Make the envelope with "created" (draft) status
-        args.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_CREATED);
-        EnvelopeDefinition env = EG002ControllerSigningViaEmail.makeEnvelope(args);
-        EnvelopeSummary results = envelopesApi.createEnvelope(accountId, env);
+        EnvelopeSummary results = EmbeddedSendingService.createEnvelopeWithDraftStatus(envelopesApi, args, accountId);
         String envelopeId = results.getEnvelopeId();
 
         // Step 2. Create the sender view.
         // Set the url where you want the recipient to go once they are done
         // signing should typically be a callback route somewhere in your app.
-        ReturnUrlRequest viewRequest = new ReturnUrlRequest();
-        viewRequest.setReturnUrl(config.getDsReturnUrl());
-        ViewUrl viewUrl = envelopesApi.createSenderView(accountId, envelopeId, viewRequest);
+        ViewUrl viewUrl = EmbeddedSendingService.createSenderView(envelopesApi, accountId, envelopeId, config.getDsReturnUrl());
 
         // Switch to Recipient and Documents view if requested by the user
         String url = viewUrl.getUrl();

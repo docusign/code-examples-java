@@ -9,6 +9,7 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.services.eSignature.examples.ApplyBrandToTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -77,10 +78,14 @@ public class EG030ControllerApplyBrandToTemplate extends AbstractEsignatureContr
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
         // Step 3: Construct your envelope JSON body
-        EnvelopeDefinition envelope = makeEnvelope(args);
+        EnvelopeDefinition envelope = ApplyBrandToTemplateService.makeEnvelope(args);
 
         // Step 5: Call the eSignature REST API
-        EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(session.getAccountId(), envelope);
+        EnvelopeSummary envelopeSummary = ApplyBrandToTemplateService.applyBrandToTemplate(
+                envelopesApi,
+                session.getAccountId(),
+                envelope
+        );
 
         DoneExample.createDefault(title)
                 .withJsonObject(envelopeSummary)
@@ -88,23 +93,5 @@ public class EG030ControllerApplyBrandToTemplate extends AbstractEsignatureContr
                     + envelopeSummary.getEnvelopeId() + ".")
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
-    }
-
-    private static EnvelopeDefinition makeEnvelope(WorkArguments args) {
-        TemplateRole signer = new TemplateRole()
-                .email(args.getSignerEmail())
-                .name(args.getSignerName())
-                .roleName(EnvelopeHelpers.SIGNER_ROLE_NAME);
-
-        TemplateRole cc = new TemplateRole()
-                .email(args.getCcEmail())
-                .name(args.getCcName())
-                .roleName(EnvelopeHelpers.CC_ROLE_NAME);
-
-        return new EnvelopeDefinition()
-                .templateId(args.getTemplateId())
-                .templateRoles(Arrays.asList(signer, cc))
-                .brandId(args.getBrandId())
-                .status(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
     }
 }

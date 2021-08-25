@@ -7,6 +7,8 @@ import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
+import com.docusign.esign.model.CustomFieldsEnvelope;
+import com.docusign.services.eSignature.examples.EnvelopeCustomFieldValuesService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,11 +48,15 @@ public class EG018ControllerEnvelopeCustomFieldValues extends AbstractEsignature
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
         // Step 2. Construct your API headers
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
+        // Step 3. Call the eSignature REST API
+        CustomFieldsEnvelope customFieldsEnvelope = EnvelopeCustomFieldValuesService.envelopeCustomFieldValues(
+                envelopesApi,
+                session.getAccountId(),
+                session.getEnvelopeId()
+        );
+
         DoneExample.createDefault(title)
-                .withJsonObject(
-                        // Step 3. Call the eSignature REST API
-                        envelopesApi.listCustomFields(session.getAccountId(), session.getEnvelopeId())
-                )
+                .withJsonObject(customFieldsEnvelope)
                 .withMessage("Results from the Envelope::GetFormData method:")
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;

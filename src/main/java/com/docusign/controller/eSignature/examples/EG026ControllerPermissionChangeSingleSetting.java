@@ -14,6 +14,7 @@ import com.docusign.core.model.AccountRoleSettingsPatch;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.services.eSignature.examples.PermissionChangeSingleSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -69,7 +70,10 @@ public class EG026ControllerPermissionChangeSingleSetting extends AbstractEsigna
 
         model.addAttribute(MODEL_CUR_PROFILE_NAME, profiles.get(0).getPermissionProfileName());
         model.addAttribute(MODEL_CUR_PROFILE_ID, profiles.get(0).getPermissionProfileId());
-        findProfile(profiles, session.getPermissionProfileId()).ifPresent((PermissionProfile curProfile) -> {
+        PermissionChangeSingleSettingService.findProfile(
+                profiles,
+                session.getPermissionProfileId()).ifPresent((PermissionProfile curProfile) ->
+        {
             model.addAttribute(MODEL_CUR_PROFILE_NAME, curProfile.getPermissionProfileName());
             model.addAttribute(MODEL_CUR_PROFILE_ID, curProfile.getPermissionProfileId());
             // model.addAttribute(MODEL_PERMISSIONS,
@@ -85,50 +89,16 @@ public class EG026ControllerPermissionChangeSingleSetting extends AbstractEsigna
         String accountId = session.getAccountId();
         String curProfileId = args.getProfileId();
 
-        // Step 3. Construct your request body
-        PermissionProfileInformation permissionsInfo = accountsApi.listPermissions(accountId);
-        PermissionProfile profile = findProfile(permissionsInfo.getPermissionProfiles(), curProfileId)
-                .orElseThrow(NoSuchElementException::new);
-
-        // Step 4. Call the eSignature REST API
-        AccountRoleSettings newSettings = Objects.requireNonNullElse(profile.getSettings(),
-                DsModelUtils.createDefaultRoleSettings());
-        profile.setSettings(changeRandomSettings(newSettings));
-        PermissionProfile newProfile = accountsApi.updatePermissionProfile(accountId, curProfileId, profile);
+        PermissionProfile newProfile = PermissionChangeSingleSettingService.permissionChangeSingleSetting(
+                accountsApi,
+                accountId,
+                curProfileId
+        );
 
         DoneExample.createDefault(title).withMessage("The permission profile is updated!<br />Permission profile ID: "
                 + newProfile.getPermissionProfileId() + ".").addToModel(model);
         return DONE_EXAMPLE_PAGE_COMPARE;
     }
 
-    private static Optional<PermissionProfile> findProfile(List<PermissionProfile> profiles, String profileId) {
 
-        return profiles.stream().filter(p -> p.getPermissionProfileId().equals(profileId)).findFirst();
-    }
-
-    // Changes random boolean properties; in a real application, changing properties
-    // will be read from the page or in a different way
-    private static AccountRoleSettings changeRandomSettings(AccountRoleSettings settings) {
-        Gson gson = new Gson();
-        // Change this value back to: gson.fromJson(gson.toJson(settings),
-        // AccountRoleSettings.class);
-        // as soon as the signinguiversion is added back to the swagger spec.
-        // Also change the type back from AccountRoleSettingsPatch to AccountRoleSettings
-        AccountRoleSettingsPatch newSettings = gson.fromJson(gson.toJson(settings), AccountRoleSettingsPatch.class);
-        newSettings.signingUiVersion("1");
-        Random random = new Random(System.currentTimeMillis());
-
-        return newSettings.canCreateWorkspaces(randomBool(random)).allowEnvelopeSending(randomBool(random))
-                .allowSignerAttachments(randomBool(random)).allowESealRecipients(randomBool(random))
-                .allowTaggingInSendAndCorrect(randomBool(random)).allowWetSigningOverride(randomBool(random))
-                .enableApiRequestLogging(randomBool(random)).enableRecipientViewingNotifications(randomBool(random))
-                .allowSupplementalDocuments(randomBool(random)).disableDocumentUpload(randomBool(random));
-    }
-
-    private static String randomBool(Random random) {
-        if (random.nextBoolean()) {
-            return DsModelUtils.TRUE;
-        }
-        return DsModelUtils.FALSE;
-    }
 }
