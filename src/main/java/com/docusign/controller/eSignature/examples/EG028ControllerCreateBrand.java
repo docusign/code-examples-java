@@ -1,25 +1,22 @@
 package com.docusign.controller.eSignature.examples;
 
-import java.io.IOException;
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.common.Languages;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.esign.api.AccountsApi;
+import com.docusign.esign.client.ApiException;
+import com.docusign.esign.model.BrandsResponse;
+import com.docusign.services.eSignature.examples.CreateBrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.docusign.DSConfiguration;
-import com.docusign.esign.api.AccountsApi;
-import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.Brand;
-import com.docusign.esign.model.BrandsResponse;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 /**
@@ -28,7 +25,7 @@ import com.docusign.esign.model.BrandsResponse;
  */
 @Controller
 @RequestMapping("/eg028")
-public class EG028ControllerCreateBrand extends AbstractEsignatureController{
+public class EG028ControllerCreateBrand extends AbstractEsignatureController {
 
     private static final String MODEL_LIST_LANGUAGE = "listLanguage";
 
@@ -57,18 +54,18 @@ public class EG028ControllerCreateBrand extends AbstractEsignatureController{
 
         // Step 3: Construct your brand JSON body
         String language = args.getLanguage();
-        Brand brand = new Brand()
-                .brandName(args.getBrandName())
-                .defaultBrandLanguage(language)
-                .brandLanguages(List.of(language));
 
-        // Step 5: Call the eSignature REST API
-        BrandsResponse brandsResponse = accountsApi.createBrand(session.getAccountId(), brand);
+        BrandsResponse brandsResponse = CreateBrandService.createBrand(
+                accountsApi,
+                args.getBrandName(),
+                language,
+                session.getAccountId()
+        );
 
         DoneExample.createDefault(title)
                 .withJsonObject(brandsResponse)
                 .withMessage("The brand has been created!<br />Brand ID "
-                    + brandsResponse.getBrands().get(0).getBrandId() + ".")
+                        + brandsResponse.getBrands().get(0).getBrandId() + ".")
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

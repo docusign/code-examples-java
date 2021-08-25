@@ -14,6 +14,7 @@ import com.docusign.esign.model.Recipients;
 import com.docusign.esign.model.SignHere;
 import com.docusign.esign.model.Signer;
 
+import com.docusign.services.eSignature.examples.KBAAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,9 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/eg022")
 public class EG022ControllerKBAAuthentication extends AbstractEsignatureController {
-
-    private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
-    private static final String DOCUMENT_NAME = "Lorem";
 
     private final Session session;
     private final User user;
@@ -53,10 +51,14 @@ public class EG022ControllerKBAAuthentication extends AbstractEsignatureControll
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
         // Step 2: Construct your envelope JSON body
-        EnvelopeDefinition envelope = createEnvelope(args.getSignerName(), args.getSignerEmail());
+        EnvelopeDefinition envelope = KBAAuthenticationService.createEnvelope(args.getSignerName(), args.getSignerEmail());
 
         // Step 3: Call the eSignature REST API
-        EnvelopeSummary results = envelopesApi.createEnvelope(session.getAccountId(), envelope);
+        EnvelopeSummary results = KBAAuthenticationService.kbaAuthentication(
+                envelopesApi,
+                session.getAccountId(),
+                envelope
+        );
 
         session.setEnvelopeId(results.getEnvelopeId());
         DoneExample.createDefault(title)
@@ -68,43 +70,5 @@ public class EG022ControllerKBAAuthentication extends AbstractEsignatureControll
         return DONE_EXAMPLE_PAGE;
     }
 
-    private static EnvelopeDefinition createEnvelope(String signerName, String signerEmail) throws IOException {
-        Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
-
-        SignHere signHere = new SignHere();
-        signHere.setName("SignHereTab");
-        signHere.setXPosition("75");
-        signHere.setYPosition("572");
-        signHere.setTabLabel("SignHereTab");
-        signHere.setPageNumber("1");
-        signHere.setDocumentId(doc.getDocumentId());
-        // A 1- to 8-digit integer or 32-character GUID to match recipient IDs on your own systems.
-        // This value is referenced in the Tabs element below to assign tabs on a per-recipient basis.
-        signHere.setRecipientId("1");
-
-        Signer signer = new Signer();
-        signer.setName(signerName);
-        signer.setEmail(signerEmail);
-        signer.setRoutingOrder("1");
-        signer.setStatus(EnvelopeHelpers.SIGNER_STATUS_CREATED);
-        signer.setDeliveryMethod(EnvelopeHelpers.DELIVERY_METHOD_EMAIL);
-        signer.setRecipientId(signHere.getRecipientId());
-        signer.setTabs(EnvelopeHelpers.createSignerTabs(signHere));
-        signer.setIdCheckConfigurationName("ID Check");
-        signer.setRequireIdLookup("true");
-
-        Recipients recipients = new Recipients();
-        recipients.setSigners(Arrays.asList(signer));
-
-        EnvelopeDefinition envelope = new EnvelopeDefinition();
-        envelope.setEmailSubject("Please Sign");
-        envelope.setEnvelopeIdStamping("true");
-        envelope.setEmailBlurb("Sample text for email body");
-        envelope.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
-        envelope.setDocuments(Arrays.asList(doc));
-        envelope.setRecipients(recipients);
-
-        return envelope;
-    }
     // ***DS.snippet.0.end
 }

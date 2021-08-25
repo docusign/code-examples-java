@@ -6,6 +6,7 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.services.eSignature.examples.PermissionDeleteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -56,7 +57,7 @@ public class EG027ControllerPermissionDelete extends AbstractEsignatureControlle
 
         // Step 3: Call the eSignature Rest API to delete profile
         String curProfileId = args.getProfileId();
-        accountsApi.deletePermissionProfile(session.getAccountId(), curProfileId);
+        PermissionDeleteService.permissionDelete(accountsApi, session.getAccountId(), curProfileId);
 
         // Step 4: Show 'done' (successful) page
         DoneExample.createDefault(title)

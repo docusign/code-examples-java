@@ -10,6 +10,8 @@ import com.docusign.esign.client.ApiException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.docusign.esign.model.Envelope;
+import com.docusign.services.eSignature.examples.EnvelopeInfoService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,8 +54,9 @@ public class EG004ControllerEnvelopeInfo extends AbstractEsignatureController {
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
         // Step 1. get envelope info
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
+        Envelope envelope = EnvelopeInfoService.envelopeInfo(envelopesApi, session.getAccountId(), session.getEnvelopeId());
         DoneExample.createDefault(title)
-                .withJsonObject(envelopesApi.getEnvelope(session.getAccountId(), session.getEnvelopeId()))
+                .withJsonObject(envelope)
                 .withMessage("Results from the Envelopes::get method:")
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;

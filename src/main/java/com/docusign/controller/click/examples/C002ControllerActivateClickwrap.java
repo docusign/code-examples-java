@@ -3,11 +3,12 @@ package com.docusign.controller.click.examples;
 import com.docusign.DSConfiguration;
 import com.docusign.click.api.AccountsApi;
 import com.docusign.click.client.ApiException;
-import com.docusign.click.model.*;
+import com.docusign.click.model.ClickwrapVersionSummaryResponse;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.services.click.examples.ActivateClickwrapService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * Activate a clickwrap.
@@ -49,15 +49,11 @@ public class C002ControllerActivateClickwrap extends AbstractClickController {
         // Step 2: Construct your API headers
         AccountsApi accountsApi = this.createAccountsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
-        // Step 3: Construct the request body for your clickwrap
-        ClickwrapRequest clickwrapRequest = new ClickwrapRequest().status(ClickwrapHelper.STATUS_ACTIVE);
-
-        // Step 4: Call the v1 Click API
-        ClickwrapVersionSummaryResponse updatedClickwrap = accountsApi.updateClickwrapVersion(
+        ClickwrapVersionSummaryResponse updatedClickwrap = ActivateClickwrapService.activateClickwrap(
+                accountsApi,
                 this.session.getAccountId(),
                 this.session.getClickwrapId(),
-                this.session.getClickwrapVersionNumber(),
-                clickwrapRequest);
+                this.session.getClickwrapVersionNumber());
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(updatedClickwrap)

@@ -8,6 +8,7 @@ import com.docusign.core.model.AccountRoleSettingsPatch;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.services.eSignature.examples.PermissionCreateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -44,19 +45,13 @@ public class EG024ControllerPermissionCreate extends AbstractEsignatureControlle
 
         // Step 2. Construct your API headers
         AccountsApi accountsApi = createAccountsApi(session.getBasePath(), user.getAccessToken());
-
-        // Step 3. Construct your request body
-        // We're extending the AccountSettings class with AccountSettingsPatch to include the signingUIVersion which is missing in the swagger spec at this time.
-        Gson gson = new Gson();
-        AccountRoleSettings settings = DsModelUtils.createDefaultRoleSettings();
-        AccountRoleSettingsPatch newSettings = gson.fromJson(gson.toJson(settings), AccountRoleSettingsPatch.class);
-        newSettings.signingUiVersion("1");
-        PermissionProfile profile = new PermissionProfile()
-                .permissionProfileName(args.getPermissionProfileName())
-                .settings(newSettings);
                 
         // Step 4. Call the eSignature REST API
-        PermissionProfile newProfile = accountsApi.createPermissionProfile(session.getAccountId(), profile);
+        PermissionProfile newProfile = PermissionCreateService.createNewProfile(
+                accountsApi,
+                session.getAccountId(),
+                args.getPermissionProfileName()
+        );
 
         DoneExample.createDefault(title)
                 .withJsonObject(newProfile)

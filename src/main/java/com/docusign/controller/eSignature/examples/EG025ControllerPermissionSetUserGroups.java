@@ -8,6 +8,7 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.services.eSignature.examples.PermissionSetUserGroupsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -66,15 +67,13 @@ public class EG025ControllerPermissionSetUserGroups extends AbstractEsignatureCo
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
         // Step 2: Construct your API headers
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
-        GroupsApi groupsApi = new GroupsApi(apiClient);
 
-        // Step 3: Perform request
-        Group newGroup = new Group()
-                .groupId(args.getGroupId())
-                .permissionProfileId(args.getProfileId());
-        GroupInformation groupInformation = new GroupInformation()
-                .groups(List.of(newGroup));
-        GroupInformation newGroupInfo = groupsApi.updateGroups(session.getAccountId(), groupInformation);
+        GroupInformation newGroupInfo = PermissionSetUserGroupsService.permissionSetUserGroups(
+                apiClient,
+                args.getGroupId(),
+                args.getProfileId(),
+                session.getAccountId()
+        );
 
         // Step 4: Show result
         ErrorDetails errorDetails = newGroupInfo.getGroups().get(0).getErrorDetails();

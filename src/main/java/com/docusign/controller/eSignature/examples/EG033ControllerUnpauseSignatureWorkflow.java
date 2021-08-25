@@ -10,6 +10,7 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.Envelope;
 import com.docusign.esign.model.EnvelopeUpdateSummary;
 import com.docusign.esign.model.Workflow;
+import com.docusign.services.eSignature.examples.UnpauseSignatureWorkflowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -43,22 +44,10 @@ public class EG033ControllerUnpauseSignatureWorkflow extends AbstractEsignatureC
         // Step 2: Construct your API headers
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
-        // Step 3: Construct your envelope JSON body
-        Workflow workflow = new Workflow();
-        workflow.setWorkflowStatus(EnvelopeHelpers.WORKFLOW_STATUS_IN_PROGRESS);
-
-        Envelope envelope = new Envelope();
-        envelope.setWorkflow(workflow);
-
-        EnvelopesApi.UpdateOptions updateOptions = envelopesApi. new UpdateOptions();
-        updateOptions.setResendEnvelope("true");
-
-        // Step 4: Call the eSignature REST API
-        EnvelopeUpdateSummary results = envelopesApi.update(
+        EnvelopeUpdateSummary results = UnpauseSignatureWorkflowService.unpauseSignatureWorkflow(
+                envelopesApi,
                 this.session.getAccountId(),
-                this.session.getEnvelopeId(),
-                envelope,
-                updateOptions
+                this.session.getEnvelopeId()
         );
 
         DoneExample.createDefault(this.title)

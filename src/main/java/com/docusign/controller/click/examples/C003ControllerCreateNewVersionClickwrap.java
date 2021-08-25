@@ -11,6 +11,7 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.services.click.examples.CreateNewVersionClickwrapService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,14 +56,12 @@ public class C003ControllerCreateNewVersionClickwrap extends AbstractClickContro
         // Step 2: Construct your API headers
         AccountsApi accountsApi = this.createAccountsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
-        // Step 3: Construct the request body for your clickwrap
-        ClickwrapRequest clickwrapRequest = this.createClickwrapRequest();
-
-        // Step 4: Call the v1 Click API
-        ClickwrapVersionSummaryResponse createdClickwrap = accountsApi.createClickwrapVersion(
+        ClickwrapVersionSummaryResponse createdClickwrap = CreateNewVersionClickwrapService.createNewVersionClickwrap(
+                accountsApi,
+                CreateNewVersionClickwrapService.createClickwrapRequest(DOCUMENT_FILE_NAME, DOCUMENT_NAME, DOCUMENT_ORDER),
                 this.session.getAccountId(),
-                this.session.getClickwrapId(),
-                clickwrapRequest);
+                this.session.getClickwrapId()
+        );
 
         this.session.setClickwrapId(createdClickwrap.getClickwrapId());
         this.session.setClickwrapVersionNumber(createdClickwrap.getVersionNumber().toString());
@@ -73,26 +72,6 @@ public class C003ControllerCreateNewVersionClickwrap extends AbstractClickContro
                         + ".<br /> Version number " + createdClickwrap.getVersionNumber())
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
-    }
-
-    private ClickwrapRequest createClickwrapRequest() throws IOException {
-        Document document = ClickwrapHelper.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, DOCUMENT_ORDER);
-        DisplaySettings displaySettings = new DisplaySettings()
-                .displayName("Terms of Service v2")
-                .consentButtonText("I Agree")
-                .downloadable(true)
-                .format("modal")
-                .mustRead(true)
-                .mustView(true)
-                .requireAccept(true)
-                .documentDisplay("document");
-
-        return new ClickwrapRequest()
-                .addDocumentsItem(document)
-                .clickwrapName("Terms of Service")
-                .requireReacceptance(true)
-                .status(ClickwrapHelper.STATUS_ACTIVE)
-                .displaySettings(displaySettings);
     }
     // ***DS.snippet.0.end
 }
