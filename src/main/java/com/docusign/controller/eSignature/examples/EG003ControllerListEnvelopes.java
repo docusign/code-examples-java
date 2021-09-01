@@ -45,7 +45,9 @@ public class EG003ControllerListEnvelopes extends AbstractEsignatureController {
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
-        EnvelopesInformation envelopesInformation = ListEnvelopesServices.listEnvelopes(envelopesApi, session.getAccountId());
+        EnvelopesInformation envelopesInformation = ListEnvelopesServices.listEnvelopes(
+                envelopesApi,
+                session.getAccountId());
 
         DoneExample.createDefault(title)
                 .withMessage("Results from the Envelopes::listStatusChanges method:")

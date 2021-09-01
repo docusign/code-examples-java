@@ -38,7 +38,9 @@ public class EG032ControllerPauseSignatureWorkflow extends AbstractEsignatureCon
     }
 
     @Override
-    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException, IOException {
+    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response)
+            throws ApiException, IOException
+    {
 
         // Step 2: Construct your API headers
         EnvelopesApi envelopesApi = createEnvelopesApi(this.session.getBasePath(), this.user.getAccessToken());

@@ -49,10 +49,16 @@ public class C001ControllerCreateClickwrap extends AbstractClickController {
         AccountsApi accountsApi = this.createAccountsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
         // Step 3. Construct the request body for your clickwrap
-        ClickwrapRequest clickwrapRequest = CreateClickwrapService.createClickwrapRequest(args.getClickwrapName(), DOCUMENT_FILE_NAME, DOCUMENT_NAME, DOCUMENT_ORDER);
+        ClickwrapRequest clickwrapRequest = CreateClickwrapService.createClickwrapRequest(
+                args.getClickwrapName(),
+                DOCUMENT_FILE_NAME,
+                DOCUMENT_NAME,
+                DOCUMENT_ORDER);
 
         // Step 4. Call the v1 Click API
-        ClickwrapVersionSummaryResponse createdClickwrap = accountsApi.createClickwrap(this.session.getAccountId(), clickwrapRequest);
+        ClickwrapVersionSummaryResponse createdClickwrap = accountsApi.createClickwrap(
+                this.session.getAccountId(),
+                clickwrapRequest);
 
         this.session.setClickwrapId(createdClickwrap.getClickwrapId());
         this.session.setClickwrapVersionNumber(createdClickwrap.getVersionNumber().toString());

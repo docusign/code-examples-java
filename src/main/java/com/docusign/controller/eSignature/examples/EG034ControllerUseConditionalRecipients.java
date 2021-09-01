@@ -41,7 +41,9 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
 
     @Override
     // ***DS.snippet.0.start
-    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException, IOException {
+    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response)
+            throws ApiException, IOException
+    {
 
         // Step 2: Construct your API headers
         EnvelopesApi envelopesApi = createEnvelopesApi(this.session.getBasePath(), this.user.getAccessToken());

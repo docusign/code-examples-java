@@ -8,7 +8,7 @@ import com.docusign.rooms.model.RoomDocument;
 import java.util.UUID;
 
 public final class AddingFormsToRoomService {
-    public static RoomDocument AddFormsToRoom(
+    public static RoomDocument addFormsToRoom(
             RoomsApi roomsApi,
             String accountId,
             UUID formId,

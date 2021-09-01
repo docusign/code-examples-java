@@ -88,7 +88,10 @@ public abstract class AbstractRoomsController extends AbstractController {
      * @param userAccessToken user's access token
      * @return an instance of the {@link ExternalFormFillSessionsApi}
      */
-    protected static ExternalFormFillSessionsApi createExternalFormFillSessionsApiClient(String basePath, String userAccessToken) {
+    protected static ExternalFormFillSessionsApi createExternalFormFillSessionsApiClient(
+            String basePath,
+            String userAccessToken)
+    {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         return new ExternalFormFillSessionsApi(apiClient);
     }
@@ -129,7 +132,9 @@ public abstract class AbstractRoomsController extends AbstractController {
         return new FormGroupsApi(apiClient);
     }
 
-    protected static RoleSummary getAdminRole(String basePath, String userAccessToken, String accountId) throws ApiException {
+    protected static RoleSummary getAdminRole(String basePath, String userAccessToken, String accountId)
+            throws ApiException
+    {
         RoleSummaryList roleSummaryList = createRolesApiClient(basePath, userAccessToken).getRoles(accountId);
         return roleSummaryList.getRoles()
                 .stream()
@@ -138,39 +143,63 @@ public abstract class AbstractRoomsController extends AbstractController {
                 .get();
     }
 
-    protected static List<FormSummary> getFormSummaryList(String basePath, String userAccessToken, String accountId) throws ApiException {
+    protected static List<FormSummary> getFormSummaryList(String basePath, String userAccessToken, String accountId)
+            throws ApiException
+    {
         FormLibrariesApi formLibrariesApi = createFormLibrariesApi(basePath, userAccessToken);
         FormLibrarySummaryList formLibrarySummaryList = formLibrariesApi.getFormLibraries(accountId);
 
         List<FormSummary> forms = new ArrayList<>();
 
         for (FormLibrarySummary formLibrarySummary : formLibrarySummaryList.getFormsLibrarySummaries()) {
-            FormSummaryList formSummaryList = formLibrariesApi.getFormLibraryForms(accountId, formLibrarySummary.getFormsLibraryId());
+            FormSummaryList formSummaryList = formLibrariesApi.getFormLibraryForms(
+                    accountId,
+                    formLibrarySummary.getFormsLibraryId());
             forms.addAll(formSummaryList.getForms());
         }
         return forms;
     }
 
-    protected List<RoomDocument> getDocumentsByRoomsId(String basePath, String accessToken, String accountId, WorkArguments roomId) throws ApiException {
+    protected List<RoomDocument> getDocumentsByRoomsId(
+            String basePath,
+            String accessToken,
+            String accountId,
+            WorkArguments roomId)
+            throws ApiException
+    {
         RoomsApi roomsApiClient = createRoomsApiClient(basePath, accessToken);
 
         return roomsApiClient.getDocuments(accountId, roomId.getRoomId()).getDocuments();
     }
 
-    protected RoomSummaryList getRoomSummaryList(String basePath, String accessToken, String accountId) throws ApiException {
+    protected RoomSummaryList getRoomSummaryList(String basePath, String accessToken, String accountId)
+            throws ApiException
+    {
         RoomsApi roomsApi = createRoomsApiClient(basePath, accessToken);
 
         return roomsApi.getRooms(accountId);
     }
 
-    protected List<RoomSummary> getRoomSummariesByRoomId(String basePath, String accessToken, String accountId, WorkArguments roomId) throws ApiException {
+    protected List<RoomSummary> getRoomSummariesByRoomId(
+            String basePath,
+            String accessToken,
+            String accountId,
+            WorkArguments roomId)
+            throws ApiException
+    {
         RoomSummaryList summaryList = getRoomSummaryList(basePath, accessToken, accountId);
         return summaryList.getRooms().stream()
                 .filter(var -> var.getRoomId().equals(roomId.getRoomId()))
                 .collect(Collectors.toList());
     }
 
-    protected List<FormSummary> getAvailableFormSummariesByRoomId(String basePath, String accessToken, String accountId, WorkArguments roomId) throws ApiException {
+    protected List<FormSummary> getAvailableFormSummariesByRoomId(
+            String basePath,
+            String accessToken,
+            String accountId,
+            WorkArguments roomId)
+            throws ApiException
+    {
         List<RoomDocument> formsByRoomsId = getDocumentsByRoomsId(basePath, accessToken, accountId, roomId);
         List<FormSummary> formSummaries = getFormSummaryList(basePath, accessToken, accountId);
 

@@ -58,7 +58,7 @@ public class R003ControllerExportingDataFromRoom extends AbstractRoomsController
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
         // Step 3: Call the v2 Rooms API
-        FieldData fieldData = ExportingDataFromRoomService.ExportDataFromRoom(
+        FieldData fieldData = ExportingDataFromRoomService.exportDataFromRoom(
                 roomsApi,
                 this.session.getAccountId(),
                 args.getRoomId());

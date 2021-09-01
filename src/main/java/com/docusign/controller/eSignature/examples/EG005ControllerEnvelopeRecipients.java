@@ -48,7 +48,10 @@ public class EG005ControllerEnvelopeRecipients extends AbstractEsignatureControl
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
         // Step 1. get envelope recipients
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
-        Recipients recipients = EnvelopeRecipientsService.envelopeRecipients(envelopesApi, session.getAccountId(), session.getEnvelopeId());
+        Recipients recipients = EnvelopeRecipientsService.envelopeRecipients(
+                envelopesApi,
+                session.getAccountId(),
+                session.getEnvelopeId());
         DoneExample.createDefault(title)
                 .withJsonObject(recipients)
                 .withMessage("Results from the EnvelopeRecipients::list method:")

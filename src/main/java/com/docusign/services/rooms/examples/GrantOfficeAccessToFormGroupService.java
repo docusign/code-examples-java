@@ -6,7 +6,7 @@ import com.docusign.rooms.client.ApiException;
 import java.util.UUID;
 
 public final class GrantOfficeAccessToFormGroupService {
-    public static void GrantOfficeAccessToFormGroup(
+    public static void grantOfficeAccessToFormGroup(
             FormGroupsApi formGroupsApi,
             String accountId,
             UUID formGroupId,

@@ -67,7 +67,7 @@ public class R005ControllerGetRoomsWithFilters extends AbstractRoomsController {
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
         // Step 4. Call the v2 Rooms API
-        RoomSummaryList rooms = GetRoomsWithFiltersService.GetRoomsWithFilters(
+        RoomSummaryList rooms = GetRoomsWithFiltersService.getRoomsWithFilters(
                 roomsApi,
                 this.session.getAccountId(),
                 args.getStartDate(),

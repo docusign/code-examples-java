@@ -6,7 +6,7 @@ import com.docusign.rooms.model.ExternalFormFillSession;
 import com.docusign.rooms.model.ExternalFormFillSessionForCreate;
 
 public final class CreateExternalFormFillSessionService {
-    public static ExternalFormFillSession CreateExternalFormFillSession(
+    public static ExternalFormFillSession createExternalFormFillSession(
             ExternalFormFillSessionsApi externalFormFillSessionsApi,
             String accountId,
             String formId,

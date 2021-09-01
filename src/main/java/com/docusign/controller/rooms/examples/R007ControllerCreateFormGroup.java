@@ -44,7 +44,7 @@ public class R007ControllerCreateFormGroup extends AbstractRoomsController {
                 this.session.getBasePath(), this.user.getAccessToken()
         );
 
-        FormGroup formGroup = CreateFormGroupService.CreateFormGroup(
+        FormGroup formGroup = CreateFormGroupService.createFormGroup(
                 formGroupsApi,
                 this.session.getAccountId(),
                 args.getFormGroupName());

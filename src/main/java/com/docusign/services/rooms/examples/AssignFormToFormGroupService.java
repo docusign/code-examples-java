@@ -7,7 +7,7 @@ import com.docusign.rooms.model.FormGroupFormToAssign;
 import java.util.UUID;
 
 public final class AssignFormToFormGroupService {
-    public static FormGroupFormToAssign AssignFormToFormGroup(
+    public static FormGroupFormToAssign assignFormToFormGroup(
             FormGroupsApi formGroupsApi,
             String accountId,
             UUID formId,

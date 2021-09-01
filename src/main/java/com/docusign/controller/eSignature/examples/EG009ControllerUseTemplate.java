@@ -64,7 +64,10 @@ public class EG009ControllerUseTemplate extends AbstractEsignatureController {
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
         EnvelopeDefinition envelope = UseTemplateService.makeEnvelope(args);
-        EnvelopeSummary result = UseTemplateService.createEnvelopeTemplate(envelopesApi, session.getAccountId(), envelope);
+        EnvelopeSummary result = UseTemplateService.createEnvelopeTemplate(
+                envelopesApi,
+                session.getAccountId(),
+                envelope);
 
         session.setEnvelopeId(result.getEnvelopeId());
         DoneExample.createDefault(title)

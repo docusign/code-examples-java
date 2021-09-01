@@ -54,7 +54,10 @@ public class EG004ControllerEnvelopeInfo extends AbstractEsignatureController {
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
         // Step 1. get envelope info
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
-        Envelope envelope = EnvelopeInfoService.envelopeInfo(envelopesApi, session.getAccountId(), session.getEnvelopeId());
+        Envelope envelope = EnvelopeInfoService.envelopeInfo(
+                envelopesApi,
+                session.getAccountId(),
+                session.getEnvelopeId());
         DoneExample.createDefault(title)
                 .withJsonObject(envelope)
                 .withMessage("Results from the Envelopes::get method:")

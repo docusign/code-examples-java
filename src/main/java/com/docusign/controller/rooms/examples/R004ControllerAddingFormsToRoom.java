@@ -49,7 +49,10 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
 
         // Step 3. Obtain the desired form ID
         RoomSummaryList roomSummaryList = roomsApi.getRooms(this.session.getAccountId());
-        List<FormSummary> forms = getFormSummaryList(this.session.getBasePath(), this.user.getAccessToken(), this.session.getAccountId());
+        List<FormSummary> forms = getFormSummaryList(
+                this.session.getBasePath(),
+                this.user.getAccessToken(),
+                this.session.getAccountId());
 
         model.addAttribute(MODEL_ROOM_LIST, roomSummaryList.getRooms());
         model.addAttribute(MODEL_FORM_LIST, forms);
@@ -64,7 +67,7 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
         
         // Step 4. Call the v2 Rooms API
-        RoomDocument roomDocument = AddingFormsToRoomService.AddFormsToRoom(
+        RoomDocument roomDocument = AddingFormsToRoomService.addFormsToRoom(
                 roomsApi,
                 this.session.getAccountId(),
                 args.getFormId(),

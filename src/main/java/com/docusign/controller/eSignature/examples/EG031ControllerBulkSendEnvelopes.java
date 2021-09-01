@@ -1,38 +1,23 @@
 package com.docusign.controller.eSignature.examples;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.esign.api.BulkEnvelopesApi;
+import com.docusign.esign.client.ApiClient;
+import com.docusign.esign.client.ApiException;
+import com.docusign.esign.model.BulkSendBatchStatus;
 import com.docusign.services.eSignature.examples.BulkSendEnvelopesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.docusign.DSConfiguration;
-import com.docusign.esign.api.BulkEnvelopesApi;
-import com.docusign.esign.api.EnvelopesApi;
-import com.docusign.esign.client.ApiClient;
-import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.BulkSendBatchStatus;
-import com.docusign.esign.model.BulkSendRequest;
-import com.docusign.esign.model.BulkSendingCopy;
-import com.docusign.esign.model.BulkSendingCopyRecipient;
-import com.docusign.esign.model.BulkSendingList;
-import com.docusign.esign.model.CustomFields;
-import com.docusign.esign.model.Document;
-import com.docusign.esign.model.EnvelopeDefinition;
-import com.docusign.esign.model.Recipients;
-import com.docusign.esign.model.Signer;
-import com.docusign.esign.model.TextCustomField;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This code example demonstrates how to send envelopes in bulk to multiple
@@ -81,7 +66,9 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
             BulkSendBatchStatus status = bulkEnvelopesApi.getBulkSendBatchStatus(accountId, batchId);
             DoneExample.createDefault(title)
                     .withJsonObject(status)
-                    .withMessage(String.join("", "Bulk request queued to ", status.getQueued(), " user lists."))
+                    .withMessage(String.join(
+                            "",
+                            "Bulk request queued to ", status.getQueued(), " user lists."))
                     .addToModel(model);
         } catch (InterruptedException exception) {
             Thread.currentThread().interrupt();

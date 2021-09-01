@@ -50,7 +50,10 @@ public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsCo
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
         RoomSummaryList roomSummaryList = roomsApi.getRooms(this.session.getAccountId());
 
-        List<FormSummary> forms = getFormSummaryList(this.session.getBasePath(), this.user.getAccessToken(), this.session.getAccountId());
+        List<FormSummary> forms = getFormSummaryList(
+                this.session.getBasePath(),
+                this.user.getAccessToken(),
+                this.session.getAccountId());
 
         model.addAttribute(MODEL_ROOM_LIST, roomSummaryList.getRooms());
         model.addAttribute(MODEL_FORM_LIST, forms);
@@ -67,7 +70,8 @@ public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsCo
         );
 
         // Step 3. Call the v2 Rooms API
-        ExternalFormFillSession externalFormFillSession = CreateExternalFormFillSessionService.CreateExternalFormFillSession(
+        ExternalFormFillSession externalFormFillSession = CreateExternalFormFillSessionService
+                .createExternalFormFillSession(
                 externalFormFillSessionsApi,
                 this.session.getAccountId(),
                 args.getFormId().toString(),

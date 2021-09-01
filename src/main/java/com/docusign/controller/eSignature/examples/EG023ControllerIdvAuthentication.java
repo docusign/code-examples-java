@@ -53,7 +53,9 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
     }
 
     @Override
-    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException, IOException {
+    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response)
+            throws ApiException, IOException
+    {
         // Step 1: Construct your API headers
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
@@ -63,7 +65,10 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
 
         logger.info("workflowId = " + workflowId);
         // Step 3: Construct your envelope JSON body
-        EnvelopeDefinition envelope = IdvAuthenticationService.createEnvelope(args.getSignerName(), args.getSignerEmail(), workflowId);
+        EnvelopeDefinition envelope = IdvAuthenticationService.createEnvelope(
+                args.getSignerName(),
+                args.getSignerEmail(),
+                workflowId);
         // Step 4: Create envelope
         EnvelopeSummary results = IdvAuthenticationService.idvAuthentication(
                 envelopesApi,
