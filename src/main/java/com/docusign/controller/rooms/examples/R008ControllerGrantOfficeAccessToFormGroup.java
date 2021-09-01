@@ -9,6 +9,7 @@ import com.docusign.rooms.api.FormGroupsApi;
 import com.docusign.rooms.api.OfficesApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.*;
+import com.docusign.services.rooms.examples.GrantOfficeAccessToFormGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -68,9 +69,13 @@ public class R008ControllerGrantOfficeAccessToFormGroup extends AbstractRoomsCon
 
         try {
             // Step 5 Start
-            this.formGroupsApi.grantOfficeAccessToFormGroup(this.session.getAccountId(), args.getFormGroupId(), args.getOfficeId());
+            GrantOfficeAccessToFormGroupService.GrantOfficeAccessToFormGroup(
+                    this.formGroupsApi,
+                    this.session.getAccountId(),
+                    args.getFormGroupId(),
+                    args.getOfficeId());
             // Step 5 End
-            
+
             DoneExample.createDefault(this.title)
                     .withMessage("Office has been granted access to a form group!")
                     .addToModel(model);

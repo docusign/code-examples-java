@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>5. Creating a new clickwrap version.</h4>
+<h4>3. Creating a new clickwrap version.</h4>
 
 <p>This topic demonstrates how to use the Click API to create a new version of a clickwrap.
     You can specify whether you require users who have previously accepted the clickwrap

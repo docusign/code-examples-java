@@ -10,6 +10,7 @@ import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.FormGroupFormToAssign;
 import com.docusign.rooms.model.FormGroupSummaryList;
 import com.docusign.rooms.model.FormSummary;
+import com.docusign.services.rooms.examples.AssignFormToFormGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -65,16 +66,13 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
-
-        // Step 5 Start
-        FormGroupFormToAssign formGroupFormToAssignRequest = new FormGroupFormToAssign()
-                .formId(args.getFormId());
-        // Step 5 End
-
         try {
             // Step 6 Start
-            FormGroupFormToAssign formGroupFormToAssign = this.formGroupsApi.assignFormGroupForm(
-                    this.session.getAccountId(), args.getFormGroupId(), formGroupFormToAssignRequest);
+            FormGroupFormToAssign formGroupFormToAssign = AssignFormToFormGroupService.AssignFormToFormGroup(
+                    this.formGroupsApi,
+                    this.session.getAccountId(),
+                    args.getFormId(),
+                    args.getFormGroupId());
             // Step 6 End
 
             DoneExample.createDefault(this.title)
