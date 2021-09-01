@@ -47,7 +47,9 @@ public class R002ControllerCreateRoomWithTemplate extends AbstractRoomsControlle
         super.onInitModel(args, model);
 
         // Step 3: Retrieve a Rooms Template ID
-        RoomTemplatesApi templatesApi = createRoomTemplatesApiClient(this.session.getBasePath(), this.user.getAccessToken());
+        RoomTemplatesApi templatesApi = createRoomTemplatesApiClient(
+                this.session.getBasePath(),
+                this.user.getAccessToken());
         RoomTemplatesSummaryList templatesSummaryList = templatesApi.getRoomTemplates(this.session.getAccountId());
 
         model.addAttribute(MODEL_TEMPLATES_LIST, templatesSummaryList.getRoomTemplates());

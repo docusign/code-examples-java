@@ -56,7 +56,10 @@ public class EG020ControllerSmsAuthentication extends AbstractEsignatureControll
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
         // Step 3: Construct your envelope JSON body
-        EnvelopeDefinition envelope = SmsAuthenticationService.createEnvelope(args.getSignerName(), args.getSignerEmail(), args.getPhoneNumber());
+        EnvelopeDefinition envelope = SmsAuthenticationService.createEnvelope(
+                args.getSignerName(),
+                args.getSignerEmail(),
+                args.getPhoneNumber());
 
         // Step 4: Call the eSignature REST API
         EnvelopeSummary results = SmsAuthenticationService.smsAuthentication(

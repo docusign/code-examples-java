@@ -5,7 +5,7 @@ import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.RoomSummaryList;
 
 public final class GetRoomsWithFiltersService {
-    public static RoomSummaryList GetRoomsWithFilters(
+    public static RoomSummaryList getRoomsWithFilters(
             RoomsApi roomsApi,
             String accountId,
             String startDate,

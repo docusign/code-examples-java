@@ -2,32 +2,21 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
-import com.docusign.core.common.DocumentType;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.CarbonCopy;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
-import com.docusign.esign.model.FormulaTab;
-import com.docusign.esign.model.List;
-import com.docusign.esign.model.ListItem;
-import com.docusign.esign.model.PaymentDetails;
-import com.docusign.esign.model.PaymentLineItem;
-import com.docusign.esign.model.Signer;
-import com.docusign.esign.model.Tabs;
-
 import com.docusign.services.eSignature.examples.CollectPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.io.IOException;
-import java.util.Arrays;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 /**
@@ -69,11 +58,15 @@ public class EG014ControllerCollectPayment extends AbstractEsignatureController 
     @Override
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
-            HttpServletResponse response) throws ApiException, IOException {
+                            HttpServletResponse response) throws ApiException, IOException {
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
         // Step 1. Make the envelope request body
-        EnvelopeDefinition envelope = CollectPaymentService.makeEnvelope(args, config.getGatewayAccountId(), config.getGatewayName(), config.getGatewayDisplayName());
+        EnvelopeDefinition envelope = CollectPaymentService.makeEnvelope(
+                args,
+                config.getGatewayAccountId(),
+                config.getGatewayName(),
+                config.getGatewayDisplayName());
 
         // Step 2. call Envelopes::create API method
         EnvelopeSummary results = CollectPaymentService.collectPayment(envelopesApi, envelope, session.getAccountId());

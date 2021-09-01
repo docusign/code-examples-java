@@ -69,7 +69,7 @@ public class R008ControllerGrantOfficeAccessToFormGroup extends AbstractRoomsCon
 
         try {
             // Step 5 Start
-            GrantOfficeAccessToFormGroupService.GrantOfficeAccessToFormGroup(
+            GrantOfficeAccessToFormGroupService.grantOfficeAccessToFormGroup(
                     this.formGroupsApi,
                     this.session.getAccountId(),
                     args.getFormGroupId(),

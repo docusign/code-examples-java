@@ -51,7 +51,9 @@ public class EG022ControllerKBAAuthentication extends AbstractEsignatureControll
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
         // Step 2: Construct your envelope JSON body
-        EnvelopeDefinition envelope = KBAAuthenticationService.createEnvelope(args.getSignerName(), args.getSignerEmail());
+        EnvelopeDefinition envelope = KBAAuthenticationService.createEnvelope(
+                args.getSignerName(),
+                args.getSignerEmail());
 
         // Step 3: Call the eSignature REST API
         EnvelopeSummary results = KBAAuthenticationService.kbaAuthentication(

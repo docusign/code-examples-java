@@ -6,7 +6,7 @@ import com.docusign.rooms.model.FormGroup;
 import com.docusign.rooms.model.FormGroupForCreate;
 
 public final class CreateFormGroupService {
-    public static FormGroup CreateFormGroup(
+    public static FormGroup createFormGroup(
             FormGroupsApi formGroupsApi,
             String accountId,
             String formGroupName) throws ApiException {

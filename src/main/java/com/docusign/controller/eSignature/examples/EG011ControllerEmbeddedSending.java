@@ -59,7 +59,11 @@ public class EG011ControllerEmbeddedSending extends AbstractEsignatureController
         // Step 2. Create the sender view.
         // Set the url where you want the recipient to go once they are done
         // signing should typically be a callback route somewhere in your app.
-        ViewUrl viewUrl = EmbeddedSendingService.createSenderView(envelopesApi, accountId, envelopeId, config.getDsReturnUrl());
+        ViewUrl viewUrl = EmbeddedSendingService.createSenderView(
+                envelopesApi,
+                accountId,
+                envelopeId,
+                config.getDsReturnUrl());
 
         // Switch to Recipient and Documents view if requested by the user
         String url = viewUrl.getUrl();

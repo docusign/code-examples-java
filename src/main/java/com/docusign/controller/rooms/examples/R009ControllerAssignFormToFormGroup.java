@@ -55,7 +55,10 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
         // Step 3 End 
 
         // Step 4 Start
-        List<FormSummary> forms = getFormSummaryList(this.session.getBasePath(), this.user.getAccessToken(), this.session.getAccountId());
+        List<FormSummary> forms = getFormSummaryList(
+                this.session.getBasePath(),
+                this.user.getAccessToken(),
+                this.session.getAccountId());
         // Step 4 End
 
         model.addAttribute(MODEL_FORM_GROUP_LIST, formGroupSummaryList.getFormGroups());
@@ -68,7 +71,7 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
                             HttpServletResponse response) throws IOException, ApiException {
         try {
             // Step 6 Start
-            FormGroupFormToAssign formGroupFormToAssign = AssignFormToFormGroupService.AssignFormToFormGroup(
+            FormGroupFormToAssign formGroupFormToAssign = AssignFormToFormGroupService.assignFormToFormGroup(
                     this.formGroupsApi,
                     this.session.getAccountId(),
                     args.getFormId(),
