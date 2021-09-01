@@ -9,6 +9,7 @@ import com.docusign.rooms.api.FormGroupsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.FormGroup;
 import com.docusign.rooms.model.FormGroupForCreate;
+import com.docusign.services.rooms.examples.CreateFormGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -43,14 +44,10 @@ public class R007ControllerCreateFormGroup extends AbstractRoomsController {
                 this.session.getBasePath(), this.user.getAccessToken()
         );
 
-        // Step 3 Start
-        FormGroupForCreate formGroupForCreate = new FormGroupForCreate()
-                .name(args.getFormGroupName());
-        // Step 3 End
-        
-        // Step 4 Start
-        FormGroup formGroup = formGroupsApi.createFormGroup(this.session.getAccountId(), formGroupForCreate);
-        // Step 4 End
+        FormGroup formGroup = CreateFormGroupService.CreateFormGroup(
+                formGroupsApi,
+                this.session.getAccountId(),
+                args.getFormGroupName());
         
         DoneExample.createDefault(this.title)
                 .withJsonObject(formGroup)

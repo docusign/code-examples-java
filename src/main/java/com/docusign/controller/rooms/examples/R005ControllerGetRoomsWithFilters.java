@@ -10,6 +10,7 @@ import com.docusign.rooms.api.RoomsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.RoomSummaryList;
 import com.docusign.rooms.model.RoomTemplatesSummaryList;
+import com.docusign.services.rooms.examples.GetRoomsWithFiltersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -65,13 +66,12 @@ public class R005ControllerGetRoomsWithFilters extends AbstractRoomsController {
         // Step 2: Construct your API headers
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
-        // Step 3. Prepare your request parameters
-        RoomsApi.GetRoomsOptions options = roomsApi.new GetRoomsOptions();
-        options.setFieldDataChangedStartDate(args.getStartDate());
-        options.setFieldDataChangedEndDate(args.getEndDate());
-
         // Step 4. Call the v2 Rooms API
-        RoomSummaryList rooms = roomsApi.getRooms(this.session.getAccountId(), options);
+        RoomSummaryList rooms = GetRoomsWithFiltersService.GetRoomsWithFilters(
+                roomsApi,
+                this.session.getAccountId(),
+                args.getStartDate(),
+                args.getEndDate());
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(rooms)

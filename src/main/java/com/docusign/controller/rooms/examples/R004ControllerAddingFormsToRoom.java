@@ -10,6 +10,7 @@ import com.docusign.rooms.api.FormLibrariesApi;
 import com.docusign.rooms.api.RoomsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.*;
+import com.docusign.services.rooms.examples.AddingFormsToRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -63,8 +64,11 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
         
         // Step 4. Call the v2 Rooms API
-        FormForAdd formForAdd = new FormForAdd().formId(args.getFormId());
-        RoomDocument roomDocument = roomsApi.addFormToRoom(this.session.getAccountId(), args.getRoomId(), formForAdd);
+        RoomDocument roomDocument = AddingFormsToRoomService.AddFormsToRoom(
+                roomsApi,
+                this.session.getAccountId(),
+                args.getFormId(),
+                args.getRoomId());
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(roomDocument)

@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>6. Get a list of clickwraps.</h4>
+<h4>4. Get a list of clickwraps.</h4>
 
 <p>This topic demonstrates how to use the Click API to get a list of clickwraps
     associated with a specific DocuSign user.

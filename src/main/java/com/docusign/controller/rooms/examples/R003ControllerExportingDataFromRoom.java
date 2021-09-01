@@ -11,6 +11,7 @@ import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.FieldData;
 import com.docusign.rooms.model.RoleSummaryList;
 import com.docusign.rooms.model.RoomSummaryList;
+import com.docusign.services.rooms.examples.ExportingDataFromRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -57,8 +58,10 @@ public class R003ControllerExportingDataFromRoom extends AbstractRoomsController
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
         // Step 3: Call the v2 Rooms API
-        FieldData fieldData = roomsApi.getRoomFieldData(this.session.getAccountId(), args.getRoomId());
-
+        FieldData fieldData = ExportingDataFromRoomService.ExportDataFromRoom(
+                roomsApi,
+                this.session.getAccountId(),
+                args.getRoomId());
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(fieldData)
