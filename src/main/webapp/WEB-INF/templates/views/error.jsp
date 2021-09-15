@@ -13,7 +13,7 @@
 
 <p><strong>Oops, we have encountered a problem.</strong></p>
 <p><em>Message: </em>${done.message}</p>
-<p><em>Dump: </em>${done.stackTrace}</p>
+<p><em>Dump: </em>${done.stackTracePrinted}</p>
 
 
 <p>Please check your account configuration. If you are unable to resolve the problem, <a href="https://github.com/docusign/code-examples-java/issues/new" target="_blank" rel="nofollow noopener noreferrer">open a new issue on GitHub</a>.</p>
