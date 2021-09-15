@@ -4,6 +4,8 @@ import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletResponse;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -116,11 +121,12 @@ public abstract class AbstractController {
         HttpServletResponse response) throws Exception;
 
     private String handleException(Exception exception, ModelMap model) {
+        String stackTrace = ExceptionUtils.getStackTrace(exception);
         new DoneExample()
             .withTitle(exampleName)
             .withName(title)
             .withMessage(exception.getMessage())
-            .withStackTrace(exception.getStackTrace())
+            .withStackTracePrinted(stackTrace)
             .addToModel(model);
         return ERROR_PAGE;
     }
