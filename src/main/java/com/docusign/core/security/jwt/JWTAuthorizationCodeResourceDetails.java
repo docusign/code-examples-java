@@ -44,9 +44,6 @@ public class JWTAuthorizationCodeResourceDetails extends AbstractRedirectResourc
     }
 
     public List<String> getScopeByApiName(){
-//Only signature scope is needed for eSIgnature api. Impersonation scope is implied.
-        return dsConfiguration.getApiName().equalsIgnoreCase("esignature") ?
-                Arrays.asList(OAuth.Scope_SIGNATURE) :
-                getScope();
+        return getScope();
     }
 }
