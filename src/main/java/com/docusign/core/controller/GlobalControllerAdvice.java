@@ -121,6 +121,8 @@ public class GlobalControllerAdvice {
             return this.config.getClickBasePath();
         }  else if (apiIndex.equals(ApiIndex.MONITOR)) {
             return this.config.getMonitorBasePath();
+        }  else if (apiIndex.equals(ApiIndex.ADMIN)) {
+            return this.config.getAdminBasePath();
         } else {
             return oauthAccount.getBaseUri();
         }

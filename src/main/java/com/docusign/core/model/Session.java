@@ -8,7 +8,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.io.Serializable;
 import java.util.List;
-
+import java.util.UUID;
 
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION,
@@ -31,5 +31,8 @@ public class Session implements Serializable {
     private boolean refreshToken = false;
     private String clickwrapId;
     private String clickwrapVersionNumber;
-
+    private String exportId;
+    private String importId;
+    private UUID orgId;
+    public UUID bulkListId;
 }
