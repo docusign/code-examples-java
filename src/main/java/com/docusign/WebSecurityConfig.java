@@ -1,11 +1,8 @@
 package com.docusign;
-import com.docusign.common.ApiIndex;
 import com.docusign.core.security.OAuthProperties;
 import com.docusign.core.security.jwt.JWTAuthorizationCodeResourceDetails;
 import com.docusign.core.security.jwt.JWTOAuth2RestTemplate;
 import com.docusign.core.security.jwt.JWTUserInfoTokenService;
-import com.docusign.esign.client.ApiClient;
-import com.docusign.esign.client.auth.OAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2SsoProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
@@ -90,16 +87,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private List<String> getScopes() {
         List<String> scopes = null;
-        if (this.dsConfiguration.getApiName().contains(ApiIndex.ESIGNATURE.toString())) {
-            scopes = Arrays.asList(OAuth.Scope_SIGNATURE);
-        }
-        if (this.dsConfiguration.getApiName().contains(ApiIndex.ROOMS.toString())) {
+        if (this.dsConfiguration.getApiName().equalsIgnoreCase("rooms")) {
             scopes = Arrays.asList(this.roomScopes);
-        }
-        if (this.dsConfiguration.getApiName().contains(ApiIndex.CLICK.toString())) {
+        } else if (this.dsConfiguration.getApiName().equalsIgnoreCase("click")) {
             scopes = Arrays.asList(this.clickScopes);
-        }
-        if (this.dsConfiguration.getApiName().contains(ApiIndex.MONITOR.toString())) {
+        } else if (this.dsConfiguration.getApiName().equalsIgnoreCase("monitor")) {
             scopes = Arrays.asList(this.monitorScopes);
         } else if (this.dsConfiguration.getApiName().equalsIgnoreCase("admin")) {
             scopes = Arrays.asList(this.adminScopes);
