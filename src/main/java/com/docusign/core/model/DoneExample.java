@@ -38,6 +38,7 @@ public class DoneExample {
     private String message;
     private String json;
     private StackTraceElement[] stackTrace;
+    private String stackTracePrinted;
     private Iterable<DiffField> diff;
 
 
@@ -92,6 +93,11 @@ public class DoneExample {
      */
     public DoneExample withStackTrace(StackTraceElement[] stackTrace) {
         this.stackTrace = stackTrace;
+        return this;
+    }
+
+    public DoneExample withStackTracePrinted(String stackTracePrinted) {
+        this.stackTracePrinted = stackTracePrinted;
         return this;
     }
 

@@ -22,13 +22,11 @@ import org.springframework.security.oauth2.provider.authentication.OAuth2Authent
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.WebApplicationContext;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-
 
 /**
  * This class provides common model attributes for all pages. If you want to
@@ -125,6 +123,8 @@ public class GlobalControllerAdvice {
             return this.config.getClickBasePath();
         }  else if (apiIndex.equals(ApiIndex.MONITOR)) {
             return this.config.getMonitorBasePath();
+        }  else if (apiIndex.equals(ApiIndex.ADMIN)) {
+            return this.config.getAdminBasePath();
         } else {
             return oauthAccount.getBaseUri();
         }

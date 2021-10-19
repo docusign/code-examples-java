@@ -3,11 +3,9 @@ package com.docusign.core.security.jwt;
 import com.docusign.core.exception.LauncherException;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.client.auth.OAuth;
 import com.docusign.esign.client.auth.OAuth.OAuthToken;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -81,7 +79,7 @@ public class JWTOAuth2RestTemplate extends OAuth2RestTemplate {
 // Special handling for consent_required
             String message = e.getMessage();
             String consent_url = "";
-            String consent_scopes = String.join(" ", scopes) + " impersonation";
+            String consent_scopes = String.join("%20", scopes) + "%20impersonation";
             if (message != null && message.contains("consent_required")) {
                 consent_url = String.format("https://%s/oauth/auth?prompt=login&response_type=code&scope=%s" +
                     "&client_id=%s" +
@@ -96,6 +94,7 @@ public class JWTOAuth2RestTemplate extends OAuth2RestTemplate {
                         "\n\nIt will ask the user to login and to approve access by your application." +
                         "\nAlternatively, an Administrator can use Organization Administration to" +
                         "\npre-approve one or more users.");
+                        
                         throw new AccessTokenRequiredException(consent_url, resource);
             }
 

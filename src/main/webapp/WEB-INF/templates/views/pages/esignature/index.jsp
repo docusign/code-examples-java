@@ -9,7 +9,7 @@
     <tr>
     <td>
       <h1 class="display-4">Java Launcher</h1>
-    <p class="Xlead">Welcome to the DocuSign Java examples using multiple OAuth flows (JWT and Authorization Code Grant).</p>
+    <p class="Xlead">Run and explore eSignature REST API code examples with Authorization Code Grant or JWT Grant authentication</p>
     </td>
     <td>
         <img src="/assets/banner-code.png" />
@@ -37,13 +37,11 @@
 
 
 <div class="container" style="margin-top: 40px" id="index-page">
-  <h2>Welcome</h2>
-  <p>This launcher both demonstrates use of common OAuth2 grant flows and multiple usage examples from the DocuSign eSignature REST API.</p>
     <c:if test="${showDoc == true}">
         <p><a target='_blank' href='${documentation}'>Documentation</a> on using OAuth Authorization Code Grant from a Java application.</p>
     </c:if>
 
-  <h2>Basic Examples</h2>
+  <h2>Basic examples</h2>
 
   <h4 id="example001">1. <a href="eg001">Use embedded signing</a></h4>
   <p>This example sends an envelope, and then uses embedded signing for the first signer.
@@ -151,6 +149,8 @@
     <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createrecipient/">EnvelopeViews::createRecipient</a>.
   </p>
 
+  <h2>Payments</h2>
+
   <h4 id="example014">14. <a href="eg014">Send an envelope with an order form and payment field</a></h4>
   <p>Anchor text
     (<a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/tabs/auto-place/">AutoPlace</a>)
@@ -160,9 +160,8 @@
     <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
   </p>
 
+  <h2>Tabs</h2>
 
-
-  <h2>Tabs Examples</h2>
   <h4 id="example015">15. <a href="eg015">Get the tab data from an envelope</a></h4>
   <p>This example retrieves the <strong>tab</strong> (<a target="_blank" href="https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/tabs/">field</a>) values from an envelope.</p>
   <p>
@@ -193,27 +192,22 @@
     <a target='_blank' href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopecustomfields/list/">EnvelopeCustomFields::list</a>.
   </p>
 
-
+  <h2>Recipient authentication</h2>
+  
   <h4 id="example019">19. <a href="eg019">Send an envelope with Access Code Authentication</a></h4>
   <p>This example sends and envelope that requires an access-code for the purpose of multi-factor authentication.</p>
   <p>API method used:
     <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
   </p>
 
-  <h4 id="example020">20. <a href="eg020">Send an envelope with SMS Authentication</a></h4>
-  <p>This example sends and envelope that requires entering in a six digit code from an text message for the purpose of multi-factor authentication.</p>
-  <p>API method used:
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
-  </p>
-
-  <h4 id="example021">21. <a href="eg021">Send an envelope with Phone Authentication</a></h4>
-  <p>This example sends and envelope that requires entering in a voice-based response code for the purpose of multi-factor authentication.</p>
+  <h4 id="example020">20. <a href="eg020">Require Phone Authentication for a Recipient</a></h4>
+  <p>Sends an envelope that requires entering a six-digit code from a text message or phone call for the purpose of multifactor authentication.</p>
   <p>API method used:
     <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
   </p>
 
   <h4 id="example022">22. <a href="eg022">Send an envelope with Knowledge-Based Authentication</a></h4>
-  <p>This example sends and envelope that requires passing a Public records check to validate identity for the purpose of multi-factor authentication.</p>
+  <p>This example sends and envelope that requires passing a Public records check to validate identity for the purpose of multifactor authentication.</p>
   <p>API method used:
     <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
   </p>
@@ -226,6 +220,7 @@
   </p>
 
   <h2>Permissions</h2>
+
   <h4 id="example024">24. <a href="eg024">Create a new permission profile</a></h4>
 
   <p>
@@ -235,7 +230,6 @@
     API method used:
     <a target='_blank' href="https://developers.docusign.com/docs/esign-rest-api/reference/accounts/accountpermissionprofiles/create/">AccountPermissionProfiles::create</a>.
   </p>
-
  
   <h4 id="example025">25. <a href="eg025">Setting a permission profile</a></h4>
   <p>This example allows you to set a permission profile on an existing user group.</p>
@@ -244,7 +238,6 @@
   </p>
 
   <h4 id="example026">26. <a href="eg026">Updating individual permission profile settings</a></h4>
-
   <p>
     This example will update individual permission settings for a given account.
   </p>
@@ -258,7 +251,9 @@
   <p>API method used:
     <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/accounts/accountpermissionprofiles/delete/">AccountPermissionProfiles::create</a>.
   </p>
-
+  
+  <h2>Brands</h2>
+  
   <h4 id="example028">28. <a href="eg028">Create a brand</a></h4>
   <p>This example will create an account brand that can be used to apply customization to your envelopes such as your own logo, colors, and text elements.</p>
   <p>API method used:
@@ -335,7 +330,7 @@
     <a target="_blank" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create">Envelopes::create</a>.
   </p>
 
-  <h2>Premium Features</h2>
+  <h2>Premium features</h2>
 
   <h4 id="example035">35. <a href="eg035">Send with SMS Delivery</a></h4>
 

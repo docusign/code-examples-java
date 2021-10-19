@@ -12,6 +12,17 @@
     </p>
 </c:if>
 
+
+<c:if test="${not empty locals.session.importId}">
+    <!-- Check request status if a batch ID is detected Admin ex04 -->
+    <form action="a004a" method="POST">
+        <input type="submit" class="btn btn-link" style="padding:0" value="Check the request status">
+    </form>
+    </c:if>
+
+
 <p><a href="/">Continue</a></p>
+
+
 
 <jsp:include page="../partials/foot.jsp"/>

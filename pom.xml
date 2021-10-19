@@ -6,7 +6,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.5.3</version>
-        <relativePath/>
+        <relativePath />
     </parent>
 
     <groupId>com.docusign</groupId>
@@ -20,7 +20,7 @@
         <java.version>11</java.version>
         <oauth2.version>2.5.2</oauth2.version>
         <commonsio.version>2.11.0</commonsio.version>
-        <docusign.version>3.13.0-RC1</docusign.version>
+        <docusign.version>3.15.0-RC1</docusign.version>
         <rooms.version>1.1.0-RC1</rooms.version>
         <click.version>1.0.0-BETA</click.version>
         <monitor.version>1.0.0-BETA</monitor.version>
@@ -104,6 +104,12 @@
             <groupId>com.docusign</groupId>
             <artifactId>docusign-monitor-java</artifactId>
             <version>${monitor.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.docusign</groupId>
+            <artifactId>docusign-admin-java</artifactId>
+            <version>1.0.0-BETA</version>
         </dependency>
 
         <dependency>

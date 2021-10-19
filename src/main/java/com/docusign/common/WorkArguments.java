@@ -55,4 +55,13 @@ public class WorkArguments {
     private String ccPhoneNumber;
     private String countryCode;
     private String ccCountryCode;
+    private String email;
+    private String userName;
+    private String firstName;
+    private String lastName;
+    private String clmProfileId;
+    private UUID clmProductId;
+    private String eSignProfileId;
+    private UUID eSignProductId;
+    private UUID dsGroupId;
 }
