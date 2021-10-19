@@ -88,8 +88,7 @@ public class GlobalControllerAdvice {
     @ModelAttribute("locals")
     public Locals populateLocals() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        ApiIndex apiIndex = ApiIndex.valueOf(config.getApiName());
+        ApiIndex apiIndex = ApiIndex.valueOf(config.getApiName().getFirstSelectedApi());
         session.setApiIndexPath(apiIndex.toString());
 
         if (!(authentication instanceof OAuth2Authentication)) {

@@ -1,6 +1,8 @@
 package com.docusign;
 
+import com.docusign.common.SelectedApiTypes;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +23,8 @@ public class DSConfiguration {
     @Value("${DS_APP_URL}")
     private String appUrl;
 
-    @Value("${DS_API_NAME}")
-    private String apiName;
+    @Autowired
+    private SelectedApiTypes apiName;
 
     @Value("${DS_BASE_PATH}")
     private String basePath;
@@ -61,5 +63,4 @@ public class DSConfiguration {
     public String getDsPingUrl() {
         return appUrl + "/";
     }
-
 }
