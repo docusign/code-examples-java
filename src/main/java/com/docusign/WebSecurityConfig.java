@@ -86,11 +86,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private List<String> getScopes() {
         List<String> scopes = null;
-        if (this.dsConfiguration.getApiName().equalsIgnoreCase("rooms")) {
+        if (this.dsConfiguration.getApiName().getESIGNATURE()) {
+            scopes = Arrays.asList(OAuth.Scope_SIGNATURE);
+        }
+        if (this.dsConfiguration.getApiName().getROOMS()) {
             scopes = Arrays.asList(this.roomScopes);
-        } else if (this.dsConfiguration.getApiName().equalsIgnoreCase("click")) {
+        }
+        if (this.dsConfiguration.getApiName().getCLICK()) {
             scopes = Arrays.asList(this.clickScopes);
-        } else if (this.dsConfiguration.getApiName().equalsIgnoreCase("monitor")) {
+        }
+        if (this.dsConfiguration.getApiName().getMONITOR()) {
             scopes = Arrays.asList(this.monitorScopes);
         }
 
