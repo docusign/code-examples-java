@@ -2,7 +2,7 @@
 
 ### GitHub repo: [code-examples-java](./README.md)
 
-This GitHub repo includes code examples for the DocuSign eSignature REST API, Rooms API, Click API, and Monitor API. To switch between API code examples, in the application.json file, change the `DS_API_NAME` setting from `ESIGNATURE` to `ROOMS`, `CLICK`, or `MONITOR`.  
+This GitHub repo includes code examples for the DocuSign Admin API, Click API, eSignature REST API, Monitor API, and Rooms API. To switch between API code examples, in the application.json file, modify the `DS_API_NAME` setting from `ESIGNATURE` to `ADMIN`, `CLICK`, `MONITOR`, or `ROOMS`, .
 
 
 ## Introduction
@@ -49,6 +49,16 @@ For a list of code examples that use the Click API, select the Java tab under [E
 For information about the scopes used for obtaining authorization to use the Monitor API, see the [scopes section](https://developers.docusign.com/docs/monitor-api/monitor101/auth/).
 
 For a list of code examples that use the Click API, select the Java tab under [Examples and languages](https://developers.docusign.com/docs/monitor-api/how-to/code-launchers#examples-and-languages) on the DocuSign Developer Center.
+
+
+## Admin API
+
+**Note:** To use the Admin API, you must [create an organization](https://support.docusign.com/en/guides/org-admin-guide-create-org) in your DocuSign developer account. Also, to run the DocuSign CLM code example, [CLM must be enabled for your organization](https://support.docusign.com/en/articles/DocuSign-and-SpringCM).
+
+For information about the scopes used for obtaining authorization to use the Admin API, see the [scopes section](https://developers.docusign.com/docs/admin-api/admin101/auth/).
+
+For a list of code examples that use the Admin API, select the Java tab under [Examples and languages](https://developers.docusign.com/docs/admin-api/how-to/code-launchers/#examples-and-languages) on the DocuSign Developer Center.
+
 
 ## Installation
 

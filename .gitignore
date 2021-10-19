@@ -40,6 +40,9 @@ private.key
 application.properties
 /target/
 src/main/resources/application.json
+src/main/resources/application.properties
+src/main/java/com/docusign/admin/
 
 # according to gitignore.io this shouldnt be shared
 .factorypath
+src/main/resources/ExportedUserData.csv

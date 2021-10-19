@@ -56,6 +56,9 @@ public class DSConfiguration {
     @Value("${DS_MONITOR_BASE_PATH}")
     private String monitorBasePath;
 
+    @Value("${DS_ADMIN_BASE_PATH}")
+    private String adminBasePath;
+
     public String getDsReturnUrl() {
         return appUrl + "/ds-return";
     }
