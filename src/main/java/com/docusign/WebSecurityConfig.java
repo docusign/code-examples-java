@@ -3,6 +3,7 @@ import com.docusign.core.security.OAuthProperties;
 import com.docusign.core.security.jwt.JWTAuthorizationCodeResourceDetails;
 import com.docusign.core.security.jwt.JWTOAuth2RestTemplate;
 import com.docusign.core.security.jwt.JWTUserInfoTokenService;
+import com.docusign.esign.client.auth.OAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2SsoProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
