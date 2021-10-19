@@ -10,8 +10,6 @@ import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 
 import com.docusign.core.utils.AccountsConverter;
-
-import java.util.*;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
@@ -24,7 +22,11 @@ import org.springframework.security.oauth2.provider.authentication.OAuth2Authent
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.WebApplicationContext;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 /**
  * This class provides common model attributes for all pages. If you want to
@@ -84,7 +86,8 @@ public class GlobalControllerAdvice {
     @ModelAttribute("locals")
     public Locals populateLocals() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        ApiIndex apiIndex = ApiIndex.valueOf(config.getApiName().split("\\s+")[0]);
+
+        ApiIndex apiIndex = ApiIndex.valueOf(config.getApiName());
         session.setApiIndexPath(apiIndex.toString());
 
         if (!(authentication instanceof OAuth2Authentication)) {
