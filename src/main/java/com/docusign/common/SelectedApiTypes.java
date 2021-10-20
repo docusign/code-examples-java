@@ -15,11 +15,14 @@ public class SelectedApiTypes {
     private Boolean CLICK;
     @Value("${DS_API_NAME.MONITOR}")
     private Boolean MONITOR;
+    @Value("${DS_API_NAME.ADMIN}")
+    private Boolean ADMIN;
 
     public String getFirstSelectedApi() {
         return (ESIGNATURE)? ApiIndex.ESIGNATURE.name()
                 : (ROOMS)? ApiIndex.ROOMS.name()
                 : (CLICK)? ApiIndex.CLICK.name()
-                : ApiIndex.MONITOR.name();
+                : (MONITOR)? ApiIndex.MONITOR.name()
+                : ApiIndex.ADMIN.name();
     }
 }

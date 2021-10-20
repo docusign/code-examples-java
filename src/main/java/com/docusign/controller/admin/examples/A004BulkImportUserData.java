@@ -7,6 +7,7 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.services.admin.examples.BulkImportUserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -37,9 +38,13 @@ public class A004BulkImportUserData extends AbstractAdminController {
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
+        // Collect ids and user data needed for the request
+        UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
+        UUID accountId = this.getExistingAccountId(this.user.getAccessToken(), this.session.getBasePath(), organizationId);
+        BulkImportsApi bulkImportsApi = createBulkImportsApi(this.user.getAccessToken(), this.session.getBasePath());
 
-
-        OrganizationImportResponse result = bulkImportUserData(this.user.getAccessToken());
+        OrganizationImportResponse result = BulkImportUserDataService
+                .bulkImportUserData(bulkImportsApi, organizationId, accountId);
 
         this.session.setImportId(result.getId().toString());
         
@@ -49,19 +54,5 @@ public class A004BulkImportUserData extends AbstractAdminController {
                 .withJsonObject(result)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
-    }
-
-    protected OrganizationImportResponse bulkImportUserData(String accessToken) throws Exception {
-        // Collect ids and user data needed for the request
-        UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
-        UUID accountId = this.getExistingAccountId(accessToken, this.session.getBasePath(), organizationId);
-        // Make sure you're using a verified domain for auto-activation to work properly
-        // Step 3 start
-        String csvUserData = String.format("AccountID,UserName,UserEmail,PermissionSet\n%s,FirstLast1,User1java@example.com,DS Admin\n%s,FirstLast2,User2java@example.com,DS Sender", accountId, accountId);
-        byte[] csvDataInBytes = csvUserData.getBytes(StandardCharsets.UTF_8);
-        BulkImportsApi bulkImportsApi = createBulkImportsApi(accessToken, this.session.getBasePath());
-        
-        return bulkImportsApi.createBulkImportSingleAccountAddUsersRequest(organizationId, accountId, csvDataInBytes);
-        // Step 3 end
     }
 }

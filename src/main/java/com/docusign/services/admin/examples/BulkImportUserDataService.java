@@ -1,0 +1,23 @@
+package com.docusign.services.admin.examples;
+
+import com.docusign.admin.api.BulkImportsApi;
+import com.docusign.admin.model.OrganizationImportResponse;
+
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
+
+public class BulkImportUserDataService {
+        public static OrganizationImportResponse bulkImportUserData(
+            BulkImportsApi bulkImportsApi,
+            UUID organizationId,
+            UUID accountId) throws Exception
+    {
+        // Make sure you're using a verified domain for auto-activation to work properly
+        // Step 3 start
+        String csvUserData = String.format("AccountID,UserName,UserEmail,PermissionSet\n%s,FirstLast1,User1java@example.com,DS Admin\n%s,FirstLast2,User2java@example.com,DS Sender", accountId, accountId);
+        byte[] csvDataInBytes = csvUserData.getBytes(StandardCharsets.UTF_8);
+
+        return bulkImportsApi.createBulkImportSingleAccountAddUsersRequest(organizationId, accountId, csvDataInBytes);
+        // Step 3 end
+    }
+}

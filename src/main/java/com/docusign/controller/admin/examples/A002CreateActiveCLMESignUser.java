@@ -20,6 +20,7 @@ import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 
+import com.docusign.services.admin.examples.CreateActiveCLMESignUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -54,7 +55,8 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
         // Step 3 start
         ProductPermissionProfilesApi permissionsInfo = this.createProductPermissionProfilesApi(user.getAccessToken(),
                 session.getBasePath());
-        ProductPermissionProfilesResponse profiles = permissionsInfo.getProductPermissionProfiles(organizationId,
+        ProductPermissionProfilesResponse profiles = permissionsInfo.getProductPermissionProfiles(
+                organizationId,
                 accountId);
         ProductPermissionProfileResponse clmProfiles = null; 
         ProductPermissionProfileResponse eSignProfiles = null;
@@ -91,7 +93,18 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
-        AddUserResponse result = createNewActiveUser(this.user.getAccessToken(), args);
+        // Create a users api instance
+        UsersApi usersApi = createUsersApi(this.user.getAccessToken(), this.session.getBasePath());
+
+        // Collect ids needed for the request
+        UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
+        UUID accountId = this.getExistingAccountId(this.user.getAccessToken(), this.session.getBasePath(), organizationId);
+
+        AddUserResponse result = CreateActiveCLMESignUserService.createNewActiveUser(
+                args,
+                usersApi,
+                organizationId,
+                accountId);
 
         // Process results
         DoneExample.createDefault(title)
@@ -101,42 +114,5 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
         return DONE_EXAMPLE_PAGE;
     }
 
-    protected AddUserResponse createNewActiveUser(String accessToken, WorkArguments args) throws Exception {
-        // Create a users api instance
-        UsersApi usersApi = createUsersApi(accessToken, this.session.getBasePath());
 
-        // Collect ids needed for the request
-        UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
-        UUID accountId = this.getExistingAccountId(accessToken, this.session.getBasePath(), organizationId);
-
-
-        // Step 5 start
-        ProductPermissionProfileRequest clm = new ProductPermissionProfileRequest();
-        ProductPermissionProfileRequest eSign = new ProductPermissionProfileRequest();
-        clm.setPermissionProfileId(args.getClmProfileId());
-        clm.setProductId(args.getClmProductId());
-
-        eSign.setPermissionProfileId(args.getESignProfileId());
-        eSign.setProductId(args.getESignProductId());
-
-        DSGroupRequest dsGroup = new DSGroupRequest();
-        dsGroup.setDsGroupId(args.getDsGroupId());
-        // Fill the request with data from the form
-
-        NewMultiProductUserAddRequest accountAddRequest = new NewMultiProductUserAddRequest()
-                .defaultAccountId(accountId)
-                .addProductPermissionProfilesItem(clm)
-                .addProductPermissionProfilesItem(eSign)
-                .addDsGroupsItem(dsGroup)
-                .userName(args.getUserName())
-                .firstName(args.getFirstName())
-                .lastName(args.getLastName())
-                .autoActivateMemberships(true)
-                .email(args.getEmail());
-        // Step 5 end
-
-        // Step 6 start
-        return usersApi.addOrUpdateUser(organizationId, accountId, accountAddRequest);
-        // Step 6 end
-    }
 }
