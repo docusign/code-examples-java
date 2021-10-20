@@ -7,6 +7,7 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.services.admin.examples.CheckImportRequestStatusService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,7 +54,15 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
             return new RedirectView("a004");
         }
 
-        OrganizationImportResponse result = checkRequestStatus(this.user.getAccessToken());
+        // Create a bulk exports api instance
+        BulkImportsApi bulkImportsApi = createBulkImportsApi(this.user.getAccessToken(), this.session.getBasePath());
+
+        OrganizationImportResponse result = CheckImportRequestStatusService.checkRequestStatus(
+                bulkImportsApi,
+                this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()),
+                UUID.fromString(this.session.getImportId())
+        );
+
         if (result.getStatus().equals("queued")){
             // Return the refresh page
             DoneExample.createDefault("Request not complete")
@@ -62,7 +71,6 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
             return EXAMPLE_PENDING_PAGE;
 
         }
-
 
         // Clear the import ID to remove 'Check Status link' from the results page
         this.session.setImportId(null);
@@ -74,13 +82,4 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }
-
-    protected OrganizationImportResponse checkRequestStatus(String accessToken) throws Exception {
-        // Create a bulk exports api instance
-        BulkImportsApi bulkImportsApi = createBulkImportsApi(accessToken, this.session.getBasePath());
-        // Step 4a start
-        return bulkImportsApi.getBulkUserImportRequest(this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()), UUID.fromString(this.session.getImportId()));
-        // Step 4a end
-    }
-    
 }

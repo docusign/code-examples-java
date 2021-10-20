@@ -99,7 +99,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         }
         if (this.dsConfiguration.getApiName().getMONITOR()) {
             scopes = Arrays.asList(this.monitorScopes);
-        } else if (this.dsConfiguration.getApiName().equalsIgnoreCase("admin")) {
+        } else if (this.dsConfiguration.getApiName().getADMIN()) {
             scopes = Arrays.asList(this.adminScopes);
         }
 
