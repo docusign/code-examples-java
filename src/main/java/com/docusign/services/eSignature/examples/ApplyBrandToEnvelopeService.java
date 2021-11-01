@@ -27,15 +27,19 @@ public final class ApplyBrandToEnvelopeService {
     // Creates an envelope. The envelope has one recipient who should sign an
     // attached document. Attached document is read from a local directory.
     // Also the envelope contains a brand Id which is created on EG028 example.
-    public static EnvelopeDefinition makeEnvelope(WorkArguments args) throws IOException {
+    public static EnvelopeDefinition makeEnvelope(
+            String signerEmail,
+            String signerName,
+            String brandId
+    ) throws IOException {
         // Reads a file from a local directory and create Document object.
         Document document = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
 
         // Create a signer recipient to sign the document and associate sign tab
         Tabs tabs = EnvelopeHelpers.createSingleSignerTab("/sn1/", ANCHOR_OFFSET_Y, ANCHOR_OFFSET_X);
         Signer signer = new Signer()
-                .email(args.getSignerEmail())
-                .name(args.getSignerName())
+                .email(signerEmail)
+                .name(signerName)
                 .recipientId("1")
                 .routingOrder("1")
                 .tabs(tabs);
@@ -49,7 +53,7 @@ public final class ApplyBrandToEnvelopeService {
                 .emailSubject("EG029. Please Sign")
                 .documents(List.of(document))
                 .recipients(recipients)
-                .brandId(args.getBrandId())
+                .brandId(brandId)
                 .status(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
     }
 }

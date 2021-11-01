@@ -9,19 +9,21 @@ import java.util.Arrays;
 
 public final class SetTemplateTabValuesService {
     public static ViewUrl setTemplateTabValues(
-            EnvelopesApi envelopesApi,
-            String accountId,
-            String envelopeId,
-            RecipientViewRequest viewRequest) throws ApiException {
+        EnvelopesApi envelopesApi,
+        String accountId,
+        String envelopeId,
+        RecipientViewRequest viewRequest
+    ) throws ApiException {
         return envelopesApi.createRecipientView(accountId, envelopeId, viewRequest);
     }
 
     public static RecipientViewRequest makeRecipientViewRequest(
-            String signerEmail,
-            String signerName,
-            String dsReturnUrl,
-            String clientUserId,
-            String dsPingUrl) {
+        String signerEmail,
+        String signerName,
+        String dsReturnUrl,
+        String clientUserId,
+        String dsPingUrl
+    ) {
         RecipientViewRequest viewRequest = new RecipientViewRequest();
         // Set the url where you want the recipient to go once they are done signing
         // should typically be a callback route somewhere in your app.
@@ -57,12 +59,13 @@ public final class SetTemplateTabValuesService {
 
 
     public static EnvelopeDefinition makeEnvelope(
-            String signerEmail,
-            String signerName,
-            String ccEmail,
-            String ccName,
-            String templateId,
-            String clientUserId){
+        String signerEmail,
+        String signerName,
+        String ccEmail,
+        String ccName,
+        String templateId,
+        String clientUserId
+    ){
         // Create a signer recipient to sign the document, identified by name and email
         // We set the clientUserId to enable embedded signing for the recipient
 

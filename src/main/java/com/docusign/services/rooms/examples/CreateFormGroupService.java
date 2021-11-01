@@ -9,7 +9,8 @@ public final class CreateFormGroupService {
     public static FormGroup createFormGroup(
             FormGroupsApi formGroupsApi,
             String accountId,
-            String formGroupName) throws ApiException {
+            String formGroupName
+    ) throws ApiException {
         // Step 3 Start
         FormGroupForCreate formGroupForCreate = new FormGroupForCreate()
                 .name(formGroupName);

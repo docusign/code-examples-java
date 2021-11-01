@@ -23,7 +23,12 @@ public final class PauseSignatureWorkflowService {
         return envelopesApi.createEnvelope(accountId, envelope);
     }
 
-    public static EnvelopeDefinition createEnvelope(WorkArguments args) throws IOException {
+    public static EnvelopeDefinition createEnvelope(
+            String signerName,
+            String signerEmail,
+            String signerName2,
+            String signerEmail2
+    ) throws IOException {
         Document document = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, DOCUMENT_ID);
 
         WorkflowStep workflowStep = new WorkflowStep();
@@ -43,8 +48,8 @@ public final class PauseSignatureWorkflowService {
         signHere1.setDocumentId(document.getDocumentId());
 
         Signer signer1 = new Signer();
-        signer1.setName(args.getSignerName());
-        signer1.setEmail(args.getSignerEmail());
+        signer1.setName(signerName);
+        signer1.setEmail(signerEmail);
         signer1.setRoutingOrder("1");
         signer1.setRecipientId("1");
         signer1.setTabs(EnvelopeHelpers.createSignerTabs(signHere1));
@@ -58,8 +63,8 @@ public final class PauseSignatureWorkflowService {
         signHere2.setDocumentId(document.getDocumentId());
 
         Signer signer2 = new Signer();
-        signer2.setName(args.getSignerName2());
-        signer2.setEmail(args.getSignerEmail2());
+        signer2.setName(signerName2);
+        signer2.setEmail(signerEmail2);
         signer2.setRoutingOrder("2");
         signer2.setRecipientId("2");
         signer2.setTabs(EnvelopeHelpers.createSignerTabs(signHere2));

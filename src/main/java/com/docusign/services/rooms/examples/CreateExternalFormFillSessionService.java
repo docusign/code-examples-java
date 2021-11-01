@@ -10,7 +10,8 @@ public final class CreateExternalFormFillSessionService {
             ExternalFormFillSessionsApi externalFormFillSessionsApi,
             String accountId,
             String formId,
-            Integer roomId) throws ApiException {
+            Integer roomId
+    ) throws ApiException {
         // Step 3. Construct your request body
         ExternalFormFillSessionForCreate externalFormFillSessionForCreate = new ExternalFormFillSessionForCreate()
                 .formId(formId)

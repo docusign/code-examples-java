@@ -23,7 +23,8 @@ public final class EmbeddedSigningService {
             String signerEmail,
             String signerName,
             DSConfiguration config,
-            String clientUserId) {
+            String clientUserId
+    ) {
         RecipientViewRequest viewRequest = new RecipientViewRequest();
         // Set the url where you want the recipient to go once they are done signing
         // should typically be a callback route somewhere in your app.
@@ -64,7 +65,8 @@ public final class EmbeddedSigningService {
             Integer anchorOffsetY,
             Integer anchorOffsetX,
             String documentFileName,
-            String documentName) throws IOException {
+            String documentName
+    ) throws IOException {
         // Create a signer recipient to sign the document, identified by name and email
         // We set the clientUserId to enable embedded signing for the recipient
         Signer signer = new Signer();

@@ -66,7 +66,11 @@ public class EG029ControllerApplyBrandToEnvelope extends AbstractEsignatureContr
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
         // Step 3: Construct your envelope JSON body
-        EnvelopeDefinition envelope = ApplyBrandToEnvelopeService.makeEnvelope(args);
+        EnvelopeDefinition envelope = ApplyBrandToEnvelopeService.makeEnvelope(
+                args.getSignerEmail(),
+                args.getSignerName(),
+                args.getBrandId()
+        );
 
         // Step 5: Call the eSignature REST API
         EnvelopeSummary envelopeSummary = ApplyBrandToEnvelopeService.applyBrandToEnvelope(

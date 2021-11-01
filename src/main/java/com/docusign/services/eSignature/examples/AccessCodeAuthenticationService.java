@@ -21,7 +21,12 @@ public final class AccessCodeAuthenticationService {
         return envelopesApi.createEnvelope(accountId, envelope);
     }
 
-    public static EnvelopeDefinition createEnvelope(WorkArguments args) throws IOException {
+    public static EnvelopeDefinition createEnvelope(
+            String signerName,
+            String signerEmail,
+            String accessCode
+    ) throws IOException
+    {
         Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
 
         SignHere signHere = new SignHere();
@@ -36,14 +41,14 @@ public final class AccessCodeAuthenticationService {
         signHere.setRecipientId("1");
 
         Signer signer = new Signer();
-        signer.setName(args.getSignerName());
-        signer.setEmail(args.getSignerEmail());
+        signer.setName(signerName);
+        signer.setEmail(signerEmail);
         signer.setRoutingOrder("1");
         signer.setStatus(EnvelopeHelpers.SIGNER_STATUS_CREATED);
         signer.setDeliveryMethod(EnvelopeHelpers.DELIVERY_METHOD_EMAIL);
         signer.setRecipientId(signHere.getRecipientId());
         signer.setTabs(EnvelopeHelpers.createSignerTabs(signHere));
-        signer.setAccessCode(args.getAccessCode());
+        signer.setAccessCode(accessCode);
 
         Recipients recipients = new Recipients();
         recipients.setSigners(Arrays.asList(signer));

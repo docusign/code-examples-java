@@ -53,7 +53,15 @@ public class EG011ControllerEmbeddedSending extends AbstractEsignatureController
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
         // Step 1. Make the envelope with "created" (draft) status
-        EnvelopeSummary results = EmbeddedSendingService.createEnvelopeWithDraftStatus(envelopesApi, args, accountId);
+        EnvelopeSummary results = EmbeddedSendingService.createEnvelopeWithDraftStatus(
+                envelopesApi,
+                args.getSignerEmail(),
+                args.getSignerName(),
+                args.getCcEmail(),
+                args.getCcName(),
+                args.getStatus(),
+                args,
+                accountId);
         String envelopeId = results.getEnvelopeId();
 
         // Step 2. Create the sender view.

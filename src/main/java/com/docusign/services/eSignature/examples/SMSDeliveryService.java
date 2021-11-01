@@ -37,7 +37,18 @@ public final class SMSDeliveryService {
     // recipient 2 - cc
     // The envelope will be sent first to the signer. After it is signed,
     // a copy is sent to the cc person.
-    public static EnvelopeDefinition makeEnvelope(WorkArguments args) throws IOException {
+    public static EnvelopeDefinition makeEnvelope(
+            String signerName,
+            String signerEmail,
+            String countryCode,
+            String phoneNumberFromRecipient,
+            String ccEmail,
+            String ccName,
+            String ccCountryCode,
+            String ccPhoneNumberFromRecipient,
+            String status,
+            WorkArguments args
+    ) throws IOException {
         // The DocuSign platform searches throughout your envelope's documents
         // for matching anchor strings. So the signHere2 tab will be used in
         // both document 2 and 3 since they use the same anchor string for
@@ -52,8 +63,8 @@ public final class SMSDeliveryService {
         // to the recipients. Parallel routing order is supported by using the
         // same integer as the order for two or more recipients.
         Signer signer = new Signer();
-        signer.setEmail(args.getSignerEmail());
-        signer.setName(args.getSignerName());
+        signer.setEmail(signerEmail);
+        signer.setName(signerName);
         signer.setRecipientId("1");
         signer.setRoutingOrder("1");
         signer.setTabs(signerTabs);
@@ -62,15 +73,15 @@ public final class SMSDeliveryService {
         smsDelivery.setSecondaryDeliveryMethod("SMS");
 
         RecipientPhoneNumber phoneNumber = new RecipientPhoneNumber();
-        phoneNumber.setCountryCode(args.getCountryCode());
-        phoneNumber.setNumber(args.getPhoneNumber());
+        phoneNumber.setCountryCode(countryCode);
+        phoneNumber.setNumber(phoneNumberFromRecipient);
         smsDelivery.phoneNumber(phoneNumber);
         signer.setAdditionalNotifications(Arrays.asList(smsDelivery));
 
         // create a cc recipient to receive a copy of the documents, identified by name and email
         CarbonCopy cc = new CarbonCopy();
-        cc.setEmail(args.getCcEmail());
-        cc.setName(args.getCcName());
+        cc.setEmail(ccEmail);
+        cc.setName(ccName);
         cc.setRecipientId("2");
         cc.setRoutingOrder("2");
 
@@ -78,8 +89,8 @@ public final class SMSDeliveryService {
         ccSmsDelivery.setSecondaryDeliveryMethod("SMS");
 
         RecipientPhoneNumber ccPhoneNumber = new RecipientPhoneNumber();
-        ccPhoneNumber.setCountryCode(args.getCcCountryCode());
-        ccPhoneNumber.setNumber(args.getCcPhoneNumber());
+        ccPhoneNumber.setCountryCode(ccCountryCode);
+        ccPhoneNumber.setNumber(ccPhoneNumberFromRecipient);
         ccSmsDelivery.phoneNumber(ccPhoneNumber);
         cc.setAdditionalNotifications(Arrays.asList(ccSmsDelivery));
 
@@ -95,7 +106,7 @@ public final class SMSDeliveryService {
         envelope.setRecipients(EnvelopeHelpers.createRecipients(signer, cc));
         // Request that the envelope be sent by setting |status| to "sent".
         // To request that the envelope be created as a draft, set to "created"
-        envelope.setStatus(args.getStatus());
+        envelope.setStatus(status);
 
         return envelope;
     }

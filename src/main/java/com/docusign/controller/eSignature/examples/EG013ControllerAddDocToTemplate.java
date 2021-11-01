@@ -45,7 +45,6 @@ import javax.servlet.http.HttpServletResponse;
 public class EG013ControllerAddDocToTemplate extends AbstractEsignatureController {
 
     private static final String MODEL_LIST_TEMPLATE = "listTemplates";
-    private static final String SIGNER_CLIENT_ID = "1000";
 
     private final Session session;
     private final User user;
@@ -75,11 +74,16 @@ public class EG013ControllerAddDocToTemplate extends AbstractEsignatureControlle
 
         ViewUrl viewUrl = AddDocToTemplateService.addDocumentToTemplate(
                 envelopesApi,
-                args,
+                args.getSignerEmail(),
+                args.getSignerName(),
+                args.getSignerClientId(),
+                args.getCcEmail(),
+                args.getCcName(),
+                args.getTemplateId(),
+                accountId,
                 config.getDsReturnUrl(),
                 config.getDsPingUrl(),
-                SIGNER_CLIENT_ID,
-                accountId
+                args
         );
 
         return new RedirectView(viewUrl.getUrl());

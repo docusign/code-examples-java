@@ -8,7 +8,8 @@ public final class PermissionDeleteService {
     public static void permissionDelete(
             AccountsApi accountsApi,
             String accountId,
-            String curProfileId) throws ApiException {
+            String curProfileId
+    ) throws ApiException {
         accountsApi.deletePermissionProfile(accountId, curProfileId);
     }
 }

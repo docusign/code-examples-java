@@ -10,7 +10,8 @@ public final class CreateRoomWithTemplateService {
     public static Room createRoomFromModel(
             RoomsApi roomsApi,
             String accountId,
-            RoomForCreate roomForCreate) throws ApiException {
+            RoomForCreate roomForCreate
+    ) throws ApiException {
         return roomsApi.createRoom(accountId, roomForCreate);
     }
 

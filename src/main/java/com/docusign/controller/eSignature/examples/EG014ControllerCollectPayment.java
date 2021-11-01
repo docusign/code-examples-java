@@ -63,10 +63,14 @@ public class EG014ControllerCollectPayment extends AbstractEsignatureController 
 
         // Step 1. Make the envelope request body
         EnvelopeDefinition envelope = CollectPaymentService.makeEnvelope(
-                args,
+                args.getSignerEmail(),
+                args.getSignerName(),
+                args.getCcName(),
+                args.getCcEmail(),
                 config.getGatewayAccountId(),
                 config.getGatewayName(),
-                config.getGatewayDisplayName());
+                config.getGatewayDisplayName(),
+                args);
 
         // Step 2. call Envelopes::create API method
         EnvelopeSummary results = CollectPaymentService.collectPayment(envelopesApi, envelope, session.getAccountId());

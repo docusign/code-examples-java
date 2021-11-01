@@ -55,7 +55,14 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
         String batchId = BulkSendEnvelopesService.bulkSendEnvelopes(
                 bulkEnvelopesApi,
                 apiClient,
-                args,
+                args.getSignerName(),
+                args.getSignerEmail(),
+                args.getCcName(),
+                args.getCcEmail(),
+                args.getSignerName2(),
+                args.getSignerEmail2(),
+                args.getCcName2(),
+                args.getCcEmail2(),
                 accountId
         );
 

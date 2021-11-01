@@ -46,7 +46,12 @@ public class EG032ControllerPauseSignatureWorkflow extends AbstractEsignatureCon
         EnvelopesApi envelopesApi = createEnvelopesApi(this.session.getBasePath(), this.user.getAccessToken());
 
         // Step 3: Construct your envelope JSON body
-        EnvelopeDefinition envelope = PauseSignatureWorkflowService.createEnvelope(args);
+        EnvelopeDefinition envelope = PauseSignatureWorkflowService.createEnvelope(
+                args.getSignerName(),
+                args.getSignerEmail(),
+                args.getSignerName2(),
+                args.getSignerEmail2()
+        );
 
         // Step 4: Call the eSignature REST API
         EnvelopeSummary results = PauseSignatureWorkflowService.pauseSignatureWorkflow(

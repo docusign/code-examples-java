@@ -38,7 +38,16 @@ public final class SendBinaryDocsService {
     private static final String DOCX_DOCUMENT_FILE_NAME = "World_Wide_Corp_Battle_Plan_Trafalgar.docx";
     private static final String DOCX_DOCUMENT_NAME = "Battle Plan";
 
-    public static String sendBinaryDocs(WorkArguments args, String basePath, String accountId, String accessToken) throws IOException {
+    public static String sendBinaryDocs(
+            WorkArguments args,
+            String signerName,
+            String signerEmail,
+            String ccName,
+            String ccEmail,
+            String basePath,
+            String accountId,
+            String accessToken
+    ) throws IOException {
         // Step 1. Gather documents and their headers
         List<SendBinaryDocsService.DocumentInfo> documents = List.of(
                 new SendBinaryDocsService.DocumentInfo(HTML_DOCUMENT_NAME, "1", DocumentType.HTML,
@@ -50,11 +59,19 @@ public final class SendBinaryDocsService {
         );
 
         // Step 2. Make the envelope JSON request body
-        JSONObject envelopeJSON = SendBinaryDocsService.makeEnvelopeJSON(args, documents);
+        JSONObject envelopeJSON = SendBinaryDocsService.makeEnvelopeJSON(
+            signerName,
+            signerEmail,
+            ccName,
+            ccEmail,
+            documents);
 
         // Step 3. Create the multipart body
         URL uri = new URL(String.format("%s/v2.1/accounts/%s/envelopes", basePath, accountId));
-        String contentType = String.join("", MediaType.MULTIPART_FORM_DATA, "; boundary=", BOUNDARY_DELIMITER);
+        String contentType = String.join(
+                "",
+                MediaType.MULTIPART_FORM_DATA,
+                "; boundary=", BOUNDARY_DELIMITER);
         HttpsURLConnection connection = (HttpsURLConnection) uri.openConnection();
         connection.setRequestMethod(HttpMethod.POST);
         connection.setRequestProperty(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON);
@@ -84,8 +101,11 @@ public final class SendBinaryDocsService {
 
         return StreamUtils.copyToString(connection.getInputStream(), StandardCharsets.UTF_8);
     }
-    public static void writeBoundaryHeader(DataOutputStream buffer,
-                                           String contentType, String contentDisposition) throws IOException {
+    public static void writeBoundaryHeader(
+            DataOutputStream buffer,
+            String contentType,
+            String contentDisposition
+    ) throws IOException {
         buffer.writeBytes(HYPHENS);
         buffer.writeBytes(BOUNDARY_DELIMITER);
         buffer.writeBytes(LINE_DELIMITER);
@@ -114,7 +134,13 @@ public final class SendBinaryDocsService {
     // recipient 2 - cc
     // The envelope will be sent first to the signer.
     // After it is signed, a copy is sent to the cc person.
-    public static JSONObject makeEnvelopeJSON(WorkArguments args, List<DocumentInfo> documents) {
+    public static JSONObject makeEnvelopeJSON(
+            String signerName,
+            String signerEmail,
+            String ccName,
+            String ccEmail,
+            List<DocumentInfo> documents
+    ) {
         // The DocuSign platform searches throughout your envelope's documents for
         // matching anchor strings. So the signHere2 tab will be used in both document
         // 2 and 3 since they use the same anchor string for their "signer 1" tabs.
@@ -127,16 +153,16 @@ public final class SendBinaryDocsService {
         // to the recipients. Parallel routing order is supported by using the
         // same integer as the order for two or more recipients.
         Signer signer = new Signer();
-        signer.setEmail(args.getSignerEmail());
-        signer.setName(args.getSignerName());
+        signer.setEmail(signerName);
+        signer.setName(signerEmail);
         signer.setRecipientId("1");
         signer.setRoutingOrder("1");
         signer.setTabs(signerTabs);
 
         // create a cc recipient to receive a copy of the documents, identified by name and email
         CarbonCopy cc = new CarbonCopy();
-        cc.setEmail(args.getCcEmail());
-        cc.setName(args.getCcName());
+        cc.setEmail(ccName);
+        cc.setName(ccEmail);
         cc.setRecipientId("2");
         cc.setRoutingOrder("2");
 

@@ -10,7 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class EnvelopeDocsService {
-    public static EnvelopeDocumentsResult envelopeDocs(EnvelopesApi envelopesApi, String accountId, String envelopeId) throws ApiException {
+    public static EnvelopeDocumentsResult envelopeDocs(
+            EnvelopesApi envelopesApi,
+            String accountId,
+            String envelopeId
+    ) throws ApiException {
         // Step 1. List the envelope's documents
         return envelopesApi.listDocuments(accountId, envelopeId);
     }

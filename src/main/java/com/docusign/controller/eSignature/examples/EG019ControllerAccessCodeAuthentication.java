@@ -52,7 +52,11 @@ public class EG019ControllerAccessCodeAuthentication extends AbstractEsignatureC
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
         // Step 2: Construct your envelope JSON body
-        EnvelopeDefinition envelope = AccessCodeAuthenticationService.createEnvelope(args);
+        EnvelopeDefinition envelope = AccessCodeAuthenticationService.createEnvelope(
+                args.getSignerName(),
+                args.getSignerEmail(),
+                args.getAccessCode()
+        );
 
         // Step 3: Call the eSignature REST API
         EnvelopeSummary results = AccessCodeAuthenticationService.accessCodeAuthentication(

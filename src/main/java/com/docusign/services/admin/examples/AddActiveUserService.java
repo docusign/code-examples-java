@@ -12,23 +12,42 @@ import java.util.UUID;
 
 public  class AddActiveUserService {
     public static NewUserResponse addActiveUser(
-            WorkArguments args,
+            String groupId,
+            String profileId,
+            String email,
+            String userName,
+            String firstName,
+            String lastName,
             UsersApi usersApi,
             UUID organizationId,
             UUID accountId) throws Exception
     {
-        return createNewActiveUser(args, usersApi, organizationId, accountId);
+        return createNewActiveUser(
+                groupId,
+                profileId,
+                email,
+                userName,
+                firstName,
+                lastName,
+                usersApi,
+                organizationId,
+                accountId);
     }
 
     protected static NewUserResponse createNewActiveUser(
-            WorkArguments args,
+            String groupId,
+            String profileId,
+            String email,
+            String userName,
+            String firstName,
+            String lastName,
             UsersApi usersApi,
             UUID organizationId,
             UUID accountId) throws Exception
     {
         // Step 5 start
         java.util.List<GroupRequest> groups = new ArrayList<>();
-        groups.add(new GroupRequest().id(Long.valueOf(args.getGroupId())));
+        groups.add(new GroupRequest().id(Long.valueOf(groupId)));
 
         // Fill the request with data from the form
         NewUserRequest accountUserRequest = new NewUserRequest()
@@ -38,14 +57,14 @@ public  class AddActiveUserService {
                                 .id(accountId)
                                 .permissionProfile(
                                         new PermissionProfileRequest()
-                                                .id(Long.valueOf(args.getProfileId()))
+                                                .id(Long.valueOf(profileId))
                                 )
                                 .groups(groups)
                 )
-                .email(args.getEmail())
-                .userName(args.getUserName())
-                .firstName(args.getFirstName())
-                .lastName(args.getLastName())
+                .email(email)
+                .userName(userName)
+                .firstName(firstName)
+                .lastName(lastName)
                 .autoActivateMemberships(true);
         // Step 5 end
 

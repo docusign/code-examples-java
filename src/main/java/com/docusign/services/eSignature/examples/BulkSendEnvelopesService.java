@@ -22,16 +22,34 @@ public final class BulkSendEnvelopesService {
     public static String bulkSendEnvelopes(
             BulkEnvelopesApi bulkEnvelopesApi,
             ApiClient apiClient,
-            WorkArguments args,
+            String signerName,
+            String signerEmail,
+            String ccName,
+            String ccEmail,
+            String signerName2,
+            String signerEmail2,
+            String ccName2,
+            String ccEmail2,
             String accountId
     ) throws ApiException, IOException {
         // Step 3. Submit a bulk list
-        BulkSendingList sendingList = BulkSendEnvelopesService.getSendingList(args);
+        BulkSendingList sendingList = BulkSendEnvelopesService.getSendingList(
+            signerName,
+            signerEmail,
+            ccName,
+            ccEmail,
+            signerName2,
+            signerEmail2,
+            ccName2,
+            ccEmail2
+        );
         String bulkListId = bulkEnvelopesApi.createBulkSendList(accountId, sendingList).getListId();
 
         // Step 4. Create an envelope
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
-        String envelopeId = envelopesApi.createEnvelope(accountId, BulkSendEnvelopesService.makeEnvelope()).getEnvelopeId();
+        String envelopeId = envelopesApi.createEnvelope(
+                accountId,
+                BulkSendEnvelopesService.makeEnvelope()).getEnvelopeId();
 
         // Step 5. Attach your bulk list ID to the envelope
         CustomFields customFields = BulkSendEnvelopesService.createCustomFields(bulkListId);
@@ -46,18 +64,31 @@ public final class BulkSendEnvelopesService {
         return bulkEnvelopesApi.createBulkSendRequest(accountId, bulkListId, request).getBatchId();
     }
 
-    public static BulkSendingList getSendingList(WorkArguments args) {
+    public static BulkSendingList getSendingList(
+        String signerName,
+        String signerEmail,
+        String ccName,
+        String ccEmail,
+        String signerName2,
+        String signerEmail2,
+        String ccName2,
+        String ccEmail2
+    ) {
         List<BulkSendingCopy> copies = List.of(
-                createBulkSending(args.getSignerName(), args.getSignerEmail(), args.getCcName(), args.getCcEmail()),
-                createBulkSending(args.getSignerName2(), args.getSignerEmail2(), args.getCcName2(), args.getCcEmail2())
+                createBulkSending(signerName, signerEmail, ccName, ccEmail),
+                createBulkSending(signerName2, signerEmail2, ccName2, ccEmail2)
         );
         return new BulkSendingList()
                 .name("sample.csv")
                 .bulkCopies(copies);
     }
 
-    private static BulkSendingCopy createBulkSending(String signerName,
-                                                     String signerEmail, String ccName, String ccEmail) {
+    private static BulkSendingCopy createBulkSending(
+            String signerName,
+            String signerEmail,
+            String ccName,
+            String ccEmail
+    ) {
         BulkSendingCopyRecipient recipient1 = new BulkSendingCopyRecipient()
                 .name(signerName)
                 .email(signerEmail)

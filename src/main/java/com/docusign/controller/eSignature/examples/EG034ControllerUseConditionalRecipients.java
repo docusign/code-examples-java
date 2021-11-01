@@ -49,7 +49,14 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
         EnvelopesApi envelopesApi = createEnvelopesApi(this.session.getBasePath(), this.user.getAccessToken());
 
         // Step 3: Construct your envelope JSON body
-        EnvelopeDefinition envelope = UseConditionalRecipientsService.createEnvelope(args);
+        EnvelopeDefinition envelope = UseConditionalRecipientsService.createEnvelope(
+                args.getSignerNotCheckedName(),
+                args.getSignerNotCheckedEmail(),
+                args.getSignerCheckedName(),
+                args.getSignerCheckedEmail(),
+                args.getSignerName(),
+                args.getSignerEmail()
+        );
 
         // Step 4: Call the eSignature REST API
         try {

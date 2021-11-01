@@ -34,8 +34,11 @@ public final class IdvAuthenticationService {
         return identityVerification.get(0).getWorkflowId();
     }
 
-    public static EnvelopeDefinition createEnvelope(String signerName, String signerEmail,
-                                                    String workflowId) {
+    public static EnvelopeDefinition createEnvelope(
+            String signerName,
+            String signerEmail,
+            String workflowId
+    ) {
         EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
         envelopeDefinition.setEmailSubject("Please sign");
         envelopeDefinition.setEmailBlurb("Sample text for email body");
