@@ -66,7 +66,7 @@ public abstract class AbstractClickController extends AbstractController {
 
         if (StringUtils.isNotBlank(clickwrapId)) {
 
-            AccountsApi accountsApi = this.createAccountsApiClient(basePath, userAccessToken);
+            AccountsApi accountsApi = createAccountsApiClient(basePath, userAccessToken);
             ClickwrapVersionResponse clickwrapResponse = accountsApi.getClickwrap(accountId, clickwrapId);
 
             isClickwrapOk = clickwrapResponse.getClickwrapId().equals(clickwrapId) &&

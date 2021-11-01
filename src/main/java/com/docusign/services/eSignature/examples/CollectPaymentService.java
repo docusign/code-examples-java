@@ -42,10 +42,15 @@ public final class CollectPaymentService {
     // The envelope will be sent first to the signer.
     // After it is signed, a copy is sent to the cc person.
     public static EnvelopeDefinition makeEnvelope(
-            WorkArguments args,
+            String signerEmail,
+            String signerName,
+            String ccName,
+            String ccEmail,
             String gatewayAccountId,
             String gatewayName,
-            String gatewayDisplayName) throws IOException {
+            String gatewayDisplayName,
+            WorkArguments args
+    ) throws IOException {
         byte[] htmlDoc = EnvelopeHelpers.createHtmlFromTemplateFile(HTML_DOCUMENT_FILE_NAME, "args", args);
 
         // create a signer recipient to sign the document, identified by name and email
@@ -53,16 +58,16 @@ public final class CollectPaymentService {
         // to the recipients. Parallel routing order is supported by using the
         // same integer as the order for two or more recipients.
         Signer signer = new Signer()
-                .email(args.getSignerEmail())
-                .name(args.getSignerName())
+                .email(signerEmail)
+                .name(signerName)
                 .recipientId("1")
                 .routingOrder("1");
         signer.setTabs(createTabs(gatewayAccountId, gatewayName, gatewayDisplayName));
 
         // create a cc recipient to receive a copy of the documents, identified by name and email
         CarbonCopy cc = new CarbonCopy()
-                .email(args.getCcEmail())
-                .name(args.getCcName())
+                .email(ccEmail)
+                .name(ccName)
                 .routingOrder("2")
                 .recipientId("2");
 

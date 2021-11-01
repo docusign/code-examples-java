@@ -17,12 +17,20 @@ public final class CreateTemplateService {
     private static final String PAGE_NUMBER = "1";
     private static final String FALSE = "false";
 
-    public static TemplateSummary createTemplate(ApiClient apiClient, String accountId, EnvelopeTemplate envelopeTemplate) throws ApiException {
+    public static TemplateSummary createTemplate(
+            ApiClient apiClient,
+            String accountId,
+            EnvelopeTemplate envelopeTemplate
+    ) throws ApiException {
         TemplatesApi templatesApi = new TemplatesApi(apiClient);
         return templatesApi.createTemplate(accountId, envelopeTemplate);
     }
 
-    public static EnvelopeTemplateResults searchTemplatesByName(ApiClient apiClient, String accountId, String templateName) throws ApiException {
+    public static EnvelopeTemplateResults searchTemplatesByName(
+            ApiClient apiClient,
+            String accountId,
+            String templateName
+    ) throws ApiException {
         TemplatesApi templatesApi = new TemplatesApi(apiClient);
         TemplatesApi.ListTemplatesOptions options = templatesApi.new ListTemplatesOptions();
         options.setSearchText(templateName);

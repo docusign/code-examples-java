@@ -11,7 +11,8 @@ public final class AssignFormToFormGroupService {
             FormGroupsApi formGroupsApi,
             String accountId,
             UUID formId,
-            UUID formGroupId) throws ApiException {
+            UUID formGroupId
+    ) throws ApiException {
         // Step 5 Start
         FormGroupFormToAssign formGroupFormToAssignRequest = new FormGroupFormToAssign()
                 .formId(formId);

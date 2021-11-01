@@ -11,22 +11,32 @@ import com.docusign.esign.model.TemplateRole;
 import java.util.Arrays;
 
 public final class UseTemplateService {
-    public static EnvelopeSummary createEnvelopeTemplate(EnvelopesApi envelopesApi, String accountId, EnvelopeDefinition envelope) throws ApiException {
+    public static EnvelopeSummary createEnvelopeTemplate(
+            EnvelopesApi envelopesApi,
+            String accountId,
+            EnvelopeDefinition envelope
+    ) throws ApiException {
         return envelopesApi.createEnvelope(accountId, envelope);
     }
-    public static EnvelopeDefinition makeEnvelope(WorkArguments args) {
+    public static EnvelopeDefinition makeEnvelope(
+            String signerName,
+            String signerEmail,
+            String ccEmail,
+            String ccName,
+            String templateId
+    ) {
         TemplateRole signer = new TemplateRole();
-        signer.setEmail(args.getSignerEmail());
-        signer.setName(args.getSignerName());
+        signer.setEmail(signerEmail);
+        signer.setName(signerName);
         signer.setRoleName(EnvelopeHelpers.SIGNER_ROLE_NAME);
 
         TemplateRole cc = new TemplateRole();
-        cc.setEmail(args.getCcEmail());
-        cc.setName(args.getCcName());
+        cc.setEmail(ccEmail);
+        cc.setName(ccName);
         cc.setRoleName(EnvelopeHelpers.CC_ROLE_NAME);
 
         EnvelopeDefinition envelope = new EnvelopeDefinition();
-        envelope.setTemplateId(args.getTemplateId());
+        envelope.setTemplateId(templateId);
         envelope.setTemplateRoles(Arrays.asList(signer, cc));
         envelope.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
 

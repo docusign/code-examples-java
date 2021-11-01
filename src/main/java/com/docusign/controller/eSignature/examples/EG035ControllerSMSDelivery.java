@@ -65,7 +65,18 @@ public class EG035ControllerSMSDelivery extends AbstractEsignatureController {
 
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
-        EnvelopeDefinition envelope = SMSDeliveryService.makeEnvelope(args);
+        EnvelopeDefinition envelope = SMSDeliveryService.makeEnvelope(
+                args.getSignerName(),
+                args.getSignerEmail(),
+                args.getCountryCode(),
+                args.getPhoneNumber(),
+                args.getCcEmail(),
+                args.getCcName(),
+                args.getCcCountryCode(),
+                args.getCcPhoneNumber(),
+                args.getStatus(),
+                args
+        );
         EnvelopeSummary results = SMSDeliveryService.smsDelivery(
                 envelopesApi,
                 session.getAccountId(),

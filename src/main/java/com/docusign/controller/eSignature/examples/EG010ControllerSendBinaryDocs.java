@@ -70,6 +70,10 @@ public class EG010ControllerSendBinaryDocs extends AbstractEsignatureController 
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws IOException {
         String responseString = SendBinaryDocsService.sendBinaryDocs(
                 args,
+                args.getSignerName(),
+                args.getSignerEmail(),
+                args.getCcName(),
+                args.getCcEmail(),
                 session.getBasePath(),
                 session.getAccountId(),
                 user.getAccessToken()

@@ -13,7 +13,8 @@ public final class EnvelopeGetDocService {
             EnvelopesApi envelopesApi,
             String accountId,
             String envelopeId,
-            String documentId) throws ApiException {
+            String documentId
+    ) throws ApiException {
         return envelopesApi.getDocument(accountId, envelopeId, documentId);
     }
     public static String addExtension(String fileName, String extension) {

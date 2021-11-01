@@ -54,7 +54,7 @@ public class C003ControllerCreateNewVersionClickwrap extends AbstractClickContro
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
         // Step 2: Construct your API headers
-        AccountsApi accountsApi = this.createAccountsApiClient(this.session.getBasePath(), this.user.getAccessToken());
+        AccountsApi accountsApi = createAccountsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
         ClickwrapVersionSummaryResponse createdClickwrap = CreateNewVersionClickwrapService.createNewVersionClickwrap(
                 accountsApi,
@@ -64,7 +64,7 @@ public class C003ControllerCreateNewVersionClickwrap extends AbstractClickContro
         );
 
         this.session.setClickwrapId(createdClickwrap.getClickwrapId());
-        this.session.setClickwrapVersionNumber(createdClickwrap.getVersionNumber().toString());
+        this.session.setClickwrapVersionNumber(createdClickwrap.getVersionNumber());
         DoneExample.createDefault(this.title)
                 .withJsonObject(createdClickwrap)
                 .withMessage("The new clickwrap version has been created!<br />"

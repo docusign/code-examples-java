@@ -77,7 +77,12 @@ public class A001AddActiveUser extends AbstractAdminController {
                 organizationId);
 
         NewUserResponse result = AddActiveUserService.addActiveUser(
-                args,
+                args.getGroupId(),
+                args.getProfileId(),
+                args.getEmail(),
+                args.getUserName(),
+                args.getFirstName(),
+                args.getLastName(),
                 createUsersApi(this.user.getAccessToken(), this.session.getBasePath()),
                 organizationId,
                 accountId);

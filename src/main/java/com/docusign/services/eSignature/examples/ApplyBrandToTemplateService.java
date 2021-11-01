@@ -19,21 +19,28 @@ public final class ApplyBrandToTemplateService {
         return envelopesApi.createEnvelope(accountId, envelope);
     }
 
-    public static EnvelopeDefinition makeEnvelope(WorkArguments args) {
+    public static EnvelopeDefinition makeEnvelope(
+            String signerEmail,
+            String signerName,
+            String ccEmail,
+            String ccName,
+            String templateId,
+            String brandId
+    ) {
         TemplateRole signer = new TemplateRole()
-                .email(args.getSignerEmail())
-                .name(args.getSignerName())
+                .email(signerEmail)
+                .name(signerName)
                 .roleName(EnvelopeHelpers.SIGNER_ROLE_NAME);
 
         TemplateRole cc = new TemplateRole()
-                .email(args.getCcEmail())
-                .name(args.getCcName())
+                .email(ccEmail)
+                .name(ccName)
                 .roleName(EnvelopeHelpers.CC_ROLE_NAME);
 
         return new EnvelopeDefinition()
-                .templateId(args.getTemplateId())
+                .templateId(templateId)
                 .templateRoles(Arrays.asList(signer, cc))
-                .brandId(args.getBrandId())
+                .brandId(brandId)
                 .status(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
     }
 }

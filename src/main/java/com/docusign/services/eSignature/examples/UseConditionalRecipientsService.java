@@ -24,7 +24,14 @@ public class UseConditionalRecipientsService {
         return envelopesApi.createEnvelope(accountId, envelope);
     }
 
-    public static EnvelopeDefinition createEnvelope(WorkArguments args) throws IOException {
+    public static EnvelopeDefinition createEnvelope(
+        String signerNotCheckedName,
+        String signerNotCheckedEmail,
+        String signerCheckedName,
+        String signerCheckedEmail,
+        String signerName,
+        String signerEmail
+    ) throws IOException {
         Document document = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, DOCUMENT_ID);
 
         WorkflowStep workflowStep = new WorkflowStep();
@@ -32,7 +39,12 @@ public class UseConditionalRecipientsService {
         workflowStep.setTriggerOnItem(EnvelopeHelpers.WORKFLOW_TRIGGER_ROUTING_ORDER);
         workflowStep.setItemId("2");
         workflowStep.setStatus("pending");
-        workflowStep.setRecipientRouting(createRecipientRouting(args));
+        workflowStep.setRecipientRouting(createRecipientRouting(
+            signerNotCheckedName,
+            signerNotCheckedEmail,
+            signerCheckedName,
+            signerCheckedEmail
+        ));
 
         Workflow workflow = new Workflow();
         workflow.setWorkflowSteps(Collections.singletonList(workflowStep));
@@ -40,7 +52,7 @@ public class UseConditionalRecipientsService {
         Recipients recipients = new Recipients();
         recipients.setSigners(Arrays.asList(
                 createApprovalSigner(document.getDocumentId()),
-                createPurchaserSigner(args, document.getDocumentId())
+                createPurchaserSigner(signerName, signerEmail, document.getDocumentId())
         ));
 
         EnvelopeDefinition envelope = new EnvelopeDefinition();
@@ -53,7 +65,11 @@ public class UseConditionalRecipientsService {
         return envelope;
     }
 
-    private static Signer createPurchaserSigner(WorkArguments args, String documentId) {
+    private static Signer createPurchaserSigner(
+        String signerName,
+        String signerEmail,
+        String documentId
+    ) {
         SignHere signHere = new SignHere();
         signHere.setName("SignHereTabs");
         signHere.setXPosition("200");
@@ -75,8 +91,8 @@ public class UseConditionalRecipientsService {
         tabs.setCheckboxTabs(Collections.singletonList(checkbox));
 
         Signer signer = new Signer();
-        signer.setName(args.getSignerName());
-        signer.setEmail(args.getSignerEmail());
+        signer.setName(signerName);
+        signer.setEmail(signerEmail);
         signer.setRoutingOrder("1");
         signer.setRecipientId("1");
         signer.setRoleName("Purchaser");
@@ -137,18 +153,23 @@ public class UseConditionalRecipientsService {
         return Arrays.asList(condition1, condition2);
     }
 
-    private static RecipientGroup createRecipientGroup(WorkArguments args) {
+    private static RecipientGroup createRecipientGroup(
+        String signerNotCheckedName,
+        String signerNotCheckedEmail,
+        String signerCheckedName,
+        String signerCheckedEmail
+    ) {
         RecipientOption recipientOption1 = new RecipientOption();
         recipientOption1.setRecipientLabel("signer2a");
-        recipientOption1.setName(args.getSignerNotCheckedName());
+        recipientOption1.setName(signerNotCheckedName);
         recipientOption1.setRoleName("Signer when not checked");
-        recipientOption1.setEmail(args.getSignerNotCheckedEmail());
+        recipientOption1.setEmail(signerNotCheckedEmail);
 
         RecipientOption recipientOption2 = new RecipientOption();
         recipientOption2.setRecipientLabel("signer2b");
-        recipientOption2.setName(args.getSignerCheckedName());
+        recipientOption2.setName(signerCheckedName);
         recipientOption2.setRoleName("Signer when checked");
-        recipientOption2.setEmail(args.getSignerCheckedEmail());
+        recipientOption2.setEmail(signerCheckedEmail);
 
         RecipientGroup recipientGroup = new RecipientGroup();
         recipientGroup.setGroupName("Approver");
@@ -157,18 +178,38 @@ public class UseConditionalRecipientsService {
         return recipientGroup;
     }
 
-    private static ConditionalRecipientRule createConditionalRecipientRule(WorkArguments args) {
+    private static ConditionalRecipientRule createConditionalRecipientRule(
+        String signerNotCheckedName,
+        String signerNotCheckedEmail,
+        String signerCheckedName,
+        String signerCheckedEmail
+    ) {
         ConditionalRecipientRule conditionalRecipientRule = new ConditionalRecipientRule();
         conditionalRecipientRule.setRecipientId("2");
         conditionalRecipientRule.setOrder("0");
-        conditionalRecipientRule.setRecipientGroup(createRecipientGroup(args));
+        conditionalRecipientRule.setRecipientGroup(createRecipientGroup(
+            signerNotCheckedName,
+            signerNotCheckedEmail,
+            signerCheckedName,
+            signerCheckedEmail
+        ));
         conditionalRecipientRule.setConditions(createConditionalRecipientRuleConditions());
         return conditionalRecipientRule;
     }
 
-    private static RecipientRouting createRecipientRouting(WorkArguments args) {
+    private static RecipientRouting createRecipientRouting(
+        String signerNotCheckedName,
+        String signerNotCheckedEmail,
+        String signerCheckedName,
+        String signerCheckedEmail
+    ) {
         RecipientRules recipientRules = new RecipientRules();
-        recipientRules.setConditionalRecipients(Collections.singletonList(createConditionalRecipientRule(args)));
+        recipientRules.setConditionalRecipients(Collections.singletonList(createConditionalRecipientRule(
+            signerNotCheckedName,
+            signerNotCheckedEmail,
+            signerCheckedName,
+            signerCheckedEmail
+        )));
 
         RecipientRouting recipientRouting = new RecipientRouting();
         recipientRouting.setRules(recipientRules);

@@ -47,7 +47,7 @@ public class C002ControllerActivateClickwrap extends AbstractClickController {
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws ApiException {
         // Step 2: Construct your API headers
-        AccountsApi accountsApi = this.createAccountsApiClient(this.session.getBasePath(), this.user.getAccessToken());
+        AccountsApi accountsApi = createAccountsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
         ClickwrapVersionSummaryResponse updatedClickwrap = ActivateClickwrapService.activateClickwrap(
                 accountsApi,

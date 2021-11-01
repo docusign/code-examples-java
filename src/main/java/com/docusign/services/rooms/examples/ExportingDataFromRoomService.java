@@ -8,7 +8,8 @@ public final class ExportingDataFromRoomService {
     public static FieldData exportDataFromRoom(
             RoomsApi roomsApi,
             String accountId,
-            Integer roomId) throws ApiException {
+            Integer roomId
+    ) throws ApiException {
         return roomsApi.getRoomFieldData(accountId, roomId);
     }
 }

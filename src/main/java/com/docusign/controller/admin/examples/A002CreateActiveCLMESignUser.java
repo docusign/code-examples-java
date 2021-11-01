@@ -98,10 +98,21 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
 
         // Collect ids needed for the request
         UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
-        UUID accountId = this.getExistingAccountId(this.user.getAccessToken(), this.session.getBasePath(), organizationId);
+        UUID accountId = this.getExistingAccountId(
+                this.user.getAccessToken(),
+                this.session.getBasePath(), o
+                rganizationId);
 
         AddUserResponse result = CreateActiveCLMESignUserService.createNewActiveUser(
-                args,
+                args.getClmProfileId(),
+                args.getClmProductId(),
+                args.getESignProfileId(),
+                args.getESignProductId(),
+                args.getDsGroupId(),
+                args.getUserName(),
+                args.getFirstName(),
+                args.getLastName(),
+                args.getEmail(),
                 usersApi,
                 organizationId,
                 accountId);

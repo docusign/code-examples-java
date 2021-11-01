@@ -9,7 +9,8 @@ public final class GetRoomsWithFiltersService {
             RoomsApi roomsApi,
             String accountId,
             String startDate,
-            String endDate) throws ApiException {
+            String endDate
+    ) throws ApiException {
         // Step 3. Prepare your request parameters
         RoomsApi.GetRoomsOptions options = roomsApi.new GetRoomsOptions();
         options.setFieldDataChangedStartDate(startDate);

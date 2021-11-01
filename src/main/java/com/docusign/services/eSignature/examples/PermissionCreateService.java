@@ -9,7 +9,11 @@ import com.docusign.esign.model.PermissionProfile;
 import com.google.gson.Gson;
 
 public class PermissionCreateService {
-    public static PermissionProfile createNewProfile(AccountsApi accountsApi, String accountid, String permissionProfileName) throws ApiException {
+    public static PermissionProfile createNewProfile(
+            AccountsApi accountsApi,
+            String accountid,
+            String permissionProfileName
+    ) throws ApiException {
         // Step 3. Construct your request body
         // We're extending the AccountSettings class with AccountSettingsPatch to include the signingUIVersion which is missing in the swagger spec at this time.
         Gson gson = new Gson();

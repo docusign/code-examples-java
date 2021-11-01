@@ -15,7 +15,12 @@ public final class SetTabValuesService {
     private static final int ANCHOR_OFFSET_X = 10;
     private static final String SIGNER_CLIENT_ID = "1000";
 
-    public static ViewUrl createRecipientView(EnvelopesApi envelopesApi, String accountId, String envelopeId, RecipientViewRequest viewRequest) throws ApiException {
+    public static ViewUrl createRecipientView(
+            EnvelopesApi envelopesApi,
+            String accountId,
+            String envelopeId,
+            RecipientViewRequest viewRequest
+    ) throws ApiException {
         return envelopesApi.createRecipientView(accountId, envelopeId, viewRequest);
     }
 
@@ -23,7 +28,8 @@ public final class SetTabValuesService {
             String signerEmail,
             String signerName,
             String dsReturnUrl,
-            String dsPingUrl) {
+            String dsPingUrl
+    ) {
         RecipientViewRequest viewRequest = new RecipientViewRequest();
         // Set the url where you want the recipient to go once they are done signing
         // should typically be a callback route somewhere in your app.

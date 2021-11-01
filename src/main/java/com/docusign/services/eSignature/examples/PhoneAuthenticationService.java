@@ -21,7 +21,11 @@ public final class PhoneAuthenticationService {
         return envelopesApi.createEnvelope(accountId, envelope);
     }
 
-    public static EnvelopeDefinition createEnvelope(String signerName, String signerEmail, String phoneNumber) throws IOException {
+    public static EnvelopeDefinition createEnvelope(
+            String signerName,
+            String signerEmail,
+            String phoneNumber
+    ) throws IOException {
         Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
 
         SignHere signHere = new SignHere();

@@ -22,9 +22,10 @@ public final class SigningViaEmailService {
     private static final int ANCHOR_OFFSET_X = 20;
 
     public static EnvelopeSummary signingViaEmail(
-            EnvelopesApi envelopesApi,
-            String accountId,
-            EnvelopeDefinition envelope) throws ApiException, IOException {
+        EnvelopesApi envelopesApi,
+        String accountId,
+        EnvelopeDefinition envelope
+    ) throws ApiException, IOException {
         return envelopesApi.createEnvelope(accountId, envelope);
     }
 
@@ -37,7 +38,14 @@ public final class SigningViaEmailService {
     // recipient 2 - cc
     // The envelope will be sent first to the signer. After it is signed,
     // a copy is sent to the cc person.
-    public static EnvelopeDefinition makeEnvelope(WorkArguments args) throws IOException {
+    public static EnvelopeDefinition makeEnvelope(
+        String signerEmail,
+        String signerName,
+        String ccEmail,
+        String ccName,
+        String status,
+        WorkArguments args
+    ) throws IOException {
         // The DocuSign platform searches throughout your envelope's documents
         // for matching anchor strings. So the signHere2 tab will be used in
         // both document 2 and 3 since they use the same anchor string for
@@ -52,16 +60,16 @@ public final class SigningViaEmailService {
         // to the recipients. Parallel routing order is supported by using the
         // same integer as the order for two or more recipients.
         Signer signer = new Signer();
-        signer.setEmail(args.getSignerEmail());
-        signer.setName(args.getSignerName());
+        signer.setEmail(signerEmail);
+        signer.setName(signerName);
         signer.setRecipientId("1");
         signer.setRoutingOrder("1");
         signer.setTabs(signerTabs);
 
         // create a cc recipient to receive a copy of the documents, identified by name and email
         CarbonCopy cc = new CarbonCopy();
-        cc.setEmail(args.getCcEmail());
-        cc.setName(args.getCcName());
+        cc.setEmail(ccEmail);
+        cc.setName(ccName);
         cc.setRecipientId("2");
         cc.setRoutingOrder("2");
 
@@ -77,7 +85,7 @@ public final class SigningViaEmailService {
         envelope.setRecipients(EnvelopeHelpers.createRecipients(signer, cc));
         // Request that the envelope be sent by setting |status| to "sent".
         // To request that the envelope be created as a draft, set to "created"
-        envelope.setStatus(args.getStatus());
+        envelope.setStatus(status);
 
         return envelope;
     }

@@ -11,7 +11,15 @@ import java.util.UUID;
 
 public class CreateActiveCLMESignUserService {
     public static AddUserResponse createNewActiveUser(
-            WorkArguments args,
+            String clmProfileId,
+            UUID clmProductId,
+            String eSignProfileId,
+            UUID eSignProductId,
+            UUID dsGroupId,
+            String userName,
+            String firstName,
+            String lastName,
+            String email,
             UsersApi usersApi,
             UUID organizationId,
             UUID accountId) throws Exception
@@ -19,14 +27,14 @@ public class CreateActiveCLMESignUserService {
         // Step 5 start
         ProductPermissionProfileRequest clm = new ProductPermissionProfileRequest();
         ProductPermissionProfileRequest eSign = new ProductPermissionProfileRequest();
-        clm.setPermissionProfileId(args.getClmProfileId());
-        clm.setProductId(args.getClmProductId());
+        clm.setPermissionProfileId(clmProfileId);
+        clm.setProductId(clmProductId);
 
-        eSign.setPermissionProfileId(args.getESignProfileId());
-        eSign.setProductId(args.getESignProductId());
+        eSign.setPermissionProfileId(eSignProfileId);
+        eSign.setProductId(eSignProductId);
 
         DSGroupRequest dsGroup = new DSGroupRequest();
-        dsGroup.setDsGroupId(args.getDsGroupId());
+        dsGroup.setDsGroupId(dsGroupId);
         // Fill the request with data from the form
 
         NewMultiProductUserAddRequest accountAddRequest = new NewMultiProductUserAddRequest()
@@ -34,11 +42,11 @@ public class CreateActiveCLMESignUserService {
                 .addProductPermissionProfilesItem(clm)
                 .addProductPermissionProfilesItem(eSign)
                 .addDsGroupsItem(dsGroup)
-                .userName(args.getUserName())
-                .firstName(args.getFirstName())
-                .lastName(args.getLastName())
+                .userName(userName)
+                .firstName(firstName)
+                .lastName(lastName)
                 .autoActivateMemberships(true)
-                .email(args.getEmail());
+                .email(email);
         // Step 5 end
 
         // Step 6 start

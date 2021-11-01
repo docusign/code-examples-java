@@ -10,7 +10,8 @@ public final class GrantOfficeAccessToFormGroupService {
             FormGroupsApi formGroupsApi,
             String accountId,
             UUID formGroupId,
-            Integer officeId) throws ApiException {
+            Integer officeId
+    ) throws ApiException {
         formGroupsApi.grantOfficeAccessToFormGroup(
                 accountId,
                 formGroupId,

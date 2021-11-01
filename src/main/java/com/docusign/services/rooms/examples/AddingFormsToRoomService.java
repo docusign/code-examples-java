@@ -12,7 +12,8 @@ public final class AddingFormsToRoomService {
             RoomsApi roomsApi,
             String accountId,
             UUID formId,
-            Integer roomId) throws ApiException {
+            Integer roomId
+    ) throws ApiException {
         FormForAdd formForAdd = new FormForAdd().formId(formId);
         return roomsApi.addFormToRoom(accountId, roomId, formForAdd);
     }
