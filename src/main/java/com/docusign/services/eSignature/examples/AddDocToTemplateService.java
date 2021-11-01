@@ -57,7 +57,7 @@ public final class AddDocToTemplateService {
         return envelopesApi.createRecipientView(accountId, results.getEnvelopeId(), viewRequest);
     }
 
-    public static RecipientViewRequest makeRecipientViewRequest(
+    private static RecipientViewRequest makeRecipientViewRequest(
             String dsReturnUrl,
             String signerEmail,
             String signerName,
@@ -93,7 +93,7 @@ public final class AddDocToTemplateService {
     // The envelope request object uses Composite Template to include in the envelope:
     // 1. A template stored on the DocuSign service
     // 2. An additional document which is a custom HTML source document
-    public static EnvelopeDefinition makeEnvelope(
+    private static EnvelopeDefinition makeEnvelope(
             String signerEmail,
             String signerName,
             String signerClientId,

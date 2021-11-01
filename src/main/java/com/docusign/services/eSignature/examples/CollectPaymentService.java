@@ -85,7 +85,7 @@ public final class CollectPaymentService {
     }
 
     // creates tabs per signer
-    public static Tabs createTabs(String gatewayAccountId, String gatewayName, String gatewayDisplayName) {
+    private static Tabs createTabs(String gatewayAccountId, String gatewayName, String gatewayDisplayName) {
         java.util.List<ListItem> listItems = java.util.List.of(
                 new ListItem().text("none").value("0"),
                 new ListItem().text("1").value("1"),

@@ -34,7 +34,7 @@ public  class AddActiveUserService {
                 accountId);
     }
 
-    protected static NewUserResponse createNewActiveUser(
+    private static NewUserResponse createNewActiveUser(
             String groupId,
             String profileId,
             String email,

@@ -56,19 +56,18 @@ public class A003BulkExportUserData extends AbstractAdminController {
         BulkExportsApi bulkExportsApi = createBulkExportsApi(this.user.getAccessToken(), this.session.getBasePath());
         UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
 
-        OrganizationExportResponse bulkList = BulkExportUserDataService
-                .createUserListExport(bulkExportsApi, organizationId);
+        OrganizationExportResponse bulkList = BulkExportUserDataService.createUserListExport(
+                bulkExportsApi,
+                organizationId);
         // Step 3 end
 
         TimeUnit.SECONDS.sleep(20);
 
         // Step 4 start
-        OrganizationExportResponse data = BulkExportUserDataService
-                .bulkExportUserData(bulkExportsApi, organizationId, bulkList.getId());
+        String csvUri = BulkExportUserDataService.bulkExportUserData(bulkExportsApi, organizationId, bulkList.getId());
         // Step 4 end
 
         // Step 5 start
-        String csvUri = data.getResults().get(0).getUrl();
         URL request_url = new URL(csvUri);
 
         // Send Web request to download and save the exported CSV data
@@ -105,8 +104,9 @@ public class A003BulkExportUserData extends AbstractAdminController {
         http_conn.disconnect();
         // Step 5 end
 
-        OrganizationExportsResponse results = BulkExportUserDataService
-                .bulkExportsUserData(bulkExportsApi, organizationId);
+        OrganizationExportsResponse results = BulkExportUserDataService.bulkExportsUserData(
+                bulkExportsApi,
+                organizationId);
         // Process results
         DoneExample.createDefault(title)
                 .withMessage("User data exported to " + saveFilePath + "<br>from UserExport:getUserListExport method:")

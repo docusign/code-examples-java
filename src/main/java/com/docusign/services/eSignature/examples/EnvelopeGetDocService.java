@@ -17,6 +17,7 @@ public final class EnvelopeGetDocService {
     ) throws ApiException {
         return envelopesApi.getDocument(accountId, envelopeId, documentId);
     }
+
     public static String addExtension(String fileName, String extension) {
         if (FilenameUtils.isExtension(fileName, extension)) {
             return fileName;

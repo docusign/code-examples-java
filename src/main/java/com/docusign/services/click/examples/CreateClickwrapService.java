@@ -12,7 +12,8 @@ public final class CreateClickwrapService {
             String clickwrapName,
             String fileName,
             String documentName,
-            Integer documentOrder) throws IOException {
+            Integer documentOrder
+    ) throws IOException {
         Document document = ClickwrapHelper.createDocumentFromFile(fileName, documentName, documentOrder);
         DisplaySettings displaySettings = new DisplaySettings()
                 .displayName("Terms of Service")

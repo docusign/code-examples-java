@@ -31,13 +31,12 @@ public final class PermissionChangeSingleSettingService {
     }
 
     public static Optional<PermissionProfile> findProfile(List<PermissionProfile> profiles, String profileId) {
-
         return profiles.stream().filter(p -> p.getPermissionProfileId().equals(profileId)).findFirst();
     }
 
     // Changes random boolean properties; in a real application, changing properties
     // will be read from the page or in a different way
-    public static AccountRoleSettings changeRandomSettings(AccountRoleSettings settings) {
+    private static AccountRoleSettings changeRandomSettings(AccountRoleSettings settings) {
         Gson gson = new Gson();
         // Change this value back to: gson.fromJson(gson.toJson(settings),
         // AccountRoleSettings.class);

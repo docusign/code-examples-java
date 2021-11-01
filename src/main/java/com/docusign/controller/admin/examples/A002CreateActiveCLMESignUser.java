@@ -100,8 +100,8 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
         UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
         UUID accountId = this.getExistingAccountId(
                 this.user.getAccessToken(),
-                this.session.getBasePath(), o
-                rganizationId);
+                this.session.getBasePath(),
+                organizationId);
 
         AddUserResponse result = CreateActiveCLMESignUserService.createNewActiveUser(
                 args.getClmProfileId(),

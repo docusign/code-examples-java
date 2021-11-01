@@ -10,18 +10,8 @@ import com.docusign.admin.api.UsersApi;
 import com.docusign.admin.api.UsersApi.GetUserProfilesOptions;
 import com.docusign.admin.client.ApiClient;
 import com.docusign.admin.client.ApiException;
-import com.docusign.admin.client.auth.AccessTokenListener;
-import com.docusign.admin.client.auth.OAuth.Account;
-import com.docusign.admin.client.auth.OAuth.Organization;
-import com.docusign.admin.model.OrganizationAccountsRequest;
-import com.docusign.admin.model.OrganizationsResponse;
-import com.docusign.admin.model.ProductPermissionProfileResponse;
 import com.docusign.admin.model.UsersDrilldownResponse;
 import com.docusign.core.controller.AbstractController;
-import com.docusign.core.model.Session;
-import com.docusign.esign.api.GroupsApi;
-//import com.docusign.esign.client.ApiClient;
-import com.docusign.esign.api.OrganizationsApi;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
@@ -104,7 +94,11 @@ public abstract class AbstractAdminController extends AbstractController {
      * @param organizationId the ID of current organization
      * @return the account Id
      */
-    protected UUID getExistingAccountId(String accessToken, String basePath, UUID organizationId) throws Exception {
+    protected UUID getExistingAccountId(
+            String accessToken,
+            String basePath,
+            UUID organizationId
+    ) throws Exception {
         UsersApi usersApi = createUsersApi(accessToken, basePath);
 
         // set the signer email to get an information about that user

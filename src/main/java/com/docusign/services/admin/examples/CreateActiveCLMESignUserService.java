@@ -22,8 +22,8 @@ public class CreateActiveCLMESignUserService {
             String email,
             UsersApi usersApi,
             UUID organizationId,
-            UUID accountId) throws Exception
-    {
+            UUID accountId
+    ) throws Exception{
         // Step 5 start
         ProductPermissionProfileRequest clm = new ProductPermissionProfileRequest();
         ProductPermissionProfileRequest eSign = new ProductPermissionProfileRequest();

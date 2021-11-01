@@ -14,7 +14,6 @@ import java.util.List;
 
 public final class IdvAuthenticationService {
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
-    private static final String DOCUMENT_NAME = "Lorem";
 
     public static EnvelopeSummary idvAuthentication(
             EnvelopesApi envelopesApi,

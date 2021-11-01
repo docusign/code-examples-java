@@ -11,8 +11,6 @@ import java.util.Arrays;
 public final class SetTabValuesService {
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_salary.docx";
     private static final String DOCUMENT_NAME = "Lorem Ipsum";
-    private static final int ANCHOR_OFFSET_Y = 20;
-    private static final int ANCHOR_OFFSET_X = 10;
     private static final String SIGNER_CLIENT_ID = "1000";
 
     public static ViewUrl createRecipientView(

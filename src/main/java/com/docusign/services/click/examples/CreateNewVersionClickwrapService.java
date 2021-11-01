@@ -15,7 +15,8 @@ public final class CreateNewVersionClickwrapService {
             AccountsApi accountsApi,
             ClickwrapRequest clickwrapRequest,
             String accountId,
-            String clickwrapId) throws ApiException {
+            String clickwrapId
+    ) throws ApiException {
         // Step 4: Call the v1 Click API
         return accountsApi.createClickwrapVersion(
                 accountId,
@@ -26,7 +27,8 @@ public final class CreateNewVersionClickwrapService {
     public static ClickwrapRequest createClickwrapRequest(
             String fileName,
             String documentName,
-            Integer documentOrder) throws IOException {
+            Integer documentOrder
+    ) throws IOException {
         Document document = ClickwrapHelper.createDocumentFromFile(fileName, documentName, documentOrder);
         DisplaySettings displaySettings = new DisplaySettings()
                 .displayName("Terms of Service v2")

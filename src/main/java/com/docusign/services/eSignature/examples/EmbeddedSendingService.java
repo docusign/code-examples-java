@@ -25,6 +25,7 @@ public final class EmbeddedSendingService {
         viewRequest.setReturnUrl(dsReturnUrl);
         return envelopesApi.createSenderView(accountId, envelopeId, viewRequest);
     }
+
     public static EnvelopeSummary createEnvelopeWithDraftStatus(
         EnvelopesApi envelopesApi,
         String signerEmail,

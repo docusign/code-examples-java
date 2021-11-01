@@ -9,8 +9,8 @@ public class CheckImportRequestStatusService {
     public static OrganizationImportResponse checkRequestStatus(
             BulkImportsApi bulkImportsApi,
             UUID organizationId,
-            UUID importId) throws Exception
-    {
+            UUID importId
+    ) throws Exception {
         // Step 4a start
         return bulkImportsApi.getBulkUserImportRequest(organizationId, importId);
         // Step 4a end

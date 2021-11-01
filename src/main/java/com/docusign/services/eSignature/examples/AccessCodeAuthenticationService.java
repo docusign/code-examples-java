@@ -25,8 +25,7 @@ public final class AccessCodeAuthenticationService {
             String signerName,
             String signerEmail,
             String accessCode
-    ) throws IOException
-    {
+    ) throws IOException {
         Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
 
         SignHere signHere = new SignHere();

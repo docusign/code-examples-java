@@ -54,7 +54,14 @@ public class EG002ControllerSigningViaEmail extends AbstractEsignatureController
 
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
-        EnvelopeDefinition envelope = SigningViaEmailService.makeEnvelope(args);
+        EnvelopeDefinition envelope = SigningViaEmailService.makeEnvelope(
+            args.getSignerEmail(),
+            args.getSignerName(),
+            args.getCcEmail(),
+            args.getCcName(),
+            args.getStatus(),
+            args
+        );
         EnvelopeSummary results = SigningViaEmailService.signingViaEmail(
                 envelopesApi,
                 session.getAccountId(),
