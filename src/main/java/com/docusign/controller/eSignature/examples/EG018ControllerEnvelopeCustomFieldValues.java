@@ -29,7 +29,6 @@ public class EG018ControllerEnvelopeCustomFieldValues extends AbstractEsignature
     private final Session session;
     private final User user;
 
-
     @Autowired
     public EG018ControllerEnvelopeCustomFieldValues(DSConfiguration config, Session session, User user) {
         super(config, "eg018", "Get Envelope Custom Field Data");

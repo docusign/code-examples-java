@@ -1,13 +1,12 @@
 package com.docusign.services.eSignature.examples;
 
-import com.docusign.common.WorkArguments;
 import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public final class ApplyBrandToEnvelopeService {
@@ -45,7 +44,7 @@ public final class ApplyBrandToEnvelopeService {
                 .tabs(tabs);
 
         Recipients recipients = new Recipients();
-        recipients.setSigners(Arrays.asList(signer));
+        recipients.setSigners(Collections.singletonList(signer));
 
         // Return envelope definition using created objects: the document,
         // the recipients and obtained brand Id.

@@ -46,7 +46,6 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
         model.addAttribute(MODEL_IMPORT_OK, StringUtils.isNotBlank(this.session.getImportId()));
     }
 
-
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
         // Redirects to the front facing example to avoid a Null Pointer Exception

@@ -1,6 +1,5 @@
 package com.docusign.services.eSignature.examples;
 
-import com.docusign.common.WorkArguments;
 import com.docusign.controller.eSignature.examples.DsModelUtils;
 import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
 import com.docusign.esign.api.BulkEnvelopesApi;

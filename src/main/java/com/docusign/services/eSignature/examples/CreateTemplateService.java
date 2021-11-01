@@ -8,6 +8,7 @@ import com.docusign.esign.model.*;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
 
 public final class CreateTemplateService {
@@ -54,9 +55,9 @@ public final class CreateTemplateService {
                 createCheckbox("ckAuthentication", "75", "447"),
                 createCheckbox("ckAgreement", "75", "478"),
                 createCheckbox("ckAcknowledgement", "75", "508")));
-        signer1Tabs.setListTabs(Arrays.asList(createList()));
-        signer1Tabs.setRadioGroupTabs(Arrays.asList(createRadioGroup()));
-        signer1Tabs.setSignHereTabs(Arrays.asList(createSignHere()));
+        signer1Tabs.setListTabs(Collections.singletonList(createList()));
+        signer1Tabs.setRadioGroupTabs(Collections.singletonList(createRadioGroup()));
+        signer1Tabs.setSignHereTabs(Collections.singletonList(createSignHere()));
         signer1Tabs.textTabs(Arrays.asList(
                 createText("text", "153", "230"),
                 createText("numbersOnly", "153", "260")));
@@ -80,7 +81,7 @@ public final class CreateTemplateService {
         // Create the overall template definition. The order in the docs array
         // determines the order in the envelope.
         EnvelopeTemplate template = new EnvelopeTemplate();
-        template.setDocuments(Arrays.asList(doc));
+        template.setDocuments(Collections.singletonList(doc));
         template.setEmailSubject("Please sign this document");
         template.setName(templateName);
         template.setDescription("Example template created via the API");

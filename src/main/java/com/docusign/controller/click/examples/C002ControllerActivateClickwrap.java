@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 public class C002ControllerActivateClickwrap extends AbstractClickController {
 
     private static final String MODEL_CLICKWRAP_OK = "clickwrapOk";
-
     private final Session session;
     private final User user;
 

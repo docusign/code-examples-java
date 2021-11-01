@@ -35,7 +35,6 @@ public class EG004ControllerEnvelopeInfo extends AbstractEsignatureController {
     private final Session session;
     private final User user;
 
-
     @Autowired
     public EG004ControllerEnvelopeInfo(DSConfiguration config, Session session, User user) {
         super(config, "eg004", "Get envelope information");

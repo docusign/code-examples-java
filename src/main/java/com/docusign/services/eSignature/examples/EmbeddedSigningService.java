@@ -7,7 +7,7 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 
 public final class EmbeddedSigningService {
     public static ViewUrl embeddedSigning(
@@ -78,13 +78,13 @@ public final class EmbeddedSigningService {
 
         // Add the recipient to the envelope object
         Recipients recipients = new Recipients();
-        recipients.setSigners(Arrays.asList(signer));
+        recipients.setSigners(Collections.singletonList(signer));
 
         EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
         envelopeDefinition.setEmailSubject("Please sign this document");
         envelopeDefinition.setRecipients(recipients);
         Document doc = EnvelopeHelpers.createDocumentFromFile(documentFileName, documentName, "3");
-        envelopeDefinition.setDocuments(Arrays.asList(doc));
+        envelopeDefinition.setDocuments(Collections.singletonList(doc));
         // Request that the envelope be sent by setting |status| to "sent".
         // To request that the envelope be created as a draft, set to "created"
         envelopeDefinition.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);

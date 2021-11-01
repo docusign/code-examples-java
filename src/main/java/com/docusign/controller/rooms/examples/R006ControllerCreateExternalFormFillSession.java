@@ -6,11 +6,9 @@ import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.rooms.api.ExternalFormFillSessionsApi;
-import com.docusign.rooms.api.FormLibrariesApi;
 import com.docusign.rooms.api.RoomsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.ExternalFormFillSession;
-import com.docusign.rooms.model.ExternalFormFillSessionForCreate;
 import com.docusign.rooms.model.FormSummary;
 import com.docusign.rooms.model.RoomSummaryList;
 import com.docusign.services.rooms.examples.CreateExternalFormFillSessionService;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-
 
 /**
  * Creating an external form fill session.
@@ -57,7 +54,6 @@ public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsCo
 
         model.addAttribute(MODEL_ROOM_LIST, roomSummaryList.getRooms());
         model.addAttribute(MODEL_FORM_LIST, forms);
-
     }
 
     @Override
@@ -72,12 +68,11 @@ public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsCo
         // Step 3. Call the v2 Rooms API
         ExternalFormFillSession externalFormFillSession = CreateExternalFormFillSessionService
                 .createExternalFormFillSession(
-                externalFormFillSessionsApi,
-                this.session.getAccountId(),
-                args.getFormId().toString(),
-                args.getRoomId()
-        );
-
+                    externalFormFillSessionsApi,
+                    this.session.getAccountId(),
+                    args.getFormId().toString(),
+                    args.getRoomId()
+                );
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(externalFormFillSession)

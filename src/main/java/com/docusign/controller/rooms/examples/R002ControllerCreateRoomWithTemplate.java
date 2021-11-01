@@ -28,11 +28,8 @@ import java.io.IOException;
 public class R002ControllerCreateRoomWithTemplate extends AbstractRoomsController {
 
     private static final String MODEL_TEMPLATES_LIST = "templateList";
-
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public R002ControllerCreateRoomWithTemplate(DSConfiguration config, Session session, User user) {
@@ -74,7 +71,6 @@ public class R002ControllerCreateRoomWithTemplate extends AbstractRoomsControlle
                         adminRole.getRoleId(),
                         args.getRoomName(),
                         args.getRoomTemplateId()));
-
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(createdRoom)

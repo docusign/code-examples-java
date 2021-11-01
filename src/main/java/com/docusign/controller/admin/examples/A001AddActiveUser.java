@@ -1,8 +1,7 @@
 package com.docusign.controller.admin.examples;
 
 import com.docusign.DSConfiguration;
-import com.docusign.admin.api.UsersApi;
-import com.docusign.admin.model.*;
+import com.docusign.admin.model.NewUserResponse;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.HttpHeaders;
-import java.util.ArrayList;
 import java.util.UUID;
 
 /**

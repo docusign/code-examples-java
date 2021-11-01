@@ -5,7 +5,6 @@ import com.docusign.admin.model.AddUserResponse;
 import com.docusign.admin.model.DSGroupRequest;
 import com.docusign.admin.model.NewMultiProductUserAddRequest;
 import com.docusign.admin.model.ProductPermissionProfileRequest;
-import com.docusign.common.WorkArguments;
 
 import java.util.UUID;
 

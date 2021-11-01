@@ -7,8 +7,10 @@ import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
-
-import com.docusign.esign.model.*;
+import com.docusign.esign.model.EnvelopeDefinition;
+import com.docusign.esign.model.EnvelopeSummary;
+import com.docusign.esign.model.RecipientViewRequest;
+import com.docusign.esign.model.ViewUrl;
 import com.docusign.services.eSignature.examples.SetTabValuesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +18,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.io.IOException;
-import java.util.Arrays;
-
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 @Controller
@@ -28,7 +28,6 @@ public class EG016ControllerSetTabValues extends AbstractEsignatureController {
 
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG016ControllerSetTabValues(DSConfiguration config, Session session, User user) {

@@ -30,10 +30,8 @@ import java.util.concurrent.TimeUnit;
 public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureController {
 
     private static final long BULK_REQUEST_DELAY = 15L;
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG031ControllerBulkSendEnvelopes(DSConfiguration config, Session session, User user) {
@@ -81,9 +79,6 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
             Thread.currentThread().interrupt();
             return null;
         }
-
         return DONE_EXAMPLE_PAGE;
     }
-
-
 }

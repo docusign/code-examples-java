@@ -3,12 +3,13 @@ package com.docusign.controller.eSignature.examples;
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.common.DocumentType;
-import com.docusign.core.model.*;
+import com.docusign.core.model.EnvelopeDocumentInfo;
+import com.docusign.core.model.OptionItem;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
-
 import com.docusign.services.eSignature.examples.EnvelopeGetDocService;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,12 +17,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -36,10 +36,8 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController 
     private static final String MODEL_DOCUMENT_OPTIONS = "documentOptions";
     private static final String HTTP_CONTENT_DISPOSITION_VALUE = "inline;filename=";
     private static final String ZIP_EXTENSION = "zip";
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG007ControllerEnvelopeGetDoc(DSConfiguration config, Session session, User user) {
@@ -114,7 +112,6 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController 
                 return docInfo;
             }
         }
-
         throw new ExampleException("Requested document is not found.", null);
     }
 }

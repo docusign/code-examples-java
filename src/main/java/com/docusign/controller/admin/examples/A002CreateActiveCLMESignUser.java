@@ -1,30 +1,25 @@
 package com.docusign.controller.admin.examples;
 
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletResponse;
-
 import com.docusign.DSConfiguration;
 import com.docusign.admin.api.DsGroupsApi;
 import com.docusign.admin.api.ProductPermissionProfilesApi;
 import com.docusign.admin.api.UsersApi;
 import com.docusign.admin.model.AddUserResponse;
 import com.docusign.admin.model.DSGroupListResponse;
-import com.docusign.admin.model.DSGroupRequest;
-import com.docusign.admin.model.NewMultiProductUserAddRequest;
-import com.docusign.admin.model.ProductPermissionProfileRequest;
 import com.docusign.admin.model.ProductPermissionProfileResponse;
 import com.docusign.admin.model.ProductPermissionProfilesResponse;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-
 import com.docusign.services.admin.examples.CreateActiveCLMESignUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 /**
  * Create new user This example demonstrates how to create a new user with
@@ -33,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/a002")
 public class A002CreateActiveCLMESignUser extends AbstractAdminController {
-
 
     private final User user;
     private final Session session;

@@ -7,6 +7,7 @@ import com.docusign.esign.model.*;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 
 public final class SetTabValuesService {
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_salary.docx";
@@ -126,23 +127,23 @@ public final class SetTabValuesService {
         salaryCustomField.setValue(String.valueOf(salary));
 
         CustomFields cf = new CustomFields();
-        cf.setTextCustomFields(Arrays.asList(salaryCustomField));
+        cf.setTextCustomFields(Collections.singletonList(salaryCustomField));
 
         Tabs tabs = new Tabs();
-        tabs.setSignHereTabs(Arrays.asList(signHere));
+        tabs.setSignHereTabs(Collections.singletonList(signHere));
         tabs.setTextTabs(Arrays.asList(textLegal, textFamiliar, textSalary));
 
         signer.setTabs(tabs);
 
         // Add the recipient to the envelope object
         Recipients recipients = new Recipients();
-        recipients.setSigners(Arrays.asList(signer));
+        recipients.setSigners(Collections.singletonList(signer));
 
         EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
         envelopeDefinition.setEmailSubject("Please sign this document from the Java SDK");
         envelopeDefinition.setRecipients(recipients);
         Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "3");
-        envelopeDefinition.setDocuments(Arrays.asList(doc));
+        envelopeDefinition.setDocuments(Collections.singletonList(doc));
         envelopeDefinition.setCustomFields(cf);
         // Request that the envelope be sent by setting |status| to "sent".
         // To request that the envelope be created as a draft, set to "created"

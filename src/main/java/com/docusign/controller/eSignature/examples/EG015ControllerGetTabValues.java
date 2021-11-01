@@ -29,7 +29,6 @@ public class EG015ControllerGetTabValues extends AbstractEsignatureController {
     private final Session session;
     private final User user;
 
-
     @Autowired
     public EG015ControllerGetTabValues(DSConfiguration config, Session session, User user) {
         super(config, "eg015", "Get Envelope Tabs");

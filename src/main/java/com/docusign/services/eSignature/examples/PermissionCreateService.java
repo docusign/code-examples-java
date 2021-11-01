@@ -11,7 +11,7 @@ import com.google.gson.Gson;
 public class PermissionCreateService {
     public static PermissionProfile createNewProfile(
             AccountsApi accountsApi,
-            String accountid,
+            String accountId,
             String permissionProfileName
     ) throws ApiException {
         // Step 3. Construct your request body
@@ -25,6 +25,6 @@ public class PermissionCreateService {
                 .settings(newSettings);
 
         // Step 4. Call the eSignature REST API
-        return accountsApi.createPermissionProfile(accountid, profile);
+        return accountsApi.createPermissionProfile(accountId, profile);
     }
 }

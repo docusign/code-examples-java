@@ -5,34 +5,19 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.esign.api.TemplatesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.CarbonCopy;
-import com.docusign.esign.model.Checkbox;
-import com.docusign.esign.model.Document;
 import com.docusign.esign.model.EnvelopeTemplate;
 import com.docusign.esign.model.EnvelopeTemplateResults;
-import com.docusign.esign.model.List;
-import com.docusign.esign.model.ListItem;
-import com.docusign.esign.model.Radio;
-import com.docusign.esign.model.RadioGroup;
-import com.docusign.esign.model.SignHere;
-import com.docusign.esign.model.Signer;
-import com.docusign.esign.model.Tabs;
 import com.docusign.esign.model.TemplateSummary;
-import com.docusign.esign.model.Text;
 import com.docusign.services.eSignature.examples.CreateTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Locale;
-
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 /**
@@ -87,7 +72,6 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
                             template.getName(), template.getTemplateId()))
                     .addToModel(model);
         }
-
         return DONE_EXAMPLE_PAGE;
     }
     // ***DS.snippet.0.end

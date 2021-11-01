@@ -8,6 +8,7 @@ import com.docusign.esign.model.*;
 import com.docusign.core.common.DocumentType;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 
 public final class CollectPaymentService {
     private static final String HTML_DOCUMENT_FILE_NAME = "templates/order-form.ftl";
@@ -76,7 +77,7 @@ public final class CollectPaymentService {
         // To request that the envelope be created as a draft, set to "created"
         EnvelopeDefinition envelope = new EnvelopeDefinition();
         envelope.setEmailSubject("Please complete your order");
-        envelope.setDocuments(Arrays.asList(EnvelopeHelpers.createDocument(htmlDoc,
+        envelope.setDocuments(Collections.singletonList(EnvelopeHelpers.createDocument(htmlDoc,
                 HTML_DOCUMENT_NAME, DocumentType.HTML.getDefaultFileExtention(), "1")));
         envelope.setRecipients(EnvelopeHelpers.createRecipients(signer, cc));
         envelope.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);

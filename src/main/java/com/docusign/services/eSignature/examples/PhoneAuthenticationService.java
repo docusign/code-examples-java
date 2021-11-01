@@ -6,7 +6,7 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public final class PhoneAuthenticationService {
@@ -28,35 +28,19 @@ public final class PhoneAuthenticationService {
     ) throws IOException {
         Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
 
-        SignHere signHere = new SignHere();
-        signHere.setName("SignHereTab");
-        signHere.setXPosition("75");
-        signHere.setYPosition("572");
-        signHere.setTabLabel("SignHereTab");
-        signHere.setPageNumber("1");
-        signHere.setDocumentId(doc.getDocumentId());
-        // A 1- to 8-digit integer or 32-character GUID to match recipient IDs on your own systems.
-        // This value is referenced in the Tabs element below to assign tabs on a per-recipient basis.
-        signHere.setRecipientId("1");
+        Signer signer = KBAAuthenticationService.setSignHereAndSignerForEnvelope(signerName, signerEmail);
+
         List<String> RECIPIENT_PHONE_NUMBERS = List.of(phoneNumber);
         RecipientPhoneAuthentication phoneAuth = new RecipientPhoneAuthentication();
         phoneAuth.setRecipMayProvideNumber("true");
         phoneAuth.setSenderProvidedNumbers(RECIPIENT_PHONE_NUMBERS);
 
-        Signer signer = new Signer();
-        signer.setName(signerName);
-        signer.setEmail(signerEmail);
-        signer.setRoutingOrder("1");
-        signer.setStatus(EnvelopeHelpers.SIGNER_STATUS_CREATED);
-        signer.setDeliveryMethod(EnvelopeHelpers.DELIVERY_METHOD_EMAIL);
-        signer.setRecipientId(signHere.getRecipientId());
-        signer.setTabs(EnvelopeHelpers.createSignerTabs(signHere));
         signer.setRequireIdLookup("true");
         signer.setPhoneAuthentication(phoneAuth);
         signer.setIdCheckConfigurationName("Phone Auth $");
 
         Recipients recipients = new Recipients();
-        recipients.setSigners(Arrays.asList(signer));
+        recipients.setSigners(Collections.singletonList(signer));
 
         EnvelopeDefinition envelope = new EnvelopeDefinition();
         envelope.setEmailSubject("Please Sign");
@@ -64,7 +48,7 @@ public final class PhoneAuthenticationService {
         envelope.setEmailBlurb("Sample text for email body");
         envelope.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
         envelope.setRecipients(recipients);
-        envelope.setDocuments(Arrays.asList(doc));
+        envelope.setDocuments(Collections.singletonList(doc));
 
         return envelope;
     }
