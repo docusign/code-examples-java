@@ -17,8 +17,8 @@ public class AuditUsersService {
     public static ArrayList<UserDrilldownResponse>  auditUsers(
             UsersApi usersApi,
             UUID organizationId,
-            UUID accountId) throws ApiException
-    {
+            UUID accountId
+    ) throws ApiException {
         ArrayList<UserDrilldownResponse> resultsArr = new ArrayList<UserDrilldownResponse>();
 
         // Step 3 start

@@ -25,7 +25,7 @@ public final class SigningViaEmailService {
         EnvelopesApi envelopesApi,
         String accountId,
         EnvelopeDefinition envelope
-    ) throws ApiException, IOException {
+    ) throws ApiException {
         return envelopesApi.createEnvelope(accountId, envelope);
     }
 

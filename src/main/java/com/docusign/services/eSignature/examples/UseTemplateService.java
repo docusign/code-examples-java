@@ -18,6 +18,7 @@ public final class UseTemplateService {
     ) throws ApiException {
         return envelopesApi.createEnvelope(accountId, envelope);
     }
+
     public static EnvelopeDefinition makeEnvelope(
             String signerName,
             String signerEmail,

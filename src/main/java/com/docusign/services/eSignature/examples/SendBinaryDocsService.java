@@ -101,7 +101,8 @@ public final class SendBinaryDocsService {
 
         return StreamUtils.copyToString(connection.getInputStream(), StandardCharsets.UTF_8);
     }
-    public static void writeBoundaryHeader(
+
+    private static void writeBoundaryHeader(
             DataOutputStream buffer,
             String contentType,
             String contentDisposition
@@ -116,7 +117,7 @@ public final class SendBinaryDocsService {
         buffer.writeBytes(LINE_DELIMITER);
     }
 
-    public static void writeClosingBoundary(DataOutputStream buffer) throws IOException {
+    private static void writeClosingBoundary(DataOutputStream buffer) throws IOException {
         buffer.writeBytes(LINE_DELIMITER);
         buffer.writeBytes(HYPHENS);
         buffer.writeBytes(BOUNDARY_DELIMITER);
@@ -134,7 +135,7 @@ public final class SendBinaryDocsService {
     // recipient 2 - cc
     // The envelope will be sent first to the signer.
     // After it is signed, a copy is sent to the cc person.
-    public static JSONObject makeEnvelopeJSON(
+    private static JSONObject makeEnvelopeJSON(
             String signerName,
             String signerEmail,
             String ccName,

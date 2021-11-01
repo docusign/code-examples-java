@@ -9,8 +9,8 @@ public class CheckRequestStatusService {
     public static OrganizationExportResponse checkRequestStatus(
             BulkExportsApi bulkExportsApi,
             UUID organizationId,
-            UUID exportId) throws Exception
-    {
+            UUID exportId
+    ) throws Exception {
         return bulkExportsApi.getUserListExport(organizationId, exportId);
     }
 }

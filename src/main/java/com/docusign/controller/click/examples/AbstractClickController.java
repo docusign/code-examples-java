@@ -60,8 +60,12 @@ public abstract class AbstractClickController extends AbstractController {
      * @param clickwrapId clickwrap's id
      * @return an boolean value
      */
-    protected boolean isClickwrapExistsAndActive(String basePath, String userAccessToken,
-                                                 String accountId, String clickwrapId) throws ApiException {
+    protected boolean isClickwrapExistsAndActive(
+            String basePath,
+            String userAccessToken,
+            String accountId,
+            String clickwrapId
+    ) throws ApiException {
         boolean isClickwrapOk = false;
 
         if (StringUtils.isNotBlank(clickwrapId)) {

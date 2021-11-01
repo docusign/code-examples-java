@@ -8,7 +8,8 @@ public final class GetClickwrapResponsesService {
     public static ClickwrapAgreementsResponse getClickwrapResponses(
             AccountsApi accountsApi,
             String accountId,
-            String clickwrapId) throws ApiException {
+            String clickwrapId
+    ) throws ApiException {
         // Step 3: Call the v1 Click API
         return accountsApi.getClickwrapAgreements(accountId, clickwrapId);
     }

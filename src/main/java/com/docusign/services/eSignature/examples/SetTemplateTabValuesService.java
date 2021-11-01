@@ -57,7 +57,6 @@ public final class SetTemplateTabValuesService {
         return viewRequest;
     }
 
-
     public static EnvelopeDefinition makeEnvelope(
         String signerEmail,
         String signerName,

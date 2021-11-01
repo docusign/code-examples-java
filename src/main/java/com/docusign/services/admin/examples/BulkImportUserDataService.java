@@ -7,11 +7,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 public class BulkImportUserDataService {
-        public static OrganizationImportResponse bulkImportUserData(
-            BulkImportsApi bulkImportsApi,
-            UUID organizationId,
-            UUID accountId) throws Exception
-    {
+    public static OrganizationImportResponse bulkImportUserData(
+        BulkImportsApi bulkImportsApi,
+        UUID organizationId,
+        UUID accountId
+    ) throws Exception{
         // Make sure you're using a verified domain for auto-activation to work properly
         // Step 3 start
         String csvUserData = String.format(

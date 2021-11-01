@@ -64,7 +64,7 @@ public final class BulkSendEnvelopesService {
         return bulkEnvelopesApi.createBulkSendRequest(accountId, bulkListId, request).getBatchId();
     }
 
-    public static BulkSendingList getSendingList(
+    private static BulkSendingList getSendingList(
         String signerName,
         String signerEmail,
         String ccName,
@@ -113,7 +113,7 @@ public final class BulkSendEnvelopesService {
                 .status(EnvelopeHelpers.ENVELOPE_STATUS_CREATED);
     }
 
-    public static CustomFields createCustomFields(String bulkListId) {
+    private static CustomFields createCustomFields(String bulkListId) {
         TextCustomField textCustomField = new TextCustomField()
                 .name("mailingListId")
                 .required(DsModelUtils.FALSE)
@@ -125,7 +125,7 @@ public final class BulkSendEnvelopesService {
                 .textCustomFields(List.of(textCustomField));
     }
 
-    public static Recipients createRecipients() {
+    private static Recipients createRecipients() {
         List<Signer> signers = List.of(
                 createSignerPlaceholder(EnvelopeHelpers.SIGNER_ROLE_NAME, "1"),
                 createSignerPlaceholder(EnvelopeHelpers.CC_ROLE_NAME, "2"));
