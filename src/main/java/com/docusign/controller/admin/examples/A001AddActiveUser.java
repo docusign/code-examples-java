@@ -12,6 +12,7 @@ import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.model.GroupInformation;
 import com.docusign.esign.model.PermissionProfileInformation;
 import com.docusign.services.admin.examples.AddActiveUserService;
+import com.docusign.services.admin.examples.GetExistingAccountIdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -50,7 +51,10 @@ public class A001AddActiveUser extends AbstractAdminController {
         // Step 3 start
         AccountsApi accountsApi = new AccountsApi(apiClient);
         UUID orgId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
-        UUID accountId = this.getExistingAccountId(this.user.getAccessToken(), this.session.getBasePath(), orgId);
+        UUID accountId = GetExistingAccountIdService.getExistingAccountId(
+                createUsersApi(this.user.getAccessToken(), this.session.getBasePath()),
+                config.getSignerEmail(),
+                orgId);
         PermissionProfileInformation permissionsInfo = accountsApi.listPermissions(String.valueOf(accountId));
         // Step 3 end
 
@@ -69,9 +73,9 @@ public class A001AddActiveUser extends AbstractAdminController {
         UUID organizationId = this.getOrganizationId(
                 this.user.getAccessToken(),
                 this.session.getBasePath());
-        UUID accountId = this.getExistingAccountId(
-                this.user.getAccessToken(),
-                this.session.getBasePath(),
+        UUID accountId = GetExistingAccountIdService.getExistingAccountId(
+                createUsersApi(this.user.getAccessToken(), this.session.getBasePath()),
+                config.getSignerEmail(),
                 organizationId);
 
         NewUserResponse result = AddActiveUserService.addActiveUser(

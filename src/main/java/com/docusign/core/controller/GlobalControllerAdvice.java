@@ -2,17 +2,9 @@ package com.docusign.core.controller;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.ApiIndex;
-import com.docusign.esign.client.auth.OAuth;
-import com.docusign.core.model.AuthType;
-import com.docusign.core.model.AuthTypeItem;
-import com.docusign.core.model.Locals;
-import com.docusign.core.model.Session;
-import com.docusign.core.model.User;
-
+import com.docusign.core.model.*;
 import com.docusign.core.utils.AccountsConverter;
-import java.util.stream.Collectors;
-
-import com.docusign.monitor.client.ApiException;
+import com.docusign.esign.client.auth.OAuth;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +16,9 @@ import org.springframework.security.oauth2.provider.authentication.OAuth2Authent
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.WebApplicationContext;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This class provides common model attributes for all pages. If you want to

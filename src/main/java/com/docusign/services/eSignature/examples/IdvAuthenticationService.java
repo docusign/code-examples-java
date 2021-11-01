@@ -72,13 +72,15 @@ public final class IdvAuthenticationService {
         RecipientIdentityVerification workflow = new RecipientIdentityVerification();
         workflow.setWorkflowId(workflowId);
 
+        String status = "created";
+        String deliveryMethod = "email";
         Signer signer1 = new Signer();
         signer1.setName(signerName);
         signer1.setEmail(signerEmail);
         signer1.setRoleName("");
         signer1.setNote("");
-        signer1.setStatus("created");
-        signer1.setDeliveryMethod("email");
+        signer1.setStatus(status);
+        signer1.setDeliveryMethod(deliveryMethod);
         signer1.setRecipientId("1"); //represents your {RECIPIENT_ID}
         signer1.setIdentityVerification(workflow);
         signer1.setTabs(signer1Tabs);

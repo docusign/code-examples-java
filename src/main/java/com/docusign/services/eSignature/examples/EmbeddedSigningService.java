@@ -33,12 +33,14 @@ public final class EmbeddedSigningService {
         // the DocuSign signing. It's usually better to use
         // the session mechanism of your web framework. Query parameters
         // can be changed/spoofed very easily.
-        viewRequest.setReturnUrl(config.getDsReturnUrl() + "?state=123");
+        String stateValue = "?state=123";
+        viewRequest.setReturnUrl(config.getDsReturnUrl() + stateValue);
 
         // How has your app authenticated the user? In addition to your app's
         // authentication, you can include authenticate steps from DocuSign.
         // Eg, SMS authentication
-        viewRequest.setAuthenticationMethod("none");
+        String authenticationMethod = "none";
+        viewRequest.setAuthenticationMethod(authenticationMethod);
 
         // Recipient information must match embedded recipient info
         // we used to create the envelope.
@@ -52,7 +54,8 @@ public final class EmbeddedSigningService {
         // parameter. It causes the DocuSign signing web page
         // (not the DocuSign server) to send pings via AJAX to your app.
         // NOTE: The pings will only be sent if the pingUrl is an https address
-        viewRequest.setPingFrequency("600"); // seconds
+        String pingFrequency = "600";
+        viewRequest.setPingFrequency(pingFrequency); // seconds
         viewRequest.setPingUrl(config.getDsPingUrl());
 
         return viewRequest;

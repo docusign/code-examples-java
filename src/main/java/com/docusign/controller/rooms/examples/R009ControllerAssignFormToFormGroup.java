@@ -11,6 +11,7 @@ import com.docusign.rooms.model.FormGroupFormToAssign;
 import com.docusign.rooms.model.FormGroupSummaryList;
 import com.docusign.rooms.model.FormSummary;
 import com.docusign.services.rooms.examples.AssignFormToFormGroupService;
+import com.docusign.services.rooms.examples.GetFormSummaryListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -53,9 +54,8 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
         // Step 3 End 
 
         // Step 4 Start
-        List<FormSummary> forms = getFormSummaryList(
-                this.session.getBasePath(),
-                this.user.getAccessToken(),
+        List<FormSummary> forms = GetFormSummaryListService.getFormSummaryList(
+                createFormLibrariesApi(session.getBasePath(), this.user.getAccessToken()),
                 this.session.getAccountId());
         // Step 4 End
 

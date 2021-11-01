@@ -33,29 +33,14 @@ public final class SetTemplateTabValuesService {
         // the DocuSign signing. It's usually better to use
         // the session mechanism of your web framework. Query parameters
         // can be changed/spoofed very easily.
-        viewRequest.setReturnUrl(dsReturnUrl + "?state=123");
+        String state = "?state=123";
+        viewRequest.setReturnUrl(dsReturnUrl + state);
 
-        // How has your app authenticated the user? In addition to your app's
-        // authentication, you can include authenticate steps from DocuSign.
-        // Eg, SMS authentication
-        viewRequest.setAuthenticationMethod("none");
-
-        // Recipient information must match embedded recipient info
-        // we used to create the envelope.
-        viewRequest.setEmail(signerEmail);
-        viewRequest.setUserName(signerName);
-        viewRequest.setClientUserId(clientUserId);
-
-        // DocuSign recommends that you redirect to DocuSign for the
-        // embedded signing. There are multiple ways to save state.
-        // To maintain your application's session, use the pingUrl
-        // parameter. It causes the DocuSign signing web page
-        // (not the DocuSign server) to send pings via AJAX to your app.
-        // NOTE: The pings will only be sent if the pingUrl is an https address
-        viewRequest.setPingFrequency("600"); // seconds
-        viewRequest.setPingUrl(dsPingUrl);
-
-        return viewRequest;
+        return SetTabValuesService.setEmailAndSignerNameForRecipientViewRequest(
+                viewRequest,
+                signerEmail,
+                signerName,
+                dsPingUrl);
     }
 
     public static EnvelopeDefinition makeEnvelope(

@@ -37,12 +37,27 @@ public final class SetTabValuesService {
         // the DocuSign signing. It's usually better to use
         // the session mechanism of your web framework. Query parameters
         // can be changed/spoofed very easily.
-        viewRequest.setReturnUrl(dsReturnUrl + "?state=123");
+        String state = "?state=123";
+        viewRequest.setReturnUrl(dsReturnUrl + state);
 
+        return setEmailAndSignerNameForRecipientViewRequest(
+                viewRequest,
+                signerEmail,
+                signerName,
+                dsPingUrl);
+    }
+
+    public static RecipientViewRequest setEmailAndSignerNameForRecipientViewRequest(
+            RecipientViewRequest viewRequest,
+            String signerEmail,
+            String signerName,
+            String dsPingUrl
+    ) {
         // How has your app authenticated the user? In addition to your app's
         // authentication, you can include authenticate steps from DocuSign.
         // Eg, SMS authentication
-        viewRequest.setAuthenticationMethod("none");
+        String authenticationMethod = "none";
+        viewRequest.setAuthenticationMethod(authenticationMethod);
 
         // Recipient information must match embedded recipient info
         // we used to create the envelope.
@@ -56,7 +71,8 @@ public final class SetTabValuesService {
         // parameter. It causes the DocuSign signing web page
         // (not the DocuSign server) to send pings via AJAX to your app.
         // NOTE: The pings will only be sent if the pingUrl is an https address
-        viewRequest.setPingFrequency("600"); // seconds
+        String pingFrequency = "600";
+        viewRequest.setPingFrequency(pingFrequency); // seconds
         viewRequest.setPingUrl(dsPingUrl);
 
         return viewRequest;
