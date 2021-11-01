@@ -28,7 +28,6 @@ public class R001ControllerCreateRoom extends AbstractRoomsController {
     private final Session session;
     private final User user;
 
-
     @Autowired
     public R001ControllerCreateRoom(DSConfiguration config, Session session, User user) {
         super(config, "r001", "Create a room");

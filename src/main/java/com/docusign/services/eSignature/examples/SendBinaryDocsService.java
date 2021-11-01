@@ -190,9 +190,9 @@ public final class SendBinaryDocsService {
     }
     @Value
     public static class DocumentInfo {
-        private String name;
-        private String id;
-        private DocumentType docType;
-        private byte[] data;
+        String name;
+        String id;
+        DocumentType docType;
+        byte[] data;
     }
 }

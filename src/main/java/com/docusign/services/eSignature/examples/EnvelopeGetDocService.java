@@ -1,11 +1,8 @@
 package com.docusign.services.eSignature.examples;
 
-import com.docusign.controller.eSignature.examples.ExampleException;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.StringUtils;
-import java.util.List;
 
 public final class EnvelopeGetDocService {
 

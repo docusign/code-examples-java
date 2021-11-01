@@ -5,11 +5,9 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.rooms.api.RoomTemplatesApi;
 import com.docusign.rooms.api.RoomsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.RoomSummaryList;
-import com.docusign.rooms.model.RoomTemplatesSummaryList;
 import com.docusign.services.rooms.examples.GetRoomsWithFiltersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,14 +29,11 @@ public class R005ControllerGetRoomsWithFilters extends AbstractRoomsController {
 
     private static final String MODEL_START_DATE = "startDate";
     private static final String MODEL_END_DATE = "endDate";
-
     private static final int FROM_DATE_OFFSET_DAYS = 10;
     private static final int FROM_DATE_FORWARD_DAYS = 1;
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public R005ControllerGetRoomsWithFilters(DSConfiguration config, Session session, User user) {

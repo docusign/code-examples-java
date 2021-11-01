@@ -27,10 +27,8 @@ import java.io.IOException;
 public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureController {
 
     private static final String NOT_ALLOWED_ERROR_MESSAGE = "Update to the workflow with recipient routing is not allowed";
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG034ControllerUseConditionalRecipients(DSConfiguration config, Session session, User user) {
@@ -44,7 +42,6 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response)
             throws ApiException, IOException
     {
-
         // Step 2: Construct your API headers
         EnvelopesApi envelopesApi = createEnvelopesApi(this.session.getBasePath(), this.user.getAccessToken());
 
@@ -87,6 +84,5 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
 
         return DONE_EXAMPLE_PAGE;
     }
-
     // ***DS.snippet.0.end
 }

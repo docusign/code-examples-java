@@ -7,9 +7,7 @@ import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.Envelope;
 import com.docusign.esign.model.EnvelopeUpdateSummary;
-import com.docusign.esign.model.Workflow;
 import com.docusign.services.eSignature.examples.UnpauseSignatureWorkflowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +26,6 @@ public class EG033ControllerUnpauseSignatureWorkflow extends AbstractEsignatureC
 
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG033ControllerUnpauseSignatureWorkflow(DSConfiguration config, Session session, User user) {

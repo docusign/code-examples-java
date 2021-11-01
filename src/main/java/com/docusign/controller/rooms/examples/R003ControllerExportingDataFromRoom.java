@@ -5,11 +5,9 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.rooms.api.RolesApi;
 import com.docusign.rooms.api.RoomsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.FieldData;
-import com.docusign.rooms.model.RoleSummaryList;
 import com.docusign.rooms.model.RoomSummaryList;
 import com.docusign.services.rooms.examples.ExportingDataFromRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +27,8 @@ import java.io.IOException;
 public class R003ControllerExportingDataFromRoom extends AbstractRoomsController {
 
     private static final String MODEL_ROOM_LIST = "roomList";
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public R003ControllerExportingDataFromRoom(DSConfiguration config, Session session, User user) {

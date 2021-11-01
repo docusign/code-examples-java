@@ -29,7 +29,6 @@ public class EG032ControllerPauseSignatureWorkflow extends AbstractEsignatureCon
     private final Session session;
     private final User user;
 
-
     @Autowired
     public EG032ControllerPauseSignatureWorkflow(DSConfiguration config, Session session, User user) {
         super(config, "eg032", "Pause a signature workflow.");

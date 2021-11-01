@@ -2,11 +2,6 @@ package com.docusign.services.admin.examples;
 
 import com.docusign.admin.api.UsersApi;
 import com.docusign.admin.model.*;
-import com.docusign.common.WorkArguments;
-import com.docusign.core.model.DoneExample;
-import org.springframework.ui.ModelMap;
-
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.UUID;
 

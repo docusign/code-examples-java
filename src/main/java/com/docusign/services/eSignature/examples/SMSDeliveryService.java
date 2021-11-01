@@ -9,6 +9,7 @@ import com.docusign.core.common.DocumentType;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 
 public final class SMSDeliveryService {
     private static final String HTML_DOCUMENT_FILE_NAME = "templates/candy-bonbon.ftl";
@@ -76,7 +77,7 @@ public final class SMSDeliveryService {
         phoneNumber.setCountryCode(countryCode);
         phoneNumber.setNumber(phoneNumberFromRecipient);
         smsDelivery.phoneNumber(phoneNumber);
-        signer.setAdditionalNotifications(Arrays.asList(smsDelivery));
+        signer.setAdditionalNotifications(Collections.singletonList(smsDelivery));
 
         // create a cc recipient to receive a copy of the documents, identified by name and email
         CarbonCopy cc = new CarbonCopy();
@@ -92,7 +93,7 @@ public final class SMSDeliveryService {
         ccPhoneNumber.setCountryCode(ccCountryCode);
         ccPhoneNumber.setNumber(ccPhoneNumberFromRecipient);
         ccSmsDelivery.phoneNumber(ccPhoneNumber);
-        cc.setAdditionalNotifications(Arrays.asList(ccSmsDelivery));
+        cc.setAdditionalNotifications(Collections.singletonList(ccSmsDelivery));
 
         // The order in the docs array determines the order in the envelope
         byte[] htmlDocument = EnvelopeHelpers.createHtmlFromTemplateFile(HTML_DOCUMENT_FILE_NAME, "args", args);

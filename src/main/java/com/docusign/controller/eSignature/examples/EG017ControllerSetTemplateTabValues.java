@@ -9,8 +9,6 @@ import com.docusign.esign.api.TemplatesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
-import com.docusign.esign.model.Checkbox;
-import com.docusign.esign.model.List;
 import com.docusign.services.eSignature.examples.SetTemplateTabValuesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,20 +18,16 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 
 
 @Controller
 @RequestMapping("/eg017")
 public class EG017ControllerSetTemplateTabValues extends AbstractEsignatureController {
 
-
     private static final String MODEL_LIST_TEMPLATE = "listTemplates";
     private static final String SIGNER_CLIENT_ID = "1000";
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG017ControllerSetTemplateTabValues(DSConfiguration config, Session session, User user) {

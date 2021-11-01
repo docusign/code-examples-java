@@ -1,32 +1,24 @@
 package com.docusign.controller.eSignature.examples;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.esign.api.AccountsApi;
+import com.docusign.esign.api.EnvelopesApi;
+import com.docusign.esign.client.ApiException;
+import com.docusign.esign.model.BrandsResponse;
+import com.docusign.esign.model.EnvelopeDefinition;
+import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.services.eSignature.examples.ApplyBrandToEnvelopeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.docusign.DSConfiguration;
-import com.docusign.esign.api.AccountsApi;
-import com.docusign.esign.api.EnvelopesApi;
-import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.BrandsResponse;
-import com.docusign.esign.model.Document;
-import com.docusign.esign.model.EnvelopeDefinition;
-import com.docusign.esign.model.EnvelopeSummary;
-import com.docusign.esign.model.Recipients;
-import com.docusign.esign.model.Signer;
-import com.docusign.esign.model.Tabs;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 /**
@@ -39,10 +31,8 @@ import com.docusign.esign.model.Tabs;
 public class EG029ControllerApplyBrandToEnvelope extends AbstractEsignatureController {
 
     private static final String MODEL_LIST_BRAND = "listBrands";
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG029ControllerApplyBrandToEnvelope(DSConfiguration config, Session session, User user) {

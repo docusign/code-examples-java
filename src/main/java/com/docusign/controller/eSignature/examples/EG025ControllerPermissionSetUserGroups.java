@@ -1,28 +1,24 @@
 package com.docusign.controller.eSignature.examples;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.esign.api.AccountsApi;
+import com.docusign.esign.api.GroupsApi;
+import com.docusign.esign.client.ApiClient;
+import com.docusign.esign.client.ApiException;
+import com.docusign.esign.model.ErrorDetails;
+import com.docusign.esign.model.GroupInformation;
+import com.docusign.esign.model.PermissionProfileInformation;
 import com.docusign.services.eSignature.examples.PermissionSetUserGroupsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.docusign.DSConfiguration;
-import com.docusign.esign.api.AccountsApi;
-import com.docusign.esign.api.GroupsApi;
-import com.docusign.esign.client.ApiClient;
-import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.ErrorDetails;
-import com.docusign.esign.model.Group;
-import com.docusign.esign.model.GroupInformation;
-import com.docusign.esign.model.PermissionProfileInformation;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -37,10 +33,8 @@ public class EG025ControllerPermissionSetUserGroups extends AbstractEsignatureCo
 
     private static final String MODEL_LIST_PROFILES = "listProfiles";
     private static final String MODEL_LIST_GROUPS = "listGroups";
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG025ControllerPermissionSetUserGroups(DSConfiguration config, Session session, User user) {

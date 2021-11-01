@@ -44,10 +44,8 @@ public class EG030ControllerApplyBrandToTemplate extends AbstractEsignatureContr
 
     private static final String MODEL_LIST_BRAND = "listBrands";
     private static final String MODEL_LIST_TEMPLATE = "listTemplates";
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG030ControllerApplyBrandToTemplate(DSConfiguration config, Session session, User user) {

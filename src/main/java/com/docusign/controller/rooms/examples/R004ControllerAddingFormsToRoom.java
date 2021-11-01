@@ -5,11 +5,11 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.rooms.api.FormDetailsApi;
-import com.docusign.rooms.api.FormLibrariesApi;
 import com.docusign.rooms.api.RoomsApi;
 import com.docusign.rooms.client.ApiException;
-import com.docusign.rooms.model.*;
+import com.docusign.rooms.model.FormSummary;
+import com.docusign.rooms.model.RoomDocument;
+import com.docusign.rooms.model.RoomSummaryList;
 import com.docusign.services.rooms.examples.AddingFormsToRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,10 +30,8 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
 
     private static final String MODEL_FORM_LIST = "formList";
     private static final String MODEL_ROOM_LIST = "roomList";
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public R004ControllerAddingFormsToRoom(DSConfiguration config, Session session, User user) {
@@ -56,7 +54,6 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
 
         model.addAttribute(MODEL_ROOM_LIST, roomSummaryList.getRooms());
         model.addAttribute(MODEL_FORM_LIST, forms);
-
     }
 
     @Override

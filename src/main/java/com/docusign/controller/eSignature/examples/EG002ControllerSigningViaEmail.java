@@ -2,27 +2,21 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
-import com.docusign.core.common.DocumentType;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.CarbonCopy;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
-import com.docusign.esign.model.Signer;
-import com.docusign.esign.model.Tabs;
-
 import com.docusign.services.eSignature.examples.SigningViaEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.io.IOException;
-import java.util.Arrays;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 /**
@@ -76,6 +70,4 @@ public class EG002ControllerSigningViaEmail extends AbstractEsignatureController
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }
-
-
 }

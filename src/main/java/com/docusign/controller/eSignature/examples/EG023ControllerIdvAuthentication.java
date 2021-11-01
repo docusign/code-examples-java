@@ -5,20 +5,11 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.AccountIdentityVerificationResponse;
-import com.docusign.esign.model.AccountIdentityVerificationWorkflow;
-import com.docusign.esign.model.Document;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
-import com.docusign.esign.model.RecipientIdentityVerification;
-import com.docusign.esign.model.Recipients;
-import com.docusign.esign.model.SignHere;
-import com.docusign.esign.model.Signer;
-import com.docusign.esign.model.Tabs;
 import com.docusign.services.eSignature.examples.IdvAuthenticationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,11 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.io.IOException;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * ID Verification authentication
@@ -41,7 +29,6 @@ import javax.servlet.http.HttpServletResponse;
 public class EG023ControllerIdvAuthentication extends AbstractEsignatureController {
 
     private static final Logger logger = LoggerFactory.getLogger(EG023ControllerIdvAuthentication.class);
-
     private final Session session;
     private final User user;
 

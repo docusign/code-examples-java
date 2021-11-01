@@ -29,10 +29,8 @@ import com.docusign.esign.model.PermissionProfileInformation;
 public class EG027ControllerPermissionDelete extends AbstractEsignatureController {
 
     private static final String MODEL_LIST_PROFILES = "listProfiles";
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG027ControllerPermissionDelete(DSConfiguration config, Session session, User user) {

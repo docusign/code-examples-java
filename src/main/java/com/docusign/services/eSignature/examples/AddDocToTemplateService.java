@@ -9,7 +9,7 @@ import com.docusign.core.common.DocumentType;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.UUID;
+import java.util.Collections;
 
 public final class AddDocToTemplateService {
     private static final String HTML_DOCUMENT_FILE_NAME = "templates/candy-bonbon2.ftl";
@@ -71,7 +71,8 @@ public final class AddDocToTemplateService {
         // How has your app authenticated the user? In addition to your app's
         // authentication, you can include authenticate steps from DocuSign.
         // Eg, SMS authentication
-        viewRequest.setAuthenticationMethod("none");
+        String authenticationMethod = "none";
+        viewRequest.setAuthenticationMethod(authenticationMethod);
         // Recipient information must match embedded recipient info
         // we used to create the envelope.
         viewRequest.setEmail(signerEmail);
@@ -84,7 +85,8 @@ public final class AddDocToTemplateService {
         // parameter. It causes the DocuSign signing web page
         // (not the DocuSign server) to send pings via AJAX to your app.
         // NOTE: The pings will only be sent if the pingUrl is an https address
-        viewRequest.setPingFrequency("600");
+        String pingFrequency = "600";
+        viewRequest.setPingFrequency(pingFrequency);
         viewRequest.setPingUrl(dsPingUrl);
 
         return viewRequest;
@@ -115,7 +117,7 @@ public final class AddDocToTemplateService {
         ServerTemplate serverTemplates = new ServerTemplate();
         serverTemplates.setSequence("1");
         serverTemplates.setTemplateId(templateId);
-        compTemplate1.setServerTemplates(Arrays.asList(serverTemplates));
+        compTemplate1.setServerTemplates(Collections.singletonList(serverTemplates));
 
         // Add the roles via an inlineTemplate
         InlineTemplate inlineTemplate = new InlineTemplate();
@@ -127,7 +129,7 @@ public final class AddDocToTemplateService {
                      signerClientId
                 ),
                 cc1));
-        compTemplate1.setInlineTemplates(Arrays.asList(inlineTemplate));
+        compTemplate1.setInlineTemplates(Collections.singletonList(inlineTemplate));
 
         // The signer recipient for the added document with a tab definition:
         Tabs signer1Tabs = EnvelopeHelpers.createSingleSignerTab(
@@ -150,7 +152,7 @@ public final class AddDocToTemplateService {
         InlineTemplate inlineTemplate2 = new InlineTemplate();
         inlineTemplate2.setSequence("1");
         inlineTemplate2.setRecipients(EnvelopeHelpers.createRecipients(signer1AddedDoc, cc1));
-        compTemplate2.setInlineTemplates(Arrays.asList(inlineTemplate2));
+        compTemplate2.setInlineTemplates(Collections.singletonList(inlineTemplate2));
         compTemplate2.setDocument(EnvelopeHelpers.createDocument(htmlDoc, HTML_DOCUMENT_NAME,
                 DocumentType.HTML.getDefaultFileExtention(), "1"));
 

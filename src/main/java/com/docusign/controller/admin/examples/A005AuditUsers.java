@@ -1,32 +1,21 @@
 package com.docusign.controller.admin.examples;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.TimeZone;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletResponse;
-
 import com.docusign.DSConfiguration;
 import com.docusign.admin.api.UsersApi;
-import com.docusign.admin.api.UsersApi.GetUserProfilesOptions;
-import com.docusign.admin.api.UsersApi.GetUsersOptions;
-import com.docusign.admin.model.OrganizationUserResponse;
-import com.docusign.admin.model.OrganizationUsersResponse;
 import com.docusign.admin.model.UserDrilldownResponse;
-import com.docusign.admin.model.UsersDrilldownResponse;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-
-
 import com.docusign.services.admin.examples.AuditUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Create new user This example demonstrates how to create a new user with
@@ -61,5 +50,4 @@ public class A005AuditUsers extends AbstractAdminController {
                 .withJsonObject(resultsArr).addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }
-
 }

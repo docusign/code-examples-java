@@ -3,10 +3,7 @@ package com.docusign.controller.click.examples;
 import com.docusign.DSConfiguration;
 import com.docusign.click.api.AccountsApi;
 import com.docusign.click.client.ApiException;
-import com.docusign.click.model.ClickwrapRequest;
 import com.docusign.click.model.ClickwrapVersionSummaryResponse;
-import com.docusign.click.model.DisplaySettings;
-import com.docusign.click.model.Document;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
@@ -32,7 +29,6 @@ public class C003ControllerCreateNewVersionClickwrap extends AbstractClickContro
     private static final String DOCUMENT_FILE_NAME = "TermsOfService.pdf";
     private static final Integer DOCUMENT_ORDER = 0;
     private static final String DOCUMENT_NAME = "Terms of Service";
-
     private final Session session;
     private final User user;
 

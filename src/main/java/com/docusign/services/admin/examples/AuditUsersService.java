@@ -19,13 +19,15 @@ public class AuditUsersService {
             UUID organizationId,
             UUID accountId
     ) throws ApiException {
-        ArrayList<UserDrilldownResponse> resultsArr = new ArrayList<UserDrilldownResponse>();
+        ArrayList<UserDrilldownResponse> resultsArr = new ArrayList<>();
 
         // Step 3 start
         UsersApi.GetUsersOptions options = usersApi.new GetUsersOptions();
         options.setAccountId(accountId);
-        TimeZone tz = TimeZone.getTimeZone("UTC");
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+        String timeZoneId = "UTC";
+        String simpleDateFormat = "yyyy-MM-dd'T'HH:mm'Z'";
+        TimeZone tz = TimeZone.getTimeZone(timeZoneId);
+        SimpleDateFormat df = new SimpleDateFormat(simpleDateFormat);
         // Quoted "Z" to indicate UTC, no timezone offset
         df.setTimeZone(tz);
         String nowAsISO = df.format(new Date(System.currentTimeMillis() - (1000 * 60 * 60 * 24 * 10)));

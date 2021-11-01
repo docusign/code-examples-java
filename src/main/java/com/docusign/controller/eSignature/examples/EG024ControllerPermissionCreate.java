@@ -4,7 +4,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 
 import com.docusign.common.WorkArguments;
-import com.docusign.core.model.AccountRoleSettingsPatch;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
@@ -16,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.docusign.DSConfiguration;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.AccountRoleSettings;
 import com.docusign.esign.model.PermissionProfile;
-import com.google.gson.Gson;
 /**
  * Permission profiles are collections of account settings that determine the
  * behavior and actions available to the user groups to which they're applied.

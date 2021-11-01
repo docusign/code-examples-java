@@ -6,6 +6,7 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public final class SetTemplateTabValuesService {
     public static ViewUrl setTemplateTabValues(
@@ -90,7 +91,7 @@ public final class SetTemplateTabValuesService {
 
         RadioGroup rg = new RadioGroup();
         rg.setGroupName("radio1");
-        rg.setRadios(Arrays.asList(radio));
+        rg.setRadios(Collections.singletonList(radio));
 
 
         Text txt = new Text();
@@ -123,9 +124,9 @@ public final class SetTemplateTabValuesService {
         Tabs tabs = new Tabs();
 
         tabs.setTextTabs(Arrays.asList(txt, txtExtra));
-        tabs.setRadioGroupTabs(Arrays.asList(rg));
+        tabs.setRadioGroupTabs(Collections.singletonList(rg));
         tabs.setCheckboxTabs(Arrays.asList(ck1, ck2));
-        tabs.setListTabs(Arrays.asList(list1));
+        tabs.setListTabs(Collections.singletonList(list1));
 
 
         // create a signer recipient to sign the document, identified by name and email
@@ -153,7 +154,7 @@ public final class SetTemplateTabValuesService {
 
 
         CustomFields cf = new CustomFields();
-        cf.setTextCustomFields(Arrays.asList(customField));
+        cf.setTextCustomFields(Collections.singletonList(customField));
 
 
         // Next, create the top level envelope definition and populate it.

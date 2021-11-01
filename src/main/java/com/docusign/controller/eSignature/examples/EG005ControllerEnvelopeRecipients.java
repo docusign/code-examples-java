@@ -29,7 +29,6 @@ public class EG005ControllerEnvelopeRecipients extends AbstractEsignatureControl
     private final Session session;
     private final User user;
 
-
     @Autowired
     public EG005ControllerEnvelopeRecipients(DSConfiguration config, Session session, User user) {
         super(config, "eg005", "List envelope recipients");

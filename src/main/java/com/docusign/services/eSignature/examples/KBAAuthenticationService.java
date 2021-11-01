@@ -6,7 +6,7 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 
 public final class KBAAuthenticationService {
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
@@ -20,12 +20,10 @@ public final class KBAAuthenticationService {
         return envelopesApi.createEnvelope(accountId, envelope);
     }
 
-    public static EnvelopeDefinition createEnvelope(
+    public static Signer setSignHereAndSignerForEnvelope(
             String signerName,
-            String signerEmail
-    ) throws IOException {
+            String signerEmail) throws IOException {
         Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
-
         SignHere signHere = new SignHere();
         signHere.setName("SignHereTab");
         signHere.setXPosition("75");
@@ -45,18 +43,28 @@ public final class KBAAuthenticationService {
         signer.setDeliveryMethod(EnvelopeHelpers.DELIVERY_METHOD_EMAIL);
         signer.setRecipientId(signHere.getRecipientId());
         signer.setTabs(EnvelopeHelpers.createSignerTabs(signHere));
+
+        return signer;
+    }
+
+    public static EnvelopeDefinition createEnvelope(
+            String signerName,
+            String signerEmail
+    ) throws IOException {
+        Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
+        Signer signer = setSignHereAndSignerForEnvelope(signerName, signerEmail);
         signer.setIdCheckConfigurationName("ID Check");
         signer.setRequireIdLookup("true");
 
         Recipients recipients = new Recipients();
-        recipients.setSigners(Arrays.asList(signer));
+        recipients.setSigners(Collections.singletonList(signer));
 
         EnvelopeDefinition envelope = new EnvelopeDefinition();
         envelope.setEmailSubject("Please Sign");
         envelope.setEnvelopeIdStamping("true");
         envelope.setEmailBlurb("Sample text for email body");
         envelope.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
-        envelope.setDocuments(Arrays.asList(doc));
+        envelope.setDocuments(Collections.singletonList(doc));
         envelope.setRecipients(recipients);
 
         return envelope;

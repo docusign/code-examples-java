@@ -2,25 +2,14 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
-import com.docusign.core.common.DocumentType;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.api.TemplatesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.CarbonCopy;
-import com.docusign.esign.model.CompositeTemplate;
-import com.docusign.esign.model.EnvelopeDefinition;
-import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.EnvelopeTemplateResults;
-import com.docusign.esign.model.InlineTemplate;
-import com.docusign.esign.model.RecipientViewRequest;
-import com.docusign.esign.model.ServerTemplate;
-import com.docusign.esign.model.Signer;
-import com.docusign.esign.model.Tabs;
 import com.docusign.esign.model.ViewUrl;
-
 import com.docusign.services.eSignature.examples.AddDocToTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,10 +17,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.io.IOException;
-import java.util.Arrays;
-
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 /**
@@ -45,10 +32,8 @@ import javax.servlet.http.HttpServletResponse;
 public class EG013ControllerAddDocToTemplate extends AbstractEsignatureController {
 
     private static final String MODEL_LIST_TEMPLATE = "listTemplates";
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG013ControllerAddDocToTemplate(DSConfiguration config, Session session, User user) {
@@ -89,6 +74,4 @@ public class EG013ControllerAddDocToTemplate extends AbstractEsignatureControlle
         return new RedirectView(viewUrl.getUrl());
         // Step 4 end
     }
-
-
 }

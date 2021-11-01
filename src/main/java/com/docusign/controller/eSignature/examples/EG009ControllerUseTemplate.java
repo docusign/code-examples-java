@@ -12,14 +12,11 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.EnvelopeTemplateResults;
-import com.docusign.esign.model.TemplateRole;
-
 import com.docusign.services.eSignature.examples.UseTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.util.Arrays;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -38,10 +35,8 @@ import javax.servlet.http.HttpServletResponse;
 public class EG009ControllerUseTemplate extends AbstractEsignatureController {
 
     private static final String MODEL_LIST_TEMPLATE = "listTemplates";
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG009ControllerUseTemplate(DSConfiguration config, Session session, User user) {
