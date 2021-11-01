@@ -12,6 +12,7 @@ import com.docusign.rooms.model.RoleSummary;
 import com.docusign.rooms.model.Room;
 import com.docusign.rooms.model.RoomTemplatesSummaryList;
 import com.docusign.services.rooms.examples.CreateRoomWithTemplateService;
+import com.docusign.services.rooms.examples.GetAdminRolesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -55,9 +56,8 @@ public class R002ControllerCreateRoomWithTemplate extends AbstractRoomsControlle
     @Override
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
-        RoleSummary adminRole = getAdminRole(
-                this.session.getBasePath(),
-                this.user.getAccessToken(),
+        RoleSummary adminRole = GetAdminRolesService.getAdminRole(
+                createRolesApiClient(this.session.getBasePath(), this.user.getAccessToken()),
                 this.session.getAccountId());
 
         // Step 2: Construct your API headers

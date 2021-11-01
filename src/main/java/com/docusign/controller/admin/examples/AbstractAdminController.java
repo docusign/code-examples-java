@@ -1,18 +1,10 @@
 package com.docusign.controller.admin.examples;
 
 import com.docusign.DSConfiguration;
-import com.docusign.admin.api.AccountsApi;
-import com.docusign.admin.api.BulkExportsApi;
-import com.docusign.admin.api.BulkImportsApi;
-import com.docusign.admin.api.DsGroupsApi;
-import com.docusign.admin.api.ProductPermissionProfilesApi;
-import com.docusign.admin.api.UsersApi;
-import com.docusign.admin.api.UsersApi.GetUserProfilesOptions;
+import com.docusign.admin.api.*;
 import com.docusign.admin.client.ApiClient;
 import com.docusign.admin.client.ApiException;
-import com.docusign.admin.model.UsersDrilldownResponse;
 import com.docusign.core.controller.AbstractController;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 
@@ -24,12 +16,10 @@ import java.util.UUID;
 @Controller
 public abstract class AbstractAdminController extends AbstractController {
 
-    private final DSConfiguration configuration;
     private static final String EXAMPLE_PAGES_PATH = "pages/admin/examples/";
 
     public AbstractAdminController(DSConfiguration config, String exampleName, String title) {
         super(config, exampleName, title);
-        this.configuration = config;
     }
 
     protected String getExamplePagesPath() {
@@ -87,39 +77,8 @@ public abstract class AbstractAdminController extends AbstractController {
         return new BulkImportsApi(apiClient);
     }
 
-    /**
-     * Creates a request to get current user.
-     * @param accessToken user's access token
-     * @param basePath basePath to the server
-     * @param organizationId the ID of current organization
-     * @return the account Id
-     */
-    protected UUID getExistingAccountId(
-            String accessToken,
-            String basePath,
-            UUID organizationId
-    ) throws Exception {
-        UsersApi usersApi = createUsersApi(accessToken, basePath);
-
-        // set the signer email to get an information about that user
-        // new GetUsersOptions() will throw "an enclosing instance that contains com.docusign.admin.api.UsersApi.GetUserProfilesOptions is required"
-        // at compile time.  I used this workaround from stackOverflow:
-        // https://stackoverflow.com/a/4297913/2226328
-        
-        GetUserProfilesOptions userProfilesOptions = usersApi.new GetUserProfilesOptions();
-        userProfilesOptions.setEmail(configuration.getSignerEmail());
-
-        UsersDrilldownResponse user = usersApi.getUserProfiles(organizationId, userProfilesOptions);
-
-        if (user.getUsers().isEmpty()) {
-            throw new Exception("Could not get an account id from the request.");
-        }
-
-        return  user.getUsers().get(0).getDefaultAccountId();
-    }
-
     protected UUID getOrganizationId(String accessToken, String basePath) throws ApiException{
-        UUID orgId = null;
+        UUID orgId;
         if (session.getOrgId() == null){
         ApiClient apiClient = createApiClient(accessToken, basePath);
         AccountsApi accounts = new AccountsApi(apiClient);
@@ -152,7 +111,7 @@ public abstract class AbstractAdminController extends AbstractController {
      * creates an instance of the AdminGroupsApi class silently.
      * @param accessToken user's access token
      * @param basePath basePath to the server
-     * @return an instance of the {@link AdminGroupsApi}
+     * @return an instance of the {@link DsGroupsApi}
      */
     protected DsGroupsApi createDSGroupsApi(String accessToken, String basePath) {
         ApiClient apiClient = createApiClient(accessToken, basePath);

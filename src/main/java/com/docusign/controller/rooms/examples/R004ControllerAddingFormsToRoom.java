@@ -11,6 +11,7 @@ import com.docusign.rooms.model.FormSummary;
 import com.docusign.rooms.model.RoomDocument;
 import com.docusign.rooms.model.RoomSummaryList;
 import com.docusign.services.rooms.examples.AddingFormsToRoomService;
+import com.docusign.services.rooms.examples.GetFormSummaryListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -47,9 +48,8 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
 
         // Step 3. Obtain the desired form ID
         RoomSummaryList roomSummaryList = roomsApi.getRooms(this.session.getAccountId());
-        List<FormSummary> forms = getFormSummaryList(
-                this.session.getBasePath(),
-                this.user.getAccessToken(),
+        List<FormSummary> forms = GetFormSummaryListService.getFormSummaryList(
+                createFormLibrariesApi(session.getBasePath(), this.user.getAccessToken()),
                 this.session.getAccountId());
 
         model.addAttribute(MODEL_ROOM_LIST, roomSummaryList.getRooms());

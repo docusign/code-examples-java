@@ -13,6 +13,7 @@ import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.services.admin.examples.CreateActiveCLMESignUserService;
+import com.docusign.services.admin.examples.GetExistingAccountIdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -44,7 +45,10 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
         UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
-        UUID accountId = this.getExistingAccountId(user.getAccessToken(), session.getBasePath(), organizationId);
+        UUID accountId = GetExistingAccountIdService.getExistingAccountId(
+                createUsersApi(this.user.getAccessToken(), this.session.getBasePath()),
+                config.getSignerEmail(),
+                organizationId);
 
         // Step 3 start
         ProductPermissionProfilesApi permissionsInfo = this.createProductPermissionProfilesApi(user.getAccessToken(),
@@ -92,9 +96,9 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
 
         // Collect ids needed for the request
         UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
-        UUID accountId = this.getExistingAccountId(
-                this.user.getAccessToken(),
-                this.session.getBasePath(),
+        UUID accountId = GetExistingAccountIdService.getExistingAccountId(
+                createUsersApi(this.user.getAccessToken(), this.session.getBasePath()),
+                config.getSignerEmail(),
                 organizationId);
 
         AddUserResponse result = CreateActiveCLMESignUserService.createNewActiveUser(

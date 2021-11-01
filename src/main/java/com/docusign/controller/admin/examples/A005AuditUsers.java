@@ -8,6 +8,7 @@ import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.services.admin.examples.AuditUsersService;
+import com.docusign.services.admin.examples.GetExistingAccountIdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -39,7 +40,10 @@ public class A005AuditUsers extends AbstractAdminController {
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
         // Collect ids needed for the request
         UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
-        UUID accountId = this.getExistingAccountId(this.user.getAccessToken(), this.session.getBasePath(), organizationId);
+        UUID accountId = GetExistingAccountIdService.getExistingAccountId(
+                createUsersApi(this.user.getAccessToken(), this.session.getBasePath()),
+                config.getSignerEmail(),
+                organizationId);
 
         UsersApi adminApi = createUsersApi(this.user.getAccessToken(), this.session.getBasePath());
 
