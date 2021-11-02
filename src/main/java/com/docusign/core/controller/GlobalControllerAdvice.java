@@ -82,7 +82,7 @@ public class GlobalControllerAdvice {
     }
 
     @ModelAttribute("locals")
-    public Locals populateLocals(ModelMap model) throws LauncherException {
+    public Locals populateLocals(ModelMap model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         String selectedApi = config.getApiName().getFirstSelectedApi();
