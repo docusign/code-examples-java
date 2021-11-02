@@ -12,7 +12,7 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.ErrorDetails;
 import com.docusign.esign.model.GroupInformation;
 import com.docusign.esign.model.PermissionProfileInformation;
-import com.docusign.services.eSignature.examples.PermissionSetUserGroupsService;
+import com.services.eSignature.PermissionSetUserGroupsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

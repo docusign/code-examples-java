@@ -10,7 +10,7 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeTemplate;
 import com.docusign.esign.model.EnvelopeTemplateResults;
 import com.docusign.esign.model.TemplateSummary;
-import com.docusign.services.eSignature.examples.CreateTemplateService;
+import com.services.eSignature.CreateTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

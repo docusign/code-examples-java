@@ -8,7 +8,7 @@ import com.docusign.core.model.User;
 import com.docusign.rooms.api.FormGroupsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.FormGroup;
-import com.docusign.services.rooms.examples.CreateFormGroupService;
+import com.services.rooms.CreateFormGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

@@ -9,7 +9,7 @@ import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
-import com.docusign.services.eSignature.examples.EnvelopeGetDocService;
+import com.services.eSignature.EnvelopeGetDocService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

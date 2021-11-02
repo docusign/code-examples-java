@@ -9,7 +9,7 @@ import com.docusign.rooms.api.RoomsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.FieldData;
 import com.docusign.rooms.model.RoomSummaryList;
-import com.docusign.services.rooms.examples.ExportingDataFromRoomService;
+import com.services.rooms.ExportingDataFromRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

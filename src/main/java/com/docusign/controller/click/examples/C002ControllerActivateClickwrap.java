@@ -8,7 +8,7 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.services.click.examples.ActivateClickwrapService;
+import com.services.click.ActivateClickwrapService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
