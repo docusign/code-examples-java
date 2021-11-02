@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
 public class GlobalControllerAdvice {
 
     private static final String ERROR_ACCOUNT_NOT_FOUND = "Could not find account information for the user";
-
+    private static final String SELECTED_API_NOT_SUPPORTED = "Currently selected api is not supported by launcher. Please, check appsettings.json file.";
     private final DSConfiguration config;
     private final Session session;
     private final User user;
@@ -82,7 +82,7 @@ public class GlobalControllerAdvice {
 
         String selectedApi = config.getApiName().getFirstSelectedApi();
         if (!EnumUtils.isValidEnum(ApiIndex.class, selectedApi)){
-            throw new NoSuchElementException(selectedApi);
+            throw new NoSuchElementException(SELECTED_API_NOT_SUPPORTED);
         }
         ApiIndex apiIndex = ApiIndex.valueOf(selectedApi);
         session.setApiIndexPath(apiIndex.toString());
