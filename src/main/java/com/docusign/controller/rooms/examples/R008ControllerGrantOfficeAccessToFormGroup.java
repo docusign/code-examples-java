@@ -9,7 +9,7 @@ import com.docusign.rooms.api.FormGroupsApi;
 import com.docusign.rooms.api.OfficesApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.*;
-import com.services.rooms.GrantOfficeAccessToFormGroupService;
+import com.docusign.controller.rooms.services.GrantOfficeAccessToFormGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

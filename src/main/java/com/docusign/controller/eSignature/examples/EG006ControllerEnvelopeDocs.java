@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
-import com.services.eSignature.EnvelopeDocsService;
+import com.docusign.controller.eSignature.services.EnvelopeDocsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
