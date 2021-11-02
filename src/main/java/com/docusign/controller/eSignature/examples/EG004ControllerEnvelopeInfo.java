@@ -9,7 +9,7 @@ import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import javax.servlet.http.HttpServletResponse;
 import com.docusign.esign.model.Envelope;
-import com.services.eSignature.EnvelopeInfoService;
+import com.docusign.controller.eSignature.services.EnvelopeInfoService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

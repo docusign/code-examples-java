@@ -9,7 +9,7 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.core.model.User;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
-import com.services.eSignature.PauseSignatureWorkflowService;
+import com.docusign.controller.eSignature.services.PauseSignatureWorkflowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

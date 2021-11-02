@@ -9,7 +9,7 @@ import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.PermissionProfile;
 import com.docusign.esign.model.PermissionProfileInformation;
-import com.services.eSignature.PermissionChangeSingleSettingService;
+import com.docusign.controller.eSignature.services.PermissionChangeSingleSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

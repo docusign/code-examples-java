@@ -9,7 +9,7 @@ import com.docusign.core.model.User;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.BrandsResponse;
-import com.services.eSignature.CreateBrandService;
+import com.docusign.controller.eSignature.services.CreateBrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

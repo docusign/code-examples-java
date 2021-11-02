@@ -11,7 +11,7 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.BrandsResponse;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
-import com.services.eSignature.ApplyBrandToEnvelopeService;
+import com.docusign.controller.eSignature.services.ApplyBrandToEnvelopeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
