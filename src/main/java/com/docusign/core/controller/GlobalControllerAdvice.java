@@ -2,7 +2,6 @@ package com.docusign.core.controller;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.ApiIndex;
-import com.docusign.core.exception.LauncherException;
 import com.docusign.core.model.*;
 import com.docusign.core.utils.AccountsConverter;
 import com.docusign.esign.client.auth.OAuth;
@@ -15,16 +14,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static com.docusign.core.controller.AbstractController.ERROR_PAGE;
 
 /**
  * This class provides common model attributes for all pages. If you want to
@@ -82,13 +77,12 @@ public class GlobalControllerAdvice {
     }
 
     @ModelAttribute("locals")
-    public Locals populateLocals(ModelMap model) {
+    public Locals populateLocals() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         String selectedApi = config.getApiName().getFirstSelectedApi();
         if (!EnumUtils.isValidEnum(ApiIndex.class, selectedApi)){
-            handleException("Wrong api name", selectedApi, model);
-            return null;
+            throw new NoSuchElementException(selectedApi);
         }
         ApiIndex apiIndex = ApiIndex.valueOf(selectedApi);
         session.setApiIndexPath(apiIndex.toString());
@@ -118,16 +112,6 @@ public class GlobalControllerAdvice {
         }
 
         return new Locals(config, session, user, "");
-    }
-
-    @PostMapping
-    private String handleException(String errorName, String errorMethod, ModelMap model) {
-        new DoneExample()
-                .withTitle(errorName)
-                .withName(errorName)
-                .withMessage(errorMethod)
-                .addToModel(model);
-        return ERROR_PAGE;
     }
 
     private String getBaseUrl(ApiIndex apiIndex, OAuth.Account oauthAccount) {
