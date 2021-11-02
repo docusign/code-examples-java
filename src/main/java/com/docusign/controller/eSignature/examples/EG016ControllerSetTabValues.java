@@ -11,7 +11,7 @@ import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.RecipientViewRequest;
 import com.docusign.esign.model.ViewUrl;
-import com.docusign.services.eSignature.examples.SetTabValuesService;
+import com.services.eSignature.SetTabValuesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

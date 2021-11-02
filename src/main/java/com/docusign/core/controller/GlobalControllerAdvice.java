@@ -5,6 +5,7 @@ import com.docusign.common.ApiIndex;
 import com.docusign.core.model.*;
 import com.docusign.core.utils.AccountsConverter;
 import com.docusign.esign.client.auth.OAuth;
+import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.security.oauth2.provider.authentication.OAuth2Authent
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -78,7 +80,11 @@ public class GlobalControllerAdvice {
     @ModelAttribute("locals")
     public Locals populateLocals() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        ApiIndex apiIndex = ApiIndex.valueOf(config.getApiName().getFirstSelectedApi());
+        String selectedApi = config.getApiName().getFirstSelectedApi();
+        if (!EnumUtils.isValidEnum(ApiIndex.class, selectedApi)){
+            throw new NoSuchElementException(selectedApi);
+        }
+        ApiIndex apiIndex = ApiIndex.valueOf(selectedApi);
         session.setApiIndexPath(apiIndex.toString());
 
         if (!(authentication instanceof OAuth2Authentication)) {

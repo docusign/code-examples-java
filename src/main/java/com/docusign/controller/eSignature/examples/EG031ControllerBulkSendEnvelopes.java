@@ -9,7 +9,7 @@ import com.docusign.esign.api.BulkEnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.BulkSendBatchStatus;
-import com.docusign.services.eSignature.examples.BulkSendEnvelopesService;
+import com.services.eSignature.BulkSendEnvelopesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

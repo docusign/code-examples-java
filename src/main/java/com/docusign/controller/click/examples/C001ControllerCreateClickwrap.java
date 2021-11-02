@@ -9,7 +9,7 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.services.click.examples.CreateClickwrapService;
+import com.services.click.CreateClickwrapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

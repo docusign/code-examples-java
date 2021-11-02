@@ -12,11 +12,9 @@ import com.docusign.esign.model.Document;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.RecipientViewRequest;
-import com.docusign.esign.model.Recipients;
-import com.docusign.esign.model.Signer;
 import com.docusign.esign.model.ViewUrl;
 
-import com.docusign.services.eSignature.examples.EmbeddedSigningService;
+import com.services.eSignature.EmbeddedSigningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import javax.servlet.http.HttpServletResponse;
 
