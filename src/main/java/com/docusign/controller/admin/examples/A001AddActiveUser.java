@@ -1,6 +1,7 @@
 package com.docusign.controller.admin.examples;
 
 import com.docusign.DSConfiguration;
+import com.docusign.admin.client.ApiException;
 import com.docusign.admin.model.NewUserResponse;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
@@ -34,12 +35,23 @@ public class A001AddActiveUser extends AbstractAdminController {
     private static final String MODEL_LIST_GROUPS = "listGroups";
     private final User user;
     private final Session session;
+    private final String accessToken;
+    private final String basePath;
+    private final UUID organizationId;
+    private final UUID accountId;
 
     @Autowired
-    public A001AddActiveUser(DSConfiguration config, Session session, User user) {
+    public A001AddActiveUser(DSConfiguration config, Session session, User user) throws Exception {
         super(config, "a001", "Create a new active eSignature user");
         this.user = user;
         this.session = session;
+        this.accessToken = this.user.getAccessToken();
+        this.basePath = this.session.getBasePath();
+        this.organizationId = this.getOrganizationId(accessToken, basePath);
+        this.accountId = GetExistingAccountIdService.getExistingAccountId(
+                createUsersApi(accessToken, basePath),
+                config.getSignerEmail(),
+                organizationId);
     }
 
     @Override
@@ -50,11 +62,6 @@ public class A001AddActiveUser extends AbstractAdminController {
         
         // Step 3 start
         AccountsApi accountsApi = new AccountsApi(apiClient);
-        UUID orgId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
-        UUID accountId = GetExistingAccountIdService.getExistingAccountId(
-                createUsersApi(this.user.getAccessToken(), this.session.getBasePath()),
-                config.getSignerEmail(),
-                orgId);
         PermissionProfileInformation permissionsInfo = accountsApi.listPermissions(String.valueOf(accountId));
         // Step 3 end
 
@@ -70,14 +77,6 @@ public class A001AddActiveUser extends AbstractAdminController {
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
-        UUID organizationId = this.getOrganizationId(
-                this.user.getAccessToken(),
-                this.session.getBasePath());
-        UUID accountId = GetExistingAccountIdService.getExistingAccountId(
-                createUsersApi(this.user.getAccessToken(), this.session.getBasePath()),
-                config.getSignerEmail(),
-                organizationId);
-
         NewUserResponse result = AddActiveUserService.addActiveUser(
                 args.getGroupId(),
                 args.getProfileId(),
@@ -85,7 +84,7 @@ public class A001AddActiveUser extends AbstractAdminController {
                 args.getUserName(),
                 args.getFirstName(),
                 args.getLastName(),
-                createUsersApi(this.user.getAccessToken(), this.session.getBasePath()),
+                createUsersApi(accessToken, basePath),
                 organizationId,
                 accountId);
 

@@ -38,14 +38,16 @@ public class A005AuditUsers extends AbstractAdminController {
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
+        String accessToken = this.user.getAccessToken();
+        String basePath = this.session.getBasePath();
         // Collect ids needed for the request
-        UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
+        UUID organizationId = this.getOrganizationId(accessToken, basePath);
         UUID accountId = GetExistingAccountIdService.getExistingAccountId(
-                createUsersApi(this.user.getAccessToken(), this.session.getBasePath()),
+                createUsersApi(accessToken, basePath),
                 config.getSignerEmail(),
                 organizationId);
 
-        UsersApi adminApi = createUsersApi(this.user.getAccessToken(), this.session.getBasePath());
+        UsersApi adminApi = createUsersApi(accessToken, basePath);
 
         ArrayList<UserDrilldownResponse> resultsArr = AuditUsersService.auditUsers(adminApi, organizationId, accountId);
 

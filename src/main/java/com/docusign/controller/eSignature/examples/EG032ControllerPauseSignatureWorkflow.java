@@ -53,19 +53,18 @@ public class EG032ControllerPauseSignatureWorkflow extends AbstractEsignatureCon
         );
 
         // Step 4: Call the eSignature REST API
-        EnvelopeSummary results = PauseSignatureWorkflowService.pauseSignatureWorkflow(
+        EnvelopeSummary envelopeSummary = PauseSignatureWorkflowService.pauseSignatureWorkflow(
                 envelopesApi,
                 this.session.getAccountId(),
                 envelope
         );
 
-        this.session.setEnvelopeId(results.getEnvelopeId());
+        this.session.setEnvelopeId(envelopeSummary.getEnvelopeId());
         DoneExample.createDefault(this.title)
-                .withJsonObject(results)
+                .withJsonObject(envelopeSummary)
                 .withMessage(
                         "The envelope where the workflow is paused before the envelope is sent to a second recipient " +
-                                "has been created and sent!<br />Envelope ID "
-                                + this.session.getEnvelopeId() + ".")
+                                "has been created and sent!<br />Envelope ID " + this.session.getEnvelopeId() + ".")
                 .addToModel(model);
 
         return DONE_EXAMPLE_PAGE;

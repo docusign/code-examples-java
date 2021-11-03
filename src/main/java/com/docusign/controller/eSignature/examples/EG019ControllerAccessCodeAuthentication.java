@@ -52,15 +52,15 @@ public class EG019ControllerAccessCodeAuthentication extends AbstractEsignatureC
         );
 
         // Step 3: Call the eSignature REST API
-        EnvelopeSummary results = AccessCodeAuthenticationService.accessCodeAuthentication(
+        EnvelopeSummary envelopeSummary = AccessCodeAuthenticationService.accessCodeAuthentication(
                 envelopesApi,
                 session.getAccountId(),
                 envelope
         );
 
-        session.setEnvelopeId(results.getEnvelopeId());
+        session.setEnvelopeId(envelopeSummary.getEnvelopeId());
         DoneExample.createDefault(title)
-                .withJsonObject(results)
+                .withJsonObject(envelopeSummary)
                 .withMessage("The envelope has been created and sent!<br />Envelope ID "
                     + session.getEnvelopeId() + ".")
                 .addToModel(model);

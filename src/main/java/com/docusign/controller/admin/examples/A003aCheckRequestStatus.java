@@ -44,9 +44,11 @@ public class A003aCheckRequestStatus extends AbstractAdminController {
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
+        String accessToken = this.user.getAccessToken();
+        String basePath = this.session.getBasePath();
         // Create a bulk exports api instance
-        BulkExportsApi bulkExportsApi = createBulkExportsApi(this.user.getAccessToken(), this.session.getBasePath());
-        UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
+        BulkExportsApi bulkExportsApi = createBulkExportsApi(accessToken, basePath);
+        UUID organizationId = this.getOrganizationId(accessToken, basePath);
         UUID exportId = UUID.fromString(this.session.getExportId());
 
         OrganizationExportResponse result = CheckRequestStatusService.checkRequestStatus(

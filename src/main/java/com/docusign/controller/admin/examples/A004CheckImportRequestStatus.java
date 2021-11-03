@@ -53,12 +53,15 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
             return new RedirectView("a004");
         }
 
+        String accessToken = this.user.getAccessToken();
+        String basePath = this.session.getBasePath();
+
         // Create a bulk exports api instance
-        BulkImportsApi bulkImportsApi = createBulkImportsApi(this.user.getAccessToken(), this.session.getBasePath());
+        BulkImportsApi bulkImportsApi = createBulkImportsApi(accessToken, basePath);
 
         OrganizationImportResponse result = CheckImportRequestStatusService.checkRequestStatus(
                 bulkImportsApi,
-                this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()),
+                this.getOrganizationId(accessToken, basePath),
                 UUID.fromString(this.session.getImportId())
         );
 

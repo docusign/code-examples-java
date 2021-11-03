@@ -55,14 +55,14 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
                 args.getPhoneNumber());
 
         // Step 3: Call the eSignature REST API
-        EnvelopeSummary results = PhoneAuthenticationService.phoneAuthentication(
+        EnvelopeSummary envelopeSummary = PhoneAuthenticationService.phoneAuthentication(
                 envelopesApi,
-                session.getAccountId(),
+                accountId,
                 envelope
         );
 
-        session.setEnvelopeId(results.getEnvelopeId());
-        DoneExample.createDefault(title).withJsonObject(results)
+        session.setEnvelopeId(envelopeSummary.getEnvelopeId());
+        DoneExample.createDefault(title).withJsonObject(envelopeSummary)
                 .withMessage(
                         "The envelope has been created and sent!<br />Envelope ID " + results.getEnvelopeId() + ".")
                 .addToModel(model);

@@ -57,17 +57,17 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
                 args.getSignerEmail(),
                 workflowId);
         // Step 4: Create envelope
-        EnvelopeSummary results = IdvAuthenticationService.idvAuthentication(
+        EnvelopeSummary envelopeSummary = IdvAuthenticationService.idvAuthentication(
                 envelopesApi,
                 session.getAccountId(),
                 envelope
         );
 
-        session.setEnvelopeId(results.getEnvelopeId());
+        session.setEnvelopeId(envelopeSummary.getEnvelopeId());
         DoneExample.createDefault(title)
-                .withJsonObject(results)
+                .withJsonObject(envelopeSummary)
                 .withMessage("The envelope has been created and sent!<br />Envelope ID "
-                        + results.getEnvelopeId() + ".")
+                        + envelopeSummary.getEnvelopeId() + ".")
                 .addToModel(model);
 
         return DONE_EXAMPLE_PAGE;

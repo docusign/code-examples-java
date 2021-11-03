@@ -77,7 +77,7 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController 
         // Exceptions will be caught by the calling function
         String documentId = args.getDocSelect();
         // Step 3 start
-        byte[] results = EnvelopeGetDocService.envelopeGetDoc(
+        byte[] envelopeDocument = EnvelopeGetDocService.envelopeGetDoc(
                 envelopesApi,
                 session.getAccountId(),
                 session.getEnvelopeId(),
@@ -99,9 +99,9 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController 
         }
 
         response.setContentType(URLConnection.guessContentTypeFromName(docName));
-        response.setContentLength(results.length);
+        response.setContentLength(envelopeDocument.length);
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION, HTTP_CONTENT_DISPOSITION_VALUE + docName);
-        response.getOutputStream().write(results);
+        response.getOutputStream().write(envelopeDocument);
         response.flushBuffer();
         return null;
     }

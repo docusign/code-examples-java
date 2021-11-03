@@ -49,17 +49,17 @@ public class EG022ControllerKBAAuthentication extends AbstractEsignatureControll
                 args.getSignerEmail());
 
         // Step 3: Call the eSignature REST API
-        EnvelopeSummary results = KBAAuthenticationService.kbaAuthentication(
+        EnvelopeSummary envelopeSummary = KBAAuthenticationService.kbaAuthentication(
                 envelopesApi,
                 session.getAccountId(),
                 envelope
         );
 
-        session.setEnvelopeId(results.getEnvelopeId());
+        session.setEnvelopeId(envelopeSummary.getEnvelopeId());
         DoneExample.createDefault(title)
-                .withJsonObject(results)
+                .withJsonObject(envelopeSummary)
                 .withMessage("The envelope has been created and sent!<br />Envelope ID "
-                     + results.getEnvelopeId() + ".")
+                     + envelopeSummary.getEnvelopeId() + ".")
                 .addToModel(model);
 
         return DONE_EXAMPLE_PAGE;

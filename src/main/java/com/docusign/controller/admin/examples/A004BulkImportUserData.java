@@ -38,13 +38,15 @@ public class A004BulkImportUserData extends AbstractAdminController {
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
+        String accessToken = this.user.getAccessToken();
+        String basePath = this.session.getBasePath();
         // Collect ids and user data needed for the request
-        UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
+        UUID organizationId = this.getOrganizationId(accessToken, basePath);
         UUID accountId = GetExistingAccountIdService.getExistingAccountId(
-                createUsersApi(this.user.getAccessToken(), this.session.getBasePath()),
+                createUsersApi(accessToken, basePath),
                 config.getSignerEmail(),
                 organizationId);
-        BulkImportsApi bulkImportsApi = createBulkImportsApi(this.user.getAccessToken(), this.session.getBasePath());
+        BulkImportsApi bulkImportsApi = createBulkImportsApi(accessToken, basePath);
 
         OrganizationImportResponse result = BulkImportUserDataService
                 .bulkImportUserData(bulkImportsApi, organizationId, accountId);

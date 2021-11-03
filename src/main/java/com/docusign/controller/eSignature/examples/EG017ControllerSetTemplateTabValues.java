@@ -19,7 +19,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
 @Controller
 @RequestMapping("/eg017")
 public class EG017ControllerSetTemplateTabValues extends AbstractEsignatureController {
@@ -54,7 +53,6 @@ public class EG017ControllerSetTemplateTabValues extends AbstractEsignatureContr
         String ccName = args.getCcName();
         String ccEmail = args.getCcEmail();
         String templateId = args.getTemplateId();
-
 
         // Step 2. Construct your API headers
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());

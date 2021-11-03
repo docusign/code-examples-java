@@ -30,7 +30,6 @@ public final class AddDocToTemplateService {
             String dsPingUrl,
             WorkArguments args
     ) throws ApiException, IOException {
-        // Step 2 start
         EnvelopeDefinition envelope = AddDocToTemplateService.makeEnvelope(
                 signerEmail,
                 signerName,
@@ -40,10 +39,9 @@ public final class AddDocToTemplateService {
                 templateId,
                 args
         );
-        // Step 2 end
 
         // Step 3 start
-        EnvelopeSummary results = envelopesApi.createEnvelope(accountId, envelope);
+        EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
         // Step 3 end
 
         // Step 4 start
@@ -54,7 +52,7 @@ public final class AddDocToTemplateService {
             signerClientId,
             dsPingUrl
         );
-        return envelopesApi.createRecipientView(accountId, results.getEnvelopeId(), viewRequest);
+        return envelopesApi.createRecipientView(accountId, envelopeSummary.getEnvelopeId(), viewRequest);
     }
 
     private static RecipientViewRequest makeRecipientViewRequest(
@@ -139,11 +137,11 @@ public final class AddDocToTemplateService {
         compTemplate2.setDocument(EnvelopeHelpers.createDocument(htmlDoc, HTML_DOCUMENT_NAME,
                 DocumentType.HTML.getDefaultFileExtention(), "1"));
 
-        EnvelopeDefinition env = new EnvelopeDefinition();
-        env.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
-        env.setCompositeTemplates(Arrays.asList(compTemplate1, compTemplate2));
+        EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
+        envelopeDefinition.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
+        envelopeDefinition.setCompositeTemplates(Arrays.asList(compTemplate1, compTemplate2));
 
-        return env;
+        return envelopeDefinition;
     }
 
     // Adding clientUserId transforms the template recipient into an embedded recipient
