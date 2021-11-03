@@ -46,7 +46,7 @@ public  class AddActiveUserService {
         groups.add(new GroupRequest().id(Long.valueOf(groupId)));
 
         // Fill the request with data from the form
-        NewUserRequest accountUserRequest = new NewUserRequest()
+        NewUserRequest userRequest = new NewUserRequest()
                 .defaultAccountId(accountId)
                 .addAccountsItem(
                         new NewUserRequestAccountProperties()
@@ -65,7 +65,7 @@ public  class AddActiveUserService {
         // Step 5 end
 
         // Step 6 start
-        return usersApi.createUser(organizationId, accountUserRequest);
+        return usersApi.createUser(organizationId, userRequest);
         // Step 6 end
     }
 }

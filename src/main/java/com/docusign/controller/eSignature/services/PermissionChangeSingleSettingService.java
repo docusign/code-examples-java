@@ -38,12 +38,13 @@ public final class PermissionChangeSingleSettingService {
     // will be read from the page or in a different way
     private static AccountRoleSettings changeRandomSettings(AccountRoleSettings settings) {
         Gson gson = new Gson();
+        String signingUiVersion = "1";
         // Change this value back to: gson.fromJson(gson.toJson(settings),
         // AccountRoleSettings.class);
         // as soon as the signinguiversion is added back to the swagger spec.
         // Also change the type back from AccountRoleSettingsPatch to AccountRoleSettings
         AccountRoleSettingsPatch newSettings = gson.fromJson(gson.toJson(settings), AccountRoleSettingsPatch.class);
-        newSettings.signingUiVersion("1");
+        newSettings.signingUiVersion(signingUiVersion);
         Random random = new Random(System.currentTimeMillis());
 
         return newSettings.canCreateWorkspaces(randomBool(random)).allowEnvelopeSending(randomBool(random))

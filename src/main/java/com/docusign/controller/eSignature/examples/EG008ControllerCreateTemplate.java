@@ -47,14 +47,14 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
         // Step 1. list existing templates
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
         String accountId = session.getAccountId();
-        EnvelopeTemplateResults results = CreateTemplateService.searchTemplatesByName(
+        EnvelopeTemplateResults envelopeTemplateResults = CreateTemplateService.searchTemplatesByName(
                 apiClient,
                 accountId,
                 TEMPLATE_NAME);
 
         // Step 2. Process results. If template do not exist, create one
-        if (Integer.parseInt(results.getResultSetSize()) > 0) {
-            EnvelopeTemplate template = results.getEnvelopeTemplates().get(0);
+        if (Integer.parseInt(envelopeTemplateResults.getResultSetSize()) > 0) {
+            EnvelopeTemplate template = envelopeTemplateResults.getEnvelopeTemplates().get(0);
             DoneExample.createDefault(title)
                     .withMessage(String.format(
                             "The template already exists in your account. <br/>Template name: %s, ID %s.",

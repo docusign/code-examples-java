@@ -73,11 +73,11 @@ public class EG014ControllerCollectPayment extends AbstractEsignatureController 
                 args);
 
         // Step 2. call Envelopes::create API method
-        EnvelopeSummary results = CollectPaymentService.collectPayment(envelopesApi, envelope, session.getAccountId());
+        EnvelopeSummary envelopeSummary = CollectPaymentService.collectPayment(envelopesApi, envelope, session.getAccountId());
 
         DoneExample.createDefault(title)
                 .withMessage(String.join("", "The envelope has been created and sent!<br/>Envelope ID ",
-                        results.getEnvelopeId(), "."))
+                        envelopeSummary.getEnvelopeId(), "."))
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

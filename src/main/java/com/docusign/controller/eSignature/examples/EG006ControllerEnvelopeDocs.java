@@ -56,7 +56,7 @@ public class EG006ControllerEnvelopeDocs extends AbstractEsignatureController {
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
         // Step 1. List the envelope's documents
-        EnvelopeDocumentsResult result = EnvelopeDocsService.envelopeDocs(
+        EnvelopeDocumentsResult envelopeDocumentsResult = EnvelopeDocsService.envelopeDocs(
                 envelopesApi,
                 session.getAccountId(),
                 session.getEnvelopeId());
@@ -69,7 +69,7 @@ public class EG006ControllerEnvelopeDocs extends AbstractEsignatureController {
         envelopeDocItems.add(new EnvelopeDocumentInfo("Combined", "content", "combined"));
         envelopeDocItems.add(new EnvelopeDocumentInfo("Zip archive", "zip", "archive"));
 
-        for (EnvelopeDocument doc : result.getEnvelopeDocuments()) {
+        for (EnvelopeDocument doc : envelopeDocumentsResult.getEnvelopeDocuments()) {
             String documentName = doc.getName();
             if (StringUtils.equals(doc.getDocumentId(), "certificate")) {
                 documentName = "Certificate of completion";
@@ -78,7 +78,7 @@ public class EG006ControllerEnvelopeDocs extends AbstractEsignatureController {
         }
 
         DoneExample.createDefault(title)
-            .withJsonObject(result)
+            .withJsonObject(envelopeDocumentsResult)
             .withMessage("Results from the EnvelopeDocuments::list method:")
             .addToModel(model);
         return DONE_EXAMPLE_PAGE;

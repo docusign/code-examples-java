@@ -65,16 +65,16 @@ public class EG009ControllerUseTemplate extends AbstractEsignatureController {
                 args.getCcName(),
                 args.getTemplateId()
         );
-        EnvelopeSummary result = UseTemplateService.createEnvelopeTemplate(
+        EnvelopeSummary envelopeSummary = UseTemplateService.createEnvelopeTemplate(
                 envelopesApi,
                 session.getAccountId(),
                 envelope);
 
-        session.setEnvelopeId(result.getEnvelopeId());
+        session.setEnvelopeId(envelopeSummary.getEnvelopeId());
         DoneExample.createDefault(title)
-                .withJsonObject(result)
+                .withJsonObject(envelopeSummary)
                 .withMessage("The envelope has been created and sent!<br/>Envelope ID "
-                        + result.getEnvelopeId() + ".")
+                        + envelopeSummary.getEnvelopeId() + ".")
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

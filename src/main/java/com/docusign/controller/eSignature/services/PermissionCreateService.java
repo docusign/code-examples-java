@@ -17,9 +17,10 @@ public class PermissionCreateService {
         // Step 3. Construct your request body
         // We're extending the AccountSettings class with AccountSettingsPatch to include the signingUIVersion which is missing in the swagger spec at this time.
         Gson gson = new Gson();
+        String signingUiVersion = "1";
         AccountRoleSettings settings = DsModelUtils.createDefaultRoleSettings();
         AccountRoleSettingsPatch newSettings = gson.fromJson(gson.toJson(settings), AccountRoleSettingsPatch.class);
-        newSettings.signingUiVersion("1");
+        newSettings.signingUiVersion(signingUiVersion);
         PermissionProfile profile = new PermissionProfile()
                 .permissionProfileName(permissionProfileName)
                 .settings(newSettings);

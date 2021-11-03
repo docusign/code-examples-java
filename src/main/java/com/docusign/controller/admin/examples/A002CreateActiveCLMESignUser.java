@@ -4,6 +4,7 @@ import com.docusign.DSConfiguration;
 import com.docusign.admin.api.DsGroupsApi;
 import com.docusign.admin.api.ProductPermissionProfilesApi;
 import com.docusign.admin.api.UsersApi;
+import com.docusign.admin.client.ApiException;
 import com.docusign.admin.model.AddUserResponse;
 import com.docusign.admin.model.DSGroupListResponse;
 import com.docusign.admin.model.ProductPermissionProfileResponse;
@@ -32,27 +33,31 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
 
     private final User user;
     private final Session session;
+    private final String accessToken;
+    private final String basePath;
+    private final UUID organizationId;
+    private final UUID accountId;
 
     @Autowired
-    public A002CreateActiveCLMESignUser(DSConfiguration config, Session session, User user) {
+    public A002CreateActiveCLMESignUser(DSConfiguration config, Session session, User user) throws Exception {
 
         super(config, "a002", "Create new active user for CLM and eSignature");
         this.user = user;
         this.session = session;
+        this.accessToken = this.user.getAccessToken();
+        this.basePath = this.session.getBasePath();
+        this.organizationId = this.getOrganizationId(accessToken, basePath);
+        this.accountId = GetExistingAccountIdService.getExistingAccountId(
+                createUsersApi(accessToken, basePath),
+                config.getSignerEmail(),
+                organizationId);
     }
 
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
-        UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
-        UUID accountId = GetExistingAccountIdService.getExistingAccountId(
-                createUsersApi(this.user.getAccessToken(), this.session.getBasePath()),
-                config.getSignerEmail(),
-                organizationId);
-
         // Step 3 start
-        ProductPermissionProfilesApi permissionsInfo = this.createProductPermissionProfilesApi(user.getAccessToken(),
-                session.getBasePath());
+        ProductPermissionProfilesApi permissionsInfo = this.createProductPermissionProfilesApi(accessToken, basePath);
         ProductPermissionProfilesResponse profiles = permissionsInfo.getProductPermissionProfiles(
                 organizationId,
                 accountId);
@@ -74,7 +79,7 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
         // Step 3 end
         
         // Step 4 start
-        DsGroupsApi groupsApi = this.createDSGroupsApi(user.getAccessToken(), session.getBasePath());
+        DsGroupsApi groupsApi = this.createDSGroupsApi(accessToken, basePath);
         DSGroupListResponse groups = groupsApi.getDSGroups(organizationId, accountId);
         // Step 4 end
 
@@ -92,14 +97,7 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
         // Create a users api instance
-        UsersApi usersApi = createUsersApi(this.user.getAccessToken(), this.session.getBasePath());
-
-        // Collect ids needed for the request
-        UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
-        UUID accountId = GetExistingAccountIdService.getExistingAccountId(
-                createUsersApi(this.user.getAccessToken(), this.session.getBasePath()),
-                config.getSignerEmail(),
-                organizationId);
+        UsersApi usersApi = createUsersApi(accessToken, basePath);
 
         AddUserResponse result = CreateActiveCLMESignUserService.createNewActiveUser(
                 args.getClmProfileId(),

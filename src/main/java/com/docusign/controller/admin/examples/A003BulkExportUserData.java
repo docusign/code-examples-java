@@ -39,9 +39,11 @@ public class A003BulkExportUserData extends AbstractAdminController {
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
+        String accessToken = this.user.getAccessToken();
+        String basePath = this.session.getBasePath();
         // Step 3 start
-        BulkExportsApi bulkExportsApi = createBulkExportsApi(this.user.getAccessToken(), this.session.getBasePath());
-        UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
+        BulkExportsApi bulkExportsApi = createBulkExportsApi(accessToken, basePath);
+        UUID organizationId = this.getOrganizationId(accessToken, basePath);
 
         OrganizationExportResponse bulkList = BulkExportUserDataService.createUserListExport(
                 bulkExportsApi,
@@ -57,7 +59,7 @@ public class A003BulkExportUserData extends AbstractAdminController {
         String saveFilePath = BulkExportUserDataService.moveUserListExportToFile(
                 csvUri,
                 BEARER_AUTHENTICATION,
-                user.getAccessToken(),
+                accessToken,
                 BUFFER_SIZE);
 
         OrganizationExportsResponse results = BulkExportUserDataService.bulkExportsUserData(

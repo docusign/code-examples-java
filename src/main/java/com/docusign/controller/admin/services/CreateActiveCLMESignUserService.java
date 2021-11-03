@@ -36,7 +36,7 @@ public class CreateActiveCLMESignUserService {
         dsGroup.setDsGroupId(dsGroupId);
         // Fill the request with data from the form
 
-        NewMultiProductUserAddRequest accountAddRequest = new NewMultiProductUserAddRequest()
+        NewMultiProductUserAddRequest multiProductUserAddRequest = new NewMultiProductUserAddRequest()
                 .defaultAccountId(accountId)
                 .addProductPermissionProfilesItem(clm)
                 .addProductPermissionProfilesItem(eSign)
@@ -49,7 +49,7 @@ public class CreateActiveCLMESignUserService {
         // Step 5 end
 
         // Step 6 start
-        return usersApi.addOrUpdateUser(organizationId, accountId, accountAddRequest);
+        return usersApi.addOrUpdateUser(organizationId, accountId, multiProductUserAddRequest);
         // Step 6 end
     }
 }
