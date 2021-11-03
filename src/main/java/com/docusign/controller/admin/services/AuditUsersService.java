@@ -31,7 +31,8 @@ public class AuditUsersService {
         SimpleDateFormat df = new SimpleDateFormat(simpleDateFormat);
         // Quoted "Z" to indicate UTC, no timezone offset
         df.setTimeZone(tz);
-        String nowAsISO = df.format(new Date(System.currentTimeMillis() - (1000 * 60 * 60 * 24 * 10)));
+        Integer tenDaysBeforeToday = 1000 * 60 * 60 * 24 * 10;
+        String nowAsISO = df.format(new Date(System.currentTimeMillis() - tenDaysBeforeToday));
         options.setLastModifiedSince(nowAsISO);
         OrganizationUsersResponse modifiedUsers = usersApi.getUsers(organizationId, options);
         // Step 3 end
