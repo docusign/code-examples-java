@@ -48,15 +48,15 @@ public class A004BulkImportUserData extends AbstractAdminController {
                 organizationId);
         BulkImportsApi bulkImportsApi = createBulkImportsApi(accessToken, basePath);
 
-        OrganizationImportResponse result = BulkImportUserDataService
+        OrganizationImportResponse importResponse = BulkImportUserDataService
                 .bulkImportUserData(bulkImportsApi, organizationId, accountId);
 
-        this.session.setImportId(result.getId().toString());
+        this.session.setImportId(importResponse.getId().toString());
         
         // Process results
         DoneExample.createDefault(title)
                 .withMessage("Results from UserImport:addBulkUserImport method:")
-                .withJsonObject(result)
+                .withJsonObject(importResponse)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

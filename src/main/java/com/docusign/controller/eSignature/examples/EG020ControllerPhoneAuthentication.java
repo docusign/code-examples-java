@@ -64,7 +64,7 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
         session.setEnvelopeId(envelopeSummary.getEnvelopeId());
         DoneExample.createDefault(title).withJsonObject(envelopeSummary)
                 .withMessage(
-                        "The envelope has been created and sent!<br />Envelope ID " + results.getEnvelopeId() + ".")
+                        "The envelope has been created and sent!<br />Envelope ID " + envelopeSummary.getEnvelopeId() + ".")
                 .addToModel(model);
 
         return DONE_EXAMPLE_PAGE;

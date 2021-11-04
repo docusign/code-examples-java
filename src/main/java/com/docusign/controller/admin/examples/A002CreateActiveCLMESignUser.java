@@ -99,7 +99,7 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
         // Create a users api instance
         UsersApi usersApi = createUsersApi(accessToken, basePath);
 
-        AddUserResponse result = CreateActiveCLMESignUserService.createNewActiveUser(
+        AddUserResponse userResponse = CreateActiveCLMESignUserService.createNewActiveUser(
                 args.getClmProfileId(),
                 args.getClmProductId(),
                 args.getESignProfileId(),
@@ -116,7 +116,7 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
         // Process results
         DoneExample.createDefault(title)
         .withMessage("Results from MultiProductUserManagement:addOrUpdateUser method:")
-        .withJsonObject(result)
+        .withJsonObject(userResponse)
         .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

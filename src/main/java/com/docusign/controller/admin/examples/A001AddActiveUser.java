@@ -77,7 +77,7 @@ public class A001AddActiveUser extends AbstractAdminController {
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
-        NewUserResponse result = AddActiveUserService.addActiveUser(
+        NewUserResponse userResponse = AddActiveUserService.addActiveUser(
                 args.getGroupId(),
                 args.getProfileId(),
                 args.getEmail(),
@@ -91,7 +91,7 @@ public class A001AddActiveUser extends AbstractAdminController {
         // Process results
         DoneExample.createDefault(title)
                 .withMessage("Results from eSignUserManagement:createUser method:")
-                .withJsonObject(result)
+                .withJsonObject(userResponse)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }
