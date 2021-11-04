@@ -22,7 +22,7 @@ public class AuditUsersService {
             UUID organizationId,
             UUID accountId
     ) throws ApiException {
-        ArrayList<UserDrilldownResponse> resultsArr = new ArrayList<>();
+        ArrayList<UserDrilldownResponse> auditedUsers = new ArrayList<>();
 
         // Step 3 start
         UsersApi.GetUsersOptions options = usersApi.new GetUsersOptions();
@@ -42,10 +42,10 @@ public class AuditUsersService {
             UsersApi.GetUserProfilesOptions profilesOptions = usersApi.new GetUserProfilesOptions();
             profilesOptions.setEmail(user.getEmail());
             UsersDrilldownResponse res = usersApi.getUserProfiles(organizationId, profilesOptions);
-            resultsArr.add(res.getUsers().get(0));
+            auditedUsers.add(res.getUsers().get(0));
         }
         // Step 5 end
 
-        return resultsArr;
+        return auditedUsers;
     }
 }

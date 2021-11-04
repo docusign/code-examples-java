@@ -59,13 +59,13 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
         // Create a bulk exports api instance
         BulkImportsApi bulkImportsApi = createBulkImportsApi(accessToken, basePath);
 
-        OrganizationImportResponse result = CheckImportRequestStatusService.checkRequestStatus(
+        OrganizationImportResponse importResponse = CheckImportRequestStatusService.checkRequestStatus(
                 bulkImportsApi,
                 this.getOrganizationId(accessToken, basePath),
                 UUID.fromString(this.session.getImportId())
         );
 
-        if (result.getStatus().equals("queued")){
+        if (importResponse.getStatus().equals("queued")){
             // Return the refresh page
             DoneExample.createDefault("Request not complete")
             .withMessage("The request has not completed, please refresh this page")
@@ -80,7 +80,7 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
         // Process results
         DoneExample.createDefault(title)
                 .withMessage("Admin API data response output:")
-                .withJsonObject(result)
+                .withJsonObject(importResponse)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

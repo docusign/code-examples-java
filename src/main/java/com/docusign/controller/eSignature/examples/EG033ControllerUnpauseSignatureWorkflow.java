@@ -41,14 +41,14 @@ public class EG033ControllerUnpauseSignatureWorkflow extends AbstractEsignatureC
         // Step 2: Construct your API headers
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
-        EnvelopeUpdateSummary results = UnpauseSignatureWorkflowService.unpauseSignatureWorkflow(
+        EnvelopeUpdateSummary envelopeUpdateSummary = UnpauseSignatureWorkflowService.unpauseSignatureWorkflow(
                 envelopesApi,
                 this.session.getAccountId(),
                 this.session.getEnvelopeId()
         );
 
         DoneExample.createDefault(this.title)
-                .withJsonObject(results)
+                .withJsonObject(envelopeUpdateSummary)
                 .withMessage("A paused envelope was resumed.")
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;

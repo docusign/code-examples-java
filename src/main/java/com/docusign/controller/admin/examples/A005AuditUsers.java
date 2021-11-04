@@ -49,11 +49,11 @@ public class A005AuditUsers extends AbstractAdminController {
 
         UsersApi adminApi = createUsersApi(accessToken, basePath);
 
-        ArrayList<UserDrilldownResponse> resultsArr = AuditUsersService.auditUsers(adminApi, organizationId, accountId);
+        ArrayList<UserDrilldownResponse> auditedUsers = AuditUsersService.auditUsers(adminApi, organizationId, accountId);
 
         // Process results
         DoneExample.createDefault(title).withMessage("Results from eSignUserManagement:getUserProfiles method:")
-                .withJsonObject(resultsArr).addToModel(model);
+                .withJsonObject(auditedUsers).addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }
 }

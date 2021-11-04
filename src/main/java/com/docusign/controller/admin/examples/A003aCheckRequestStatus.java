@@ -51,7 +51,7 @@ public class A003aCheckRequestStatus extends AbstractAdminController {
         UUID organizationId = this.getOrganizationId(accessToken, basePath);
         UUID exportId = UUID.fromString(this.session.getExportId());
 
-        OrganizationExportResponse result = CheckRequestStatusService.checkRequestStatus(
+        OrganizationExportResponse exportResponse = CheckRequestStatusService.checkRequestStatus(
                 bulkExportsApi,
                 organizationId,
                 exportId);
@@ -59,7 +59,7 @@ public class A003aCheckRequestStatus extends AbstractAdminController {
         // Process results
         DoneExample.createDefault(title)
                 .withMessage("Admin API data response output:")
-                .withJsonObject(result)
+                .withJsonObject(exportResponse)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

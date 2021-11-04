@@ -10,7 +10,7 @@ public final class GetMonitoringDataService {
         // Declare variables
         boolean complete = false;
         String cursorValue = "";
-        JSONArray result = new JSONArray();
+        JSONArray monitoringData = new JSONArray();
 
         DataSetApi.GetStreamOptions options = datasetApi.new GetStreamOptions();
 
@@ -36,11 +36,11 @@ public final class GetMonitoringDataService {
             else
             {
                 cursorValue = endCursor;
-                result.put(new JSONObject(cursoredResult));
+                monitoringData.put(new JSONObject(cursoredResult));
             }
         }
         while (!complete);
 
-        return result;
+        return monitoringData;
     }
 }

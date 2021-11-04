@@ -57,15 +57,15 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
 
         // Step 4: Call the eSignature REST API
         try {
-            EnvelopeSummary results = UseConditionalRecipientsService.useConditionalRecipients(
+            EnvelopeSummary envelopeSummary = UseConditionalRecipientsService.useConditionalRecipients(
                     envelopesApi,
                     this.session.getAccountId(),
                     envelope
             );
 
-            this.session.setEnvelopeId(results.getEnvelopeId());
+            this.session.setEnvelopeId(envelopeSummary.getEnvelopeId());
             DoneExample.createDefault(this.title)
-                    .withJsonObject(results)
+                    .withJsonObject(envelopeSummary)
                     .withMessage(
                             "An envelope where the workflow is routed to different recipients based on the value of a transaction " +
                                     "has been created and sent!<br/>Envelope ID "

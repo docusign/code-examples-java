@@ -59,18 +59,18 @@ public class EG035ControllerSMSDelivery extends AbstractEsignatureController {
                 args.getStatus(),
                 args
         );
-        EnvelopeSummary results = SMSDeliveryService.smsDelivery(
+        EnvelopeSummary envelopeSummary = SMSDeliveryService.smsDelivery(
                 envelopesApi,
                 session.getAccountId(),
                 envelope
         );
 
         // process results
-        session.setEnvelopeId(results.getEnvelopeId());
+        session.setEnvelopeId(envelopeSummary.getEnvelopeId());
         DoneExample.createDefault(title)
                 .withMessage("The envelope has been created and sent!<br />Envelope ID "
-                        + results.getEnvelopeId() + ".")
-                .withJsonObject(results)
+                        + envelopeSummary.getEnvelopeId() + ".")
+                .withJsonObject(envelopeSummary)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

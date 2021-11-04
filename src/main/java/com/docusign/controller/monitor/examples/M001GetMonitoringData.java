@@ -41,15 +41,15 @@ public class M001GetMonitoringData extends AbstractMonitorController {
         accessToken = ensureUsageOfJWTToken(accessToken, this.session);
         // step 1 end
 
-        JSONArray result = GetMonitoringDataService.getMonitoringData(createDataSetApi(accessToken, this.session));
+        JSONArray monitoringData = GetMonitoringDataService.getMonitoringData(createDataSetApi(accessToken, this.session));
 
         // Cleaning the data from wrong symbols
-        String resultCleaned = result.toString().replaceAll("'", "");
+        String monitoringDataCleaned = monitoringData.toString().replaceAll("'", "");
 
         // Process results
         DoneExample.createDefault(title)
                 .withMessage("Results from DataSet:getStream method:")
-                .withJsonObject(resultCleaned)
+                .withJsonObject(monitoringDataCleaned)
                 .addToModel(model);
 
         return DONE_EXAMPLE_PAGE;

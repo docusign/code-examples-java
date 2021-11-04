@@ -62,13 +62,13 @@ public class A003BulkExportUserData extends AbstractAdminController {
                 accessToken,
                 BUFFER_SIZE);
 
-        OrganizationExportsResponse results = BulkExportUserDataService.bulkExportsUserData(
+        OrganizationExportsResponse exportResponse = BulkExportUserDataService.bulkExportsUserData(
                 bulkExportsApi,
                 organizationId);
         // Process results
         DoneExample.createDefault(title)
                 .withMessage("User data exported to " + saveFilePath + "<br>from UserExport:getUserListExport method:")
-                .withJsonObject(results).addToModel(model);
+                .withJsonObject(exportResponse).addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }
 }
