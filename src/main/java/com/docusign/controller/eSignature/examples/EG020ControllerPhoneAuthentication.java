@@ -58,15 +58,15 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
         // Step 2 end
 
-        // Step 3a start
+        // Step 4a start
         String workFlowId = getWorkflowId(accountId);
         EnvelopeDefinition envelope = createEnvelope(args.getSignerName(), args.getSignerEmail(), args.getCountryCode(),
                 args.getPhoneNumber(), workFlowId);
-        // Step 3a end
+        // Step 4a end
 
-        // Step 4 start
+        // Step 5 start
         EnvelopeSummary results = envelopesApi.createEnvelope(accountId, envelope);
-        // Step 4 end
+        // Step 5 end
 
         session.setEnvelopeId(results.getEnvelopeId());
         DoneExample.createDefault(title).withJsonObject(results)
@@ -77,7 +77,7 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
         return DONE_EXAMPLE_PAGE;
     }
 
-    // Step 3b start
+    // Step 4b start
     private static EnvelopeDefinition createEnvelope(String signerName, String signerEmail, String countryCode,
             String phone, String workFlowId) throws IOException {
         Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
@@ -154,5 +154,5 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
         }
 
     }
-    // Step 3b end
+    // Step 4b end
 }
