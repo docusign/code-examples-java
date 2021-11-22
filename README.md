@@ -2,7 +2,7 @@
 
 ### GitHub repo: [code-examples-java](./README.md)
 
-This GitHub repo includes code examples for the DocuSign Admin API, Click API, eSignature REST API, Monitor API, and Rooms API. To switch between API code examples, in the application.json file, modify the `DS_API_NAME` setting from `ESIGNATURE` to `ADMIN`, `CLICK`, `MONITOR`, or `ROOMS`, .
+This GitHub repo includes code examples for the DocuSign Admin API, Click API, eSignature REST API, Monitor API, and Rooms API. To switch between API code examples, in the application.json file, modify the `DS_API_NAME` setting from `ESIGNATURE` to `ADMIN`, `CLICK`, `MONITOR`, or `ROOMS`.
 
 
 ## Introduction
