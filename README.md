@@ -2,7 +2,7 @@
 
 ### GitHub repo: [code-examples-java](./README.md)
 
-This GitHub repo includes code examples for the DocuSign Admin API, Click API, eSignature REST API, Monitor API, and Rooms API. To switch between API code examples, in the application.json file, modify the `DS_API_NAME` setting from `ESIGNATURE` to `ADMIN`, `CLICK`, `MONITOR`, or `ROOMS`, .
+This GitHub repo includes code examples for the DocuSign Admin API, Click API, eSignature REST API, Monitor API, and Rooms API. To switch between API code examples, in the application.json file, modify the `DS_API_NAME` setting from `ESIGNATURE` to `ADMIN`, `CLICK`, `MONITOR`, or `ROOMS`.
 
 
 ## Introduction
@@ -87,8 +87,9 @@ For a list of code examples that use the Admin API, select the Java tab under [E
    
    where {base_url} is the URL for the web app.  
 
-1. [JDK 11](https://jdk.java.net/java-se-ri/11) or later
-1. [Maven](https://maven.apache.org/download.cgi)
+1. Download [JDK 11](https://jdk.java.net/java-se-ri/11) or later and extract to C:\Program Files\Java
+1. Download [Maven](https://maven.apache.org/download.cgi) and extract to C:
+   * Follow these [instructions](https://maven.apache.org/install.html) to add both Java and Maven to the `PATH` environment variable
 
 
 ### Installation steps
