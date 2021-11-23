@@ -89,7 +89,8 @@ For a list of code examples that use the Admin API, select the Java tab under [E
 
 1. Download [JDK 11](https://jdk.java.net/java-se-ri/11) or later and extract to C:\Program Files\Java
 1. Download [Maven](https://maven.apache.org/download.cgi) and extract to C:
-   * Follow these [instructions](https://maven.apache.org/install.html) to add both Java and Maven to the `PATH` environment variable
+   * Follow these [instructions](https://maven.apache.org/install.html) to add both Java and Maven to the `PATH` environment variable.
+1. [Git Bash command line](https://gitforwindows.org/), macOS Terminal, or Linux shell
 
 
 ### Installation steps
