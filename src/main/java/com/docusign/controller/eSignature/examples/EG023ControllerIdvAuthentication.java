@@ -116,8 +116,8 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
 
         SignHere signHere1 = new SignHere();
         signHere1.setName("SignHereTab");
-        signHere1.setXPosition("75");
-        signHere1.setYPosition("572");
+        signHere1.setXPosition("200");
+        signHere1.setYPosition("160");
         signHere1.setTabLabel("SignHereTab");
         signHere1.setPageNumber("1");
         signHere1.setDocumentId("1");
