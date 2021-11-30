@@ -76,12 +76,12 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
         {
             throw new ApiException(0, "Please contact <a href='https://support.docusign.com'>DocuSign Support</a> to enable IDV in your account.");
         }
-        // Step 4.1 start
+        // Step 4-1 start
         EnvelopeDefinition envelope = createEnvelope(args.getSignerName(), args.getSignerEmail(), workflowId);
-        // Step 4.1 end
+        // Step 4-1 end
         // Step 5 start
         EnvelopeSummary results = envelopesApi.createEnvelope(session.getAccountId(), envelope);
-        // step 5 end
+        // Step 5 end
 
         session.setEnvelopeId(results.getEnvelopeId());
         DoneExample.createDefault(title)
@@ -93,7 +93,7 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
         return DONE_EXAMPLE_PAGE;
     }
 
-    // Step 4.2 start
+    // Step 4-2 start
     private static EnvelopeDefinition createEnvelope(String signerName, String signerEmail,
                                                      String workflowId) {
         EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
@@ -148,5 +148,5 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
         envelopeDefinition.setDocuments(Collections.singletonList(doc1));
         return envelopeDefinition;
     }
-    // Step 4.2 end
+    // Step 4-2 end
 }
