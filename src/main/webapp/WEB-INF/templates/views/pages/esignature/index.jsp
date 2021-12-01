@@ -194,26 +194,26 @@
 
   <h2>Recipient authentication</h2>
   
-  <h4 id="example019">19. <a href="eg019">Send an envelope with Access Code Authentication</a></h4>
-  <p>This example sends and envelope that requires an access-code for the purpose of multi-factor authentication.</p>
+  <h4 id="example019">19. <a href="eg019">Require access code authentication for a recipient</a></h4>
+  <p>Sends an envelope that requires entering an access code for the purpose of multifactor authentication.</p>
   <p>API method used:
     <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
   </p>
 
-  <h4 id="example020">20. <a href="eg020">Require Phone Authentication for a Recipient</a></h4>
+  <h4 id="example020">20. <a href="eg020">Require phone authentication for a recipient</a></h4>
   <p>Sends an envelope that requires entering a six-digit code from a text message or phone call for the purpose of multifactor authentication.</p>
   <p>API method used:
     <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
   </p>
 
-  <h4 id="example022">22. <a href="eg022">Send an envelope with Knowledge-Based Authentication</a></h4>
-  <p>This example sends and envelope that requires passing a Public records check to validate identity for the purpose of multifactor authentication.</p>
+  <h4 id="example022">22. <a href="eg022">Require knowledge-based authentication (KBA) for a recipient</a></h4>
+  <p>Sends an envelope that requires passing a public records check to validate identity for the purpose of multifactor authentication.</p>
   <p>API method used:
     <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
   </p>
 
-  <h4 id="example023">23. <a href="eg023">Send an envelope with ID Verification Authentication</a></h4>
-  <p>Submit an envelope that requires verification of a government issued identity.</p>
+  <h4 id="example023">23. <a href="eg023">Require ID verification (IDV) for a recipient</a></h4>
+  <p>Sends an envelope that requires the recipient to upload a government-issued ID for the purpose of multifactor authentication.</p>
   <p>
     API method used:
     <a target ='_blank' href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
@@ -222,10 +222,6 @@
   <h2>Permissions</h2>
 
   <h4 id="example024">24. <a href="eg024">Create a new permission profile</a></h4>
-
-  <p>
-    Creating new permission profile.
-  </p>
   <p>
     API method used:
     <a target='_blank' href="https://developers.docusign.com/docs/esign-rest-api/reference/accounts/accountpermissionprofiles/create/">AccountPermissionProfiles::create</a>.
