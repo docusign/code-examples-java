@@ -39,7 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/eg020")
 public class EG020ControllerPhoneAuthentication extends AbstractEsignatureController {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(EG023ControllerIdvAuthentication.class);
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
     private static final String DOCUMENT_NAME = "Lorem";
@@ -76,9 +76,12 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
                 workflowId = identityVerification.get(i).getWorkflowId();
             }
         }
-        logger.info("workflowId = " + workflowId);
         // Step 3 end
-        EnvelopeDefinition envelope = createEnvelope(args.getSignerName(), args.getSignerEmail(), args.getCountryCode(),
+        logger.info("workflowId = " + workflowId);
+        if (workflowId.equals(""))
+        {
+            throw new ApiException(0, "Please contact <a href='https://support.docusign.com'>DocuSign Support</a> to enable Phone Auth in your account.");
+        }EnvelopeDefinition envelope = createEnvelope(args.getSignerName(), args.getSignerEmail(), args.getCountryCode(),
                 args.getPhoneNumber(), workflowId);
         // Step 4.1 start
         EnvelopeSummary results = envelopesApi.createEnvelope(accountId, envelope);
