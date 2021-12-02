@@ -7,8 +7,10 @@ import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.api.EnvelopesApi;
+import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.AccountIdentityVerificationResponse;
+import com.docusign.esign.model.AccountIdentityVerificationWorkflow;
 import com.docusign.esign.model.Document;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
@@ -18,13 +20,16 @@ import com.docusign.esign.model.RecipientIdentityVerification;
 import com.docusign.esign.model.Recipients;
 import com.docusign.esign.model.SignHere;
 import com.docusign.esign.model.Signer;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,8 +39,8 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/eg020")
 public class EG020ControllerPhoneAuthentication extends AbstractEsignatureController {
-    // For List.of you could even do groups of numbers such as
-    // List.of("415-555-1212", "415-555-3434");
+
+    private static final Logger logger = LoggerFactory.getLogger(EG023ControllerIdvAuthentication.class);
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
     private static final String DOCUMENT_NAME = "Lorem";
 
@@ -55,18 +60,32 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
         String accountId = session.getAccountId();
 
         // Step 2 start
-        EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
+        ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
         // Step 2 end
+        EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
 
-        // Step 4a start
-        String workFlowId = getWorkflowId(accountId);
-        EnvelopeDefinition envelope = createEnvelope(args.getSignerName(), args.getSignerEmail(), args.getCountryCode(),
-                args.getPhoneNumber(), workFlowId);
-        // Step 4a end
-
-        // Step 5 start
+        // Step 3 start
+        AccountsApi workflowDetails = new AccountsApi(apiClient);
+        AccountIdentityVerificationResponse workflowRes = workflowDetails.getAccountIdentityVerification(session.getAccountId());
+        List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getIdentityVerification();
+        String workflowId = "";
+        for (int i = 0; i < identityVerification.size(); i++)
+        {
+            if (identityVerification.get(i).getDefaultName().equals("Phone Authentication"))
+            {
+                workflowId = identityVerification.get(i).getWorkflowId();
+            }
+        }
+        // Step 3 end
+        logger.info("workflowId = " + workflowId);
+        if (workflowId.equals(""))
+        {
+            throw new ApiException(0, "Please contact <a href='https://support.docusign.com'>DocuSign Support</a> to enable Phone Auth in your account.");
+        }EnvelopeDefinition envelope = createEnvelope(args.getSignerName(), args.getSignerEmail(), args.getCountryCode(),
+                args.getPhoneNumber(), workflowId);
+        // Step 4.1 start
         EnvelopeSummary results = envelopesApi.createEnvelope(accountId, envelope);
-        // Step 5 end
+        // Step 4.1 end
 
         session.setEnvelopeId(results.getEnvelopeId());
         DoneExample.createDefault(title).withJsonObject(results)
@@ -77,15 +96,15 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
         return DONE_EXAMPLE_PAGE;
     }
 
-    // Step 4b start
+    // Step 4.2 start
     private static EnvelopeDefinition createEnvelope(String signerName, String signerEmail, String countryCode,
             String phone, String workFlowId) throws IOException {
         Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
 
         SignHere signHere = new SignHere();
         signHere.setName("SignHereTab");
-        signHere.setXPosition("75");
-        signHere.setYPosition("572");
+        signHere.setXPosition("200");
+        signHere.setYPosition("160");
         signHere.setTabLabel("SignHereTab");
         signHere.setPageNumber("1");
         signHere.setDocumentId(doc.getDocumentId());
@@ -132,27 +151,6 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
 
         return envelope;
     }
+    // Step 4.2 end
 
-    // retreives the workflow ID
-    private String getWorkflowId(String accountId) {
-        try {
-            AccountsApi workflowDetails = createAccountsApi(session.getBasePath(), user.getAccessToken());
-            AccountIdentityVerificationResponse workflowResponse = workflowDetails
-                    .getAccountIdentityVerification(accountId);
-
-            // Check that idv authentication is enabled
-            // The workflow ID is a hard-coded value which is unique to this phone
-            // authentication workflow
-            if (workflowResponse.getIdentityVerification() != null) {
-                return "c368e411-1592-4001-a3df-dca94ac539ae";
-            } else {
-                throw new RuntimeException("Identity Verification is not enabled for this account");
-            }
-
-        } catch (Exception e) {
-            return null;
-        }
-
-    }
-    // Step 4b end
 }

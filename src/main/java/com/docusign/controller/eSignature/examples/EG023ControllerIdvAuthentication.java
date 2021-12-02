@@ -54,22 +54,34 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException, IOException {
-        // Step 1: Construct your API headers
+        // Step 2 start
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
+        // Step 2 end
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
-        //Step 2: Retrieve the workflow ID
+        // Step 3 start
         AccountsApi workflowDetails = new AccountsApi(apiClient);
         AccountIdentityVerificationResponse workflowRes = workflowDetails.getAccountIdentityVerification(session.getAccountId());
         List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getIdentityVerification();
-        if (identityVerification == null || identityVerification.isEmpty()) {
-            throw new ApiException("Error. Cant get AccountIdentityVerificationWorkflow");
+        String workflowId = "";
+        for (int i = 0; i < identityVerification.size(); i++)
+        {
+            if (identityVerification.get(i).getDefaultName().equals("DocuSign ID Verification"))
+            {
+                workflowId = identityVerification.get(i).getWorkflowId();
+            }
         }
-        String workflowId = identityVerification.get(0).getWorkflowId();
         logger.info("workflowId = " + workflowId);
-        // Step 3: Construct your envelope JSON body
+        // Step 3 end
+        if (workflowId.equals(""))
+        {
+            throw new ApiException(0, "Please contact <a href='https://support.docusign.com'>DocuSign Support</a> to enable IDV in your account.");
+        }
+        // Step 4-1 start
         EnvelopeDefinition envelope = createEnvelope(args.getSignerName(), args.getSignerEmail(), workflowId);
-        // Step 4: Create envelope
+        // Step 4-1 end
+        // Step 5 start
         EnvelopeSummary results = envelopesApi.createEnvelope(session.getAccountId(), envelope);
+        // Step 5 end
 
         session.setEnvelopeId(results.getEnvelopeId());
         DoneExample.createDefault(title)
@@ -81,6 +93,7 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
         return DONE_EXAMPLE_PAGE;
     }
 
+    // Step 4-2 start
     private static EnvelopeDefinition createEnvelope(String signerName, String signerEmail,
                                                      String workflowId) {
         EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
@@ -103,8 +116,8 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
 
         SignHere signHere1 = new SignHere();
         signHere1.setName("SignHereTab");
-        signHere1.setXPosition("75");
-        signHere1.setYPosition("572");
+        signHere1.setXPosition("200");
+        signHere1.setYPosition("160");
         signHere1.setTabLabel("SignHereTab");
         signHere1.setPageNumber("1");
         signHere1.setDocumentId("1");
@@ -135,4 +148,5 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
         envelopeDefinition.setDocuments(Collections.singletonList(doc1));
         return envelopeDefinition;
     }
+    // Step 4-2 end
 }
