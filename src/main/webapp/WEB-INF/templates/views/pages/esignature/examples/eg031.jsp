@@ -88,58 +88,6 @@
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <button type="submit" class="btn btn-docu">Submit</button>
     </div>
-    <!-- <div class="form-group">
-        <label for="signerEmail">Signer Email</label>
-        <input type="email" class="form-control" id="signerEmail" name="signerEmail"
-               aria-describedby="emailHelp" placeholder="pat@example.com" required
-               value="${locals.dsConfig.signerEmail}">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-    <div class="form-group">
-        <label for="signerName">Signer Name</label>
-        <input type="text" class="form-control" id="signerName" placeholder="Pat Johnson" name="signerName"
-               value="${locals.dsConfig.signerName}" required>
-    </div>
-    <div class="form-group">
-        <label for="ccEmail">CC Email</label>
-        <input type="email" class="form-control" id="ccEmail" name="ccEmail"
-               aria-describedby="emailHelp" placeholder="pat@example.com" required>
-        <small id="emailHelp" class="form-text text-muted">The email and/or name for the cc recipient must be different
-            from the signer.
-        </small>
-    </div>
-    <div class="form-group">
-        <label for="ccName">CC Name</label>
-        <input type="text" class="form-control" id="ccName" placeholder="Pat Johnson" name="ccName" required>
-    </div>
-
-    <div class="form-group">
-        <label for="signerEmail2">Second Signer Email</label>
-        <input type="email" class="form-control" id="signerEmail2" name="signerEmail2"
-               aria-describedby="emailHelp" placeholder="pat@example.com" required
-               value="${locals.dsConfig.signerEmail}">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-    <div class="form-group">
-        <label for="signerName2">Second Signer Name</label>
-        <input type="text" class="form-control" id="signerName2" placeholder="Pat Johnson" name="signerName2"
-               value="${locals.dsConfig.signerName}" required>
-    </div>
-    <div class="form-group">
-        <label for="ccEmail2">Second CC Email</label>
-        <input type="email" class="form-control" id="ccEmail2" name="ccEmail2"
-               aria-describedby="emailHelp" placeholder="pat@example.com" required>
-        <small id="emailHelp" class="form-text text-muted">The email and/or name for the cc recipient must be different
-            from the signer.
-        </small>
-    </div>
-    <div class="form-group">
-        <label for="ccName2">Second CC Name</label>
-        <input type="text" class="form-control" id="ccName2" placeholder="Pat Johnson" name="ccName2" required>
-    </div>
-
-    <input type="hidden" name="_csrf" value="${csrfToken}">
-    <button type="submit" class="btn btn-docu">Submit</button> -->
 </form>
 
 <jsp:include page="../../../partials/foot.jsp"/>
