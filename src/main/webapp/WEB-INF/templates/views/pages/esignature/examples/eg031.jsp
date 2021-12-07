@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>31. ${title}.</h4>
+<h4>31. ${title}</h4>
 
 <p>
     This code example demonstrates how to send envelopes in bulk to multiple recipients with the
