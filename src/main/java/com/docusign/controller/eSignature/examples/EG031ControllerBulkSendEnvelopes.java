@@ -49,8 +49,8 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
     private static final String BULK_SIGNER_NAME_PLACEHOLDER = "Multi Bulk Recipients::%s";
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
     private static final String DOCUMENT_NAME = "Lorem Ipsum";
-    private static final int ANCHOR_OFFSET_Y = 20;
-    private static final int ANCHOR_OFFSET_X = 10;
+    private static final int ANCHOR_OFFSET_Y = -5;
+    private static final int ANCHOR_OFFSET_X = 15;
 
     private final Session session;
     private final User user;
