@@ -92,25 +92,20 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
         envelopesApi.createCustomFields(accountId, envelopeId, customFields);
         // Step 5 end
 
-        // Add placeholder recipients
-        // Step 6 start
-        envelopesApi.createRecipient(accountId, envelopeId, envelopesApi.listRecipients(accountId, envelopeId));
-        // Step 6 end
-
         // Initiate bulk send
-        // Step 7 start
+        // Step 6 start
         BulkSendRequest request = new BulkSendRequest();
         request.setEnvelopeOrTemplateId(envelopeId);
         String batchId = bulkEnvelopesApi.createBulkSendRequest(accountId, bulkListId, request).getBatchId();
-        // Step 7 end
+        // Step 6 end
 
         // Confirm successful bulk send
-        // Step 8 start
+        // Step 7 start
         try {
             TimeUnit.SECONDS.sleep(BULK_REQUEST_DELAY);
             // For 2000 recipients, it can take about an hour
             BulkSendBatchStatus status = bulkEnvelopesApi.getBulkSendBatchStatus(accountId, batchId);
-            // Step 8 end
+            // Step 7 end
             DoneExample.createDefault(title)
                     .withJsonObject(status)
                     .withMessage(String.join("", "Results from BulkSend:getBulkSendBatchStatus method:"))
