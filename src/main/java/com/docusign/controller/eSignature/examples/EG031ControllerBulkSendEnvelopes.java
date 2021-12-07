@@ -58,7 +58,7 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
 
     @Autowired
     public EG031ControllerBulkSendEnvelopes(DSConfiguration config, Session session, User user) {
-        super(config, "eg031", "Bulk sending envelopes to multiple recipients");
+        super(config, "eg031", "Bulk send envelopes");
         this.session = session;
         this.user = user;
     }
@@ -113,7 +113,7 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
             // Step 8 end
             DoneExample.createDefault(title)
                     .withJsonObject(status)
-                    .withMessage(String.join("", "Bulk request queued to ", status.getQueued(), " user lists."))
+                    .withMessage(String.join("", "Results from BulkSend:getBulkSendBatchStatus method:"))
                     .addToModel(model);
         } catch (InterruptedException exception) {
             Thread.currentThread().interrupt();
