@@ -26,6 +26,7 @@ import com.docusign.esign.model.BulkSendRequest;
 import com.docusign.esign.model.BulkSendingCopy;
 import com.docusign.esign.model.BulkSendingCopyRecipient;
 import com.docusign.esign.model.BulkSendingList;
+import com.docusign.esign.model.CarbonCopy;
 import com.docusign.esign.model.CustomFields;
 import com.docusign.esign.model.Document;
 import com.docusign.esign.model.EnvelopeDefinition;
@@ -46,8 +47,10 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
     private static final long BULK_REQUEST_DELAY = 15L;
     private static final String BULK_SIGNER_EMAIL_PLACEHOLDER = "MultiBulkRecipients-%s@docusign.com";
     private static final String BULK_SIGNER_NAME_PLACEHOLDER = "Multi Bulk Recipients::%s";
-    private static final String DOCX_DOCUMENT_FILE_NAME = "World_Wide_Corp_Battle_Plan_Trafalgar.docx";
-    private static final String DOCX_DOCUMENT_NAME = "Battle Plan";
+    private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
+    private static final String DOCUMENT_NAME = "Lorem Ipsum";
+    private static final int ANCHOR_OFFSET_Y = -5;
+    private static final int ANCHOR_OFFSET_X = 15;
 
     private final Session session;
     private final User user;
@@ -55,7 +58,7 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
 
     @Autowired
     public EG031ControllerBulkSendEnvelopes(DSConfiguration config, Session session, User user) {
-        super(config, "eg031", "Bulk sending envelopes to multiple recipients");
+        super(config, "eg031", "Bulk send envelopes");
         this.session = session;
         this.user = user;
     }
@@ -64,39 +67,48 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response)
             throws ApiException, IOException {
 
-        // Step 2. Construct your API headers
+        // Construct your API headers
+        // Step 2 start
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
-        String accountId = session.getAccountId();
+        // Step 2 end
 
-        // Step 3. Submit a bulk list
+        // Submit a bulk list
+        // Step 3-1 start
+        String accountId = session.getAccountId();
         BulkEnvelopesApi bulkEnvelopesApi = new BulkEnvelopesApi(apiClient);
         BulkSendingList sendingList = getSendingList(args);
         String bulkListId = bulkEnvelopesApi.createBulkSendList(accountId, sendingList).getListId();
+        // Step 3-1 end
 
-        // Step 4. Create an envelope
+        // Create an envelope
+        // Step 4-1 start
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
         String envelopeId = envelopesApi.createEnvelope(accountId, makeEnvelope()).getEnvelopeId();
+        // Step 4-1 end
 
-        // Step 5. Attach your bulk list ID to the envelope
+        // Attach your bulk list ID to the envelope
+        // Step 5 start
         CustomFields customFields = createCustomFields(bulkListId);
         envelopesApi.createCustomFields(accountId, envelopeId, customFields);
+        // Step 5 end
 
-        // Step 6. Add placeholder recipients
-        envelopesApi.createRecipient(accountId, envelopeId, createRecipients());
-
-        // Step 7. Initiate bulk send
+        // Initiate bulk send
+        // Step 6 start
         BulkSendRequest request = new BulkSendRequest();
         request.setEnvelopeOrTemplateId(envelopeId);
         String batchId = bulkEnvelopesApi.createBulkSendRequest(accountId, bulkListId, request).getBatchId();
+        // Step 6 end
 
-        // Step 8. Confirm successful bulk send 
+        // Confirm successful bulk send
+        // Step 7 start
         try {
             TimeUnit.SECONDS.sleep(BULK_REQUEST_DELAY);
             // For 2000 recipients, it can take about an hour
             BulkSendBatchStatus status = bulkEnvelopesApi.getBulkSendBatchStatus(accountId, batchId);
+            // Step 7 end
             DoneExample.createDefault(title)
                     .withJsonObject(status)
-                    .withMessage(String.join("", "Bulk request queued to ", status.getQueued(), " user lists."))
+                    .withMessage(String.join("", "Results from BulkSend:getBulkSendBatchStatus method:"))
                     .addToModel(model);
         } catch (InterruptedException exception) {
             Thread.currentThread().interrupt();
@@ -106,6 +118,7 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
         return DONE_EXAMPLE_PAGE;
     }
 
+    // Step 3-2 start
     private static BulkSendingList getSendingList(WorkArguments args) {
         List<BulkSendingCopy> copies = List.of(
                 createBulkSending(args.getSignerName(), args.getSignerEmail(), args.getCcName(), args.getCcEmail()),
@@ -115,6 +128,7 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
                 .name("sample.csv")
                 .bulkCopies(copies);
     }
+    // Step 3-2 end
 
     private static BulkSendingCopy createBulkSending(String signerName,
             String signerEmail, String ccName, String ccEmail) {
@@ -133,14 +147,17 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
                 .customFields(Collections.emptyList());
     }
 
+    // Step 4-2 start
     private static EnvelopeDefinition makeEnvelope() throws IOException {
-        Document document = EnvelopeHelpers.createDocumentFromFile(DOCX_DOCUMENT_FILE_NAME, DOCX_DOCUMENT_NAME, "1");
+        Document document = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
         return new EnvelopeDefinition()
                 .documents(List.of(document))
                 .envelopeIdStamping(DsModelUtils.TRUE)
                 .emailSubject("EG031 Please sign")
-                .status(EnvelopeHelpers.ENVELOPE_STATUS_CREATED);
+                .status(EnvelopeHelpers.ENVELOPE_STATUS_CREATED)
+                .recipients(createRecipients());
     }
+    // Step 4-2 end
 
     private static CustomFields createCustomFields(String bulkListId) {
         TextCustomField textCustomField = new TextCustomField()
@@ -155,23 +172,37 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
     }
 
     private static Recipients createRecipients() {
-        List<Signer> signers = List.of(
-                createSignerPlaceholder(EnvelopeHelpers.SIGNER_ROLE_NAME, "1"),
-                createSignerPlaceholder(EnvelopeHelpers.CC_ROLE_NAME, "2"));
+        Signer signer = createSignerPlaceholder(EnvelopeHelpers.SIGNER_ROLE_NAME, "1", "1");
+        CarbonCopy cc = createCCPlaceholder(EnvelopeHelpers.CC_ROLE_NAME, "2", "2");
         return new Recipients()
-                .signers(signers);
+                .signers(List.of(signer))
+                .carbonCopies(List.of(cc));
     }
 
-    private static Signer createSignerPlaceholder(String roleName, String recipientId) {
+    private static Signer createSignerPlaceholder(String roleName, String recipientId, String routingOrder) {
         return new Signer()
                 .name(String.format(BULK_SIGNER_NAME_PLACEHOLDER, roleName))
                 .email(String.format(BULK_SIGNER_EMAIL_PLACEHOLDER, roleName))
                 .roleName(roleName)
                 .note("")
-                .routingOrder("1")
+                .routingOrder(routingOrder)
                 .status(EnvelopeHelpers.SIGNER_STATUS_CREATED)
                 .deliveryMethod(EnvelopeHelpers.DELIVERY_METHOD_EMAIL)
                 .recipientId(recipientId)
-                .recipientType(EnvelopeHelpers.SIGNER_ROLE_NAME);
+                .recipientType(roleName)
+                .tabs(EnvelopeHelpers.createSingleSignerTab("/sn1/", ANCHOR_OFFSET_Y, ANCHOR_OFFSET_X));
+    }
+
+    private static CarbonCopy createCCPlaceholder(String roleName, String recipientId, String routingOrder) {
+        return new CarbonCopy()
+                .name(String.format(BULK_SIGNER_NAME_PLACEHOLDER, roleName))
+                .email(String.format(BULK_SIGNER_EMAIL_PLACEHOLDER, roleName))
+                .roleName(roleName)
+                .note("")
+                .routingOrder(routingOrder)
+                .status(EnvelopeHelpers.SIGNER_STATUS_CREATED)
+                .deliveryMethod(EnvelopeHelpers.DELIVERY_METHOD_EMAIL)
+                .recipientId(recipientId)
+                .recipientType(roleName);
     }
 }
