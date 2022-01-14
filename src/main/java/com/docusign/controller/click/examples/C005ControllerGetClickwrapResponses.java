@@ -46,7 +46,7 @@ public class C005ControllerGetClickwrapResponses extends AbstractClickController
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(clickwrapAgreementsResponse)
-                .withMessage("Clickwrap responses have been returned!")
+                .withMessage("Results from the ClickWraps::getClickwrapAgreements method")
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }
