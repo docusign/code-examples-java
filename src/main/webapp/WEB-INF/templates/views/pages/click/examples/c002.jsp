@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>2. Activating a clickwrap.</h4>
+<h4>2. Activate a clickwrap.</h4>
 
 <p>
     Activates a new clickwrap that you have already created. By default, new clickwraps are <br>

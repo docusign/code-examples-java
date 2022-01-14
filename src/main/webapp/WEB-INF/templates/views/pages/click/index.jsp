@@ -21,13 +21,9 @@
 </c:if>
 
 <div class="container" style="margin-top: 40px" id="index-page">
-    <h2>Welcome</h2>
-    <p>This launcher both demonstrates use of common OAuth2 grant flows and multiple usage examples from the DocuSign Rooms REST API.</p>
     <c:if test="${showDoc == true}">
         <p><a target='_blank' href='${documentation}'>Documentation</a> on using OAuth Authorization Code Grant from a Java application.</p>
     </c:if>
-
-    <h2>Click Examples</h2>
 
     <h4 id="example001">1. <a href="c001">Create a clickwrap</a></h4>
     <p>Creates a clickwrap that you can embed in your website or app.
@@ -43,7 +39,7 @@
         <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/updateclickwrapversion">ClickWraps:updateClickwrapVersion</a>
     </p>
 
-    <h4 id="example003">3. <a href="c003">How to create a new clickwrap version</a></h4>
+    <h4 id="example003">3. <a href="c003">Create a new clickwrap version</a></h4>
     <p>Creates a new version of a clickwrap.
     </p>
     <p>API methods used:
