@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>1. Creating a clickwrap.</h4>
+<h4>1. Create a clickwrap.</h4>
 
 <p>
     Creates a clickwrap that you can embed in your website or app.

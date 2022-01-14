@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>3. Creating a new clickwrap version.</h4>
+<h4>3. Create a new clickwrap version.</h4>
 
 <p>
     Creates a new version of a clickwrap.
