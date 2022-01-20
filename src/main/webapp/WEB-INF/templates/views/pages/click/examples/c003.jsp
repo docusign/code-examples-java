@@ -7,11 +7,11 @@
     Creates a new version of a clickwrap.
 </p>
 <p>
-    You can specify whether you require users who have previously accepted the clickwrap <br>
+    You can specify whether you require users who have previously accepted the clickwrap
     to accept the new version when they return to your website.
 </p>
 <p>API methods used:
-    <a target ="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/updateclickwrapversion">ClickWraps:updateClickwrapVersion</a>
+    <a target ="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/updateclickwrapversion">ClickWraps:createClickwrapVersion</a>
 </p>
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
