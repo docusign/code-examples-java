@@ -43,7 +43,7 @@
     <p>Creates a new version of a clickwrap.
     </p>
     <p>API methods used:
-        <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/updateclickwrapversion">ClickWraps:updateClickwrapVersion</a>
+        <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/updateclickwrapversion">ClickWraps:createClickwrapVersion</a>
     </p>
 
     <h4 id="example004">4. <a href="c004">Get a list of clickwraps</a></h4>
