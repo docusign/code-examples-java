@@ -7,7 +7,7 @@
     Activates a new clickwrap that you have already created. By default, new clickwraps are 
     inactive. You must activate your clickwrap before you can use it.
 </p>
-<p>API methods used:
+<p>API method used:
     <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/updateclickwrapversion">ClickWraps:updateClickwrapVersion</a>.
 </p>
 <p>

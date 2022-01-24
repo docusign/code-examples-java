@@ -6,7 +6,7 @@
 <p>
     Creates a clickwrap that you can embed in your website or app.
 </p>
-<p>API methods used:
+<p>API method used:
     <a target ="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/createclickwrap">ClickWraps:createClickwrap</a>.
 </p>
 <p>
