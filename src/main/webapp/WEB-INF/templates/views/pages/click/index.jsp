@@ -28,35 +28,35 @@
     <h4 id="example001">1. <a href="c001">Create a clickwrap</a></h4>
     <p>Creates a clickwrap that you can embed in your website or app.
     </p>
-    <p>API methods used:
+    <p>API method used:
         <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/createclickwrap">ClickWraps:createClickwrap</a>.
     </p>
 
     <h4 id="example002">2. <a href="c002">Activate a clickwrap</a></h4>
     <p>Activates a new clickwrap that you have already created.
     </p>
-    <p>API methods used:
+    <p>API method used:
         <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/updateclickwrapversion">ClickWraps:updateClickwrapVersion</a>
     </p>
 
     <h4 id="example003">3. <a href="c003">Create a new clickwrap version</a></h4>
     <p>Creates a new version of a clickwrap.
     </p>
-    <p>API methods used:
-        <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/updateclickwrapversion">ClickWraps:createClickwrapVersion</a>
+    <p>API method used:
+        <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/createclickwrapversion/">ClickWraps:createClickwrapVersion</a>
     </p>
 
     <h4 id="example004">4. <a href="c004">Get a list of clickwraps</a></h4>
     <p>Gets a list of clickwraps associated with a specific DocuSign user.
     </p>
-    <p>API methods used:
+    <p>API method used:
         <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/getclickwraps">ClickWraps:getClickwraps</a>
     </p>
 
     <h4 id="example005">5. <a href="c005">Get clickwrap responses</a></h4>
     <p>Gets user responses to your clickwrap agreements.
     </p>
-    <p>API methods used:
+    <p>API method used:
         <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/getclickwrapagreements">ClickWraps:getClickwrapAgreements</a>
     </p>
 </div>

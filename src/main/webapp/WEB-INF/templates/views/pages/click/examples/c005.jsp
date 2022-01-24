@@ -6,7 +6,7 @@
 <p>
     Gets user responses to your clickwrap agreements.
 </p>
-<p>API methods used:
+<p>API method used:
     <a target ="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/getclickwrapagreements">ClickWraps:getClickwrapAgreements</a>
 </p>
 <p>
