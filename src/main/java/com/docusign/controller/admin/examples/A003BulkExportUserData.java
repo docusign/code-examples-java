@@ -58,7 +58,7 @@ public class A003BulkExportUserData extends AbstractAdminController {
                 this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()), request);
         // Step 3 end
 
-        TimeUnit.SECONDS.sleep(20);
+        TimeUnit.SECONDS.sleep(30);
 
         // Step 4 start
         OrganizationExportResponse data = bulkExportsApi.getUserListExport(
