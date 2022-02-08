@@ -11,12 +11,10 @@ import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.auth.OAuth;
 import com.docusign.esign.client.auth.OAuth.OAuthToken;
 
-import java.io.IOException;
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
 /**
  * Starter class for JWTConsoleApp application.
@@ -32,7 +30,7 @@ public class JWTConsoleApp {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System. in);
-        System.out.print ("Welcome to the JWT Code example! ");
+        System.out.println ("Welcome to the JWT Code example! ");
         System.out.print("Enter the signer's email address: ");
         String signerEmail = scanner. nextLine();
         System.out.print("Enter the signer's name: ");
@@ -44,19 +42,24 @@ public class JWTConsoleApp {
         
         try
         {
+            Properties prop = new Properties();
+            String fileName = "app.config";
+            FileInputStream fis = new FileInputStream(fileName);
+            prop.load(fis);
             ApiClient apiClient = new ApiClient();
             apiClient.setOAuthBasePath("account-d.docusign.com");
             ArrayList<String> scopes = new ArrayList<String>();
             scopes.add("signature");
             scopes.add("impersonation");
-            byte[] privateKeyBytes = Files.readAllBytes(Paths.get("C:\\Src\\Public\\code-examples-csharp-private\\JWT-Console\\private.key"));
+            byte[] privateKeyBytes = Files.readAllBytes(Paths.get(prop.getProperty("rsaKeyFile")));
             OAuthToken oAuthToken = apiClient.requestJWTUserToken(
-                "f2b6bea6-ca9e-414c-8102-56ec32a3074d",
-                "ee76c29e-9b6f-4b6e-896f-a0f95cd8e225",
+                prop.getProperty("clientId"),
+                prop.getProperty("userId"),
                 scopes,
                 privateKeyBytes,
                 3600);
-            System.out.print ("Got Token!!!  ");
+            System.out.println ("Got Token!!!  ");
+            System.out.println (oAuthToken.getAccessToken());
         }
         catch (Exception e)
         {
