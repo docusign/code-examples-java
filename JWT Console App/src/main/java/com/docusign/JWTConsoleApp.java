@@ -7,9 +7,18 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.auth.OAuth;
 import com.docusign.esign.client.auth.OAuth.OAuthToken;
+import com.docusign.esign.client.auth.OAuth.UserInfo;
+import com.docusign.esign.client.auth.OAuth.Account;
+import com.docusign.esign.client.ApiException;
+import com.docusign.esign.model.CarbonCopy;
+import com.docusign.esign.model.EnvelopeDefinition;
+import com.docusign.esign.model.EnvelopeSummary;
+import com.docusign.esign.model.Signer;
+import com.docusign.esign.model.Tabs;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -46,7 +55,7 @@ public class JWTConsoleApp {
             String fileName = "app.config";
             FileInputStream fis = new FileInputStream(fileName);
             prop.load(fis);
-            ApiClient apiClient = new ApiClient();
+            ApiClient apiClient = new ApiClient("https://demo.docusign.net/restapi");
             apiClient.setOAuthBasePath("account-d.docusign.com");
             ArrayList<String> scopes = new ArrayList<String>();
             scopes.add("signature");
@@ -58,8 +67,19 @@ public class JWTConsoleApp {
                 scopes,
                 privateKeyBytes,
                 3600);
-            System.out.println ("Got Token!!!  ");
-            System.out.println (oAuthToken.getAccessToken());
+            String accessToken = oAuthToken.getAccessToken();
+            UserInfo userInfo = apiClient.getUserInfo(accessToken);
+            String accountId = userInfo.getAccounts().get(0).getAccountId();
+
+            EnvelopeDefinition envelope = new EnvelopeDefinition();
+            envelope.setEmailSubject("Please sign this document set");
+            envelope.setStatus("sent");
+
+            apiClient.addDefaultHeader("Authorization", "Bearer " + accessToken);
+            EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
+
+            envelopesApi.createEnvelope(accountId, envelope);
+    
         }
         catch (Exception e)
         {
