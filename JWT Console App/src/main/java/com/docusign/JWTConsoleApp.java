@@ -21,6 +21,7 @@ import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.Recipients;
 import com.docusign.esign.model.Signer;
 import com.docusign.esign.model.Tabs;
+import com.docusign.esign.model.SignHere;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -80,11 +81,20 @@ public class JWTConsoleApp {
             envelope.setEmailSubject("Please sign this document set");
             envelope.setStatus("sent");
 
+            // Create tabs object
+            SignHere signHere = new SignHere();
+            signHere.setDocumentId("1");
+            signHere.setPageNumber("1");
+            signHere.setXPosition("191");
+            signHere.setYPosition("148");
+            Tabs tabs = new Tabs();
+            tabs.setSignHereTabs(Arrays.asList(signHere));
             // Set recipients
             Signer signer = new Signer();
             signer.setEmail(signerEmail);
             signer.setName(signerName);
             signer.recipientId("1");
+            signer.setTabs(tabs);
             CarbonCopy cc = new CarbonCopy();
             cc.setEmail(ccEmail);
             cc.setName(ccName);
