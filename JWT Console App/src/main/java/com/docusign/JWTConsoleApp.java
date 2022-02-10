@@ -27,6 +27,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.io.*;
+import java.awt.Desktop;
+import java.net.URI;
 
 /**
  * Starter class for JWTConsoleApp application.
@@ -34,12 +36,13 @@ import java.io.*;
 
 public class JWTConsoleApp {
 
+    static String DevCenterPage = "https://developers.docusign.com/platform/auth/consent";
     /**
      * Application entry point.
      *
      * @param args application command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws java.io.IOException  {
 
         Scanner scanner = new Scanner(System. in);
         System.out.println ("Welcome to the JWT Code example! ");
@@ -52,13 +55,13 @@ public class JWTConsoleApp {
         System.out.print("Enter the carbon copy's name: ");
         String ccName = scanner. nextLine();
         
+        // Get information fro app.config
+        Properties prop = new Properties();
+        String fileName = "app.config";
+        FileInputStream fis = new FileInputStream(fileName);
+        prop.load(fis);
         try
         {
-            // Get information fro app.config
-            Properties prop = new Properties();
-            String fileName = "app.config";
-            FileInputStream fis = new FileInputStream(fileName);
-            prop.load(fis);
             // Get access token and accountId
             ApiClient apiClient = new ApiClient("https://demo.docusign.net/restapi");
             apiClient.setOAuthBasePath("account-d.docusign.com");
@@ -117,6 +120,22 @@ public class JWTConsoleApp {
             EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
             EnvelopeSummary results = envelopesApi.createEnvelope(accountId, envelope);
             System.out.println("Successfully sent envelope with envelopeId " + results.getEnvelopeId());
+        }
+        catch (ApiException exp)
+        {
+            if (exp.getMessage().contains("consent_required"))
+            {
+                try
+                {
+                    System.out.println ("Consent required, please provide consent in browser window and then run this app again.");
+                    Desktop.getDesktop().browse(new URI("https://account-d.docusign.com/oauth/auth?response_type=code&scope=impersonation%20signature&client_id=" + prop.getProperty("clientId") + "&redirect_uri=" + DevCenterPage));
+                }
+                catch (Exception e)
+                {
+                    System.out.print ("Error!!!  ");
+                    System.out.print (e.getMessage());
+                }
+                    }
         }
         catch (Exception e)
         {
