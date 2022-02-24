@@ -61,7 +61,7 @@ public class C002ControllerActivateClickwrap extends AbstractClickController {
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(updatedClickwrap)
-                .withMessage("The clickwrap has been activated!<br />Clickwrap ID " + updatedClickwrap.getClickwrapId() + ".")
+                .withMessage("The clickwrap " + updatedClickwrap.getClickwrapName() + " has been activated.")
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }
