@@ -31,7 +31,7 @@
     <c:when test="${envelopeOk}">
         <p>
         The last envelope you created with this example launcher will be queried.
-        Recommendation:  use example 9, then this example, since example 9 includes many tabs of different types.
+        Recommendation: Create an envelope using <a href="eg016">example 16</a> then use this example in order to see an example of custom tab values.
         </p>
         <form class="eg" action="" method="post" data-busy="form">
             <input type="hidden" name="_csrf" value="${csrfToken}">
@@ -39,8 +39,7 @@
         </form>
     </c:when>
     <c:otherwise>
-        <p>Problem: please first create an envelope using <a href="eg009">example 9.</a> <br/>
-            Thank you.</p>
+        <p>Problem: Please first create an envelope using <a href="eg016">example 16</a>.</p>
 
         <form class="eg" action="eg009" method="get">
             <button type="submit" class="btn btn-docu">Continue</button>
