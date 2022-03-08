@@ -25,6 +25,7 @@
         <p><a target='_blank' href='${documentation}'>Documentation</a> on using OAuth Authorization Code Grant from a Java application.</p>
     </c:if>
 
+    <h2>Click examples</h2>
     <h4 id="example001">1. <a href="c001">Create a clickwrap</a></h4>
     <p>Creates a clickwrap that you can embed in your website or app.
     </p>
