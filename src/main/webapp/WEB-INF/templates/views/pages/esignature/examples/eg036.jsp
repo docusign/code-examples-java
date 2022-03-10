@@ -1,8 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>35. Schedule an envelope</h4>
-<p>Demonstrates how to schedule an envelope using the scheduled sending feature.</p>
+<h4>36. Send an envelope with delayed routing</h4>
+<p>Demonstrates how to delay an envelope's delivery between recipients using the delayed routing feature.</p>
 
 <c:if test="${showDoc}">
     <p><a target="_blank" href='${documentation}'>Documentation</a> about this example.</p>
@@ -19,21 +19,31 @@
 
 <form class="eg" action="" method="post" data-busy="form">
     <div class="form-group">
-      <label for="signerEmail">Signer Email</label>
+      <label for="signerEmail">First Signer Email</label>
       <input type="email" class="form-control" id="signerEmail" name="signerEmail"
              aria-describedby="emailHelp" placeholder="pat@example.com" required
              value="${signerEmail}" />
       <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
     <div class="form-group">
-      <label for="signer_name">Signer Name</label>
+      <label for="signerName">First Signer Name</label>
       <input type="text" class="form-control" id="signerName" placeholder="Pat Johnson" name="signerName"
              value="${signerName}" required />
     </div>
     <div class="form-group">
-      <label for="resumeDate">Resume Date</label>
-      <input type="date" class="form-control" id="resumeDate" name="resumeDate" required />
-      <small id="dateHelp" class="form-text text-muted">Please choose a date in the future.</small>
+      <label for="signerEmail2">Second Signer Email</label>
+      <input type="email" class="form-control" id="signerEmail2" name="signerEmail2"
+             aria-describedby="emailHelp" placeholder="pat@example.com" required />
+      <small id="emailHelp" class="form-text text-muted">The email for the cc recipient must be different from the signer's email.</small>
+    </div>
+    <div class="form-group">
+      <label for="signerName2">Second Signer Name</label>
+      <input type="text" class="form-control" id="signerName2" placeholder="Pat Johnson" name="signerName2"
+             required />
+    </div>
+    <div class="form-group">
+      <label for="delay">Delay (in hours)</label>
+      <input type="number" class="form-control" id="delay" name="delay" required />
     </div>
     <input type="hidden" name="csrfToken" value="${csrfToken}"/>
     <button type="submit" class="btn btn-docu">Submit</button>
@@ -41,5 +51,6 @@
 </br>
 </br>
 </br>
+
 
 <jsp:include page="../../../partials/foot.jsp"/>
