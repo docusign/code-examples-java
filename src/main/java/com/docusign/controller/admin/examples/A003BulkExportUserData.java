@@ -3,20 +3,32 @@ package com.docusign.controller.admin.examples;
 import com.docusign.DSConfiguration;
 import com.docusign.admin.api.BulkExportsApi;
 import com.docusign.admin.model.OrganizationExportResponse;
+import com.docusign.admin.model.OrganizationExportRequest;
 import com.docusign.admin.model.OrganizationExportsResponse;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.admin.services.BulkExportUserDataService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.controller.admin.services.BulkExportUserDataService;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.HttpHeaders;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletResponse;
-import java.util.UUID;
+import javax.ws.rs.core.MediaType;
 import java.util.concurrent.TimeUnit;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Paths;
 
 /**
  * How to bulk-export user data This example demonstrates how to bulk-export
@@ -39,36 +51,39 @@ public class A003BulkExportUserData extends AbstractAdminController {
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
-        String accessToken = this.user.getAccessToken();
-        String basePath = this.session.getBasePath();
         // Step 3 start
-        BulkExportsApi bulkExportsApi = createBulkExportsApi(accessToken, basePath);
-        UUID organizationId = this.getOrganizationId(accessToken, basePath);
+        BulkExportsApi bulkExportsApi = createBulkExportsApi(this.user.getAccessToken(), this.session.getBasePath());
 
         OrganizationExportResponse bulkList = BulkExportUserDataService.createUserListExport(
                 bulkExportsApi,
-                organizationId);
+                this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()));
         // Step 3 end
 
-        TimeUnit.SECONDS.sleep(20);
+        TimeUnit.SECONDS.sleep(30);
 
         // Step 4 start
-        String csvUri = BulkExportUserDataService.bulkExportUserData(bulkExportsApi, organizationId, bulkList.getId());
+        OrganizationExportResponse data = BulkExportUserDataService.bulkExportUserData(
+                bulkExportsApi,
+                this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()),
+                bulkList.getId());
         // Step 4 end
 
+        // Step 5 start
+        String csvUri = data.getResults().get(0).getUrl();
         String saveFilePath = BulkExportUserDataService.moveUserListExportToFile(
                 csvUri,
                 BEARER_AUTHENTICATION,
-                accessToken,
-                BUFFER_SIZE);
+                this.user.getAccessToken(),
+                BUFFER_SIZE
+        );
 
-        OrganizationExportsResponse exportResponse = BulkExportUserDataService.bulkExportsUserData(
-                bulkExportsApi,
-                organizationId);
+        OrganizationExportsResponse results = BulkExportUserDataService
+                .bulkExportsUserData(bulkExportsApi, this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()));
         // Process results
         DoneExample.createDefault(title)
                 .withMessage("User data exported to " + saveFilePath + "<br>from UserExport:getUserListExport method:")
-                .withJsonObject(exportResponse).addToModel(model);
+                .withJsonObject(results).addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }
+
 }

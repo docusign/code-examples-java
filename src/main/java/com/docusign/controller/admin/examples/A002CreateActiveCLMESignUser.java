@@ -1,27 +1,30 @@
 package com.docusign.controller.admin.examples;
 
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletResponse;
+
 import com.docusign.DSConfiguration;
 import com.docusign.admin.api.DsGroupsApi;
 import com.docusign.admin.api.ProductPermissionProfilesApi;
 import com.docusign.admin.api.UsersApi;
-import com.docusign.admin.client.ApiException;
 import com.docusign.admin.model.AddUserResponse;
 import com.docusign.admin.model.DSGroupListResponse;
+import com.docusign.admin.model.DSGroupRequest;
+import com.docusign.admin.model.NewMultiProductUserAddRequest;
+import com.docusign.admin.model.ProductPermissionProfileRequest;
 import com.docusign.admin.model.ProductPermissionProfileResponse;
 import com.docusign.admin.model.ProductPermissionProfilesResponse;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.admin.services.CreateActiveCLMESignUserService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.controller.admin.services.CreateActiveCLMESignUserService;
-import com.docusign.controller.admin.services.GetExistingAccountIdService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.UUID;
 
 /**
  * Create new user This example demonstrates how to create a new user with
@@ -31,35 +34,28 @@ import java.util.UUID;
 @RequestMapping("/a002")
 public class A002CreateActiveCLMESignUser extends AbstractAdminController {
 
+
     private final User user;
     private final Session session;
-    private final String accessToken;
-    private final String basePath;
-    private final UUID organizationId;
-    private final UUID accountId;
 
     @Autowired
-    public A002CreateActiveCLMESignUser(DSConfiguration config, Session session, User user) throws Exception {
+    public A002CreateActiveCLMESignUser(DSConfiguration config, Session session, User user) {
 
         super(config, "a002", "Create new active user for CLM and eSignature");
         this.user = user;
         this.session = session;
-        this.accessToken = this.user.getAccessToken();
-        this.basePath = this.session.getBasePath();
-        this.organizationId = this.getOrganizationId(accessToken, basePath);
-        this.accountId = GetExistingAccountIdService.getExistingAccountId(
-                createUsersApi(accessToken, basePath),
-                config.getSignerEmail(),
-                organizationId);
     }
 
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
+        UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
+        UUID accountId = this.getExistingAccountId(user.getAccessToken(), session.getBasePath(), organizationId);
+
         // Step 3 start
-        ProductPermissionProfilesApi permissionsInfo = this.createProductPermissionProfilesApi(accessToken, basePath);
-        ProductPermissionProfilesResponse profiles = permissionsInfo.getProductPermissionProfiles(
-                organizationId,
+        ProductPermissionProfilesApi permissionsInfo = this.createProductPermissionProfilesApi(user.getAccessToken(),
+                session.getBasePath());
+        ProductPermissionProfilesResponse profiles = permissionsInfo.getProductPermissionProfiles(organizationId,
                 accountId);
         ProductPermissionProfileResponse clmProfiles = null; 
         ProductPermissionProfileResponse eSignProfiles = null;
@@ -79,7 +75,7 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
         // Step 3 end
         
         // Step 4 start
-        DsGroupsApi groupsApi = this.createDSGroupsApi(accessToken, basePath);
+        DsGroupsApi groupsApi = this.createDSGroupsApi(user.getAccessToken(), session.getBasePath());
         DSGroupListResponse groups = groupsApi.getDSGroups(organizationId, accountId);
         // Step 4 end
 
@@ -96,10 +92,16 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
+        String accessToken = this.user.getAccessToken();
+        String basePath = this.session.getBasePath();
         // Create a users api instance
         UsersApi usersApi = createUsersApi(accessToken, basePath);
 
-        AddUserResponse userResponse = CreateActiveCLMESignUserService.createNewActiveUser(
+        // Collect ids needed for the request
+        UUID organizationId = this.getOrganizationId(accessToken, basePath);
+        UUID accountId = this.getExistingAccountId(accessToken, basePath, organizationId);
+
+        AddUserResponse result = CreateActiveCLMESignUserService.createNewActiveUser(
                 args.getClmProfileId(),
                 args.getClmProductId(),
                 args.getESignProfileId(),
@@ -116,10 +118,8 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
         // Process results
         DoneExample.createDefault(title)
         .withMessage("Results from MultiProductUserManagement:addOrUpdateUser method:")
-        .withJsonObject(userResponse)
+        .withJsonObject(result)
         .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }
-
-
 }

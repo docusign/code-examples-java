@@ -7,30 +7,8 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public  class AddActiveUserService {
-    public static NewUserResponse addActiveUser(
-            String groupId,
-            String profileId,
-            String email,
-            String userName,
-            String firstName,
-            String lastName,
-            UsersApi usersApi,
-            UUID organizationId,
-            UUID accountId) throws Exception
-    {
-        return createNewActiveUser(
-                groupId,
-                profileId,
-                email,
-                userName,
-                firstName,
-                lastName,
-                usersApi,
-                organizationId,
-                accountId);
-    }
 
-    private static NewUserResponse createNewActiveUser(
+    public static NewUserResponse createNewActiveUser(
             String groupId,
             String profileId,
             String email,
@@ -41,12 +19,11 @@ public  class AddActiveUserService {
             UUID organizationId,
             UUID accountId) throws Exception
     {
-        // Step 5 start
         java.util.List<GroupRequest> groups = new ArrayList<>();
         groups.add(new GroupRequest().id(Long.valueOf(groupId)));
 
         // Fill the request with data from the form
-        NewUserRequest userRequest = new NewUserRequest()
+        NewUserRequest accountUserRequest = new NewUserRequest()
                 .defaultAccountId(accountId)
                 .addAccountsItem(
                         new NewUserRequestAccountProperties()
@@ -65,7 +42,7 @@ public  class AddActiveUserService {
         // Step 5 end
 
         // Step 6 start
-        return usersApi.createUser(organizationId, userRequest);
+        return usersApi.createUser(organizationId, accountUserRequest);
         // Step 6 end
     }
 }

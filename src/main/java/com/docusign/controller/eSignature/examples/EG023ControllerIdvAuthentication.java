@@ -5,9 +5,12 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
+import com.docusign.esign.model.AccountIdentityVerificationResponse;
+import com.docusign.esign.model.AccountIdentityVerificationWorkflow;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.controller.eSignature.services.IdvAuthenticationService;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * ID Verification authentication
@@ -40,34 +44,29 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
     }
 
     @Override
-    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response)
-            throws ApiException, IOException
-    {
-        // Step 1: Construct your API headers
+    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException, IOException {
+        // Step 2 start
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
+        // Step 2 end
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
-
-        //Step 2: Retrieve the workflow ID
         String workflowId = IdvAuthenticationService.retrieveWorkflowId(apiClient, session.getAccountId());
-
         logger.info("workflowId = " + workflowId);
-        // Step 3: Construct your envelope JSON body
-        EnvelopeDefinition envelope = IdvAuthenticationService.createEnvelope(
-                args.getSignerName(),
-                args.getSignerEmail(),
-                workflowId);
-        // Step 4: Create envelope
-        EnvelopeSummary envelopeSummary = IdvAuthenticationService.idvAuthentication(
-                envelopesApi,
-                session.getAccountId(),
-                envelope
-        );
+        if (workflowId.equals(""))
+        {
+            throw new ApiException(0, "Please contact <a href='https://support.docusign.com'>DocuSign Support</a> to enable IDV in your account.");
+        }
+        // Step 4-1 start
+        EnvelopeDefinition envelope = IdvAuthenticationService.createEnvelope(args.getSignerName(), args.getSignerEmail(), workflowId);
+        // Step 4-1 end
+        // Step 5 start
+        EnvelopeSummary results = IdvAuthenticationService.idvAuthentication(envelopesApi, session.getAccountId(), envelope);
+        // Step 5 end
 
-        session.setEnvelopeId(envelopeSummary.getEnvelopeId());
+        session.setEnvelopeId(results.getEnvelopeId());
         DoneExample.createDefault(title)
-                .withJsonObject(envelopeSummary)
+                .withJsonObject(results)
                 .withMessage("The envelope has been created and sent!<br />Envelope ID "
-                        + envelopeSummary.getEnvelopeId() + ".")
+                        + results.getEnvelopeId() + ".")
                 .addToModel(model);
 
         return DONE_EXAMPLE_PAGE;

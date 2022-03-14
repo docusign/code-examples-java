@@ -24,13 +24,20 @@ public final class IdvAuthenticationService {
     }
 
     public static String retrieveWorkflowId(ApiClient apiClient, String accountId) throws ApiException {
+        // Step 3 start
         AccountsApi workflowDetails = new AccountsApi(apiClient);
         AccountIdentityVerificationResponse workflowRes = workflowDetails.getAccountIdentityVerification(accountId);
         List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getIdentityVerification();
-        if (identityVerification == null || identityVerification.isEmpty()) {
-            throw new ApiException("Error. Cant get AccountIdentityVerificationWorkflow");
+        String workflowId = "";
+        for (int i = 0; i < identityVerification.size(); i++)
+        {
+            if (identityVerification.get(i).getDefaultName().equals("DocuSign ID Verification"))
+            {
+                workflowId = identityVerification.get(i).getWorkflowId();
+            }
         }
-        return identityVerification.get(0).getWorkflowId();
+        return  workflowId;
+        // Step 3 end
     }
 
     public static EnvelopeDefinition createEnvelope(

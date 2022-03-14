@@ -29,12 +29,12 @@ public class BulkExportUserDataService {
         return bulkExportsApi.getUserListExports(organizationId);
     }
 
-    public static String bulkExportUserData(
+    public static OrganizationExportResponse bulkExportUserData(
             BulkExportsApi bulkExportsApi,
             UUID organizationId,
             UUID exportId) throws ApiException
     {
-        return bulkExportsApi.getUserListExport(organizationId, exportId).getResults().get(0).getUrl();
+        return bulkExportsApi.getUserListExport(organizationId, exportId);
     }
 
     public static OrganizationExportResponse createUserListExport(
