@@ -197,4 +197,16 @@ public final class EnvelopeHelpers {
         recipients.setCarbonCopies(Arrays.asList(cc));
         return recipients;
     }
+
+    public static Recipients createSingleRecipient(Signer signer) {
+        Recipients recipients = new Recipients();
+        recipients.setSigners(Arrays.asList(signer));
+        return recipients;
+    }
+
+    public static Recipients createTwoSigners(Signer signer, Signer signer2) {
+        Recipients recipients = new Recipients();
+        recipients.setSigners(Arrays.asList(signer, signer2));
+        return recipients;
+    }
 }

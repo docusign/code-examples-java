@@ -59,13 +59,14 @@ public class C003ControllerCreateNewVersionClickwrap extends AbstractClickContro
                 this.session.getClickwrapId()
         );
 
+
+
         this.session.setClickwrapId(createdClickwrap.getClickwrapId());
         this.session.setClickwrapVersionNumber(createdClickwrap.getVersionNumber());
         DoneExample.createDefault(this.title)
                 .withJsonObject(createdClickwrap)
-                .withMessage("The new clickwrap version has been created!<br />"
-                        + "Clickwrap ID " + createdClickwrap.getClickwrapId()
-                        + ".<br /> Version number " + createdClickwrap.getVersionNumber())
+                .withMessage("Version " + createdClickwrap.getVersionNumber() + " of clickwrap " + 
+                createdClickwrap.getClickwrapName() + " has been created.")
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

@@ -4,10 +4,10 @@ import com.docusign.DSConfiguration;
 import com.docusign.admin.api.BulkExportsApi;
 import com.docusign.admin.model.OrganizationExportResponse;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.admin.services.CheckRequestStatusService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.controller.admin.services.CheckRequestStatusService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,22 +44,18 @@ public class A003aCheckRequestStatus extends AbstractAdminController {
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
-        String accessToken = this.user.getAccessToken();
-        String basePath = this.session.getBasePath();
         // Create a bulk exports api instance
-        BulkExportsApi bulkExportsApi = createBulkExportsApi(accessToken, basePath);
-        UUID organizationId = this.getOrganizationId(accessToken, basePath);
-        UUID exportId = UUID.fromString(this.session.getExportId());
+        BulkExportsApi bulkExportsApi = createBulkExportsApi(this.user.getAccessToken(), this.session.getBasePath());
 
-        OrganizationExportResponse exportResponse = CheckRequestStatusService.checkRequestStatus(
+        OrganizationExportResponse result = CheckRequestStatusService.checkRequestStatus(
                 bulkExportsApi,
-                organizationId,
-                exportId);
+                this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()),
+                UUID.fromString(this.session.getExportId()));
 
         // Process results
         DoneExample.createDefault(title)
                 .withMessage("Admin API data response output:")
-                .withJsonObject(exportResponse)
+                .withJsonObject(result)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

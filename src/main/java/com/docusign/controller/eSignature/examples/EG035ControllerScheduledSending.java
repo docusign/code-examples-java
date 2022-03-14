@@ -1,22 +1,31 @@
 package com.docusign.controller.eSignature.examples;
 
+import java.io.IOException;
+import java.util.Arrays;
+
+import javax.servlet.http.HttpServletResponse;
+
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.eSignature.services.ScheduledSendlingService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeDefinition;
+import com.docusign.esign.model.EnvelopeDelayRuleApiModel;
 import com.docusign.esign.model.EnvelopeSummary;
-import com.docusign.controller.eSignature.services.SMSDeliveryService;
+import com.docusign.esign.model.ScheduledSendingApiModel;
+import com.docusign.esign.model.Signer;
+import com.docusign.esign.model.Tabs;
+import com.docusign.esign.model.Workflow;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * Send an envelope with a remote (email) signer and cc recipient.<br />
@@ -25,14 +34,13 @@ import java.io.IOException;
  */
 @Controller
 @RequestMapping("/eg035")
-public class EG035ControllerSMSDelivery extends AbstractEsignatureController {
-
+public class EG035ControllerScheduledSending extends AbstractEsignatureController {
     private final Session session;
     private final User user;
 
     @Autowired
-    public EG035ControllerSMSDelivery(DSConfiguration config, Session session, User user) {
-        super(config, "eg035", "Signing request by email");
+    public EG035ControllerScheduledSending(DSConfiguration config, Session session, User user) {
+        super(config, "eg035", "Schedule an Envelope");
         this.session = session;
         this.user = user;
     }
@@ -47,31 +55,32 @@ public class EG035ControllerSMSDelivery extends AbstractEsignatureController {
 
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
-        EnvelopeDefinition envelope = SMSDeliveryService.makeEnvelope(
-                args.getSignerName(),
+
+        System.out.println("RESUMEDATE");
+        System.out.println(args.getResumeDate()+"T00:00:00Z");
+
+        EnvelopeDefinition envelope = ScheduledSendlingService.makeEnvelope(
                 args.getSignerEmail(),
-                args.getCountryCode(),
-                args.getPhoneNumber(),
-                args.getCcEmail(),
-                args.getCcName(),
-                args.getCcCountryCode(),
-                args.getCcPhoneNumber(),
-                args.getStatus(),
-                args
-        );
-        EnvelopeSummary envelopeSummary = SMSDeliveryService.smsDelivery(
-                envelopesApi,
-                session.getAccountId(),
-                envelope
-        );
+                args.getSignerName(),
+                args.getResumeDate(),
+                args.getStatus());
+
+        // Step 3 start
+        EnvelopeSummary results = envelopesApi.createEnvelope(session.getAccountId(), envelope);
+        // Step 3 end
+
+        System.out.println("ENVELOPE");
+        System.out.println(results.getEnvelopeId());
 
         // process results
-        session.setEnvelopeId(envelopeSummary.getEnvelopeId());
+        session.setEnvelopeId(results.getEnvelopeId());
         DoneExample.createDefault(title)
                 .withMessage("The envelope has been created and sent!<br />Envelope ID "
-                        + envelopeSummary.getEnvelopeId() + ".")
-                .withJsonObject(envelopeSummary)
+                        + results.getEnvelopeId() + ".")
+                .withJsonObject(results)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }
+
+
 }

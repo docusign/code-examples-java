@@ -27,7 +27,7 @@
         <p><a target='_blank' href='${documentation}'>Documentation</a> on using OAuth Authorization Code Grant from a Java application.</p>
     </c:if>
 
-  <h2>Rooms Examples</h2>
+  <h2>Rooms examples</h2>
 
   <h4 id="example001">1. <a href="r001">Creating a room with data</a></h4>
   <p>This example demonstrates creating a DocuSign room.

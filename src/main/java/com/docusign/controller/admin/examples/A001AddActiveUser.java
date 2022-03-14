@@ -1,9 +1,10 @@
 package com.docusign.controller.admin.examples;
 
 import com.docusign.DSConfiguration;
-import com.docusign.admin.client.ApiException;
-import com.docusign.admin.model.NewUserResponse;
+import com.docusign.admin.api.UsersApi;
+import com.docusign.admin.model.*;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.admin.services.AddActiveUserService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
@@ -12,8 +13,6 @@ import com.docusign.esign.api.GroupsApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.model.GroupInformation;
 import com.docusign.esign.model.PermissionProfileInformation;
-import com.docusign.controller.admin.services.AddActiveUserService;
-import com.docusign.controller.admin.services.GetExistingAccountIdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.HttpHeaders;
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -35,23 +35,12 @@ public class A001AddActiveUser extends AbstractAdminController {
     private static final String MODEL_LIST_GROUPS = "listGroups";
     private final User user;
     private final Session session;
-    private final String accessToken;
-    private final String basePath;
-    private final UUID organizationId;
-    private final UUID accountId;
 
     @Autowired
-    public A001AddActiveUser(DSConfiguration config, Session session, User user) throws Exception {
+    public A001AddActiveUser(DSConfiguration config, Session session, User user) {
         super(config, "a001", "Create a new active eSignature user");
         this.user = user;
         this.session = session;
-        this.accessToken = this.user.getAccessToken();
-        this.basePath = this.session.getBasePath();
-        this.organizationId = this.getOrganizationId(accessToken, basePath);
-        this.accountId = GetExistingAccountIdService.getExistingAccountId(
-                createUsersApi(accessToken, basePath),
-                config.getSignerEmail(),
-                organizationId);
     }
 
     @Override
@@ -62,6 +51,8 @@ public class A001AddActiveUser extends AbstractAdminController {
         
         // Step 3 start
         AccountsApi accountsApi = new AccountsApi(apiClient);
+        UUID orgId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
+        UUID accountId = this.getExistingAccountId(this.user.getAccessToken(), this.session.getBasePath(), orgId);
         PermissionProfileInformation permissionsInfo = accountsApi.listPermissions(String.valueOf(accountId));
         // Step 3 end
 
@@ -77,21 +68,31 @@ public class A001AddActiveUser extends AbstractAdminController {
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
-        NewUserResponse userResponse = AddActiveUserService.addActiveUser(
+        String accessToken = this.user.getAccessToken();
+        String basePath = this.session.getBasePath();
+        // Create a users api instance
+        UsersApi usersApi = createUsersApi(accessToken, basePath);
+
+        // Collect ids needed for the request
+        UUID organizationId = this.getOrganizationId(accessToken, basePath);
+
+        // Step 5 start
+        UUID accountId = this.getExistingAccountId(accessToken, basePath, organizationId);
+        NewUserResponse result = AddActiveUserService.createNewActiveUser(
                 args.getGroupId(),
                 args.getProfileId(),
                 args.getEmail(),
                 args.getUserName(),
                 args.getFirstName(),
                 args.getLastName(),
-                createUsersApi(accessToken, basePath),
+                usersApi,
                 organizationId,
                 accountId);
 
         // Process results
         DoneExample.createDefault(title)
                 .withMessage("Results from eSignUserManagement:createUser method:")
-                .withJsonObject(userResponse)
+                .withJsonObject(result)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

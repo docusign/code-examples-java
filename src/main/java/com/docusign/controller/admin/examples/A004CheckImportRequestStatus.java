@@ -4,10 +4,10 @@ import com.docusign.DSConfiguration;
 import com.docusign.admin.api.BulkImportsApi;
 import com.docusign.admin.model.OrganizationImportResponse;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.admin.services.CheckImportRequestStatusService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.controller.admin.services.CheckImportRequestStatusService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,6 +46,7 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
         model.addAttribute(MODEL_IMPORT_OK, StringUtils.isNotBlank(this.session.getImportId()));
     }
 
+
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
         // Redirects to the front facing example to avoid a Null Pointer Exception
@@ -53,19 +54,8 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
             return new RedirectView("a004");
         }
 
-        String accessToken = this.user.getAccessToken();
-        String basePath = this.session.getBasePath();
-
-        // Create a bulk exports api instance
-        BulkImportsApi bulkImportsApi = createBulkImportsApi(accessToken, basePath);
-
-        OrganizationImportResponse importResponse = CheckImportRequestStatusService.checkRequestStatus(
-                bulkImportsApi,
-                this.getOrganizationId(accessToken, basePath),
-                UUID.fromString(this.session.getImportId())
-        );
-
-        if (importResponse.getStatus().equals("queued")){
+        OrganizationImportResponse result = checkRequestStatus(this.user.getAccessToken());
+        if (result.getStatus().equals("queued")){
             // Return the refresh page
             DoneExample.createDefault("Request not complete")
             .withMessage("The request has not completed, please refresh this page")
@@ -74,14 +64,27 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
 
         }
 
+
         // Clear the import ID to remove 'Check Status link' from the results page
         this.session.setImportId(null);
         
         // Process results
         DoneExample.createDefault(title)
                 .withMessage("Admin API data response output:")
-                .withJsonObject(importResponse)
+                .withJsonObject(result)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }
+
+    protected OrganizationImportResponse checkRequestStatus(String accessToken) throws Exception {
+        // Create a bulk exports api instance
+        BulkImportsApi bulkImportsApi = createBulkImportsApi(accessToken, this.session.getBasePath());
+        // Step 4a start
+        return CheckImportRequestStatusService.checkRequestStatus(
+                bulkImportsApi,
+                this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()),
+                UUID.fromString(this.session.getImportId()));
+        // Step 4a end
+    }
+    
 }

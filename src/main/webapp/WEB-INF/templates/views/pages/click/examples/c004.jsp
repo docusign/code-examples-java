@@ -3,10 +3,10 @@
 
 <h4>4. Get a list of clickwraps.</h4>
 
-<p>This topic demonstrates how to use the Click API to get a list of clickwraps
-    associated with a specific DocuSign user.
+<p>
+    Gets a list of clickwraps associated with a specific DocuSign user.
 </p>
-<p>API methods used:
+<p>API method used:
     <a target ="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/getclickwraps">ClickWraps:getClickwraps</a>
 </p>
 <p>
