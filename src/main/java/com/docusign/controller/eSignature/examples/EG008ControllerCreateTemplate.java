@@ -53,8 +53,11 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
                 TEMPLATE_NAME);
 
         // Step 2. Process results. If template do not exist, create one
-        if (Integer.parseInt(envelopeTemplateResults.getResultSetSize()) > 0) {
-            EnvelopeTemplate template = envelopeTemplateResults.getEnvelopeTemplates().get(0);
+
+        if (Integer.parseInt(results.getResultSetSize()) > 0) {
+            EnvelopeTemplate template = results.getEnvelopeTemplates().get(0);
+            session.setTemplateId(template.getTemplateId());
+
             DoneExample.createDefault(title)
                     .withMessage(String.format(
                             "The template already exists in your account. <br/>Template name: %s, ID %s.",
@@ -62,10 +65,9 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
                     .addToModel(model);
         } else {
             session.setTemplateName(TEMPLATE_NAME);
-            TemplateSummary template = CreateTemplateService.createTemplate(
-                    apiClient,
-                    accountId,
-                    CreateTemplateService.makeTemplate(session.getTemplateName()));
+
+            TemplateSummary template = templatesApi.createTemplate(accountId, makeTemplate());
+            session.setTemplateId(template.getTemplateId());
             DoneExample.createDefault(title)
                     .withMessage(String.format(
                             "The template has been created!<br/>Template name: %s, ID %s.",

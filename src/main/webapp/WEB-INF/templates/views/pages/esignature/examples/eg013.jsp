@@ -33,18 +33,10 @@
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
 </p>
 <c:choose>
-    <c:when test="${not empty listTemplates}">
+    <c:when test="${templateOk}">
         <p>The template you created via example 8 will be used.</p>
 
         <form class="eg" action="" method="post" data-busy="form">
-            <div class="form-group">
-                <label for="templateId">Envelope template</label> <select
-                    id="templateId" name="templateId" class="form-control">
-                    <c:forEach items="${listTemplates}" var="template">
-                        <option value="${template.templateId}">${template.name}</option>
-                    </c:forEach>
-                </select>
-            </div>
             <div class="form-group">
                 <label for="signerEmail">Signer Email</label>
                 <input type="email" class="form-control" id="signerEmail" name="signerEmail"
