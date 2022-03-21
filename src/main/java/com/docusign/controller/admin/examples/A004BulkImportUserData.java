@@ -4,6 +4,7 @@ import com.docusign.DSConfiguration;
 import com.docusign.admin.api.BulkImportsApi;
 import com.docusign.admin.model.OrganizationImportResponse;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.admin.services.BulkImportUserDataService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
@@ -57,11 +58,9 @@ public class A004BulkImportUserData extends AbstractAdminController {
         UUID accountId = this.getExistingAccountId(accessToken, this.session.getBasePath(), organizationId);
         // Make sure you're using a verified domain for auto-activation to work properly
         // Step 3 start
-        String csvUserData = String.format("AccountID,UserName,UserEmail,PermissionSet\n%s,FirstLast1,User1java@example.com,DS Admin\n%s,FirstLast2,User2java@example.com,DS Sender", accountId, accountId);
-        byte[] csvDataInBytes = csvUserData.getBytes(StandardCharsets.UTF_8);
         BulkImportsApi bulkImportsApi = createBulkImportsApi(accessToken, this.session.getBasePath());
         
-        return bulkImportsApi.createBulkImportSingleAccountAddUsersRequest(organizationId, accountId, csvDataInBytes);
+        return BulkImportUserDataService.bulkImportUserData(bulkImportsApi, organizationId, accountId);
         // Step 3 end
     }
 }

@@ -10,6 +10,8 @@ import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.FormGroupFormToAssign;
 import com.docusign.rooms.model.FormGroupSummaryList;
 import com.docusign.rooms.model.FormSummary;
+import com.docusign.controller.rooms.services.AssignFormToFormGroupService;
+import com.docusign.controller.rooms.services.GetFormSummaryListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,8 +31,6 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
     private static final String MODEL_FORM_LIST = "formList";
     private static final String MODEL_FORM_GROUP_LIST = "formGroupList";
     private static final String FORM_ALREADY_EXISTS_ERROR_MESSAGE = "Form in the form group already exists";
-
-
     private final Session session;
     private final User user;
     private FormGroupsApi formGroupsApi;
@@ -54,7 +54,9 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
         // Step 3 End 
 
         // Step 4 Start
-        List<FormSummary> forms = getFormSummaryList(this.session.getBasePath(), this.user.getAccessToken(), this.session.getAccountId());
+        List<FormSummary> forms = GetFormSummaryListService.getFormSummaryList(
+                createFormLibrariesApi(session.getBasePath(), this.user.getAccessToken()),
+                this.session.getAccountId());
         // Step 4 End
 
         model.addAttribute(MODEL_FORM_GROUP_LIST, formGroupSummaryList.getFormGroups());
@@ -65,16 +67,13 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
-
-        // Step 5 Start
-        FormGroupFormToAssign formGroupFormToAssignRequest = new FormGroupFormToAssign()
-                .formId(args.getFormId());
-        // Step 5 End
-
         try {
             // Step 6 Start
-            FormGroupFormToAssign formGroupFormToAssign = this.formGroupsApi.assignFormGroupForm(
-                    this.session.getAccountId(), args.getFormGroupId(), formGroupFormToAssignRequest);
+            FormGroupFormToAssign formGroupFormToAssign = AssignFormToFormGroupService.assignFormToFormGroup(
+                    this.formGroupsApi,
+                    this.session.getAccountId(),
+                    args.getFormId(),
+                    args.getFormGroupId());
             // Step 6 End
 
             DoneExample.createDefault(this.title)

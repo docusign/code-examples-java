@@ -25,7 +25,7 @@ public class JWTUserInfoTokenService implements ResourceServerTokenServices {
     private static final String AUTHORITIES = "ROLE_USER";
 
     private final JWTAuthorizationCodeResourceDetails resource;
-    private ApiClient apiClient;
+    private final ApiClient apiClient;
 
     public JWTUserInfoTokenService(JWTAuthorizationCodeResourceDetails resource) {
         this.resource = resource;

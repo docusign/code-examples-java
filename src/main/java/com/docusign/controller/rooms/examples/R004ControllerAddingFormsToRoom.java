@@ -5,11 +5,13 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.rooms.api.FormDetailsApi;
-import com.docusign.rooms.api.FormLibrariesApi;
 import com.docusign.rooms.api.RoomsApi;
 import com.docusign.rooms.client.ApiException;
-import com.docusign.rooms.model.*;
+import com.docusign.rooms.model.FormSummary;
+import com.docusign.rooms.model.RoomDocument;
+import com.docusign.rooms.model.RoomSummaryList;
+import com.docusign.controller.rooms.services.AddingFormsToRoomService;
+import com.docusign.controller.rooms.services.GetFormSummaryListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,10 +31,8 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
 
     private static final String MODEL_FORM_LIST = "formList";
     private static final String MODEL_ROOM_LIST = "roomList";
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public R004ControllerAddingFormsToRoom(DSConfiguration config, Session session, User user) {
@@ -48,11 +48,12 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
 
         // Step 3. Obtain the desired form ID
         RoomSummaryList roomSummaryList = roomsApi.getRooms(this.session.getAccountId());
-        List<FormSummary> forms = getFormSummaryList(this.session.getBasePath(), this.user.getAccessToken(), this.session.getAccountId());
+        List<FormSummary> forms = GetFormSummaryListService.getFormSummaryList(
+                createFormLibrariesApi(session.getBasePath(), this.user.getAccessToken()),
+                this.session.getAccountId());
 
         model.addAttribute(MODEL_ROOM_LIST, roomSummaryList.getRooms());
         model.addAttribute(MODEL_FORM_LIST, forms);
-
     }
 
     @Override
@@ -63,8 +64,11 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
         
         // Step 4. Call the v2 Rooms API
-        FormForAdd formForAdd = new FormForAdd().formId(args.getFormId());
-        RoomDocument roomDocument = roomsApi.addFormToRoom(this.session.getAccountId(), args.getRoomId(), formForAdd);
+        RoomDocument roomDocument = AddingFormsToRoomService.addFormsToRoom(
+                roomsApi,
+                this.session.getAccountId(),
+                args.getFormId(),
+                args.getRoomId());
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(roomDocument)

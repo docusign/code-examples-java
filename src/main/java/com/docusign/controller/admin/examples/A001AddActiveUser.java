@@ -4,6 +4,7 @@ import com.docusign.DSConfiguration;
 import com.docusign.admin.api.UsersApi;
 import com.docusign.admin.model.*;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.admin.services.AddActiveUserService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
@@ -67,7 +68,26 @@ public class A001AddActiveUser extends AbstractAdminController {
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
-        NewUserResponse result = createNewActiveUser(this.user.getAccessToken(), args);
+        String accessToken = this.user.getAccessToken();
+        String basePath = this.session.getBasePath();
+        // Create a users api instance
+        UsersApi usersApi = createUsersApi(accessToken, basePath);
+
+        // Collect ids needed for the request
+        UUID organizationId = this.getOrganizationId(accessToken, basePath);
+
+        // Step 5 start
+        UUID accountId = this.getExistingAccountId(accessToken, basePath, organizationId);
+        NewUserResponse result = AddActiveUserService.createNewActiveUser(
+                args.getGroupId(),
+                args.getProfileId(),
+                args.getEmail(),
+                args.getUserName(),
+                args.getFirstName(),
+                args.getLastName(),
+                usersApi,
+                organizationId,
+                accountId);
 
         // Process results
         DoneExample.createDefault(title)
@@ -75,41 +95,5 @@ public class A001AddActiveUser extends AbstractAdminController {
                 .withJsonObject(result)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
-    }
-
-    protected NewUserResponse createNewActiveUser(String accessToken, WorkArguments args) throws Exception {
-        // Create a users api instance
-        UsersApi usersApi = createUsersApi(accessToken, this.session.getBasePath());
-
-        // Collect ids needed for the request
-        UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
-
-        // Step 5 start
-        UUID accountId = this.getExistingAccountId(accessToken, this.session.getBasePath(), organizationId);
-        java.util.List<GroupRequest> groups = new ArrayList<>();
-        groups.add(new GroupRequest().id(Long.valueOf(args.getGroupId())));
-
-        // Fill the request with data from the form
-        NewUserRequest accountUserRequest = new NewUserRequest()
-                .defaultAccountId(accountId)
-                .addAccountsItem(
-                        new NewUserRequestAccountProperties()
-                                .id(accountId)
-                                .permissionProfile(
-                                        new PermissionProfileRequest()
-                                                .id(Long.valueOf(args.getProfileId()))
-                                )
-                        .groups(groups)
-                )
-                .email(args.getEmail())
-                .userName(args.getUserName())
-                .firstName(args.getFirstName())
-                .lastName(args.getLastName())
-                .autoActivateMemberships(true);
-        // Step 5 end
-
-        // Step 6 start
-        return usersApi.createUser(organizationId, accountUserRequest);
-        // Step 6 end
     }
 }

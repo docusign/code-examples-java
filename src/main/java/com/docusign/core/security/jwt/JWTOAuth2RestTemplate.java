@@ -26,7 +26,7 @@ public class JWTOAuth2RestTemplate extends OAuth2RestTemplate {
 
     private final JWTAuthorizationCodeResourceDetails resource;
     private final OAuth2ClientContext context;
-    private ApiClient apiClient;
+    private final ApiClient apiClient;
 
     public JWTOAuth2RestTemplate(JWTAuthorizationCodeResourceDetails resource, OAuth2ClientContext context) {
         super(resource, context);
@@ -66,7 +66,7 @@ public class JWTOAuth2RestTemplate extends OAuth2RestTemplate {
             throw new AccessTokenRequiredException(e.getMessage(), resource);
         }
 
-        apiClient.setOAuthBasePath((String) resource.getBaseUrl());
+        apiClient.setOAuthBasePath(resource.getBaseUrl());
         OAuthToken oAuthToken;
         try {
             oAuthToken = apiClient.requestJWTUserToken(

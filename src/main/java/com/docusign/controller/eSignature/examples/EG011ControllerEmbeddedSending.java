@@ -6,20 +6,17 @@ import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
-import com.docusign.esign.model.ReturnUrlRequest;
 import com.docusign.esign.model.ViewUrl;
-
+import com.docusign.controller.eSignature.services.EmbeddedSendingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 /**
@@ -34,7 +31,6 @@ public class EG011ControllerEmbeddedSending extends AbstractEsignatureController
 
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG011ControllerEmbeddedSending(DSConfiguration config, Session session, User user) {
@@ -51,17 +47,25 @@ public class EG011ControllerEmbeddedSending extends AbstractEsignatureController
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
         // Step 1. Make the envelope with "created" (draft) status
-        args.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_CREATED);
-        EnvelopeDefinition env = EG002ControllerSigningViaEmail.makeEnvelope(args);
-        EnvelopeSummary results = envelopesApi.createEnvelope(accountId, env);
-        String envelopeId = results.getEnvelopeId();
+        EnvelopeSummary envelopeSummary = EmbeddedSendingService.createEnvelopeWithDraftStatus(
+                envelopesApi,
+                args.getSignerEmail(),
+                args.getSignerName(),
+                args.getCcEmail(),
+                args.getCcName(),
+                args.getStatus(),
+                args,
+                accountId);
+        String envelopeId = envelopeSummary.getEnvelopeId();
 
         // Step 2. Create the sender view.
         // Set the url where you want the recipient to go once they are done
         // signing should typically be a callback route somewhere in your app.
-        ReturnUrlRequest viewRequest = new ReturnUrlRequest();
-        viewRequest.setReturnUrl(config.getDsReturnUrl());
-        ViewUrl viewUrl = envelopesApi.createSenderView(accountId, envelopeId, viewRequest);
+        ViewUrl viewUrl = EmbeddedSendingService.createSenderView(
+                envelopesApi,
+                accountId,
+                envelopeId,
+                config.getDsReturnUrl());
 
         // Switch to Recipient and Documents view if requested by the user
         String url = viewUrl.getUrl();
