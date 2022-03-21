@@ -7,14 +7,15 @@ import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.docusign.esign.model.Recipients;
+import com.docusign.controller.eSignature.services.EnvelopeRecipientsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -27,7 +28,6 @@ public class EG005ControllerEnvelopeRecipients extends AbstractEsignatureControl
 
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG005ControllerEnvelopeRecipients(DSConfiguration config, Session session, User user) {
@@ -47,8 +47,12 @@ public class EG005ControllerEnvelopeRecipients extends AbstractEsignatureControl
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
         // Step 1. get envelope recipients
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
+        Recipients recipients = EnvelopeRecipientsService.envelopeRecipients(
+                envelopesApi,
+                session.getAccountId(),
+                session.getEnvelopeId());
         DoneExample.createDefault(title)
-                .withJsonObject(envelopesApi.listRecipients(session.getAccountId(), session.getEnvelopeId()))
+                .withJsonObject(recipients)
                 .withMessage("Results from the EnvelopeRecipients::list method:")
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;

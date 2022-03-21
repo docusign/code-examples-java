@@ -6,9 +6,9 @@ package com.docusign;
  */
 public class OSDetector
 {
-    private static boolean isWindows;
-    private static boolean isLinux;
-    private static boolean isMac;
+    private static final boolean isWindows;
+    private static final boolean isLinux;
+    private static final boolean isMac;
 
     static
     {
@@ -20,6 +20,6 @@ public class OSDetector
 
     public static boolean isWindows() { return isWindows; }
     public static boolean isLinux() { return isLinux; }
-    public static boolean isMac() { return isMac; };
+    public static boolean isMac() { return isMac; }
 
 }

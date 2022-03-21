@@ -9,6 +9,7 @@ import com.docusign.rooms.api.FormGroupsApi;
 import com.docusign.rooms.api.OfficesApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.*;
+import com.docusign.controller.rooms.services.GrantOfficeAccessToFormGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -27,10 +28,8 @@ public class R008ControllerGrantOfficeAccessToFormGroup extends AbstractRoomsCon
     private static final String MODEL_OFFICE_LIST = "officeList";
     private static final String MODEL_FORM_GROUP_LIST = "formGroupList";
     private static final String OFFICE_ALREADY_HAS_ACCESS_TO_FORM_GROUP_ERROR_MESSAGE = "OFFICE_ALREADY_HAS_ACCESS_TO_FORM_GROUP";
-
     private final Session session;
     private final User user;
-
     private FormGroupsApi formGroupsApi;
 
     @Autowired
@@ -68,9 +67,13 @@ public class R008ControllerGrantOfficeAccessToFormGroup extends AbstractRoomsCon
 
         try {
             // Step 5 Start
-            this.formGroupsApi.grantOfficeAccessToFormGroup(this.session.getAccountId(), args.getFormGroupId(), args.getOfficeId());
+            GrantOfficeAccessToFormGroupService.grantOfficeAccessToFormGroup(
+                    this.formGroupsApi,
+                    this.session.getAccountId(),
+                    args.getFormGroupId(),
+                    args.getOfficeId());
             // Step 5 End
-            
+
             DoneExample.createDefault(this.title)
                     .withMessage("Office has been granted access to a form group!")
                     .addToModel(model);

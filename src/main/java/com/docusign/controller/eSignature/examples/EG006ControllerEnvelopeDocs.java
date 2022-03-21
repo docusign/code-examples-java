@@ -13,9 +13,9 @@ import com.docusign.esign.model.EnvelopeDocumentsResult;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
 
+import com.docusign.controller.eSignature.services.EnvelopeDocsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,7 +56,10 @@ public class EG006ControllerEnvelopeDocs extends AbstractEsignatureController {
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
         // Step 1. List the envelope's documents
-        EnvelopeDocumentsResult result = envelopesApi.listDocuments(session.getAccountId(), session.getEnvelopeId());
+        EnvelopeDocumentsResult envelopeDocumentsResult = EnvelopeDocsService.envelopeDocs(
+                envelopesApi,
+                session.getAccountId(),
+                session.getEnvelopeId());
 
         // Step 2. Process results
         // Save the envelopeId and its list of documents in the session so
@@ -66,7 +69,7 @@ public class EG006ControllerEnvelopeDocs extends AbstractEsignatureController {
         envelopeDocItems.add(new EnvelopeDocumentInfo("Combined", "content", "combined"));
         envelopeDocItems.add(new EnvelopeDocumentInfo("Zip archive", "zip", "archive"));
 
-        for (EnvelopeDocument doc : result.getEnvelopeDocuments()) {
+        for (EnvelopeDocument doc : envelopeDocumentsResult.getEnvelopeDocuments()) {
             String documentName = doc.getName();
             if (StringUtils.equals(doc.getDocumentId(), "certificate")) {
                 documentName = "Certificate of completion";
@@ -75,7 +78,7 @@ public class EG006ControllerEnvelopeDocs extends AbstractEsignatureController {
         }
 
         DoneExample.createDefault(title)
-            .withJsonObject(result)
+            .withJsonObject(envelopeDocumentsResult)
             .withMessage("Results from the EnvelopeDocuments::list method:")
             .addToModel(model);
         return DONE_EXAMPLE_PAGE;

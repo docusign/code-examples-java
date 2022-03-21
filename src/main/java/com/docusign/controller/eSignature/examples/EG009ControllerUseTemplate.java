@@ -12,13 +12,11 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.EnvelopeTemplateResults;
-import com.docusign.esign.model.TemplateRole;
-
+import com.docusign.controller.eSignature.services.UseTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.util.Arrays;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,10 +35,8 @@ import javax.servlet.http.HttpServletResponse;
 public class EG009ControllerUseTemplate extends AbstractEsignatureController {
 
     private static final String MODEL_LIST_TEMPLATE = "listTemplates";
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG009ControllerUseTemplate(DSConfiguration config, Session session, User user) {
@@ -62,35 +58,25 @@ public class EG009ControllerUseTemplate extends AbstractEsignatureController {
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
-        EnvelopeDefinition envelope = makeEnvelope(args);
-        EnvelopeSummary result = envelopesApi.createEnvelope(session.getAccountId(), envelope);
+        EnvelopeDefinition envelope = UseTemplateService.makeEnvelope(
+                args.getSignerName(),
+                args.getSignerEmail(),
+                args.getCcEmail(),
+                args.getCcName(),
+                args.getTemplateId()
+        );
+        EnvelopeSummary envelopeSummary = UseTemplateService.createEnvelopeTemplate(
+                envelopesApi,
+                session.getAccountId(),
+                envelope);
 
-        session.setEnvelopeId(result.getEnvelopeId());
+        session.setEnvelopeId(envelopeSummary.getEnvelopeId());
         DoneExample.createDefault(title)
-                .withJsonObject(result)
+                .withJsonObject(envelopeSummary)
                 .withMessage("The envelope has been created and sent!<br/>Envelope ID "
-                        + result.getEnvelopeId() + ".")
+                        + envelopeSummary.getEnvelopeId() + ".")
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
-    }
-
-    private static EnvelopeDefinition makeEnvelope(WorkArguments args) {
-        TemplateRole signer = new TemplateRole();
-        signer.setEmail(args.getSignerEmail());
-        signer.setName(args.getSignerName());
-        signer.setRoleName(EnvelopeHelpers.SIGNER_ROLE_NAME);
-
-        TemplateRole cc = new TemplateRole();
-        cc.setEmail(args.getCcEmail());
-        cc.setName(args.getCcName());
-        cc.setRoleName(EnvelopeHelpers.CC_ROLE_NAME);
-
-        EnvelopeDefinition envelope = new EnvelopeDefinition();
-        envelope.setTemplateId(args.getTemplateId());
-        envelope.setTemplateRoles(Arrays.asList(signer, cc));
-        envelope.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
-
-        return envelope;
     }
     // ***DS.snippet.0.end
 }
