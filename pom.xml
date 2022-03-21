@@ -18,12 +18,12 @@
 
     <properties>
         <java.version>11</java.version>
-        <oauth2.version>2.5.2</oauth2.version>
+        <oauth2.version>2.5.6</oauth2.version>
         <commonsio.version>2.11.0</commonsio.version>
         <docusign.version>3.17.1</docusign.version>
         <rooms.version>1.1.0</rooms.version>
-        <click.version>1.0.0-BETA</click.version>
-        <monitor.version>1.0.0-BETA</monitor.version>
+        <click.version>1.0.0</click.version>
+        <monitor.version>1.0.0</monitor.version>
         <admin.version>1.0.0-BETA</admin.version>
     </properties>
 
@@ -45,7 +45,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
+            <version>1.18.22</version>
             <optional>true</optional>
         </dependency>
         <dependency>
