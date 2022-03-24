@@ -1,0 +1,3 @@
+clientId={INTEGRATION_KEY_JWT}
+userId={IMPERSONATED_USER_ID}
+rsaKeyFile=private.key
