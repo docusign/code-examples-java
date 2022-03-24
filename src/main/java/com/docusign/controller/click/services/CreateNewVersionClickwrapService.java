@@ -36,7 +36,6 @@ public final class CreateNewVersionClickwrapService {
                 .downloadable(true)
                 .format("modal")
                 .mustRead(true)
-                .mustView(true)
                 .requireAccept(true)
                 .documentDisplay("document");
 
