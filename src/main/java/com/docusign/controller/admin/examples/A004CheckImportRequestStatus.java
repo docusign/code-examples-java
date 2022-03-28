@@ -4,6 +4,7 @@ import com.docusign.DSConfiguration;
 import com.docusign.admin.api.BulkImportsApi;
 import com.docusign.admin.model.OrganizationImportResponse;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.admin.services.CheckImportRequestStatusService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
@@ -79,7 +80,10 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
         // Create a bulk exports api instance
         BulkImportsApi bulkImportsApi = createBulkImportsApi(accessToken, this.session.getBasePath());
         // Step 4a start
-        return bulkImportsApi.getBulkUserImportRequest(this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()), UUID.fromString(this.session.getImportId()));
+        return CheckImportRequestStatusService.checkRequestStatus(
+                bulkImportsApi,
+                this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()),
+                UUID.fromString(this.session.getImportId()));
         // Step 4a end
     }
     

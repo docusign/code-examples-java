@@ -6,6 +6,7 @@ import com.docusign.admin.model.OrganizationExportResponse;
 import com.docusign.admin.model.OrganizationExportRequest;
 import com.docusign.admin.model.OrganizationExportsResponse;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.admin.services.BulkExportUserDataService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
@@ -52,59 +53,32 @@ public class A003BulkExportUserData extends AbstractAdminController {
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
         // Step 3 start
         BulkExportsApi bulkExportsApi = createBulkExportsApi(this.user.getAccessToken(), this.session.getBasePath());
-        OrganizationExportRequest request = new OrganizationExportRequest();
-        request.setType("organization_memberships_export");
-        OrganizationExportResponse bulkList = bulkExportsApi.createUserListExport(
-                this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()), request);
+
+        OrganizationExportResponse bulkList = BulkExportUserDataService.createUserListExport(
+                bulkExportsApi,
+                this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()));
         // Step 3 end
 
         TimeUnit.SECONDS.sleep(30);
 
         // Step 4 start
-        OrganizationExportResponse data = bulkExportsApi.getUserListExport(
-                this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()), bulkList.getId());
+        OrganizationExportResponse data = BulkExportUserDataService.bulkExportUserData(
+                bulkExportsApi,
+                this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()),
+                bulkList.getId());
         // Step 4 end
 
         // Step 5 start
-String csvUri = data.getResults().get(0).getUrl();
-URL request_url = new URL(csvUri);
+        String csvUri = data.getResults().get(0).getUrl();
+        String saveFilePath = BulkExportUserDataService.moveUserListExportToFile(
+                csvUri,
+                BEARER_AUTHENTICATION,
+                this.user.getAccessToken(),
+                BUFFER_SIZE
+        );
 
-// Send Web request to download and save the exported CSV data
-HttpsURLConnection.setFollowRedirects(true); // Defaults to true
-HttpsURLConnection http_conn = (HttpsURLConnection) request_url.openConnection();
-http_conn.setRequestProperty(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON);
-http_conn.setRequestProperty(HttpHeaders.CONTENT_TYPE, "mutlipart/form-data");
-http_conn.setRequestProperty(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + user.getAccessToken());
-http_conn.setInstanceFollowRedirects(true);
-
-ClassLoader rawPath = Thread.currentThread().getContextClassLoader();
-String rootDir = Paths.get(rawPath.getResource("").toURI()).toString();
-// Set the save file path in the project root instead of the compiled folder and
-// force forward slash scheme
-rootDir = StringUtils.remove(rootDir, "target\\classes");
-rootDir = StringUtils.remove(rootDir, "file:/");
-rootDir = StringUtils.replace(rootDir, "\\", "/");
-
-// opens input stream from the HTTP connection
-InputStream inputStream = http_conn.getInputStream();
-String saveFilePath = rootDir + "src/main/resources/ExportedUserData.csv";
-
-// opens an output stream to save into file
-FileOutputStream outputStream = FileUtils.openOutputStream(new File(saveFilePath));
-
-int bytesRead = -1;
-byte[] buffer = new byte[BUFFER_SIZE];
-while ((bytesRead = inputStream.read(buffer)) != -1) {
-    outputStream.write(buffer, 0, bytesRead);
-}
-
-outputStream.close();
-inputStream.close();
-http_conn.disconnect();
-        // Step 5 end
-
-        OrganizationExportsResponse results = bulkExportsApi
-                .getUserListExports(this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()));
+        OrganizationExportsResponse results = BulkExportUserDataService
+                .bulkExportsUserData(bulkExportsApi, this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()));
         // Process results
         DoneExample.createDefault(title)
                 .withMessage("User data exported to " + saveFilePath + "<br>from UserExport:getUserListExport method:")

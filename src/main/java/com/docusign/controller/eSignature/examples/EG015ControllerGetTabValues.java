@@ -7,6 +7,8 @@ import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
+import com.docusign.esign.model.EnvelopeFormData;
+import com.docusign.controller.eSignature.services.GetTabValuesService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +29,6 @@ public class EG015ControllerGetTabValues extends AbstractEsignatureController {
     private final Session session;
     private final User user;
 
-
     @Autowired
     public EG015ControllerGetTabValues(DSConfiguration config, Session session, User user) {
         super(config, "eg015", "Get Envelope Tabs");
@@ -46,8 +47,12 @@ public class EG015ControllerGetTabValues extends AbstractEsignatureController {
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
         // Step 1. get envelope recipients
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
+        EnvelopeFormData envelopeFormData = GetTabValuesService.getTabValues(
+                envelopesApi,
+                session.getAccountId(),
+                session.getEnvelopeId());
         DoneExample.createDefault(title)
-                .withJsonObject(envelopesApi.getFormData(session.getAccountId(), session.getEnvelopeId()))
+                .withJsonObject(envelopeFormData)
                 .withMessage("Results from the Envelope::GetFormData method:")
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;

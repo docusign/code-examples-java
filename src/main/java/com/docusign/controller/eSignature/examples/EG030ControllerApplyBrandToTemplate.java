@@ -6,9 +6,11 @@ import java.util.Arrays;
 import javax.servlet.http.HttpServletResponse;
 
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.eSignature.services.ApplyBrandToTemplateService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -43,10 +45,8 @@ public class EG030ControllerApplyBrandToTemplate extends AbstractEsignatureContr
 
     private static final String MODEL_LIST_BRAND = "listBrands";
     private static final String MODEL_LIST_TEMPLATE = "listTemplates";
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG030ControllerApplyBrandToTemplate(DSConfiguration config, Session session, User user) {
@@ -65,9 +65,7 @@ public class EG030ControllerApplyBrandToTemplate extends AbstractEsignatureContr
         BrandsResponse brands = accountsApi.listBrands(accountId);
         model.addAttribute(MODEL_LIST_BRAND, brands.getBrands());
 
-        TemplatesApi templatesApi = new TemplatesApi(apiClient);
-        EnvelopeTemplateResults templates = templatesApi.listTemplates(accountId);
-        model.addAttribute(MODEL_LIST_TEMPLATE, templates.getEnvelopeTemplates());
+        model.addAttribute(MODEL_TEMPLATE_OK, StringUtils.isNotBlank(session.getTemplateId()));
     }
 
     @Override
@@ -77,10 +75,14 @@ public class EG030ControllerApplyBrandToTemplate extends AbstractEsignatureContr
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
         // Step 3: Construct your envelope JSON body
-        EnvelopeDefinition envelope = makeEnvelope(args);
+        EnvelopeDefinition envelope = makeEnvelope(args, session.getTemplateId());
 
         // Step 5: Call the eSignature REST API
-        EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(session.getAccountId(), envelope);
+        EnvelopeSummary envelopeSummary = ApplyBrandToTemplateService.applyBrandToTemplate(
+                envelopesApi,
+                session.getAccountId(),
+                envelope
+        );
 
         DoneExample.createDefault(title)
                 .withJsonObject(envelopeSummary)
@@ -90,7 +92,7 @@ public class EG030ControllerApplyBrandToTemplate extends AbstractEsignatureContr
         return DONE_EXAMPLE_PAGE;
     }
 
-    private static EnvelopeDefinition makeEnvelope(WorkArguments args) {
+    private static EnvelopeDefinition makeEnvelope(WorkArguments args, String templateId) {
         TemplateRole signer = new TemplateRole()
                 .email(args.getSignerEmail())
                 .name(args.getSignerName())
@@ -102,7 +104,7 @@ public class EG030ControllerApplyBrandToTemplate extends AbstractEsignatureContr
                 .roleName(EnvelopeHelpers.CC_ROLE_NAME);
 
         return new EnvelopeDefinition()
-                .templateId(args.getTemplateId())
+                .templateId(templateId)
                 .templateRoles(Arrays.asList(signer, cc))
                 .brandId(args.getBrandId())
                 .status(EnvelopeHelpers.ENVELOPE_STATUS_SENT);

@@ -4,6 +4,7 @@ import com.docusign.DSConfiguration;
 import com.docusign.admin.api.BulkExportsApi;
 import com.docusign.admin.model.OrganizationExportResponse;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.admin.services.CheckRequestStatusService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
@@ -43,7 +44,13 @@ public class A003aCheckRequestStatus extends AbstractAdminController {
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
-        OrganizationExportResponse result = checkRequestStatus(this.user.getAccessToken());
+        // Create a bulk exports api instance
+        BulkExportsApi bulkExportsApi = createBulkExportsApi(this.user.getAccessToken(), this.session.getBasePath());
+
+        OrganizationExportResponse result = CheckRequestStatusService.checkRequestStatus(
+                bulkExportsApi,
+                this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()),
+                UUID.fromString(this.session.getExportId()));
 
         // Process results
         DoneExample.createDefault(title)
@@ -51,12 +58,5 @@ public class A003aCheckRequestStatus extends AbstractAdminController {
                 .withJsonObject(result)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
-    }
-
-    protected OrganizationExportResponse checkRequestStatus(String accessToken) throws Exception {
-        // Create a bulk exports api instance
-        BulkExportsApi bulkExportsApi = createBulkExportsApi(accessToken, this.session.getBasePath());
-
-        return bulkExportsApi.getUserListExport(this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()), UUID.fromString(this.session.getExportId()));
     }
 }

@@ -30,7 +30,7 @@
 </p>
 
 <c:choose>
-    <c:when test="${not empty listBrands and not empty listTemplates}">
+    <c:when test="${templateOk and not empty listBrands}">
         <p>The template you created via example 8 and brands created via
             example 24 will be used.</p>
         <form class="eg" action="" method="post" data-busy="form">
@@ -60,14 +60,6 @@
                     name="ccName" required>
             </div>
             <div class="form-group">
-                <label for="templateId">Envelope template</label> <select
-                    id="templateId" name="templateId" class="form-control">
-                    <c:forEach items="${listTemplates}" var="template">
-                        <option value="${template.templateId}">${template.name}</option>
-                    </c:forEach>
-                </select>
-            </div>
-            <div class="form-group">
                 <label for="brandId">Brand</label>
                 <select id="brandId" name="brandId" class="form-control">
                     <c:forEach items="${listBrands}" var="brand">
@@ -80,18 +72,14 @@
         </form>
     </c:when>
     <c:otherwise>
-        <c:if test="${empty listTemplates}">
+        <c:if test="${not templateOk}">
             <p>Problem: please create the template using <a href="eg008">example 8.</a></p>
-        </c:if>
-        <c:if test="${empty listBrands}">
-            <p>Problem: please create the brand using <a href="eg024">example 24.</a></p>
-        </c:if>
-        <c:if test="${empty listTemplates}">
             <form class="eg" action="eg008" method="get">
                 <button type="submit" class="btn btn-docu">Continue</button>
             </form>
         </c:if>
-        <c:if test="${not empty listTemplates}">
+        <c:if test="${empty listBrands}">
+            <p>Problem: please create the brand using <a href="eg024">example 24.</a></p>
             <form class="eg" action="eg024" method="get">
                 <button type="submit" class="btn btn-docu">Continue</button>
             </form>

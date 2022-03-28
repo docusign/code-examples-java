@@ -49,7 +49,7 @@ public final class EnvelopeHelpers {
      * @return the new byte array that has been loaded from the file
      * @throws IOException in case of I/O errors
      */
-    static byte[] readFile(String path) throws IOException {
+    public static byte[] readFile(String path) throws IOException {
         ClassPathResource resource = new ClassPathResource(path);
         return StreamUtils.copyToByteArray(resource.getInputStream());
     }
@@ -104,7 +104,7 @@ public final class EnvelopeHelpers {
      * @return array of bytes representing created html document
      * @throws IOException in case of I/O errors or template parsing error
      */
-    static byte[] createHtmlFromTemplateFile(String path, String objectName, Object value) throws IOException {
+    public static byte[] createHtmlFromTemplateFile(String path, String objectName, Object value) throws IOException {
         Template template = loadHtmlTemplate(path);
         return createHtmlFromTemplate(template, objectName, value);
     }
@@ -133,7 +133,7 @@ public final class EnvelopeHelpers {
      * @param documentId identifier of the created document
      * @return the {@link Document} object
      */
-    static Document createDocument(byte[] data, String documentName, String fileExtention, String documentId) {
+    public static Document createDocument(byte[] data, String documentName, String fileExtention, String documentId) {
         Document document = new Document();
         document.setDocumentBase64(Base64.getEncoder().encodeToString(data));
         document.setName(documentName);
@@ -151,7 +151,7 @@ public final class EnvelopeHelpers {
      * @param xOffsetPixels the x offset of anchor in pixels
      * @return the {@link SignHere} object
      */
-    static SignHere createSignHere(String anchorString, int yOffsetPixels, int xOffsetPixels) {
+    public static SignHere createSignHere(String anchorString, int yOffsetPixels, int xOffsetPixels) {
         SignHere signHere = new SignHere();
         signHere.setAnchorString(anchorString);
         signHere.setAnchorUnits("pixels");
@@ -179,7 +179,7 @@ public final class EnvelopeHelpers {
      * @param signs the array of SignHere (see {@link SignHere})
      * @return the {@link Tabs} object containing passed SignHere objects
      */
-    static Tabs createSignerTabs(SignHere... signs) {
+    public static Tabs createSignerTabs(SignHere... signs) {
         Tabs signerTabs = new Tabs();
         signerTabs.setSignHereTabs(Arrays.asList(signs));
         return signerTabs;
@@ -191,7 +191,7 @@ public final class EnvelopeHelpers {
      * @param cc the cc object
      * @return the {@link Recipients} object
      */
-    static Recipients createRecipients(Signer signer, CarbonCopy cc) {
+    public static Recipients createRecipients(Signer signer, CarbonCopy cc) {
         Recipients recipients = new Recipients();
         recipients.setSigners(Arrays.asList(signer));
         recipients.setCarbonCopies(Arrays.asList(cc));

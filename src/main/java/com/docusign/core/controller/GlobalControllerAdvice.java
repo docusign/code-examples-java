@@ -2,15 +2,10 @@ package com.docusign.core.controller;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.ApiIndex;
-import com.docusign.esign.client.auth.OAuth;
-import com.docusign.core.model.AuthType;
-import com.docusign.core.model.AuthTypeItem;
-import com.docusign.core.model.Locals;
-import com.docusign.core.model.Session;
-import com.docusign.core.model.User;
-
+import com.docusign.core.model.*;
 import com.docusign.core.utils.AccountsConverter;
-import java.util.stream.Collectors;
+import com.docusign.esign.client.auth.OAuth;
+import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +17,9 @@ import org.springframework.security.oauth2.provider.authentication.OAuth2Authent
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.WebApplicationContext;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This class provides common model attributes for all pages. If you want to
@@ -48,12 +41,12 @@ import java.util.Optional;
 public class GlobalControllerAdvice {
 
     private static final String ERROR_ACCOUNT_NOT_FOUND = "Could not find account information for the user";
-
+    private static final String SELECTED_API_NOT_SUPPORTED = "Currently selected api is not supported by launcher. Please, check appsettings.json file.";
     private final DSConfiguration config;
     private final Session session;
     private final User user;
     private Optional<OAuth.Account> account;
-    private AuthType authTypeSelected = AuthType.AGC;
+    private final AuthType authTypeSelected = AuthType.AGC;
 
     @Autowired
     public GlobalControllerAdvice(DSConfiguration config, Session session, User user, Optional<OAuth.Account> account) {
@@ -87,7 +80,11 @@ public class GlobalControllerAdvice {
     public Locals populateLocals() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        ApiIndex apiIndex = ApiIndex.valueOf(config.getApiName());
+        String selectedApi = config.getApiName().getFirstSelectedApi();
+        if (!EnumUtils.isValidEnum(ApiIndex.class, selectedApi)){
+            throw new NoSuchElementException(SELECTED_API_NOT_SUPPORTED);
+        }
+        ApiIndex apiIndex = ApiIndex.valueOf(selectedApi);
         session.setApiIndexPath(apiIndex.toString());
 
         if (!(authentication instanceof OAuth2Authentication)) {
