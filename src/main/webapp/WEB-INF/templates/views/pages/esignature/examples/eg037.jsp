@@ -1,12 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>37. Send an envelope via SMS delivery</h4>
-<p>The envelope includes a pdf, Word, and HTML document. Anchor text
-    (<a href="https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/tabs/auto-place/">AutoPlace</a>)
-    is used to position the signing fields in the documents.
-</p>
-<p>This is a general example of creating and sending an envelope (a signing request) to a recipient and notifying that recipient with an SMS message..</p>
+<h4>37. Request a signature by SMS delivery</h4>
+<p>Sends a signature request via an SMS message.</p>
 <c:if test="${showDoc}">
     <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
@@ -31,7 +27,7 @@
         <label for="phoneNumber">Signer Phone Number</label>
         <input type="text" class="form-control" id="phoneNumber" placeholder="415-555-1212" name="phoneNumber"
                value="" required>
-        <small id="emailHelp" class="form-text text-muted">We'll never share your phone number with anyone else.</small>
+        <small id="emailHelp" class="form-text text-muted">This phone number will receive a notification. We'll never share your phone number with anyone else.</small>
     </div>
     <div class="form-group">
         <label for="signerName">Signer Name</label>
@@ -48,7 +44,7 @@
         <label for="ccPhoneNumber">CC Phone Number</label>
         <input type="text" class="form-control" id="ccPhoneNumber" placeholder="415-555-1212" name="ccPhoneNumber"
                value="" required>
-        <small id="emailHelp" class="form-text text-muted">We'll never share your phone number with anyone else.</small>
+        <small id="emailHelp" class="form-text text-muted">This phone number will receive a notification. We'll never share your phone number with anyone else.</small>
     </div>
     <div class="form-group">
         <label for="ccName">CC Name</label>

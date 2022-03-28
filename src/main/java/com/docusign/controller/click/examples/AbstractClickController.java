@@ -51,29 +51,5 @@ public abstract class AbstractClickController extends AbstractController {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         return new AccountsApi(apiClient);
     }
-
-    /**
-     * Checks a clickwrap and return true IF clickwrap exists and is activated.
-     * @param basePath URL to Click API
-     * @param userAccessToken user's access token
-     * @param accountId user's account id
-     * @param clickwrapId clickwrap's id
-     * @return an boolean value
-     */
-    protected boolean isClickwrapExistsAndActive(String basePath, String userAccessToken,
-                                                 String accountId, String clickwrapId) throws ApiException {
-        boolean isClickwrapOk = false;
-
-        if (StringUtils.isNotBlank(clickwrapId)) {
-
-            AccountsApi accountsApi = this.createAccountsApiClient(basePath, userAccessToken);
-            ClickwrapVersionResponse clickwrapResponse = accountsApi.getClickwrap(accountId, clickwrapId);
-
-            isClickwrapOk = clickwrapResponse.getClickwrapId().equals(clickwrapId) &&
-                    clickwrapResponse.getStatus().equals(ClickwrapHelper.STATUS_ACTIVE);
-        }
-
-        return isClickwrapOk;
-    }
 }
 

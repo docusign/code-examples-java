@@ -5,11 +5,10 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.rooms.api.RoomTemplatesApi;
 import com.docusign.rooms.api.RoomsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.RoomSummaryList;
-import com.docusign.rooms.model.RoomTemplatesSummaryList;
+import com.docusign.controller.rooms.services.GetRoomsWithFiltersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,14 +29,11 @@ public class R005ControllerGetRoomsWithFilters extends AbstractRoomsController {
 
     private static final String MODEL_START_DATE = "startDate";
     private static final String MODEL_END_DATE = "endDate";
-
     private static final int FROM_DATE_OFFSET_DAYS = 10;
     private static final int FROM_DATE_FORWARD_DAYS = 1;
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public R005ControllerGetRoomsWithFilters(DSConfiguration config, Session session, User user) {
@@ -65,13 +61,12 @@ public class R005ControllerGetRoomsWithFilters extends AbstractRoomsController {
         // Step 2: Construct your API headers
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
-        // Step 3. Prepare your request parameters
-        RoomsApi.GetRoomsOptions options = roomsApi.new GetRoomsOptions();
-        options.setFieldDataChangedStartDate(args.getStartDate());
-        options.setFieldDataChangedEndDate(args.getEndDate());
-
         // Step 4. Call the v2 Rooms API
-        RoomSummaryList rooms = roomsApi.getRooms(this.session.getAccountId(), options);
+        RoomSummaryList rooms = GetRoomsWithFiltersService.getRoomsWithFilters(
+                roomsApi,
+                this.session.getAccountId(),
+                args.getStartDate(),
+                args.getEndDate());
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(rooms)

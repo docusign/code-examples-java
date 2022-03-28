@@ -2,6 +2,7 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.eSignature.services.PhoneAuthenticationService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
@@ -26,12 +27,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Example 020: Phone Authentication for recipient
@@ -41,9 +42,6 @@ import javax.servlet.http.HttpServletResponse;
 public class EG020ControllerPhoneAuthentication extends AbstractEsignatureController {
 
     private static final Logger logger = LoggerFactory.getLogger(EG023ControllerIdvAuthentication.class);
-    private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
-    private static final String DOCUMENT_NAME = "Lorem";
-
     private final Session session;
     private final User user;
 
@@ -81,10 +79,10 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
         if (workflowId.equals(""))
         {
             throw new ApiException(0, "Please contact <a href='https://support.docusign.com'>DocuSign Support</a> to enable Phone Auth in your account.");
-        }EnvelopeDefinition envelope = createEnvelope(args.getSignerName(), args.getSignerEmail(), args.getCountryCode(),
+        }EnvelopeDefinition envelope = PhoneAuthenticationService.createEnvelope(args.getSignerName(), args.getSignerEmail(), args.getCountryCode(),
                 args.getPhoneNumber(), workflowId);
         // Step 4.1 start
-        EnvelopeSummary results = envelopesApi.createEnvelope(accountId, envelope);
+        EnvelopeSummary results = PhoneAuthenticationService.phoneAuthentication(envelopesApi, accountId, envelope);
         // Step 4.1 end
 
         session.setEnvelopeId(results.getEnvelopeId());
@@ -95,62 +93,4 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
 
         return DONE_EXAMPLE_PAGE;
     }
-
-    // Step 4.2 start
-    private static EnvelopeDefinition createEnvelope(String signerName, String signerEmail, String countryCode,
-            String phone, String workFlowId) throws IOException {
-        Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
-
-        SignHere signHere = new SignHere();
-        signHere.setName("SignHereTab");
-        signHere.setXPosition("200");
-        signHere.setYPosition("160");
-        signHere.setTabLabel("SignHereTab");
-        signHere.setPageNumber("1");
-        signHere.setDocumentId(doc.getDocumentId());
-        // A 1- to 8-digit integer or 32-character GUID to match recipient IDs on your
-        // own systems.
-        // This value is referenced in the Tabs element below to assign tabs on a
-        // per-recipient basis.
-        signHere.setRecipientId("1");
-
-        RecipientIdentityPhoneNumber phoneNumber = new RecipientIdentityPhoneNumber();
-        phoneNumber.setCountryCode(countryCode);
-        phoneNumber.setNumber(phone);
-
-        RecipientIdentityInputOption inputOption = new RecipientIdentityInputOption();
-        inputOption.setName("phone_number_list");
-        inputOption.setValueType("PhoneNumberList");
-        inputOption.setPhoneNumberList(Arrays.asList(phoneNumber));
-
-        RecipientIdentityVerification identityVerifcation = new RecipientIdentityVerification();
-
-        identityVerifcation.setWorkflowId(workFlowId);
-        identityVerifcation.setInputOptions(Arrays.asList(inputOption));
-
-        Signer signer = new Signer();
-        signer.setName(signerName);
-        signer.setEmail(signerEmail);
-        signer.setRoutingOrder("1");
-        signer.setStatus(EnvelopeHelpers.SIGNER_STATUS_CREATED);
-        signer.setDeliveryMethod(EnvelopeHelpers.DELIVERY_METHOD_EMAIL);
-        signer.setRecipientId(signHere.getRecipientId());
-        signer.setTabs(EnvelopeHelpers.createSignerTabs(signHere));
-        signer.setIdentityVerification(identityVerifcation);
-
-        Recipients recipients = new Recipients();
-        recipients.setSigners(Arrays.asList(signer));
-
-        EnvelopeDefinition envelope = new EnvelopeDefinition();
-        envelope.setEmailSubject("Please Sign");
-        envelope.setDocuments(Arrays.asList(doc));
-        envelope.setEnvelopeIdStamping("true");
-        envelope.setEmailBlurb("Sample text for email body");
-        envelope.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
-        envelope.setRecipients(recipients);
-
-        return envelope;
-    }
-    // Step 4.2 end
-
 }

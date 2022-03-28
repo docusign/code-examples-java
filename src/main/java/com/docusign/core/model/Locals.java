@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import com.docusign.DSConfiguration;
 
-
 @Data
 @AllArgsConstructor
 public class Locals {

@@ -1,27 +1,24 @@
 package com.docusign.controller.eSignature.examples;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.docusign.DSConfiguration;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.api.GroupsApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.ErrorDetails;
-import com.docusign.esign.model.Group;
 import com.docusign.esign.model.GroupInformation;
 import com.docusign.esign.model.PermissionProfileInformation;
+import com.docusign.controller.eSignature.services.PermissionSetUserGroupsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -36,10 +33,8 @@ public class EG025ControllerPermissionSetUserGroups extends AbstractEsignatureCo
 
     private static final String MODEL_LIST_PROFILES = "listProfiles";
     private static final String MODEL_LIST_GROUPS = "listGroups";
-
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG025ControllerPermissionSetUserGroups(DSConfiguration config, Session session, User user) {
@@ -66,15 +61,13 @@ public class EG025ControllerPermissionSetUserGroups extends AbstractEsignatureCo
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
         // Step 2: Construct your API headers
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
-        GroupsApi groupsApi = new GroupsApi(apiClient);
 
-        // Step 3: Perform request
-        Group newGroup = new Group()
-                .groupId(args.getGroupId())
-                .permissionProfileId(args.getProfileId());
-        GroupInformation groupInformation = new GroupInformation()
-                .groups(List.of(newGroup));
-        GroupInformation newGroupInfo = groupsApi.updateGroups(session.getAccountId(), groupInformation);
+        GroupInformation newGroupInfo = PermissionSetUserGroupsService.permissionSetUserGroups(
+                apiClient,
+                args.getGroupId(),
+                args.getProfileId(),
+                session.getAccountId()
+        );
 
         // Step 4: Show result
         ErrorDetails errorDetails = newGroupInfo.getGroups().get(0).getErrorDetails();

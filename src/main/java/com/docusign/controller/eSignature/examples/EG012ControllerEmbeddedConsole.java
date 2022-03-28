@@ -6,17 +6,16 @@ import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.ConsoleViewRequest;
 import com.docusign.esign.model.ViewUrl;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.docusign.controller.eSignature.services.EmbeddedConsoleService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
+
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -32,7 +31,6 @@ public class EG012ControllerEmbeddedConsole extends AbstractEsignatureController
 
     private final Session session;
     private final User user;
-
 
     @Autowired
     public EG012ControllerEmbeddedConsole(DSConfiguration config, Session session, User user) {
@@ -54,19 +52,14 @@ public class EG012ControllerEmbeddedConsole extends AbstractEsignatureController
 
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
-        // Step 1. Create the Console / Web UI view.
-        // Set the URL where you want the recipient to go once they are finished in
-        // the Web UI. There are cases where a user will never click "FINISH" within
-        // the Web UI, you cannot assume control will be passed back to your application.
-        ConsoleViewRequest viewRequest = new ConsoleViewRequest();
-        viewRequest.setReturnUrl(config.getDsReturnUrl());
-        String envelopeId = session.getEnvelopeId();
-        if ("envelope".equalsIgnoreCase(args.getStartingView()) && envelopeId != null) {
-            viewRequest.setEnvelopeId(envelopeId);
-        }
-
         // Step 2. Call the CreateSenderView API
-        ViewUrl viewUrl = envelopesApi.createConsoleView(session.getAccountId(), viewRequest);
+        ViewUrl viewUrl = EmbeddedConsoleService.createConsoleView(
+                envelopesApi,
+                config.getDsReturnUrl(),
+                session.getEnvelopeId(),
+                args.getStartingView(),
+                session.getAccountId());
+
         return new RedirectView(viewUrl.getUrl());
     }
     // ***DS.snippet.0.end
