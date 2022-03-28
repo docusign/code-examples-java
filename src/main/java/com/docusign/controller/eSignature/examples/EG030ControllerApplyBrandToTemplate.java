@@ -1,10 +1,12 @@
 package com.docusign.controller.eSignature.examples;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletResponse;
 
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.eSignature.services.ApplyBrandToTemplateService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
@@ -24,6 +26,7 @@ import com.docusign.esign.model.BrandsResponse;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.EnvelopeTemplateResults;
+import com.docusign.esign.model.TemplateRole;
 
 
 /**
