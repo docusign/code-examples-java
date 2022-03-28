@@ -31,7 +31,7 @@ public class EG037ControllerSMSDelivery extends AbstractEsignatureController {
 
     @Autowired
     public EG037ControllerSMSDelivery(DSConfiguration config, Session session, User user) {
-        super(config, "eg037", "Send an email with SMS delivery");
+        super(config, "eg037", "Request a signature by SMS delivery");
         this.session = session;
         this.user = user;
     }
