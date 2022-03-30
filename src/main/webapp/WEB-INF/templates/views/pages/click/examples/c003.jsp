@@ -18,16 +18,28 @@
 </p>
 
 <c:choose>
-    <c:when test="${clickwrapOk == true}">
-        <p>The clickwrap you created via example 1 will be queried.</p>
+    <c:when test="${clickwraps['clickwraps'] != null }">
         <form class="eg" action="" method="post" data-busy="form">
+            <div class="form-group">
+                <label for="clickwrapId">Clickwrap</label>
+                <select class="custom-select" id="clickwrapId" name="clickwrapId">
+                    <c:forEach items="${clickwraps['clickwraps']}" var="clickwrap">
+                        <option value="${clickwrap['clickwrapId']}">${clickwrap['clickwrapName']}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="clickwrapName">New Name</label>
+                <input type="text" class="form-control" id="clickwrapName" name="clickwrapName" required>
+            </div>
             <input type="hidden" name="_csrf" value="${csrfToken}">
             <button type="submit" class="btn btn-docu">Submit</button>
         </form>
     </c:when>
     <c:otherwise>
-        <p>Cannot find any clickwrap. Please first create a clickwrap using
-            <a target="_blank" href="/c001">example 1</a>.
+        <p>
+            Problem: You do not have clickwraps to activate. Go to example#1 and create one: 
+            <a href="c001">create clickwrap.</a> <br/>
         </p>
     </c:otherwise>
 </c:choose>

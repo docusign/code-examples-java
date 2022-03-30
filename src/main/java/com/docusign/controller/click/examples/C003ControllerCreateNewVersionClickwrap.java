@@ -4,11 +4,13 @@ import com.docusign.DSConfiguration;
 import com.docusign.click.api.AccountsApi;
 import com.docusign.click.client.ApiException;
 import com.docusign.click.model.ClickwrapVersionSummaryResponse;
+import com.docusign.click.model.ClickwrapVersionsResponse;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.controller.click.services.CreateNewVersionClickwrapService;
+import com.docusign.controller.click.services.GetListClickwrapsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +27,7 @@ import java.io.IOException;
 @RequestMapping("/c003")
 public class C003ControllerCreateNewVersionClickwrap extends AbstractClickController {
 
-    private static final String MODEL_CLICKWRAP_OK = "clickwrapOk";
+    private static final String MODEL_CLICKWRAPS = "clickwraps";
     private static final String DOCUMENT_FILE_NAME = "TermsOfService.pdf";
     private static final Integer DOCUMENT_ORDER = 0;
     private static final String DOCUMENT_NAME = "Terms of Service";
@@ -42,7 +44,9 @@ public class C003ControllerCreateNewVersionClickwrap extends AbstractClickContro
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
-        model.addAttribute(MODEL_CLICKWRAP_OK, StringUtils.isNotBlank(this.session.getClickwrapId()));
+        AccountsApi accountsApi = createAccountsApiClient(this.session.getBasePath(), this.user.getAccessToken());
+        ClickwrapVersionsResponse clickwraps = GetListClickwrapsService.getListClickwrap(accountsApi, this.session.getAccountId());
+        model.addAttribute(MODEL_CLICKWRAPS, clickwraps);
     }
 
     @Override
@@ -54,9 +58,9 @@ public class C003ControllerCreateNewVersionClickwrap extends AbstractClickContro
 
         ClickwrapVersionSummaryResponse createdClickwrap = CreateNewVersionClickwrapService.createNewVersionClickwrap(
                 accountsApi,
-                CreateNewVersionClickwrapService.createClickwrapRequest(DOCUMENT_FILE_NAME, DOCUMENT_NAME, DOCUMENT_ORDER),
+                CreateNewVersionClickwrapService.createClickwrapRequest(DOCUMENT_FILE_NAME, DOCUMENT_NAME, DOCUMENT_ORDER, args.getClickwrapName()),
                 this.session.getAccountId(),
-                this.session.getClickwrapId()
+                args.getClickwrapId()
         );
 
 

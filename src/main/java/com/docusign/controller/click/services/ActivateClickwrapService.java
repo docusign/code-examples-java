@@ -5,6 +5,8 @@ import com.docusign.click.client.ApiException;
 import com.docusign.click.model.ClickwrapRequest;
 import com.docusign.click.model.ClickwrapVersionSummaryResponse;
 import com.docusign.controller.click.examples.ClickwrapHelper;
+import com.docusign.click.model.ClickwrapVersionsResponse;
+import com.docusign.click.api.AccountsApi.GetClickwrapsOptions;
 
 public final class ActivateClickwrapService {
     public static ClickwrapVersionSummaryResponse activateClickwrap(
@@ -21,5 +23,14 @@ public final class ActivateClickwrapService {
                 clickwrapId,
                 clickwrapVersionNumber,
                 clickwrapRequest);
+    }
+
+    public static ClickwrapVersionsResponse getInactiveClickwraps(
+            AccountsApi accountsApi,
+            String accountId
+    ) throws ApiException{
+        AccountsApi.GetClickwrapsOptions options = accountsApi.new GetClickwrapsOptions();
+        options.setStatus("inactive");
+        return accountsApi.getClickwraps(accountId, options);
     }
 }

@@ -12,15 +12,30 @@
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
 </p>
-<p>
-    The clickwrap you created via example 1 will be queried.
-</p>
 
-
-<form class="eg" action="" method="post" data-busy="form">
-    <input type="hidden" name="_csrf" value="${csrfToken}">
-    <button type="submit" class="btn btn-docu">Submit</button>
-</form>
+<c:choose>
+    <c:when test="${clickwraps['clickwraps'] != null }">
+        <p>Please choose a clickwrap</p>
+        <form class="eg" action="" method="post" data-busy="form">
+            <div class="form-group">
+                <label for="clickwrapId">Clickwrap</label>
+                <select class="custom-select" id="clickwrapId" name="clickwrapId">
+                    <c:forEach items="${clickwraps['clickwraps']}" var="clickwrap">
+                        <option value="${clickwrap['clickwrapId']}">${clickwrap['clickwrapName']}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <input type="hidden" name="_csrf" value="${csrfToken}">
+            <button type="submit" class="btn btn-docu">Submit</button>
+        </form>
+    </c:when>
+    <c:otherwise>
+        <p>
+            Problem: You do not have clickwraps. Go to example#1 and create one: 
+            <a href="c001">create clickwrap.</a> <br/>
+        </p>
+    </c:otherwise>
+</c:choose>
 
 
 <jsp:include page="../../../partials/foot.jsp"/>
