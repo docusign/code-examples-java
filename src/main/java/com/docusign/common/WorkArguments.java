@@ -66,4 +66,6 @@ public class WorkArguments {
     private UUID dsGroupId;
     private String resumeDate;
     private String delay;
+    private String clickwrap;
+    private String clickwrapId;
 }
