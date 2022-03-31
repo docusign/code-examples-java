@@ -3,9 +3,13 @@ package com.docusign.core.controller;
 import com.docusign.DSConfiguration;
 import com.docusign.common.ApiIndex;
 import com.docusign.core.model.*;
-import com.docusign.core.utils.AccountsConverter;
+
 import com.docusign.esign.client.auth.OAuth;
-import org.apache.commons.lang3.EnumUtils;
+
+import com.docusign.core.utils.AccountsConverter;
+
+import java.io.IOException;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +50,10 @@ public class GlobalControllerAdvice {
     private final Session session;
     private final User user;
     private Optional<OAuth.Account> account;
-    private final AuthType authTypeSelected = AuthType.AGC;
+
+    private AuthType authTypeSelected = AuthType.AGC;
+    private ApiType apiTypeSelected = ApiType.ESIGNATURE;
+
 
     @Autowired
     public GlobalControllerAdvice(DSConfiguration config, Session session, User user, Optional<OAuth.Account> account) {
@@ -66,6 +73,16 @@ public class GlobalControllerAdvice {
         return AuthTypeItem.convert(authTypeSelected);
     }
 
+    @ModelAttribute("apiTypes")
+    public List<ApiTypeItem> apiTypes() {
+        return ApiTypeItem.list();
+    }
+
+    @ModelAttribute("apiTypeSelected")
+    public ApiTypeItem apiTypeSelected() {
+        return ApiTypeItem.convert(apiTypeSelected);
+    }
+
     @ModelAttribute("documentOptions")
     public List<JSONObject> populateDocumentOptions() {
         return new ArrayList<>();
@@ -77,14 +94,16 @@ public class GlobalControllerAdvice {
     }
 
     @ModelAttribute("locals")
-    public Locals populateLocals() {
+    public Locals populateLocals() throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        String selectedApi = config.getApiName().getFirstSelectedApi();
-        if (!EnumUtils.isValidEnum(ApiIndex.class, selectedApi)){
-            throw new NoSuchElementException(SELECTED_API_NOT_SUPPORTED);
+
+        ApiIndex apiIndex = ApiIndex.ESIGNATURE;
+
+        if (config.getSelectedApiIndex() != null){
+            apiIndex = config.getSelectedApiIndex();
         }
-        ApiIndex apiIndex = ApiIndex.valueOf(selectedApi);
+
         session.setApiIndexPath(apiIndex.toString());
 
         if (!(authentication instanceof OAuth2Authentication)) {

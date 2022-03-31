@@ -35,7 +35,7 @@ import java.util.Objects;
 public abstract class AbstractController {
 
     private static final String REDIRECT_PREFIX = "redirect:";
-    protected static final String REDIRECT_AUTHENTICATION_PAGE = REDIRECT_PREFIX + "/ds/mustAuthenticate";
+    protected static final String REDIRECT_SELECT_API_PAGE = REDIRECT_PREFIX + "/ds/selectApi";
     protected static final String BEARER_AUTHENTICATION = "Bearer ";
     protected static final String DONE_EXAMPLE_PAGE = "pages/example_done";
     protected static final String DONE_EXAMPLE_PAGE_COMPARE = "pages/example_done_compare";
@@ -65,7 +65,7 @@ public abstract class AbstractController {
     @GetMapping
     public String get(WorkArguments args, ModelMap model) {
         if (isTokenExpired()) {
-            return REDIRECT_AUTHENTICATION_PAGE;
+            return REDIRECT_SELECT_API_PAGE;
         }
 
         try {
@@ -79,7 +79,7 @@ public abstract class AbstractController {
     @PostMapping
     public Object create(WorkArguments args, ModelMap model, HttpServletResponse response) {
         if (isTokenExpired()) {
-            return REDIRECT_AUTHENTICATION_PAGE;
+            return REDIRECT_SELECT_API_PAGE;
         }
 
         try {

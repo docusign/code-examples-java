@@ -27,7 +27,7 @@ public abstract class AbstractMonitorController extends AbstractController {
 
     protected String ensureUsageOfJWTToken(String accessToken, Session session) {
         if (session.getAuthTypeSelected() != AuthType.JWT || accessToken.isEmpty()){
-            return REDIRECT_AUTHENTICATION_PAGE;
+            return REDIRECT_SELECT_API_PAGE;
         } else {
             return accessToken;
         }

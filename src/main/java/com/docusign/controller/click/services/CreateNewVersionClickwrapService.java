@@ -27,22 +27,22 @@ public final class CreateNewVersionClickwrapService {
     public static ClickwrapRequest createClickwrapRequest(
             String fileName,
             String documentName,
-            Integer documentOrder
+            Integer documentOrder,
+            String clickwrapName
     ) throws IOException {
         Document document = ClickwrapHelper.createDocumentFromFile(fileName, documentName, documentOrder);
         DisplaySettings displaySettings = new DisplaySettings()
-                .displayName("Terms of Service v2")
+                .displayName(clickwrapName)
                 .consentButtonText("I Agree")
                 .downloadable(true)
                 .format("modal")
                 .mustRead(true)
-                .mustView(true)
                 .requireAccept(true)
                 .documentDisplay("document");
 
         return new ClickwrapRequest()
                 .addDocumentsItem(document)
-                .clickwrapName("Terms of Service")
+                .clickwrapName(clickwrapName)
                 .requireReacceptance(true)
                 .status(ClickwrapHelper.STATUS_ACTIVE)
                 .displaySettings(displaySettings);
