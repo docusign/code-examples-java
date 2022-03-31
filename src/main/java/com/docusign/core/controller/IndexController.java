@@ -1,11 +1,30 @@
 package com.docusign.core.controller;
 
 import com.docusign.DSConfiguration;
+import com.docusign.common.ApiIndex;
+import com.docusign.core.model.ApiType;
 import com.docusign.core.model.AuthType;
 import com.docusign.core.model.Session;
 import com.docusign.core.security.OAuthProperties;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
+
+import org.apache.commons.lang3.EnumUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
@@ -16,6 +35,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class IndexController {
@@ -37,18 +58,33 @@ public class IndexController {
     private DSConfiguration config;
 
     @GetMapping(path = "/")
-    public String index(ModelMap model) {
+    public String index(ModelMap model, HttpServletResponse response) throws IOException {
         model.addAttribute(ATTR_TITLE,"Home");
+
+        if (config.getQuickstart().equals("true") && config.getSelectedApiIndex().equals(ApiIndex.ESIGNATURE) &&
+                !(SecurityContextHolder.getContext().getAuthentication() instanceof OAuth2Authentication)){
+            String site = config.getSelectedApiIndex().getPathOfFirstExample();
+            response.setStatus(response.SC_MOVED_TEMPORARILY);
+            response.setHeader("Location", site);
+            return null;
+        }
+
         return session.getApiIndexPath();
     }
 
     @GetMapping(path = "/ds/mustAuthenticate")
-    public ModelAndView mustAuthenticateController(ModelMap model) {
+    public ModelAndView mustAuthenticateController(ModelMap model) throws IOException {
         model.addAttribute(ATTR_TITLE, "Authenticate with DocuSign");
         if (session.isRefreshToken() || config.getQuickstart().equals("true")) {
+            config.setQuickstart("false");
+
+            if  (config.getSelectedApiType().equals(ApiType.MONITOR)) {
+                return new ModelAndView(getRedirectView(AuthType.JWT));
+            }
+
             return new ModelAndView(getRedirectView(session.getAuthTypeSelected()));
         }
-        else if (config.getApiName().equals("MONITOR")) {
+        else if (config.getSelectedApiType().equals(ApiType.MONITOR)) {
             return new ModelAndView(getRedirectView(AuthType.JWT));
         }
         else {
@@ -56,10 +92,51 @@ public class IndexController {
         }
     }
 
+    @GetMapping(path = "/ds/selectApi")
+    public Object choseApiType() {
+        return new ModelAndView("pages/ds_select_api");
+    }
+
+    @RequestMapping(path = "/ds/selectApi", method = RequestMethod.POST)
+    public Object getApiType(ModelMap model, @RequestBody MultiValueMap<String, String> formParams) throws IOException, URISyntaxException {
+        if (!formParams.containsKey("selectApiType")) {
+            model.addAttribute("message", "Select option with selectApiType name must be provided.");
+            return new RedirectView("pages/error");
+        }
+        List<String> selectApiTypeObject = formParams.get("selectApiType");
+        ApiType apiTypeSelected = ApiType.valueOf(selectApiTypeObject.get(0));
+        writeApiTypeIntoFile(apiTypeSelected);
+
+        return new ModelAndView("pages/ds_restart");
+    }
+
+    private void writeApiTypeIntoFile(ApiType apiTypeSelected) throws URISyntaxException, IOException {
+        JSONObject currentApiType = new JSONObject();
+        currentApiType.put(config.getApiTypeHeader(), apiTypeSelected.name());
+
+        Path exampleApiSourcePath = Paths.get("").resolve("src").resolve("main")
+            .resolve("resources").resolve(config.getExamplesApiPath());
+        if (Files.exists(exampleApiSourcePath)) {
+            try (BufferedWriter bufferedWriter = new BufferedWriter(
+                    new FileWriter(exampleApiSourcePath.toAbsolutePath().toString()))
+            ) {
+                bufferedWriter.write(currentApiType.toString());
+            }
+        } else {
+            // Works in case we create war and run it on 'tomcat' server
+            URL exampleApiURL = getClass().getClassLoader().getResource(config.getExamplesApiPath());
+            try (BufferedWriter bufferedWriter = new BufferedWriter(
+                    new FileWriter(new File(Objects.requireNonNull(exampleApiURL).toURI())))
+            ) {
+                bufferedWriter.write(currentApiType.toString());
+            }
+        }
+    }
+
     @RequestMapping(path = "/ds/authenticate", method = RequestMethod.POST)
     public RedirectView authenticate(ModelMap model, @RequestBody MultiValueMap<String, String> formParams) {
         if (!formParams.containsKey("selectAuthType")) {
-            model.addAttribute("message", "select option with selectAuthType name must be provided");
+            model.addAttribute("message", "Select option with selectAuthType name must be provided.");
             return new RedirectView("pages/error");
         }
         List<String> selectAuthTypeObject = formParams.get("selectAuthType");

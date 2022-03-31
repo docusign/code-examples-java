@@ -1,4 +1,5 @@
 package com.docusign;
+import com.docusign.core.model.ApiType;
 import com.docusign.core.security.OAuthProperties;
 import com.docusign.core.security.jwt.JWTAuthorizationCodeResourceDetails;
 import com.docusign.core.security.jwt.JWTOAuth2RestTemplate;
@@ -28,23 +29,14 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 import org.springframework.web.filter.CompositeFilter;
 
 import javax.servlet.Filter;
-import java.util.Arrays;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 
 @EnableOAuth2Client
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	public String roomScopes[] = new String[] {"signature", "dtr.rooms.read", "dtr.rooms.write", "dtr.documents.read", "dtr.documents.write", "dtr.profile.read", "dtr.profile.write", "dtr.company.read", "dtr.company.write", "room_forms"};
-	public String clickScopes[] = new String[] {"click.manage", "click.send"};
-    public String monitorScopes[] = new String[] {"signature", "impersonation"};
-    public String adminScopes[] = new String[] {"user_write", "signature", "impersonation", "group_read", "organization_read", "permission_read", "user_read", "account_read", "domain_read", "identity_provider_read"};
-
     @Autowired
-    private DSConfiguration dsConfiguration;
-
-
-	@Autowired
     private OAuth2ClientContext oAuth2ClientContext;
 
     @Bean
@@ -52,6 +44,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public OAuthProperties authCodeGrantSso() {
         return new OAuthProperties();
     }
+
+    @Autowired
+    public DSConfiguration dsConfiguration;
 
     @Bean
     @ConfigurationProperties("jwt.grant.sso")
@@ -86,27 +81,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return registration;
     }
 
-    private List<String> getScopes() {
-        List<String> scopes = null;
-        if (this.dsConfiguration.getApiName().getESIGNATURE()) {
-            scopes = Arrays.asList(OAuth.Scope_SIGNATURE);
-        }
-        if (this.dsConfiguration.getApiName().getROOMS()) {
-            scopes = Arrays.asList(this.roomScopes);
-        }
-        if (this.dsConfiguration.getApiName().getCLICK()) {
-            scopes = Arrays.asList(this.clickScopes);
-        }
-        if (this.dsConfiguration.getApiName().getMONITOR()) {
-            scopes = Arrays.asList(this.monitorScopes);
-        } else if (this.dsConfiguration.getApiName().getADMIN()) {
-            scopes = Arrays.asList(this.adminScopes);
-        }
 
-        return scopes;
+    private List<String> getScopes() throws IOException {
+        return Arrays.asList(dsConfiguration.getSelectedApiType().getScopes());
+
     }
 
-    private OAuth2ClientAuthenticationProcessingFilter authCodeGrantFilter() {
+    private OAuth2ClientAuthenticationProcessingFilter authCodeGrantFilter() throws IOException {
         OAuth2SsoProperties authCodeGrantSso = authCodeGrantSso();
         AuthorizationCodeResourceDetails authCodeGrantClient = authCodeGrantClient();
     	
@@ -126,7 +107,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return filter;
     }
 
-    private OAuth2ClientAuthenticationProcessingFilter jwtGrantFilter() {
+    private OAuth2ClientAuthenticationProcessingFilter jwtGrantFilter() throws IOException {
         OAuth2SsoProperties authCodeGrantSso = jwtGrantSso();
         JWTAuthorizationCodeResourceDetails jwtCodeGrantClient = jwtCodeGrantClient();
 
@@ -146,12 +127,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http
             .antMatcher("/**")
             .authorizeRequests()
             .antMatchers( "/", "/login**", "/error**", "/assets/**","/ds/mustAuthenticate**",
-                "/ds/authenticate**")
+                "/ds/authenticate**", "/ds/selectApi**")
             .permitAll()
             .anyRequest()
             .authenticated()
@@ -162,8 +142,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .logout().logoutSuccessUrl("/").permitAll()
             .and()
             .csrf().disable();
-        http.apply(new CombinedAuthenticationConfigurer(Arrays.asList(authCodeGrantFilter(),
-            jwtGrantFilter())));
+        http.apply(new CombinedAuthenticationConfigurer(Arrays.asList(authCodeGrantFilter(), jwtGrantFilter())));
     }
 
     private static class CombinedAuthenticationConfigurer
