@@ -47,7 +47,7 @@ public class JWTOAuth2RestTemplate extends OAuth2RestTemplate {
                 context.setAccessToken(null);
                 try {
                     throw e;
-                } catch (LauncherException ex) {
+                } catch (IOException ex) {
                     ex.printStackTrace();
                 }
             }
@@ -55,10 +55,10 @@ public class JWTOAuth2RestTemplate extends OAuth2RestTemplate {
         return accessToken;
     }
 
-    private OAuth2AccessToken accessToken() throws LauncherException {
+    private OAuth2AccessToken accessToken() throws IOException {
         logger.info("Fetching an access token via JWT grant...");
 // Only signature scope is needed. Impersonation scope is implied.
-        List<String> scopes = resource.getScopeByApiName();
+        List<String> scopes = resource.getScopes();
         byte[] privateKeyBytes;
         try {
             privateKeyBytes = resource.getRsaBytes();

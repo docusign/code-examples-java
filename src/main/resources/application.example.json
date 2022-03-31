@@ -4,13 +4,6 @@
   "DS_SIGNER_EMAIL": "{SIGNER_EMAIL}",
   "DS_APP_URL": "http://localhost:8080",
   "DS_TARGET_ACCOUNT_ID": "{IMPERSONATED_USER_ID}",
-  "DS_API_NAME": {
-    "ESIGNATURE": true,
-    "ROOMS": false,
-    "CLICK": false,
-    "MONITOR": false,
-    "ADMIN": false
-  },
   "DS_BASE_PATH": "https://demo.docusign.net",
   "DS_ROOMS_BASE_PATH": "https://demo.rooms.docusign.com",
   "DS_CLICK_BASE_PATH": "https://demo.docusign.net",
