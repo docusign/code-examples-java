@@ -1,17 +1,24 @@
 package com.docusign;
 
 import java.io.IOException;
+import java.net.URI;
+import java.nio.file.FileSystemAlreadyExistsException;
+import java.nio.file.FileSystems;
+import java.util.Collections;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
 
+@Slf4j
 @SpringBootApplication(exclude={JmxAutoConfiguration.class})
 public class App {
 
     public static void main(String[] args) throws IOException {
         SpringApplication.run(App.class, args);
         openHomePage();
+        initFileSystem();
     }
 
     private static void openHomePage() throws IOException {
@@ -23,7 +30,7 @@ public class App {
             rt.exec(arguments);
         }
         else if (OSDetector.isWindows()){
-           rt.exec("rundll32 url.dll,FileProtocolHandler " + "http://localhost:8080");
+            rt.exec("rundll32 url.dll,FileProtocolHandler " + "http://localhost:8080");
         }
         else if (OSDetector.isLinux()){
             String [] browsers = {"firefox", "safari", "chrome", "mozilla"};
@@ -33,5 +40,19 @@ public class App {
             rt.exec(new String[] { "sh", "-c", cmd.toString() });
         }
 
+    }
+
+    private static void initFileSystem() {
+        try {
+            FileSystems.newFileSystem(new URI(""), Collections.emptyMap());
+            log.info("FileSystem initialized successfully");
+        } catch (Exception e) {
+            if (e instanceof FileSystemAlreadyExistsException) {
+                log.info("FileSystem is already initialized");
+            } else {
+                log.info("Retrieving the default initialize context");
+                FileSystems.getDefault();
+            }
+        }
     }
 }

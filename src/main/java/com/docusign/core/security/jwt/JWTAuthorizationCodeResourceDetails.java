@@ -2,15 +2,14 @@ package com.docusign.core.security.jwt;
 
 import com.docusign.DSConfiguration;
 import com.docusign.core.exception.LauncherException;
+import com.docusign.core.model.ApiType;
 import com.docusign.esign.client.ApiClient;
-import com.docusign.esign.client.auth.OAuth;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.security.oauth2.client.token.grant.redirect.AbstractRedirectResourceDetails;
 import org.springframework.util.FileCopyUtils;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +21,7 @@ public class JWTAuthorizationCodeResourceDetails extends AbstractRedirectResourc
     private String privateKeyPath;
     private String impersonatedUserGuid;
     private String baseUrl;
+
     @Autowired
     private DSConfiguration dsConfiguration;
 
@@ -43,8 +43,11 @@ public class JWTAuthorizationCodeResourceDetails extends AbstractRedirectResourc
         return apiClient;
     }
 
-    public List<String> getScopeByApiName(){
-        //Only signature scope is needed for eSignature api. Impersonation scope is implied.
-        return getScope();
+
+    public List<String> getScopes() throws IOException {
+        ApiType apiType = dsConfiguration.getSelectedApiType();
+
+        return Arrays.asList(apiType.getScopes());
+
     }
 }

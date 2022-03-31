@@ -21,7 +21,6 @@ public final class CreateClickwrapService {
                 .downloadable(true)
                 .format("modal")
                 .mustRead(true)
-                .mustView(true)
                 .requireAccept(true)
                 .documentDisplay("document");
 

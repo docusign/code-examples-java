@@ -5,6 +5,7 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.esign.api.TemplatesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeTemplate;
@@ -54,8 +55,8 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
 
         // Step 2. Process results. If template do not exist, create one
 
-        if (Integer.parseInt(results.getResultSetSize()) > 0) {
-            EnvelopeTemplate template = results.getEnvelopeTemplates().get(0);
+        if (Integer.parseInt(envelopeTemplateResults.getResultSetSize()) > 0) {
+            EnvelopeTemplate template = envelopeTemplateResults.getEnvelopeTemplates().get(0);
             session.setTemplateId(template.getTemplateId());
 
             DoneExample.createDefault(title)
@@ -66,7 +67,7 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
         } else {
             session.setTemplateName(TEMPLATE_NAME);
 
-            TemplateSummary template = templatesApi.createTemplate(accountId, makeTemplate());
+            TemplateSummary template = CreateTemplateService.createTemplate(apiClient, accountId, CreateTemplateService.makeTemplate("Example Signer and CC template"));
             session.setTemplateId(template.getTemplateId());
             DoneExample.createDefault(title)
                     .withMessage(String.format(

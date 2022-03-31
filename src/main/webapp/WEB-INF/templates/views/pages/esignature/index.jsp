@@ -21,19 +21,6 @@
 </c:if>
 
 
-
-<c:if test="${locals.dsConfig.quickstart == 'true' && locals.user == null}">
-
-  <%
-        // New location to be redirected
-        String site = new String("/eg001");
-        response.setStatus(response.SC_MOVED_TEMPORARILY);
-        response.setHeader("Location", site);
-   %>
-</c:if>
-
-
-
 <div class="container" style="margin-top: 40px" id="index-page">
     <c:if test="${showDoc == true}">
         <p><a target='_blank' href='${documentation}'>Documentation</a> on using OAuth Authorization Code Grant from a Java application.</p>
@@ -348,7 +335,7 @@
   <h2>Premium features</h2>
   <h4 id="example037">37. <a href="eg037">Request a signature by SMS delivery</a></h4>
   <p>
-      Demonstrates how to send a signature request via an SMS message using the <a target='_blank' href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Create Envelope</a> method.
+      Sends a signature requet via an SMS message.
   </p>
   <p>
       API method used:
