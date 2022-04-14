@@ -2,15 +2,12 @@ package com.docusign;
 
 
 import com.docusign.common.ApiIndex;
-import com.docusign.common.SelectedApiTypes;
 import com.docusign.core.model.ApiType;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.EnumUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -36,10 +33,6 @@ public class DSConfiguration {
 
     @Value("${DS_APP_URL}")
     private String appUrl;
-
-
-    @Autowired
-    private SelectedApiTypes apiName;
 
     @Value("${DS_BASE_PATH}")
     private String basePath;
