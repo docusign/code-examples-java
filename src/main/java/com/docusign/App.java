@@ -2,9 +2,12 @@ package com.docusign;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.FileSystemAlreadyExistsException;
 import java.nio.file.FileSystems;
 import java.util.Collections;
+
+import java.awt.Desktop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -22,24 +25,12 @@ public class App {
     }
 
     private static void openHomePage() throws IOException {
-        // Each operating system opens web browsers differently so we need to determine the user's
-        // OS and open a browser to the example homepage accordingly.
-        Runtime rt = Runtime.getRuntime();
-        if (OSDetector.isMac()){
-            String[] arguments = { "osascript", "-e", "open location \"" + "http://localhost:8080" + "\"" };
-            rt.exec(arguments);
+        System.setProperty("java.awt.headless", "false");
+        try {
+            Desktop.getDesktop().browse(new URI("http://localhost:8080"));
+        } catch (URISyntaxException use) {
+            System.err.println("Invalid URI in App.openHomePage()");
         }
-        else if (OSDetector.isWindows()){
-            rt.exec("rundll32 url.dll,FileProtocolHandler " + "http://localhost:8080");
-        }
-        else if (OSDetector.isLinux()){
-            String [] browsers = {"firefox", "safari", "chrome", "mozilla"};
-            StringBuffer cmd = new StringBuffer();
-            for (int i=0; i<browsers.length; i++)
-                cmd.append( (i==0  ? "" : " || " ) + browsers[i] +" \"" + "http://localhost:8080" + "\" ");
-            rt.exec(new String[] { "sh", "-c", cmd.toString() });
-        }
-
     }
 
     private static void initFileSystem() {
