@@ -1,6 +1,5 @@
 package com.docusign.controller.eSignature.services;
 
-import com.docusign.common.WorkArguments;
 import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
 import com.docusign.esign.model.*;
 
@@ -74,10 +73,10 @@ public class DelayedRoutingService {
 	   // Add the workflow to delay the second recipient
 
 	   String delayFormatted = delay + ":00:00";
-	   EnvelopeDelayRuleApiModel rule = new EnvelopeDelayRuleApiModel();
+	   EnvelopeDelayRule rule = new EnvelopeDelayRule();
 	   rule.setDelay(delayFormatted);
 
-	   DelayedRoutingApiModel delayedRouting = new DelayedRoutingApiModel();
+	   DelayedRouting delayedRouting = new DelayedRouting();
 	   delayedRouting.setRules(Arrays.asList(rule));
 
 	   WorkflowStep workflowStep = new WorkflowStep();

@@ -51,15 +51,15 @@ public class ScheduledSendlingService {
 	   envelope.setRecipients(EnvelopeHelpers.createSingleRecipient(signer));
 
 	   // Add the workflow to schedule the envelope with a delay
-	   EnvelopeDelayRuleApiModel delayRule = new EnvelopeDelayRuleApiModel();
+	   EnvelopeDelayRule delayRule = new EnvelopeDelayRule();
 
 	   delayRule.setResumeDate(resumeDate+"T00:00:00Z");
 
-	   ScheduledSendingApiModel scheduledSendingApiModel = new ScheduledSendingApiModel();
-	   scheduledSendingApiModel.setRules(Arrays.asList(delayRule));
+	   ScheduledSending scheduledSending = new ScheduledSending();
+	   scheduledSending.setRules(Arrays.asList(delayRule));
 
 	   Workflow workflow = new Workflow();
-	   workflow.setScheduledSending(scheduledSendingApiModel);
+	   workflow.setScheduledSending(scheduledSending);
 	   envelope.setWorkflow(workflow);
 
 	   // Request that the envelope be sent by setting |status| to "sent".
