@@ -8,6 +8,7 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public final class SigningViaEmailService {
@@ -74,7 +75,8 @@ public final class SigningViaEmailService {
         cc.setRoutingOrder("2");
 
         // The order in the docs array determines the order in the envelope
-        byte[] htmlDocument = EnvelopeHelpers.createHtmlFromTemplateFile(HTML_DOCUMENT_FILE_NAME, "args", args);
+        byte[] htmlDocument = EnvelopeHelpers.createHtmlFromTemplateFile(HTML_DOCUMENT_FILE_NAME, "args", args)
+                .getBytes(StandardCharsets.UTF_8);
         EnvelopeDefinition envelope = new EnvelopeDefinition();
         envelope.setEmailSubject("Please sign this document set");
         envelope.setDocuments(Arrays.asList(

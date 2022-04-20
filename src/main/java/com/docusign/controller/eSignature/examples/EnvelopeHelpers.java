@@ -81,13 +81,13 @@ public final class EnvelopeHelpers {
      * @return array of bytes representing created html document
      * @throws IOException in case of template parsing error
      */
-    static byte[] createHtmlFromTemplate(Template template, String objectName, Object value) throws IOException {
+    static String createHtmlFromTemplate(Template template, String objectName, Object value) throws IOException {
         Map<String, Object> input = new HashMap<>();
         input.put(objectName, value);
         StringWriter stringWriter = new StringWriter();
         try {
             template.process(input, stringWriter);
-            return stringWriter.toString().getBytes(StandardCharsets.UTF_8);
+            return stringWriter.toString();
         } catch (TemplateException exception) {
             throw new ExampleException("Can't process html template " + template.getName(), exception);
         }
@@ -104,7 +104,23 @@ public final class EnvelopeHelpers {
      * @return array of bytes representing created html document
      * @throws IOException in case of I/O errors or template parsing error
      */
-    public static byte[] createHtmlFromTemplateFile(String path, String objectName, Object value) throws IOException {
+    public static byte[] createHtmlFromTemplateFileInByte(String path, String objectName, Object value) throws IOException {
+        Template template = loadHtmlTemplate(path);
+        return createHtmlFromTemplate(template, objectName, value).getBytes(StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Generates a html document from the template file. Placeholder looks like
+     * ${objectName.fieldName}. It is a convenient method which loads template
+     * from a file using {@link #loadHtmlTemplate(String)} and creates a html
+     * page from the loaded template using {@link #createHtmlFromTemplate(Template, String, Object)}
+     * @param path the path to template file
+     * @param objectName name of object to find placeholder related to a value
+     * @param value object which fields are used as a values in the template
+     * @return array of bytes representing created html document
+     * @throws IOException in case of I/O errors or template parsing error
+     */
+    public static String createHtmlFromTemplateFile(String path, String objectName, Object value) throws IOException {
         Template template = loadHtmlTemplate(path);
         return createHtmlFromTemplate(template, objectName, value);
     }
