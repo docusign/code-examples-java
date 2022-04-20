@@ -8,6 +8,7 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -125,7 +126,8 @@ public final class AddDocToTemplateService {
         signer1AddedDoc.setTabs(signer1Tabs);
 
         // create the HTML document
-        byte[] htmlDoc = EnvelopeHelpers.createHtmlFromTemplateFile(HTML_DOCUMENT_FILE_NAME, "args", args);
+        byte[] htmlDoc = EnvelopeHelpers.createHtmlFromTemplateFile(HTML_DOCUMENT_FILE_NAME, "args", args)
+                .getBytes(StandardCharsets.UTF_8);
 
         // create a composite template for the added document and add the recipients via an inlineTemplate
         CompositeTemplate compTemplate2 = new CompositeTemplate();

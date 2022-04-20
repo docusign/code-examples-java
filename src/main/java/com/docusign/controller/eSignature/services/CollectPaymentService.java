@@ -8,6 +8,7 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -53,7 +54,8 @@ public final class CollectPaymentService {
             String gatewayDisplayName,
             WorkArguments args
     ) throws IOException {
-        byte[] htmlDoc = EnvelopeHelpers.createHtmlFromTemplateFile(HTML_DOCUMENT_FILE_NAME, "args", args);
+        byte[] htmlDoc = EnvelopeHelpers.createHtmlFromTemplateFile(HTML_DOCUMENT_FILE_NAME, "args", args)
+                .getBytes(StandardCharsets.UTF_8);
 
         // create a signer recipient to sign the document, identified by name and email
         // routingOrder (lower means earlier) determines the order of deliveries

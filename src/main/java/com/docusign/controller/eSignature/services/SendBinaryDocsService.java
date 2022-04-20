@@ -51,7 +51,8 @@ public final class SendBinaryDocsService {
         // Step 1. Gather documents and their headers
         List<DocumentInfo> documents = List.of(
                 new DocumentInfo(HTML_DOCUMENT_NAME, "1", DocumentType.HTML,
-                        EnvelopeHelpers.createHtmlFromTemplateFile(HTML_DOCUMENT_FILE_NAME, "args", args)),
+                        EnvelopeHelpers.createHtmlFromTemplateFile(HTML_DOCUMENT_FILE_NAME, "args", args)
+                                .getBytes(StandardCharsets.UTF_8)),
                 new DocumentInfo(DOCX_DOCUMENT_NAME, "2", DocumentType.DOCX,
                         EnvelopeHelpers.readFile(DOCX_DOCUMENT_FILE_NAME)),
                 new DocumentInfo(PDF_DOCUMENT_NAME, "3", DocumentType.PDF,
