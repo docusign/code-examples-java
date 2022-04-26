@@ -312,7 +312,7 @@
     <a target="_blank" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create">Envelopes::create</a>.
   </p>
 
-  <h4 id="example036">35. <a href="eg035">Schedule an envelope</a></h4>
+  <h4 id="example035">35. <a href="eg035">Schedule an envelope</a></h4>
   <p>
       Demonstrates how to schedule an envelope using the scheduled sending feature.
   </p>
