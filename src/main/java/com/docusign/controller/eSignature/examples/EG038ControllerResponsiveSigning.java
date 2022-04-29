@@ -38,6 +38,7 @@ public class EG038ControllerResponsiveSigning extends AbstractEsignatureControll
     }
 
     @Override
+	// Step 3 start
     protected Object doWork(WorkArguments args, ModelMap model,
 					   HttpServletResponse response) throws ApiException, IOException {
 	   String signerName = args.getSignerName();
@@ -84,4 +85,5 @@ public class EG038ControllerResponsiveSigning extends AbstractEsignatureControll
 
 	   return new RedirectView(viewUrl.getUrl());
     }
+	// Step 3 end
 }
