@@ -26,8 +26,16 @@
 
     <h4 id='example001'>1. <a href='m001'>Get monitoring data</a></h4>
     <p> Demonstrates how to get and display all of your organization's monitoring data.</p>
-    <p>API method used:
+    <p>
+        API method used:
         <a target ='_blank' rel='noopener noreferrer' href='https://developers.docusign.com/docs/monitor-api/reference/monitor/dataset/getstream/'>DataSet:getStream</a>
+    </p>
+
+    <h4 id="example002">2. <a href="m002">Query monitoring data with filters</a></h4>
+    <p>Demonstrates how to query an organization's data based on specified filters and aggregations.</p>
+    <p>
+        API method used:
+        <a target='_blank' href="https://developers.docusign.com/docs/monitor-api/reference/monitor/dataset/postwebquery/">DataSet:postWebQuery</a>.
     </p>
 </div>
 
