@@ -40,9 +40,11 @@ public abstract class AbstractMonitorController extends AbstractController {
      * @return an instance of the {@link com.docusign.monitor.client.ApiClient}
      */
     protected static ApiClient createApiClient(String accessToken, Session session) {
+
+        // Step 2 start
         ApiClient apiClient = new ApiClient(session.getBasePath());
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + accessToken);
-
+        // Step 2 end
         return apiClient;
     }
 

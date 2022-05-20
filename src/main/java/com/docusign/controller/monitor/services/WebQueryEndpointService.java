@@ -9,7 +9,9 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+
 public final class WebQueryEndpointService {
+    // Step 4 start
     private static final String API_VERSION = "2.0";
     private static final String NAME_OF_DATASET = "monitor";
     public static JSONObject postWebQueryMethod(
@@ -21,10 +23,10 @@ public final class WebQueryEndpointService {
                 API_VERSION,
                 NAME_OF_DATASET,
                 prepareWebQueryOptions(accountId, filterStartDate, filterEndDate));
-
+        
         AggregateResultResult methodResult = null;
         List<AggregateResultResult> aggregateResultList = aggregateResult.getResult();
-
+        // Step 4 end
         if (aggregateResultList != null && !aggregateResultList.isEmpty()) {
             methodResult = aggregateResultList.get(0);
         }
@@ -32,6 +34,7 @@ public final class WebQueryEndpointService {
         return new JSONObject(methodResult);
     }
 
+    // Step 3 start
     private static WebQuery prepareWebQueryOptions(String accountId, String filterStartDate, String filterEndDate) {
         WebQuery webQuery = new WebQuery();
         webQuery.addFiltersItem(new Object(){
@@ -51,4 +54,6 @@ public final class WebQueryEndpointService {
         });
         return webQuery;
     }
+    // Step 3 end
 }
+
