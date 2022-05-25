@@ -1,8 +1,6 @@
 package com.docusign;
 
-
-import com.docusign.common.ApiIndex;
-import com.docusign.core.model.ApiType;
+import com.docusign.core.model.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.EnumUtils;
@@ -14,6 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Component
 @Getter
@@ -61,8 +61,7 @@ public class DSConfiguration {
     @Value("${quickstart:{quickstart}}")
     private String quickstart;
 
-    @Value("${quickACG:{quickACG}}")
-    private String quickACG;
+    private String quickACG = "true";
 
     @Value("${DS_MONITOR_BASE_PATH}")
     private String monitorBasePath;
@@ -80,36 +79,5 @@ public class DSConfiguration {
 
     public String getDsPingUrl() {
         return appUrl + "/";
-    }
-
-    public ApiType getSelectedApiType() throws IOException {
-        return ApiType.valueOf(getSelectedApi());
-    }
-
-    public ApiIndex getSelectedApiIndex() throws IOException {
-        return ApiIndex.valueOf(getSelectedApi());
-    }
-
-    private String getSelectedApi() throws IOException {
-        if (selectedApiType != null){
-            return selectedApiType;
-        }
-
-        if(Boolean.valueOf(quickACG)){
-            return ApiIndex.ESIGNATURE.name();
-        }
-
-        ClassPathResource resource = new ClassPathResource(examplesApiPath);
-        String source = StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
-        try {
-            Object apiTypeValues = new JSONObject(source).get(apiTypeHeader);
-            if (apiTypeValues == null ||  !EnumUtils.isValidEnum(ApiIndex.class, apiTypeValues.toString())) {
-                throw new JSONException(String.format("The wrong format of the %s file.", examplesApiPath));
-            }
-            selectedApiType = apiTypeValues.toString();
-        } catch (JSONException e){
-            e.printStackTrace();
-        }
-        return selectedApiType;
     }
 }
