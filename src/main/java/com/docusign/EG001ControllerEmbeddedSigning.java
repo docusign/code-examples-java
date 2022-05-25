@@ -46,7 +46,7 @@ public class EG001ControllerEmbeddedSigning extends AbstractEsignatureController
 
     @Autowired
     public EG001ControllerEmbeddedSigning(DSConfiguration config, Session session, User user) {
-        super(config, "eg001", "Use embedded signing");
+        super(config, Boolean.valueOf(config.getQuickACG()) ? "quickEmbeddedSigning" : "eg001", "Use embedded signing");
         this.session = session;
         this.user = user;
     }

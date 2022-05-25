@@ -1,5 +1,6 @@
 {
   "quickstart" :"{QUICKSTART_VALUE}",
+  "quickACG": "{QUICK_ACG_VALUE}",
   "DS_SIGNER_NAME": "{SIGNER_NAME}",
   "DS_SIGNER_EMAIL": "{SIGNER_EMAIL}",
   "DS_APP_URL": "http://localhost:8080",

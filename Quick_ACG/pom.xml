@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.12</version>
+        <relativePath />
+    </parent>
+
+    <groupId>com.quickACG</groupId>
+    <artifactId>code-examples-java-acg</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>Docusign Java Tutorial</name>
+
+    <properties>
+        <java.version>11</java.version>
+        <oauth2.version>2.5.6</oauth2.version>
+        <commonsio.version>2.11.0</commonsio.version>
+        <docusign.version>3.17.1</docusign.version>
+        <rooms.version>1.1.0</rooms.version>
+        <click.version>1.0.0</click.version>
+        <monitor.version>1.0.0</monitor.version>
+        <admin.version>1.0.0-BETA</admin.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security.oauth.boot</groupId>
+            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+            <version>${oauth2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+        </dependency>
+
+        <!-- JSTL -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
+        <!-- To compile JSP files -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commonsio.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.docusign</groupId>
+            <artifactId>docusign-esign-java</artifactId>
+            <version>${docusign.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.docusign</groupId>
+            <artifactId>docusign-rooms-java</artifactId>
+            <version>${rooms.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.docusign</groupId>
+            <artifactId>docusign-click-java</artifactId>
+            <version>${click.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.docusign</groupId>
+            <artifactId>docusign-monitor-java</artifactId>
+            <version>${monitor.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.docusign</groupId>
+            <artifactId>docusign-admin-java</artifactId>
+            <version>${admin.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <version>2.4.4</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-resource-one</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <targetPath>${basedir}/src/main/resources</targetPath>
+                                    <directory>../src/main/resources</directory>
+                                    <includes>
+                                        <include>application.json</include>
+                                        <include>World_Wide_Corp_lorem.pdf</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <targetPath>${basedir}/src/main/resources/META-INF</targetPath>
+                                    <directory>../src/main/resources/META-INF</directory>
+                                    <includes>
+                                        <include>spring.factories</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <targetPath>${basedir}/src/main/resources/public/assets</targetPath>
+                                    <directory>../src/main/resources/public/assets</directory>
+                                    <includes>
+                                        <include>favicon.ico</include>
+                                        <include>css.css</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <targetPath>${basedir}/src/main/java/com/docusign</targetPath>
+                                    <directory>../src/main/java/com/docusign</directory>
+                                    <includes>
+                                        <include>JsonPropertySourceLoader.java</include>
+                                        <include>OSDetector.java</include>
+                                        <include>EG001ControllerEmbeddedSigning.java</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <targetPath>${basedir}/src/main/java/com/docusign/common</targetPath>
+                                    <directory>../src/main/java/com/docusign/common</directory>
+                                    <includes>
+                                        <include>WorkArguments.java</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <targetPath>${basedir}/src/main/java/com/docusign/controller/eSignature/examples</targetPath>
+                                    <directory>../src/main/java/com/docusign/controller/eSignature/examples</directory>
+                                    <includes>
+                                        <include>EnvelopeHelpers.java</include>
+                                        <include>ExampleException.java</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <targetPath>${basedir}/src/main/java/com/docusign/controller/eSignature/services</targetPath>
+                                    <directory>../src/main/java/com/docusign/controller/eSignature/services</directory>
+                                    <includes>
+                                        <include>EmbeddedSigningService.java</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <targetPath>${basedir}/src/main/java/com/docusign/core/model</targetPath>
+                                    <directory>../src/main/java/com/docusign/core/model</directory>
+                                    <includes>
+                                        <include>Locals.java</include>
+                                        <include>User.java</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <targetPath>${basedir}/src/main/java/com/docusign/core/security</targetPath>
+                                    <directory>../src/main/java/com/docusign/core/security</directory>
+                                    <includes>
+                                        <include>OAuthProperties.java</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <targetPath>${basedir}/src/main/webapp/WEB-INF/templates/views/pages/esignature/examples</targetPath>
+                                    <directory>../src/main/webapp/WEB-INF/templates/views/pages/esignature/examples</directory>
+                                    <includes>
+                                        <include>quickEmbeddedSigning.jsp</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>1.69</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
