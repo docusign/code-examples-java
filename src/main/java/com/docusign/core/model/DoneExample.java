@@ -4,11 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
-import com.google.gson.Gson;
-import com.fasterxml.jackson.databind.SerializationConfig;
-import org.json.JSONObject;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.ui.ModelMap;
 
 import com.docusign.core.common.DiffField;
@@ -109,7 +105,7 @@ public class DoneExample {
     public DoneExample withJsonObject(Object object) {
         if (object != null) {
             ObjectWriter writer = new ObjectMapper()
-                    .registerModule(new JodaModule())
+                    .registerModule(new JavaTimeModule())
                     .setDateFormat(new SimpleDateFormat(DATETIME_PATTERN))
                     .setDefaultPrettyPrinter(new DefaultPrettyPrinter())
                     .writerWithDefaultPrettyPrinter();

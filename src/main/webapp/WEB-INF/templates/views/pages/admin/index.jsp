@@ -115,7 +115,25 @@
         href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/users/getusers/">Users:getUsers</a>,
    <a target="_blank" rel="noopener noreferrer" 
         href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/esignusermanagement/getuserprofiles/">eSignUserManagement:getUserProfiles</a>
-</p>
+    </p>
+
+    <h4 id="Example06">6. <a href="a006">Retrieve the user's DocuSign profile using an email address</a></h4>
+    <p>
+        Demonstrates how to obtain the user's DocuSign profile information across all DocuSign accounts by specifying the user's email address.
+    </p>
+    <p>
+        API method used:
+        <a target="_blank" rel='noopener noreferrer'
+           href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/esignusermanagement/getuserprofiles/">MultiProductUserManagement:getUserDSProfilesByEmail</a>
+    </p>
+
+    <h4 id="Example07">7. <a href="a007">Retrieve the user's DocuSign profile using a User ID</a></h4>
+    <p>Demonstrates how to obtain the user's DocuSign profile information across all DocuSign accounts by specifying the user's User ID.</p>
+    <p>
+        API method used:
+        <a target="_blank" rel='noopener noreferrer'
+           href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/esignusermanagement/getuserprofiles/">MultiProductUserManagement:getUserDSProfile</a>
+    </p>
 
 <!-- anchor-js is only for the index page -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.1/anchor.min.js'></script>
