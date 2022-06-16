@@ -24,7 +24,7 @@
         <rooms.version>1.1.0</rooms.version>
         <click.version>1.0.0</click.version>
         <monitor.version>1.1.0</monitor.version>
-        <admin.version>1.0.0-BETA</admin.version>
+        <admin.version>1.1.0</admin.version>
     </properties>
 
     <dependencies>
@@ -64,6 +64,10 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-joda</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
 
         <!-- JSTL -->

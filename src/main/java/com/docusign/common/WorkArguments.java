@@ -64,6 +64,7 @@ public class WorkArguments {
     private String eSignProfileId;
     private UUID eSignProductId;
     private UUID dsGroupId;
+    private UUID userId;
     private String resumeDate;
     private String delay;
     private String clickwrap;
