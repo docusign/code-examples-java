@@ -49,7 +49,7 @@ public final class WebQueryEndpointService {
         });
         webQuery.addAggregationsItem(new Object(){
             public String aggregationName = "Raw";
-            public String limit = "1";
+            public String limit = "100";
             public String[] orderby = new String[] { "Timestamp, desc" };
         });
         return webQuery;
