@@ -55,9 +55,10 @@ public class A009DeleteUserProductPermissionProfile extends AbstractAdminControl
 
 	   if (emailAddress != null) {
 		  try {
+
 			 UsersApi usersApi = createUsersApi(this.user.getAccessToken(), this.session.getBasePath());
 			 RetrieveDocuSignProfileByEmailAddress.getDocuSignProfileByEmailAddress(usersApi, organizationId, emailAddress);
-
+             //Step 3 start
 			 ProductPermissionProfilesApi productPermissionProfilesApi = this.createProductPermissionProfilesApi(
 				    user.getAccessToken(),
 				    session.getBasePath()
@@ -67,7 +68,7 @@ public class A009DeleteUserProductPermissionProfile extends AbstractAdminControl
 			 userProductPermissionProfilesByEmailOptions.setEmail(emailAddress);
 			 UserProductPermissionProfilesResponse userProductPermissionProfilesByEmail = productPermissionProfilesApi
 				    .getUserProductPermissionProfilesByEmail(organizationId, existingAccountId, userProductPermissionProfilesByEmailOptions);
-
+			 //Step 3 end
 			 for (ProductPermissionProfileResponse profileResponse : userProductPermissionProfilesByEmail.getProductPermissionProfiles()) {
 				if (profileResponse.getProductName().equals("CLM")) {
 				    clmProfiles = profileResponse
@@ -114,14 +115,14 @@ public class A009DeleteUserProductPermissionProfile extends AbstractAdminControl
 	   ProductPermissionProfilesApi productPermissionProfilesApi = createProductPermissionProfilesApi(
 			 this.user.getAccessToken(),
 			 this.session.getBasePath());
-
+	   //Step 5 start
 	   RemoveUserProductsResponse removeUserProductsRepsonse = DeleteUserProductPermissionProfileById.deleteUserProductPermissionProfile(
 			 productPermissionProfilesApi,
 			 args.getProductId(),
 			 this.session.getEmailAddress(),
 			 organizationId,
 			 existingAccountId);
-
+		//Step 5 end
 	   DoneExample.createDefault(title)
 			 .withMessage("Results from MultiProductUserManagement:removeUserProductPermission method:")
 			 .withJsonObject(removeUserProductsRepsonse)

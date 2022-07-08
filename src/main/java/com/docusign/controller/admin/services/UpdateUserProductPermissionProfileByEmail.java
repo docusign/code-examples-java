@@ -16,6 +16,7 @@ public class UpdateUserProductPermissionProfileByEmail {
 		  UUID organizationId,
 		  UUID accountId
     ) throws Exception {
+	// Step 3 start
 	   var productPermissionProfileRequest = new ProductPermissionProfileRequest();
 	   productPermissionProfileRequest.setPermissionProfileId(permissionProfileId);
 	   productPermissionProfileRequest.setProductId(productId);
@@ -23,10 +24,12 @@ public class UpdateUserProductPermissionProfileByEmail {
 	   var userProductPermissionProfilesRequest = new UserProductPermissionProfilesRequest();
 	   userProductPermissionProfilesRequest.email(emailAddress);
 	   userProductPermissionProfilesRequest.addProductPermissionProfilesItem(productPermissionProfileRequest);
-
+	// Step 3 end
+	// Step 4 start
 	   return productPermissionProfilesApi.addUserProductPermissionProfilesByEmail(
 			 organizationId,
 			 accountId,
 			 userProductPermissionProfilesRequest);
+	// Step 4 end
     }
 }
