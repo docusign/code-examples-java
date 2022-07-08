@@ -112,27 +112,47 @@
     <p>
         API methods used:
         <a target="_blank" rel="noopener noreferrer" 
-        href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/users/getusers/">Users:getUsers</a>,
-   <a target="_blank" rel="noopener noreferrer" 
-        href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/esignusermanagement/getuserprofiles/">eSignUserManagement:getUserProfiles</a>
+            href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/users/getusers/">Users:getUsers</a>,
+        <a target="_blank" rel="noopener noreferrer"
+            href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/esignusermanagement/getuserprofiles/">eSignUserManagement:getUserProfiles</a>
     </p>
 
-    <h4 id="Example06">6. <a href="a006">Retrieve the user's DocuSign profile using an email address</a></h4>
+    <h4 id="Example6">6. <a href="a006">Retrieve the user's DocuSign profile using an email address</a></h4>
     <p>
         Demonstrates how to obtain the user's DocuSign profile information across all DocuSign accounts by specifying the user's email address.
     </p>
     <p>
         API method used:
         <a target="_blank" rel='noopener noreferrer'
-           href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/esignusermanagement/getuserprofiles/">MultiProductUserManagement:getUserDSProfilesByEmail</a>
+           href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/multiproductusermanagement/getuserdsprofilesbyemail/">MultiProductUserManagement:getUserDSProfilesByEmail</a>
     </p>
 
-    <h4 id="Example07">7. <a href="a007">Retrieve the user's DocuSign profile using a User ID</a></h4>
+    <h4 id="Example7">7. <a href="a007">Retrieve the user's DocuSign profile using a User ID</a></h4>
     <p>Demonstrates how to obtain the user's DocuSign profile information across all DocuSign accounts by specifying the user's User ID.</p>
     <p>
         API method used:
         <a target="_blank" rel='noopener noreferrer'
-           href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/esignusermanagement/getuserprofiles/">MultiProductUserManagement:getUserDSProfile</a>
+           href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/multiproductusermanagement/getuserdsprofile/">MultiProductUserManagement:getUserDSProfile</a>
+    </p>
+
+    <h4 id="Example8">8. <a href="a008">Update user product permission profiles using an email address</a></h4>
+    <p>Demonstrates how to update user product permission profiles. There may only be one permission profile assigned to a user per product.</p>
+    <p>
+        API methods used:
+        <a target='_blank' rel='noopener noreferrer'
+           href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/multiproductusermanagement/getproductpermissionprofiles/">MultiProductUserManagement:getProductPermissionProfiles</a>,
+        <a target="_blank" rel='noopener noreferrer'
+           href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/multiproductusermanagement/adduserproductpermissionprofilesbyemail/">MultiProductUserManagement:addUserProductPermissionProfilesByEmail</a>
+    </p>
+
+    <h4 id="Example9">9. <a href="a009">Delete user product permission profiles using an email address</a></h4>
+    <p>Demonstrates how to list and delete DocuSign Admin user product permission profiles.</p>
+    <p>
+        API methods used:
+        <a target="_blank" rel='noopener noreferrer'
+           href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/multiproductusermanagement/getuserproductpermissionprofilesbyemail/">MultiProductUserManagement:getUserProductPermissionProfilesByEmail</a>,
+        <a target="_blank" rel='noopener noreferrer'
+           href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/multiproductusermanagement/removeuserproductpermission/">MultiProductUserManagement:removeUserProductPermission</a>
     </p>
 
 <!-- anchor-js is only for the index page -->

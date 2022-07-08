@@ -22,6 +22,7 @@
 <script src="/assets/notify.min.js"></script>
 <!-- see https://notifyjs.jpillora.com/ -->
 <script src="/assets/eg_03.js"></script>
+<script src="/assets/site.js"></script>
 
 <c:if test="${false}">
     <!-- For debugging: showing local values including session -->

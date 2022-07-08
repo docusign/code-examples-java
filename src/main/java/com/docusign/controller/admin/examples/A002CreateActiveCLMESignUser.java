@@ -115,6 +115,8 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
                 organizationId,
                 accountId);
 
+        this.session.setEmailAddress(result.getEmail());
+
         // Process results
         DoneExample.createDefault(title)
         .withMessage("Results from MultiProductUserManagement:addOrUpdateUser method:")

@@ -63,6 +63,8 @@ public class WorkArguments {
     private UUID clmProductId;
     private String eSignProfileId;
     private UUID eSignProductId;
+    private String PermissionProfileId;
+    private UUID ProductId;
     private UUID dsGroupId;
     private UUID userId;
     private String resumeDate;

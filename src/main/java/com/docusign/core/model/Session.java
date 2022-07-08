@@ -34,6 +34,7 @@ public class Session implements Serializable {
     private String clickwrapVersionNumber;
     private String exportId;
     private String importId;
+    private String emailAddress;
     private UUID orgId;
     public UUID bulkListId;
 }
