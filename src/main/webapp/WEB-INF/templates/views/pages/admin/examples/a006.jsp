@@ -11,7 +11,7 @@
 <p>
     API method used:
     <a target="_blank" rel='noopener noreferrer'
-       href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/esignusermanagement/getuserprofiles/">MultiProductUserManagement:getUserDSProfilesByEmail</a>
+       href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/multiproductusermanagement/getuserdsprofilesbyemail/">MultiProductUserManagement:getUserDSProfilesByEmail</a>.
 </p>
 
 <p>
@@ -22,7 +22,7 @@
     <div class="form-group">
         <label for="email">Email address</label>
         <input type="email" class="form-control" id="email" name="email" placeholder="example@example.com" required>
-        <small id="accessHelp" class="form-text text-muted">This email address must use the same domain that has been claimed by your organization.</small>
+        <small id="accessHelp" class="form-text text-muted">We will never share your email with anyone else.</small>
 
         <br/>
         <input type="hidden" name="_csrf" value="${csrfToken}">

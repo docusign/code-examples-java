@@ -13,7 +13,7 @@
 <p>
     API method used:
     <a target="_blank" rel='noopener noreferrer'
-       href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/esignusermanagement/getuserprofiles/">MultiProductUserManagement:getUserDSProfile</a>
+       href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/multiproductusermanagement/getuserdsprofile/">MultiProductUserManagement:getUserDSProfile</a>.
 </p>
 
 <p>
