@@ -354,6 +354,12 @@
     <a target='_blank'
        href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createrecipient/">EnvelopeViews::createRecipient</a>.
   </p>
+
+  <h4 id="example039">39. <a href="eg039">Send an envelope to an In Person Signer</a></h4>
+  <p>
+    API method used:
+    <a target="_blank" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
+  </p>
 </div>
 
 
