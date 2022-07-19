@@ -28,8 +28,6 @@ public class EG039ControllerInPersonSigning extends AbstractEsignatureController
     private static final String DOCUMENT_NAME = "Lorem Ipsum";
     private static final int ANCHOR_OFFSET_Y = 10;
     private static final int ANCHOR_OFFSET_X = 20;
-
-    private final Session session;
     private final User user;
 
     @Autowired
