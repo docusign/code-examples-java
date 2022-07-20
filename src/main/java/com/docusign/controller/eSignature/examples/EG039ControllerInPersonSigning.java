@@ -40,15 +40,18 @@ public class EG039ControllerInPersonSigning extends AbstractEsignatureController
     @Override
     protected Object doWork(WorkArguments args, ModelMap model,
 					   HttpServletResponse response) throws ApiException, IOException {
+        String basePath = session.getBasePath();
+        String accessToken = user.getAccessToken();
+
 	   String hostName = args.getHostName();
-	   String hostEmail = args.getHostEmail();
+	   String hostEmail = getAuthenticatedUserEmail(basePath, accessToken);
 	   String signerName = args.getSignerName();
 	   String accountId = session.getAccountId();
 
 	   EnvelopeDefinition envelope = InPersonSigningService.makeEnvelope(hostEmail, hostName, signerName,
 		  ANCHOR_OFFSET_Y, ANCHOR_OFFSET_X, DOCUMENT_FILE_NAME, DOCUMENT_NAME);
 
-	   ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
+	   ApiClient apiClient = createApiClient(basePath, accessToken);
 	   EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
 
 	   EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);

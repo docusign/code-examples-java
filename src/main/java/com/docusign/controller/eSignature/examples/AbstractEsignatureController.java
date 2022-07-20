@@ -5,6 +5,8 @@ import com.docusign.core.controller.AbstractController;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
+import com.docusign.esign.client.ApiException;
+import com.docusign.esign.client.auth.OAuth;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 
@@ -61,5 +63,18 @@ public abstract class AbstractEsignatureController extends AbstractController {
     protected static AccountsApi createAccountsApi(String basePath, String userAccessToken) {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         return new AccountsApi(apiClient);
+    }
+
+    /**
+     * Get the email address of the authenticated user
+     * @param basePath URL to eSignature REST API
+     * @param userAccessToken user's access token
+     * @return users email address
+     */
+    protected static String getAuthenticatedUserEmail(String basePath, String userAccessToken) throws ApiException {
+        ApiClient apiClient = createApiClient(basePath, userAccessToken);
+        OAuth.UserInfo userInfo = apiClient.getUserInfo(userAccessToken);
+
+        return userInfo.getEmail();
     }
 }
