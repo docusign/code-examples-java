@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>5. List an envelope's recipients and their status</h4>
+<h4>List an envelope's recipients and their status</h4>
 <p>List the envelope's recipients, including their current status.</p>
 
 <c:if test="${showDoc}">

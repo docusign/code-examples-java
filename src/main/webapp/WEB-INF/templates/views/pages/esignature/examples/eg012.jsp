@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>12. Embedded DocuSign web tool</h4>
+<h4>Embedded DocuSign web tool</h4>
 <p>Redirect the user to the DocuSign web tool.</p>
 <p>Use this API call to open the DocuSign web tool, the NDSE (New DocuSign Signing Experience),
     with the user already logged in.</p>

@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>6. List an envelope's documents</h4>
+<h4>List an envelope's documents</h4>
 <p>List the envelope's documents. A <em>Certificate of Completion</em> document
     is also associated with every envelope.
 </p>

@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>24. ${title}.</h4>
+<h4>${title}.</h4>
 
 <p>
 Permission profiles are collections of account settings that determine the behavior and actions 

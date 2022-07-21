@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>11. Use embedded sending</h4>
+<h4>Use embedded sending</h4>
 <p>An envelope will be created in draft mode. Your browser will then be redirected to
     the DocuSign web tool where the envelope can be (optionally) updated and then sent.</p>
 <p>The envelope includes a pdf, Word, and HTML document. Anchor text
