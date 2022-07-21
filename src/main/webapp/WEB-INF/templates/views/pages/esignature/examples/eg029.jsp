@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="../../../partials/head.jsp" />
 
-<h4>29. Applying a brand to an envelope</h4>
+<h4>Applying a brand to an envelope</h4>
 <p>
     The envelope includes a pdf document. Anchor text (<a
         href="https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/tabs/auto-place/">AutoPlace</a>)

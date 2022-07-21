@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>22. Send an envelope with a recipient using Knowledge-Based Authentication.</h4>
+<h4>Send an envelope with a recipient using Knowledge-Based Authentication.</h4>
 
 <c:if test="${showDoc}">
     <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>

@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>38. Create a signable HTML document</h4>
+<h4>Create a signable HTML document</h4>
 <p>Demonstrates how to create an HTML document for responsive signing.</p>
 
 <c:if test="${showDoc}">

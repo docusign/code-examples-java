@@ -1,8 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>39. Send an envelope to an In Person Signer</h4>
-
+<h4>Send an envelope to an In Person Signer</h4>
+<p>
+    Demonstrates how to host an In Person Signing session with embedded signing.
+<p>
 <c:if test="${showDoc}">
     <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>

@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>15. Get the tab data from an envelope.</h4>
+<h4>Get the tab data from an envelope.</h4>
 
 <p>Get the tab (field) values from an envelope for all of the envelope's recipients.</p>
 
