@@ -77,4 +77,17 @@ public abstract class AbstractEsignatureController extends AbstractController {
 
         return userInfo.getEmail();
     }
+
+    /**
+     * Get the name of the authenticated user
+     * @param basePath URL to eSignature REST API
+     * @param userAccessToken user's access token
+     * @return users email address
+     */
+    protected static String getAuthenticatedUserName(String basePath, String userAccessToken) throws ApiException {
+        ApiClient apiClient = createApiClient(basePath, userAccessToken);
+        OAuth.UserInfo userInfo = apiClient.getUserInfo(userAccessToken);
+
+        return userInfo.getName();
+    }
 }
