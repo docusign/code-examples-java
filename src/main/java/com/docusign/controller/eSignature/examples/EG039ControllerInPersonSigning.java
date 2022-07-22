@@ -43,7 +43,7 @@ public class EG039ControllerInPersonSigning extends AbstractEsignatureController
         String basePath = session.getBasePath();
         String accessToken = user.getAccessToken();
 
-	   String hostName = args.getHostName();
+	   String hostName = getAuthenticatedUserName(basePath, accessToken);
 	   String hostEmail = getAuthenticatedUserEmail(basePath, accessToken);
 	   String signerName = args.getSignerName();
 	   String accountId = session.getAccountId();

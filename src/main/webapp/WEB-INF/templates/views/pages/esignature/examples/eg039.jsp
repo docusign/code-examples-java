@@ -19,11 +19,6 @@
 
 <form class="eg" action="" method="post" data-busy="form">
     <div class="form-group">
-        <label for="hostName">Host Name</label>
-        <input type="text" class="form-control" id="hostName" placeholder="Pat Johnson" name="hostName"
-               value="${locals.dsConfig.signerName}" required>
-    </div>
-    <div class="form-group">
         <label for="signerName">Signer Name</label>
         <input type="text" class="form-control" id="signerName" placeholder="Pat Johnson" name="signerName"
                required>
