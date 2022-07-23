@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>4. Get an envelope's basic information and status</h4>
+<h4>Get an envelope's basic information and status</h4>
 <p>List the basic information about an envelope, including its overall status.
     Additional API/SDK methods may be used to get additional information about the
     envelope, its documents, recipients, etc.</p>

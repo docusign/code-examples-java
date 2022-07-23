@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>9. Send an envelope using a template</h4>
+<h4>Send an envelope using a template</h4>
 <p>The envelope is defined by the template.
     The signer and cc recipient name and email are used to fill in the template's <em>roles</em>.</p>
 

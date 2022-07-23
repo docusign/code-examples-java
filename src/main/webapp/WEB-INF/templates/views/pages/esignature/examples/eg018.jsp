@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>18. Get the custom field data for an envelope</h4>
+<h4>Get the custom field data for an envelope</h4>
 <p>
     Get the data values associated with the envelope itself. The custom data fields enable you to
     add additional meta-data to the envelope. The custom data fields can be set by the <b>Sender</b>

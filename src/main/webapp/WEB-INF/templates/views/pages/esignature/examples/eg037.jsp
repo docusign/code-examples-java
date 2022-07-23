@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>37. Request a signature by SMS delivery</h4>
+<h4>Request a signature by SMS delivery</h4>
 <p>Sends a signature request via an SMS message.</p>
 <c:if test="${showDoc}">
     <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>

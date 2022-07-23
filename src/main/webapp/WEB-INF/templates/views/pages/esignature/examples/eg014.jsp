@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>14. Send an envelope with an order form, including a payment field.</h4>
+<h4>Send an envelope with an order form, including a payment field.</h4>
 
 <h5 style="color: purple;">Note: This example will only work if the sender's DocuSign account
     is set up with a DocuSign payment gateway. Since the Payment Gateway ID

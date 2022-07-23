@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>35. Schedule an envelope</h4>
+<h4>Schedule an envelope</h4>
 <p>Demonstrates how to schedule an envelope using the scheduled sending feature.</p>
 
 <c:if test="${showDoc}">

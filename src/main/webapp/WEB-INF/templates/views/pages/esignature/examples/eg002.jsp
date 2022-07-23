@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>2. Send an envelope with a remote (email) signer and cc recipient</h4>
+<h4>Send an envelope with a remote (email) signer and cc recipient</h4>
 <p>The envelope includes a pdf, Word, and HTML document. Anchor text
     (<a href="https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/tabs/auto-place/">AutoPlace</a>)
     is used to position the signing fields in the documents.

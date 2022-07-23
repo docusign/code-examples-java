@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="../../../partials/head.jsp" />
 
-<h4>30. Applying a brand to a template</h4>
+<h4>Applying a brand to a template</h4>
 <p>This code example demonstrates how to apply a brand to an template.</p>
 <p>
     The envelope is defined by the template. The signer and cc recipient
