@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>19. Send an envelope with a recipient using Access Code Authentication.</h4>
+<h4>Send an envelope with a recipient using Access Code Authentication.</h4>
 
 <p>
     The envelope includes a pdf document. Anchor text

@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>36. Send an envelope with delayed routing</h4>
+<h4>Send an envelope with delayed routing</h4>
 <p>Demonstrates how to delay an envelope's delivery between recipients using the delayed routing feature.</p>
 
 <c:if test="${showDoc}">

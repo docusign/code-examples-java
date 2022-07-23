@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>7. Download a document from an envelope</h4>
+<h4>Download a document from an envelope</h4>
 <p>An envelope's documents can be downloaded one by one or as a complete set.</p>
 <p>Document download options:</p>
 <ul>
