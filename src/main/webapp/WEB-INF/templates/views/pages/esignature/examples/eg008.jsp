@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>8. Create a template</h4>
+<h4>Create a template</h4>
 <p>Create a template with two roles, <strong>signer</strong> and <strong>cc</strong>.
     The template includes three documents.
 </p>

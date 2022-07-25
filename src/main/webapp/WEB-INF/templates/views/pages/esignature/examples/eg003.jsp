@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>3. List envelopes in the user's account</h4>
+<h4>List envelopes in the user's account</h4>
 <p>List the envelopes created in the last 30 days.</p>
 <p>This example demonstrates how to query DocuSign about envelopes sent by the current user.</p>
 <c:if test="${showDoc}">

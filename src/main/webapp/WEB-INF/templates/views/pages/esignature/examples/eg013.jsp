@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>13. Use embedded signing from a template with an added document</h4>
+<h4>Use embedded signing from a template with an added document</h4>
 <c:if test="${templateOk}">
     <p>This example sends an envelope based on a template.</p>
     <p>In addition to the template's document(s), the example adds an
