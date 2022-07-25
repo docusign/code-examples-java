@@ -137,11 +137,11 @@
   <p>
     Demonstrates how to host an In Person Signing session with embedded signing.
   <p>
-  <p>
-    API method used:
-    <a target="_blank" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
-  </p>
-
+    <p>API methods used:
+      <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a> and
+      <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createrecipient/">EnvelopeViews::createRecipient</a>.
+    </p>
+  
   <h2>Payments</h2>
 
   <h4 id="example014"><a href="eg014">Send an envelope with an order form and payment field</a></h4>
