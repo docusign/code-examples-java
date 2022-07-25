@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>26. ${title}.</h4>
+<h4>${title}.</h4>
 
 <p>
 This code example demonstrates how to edit individual permission settings on a permissions profile 

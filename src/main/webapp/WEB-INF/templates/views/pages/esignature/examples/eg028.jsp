@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>28. Creating a brand.</h4>
+<h4>Creating a brand.</h4>
 
 <p>
     The brand includes a Brand Name <a href="https://support.docusign.com/en/guides/ndse-admin-guide-configure-branding">Configure Brands</a>.

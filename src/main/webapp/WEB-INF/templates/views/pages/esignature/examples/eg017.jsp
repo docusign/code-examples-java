@@ -2,7 +2,7 @@
 <jsp:include page="../../../partials/head.jsp"/>
 
 
-<h4>17. Set template tab values</h4>
+<h4>Set template tab values</h4>
 <p>
     This example sets the value of a template's tabs. It includes setting
     radio button and checkbox tabs.

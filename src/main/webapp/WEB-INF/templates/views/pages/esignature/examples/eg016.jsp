@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>16. Set tab values for an envelope.</h4>
+<h4>Set tab values for an envelope.</h4>
 
 <p>
     This example creates an example with both read-only tabs (fields) and tabs that can

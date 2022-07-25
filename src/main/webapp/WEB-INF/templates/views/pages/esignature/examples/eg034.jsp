@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>34. ${title}.</h4>
+<h4>${title}.</h4>
 
 <p>
     This topic demonstrates how to create an envelope where the workflow is routed to
