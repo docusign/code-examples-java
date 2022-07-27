@@ -361,6 +361,24 @@
        href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createrecipient/">EnvelopeViews::createRecipient</a>.
   </p>
 
+  <h4 id="example039"><a href="eg039">Send an envelope to an In Person Signer</a></h4>
+  <p>
+    Demonstrates how to host an In Person Signing session with embedded signing.
+  <p>
+  <p>
+    API method used:
+    <a target="_blank" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
+  </p>
+
+  <h4 id="example040"><a href="eg040">Set document visibility for envelope recipients</a></h4>
+  <p>
+    Demonstrates how to set document visibility for envelope recipients.
+  <p>
+  <p>
+    API method used:
+    <a target="_blank" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
+  </p>
+
 </div>
 
 
