@@ -42,32 +42,32 @@ public class EG040ControllerSetDocumentVisibility extends AbstractEsignatureCont
     @Override
     protected Object doWork(WorkArguments args, ModelMap model,
 					   HttpServletResponse response) throws ApiException, IOException {
-	   model.addAttribute("fixingInstructions", FIXING_INSTRUCTIONS_FOR_PERMISSIONS);
-	   model.addAttribute("caseForInstructions", CASE_FOR_INSTRUCTIONS);
+		model.addAttribute("fixingInstructions", FIXING_INSTRUCTIONS_FOR_PERMISSIONS);
+		model.addAttribute("caseForInstructions", CASE_FOR_INSTRUCTIONS);
 
-       String basePath = session.getBasePath();
-       String accessToken = user.getAccessToken();
+		String basePath = session.getBasePath();
+		String accessToken = user.getAccessToken();
 
-	   String signerName = args.getSignerName();
-	   String signerEmail = args.getSignerEmail();
-	   String signer2Name = args.getSignerName2();
-	   String signer2Email = args.getSignerEmail2();
-	   String ccName = args.getCcName();
-	   String ccEmail = args.getCcEmail();
-	   String accountId = session.getAccountId();
+		String signerName = args.getSignerName();
+		String signerEmail = args.getSignerEmail();
+		String signer2Name = args.getSignerName2();
+		String signer2Email = args.getSignerEmail2();
+		String ccName = args.getCcName();
+		String ccEmail = args.getCcEmail();
+		String accountId = session.getAccountId();
 
-	   EnvelopeDefinition envelope = SetDocumentVisibilityService.makeEnvelope(signerEmail, signerName, signer2Email,
-			 signer2Name, ccEmail, ccName, DOCUMENT_FILE_NAME_PDF, DOCUMENT_FILE_NAME_DOCX, DOCUMENT_FILE_NAME_HTML);
+		EnvelopeDefinition envelope = SetDocumentVisibilityService.makeEnvelope(signerEmail, signerName, signer2Email,
+			signer2Name, ccEmail, ccName, DOCUMENT_FILE_NAME_PDF, DOCUMENT_FILE_NAME_DOCX, DOCUMENT_FILE_NAME_HTML);
 
-	   ApiClient apiClient = createApiClient(basePath, accessToken);
-	   EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
+		ApiClient apiClient = createApiClient(basePath, accessToken);
+		EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
 
-	   EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
+		EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
 
-	   DoneExample.createDefault(title)
-			 .withMessage("The envelope has been created and sent!<br />Envelope ID "
-				    + envelopeSummary.getEnvelopeId() + ".")
-			 .addToModel(model);
-	   return DONE_EXAMPLE_PAGE;
+		DoneExample.createDefault(title)
+			.withMessage("The envelope has been created and sent!<br />Envelope ID "
+			+ envelopeSummary.getEnvelopeId() + ".")
+			.addToModel(model);
+		return DONE_EXAMPLE_PAGE;
     }
 }
