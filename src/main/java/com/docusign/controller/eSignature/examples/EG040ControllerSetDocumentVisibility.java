@@ -45,8 +45,8 @@ public class EG040ControllerSetDocumentVisibility extends AbstractEsignatureCont
 	   model.addAttribute("fixingInstructions", FIXING_INSTRUCTIONS_FOR_PERMISSIONS);
 	   model.addAttribute("caseForInstructions", CASE_FOR_INSTRUCTIONS);
 
-        String basePath = session.getBasePath();
-        String accessToken = user.getAccessToken();
+       String basePath = session.getBasePath();
+       String accessToken = user.getAccessToken();
 
 	   String signerName = args.getSignerName();
 	   String signerEmail = args.getSignerEmail();
