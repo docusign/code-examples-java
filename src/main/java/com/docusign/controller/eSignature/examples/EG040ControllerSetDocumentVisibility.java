@@ -22,26 +22,26 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/eg040")
 public class EG040ControllerSetDocumentVisibility extends AbstractEsignatureController {
-    private static final String DOCUMENT_FILE_NAME_PDF = "World_Wide_Corp_lorem.pdf";
-    private static final String DOCUMENT_FILE_NAME_DOCX = "World_Wide_Corp_Battle_Plan_Trafalgar.docx";
-    private static final String DOCUMENT_FILE_NAME_HTML = "doc_1.html";
-    private static final String CASE_FOR_INSTRUCTIONS = "ACCOUNT_LACKS_PERMISSIONS";
-    private static final String FIXING_INSTRUCTIONS_FOR_PERMISSIONS = "See " +
-		  "<a href=\"https://developers.docusign.com/docs/esign-rest-api/how-to/set-document-visibility\">" +
-		  "How to set document visibility for envelope recipients</a> in the DocuSign Developer Center " +
-		  "for instructions on how to enable document visibility in your developer account.";
-    private final User user;
+	private static final String DOCUMENT_FILE_NAME_PDF = "World_Wide_Corp_lorem.pdf";
+	private static final String DOCUMENT_FILE_NAME_DOCX = "World_Wide_Corp_Battle_Plan_Trafalgar.docx";
+	private static final String DOCUMENT_FILE_NAME_HTML = "doc_1.html";
+	private static final String CASE_FOR_INSTRUCTIONS = "ACCOUNT_LACKS_PERMISSIONS";
+	private static final String FIXING_INSTRUCTIONS_FOR_PERMISSIONS = "See " +
+	"<a href=\"https://developers.docusign.com/docs/esign-rest-api/how-to/set-document-visibility\">" +
+	"How to set document visibility for envelope recipients</a> in the DocuSign Developer Center " +
+	"for instructions on how to enable document visibility in your developer account.";
+	private final User user;
 
-    @Autowired
-    public EG040ControllerSetDocumentVisibility(DSConfiguration config, Session session, User user) {
-	   super(config, "eg040", "Set document visibility");
-	   this.session = session;
-	   this.user = user;
-    }
+	@Autowired
+	public EG040ControllerSetDocumentVisibility(DSConfiguration config, Session session, User user) {
+		super(config, "eg040", "Set document visibility");
+		this.session = session;
+		this.user = user;
+	}
 
-    @Override
-    protected Object doWork(WorkArguments args, ModelMap model,
-					   HttpServletResponse response) throws ApiException, IOException {
+	@Override
+	protected Object doWork(WorkArguments args, ModelMap model,
+		HttpServletResponse response) throws ApiException, IOException {
 		model.addAttribute("fixingInstructions", FIXING_INSTRUCTIONS_FOR_PERMISSIONS);
 		model.addAttribute("caseForInstructions", CASE_FOR_INSTRUCTIONS);
 
@@ -69,5 +69,5 @@ public class EG040ControllerSetDocumentVisibility extends AbstractEsignatureCont
 			+ envelopeSummary.getEnvelopeId() + ".")
 			.addToModel(model);
 		return DONE_EXAMPLE_PAGE;
-    }
+	}
 }
