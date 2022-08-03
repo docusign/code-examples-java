@@ -1,5 +1,6 @@
 package com.docusign;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -19,9 +20,23 @@ import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
 public class App {
 
     public static void main(String[] args) throws IOException {
-        SpringApplication.run(App.class, args);
-        openHomePage();
         initFileSystem();
+
+        String fileName = "src\\main\\resources\\application.json";
+        File file = new File(fileName);
+
+        if (file.isFile() && file.canRead()) {
+            SpringApplication.run(App.class, args);
+            openHomePage();
+        } else {
+            String htmlFilePath = "src\\main\\webapp\\WEB-INF\\templates\\views\\applicationJsonMissingError.html";
+            File htmlFile = new File(htmlFilePath);
+            Desktop.getDesktop().browse(htmlFile.toURI());
+
+            System.out.println("");
+            System.out.println("Please, add the application.json file to the resources folder.");
+            System.out.println("");
+        }
     }
 
     private static void openHomePage() throws IOException {
