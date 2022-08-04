@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
+import org.springframework.core.io.ClassPathResource;
 
 @Slf4j
 @SpringBootApplication(exclude={JmxAutoConfiguration.class})
@@ -22,15 +23,12 @@ public class App {
     public static void main(String[] args) throws IOException {
         initFileSystem();
 
-        String fileName = "src\\main\\resources\\application.json";
-        File file = new File(fileName);
-
-        if (file.isFile() && file.canRead()) {
+        var resource = new ClassPathResource("application.json");
+        if (resource.exists()){
             SpringApplication.run(App.class, args);
             openHomePage();
         } else {
-            String htmlFilePath = "src\\main\\webapp\\WEB-INF\\templates\\views\\applicationJsonMissingError.html";
-            File htmlFile = new File(htmlFilePath);
+            File htmlFile = new ClassPathResource("applicationJsonMissingError.html").getFile();
             Desktop.getDesktop().browse(htmlFile.toURI());
 
             System.out.println("");
