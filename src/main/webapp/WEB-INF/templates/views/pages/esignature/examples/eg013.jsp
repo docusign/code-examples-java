@@ -34,7 +34,7 @@
 </p>
 <c:choose>
     <c:when test="${templateOk}">
-        <p>The template you created via example 8 will be used.</p>
+        <p>The template you created via Create a template will be used.</p>
 
         <form class="eg" action="" method="post" data-busy="form">
             <div class="form-group">
@@ -95,7 +95,7 @@
         </form>
     </c:when>
     <c:otherwise>
-        <p>Problem: please first create the template using <a href="eg008">example 8.</a> <br/>
+        <p>Problem: please first create the template using <a href="eg008">Create a template.</a> <br/>
             Thank you.</p>
 
         <form class="eg" action="eg008" method="get">

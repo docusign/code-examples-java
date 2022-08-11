@@ -29,7 +29,7 @@
 
 <c:choose>
     <c:when test="${not envelopeOk}">
-        <p>Problem: please first create an envelope using <a href="eg002">example 2.</a> <br/>
+        <p>Problem: please first create an envelope using <a href="eg002">Send an envelope with a remote (email) signer and cc recipient..</a> <br/>
             You will then need to use example 6 to create the list of documents.<br/>
             Thank you.</p>
 
