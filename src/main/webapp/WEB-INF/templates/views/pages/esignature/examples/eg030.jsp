@@ -31,8 +31,8 @@
 
 <c:choose>
     <c:when test="${templateOk and not empty listBrands}">
-        <p>The template you created via example 8 and brands created via
-            example 24 will be used.</p>
+        <p>The template you created via Create a template and brands created via
+            Create a brand will be used.</p>
         <form class="eg" action="" method="post" data-busy="form">
             <div class="form-group">
                 <label for="signerEmail">Signer Email</label> <input type="email"
@@ -73,14 +73,14 @@
     </c:when>
     <c:otherwise>
         <c:if test="${not templateOk}">
-            <p>Problem: please create the template using <a href="eg008">example 8.</a></p>
+            <p>Problem: please create the template using <a href="eg008">Create a template.</a></p>
             <form class="eg" action="eg008" method="get">
                 <button type="submit" class="btn btn-docu">Continue</button>
             </form>
         </c:if>
         <c:if test="${empty listBrands}">
-            <p>Problem: please create the brand using <a href="eg024">example 24.</a></p>
-            <form class="eg" action="eg024" method="get">
+            <p>Problem: please create the brand using <a href="eg028">Create a brand.</a></p>
+            <form class="eg" action="eg028" method="get">
                 <button type="submit" class="btn btn-docu">Continue</button>
             </form>
         </c:if>
