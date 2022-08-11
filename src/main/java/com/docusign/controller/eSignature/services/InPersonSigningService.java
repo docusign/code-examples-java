@@ -19,6 +19,7 @@ public final class InPersonSigningService {
         return envelopesApi.createRecipientView(accountId, envelopeId, viewRequest);
     }
 
+    // Step 4 start
     public static RecipientViewRequest makeRecipientViewRequest(
             String hostEmail,
             String hostName,
@@ -39,7 +40,9 @@ public final class InPersonSigningService {
 
         return viewRequest;
     }
+    // Step 4 end
 
+    // Step 2 start
     public static EnvelopeDefinition makeEnvelope(
             String hostEmail,
             String hostName,
@@ -71,4 +74,5 @@ public final class InPersonSigningService {
 
         return envelopeDefinition;
     }
+    // Step 2 end
 }
