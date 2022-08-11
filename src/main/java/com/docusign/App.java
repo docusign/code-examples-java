@@ -1,10 +1,13 @@
 package com.docusign;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.FileSystemAlreadyExistsException;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collections;
 
 import java.awt.Desktop;
@@ -18,10 +21,37 @@ import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
 @SpringBootApplication(exclude={JmxAutoConfiguration.class})
 public class App {
 
-    public static void main(String[] args) throws IOException {
-        SpringApplication.run(App.class, args);
-        openHomePage();
+    public static void main(String[] args) throws IOException, URISyntaxException {
         initFileSystem();
+
+        ClassLoader classLoader = App.class.getClassLoader();
+        URL applicationJsonURL = classLoader.getResource("application.json");
+
+        if (applicationJsonURL != null){
+            SpringApplication.run(App.class, args);
+            openHomePage();
+        } else {
+            InputStream inputStream = classLoader.getResourceAsStream("applicationJsonMissingError.html");
+
+            if (inputStream.available() > 0) {
+                Path path = Files.createTempFile("applicationJsonMissingError", ".html");
+                try (FileOutputStream out = new FileOutputStream(path.toFile())) {
+                    byte[] buffer = new byte[1024];
+                    int len;
+                    while ((len = inputStream.read(buffer)) != -1) {
+                        out.write(buffer, 0, len);
+                    }
+                } catch (Exception e) {
+                    System.out.println("File applicationJsonMissingError.html could not be accessed.");
+                }
+
+                Desktop.getDesktop().browse(path.toUri());
+            }
+
+            System.out.println("");
+            System.out.println("Please, add the application.json file to the resources folder.");
+            System.out.println("");
+        }
     }
 
     private static void openHomePage() throws IOException {
