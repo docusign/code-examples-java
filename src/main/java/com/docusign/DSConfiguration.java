@@ -3,6 +3,8 @@ package com.docusign;
 
 import com.docusign.common.ApiIndex;
 import com.docusign.core.model.ApiType;
+import com.docusign.core.model.manifestModels.ManifestStructure;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.EnumUtils;
@@ -10,9 +12,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
+
+import javax.ws.rs.HttpMethod;
+import javax.ws.rs.core.HttpHeaders;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 @Component
@@ -27,6 +37,8 @@ public class DSConfiguration {
     private String documentationPath;
 
     private String selectedApiType;
+
+    //private ManifestStructure codeExamplesText;
 
     @Value("${DS_TARGET_ACCOUNT_ID}")
     private String targetAccountId;
@@ -70,6 +82,21 @@ public class DSConfiguration {
     @Value("${DS_ADMIN_BASE_PATH}")
     private String adminBasePath;
 
+    @Value("${AdminManifest}")
+    private String adminManifest;
+
+    @Value("${ESignatureManifest}")
+    private String eSignatureManifest;
+
+    @Value("${ClickManifest}")
+    private String clickManifest;
+
+    @Value("${RoomsManifest}")
+    private String roomsManifest;
+
+    @Value("${MonitorManifest}")
+    private String monitorManifest;
+
     public String examplesApiPath = "examplesApi.json";
 
     public String apiTypeHeader = "ApiType";
@@ -111,5 +138,43 @@ public class DSConfiguration {
             e.printStackTrace();
         }
         return selectedApiType;
+    }
+
+    public ManifestStructure getCodeExamplesText() throws Exception {
+        if (codeExamplesText != null){
+            return codeExamplesText;
+        }
+
+        try {
+            var json = loadFileData(eSignatureManifest);
+            codeExamplesText = new ObjectMapper().readValue(json, ManifestStructure.class);
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+        return codeExamplesText;
+    }
+
+    private String loadFileData(String filePath) throws Exception {
+        URL fullRequestPath = new URL(filePath);
+        HttpURLConnection httpConnection = (HttpURLConnection) fullRequestPath.openConnection();
+        httpConnection.setRequestMethod(HttpMethod.GET);
+
+        httpConnection.setRequestProperty(
+                HttpHeaders.CONTENT_TYPE,
+                String.valueOf(MediaType.APPLICATION_JSON));
+
+        int responseCode = httpConnection.getResponseCode();
+
+        if (responseCode < HttpURLConnection.HTTP_OK || responseCode >= HttpURLConnection.HTTP_BAD_REQUEST) {
+            throw new Exception(httpConnection.getResponseMessage());
+        }
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
+        StringBuilder stringBuilder = new StringBuilder();
+
+        bufferedReader.close();
+        httpConnection.disconnect();
+
+        return stringBuilder.toString();
     }
 }
