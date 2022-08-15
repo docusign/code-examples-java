@@ -25,11 +25,11 @@ Examples should be self-contained within the scope of the
 launcher.
 
 For example, if your example operates on a template,
-then either use the template created by example number 8,
-or modify the template created by example 8 (eg add a field),
+then either use the template created by Create a template,
+or modify the template created by Create a template (eg add a field),
 or programmatically create a new template.
 
-If you plan to change example 8, first discuss with the
+If you plan to change Create a template, first discuss with the
 Examples Manager via apihelp@docusign.com.
 
 Do not require a user to create or modify a template by
