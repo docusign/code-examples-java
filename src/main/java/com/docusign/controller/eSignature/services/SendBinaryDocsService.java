@@ -155,16 +155,16 @@ public final class SendBinaryDocsService {
         // to the recipients. Parallel routing order is supported by using the
         // same integer as the order for two or more recipients.
         Signer signer = new Signer();
-        signer.setEmail(signerName);
-        signer.setName(signerEmail);
+        signer.setEmail(signerEmail);
+        signer.setName(signerName);
         signer.setRecipientId("1");
         signer.setRoutingOrder("1");
         signer.setTabs(signerTabs);
 
         // create a cc recipient to receive a copy of the documents, identified by name and email
         CarbonCopy cc = new CarbonCopy();
-        cc.setEmail(ccName);
-        cc.setName(ccEmail);
+        cc.setEmail(ccEmail);
+        cc.setName(ccName);
         cc.setRecipientId("2");
         cc.setRoutingOrder("2");
 
