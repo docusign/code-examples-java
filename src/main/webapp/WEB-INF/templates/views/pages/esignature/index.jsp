@@ -89,7 +89,8 @@
   <p>
   <p>
     API method used:
-    <a target="_blank" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
+    <a target="_blank" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>,
+    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createrecipient/">EnvelopeViews::createRecipient</a>.
   </p>
 
   <h2>Working with envelopes and templates</h2>

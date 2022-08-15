@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.*;
 
 public final class SetDocumentVisibilityService {
+    // Step 3 start    
     public static EnvelopeDefinition makeEnvelope(
             String signerEmail,
             String signerName,
@@ -92,4 +93,5 @@ public final class SetDocumentVisibilityService {
 
         return new Document[]{documentHTML, documentDOCX, documentPDF};
     }
+    // Step 3 end
 }

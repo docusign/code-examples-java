@@ -44,7 +44,7 @@
         <label for="ccEmail">CC Email</label>
         <input type="email" class="form-control" id="ccEmail" name="ccEmail"
                aria-describedby="emailHelp" placeholder="pat@example.com" required />
-        <small class="form-text text-muted">The email for the cc recipient must be different from the signer.</small>
+        <small class="form-text text-muted">The email for the cc recipient must be different from the signer emails.</small>
     </div>
     <div class="form-group">
         <label for="ccName">CC Name</label>
