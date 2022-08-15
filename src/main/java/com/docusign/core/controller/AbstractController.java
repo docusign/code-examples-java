@@ -123,10 +123,15 @@ public abstract class AbstractController {
 
     private String handleException(Exception exception, ModelMap model) {
         String stackTrace = ExceptionUtils.getStackTrace(exception);
+        String exceptionMessage = exception.getMessage();
+        String fixingInstructions = exceptionMessage.contains((CharSequence) model.getAttribute("caseForInstructions")) ?
+                (String) model.getAttribute("fixingInstructions") : null;
+
         new DoneExample()
             .withTitle(exampleName)
             .withName(title)
-            .withMessage(exception.getMessage())
+            .withMessage(exceptionMessage)
+            .withFixingInstructions(fixingInstructions)
             .withStackTracePrinted(stackTrace)
             .addToModel(model);
         return ERROR_PAGE;
