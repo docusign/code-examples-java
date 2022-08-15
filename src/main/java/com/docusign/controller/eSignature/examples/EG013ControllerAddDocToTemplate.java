@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.io.Console;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,6 +33,7 @@ public class EG013ControllerAddDocToTemplate extends AbstractEsignatureControlle
 
     private final Session session;
     private final User user;
+    private final String SIGNER_CLIENT_ID = "1000";
 
     @Autowired
     public EG013ControllerAddDocToTemplate(DSConfiguration config, Session session, User user) {
@@ -61,13 +64,13 @@ public class EG013ControllerAddDocToTemplate extends AbstractEsignatureControlle
             envelopesApi,
             args.getSignerEmail(),
             args.getSignerName(),
-            args.getSignerClientId(),
+            SIGNER_CLIENT_ID,
             args.getCcEmail(),
             args.getCcName(),
-            args.getTemplateId(),
+            session.getTemplateId(),
             accountId,
-            args.getDsReturnUrl(),
-            args.getDsPingUrl(),
+            config.getDsReturnUrl(),
+            config.getDsPingUrl(),
             args
         );
         return new RedirectView(embeddedEnvelope.getUrl());
