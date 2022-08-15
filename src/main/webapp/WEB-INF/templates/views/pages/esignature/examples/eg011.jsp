@@ -12,7 +12,7 @@
 </p>
 <p>For example, if the sender view is used to optionally
     add additional documents to the envelope, enhance your app to provide the
-    needed feature (see example 13 for adding additional documents programmatically).
+    needed feature (see Use embedded signing from a template with an added document for adding additional documents programmatically).
 </p>
 <c:if test="${showDoc}">
     <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
