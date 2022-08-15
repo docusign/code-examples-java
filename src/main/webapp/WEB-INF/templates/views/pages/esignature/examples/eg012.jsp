@@ -26,7 +26,7 @@
 </p>
 <c:if test="${not envelopeOk}">
     <p><strong>Optional:</strong> to use the <em>Envelope's document view</em> please first create an envelope using
-        <a href="eg002">example 2.</a></p>
+        <a href="eg002">Send an envelope with a remote (email) signer and cc recipient.</a></p>
 </c:if>
 
 
