@@ -62,6 +62,8 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController 
             OptionItem doc = new OptionItem(docInfo.getName(), docInfo.getDocumentId());
             documentOptions.add(doc);
         }
+        OptionItem pdfp = new OptionItem("PDF Portfolio", "portfolio");
+        documentOptions.add(pdfp);
 
         model.addAttribute(MODEL_DOCUMENT_OPTIONS, documentOptions);
     }
@@ -86,6 +88,8 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController 
 
         // Process results
         List<EnvelopeDocumentInfo> envelopeDocuments = session.getEnvelopeDocuments();
+        EnvelopeDocumentInfo pdfp = new EnvelopeDocumentInfo("PDF Portfolio", "content", "portfolio");
+        envelopeDocuments.add(pdfp);
         EnvelopeDocumentInfo docItem = find(envelopeDocuments, documentId);
 
         String docName = docItem.getName();
