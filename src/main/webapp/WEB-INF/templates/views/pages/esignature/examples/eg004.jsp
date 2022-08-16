@@ -1,25 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>Get an envelope's basic information and status</h4>
-<p>List the basic information about an envelope, including its overall status.
-    Additional API/SDK methods may be used to get additional information about the
-    envelope, its documents, recipients, etc.</p>
-
-<p>This example demonstrates how to obtain the latest information about
-    an envelope from DocuSign. Often an alternative is to use Connect
-    to enable DocuSign to proactively send your application updates when the
-    status of an envelope changes.
-</p>
+<h4>${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 
 <c:if test="${showDoc == true}">
     <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
 
 
-<p>API method used:
-    <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/get/">Envelopes::get</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.

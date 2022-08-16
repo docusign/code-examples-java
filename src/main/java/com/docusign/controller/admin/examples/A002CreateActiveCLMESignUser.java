@@ -34,14 +34,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/a002")
 public class A002CreateActiveCLMESignUser extends AbstractAdminController {
 
-
     private final User user;
     private final Session session;
 
     @Autowired
     public A002CreateActiveCLMESignUser(DSConfiguration config, Session session, User user) {
 
-        super(config, "a002", "Create new active user for CLM and eSignature");
+        super(config, "a002");
         this.user = user;
         this.session = session;
     }
@@ -118,10 +117,11 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
         this.session.setEmailAddress(result.getEmail());
 
         // Process results
-        DoneExample.createDefault(title)
-        .withMessage("Results from MultiProductUserManagement:addOrUpdateUser method:")
-        .withJsonObject(result)
-        .addToModel(model);
+        DoneExample
+                .createDefault(this.codeExampleText.ResultsPageHeader)
+                .withMessage(this.codeExampleText.ResultsPageText)
+                .withJsonObject(result)
+                .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }
 }

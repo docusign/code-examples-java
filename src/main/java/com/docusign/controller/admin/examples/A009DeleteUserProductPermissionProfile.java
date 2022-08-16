@@ -40,7 +40,7 @@ public class A009DeleteUserProductPermissionProfile extends AbstractAdminControl
 
     @Autowired
     public A009DeleteUserProductPermissionProfile(DSConfiguration config, Session session, User user) {
-	   super(config, "a009", "Delete user product permission profiles using an email address");
+	   super(config, "a009");
 	   this.user = user;
     }
 
@@ -123,8 +123,8 @@ public class A009DeleteUserProductPermissionProfile extends AbstractAdminControl
 			 organizationId,
 			 existingAccountId);
 		//Step 5 end
-	   DoneExample.createDefault(title)
-			 .withMessage("Results from MultiProductUserManagement:removeUserProductPermission method:")
+	   DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+			 .withMessage(this.codeExampleText.ResultsPageText)
 			 .withJsonObject(removeUserProductsRepsonse)
 			 .addToModel(model);
 

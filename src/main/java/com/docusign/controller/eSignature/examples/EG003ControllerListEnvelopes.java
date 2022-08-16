@@ -31,7 +31,7 @@ public class EG003ControllerListEnvelopes extends AbstractEsignatureController {
 
     @Autowired
     public EG003ControllerListEnvelopes(DSConfiguration config, Session session, User user) {
-        super(config, "eg003", "List envelopes");
+        super(config, "eg003");
         this.session = session;
         this.user = user;
     }
@@ -44,8 +44,8 @@ public class EG003ControllerListEnvelopes extends AbstractEsignatureController {
                 envelopesApi,
                 session.getAccountId());
 
-        DoneExample.createDefault(title)
-                .withMessage("Results from the Envelopes::listStatusChanges method:")
+        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+                .withMessage(this.codeExampleText.ResultsPageText)
                 .withJsonObject(envelopesInformation)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;

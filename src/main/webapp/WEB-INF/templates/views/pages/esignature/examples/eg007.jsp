@@ -1,27 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>Download a document from an envelope</h4>
-<p>An envelope's documents can be downloaded one by one or as a complete set.</p>
-<p>Document download options:</p>
-<ul>
-    <li><strong>Combined</strong>: a PDF with the combined content of all documents and the
-        certificate
-    </li>
-    <li><strong>Zip Archive</strong>: a ZIP archive that contains all of the PDF documents,
-        the certificate, and any .WAV files used for voice authentication.
-    </li>
-    <li>The envelope's individual documents</li>
-    <li>The envelope's Certificate of Completion</li>
-</ul>
+<h4>${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 <c:if test="${showDoc}">
     <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
 
 
-<p>API method used:
-    <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopedocuments/get/">EnvelopeDocuments::get</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.

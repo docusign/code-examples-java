@@ -38,7 +38,7 @@ public class EG025ControllerPermissionSetUserGroups extends AbstractEsignatureCo
 
     @Autowired
     public EG025ControllerPermissionSetUserGroups(DSConfiguration config, Session session, User user) {
-        super(config, "eg025", "Setting a permission profile");
+        super(config, "eg025");
         this.session = session;
         this.user = user;
     }
@@ -79,9 +79,9 @@ public class EG025ControllerPermissionSetUserGroups extends AbstractEsignatureCo
                     .addToModel(model);
             return ERROR_PAGE;
         }
-        DoneExample.createDefault(title)
+        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
                 .withJsonObject(newGroupInfo)
-                .withMessage("The permission profile was successfully set to the user group!")
+                .withMessage(this.codeExampleText.ResultsPageText)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

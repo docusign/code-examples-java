@@ -37,7 +37,7 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
 
     @Autowired
     public R009ControllerAssignFormToFormGroup(DSConfiguration config, Session session, User user) {
-        super(config, "r009", "Assigning a form to a form group");
+        super(config, "r009");
         this.session = session;
         this.user = user;
     }
@@ -78,7 +78,7 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
 
             DoneExample.createDefault(this.title)
                     .withJsonObject(formGroupFormToAssign)
-                    .withMessage("A form has been assigned to a form group!")
+                    .withMessage(this.codeExampleText.ResultsPageText)
                     .addToModel(model);
         } catch (ApiException apiException) {
             if (!apiException.getMessage().contains(FORM_ALREADY_EXISTS_ERROR_MESSAGE)) {

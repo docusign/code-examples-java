@@ -31,7 +31,7 @@ public class C005ControllerGetClickwrapResponses extends AbstractClickController
 
     @Autowired
     public C005ControllerGetClickwrapResponses(DSConfiguration config, Session session, User user) {
-        super(config, "c005", "Get clickwrap responses");
+        super(config, "c005");
         this.session = session;
         this.user = user;
     }
@@ -59,7 +59,7 @@ public class C005ControllerGetClickwrapResponses extends AbstractClickController
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(clickwrapAgreementsResponse)
-                .withMessage("Results from the ClickWraps::getClickwrapAgreements method:")
+                .withMessage(this.codeExampleText.ResultsPageText)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

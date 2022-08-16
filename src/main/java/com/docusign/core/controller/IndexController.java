@@ -44,6 +44,7 @@ public class IndexController {
     private static final String ATTR_STATE = "state";
     private static final String ATTR_EVENT = "event";
     private static final String ATTR_TITLE = "title";
+    private static final String LAUNCHER_TEXTS = "launcherTexts";
 
     @Autowired
     private Session session;
@@ -69,6 +70,7 @@ public class IndexController {
             return null;
         }
 
+        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().Groups.toArray());
         return session.getApiIndexPath();
     }
 

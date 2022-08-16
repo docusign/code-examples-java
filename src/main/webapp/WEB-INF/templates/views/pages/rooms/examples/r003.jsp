@@ -1,15 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>3. Exporting data from a room.</h4>
+<h4>3. ${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 
-<p>This example demonstrates how to export rooms data from a <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/guides">DocuSign Room</a>.
-</p>
-
-<p>API method used:
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Rooms/Rooms/GetRooms">Rooms::GetRooms</a> and
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Rooms/Rooms/GetRoomFieldData">Rooms::GetRoomFieldSet</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <c:choose>
     <c:when test="${roomList.size() == 0}">

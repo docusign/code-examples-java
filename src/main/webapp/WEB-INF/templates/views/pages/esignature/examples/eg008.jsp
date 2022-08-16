@@ -1,26 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>Create a template</h4>
-<p>Create a template with two roles, <strong>signer</strong> and <strong>cc</strong>.
-    The template includes three documents.
-</p>
-
-<p>Templates are usually created using the DocuSign web tool. This example creates
-    a template that will later be used by other examples in this launcher. </p>
-
-<p>This example first lists the user's templates and only creates a new template if one does not already exist in your
-    account.
-</p>
+<h4>${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 <c:if test="${showDoc}">
     <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
 
 
-<p>API methods used:
-    <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/templates/templates/list/">Templates::list</a>,
-    <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/templates/templates/create/">Templates::create</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.

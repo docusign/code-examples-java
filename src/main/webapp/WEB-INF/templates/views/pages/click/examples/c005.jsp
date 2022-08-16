@@ -1,14 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>5. Get clickwrap responses.</h4>
+<h4>5. ${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 
-<p>
-    Gets user responses to your clickwrap agreements.
-</p>
-<p>API method used:
-    <a target ="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/getclickwrapagreements">ClickWraps:getClickwrapAgreements</a>
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
 </p>

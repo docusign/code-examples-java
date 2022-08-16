@@ -32,7 +32,7 @@ public class R003ControllerExportingDataFromRoom extends AbstractRoomsController
 
     @Autowired
     public R003ControllerExportingDataFromRoom(DSConfiguration config, Session session, User user) {
-        super(config, "r003", "Exporting data from a room");
+        super(config, "r003");
         this.session = session;
         this.user = user;
     }
@@ -61,7 +61,7 @@ public class R003ControllerExportingDataFromRoom extends AbstractRoomsController
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(fieldData)
-                .withMessage("The room data has been exported!")
+                .withMessage(this.codeExampleText.ResultsPageText)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

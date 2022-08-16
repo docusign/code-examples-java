@@ -31,7 +31,7 @@ public class A003aCheckRequestStatus extends AbstractAdminController {
 
     @Autowired
     public A003aCheckRequestStatus(DSConfiguration config, Session session, User user) {
-        super(config, "a003a", "Check request status");
+        super(config, "a003a");
         this.session = session;
         this.user = user;
     }
@@ -53,8 +53,9 @@ public class A003aCheckRequestStatus extends AbstractAdminController {
                 UUID.fromString(this.session.getExportId()));
 
         // Process results
-        DoneExample.createDefault(title)
-                .withMessage("Admin API data response output:")
+        DoneExample
+                .createDefault(this.codeExampleText.ResultsPageHeader)
+                .withMessage(this.codeExampleText.ResultsPageText)
                 .withJsonObject(result)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;

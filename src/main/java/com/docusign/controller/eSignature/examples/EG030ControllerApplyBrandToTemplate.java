@@ -51,7 +51,7 @@ public class EG030ControllerApplyBrandToTemplate extends AbstractEsignatureContr
 
     @Autowired
     public EG030ControllerApplyBrandToTemplate(DSConfiguration config, Session session, User user) {
-        super(config, "eg030", "Apply brand to template");
+        super(config, "eg030");
         this.session = session;
         this.user = user;
     }
@@ -85,10 +85,11 @@ public class EG030ControllerApplyBrandToTemplate extends AbstractEsignatureContr
                 envelope
         );
 
-        DoneExample.createDefault(title)
+        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
                 .withJsonObject(envelopeSummary)
-                .withMessage("The envelope has been created and sent!<br />Envelope ID "
-                    + envelopeSummary.getEnvelopeId() + ".")
+                .withMessage(this.codeExampleText.ResultsPageText
+                        .replaceFirst("\\{0}", envelopeSummary.getEnvelopeId())
+                )
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

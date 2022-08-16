@@ -38,7 +38,7 @@ public class A001AddActiveUser extends AbstractAdminController {
 
     @Autowired
     public A001AddActiveUser(DSConfiguration config, Session session, User user) {
-        super(config, "a001", "Create a new active eSignature user");
+        super(config, "a001");
         this.user = user;
         this.session = session;
     }
@@ -90,8 +90,9 @@ public class A001AddActiveUser extends AbstractAdminController {
                 accountId);
 
         // Process results
-        DoneExample.createDefault(title)
-                .withMessage("Results from eSignUserManagement:createUser method:")
+        DoneExample
+                .createDefault(this.codeExampleText.ResultsPageHeader)
+                .withMessage(this.codeExampleText.ResultsPageText)
                 .withJsonObject(result)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;

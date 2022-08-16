@@ -35,7 +35,7 @@ public class EG004ControllerEnvelopeInfo extends AbstractEsignatureController {
 
     @Autowired
     public EG004ControllerEnvelopeInfo(DSConfiguration config, Session session, User user) {
-        super(config, "eg004", "Get envelope information");
+        super(config, "eg004");
         this.session = session;
         this.user = user;
     }
@@ -55,9 +55,9 @@ public class EG004ControllerEnvelopeInfo extends AbstractEsignatureController {
                 envelopesApi,
                 session.getAccountId(),
                 session.getEnvelopeId());
-        DoneExample.createDefault(title)
+        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
                 .withJsonObject(envelope)
-                .withMessage("Results from the Envelopes::get method:")
+                .withMessage(this.codeExampleText.ResultsPageText)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

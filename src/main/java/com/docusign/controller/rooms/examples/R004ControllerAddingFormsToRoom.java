@@ -36,7 +36,7 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
 
     @Autowired
     public R004ControllerAddingFormsToRoom(DSConfiguration config, Session session, User user) {
-        super(config, "r004", "Adding forms to a room");
+        super(config, "r004");
         this.session = session;
         this.user = user;
     }
@@ -72,7 +72,7 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(roomDocument)
-                .withMessage("The form has been added to the room!")
+                .withMessage(this.codeExampleText.ResultsPageText)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

@@ -1,20 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>Send an envelope with a remote (email) signer and cc recipient</h4>
-<p>The envelope includes a pdf, Word, and HTML document. Anchor text
-    (<a href="https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/tabs/auto-place/">AutoPlace</a>)
-    is used to position the signing fields in the documents.
-</p>
-<p>This is a general example of creating and sending an envelope (a signing request) to multiple recipients,
-    with multiple documents, and with signature fields for the documents.</p>
+<h4>${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 <c:if test="${showDoc}">
     <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
 
-<p>API method used:
-    <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.

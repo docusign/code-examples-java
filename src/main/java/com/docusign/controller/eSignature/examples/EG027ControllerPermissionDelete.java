@@ -34,7 +34,7 @@ public class EG027ControllerPermissionDelete extends AbstractEsignatureControlle
 
     @Autowired
     public EG027ControllerPermissionDelete(DSConfiguration config, Session session, User user) {
-        super(config, "eg027", "Deleting a permission profile");
+        super(config, "eg027");
         this.session = session;
         this.user = user;
     }
@@ -58,8 +58,10 @@ public class EG027ControllerPermissionDelete extends AbstractEsignatureControlle
         PermissionDeleteService.permissionDelete(accountsApi, session.getAccountId(), curProfileId);
 
         // Step 4: Show 'done' (successful) page
-        DoneExample.createDefault(title)
-                .withMessage(String.join("", "The permission profile '", curProfileId, "' is deleted."))
+        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+                .withMessage(this.codeExampleText.ResultsPageText
+                        .replaceFirst("\\{0}", curProfileId)
+                )
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

@@ -1,28 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>Get the custom field data for an envelope</h4>
-<p>
-    Get the data values associated with the envelope itself. The custom data fields enable you to
-    add additional meta-data to the envelope. The custom data fields can be set by the <b>Sender</b>
-    via the DocuSign web tool, or can be set programmatically. The data can be included in the
-    envelope's certificate of completion.
-</p>
-
-<p>
-    This method is used to read the custom field values from
-    an envelope.
-</p>
+<h4>${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 
 <c:if test="${showDoc}">
     <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
 
 
-<p>
-    API method used:
-    <a target='_blank' href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopecustomfields/list/">EnvelopeCustomFields::list</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
 </p>

@@ -1,13 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>7. Creating a form group.</h4>
+<h4>7. ${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 
-<p>This example demonstrates creating a form group for your DocuSign Rooms for Real Estate account.</p>
-
-<p>API methods used:
-    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/reference/forms/formgroups/createformgroup">FormGroups:CreateFormGroup</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <form class="eg" action="" method="post" data-busy="form">
     <div class="form-group">

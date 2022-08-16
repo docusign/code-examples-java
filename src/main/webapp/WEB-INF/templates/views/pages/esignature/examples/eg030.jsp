@@ -1,19 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="../../../partials/head.jsp" />
 
-<h4>Applying a brand to a template</h4>
-<p>This code example demonstrates how to apply a brand to an template.</p>
-<p>
-    The envelope is defined by the template. The signer and cc recipient
-    name and email are used to fill in the template's <em>roles</em>.
-</p>
-
-<p>
-    This example demonstrates a common pattern for DocuSign integrations: envelopes will be sent 
-    programmatically, based on a template. If the template definition needs to be updated, the 
-    DocuSign web tool can be used to easily update the template, thus avoiding the need to make 
-    software changes.
-</p>
+<h4>${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 <c:if test="${showDoc}">
     <p>
         <a target='_blank' href='${documentation}'>Documentation</a> about this example.
@@ -21,10 +10,7 @@
 </c:if>
 
 
-<p>
-    API method used: <a target='_blank' rel="noopener noreferrer"
-        href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
 </p>

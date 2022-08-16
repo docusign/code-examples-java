@@ -35,12 +35,8 @@ public abstract class AbstractAdminController extends AbstractController {
   private final DSConfiguration configuration;
   private static final String EXAMPLE_PAGES_PATH = "pages/admin/examples/";
 
-  public AbstractAdminController(
-    DSConfiguration config,
-    String exampleName,
-    String title
-  ) {
-    super(config, exampleName, title);
+  public AbstractAdminController(DSConfiguration config, String exampleName) {
+    super(config, exampleName);
     this.configuration = config;
   }
 

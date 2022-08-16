@@ -32,7 +32,7 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
 
     @Autowired
     public EG034ControllerUseConditionalRecipients(DSConfiguration config, Session session, User user) {
-        super(config, "eg034", "Use conditional recipients.");
+        super(config, "eg034");
         this.session = session;
         this.user = user;
     }
@@ -66,10 +66,8 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
             this.session.setEnvelopeId(envelopeSummary.getEnvelopeId());
             DoneExample.createDefault(this.title)
                     .withJsonObject(envelopeSummary)
-                    .withMessage(
-                            "An envelope where the workflow is routed to different recipients based on the value of a transaction " +
-                                    "has been created and sent!<br/>Envelope ID "
-                                    + this.session.getEnvelopeId() + ".")
+                    .withMessage(this.codeExampleText.ResultsPageText
+                        .replaceFirst("\\{0}", this.session.getEnvelopeId()))
                     .addToModel(model);
         } catch (ApiException apiException) {
             if (!apiException.getMessage().contains(NOT_ALLOWED_ERROR_MESSAGE)) {

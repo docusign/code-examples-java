@@ -1,12 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>2. Query monitoring data with filters</h4>
-<p>Demonstrates how to query an organization's data based on specified filters and aggregations.</p>
-<p>
-    API method used:
-    <a target='_blank' href="https://developers.docusign.com/docs/monitor-api/reference/monitor/dataset/postwebquery/">DataSet:postWebQuery</a>.
-</p>
+<h4>2. ${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 <p>
     View source file <a target='_blank' href='${sourceUrl}'>${sourceFile}</a> on GitHub.
 </p>

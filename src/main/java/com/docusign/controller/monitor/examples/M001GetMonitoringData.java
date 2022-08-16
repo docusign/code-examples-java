@@ -27,7 +27,7 @@ public class M001GetMonitoringData extends AbstractMonitorController {
 
     @Autowired
     public M001GetMonitoringData(DSConfiguration config, Session session, User user) {
-        super(config, "m001", "Monitoring data result");
+        super(config, "m001");
         this.session = session;
         this.user = user;
     }
@@ -47,8 +47,8 @@ public class M001GetMonitoringData extends AbstractMonitorController {
         String monitoringDataCleaned = monitoringData.toString().replaceAll("'", "");
 
         // Process results
-        DoneExample.createDefault(title)
-                .withMessage("Results from DataSet:getStream method:")
+        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+                .withMessage(this.codeExampleText.ResultsPageText)
                 .withJsonObject(monitoringDataCleaned)
                 .addToModel(model);
 

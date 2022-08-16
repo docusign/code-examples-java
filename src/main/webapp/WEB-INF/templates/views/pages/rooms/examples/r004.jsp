@@ -1,16 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>4. Adding forms to a room.</h4>
+<h4>4. ${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 
-<p>This example demonstrates how to attach forms to a room using the Rooms API.
-</p>
-
-<p>API method used:
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Rooms/Rooms/GetRooms">Rooms::GetRooms</a>,
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Forms/FormLibraries/GetFormLibraries">FormLibraries::GetFormLibraryForms</a> and
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Rooms/Rooms/AddFormToRoom">Rooms::AddFormToRoom</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 
 <form class="eg" action="" method="post" data-busy="form">

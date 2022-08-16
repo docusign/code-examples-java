@@ -39,7 +39,7 @@ public class EG006ControllerEnvelopeDocs extends AbstractEsignatureController {
 
     @Autowired
     public EG006ControllerEnvelopeDocs(DSConfiguration config, Session session, User user) {
-        super(config, "eg006", "List envelope documents");
+        super(config, "eg006");
         this.session = session;
         this.user = user;
     }
@@ -77,9 +77,9 @@ public class EG006ControllerEnvelopeDocs extends AbstractEsignatureController {
             envelopeDocItems.add(new EnvelopeDocumentInfo(documentName, doc.getType(), doc.getDocumentId()));
         }
 
-        DoneExample.createDefault(title)
+        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
             .withJsonObject(envelopeDocumentsResult)
-            .withMessage("Results from the EnvelopeDocuments::list method:")
+            .withMessage(this.codeExampleText.ResultsPageText)
             .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

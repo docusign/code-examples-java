@@ -31,7 +31,7 @@ public class EG022ControllerKBAAuthentication extends AbstractEsignatureControll
 
     @Autowired
     public EG022ControllerKBAAuthentication(DSConfiguration config, Session session, User user) {
-        super(config, "eg022", "Signing request by email");
+        super(config, "eg022");
         this.session = session;
         this.user = user;
     }
@@ -56,10 +56,11 @@ public class EG022ControllerKBAAuthentication extends AbstractEsignatureControll
         );
 
         session.setEnvelopeId(envelopeSummary.getEnvelopeId());
-        DoneExample.createDefault(title)
+        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
                 .withJsonObject(envelopeSummary)
-                .withMessage("The envelope has been created and sent!<br />Envelope ID "
-                     + envelopeSummary.getEnvelopeId() + ".")
+                .withMessage(this.codeExampleText.ResultsPageText
+                        .replaceFirst("\\{0}", envelopeSummary.getEnvelopeId())
+                )
                 .addToModel(model);
 
         return DONE_EXAMPLE_PAGE;

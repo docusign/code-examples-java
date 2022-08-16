@@ -34,7 +34,7 @@ public class EG011ControllerEmbeddedSending extends AbstractEsignatureController
 
     @Autowired
     public EG011ControllerEmbeddedSending(DSConfiguration config, Session session, User user) {
-        super(config, "eg011", "Signing request by email");
+        super(config, "eg011");
         this.session = session;
         this.user = user;
     }

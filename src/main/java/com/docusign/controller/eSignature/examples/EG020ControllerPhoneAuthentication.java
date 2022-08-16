@@ -47,7 +47,7 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
 
     @Autowired
     public EG020ControllerPhoneAuthentication(DSConfiguration config, Session session, User user) {
-        super(config, "eg020", "Require Phone Authentication for a Recipient");
+        super(config, "eg020");
         this.session = session;
         this.user = user;
     }
@@ -86,9 +86,11 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
         // Step 4.1 end
 
         session.setEnvelopeId(results.getEnvelopeId());
-        DoneExample.createDefault(title).withJsonObject(results)
-                .withMessage(
-                        "The envelope has been created and sent!<br />Envelope ID " + results.getEnvelopeId() + ".")
+        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+                .withJsonObject(results)
+                .withMessage(this.codeExampleText.ResultsPageText
+                        .replaceFirst("\\{0}", results.getEnvelopeId())
+                )
                 .addToModel(model);
 
         return DONE_EXAMPLE_PAGE;

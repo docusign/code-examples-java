@@ -1,23 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>${title}.</h4>
-
-<p>
-    This topic demonstrates how to create an envelope where the workflow is paused before the
-    envelope is sent to a second recipient. For information on resuming a workflow see
-    <a href="https://developers.docusign.com/docs/esign-rest-api/how-to/unpause-workflow">
-        How to unpause a signature workflow
-    </a>. The envelope includes a txt document.
-</p>
+<h4>${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 
 <c:if test="${showDoc}">
     <p><a target="_blank" href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
 
-<p>API methods used:
-    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create">Envelopes::create</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.

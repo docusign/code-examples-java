@@ -44,7 +44,7 @@ public class A003BulkExportUserData extends AbstractAdminController {
 
     @Autowired
     public A003BulkExportUserData(DSConfiguration config, Session session, User user) {
-        super(config, "a003", "Bulk export user data");
+        super(config, "a003");
         this.session = session;
         this.user = user;
     }
@@ -80,8 +80,9 @@ public class A003BulkExportUserData extends AbstractAdminController {
         OrganizationExportsResponse results = BulkExportUserDataService
                 .bulkExportsUserData(bulkExportsApi, this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()));
         // Process results
-        DoneExample.createDefault(title)
-                .withMessage("User data exported to " + saveFilePath + "<br>from UserExport:getUserListExport method:")
+        DoneExample
+                .createDefault(this.codeExampleText.ResultsPageHeader)
+                .withMessage(this.codeExampleText.ResultsPageText.replaceFirst("\\{0}", saveFilePath))
                 .withJsonObject(results).addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

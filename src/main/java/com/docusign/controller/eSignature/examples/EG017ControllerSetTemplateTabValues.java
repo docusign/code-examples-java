@@ -30,7 +30,7 @@ public class EG017ControllerSetTemplateTabValues extends AbstractEsignatureContr
 
     @Autowired
     public EG017ControllerSetTemplateTabValues(DSConfiguration config, Session session, User user) {
-        super(config, "eg017", "Set template tab values");
+        super(config, "eg017");
         this.session = session;
         this.user = user;
     }

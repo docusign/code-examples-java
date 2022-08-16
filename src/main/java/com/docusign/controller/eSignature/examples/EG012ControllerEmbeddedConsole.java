@@ -34,7 +34,7 @@ public class EG012ControllerEmbeddedConsole extends AbstractEsignatureController
 
     @Autowired
     public EG012ControllerEmbeddedConsole(DSConfiguration config, Session session, User user) {
-        super(config, "eg012", "Embedded DocuSign web tool");
+        super(config, "eg012");
         this.session = session;
         this.user = user;
     }

@@ -1,14 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>1. Create a clickwrap.</h4>
-
-<p>
-    Creates a clickwrap that you can embed in your website or app.
-</p>
-<p>API method used:
-    <a target ="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/click-api/reference/accounts/clickwraps/createclickwrap">ClickWraps:createClickwrap</a>.
-</p>
+<h4>1. ${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
 </p>
