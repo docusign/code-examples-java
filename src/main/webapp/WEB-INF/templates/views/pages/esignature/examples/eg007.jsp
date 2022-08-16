@@ -11,6 +11,9 @@
     <li><strong>Zip Archive</strong>: a ZIP archive that contains all of the PDF documents,
         the certificate, and any .WAV files used for voice authentication.
     </li>
+    <li>
+        <strong>PDF Portfolio</strong>: Retrieves the envelope documents as a <a href="https://helpx.adobe.com/acrobat/using/overview-pdf-portfolios.html">PDF portfolio</a>
+    </li>
     <li>The envelope's individual documents</li>
     <li>The envelope's Certificate of Completion</li>
 </ul>
@@ -30,7 +33,7 @@
 <c:choose>
     <c:when test="${not envelopeOk}">
         <p>Problem: please first create an envelope using <a href="eg002">Send an envelope with a remote (email) signer and cc recipient..</a> <br/>
-            You will then need to use example 6 to create the list of documents.<br/>
+            You will then need to use List an envelope's documents to create the list of documents.<br/>
             Thank you.</p>
 
         <form class="eg" action="eg002" method="get">
@@ -39,7 +42,7 @@
     </c:when>
     <c:when test="${not documentsOk}">
         <p>Problem: please first create a list of the envelope's documents using
-            <a href="eg006">example 6.</a> <br/>
+            <a href="eg006">List an envelope's documents.</a> <br/>
             Thank you.</p>
 
         <form class="eg" action="eg006" method="get">
