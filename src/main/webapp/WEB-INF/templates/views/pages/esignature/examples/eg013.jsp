@@ -1,21 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>Use embedded signing from a template with an added document</h4>
+<h4>${example.getExampleName()}</h4>
+
 <c:if test="${templateOk}">
-    <p>This example sends an envelope based on a template.</p>
-    <p>In addition to the template's document(s), the example adds an
-        additional document to the envelope by using the
-        <a target='_blank' rel="noopener noreferrer" 
-           href='https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/templates/composite/'>Composite
-            Templates</a>
-        feature.</p>
-    <p>In this example, the additional document is an HTML document that
-        includes order details with information from the form below.</p>
-    <p>This example then enables you to sign the envelope using embedded signing.</p>
-    <p>Embedded signing provides a smoother user experience for a signer who is
-        already logged into your web application since the DocuSign
-        signing is initiated from your website.</p>
+    <p>${example.getExampleDescriptionExtended()}</p>
 </c:if>
 
 <c:if test="${showDoc}">
@@ -23,12 +12,7 @@
 </c:if>
 
 
-<p>API methods used:
-    <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>
-    and
-    <a target='_blank' rel="noopener noreferrer"
-       href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createrecipient/">EnvelopeViews::createRecipient</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
 </p>

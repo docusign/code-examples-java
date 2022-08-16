@@ -29,7 +29,7 @@ public class EG033ControllerUnpauseSignatureWorkflow extends AbstractEsignatureC
 
     @Autowired
     public EG033ControllerUnpauseSignatureWorkflow(DSConfiguration config, Session session, User user) {
-        super(config, "eg033", "Unpause a signature workflow");
+        super(config, "eg033");
         this.session = session;
         this.user = user;
     }
@@ -49,7 +49,7 @@ public class EG033ControllerUnpauseSignatureWorkflow extends AbstractEsignatureC
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(envelopeUpdateSummary)
-                .withMessage("A paused envelope was resumed.")
+                .withMessage(this.codeExampleText.ResultsPageText)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

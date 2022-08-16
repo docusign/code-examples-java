@@ -1,21 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>9. Assigning a form to a form group.</h4>
+<h4>9. ${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 
-<p>This example demonstrates how to assign a form to
-    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/rooms101/forms/managing-forms-rooms/">a form group</a>
-    for your DocuSign Rooms for Real Estate account. As a prerequisite, ensure that you have
-    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/how-to/create-form-group/">created a form group</a>
-    and <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/how-to/access-form-group/">set the office ID on this form group</a>
-    before proceeding.
-</p>
-
-<p>API method used:
-    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/reference/forms/formgroups/assignformgroupform">FormGroups:AssignFormGroupForm</a>,
-    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/reference/forms/formgroups/getformgroups">FormGroups:GetFormGroups</a> and
-    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Forms/FormLibraries/GetFormLibraries">FormLibraries::GetFormLibraryForms</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 
 <form class="eg" action="" method="post" data-busy="form">

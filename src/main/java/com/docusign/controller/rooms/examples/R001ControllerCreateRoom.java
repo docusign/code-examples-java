@@ -31,7 +31,7 @@ public class R001ControllerCreateRoom extends AbstractRoomsController {
 
     @Autowired
     public R001ControllerCreateRoom(DSConfiguration config, Session session, User user) {
-        super(config, "r001", "Create a room");
+        super(config, "r001");
         this.session = session;
         this.user = user;
     }
@@ -55,7 +55,9 @@ public class R001ControllerCreateRoom extends AbstractRoomsController {
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(createdRoom)
-                .withMessage("The room has been created!<br />Room ID " + createdRoom.getRoomId() + ".")
+                .withMessage(this.codeExampleText.ResultsPageText
+                        .replaceFirst("\\{0}", createdRoom.getRoomId().toString())
+                )
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

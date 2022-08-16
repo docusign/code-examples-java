@@ -1,19 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>2. Creating a room with a template.</h4>
+<h4>2. ${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 
-<p>This example demonstrates creating a DocuSign Room using a predefined template.
-    If you've <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/guides/templates">created a template</a>
-    for your organization in either Rooms for Mortgage or Rooms for Real Estate,
-    you can create rooms based on this template using the Rooms API.
-</p>
-
-<p>API method used:
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/RoomTemplates/RoomTemplates/GetRoomTemplates">RoomTemplates::GetRoomTemplates</a>,
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Roles/Roles/GetRoles">Roles::GetRoles</a> and
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Rooms/Rooms/CreateRoom">Rooms::CreateRoom</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <c:choose>
     <c:when test="${templateList.size() == 0}">

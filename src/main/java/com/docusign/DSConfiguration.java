@@ -38,7 +38,7 @@ public class DSConfiguration {
 
     private String selectedApiType;
 
-    //private ManifestStructure codeExamplesText;
+    private ManifestStructure codeExamplesText;
 
     @Value("${DS_TARGET_ACCOUNT_ID}")
     private String targetAccountId;
@@ -140,18 +140,49 @@ public class DSConfiguration {
         return selectedApiType;
     }
 
-    public ManifestStructure getCodeExamplesText() throws Exception {
+    public ManifestStructure getCodeExamplesText() {
         if (codeExamplesText != null){
             return codeExamplesText;
         }
 
         try {
-            var json = loadFileData(eSignatureManifest);
+            String json = loadFileData(getTextManifestDependingOnCurrentAPI());
             codeExamplesText = new ObjectMapper().readValue(json, ManifestStructure.class);
-        } catch (JSONException e){
+        } catch (JSONException | IOException e){
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
         return codeExamplesText;
+    }
+
+    private String getTextManifestDependingOnCurrentAPI() throws IOException {
+        String linkToManifest = "";
+
+        ApiIndex selectedApiIndex = getSelectedApiIndex();
+        if (selectedApiIndex == ApiIndex.ESIGNATURE)
+        {
+            linkToManifest = eSignatureManifest;
+        }
+        else if (selectedApiIndex == ApiIndex.CLICK)
+        {
+            linkToManifest = clickManifest;
+        }
+        else if (selectedApiIndex == ApiIndex.ROOMS)
+        {
+            linkToManifest =roomsManifest;
+        }
+        else if (selectedApiIndex == ApiIndex.MONITOR)
+        {
+            linkToManifest = monitorManifest;
+        }
+        else if (selectedApiIndex == ApiIndex.ADMIN)
+        {
+            linkToManifest = adminManifest;
+        }
+
+        return linkToManifest;
     }
 
     private String loadFileData(String filePath) throws Exception {
@@ -171,10 +202,15 @@ public class DSConfiguration {
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
         StringBuilder stringBuilder = new StringBuilder();
-
+        String temp;
+        while ((temp = bufferedReader.readLine()) != null) {
+            stringBuilder.append(temp);
+        }
         bufferedReader.close();
         httpConnection.disconnect();
 
-        return stringBuilder.toString();
+        // Removing invalid symbols from the data
+        String a = stringBuilder.toString();
+        return a;
     }
 }

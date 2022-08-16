@@ -36,7 +36,7 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
 
     @Autowired
     public EG008ControllerCreateTemplate(DSConfiguration config, Session session, User user) {
-        super(config, "eg008", "Create a template");
+        super(config, "eg008");
         this.session = session;
         this.user = user;
     }
@@ -59,20 +59,20 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
             EnvelopeTemplate template = envelopeTemplateResults.getEnvelopeTemplates().get(0);
             session.setTemplateId(template.getTemplateId());
 
-            DoneExample.createDefault(title)
-                    .withMessage(String.format(
-                            "The template already exists in your account. <br/>Template name: %s, ID %s.",
-                             template.getName(), template.getTemplateId()))
+            DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+                    .withMessage(
+                            "The template already exists in your account." + this.codeExampleText.ResultsPageText
+                            .replaceFirst("\\{0}", template.getName()).replaceFirst("\\{1}", template.getTemplateId()))
                     .addToModel(model);
         } else {
             session.setTemplateName(TEMPLATE_NAME);
 
             TemplateSummary template = CreateTemplateService.createTemplate(apiClient, accountId, CreateTemplateService.makeTemplate("Example Signer and CC template"));
             session.setTemplateId(template.getTemplateId());
-            DoneExample.createDefault(title)
-                    .withMessage(String.format(
-                            "The template has been created!<br/>Template name: %s, ID %s.",
-                            template.getName(), template.getTemplateId()))
+            DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+                    .withMessage(
+                            "The template has been created!" + this.codeExampleText.ResultsPageText
+                            .replaceFirst("\\{0}", template.getName()).replaceFirst("\\{1}", template.getTemplateId()))
                     .addToModel(model);
         }
         return DONE_EXAMPLE_PAGE;

@@ -1,21 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>6. Creating an external form fill session.</h4>
+<h4>6. ${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 
-<p>The DocuSign Rooms API offers developers the option to have users fill out forms without
-    logging in to the Rooms UI through the use of an <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/guides/forms">external form fill session</a>.
-    This example demonstrates how to create an external form fill session using the
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/guides">Rooms API</a>:
-    the result of this code example is the URL for the form fill session, which you can embed in
-    your integration or send to the user.
-</p>
-
-<p>API method used:
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Rooms/Rooms/GetRooms">Rooms::GetRooms</a>,
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Forms/FormLibraries/GetFormLibraries">FormLibraries::GetFormLibraries</a> and
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Forms/ExternalFormFillSessions/CreateExternalFormFillSession">ExternalFormFillSessions::CreateExternalFormFillSession</a>,
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 
 <form class="eg" action="" method="post" data-busy="form">

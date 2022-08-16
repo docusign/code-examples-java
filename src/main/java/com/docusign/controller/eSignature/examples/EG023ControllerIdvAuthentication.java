@@ -38,7 +38,7 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
 
     @Autowired
     public EG023ControllerIdvAuthentication(DSConfiguration config, Session session, User user) {
-        super(config, "eg023", "ID Verification Authentication");
+        super(config, "eg023");
         this.session = session;
         this.user = user;
     }
@@ -63,10 +63,11 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
         // Step 5 end
 
         session.setEnvelopeId(results.getEnvelopeId());
-        DoneExample.createDefault(title)
+        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
                 .withJsonObject(results)
-                .withMessage("The envelope has been created and sent!<br />Envelope ID "
-                        + results.getEnvelopeId() + ".")
+                .withMessage(this.codeExampleText.ResultsPageText
+                        .replaceFirst("\\{0}", results.getEnvelopeId())
+                )
                 .addToModel(model);
 
         return DONE_EXAMPLE_PAGE;

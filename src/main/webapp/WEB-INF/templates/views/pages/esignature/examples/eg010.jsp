@@ -1,22 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>Send an envelope using binary document transfer</h4>
-<p>The envelope includes a pdf, Word, and HTML document.</p>
-<p>Multipart data transfer is used to send the documents in binary format to DocuSign.
-    Binary transfer is 33% more efficient than base64 encoding and is recommended for documents over 15M Bytes.
-</p>
-
-<p>Since binary transfer is not yet supported by the SDK, this example uses the API directly and
-    demonstrates how to do so.</p>
+<h4>${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 <c:if test="showDoc">
     <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
 
 
-<p>API method used:
-    <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.

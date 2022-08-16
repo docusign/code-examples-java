@@ -40,7 +40,7 @@ public class EG035ControllerScheduledSending extends AbstractEsignatureControlle
 
     @Autowired
     public EG035ControllerScheduledSending(DSConfiguration config, Session session, User user) {
-        super(config, "eg035", "Schedule an Envelope");
+        super(config, "eg035");
         this.session = session;
         this.user = user;
     }
@@ -74,9 +74,10 @@ public class EG035ControllerScheduledSending extends AbstractEsignatureControlle
 
         // process results
         session.setEnvelopeId(results.getEnvelopeId());
-        DoneExample.createDefault(title)
-                .withMessage("The envelope has been created and sent!<br />Envelope ID "
-                        + results.getEnvelopeId() + ".")
+        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+                .withMessage(this.codeExampleText.ResultsPageText
+                        .replaceFirst("\\{0}", results.getEnvelopeId())
+                )
                 .withJsonObject(results)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;

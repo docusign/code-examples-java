@@ -32,7 +32,7 @@ public class EG038ControllerResponsiveSigning extends AbstractEsignatureControll
 
     @Autowired
     public EG038ControllerResponsiveSigning(DSConfiguration config, Session session, User user) {
-	   super(config, "eg038", "Use responsive signing");
+	   super(config, "eg038");
 	   this.session = session;
 	   this.user = user;
     }

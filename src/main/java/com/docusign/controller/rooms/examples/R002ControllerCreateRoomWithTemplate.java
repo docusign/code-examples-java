@@ -34,7 +34,7 @@ public class R002ControllerCreateRoomWithTemplate extends AbstractRoomsControlle
 
     @Autowired
     public R002ControllerCreateRoomWithTemplate(DSConfiguration config, Session session, User user) {
-        super(config, "r002", "Create a room with template");
+        super(config, "r002");
         this.session = session;
         this.user = user;
     }
@@ -74,7 +74,9 @@ public class R002ControllerCreateRoomWithTemplate extends AbstractRoomsControlle
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(createdRoom)
-                .withMessage("The room has been created!<br />Room ID " + createdRoom.getRoomId() + ".")
+                .withMessage(this.codeExampleText.ResultsPageText
+                        .replaceFirst("\\{0}", createdRoom.getRoomId().toString())
+                )
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

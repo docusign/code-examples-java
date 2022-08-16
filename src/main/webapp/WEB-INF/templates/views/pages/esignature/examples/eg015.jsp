@@ -1,15 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>Get the tab data from an envelope.</h4>
-
-<p>Get the tab (field) values from an envelope for all of the envelope's recipients.</p>
-
-<p>
-    This method is used to read the updated tab values from
-    the envelope. The method can be used after the envelope is complete or while it is
-    still in progress.
-</p>
+<h4>${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 
 
 
@@ -17,10 +10,7 @@
 <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
 
-<p>
-    API method used:
-    <a target='_blank' href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeformdata/get/">EnvelopeFormData::get</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.

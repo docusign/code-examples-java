@@ -31,7 +31,7 @@ public class C002ControllerActivateClickwrap extends AbstractClickController {
 
     @Autowired
     public C002ControllerActivateClickwrap(DSConfiguration config, Session session, User user) {
-        super(config, "c002", "Activate a clickwrap");
+        super(config, "c002");
         this.session = session;
         this.user = user;
     }
@@ -64,7 +64,7 @@ public class C002ControllerActivateClickwrap extends AbstractClickController {
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(updatedClickwrap)
-                .withMessage("The clickwrap " + updatedClickwrap.getClickwrapName() + " has been activated.")
+                .withMessage(this.codeExampleText.ResultsPageText)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

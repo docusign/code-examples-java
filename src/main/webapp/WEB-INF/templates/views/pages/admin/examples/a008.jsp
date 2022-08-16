@@ -2,21 +2,14 @@
 <jsp:include page='../../../partials/head.jsp'/>
 
 
-<h4>8. Update user product permission profiles using an email address</h4>
-<p>Demonstrates how to update user product permission profiles. There may only be one permission profile assigned to a user per product.</p>
-
+<h4>8. ${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 
 <c:if test='${showDoc}'>
     <p><a target='_blank' rel="noopener noreferrer" href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
 
-<p>
-    API methods used:
-    <a target='_blank' rel='noopener noreferrer'
-       href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/multiproductusermanagement/getproductpermissionprofiles/">MultiProductUserManagement:getProductPermissionProfiles</a>,
-    <a target="_blank" rel='noopener noreferrer'
-       href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/multiproductusermanagement/adduserproductpermissionprofilesbyemail/">MultiProductUserManagement:addUserProductPermissionProfilesByEmail</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
    View source file <a target='_blank' href='${sourceUrl}'>${sourceFile}</a> on GitHub.

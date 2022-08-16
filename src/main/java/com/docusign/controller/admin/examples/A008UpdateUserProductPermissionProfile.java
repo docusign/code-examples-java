@@ -41,7 +41,7 @@ public class A008UpdateUserProductPermissionProfile extends AbstractAdminControl
 
     @Autowired
     public A008UpdateUserProductPermissionProfile(DSConfiguration config, Session session, User user) {
-	   super(config, "a008", "Update user product permission profiles using an email address");
+	   super(config, "a008");
 	   this.user = user;
     }
 
@@ -125,8 +125,8 @@ public class A008UpdateUserProductPermissionProfile extends AbstractAdminControl
 				    existingAccountId
 			 );
 
-	   DoneExample.createDefault(title)
-			 .withMessage("Results from MultiProductUserManagement:addUserProductPermissionProfilesByEmail method:")
+	   DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+			 .withMessage(this.codeExampleText.ResultsPageText)
 			 .withJsonObject(productPermissionProfile)
 			 .addToModel(model);
 

@@ -32,7 +32,7 @@ public class EG019ControllerAccessCodeAuthentication extends AbstractEsignatureC
 
     @Autowired
     public EG019ControllerAccessCodeAuthentication(DSConfiguration config, Session session, User user) {
-        super(config, "eg019", "Signing request by email");
+        super(config, "eg019");
         this.session = session;
         this.user = user;
     }
@@ -59,10 +59,11 @@ public class EG019ControllerAccessCodeAuthentication extends AbstractEsignatureC
         );
 
         session.setEnvelopeId(envelopeSummary.getEnvelopeId());
-        DoneExample.createDefault(title)
+        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
                 .withJsonObject(envelopeSummary)
-                .withMessage("The envelope has been created and sent!<br />Envelope ID "
-                    + session.getEnvelopeId() + ".")
+                .withMessage(this.codeExampleText.ResultsPageText
+                        .replaceFirst("\\{0}", session.getEnvelopeId())
+                )
                 .addToModel(model);
 
         return DONE_EXAMPLE_PAGE;

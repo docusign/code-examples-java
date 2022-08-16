@@ -31,7 +31,7 @@ public class A004BulkImportUserData extends AbstractAdminController {
 
     @Autowired
     public A004BulkImportUserData(DSConfiguration config, Session session, User user) {
-        super(config, "a004", "Add users via bulk import");
+        super(config, "a004");
         this.session = session;
         this.user = user;
     }
@@ -45,8 +45,9 @@ public class A004BulkImportUserData extends AbstractAdminController {
         this.session.setImportId(result.getId().toString());
         
         // Process results
-        DoneExample.createDefault(title)
-                .withMessage("Results from UserImport:addBulkUserImport method:")
+        DoneExample
+                .createDefault(this.codeExampleText.ResultsPageHeader)
+                .withMessage(this.codeExampleText.ResultsPageText)
                 .withJsonObject(result)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;

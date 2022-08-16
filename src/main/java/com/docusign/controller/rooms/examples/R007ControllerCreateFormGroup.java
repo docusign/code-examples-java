@@ -29,7 +29,7 @@ public class R007ControllerCreateFormGroup extends AbstractRoomsController {
 
     @Autowired
     public R007ControllerCreateFormGroup(DSConfiguration config, Session session, User user) {
-        super(config, "r007", "Creating create a form group");
+        super(config, "r007");
         this.session = session;
         this.user = user;
     }
@@ -50,7 +50,7 @@ public class R007ControllerCreateFormGroup extends AbstractRoomsController {
         
         DoneExample.createDefault(this.title)
                 .withJsonObject(formGroup)
-                .withMessage("A form group has been created!")
+                .withMessage(this.codeExampleText.ResultsPageText)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

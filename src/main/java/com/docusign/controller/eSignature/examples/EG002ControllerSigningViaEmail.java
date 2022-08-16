@@ -33,7 +33,7 @@ public class EG002ControllerSigningViaEmail extends AbstractEsignatureController
 
     @Autowired
     public EG002ControllerSigningViaEmail(DSConfiguration config, Session session, User user) {
-        super(config, "eg002", "Signing request by email");
+        super(config, "eg002");
         this.session = session;
         this.user = user;
     }
@@ -63,9 +63,10 @@ public class EG002ControllerSigningViaEmail extends AbstractEsignatureController
 
         // process results
         session.setEnvelopeId(envelopeSummary.getEnvelopeId());
-        DoneExample.createDefault(title)
-                .withMessage("The envelope has been created and sent!<br />Envelope ID "
-                        + envelopeSummary.getEnvelopeId() + ".")
+        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+                .withMessage(this.codeExampleText.ResultsPageText
+                        .replaceFirst("\\{0}", envelopeSummary.getEnvelopeId())
+                )
                 .withJsonObject(envelopeSummary)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;

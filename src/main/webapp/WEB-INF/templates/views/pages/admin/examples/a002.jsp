@@ -1,9 +1,8 @@
 <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
     <jsp:include page='../../../partials/head.jsp' />
 
-    <h4>2. Create a new active user for CLM and eSignature</h4>
-    <p>Demonstrates how to create a new DocuSign user (valid for both CLM and eSignature) and activate their account
-        automatically.</p>
+    <h4>2. ${example.getExampleName()}</h4>
+    <p>${example.getExampleDescriptionExtended()}</p>
 
     <c:if test='${showDoc}'>
         <p><a target='_blank' rel="noopener noreferrer" href='${documentation}'>Documentation</a> about this example.
@@ -11,14 +10,7 @@
     </c:if>
 
 
-    <p>API methods used:
-        <a target='_blank' rel='noopener noreferrer'
-            href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/multiproductusermanagement/getproductpermissionprofiles/">MultiProductUserManagement:getProductPermissionProfiles</a>,
-        <a target='_blank' rel='noopener noreferrer'
-            href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/multiproductusermanagement/getdsgroups/">MultiProductUserManagement:getDsGroups</a>,
-        <a target='_blank' rel='noopener noreferrer'
-            href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/multiproductusermanagement/addorupdateuser/">MultiProductUserManagement:addOrUpdateUser</a>.
-    </p>
+    <jsp:include page="../../links_to_api_methods.jsp" />
 
     <p>
         View source file <a target='_blank' href='${sourceUrl}'>${sourceFile}</a> on GitHub.

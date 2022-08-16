@@ -5,6 +5,7 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 
+import com.docusign.core.model.manifestModels.CodeExampleText;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
@@ -42,6 +43,8 @@ public abstract class AbstractController {
     protected static final String EXAMPLE_PENDING_PAGE = "pages/example_pending";
     protected static final String ERROR_PAGE = "error";
 
+    private static final String EXAMPLE_TEXT = "example";
+
     @Autowired
     private OAuth2ClientContext oAuth2ClientContext;
 
@@ -49,15 +52,15 @@ public abstract class AbstractController {
     protected Session session;
 
     protected final String exampleName;
-    protected final String title;
+    protected CodeExampleText codeExampleText;
+    protected String title;
     private final String pagePath;
     protected final DSConfiguration config;
 
-    public AbstractController(DSConfiguration config, String exampleName, String title) {
+    public AbstractController(DSConfiguration config, String exampleName) {
         this.config = config;
         this.exampleName = exampleName;
         this.pagePath = this.getExamplePagesPath() + exampleName;
-        this.title = title;
     }
 
     protected abstract String getExamplePagesPath();
@@ -105,6 +108,10 @@ public abstract class AbstractController {
         model.addAttribute("sourceFile", clazz.getSimpleName() + ".java");
         model.addAttribute("sourceUrl", srcPath);
         model.addAttribute("documentation", config.getDocumentationPath() + exampleName);
+
+        this.codeExampleText = GetExampleText();
+        this.title = this.codeExampleText.PageTitle;
+        model.addAttribute(EXAMPLE_TEXT, this.codeExampleText);
     }
 
     /**
@@ -137,5 +144,26 @@ public abstract class AbstractController {
         boolean tokenExpired = accessToken != null && accessToken.isExpired();
         session.setRefreshToken(tokenExpired);
         return tokenExpired;
+    }
+
+
+    protected CodeExampleText GetExampleText() {
+        var groups = config.getCodeExamplesText().Groups;
+        var exampleNumberToSearch =  Integer.parseInt(this.exampleName.replaceAll("\\D+", ""));
+
+        for(var i = 0; i < groups.size(); ++i)
+        {
+            CodeExampleText codeExampleText = (CodeExampleText) Arrays
+                    .stream(groups.get(i).Examples.toArray())
+                    .filter(x -> ((CodeExampleText) x).ExampleNumber == exampleNumberToSearch)
+                    .findFirst()
+                    .orElse(null);
+
+            if (codeExampleText != null)
+            {
+                return codeExampleText;
+            }
+        }
+        return null;
     }
 }

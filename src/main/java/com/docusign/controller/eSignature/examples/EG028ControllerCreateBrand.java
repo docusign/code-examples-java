@@ -33,7 +33,7 @@ public class EG028ControllerCreateBrand extends AbstractEsignatureController {
 
     @Autowired
     public EG028ControllerCreateBrand(DSConfiguration config, Session session, User user) {
-        super(config, "eg028", "Creating a brand");
+        super(config, "eg028");
         this.session = session;
         this.user = user;
     }
@@ -60,10 +60,11 @@ public class EG028ControllerCreateBrand extends AbstractEsignatureController {
                 session.getAccountId()
         );
 
-        DoneExample.createDefault(title)
+        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
                 .withJsonObject(brandsResponse)
-                .withMessage("The brand has been created!<br />Brand ID "
-                        + brandsResponse.getBrands().get(0).getBrandId() + ".")
+                .withMessage(this.codeExampleText.ResultsPageText
+                        .replaceFirst("\\{0}", brandsResponse.getBrands().get(0).getBrandId())
+                )
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

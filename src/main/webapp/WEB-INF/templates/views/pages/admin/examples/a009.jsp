@@ -2,23 +2,14 @@
 <jsp:include page='../../../partials/head.jsp'/>
 
 
-<h4>9. Delete user product permission profiles using an email address</h4>
-<p>
-    Demonstrates how to list and delete DocuSign Admin user product permission profiles.
-</p>
-
+<h4>9. ${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 
 <c:if test='${showDoc}'>
     <p><a target='_blank' rel="noopener noreferrer" href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
 
-<p>
-    API methods used:
-    <a target="_blank" rel='noopener noreferrer'
-       href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/multiproductusermanagement/getuserproductpermissionprofilesbyemail/">MultiProductUserManagement:getUserProductPermissionProfilesByEmail</a>,
-    <a target="_blank" rel='noopener noreferrer'
-       href="https://developers.docusign.com/docs/admin-api/reference/usermanagement/multiproductusermanagement/removeuserproductpermission/">MultiProductUserManagement:removeUserProductPermission</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
    View source file <a target='_blank' href='${sourceUrl}'>${sourceFile}</a> on GitHub.

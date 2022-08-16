@@ -1,28 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>Use embedded sending</h4>
-<p>An envelope will be created in draft mode. Your browser will then be redirected to
-    the DocuSign web tool where the envelope can be (optionally) updated and then sent.</p>
-<p>The envelope includes a pdf, Word, and HTML document. Anchor text
-    (<a href="https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/tabs/auto-place/">AutoPlace</a>)
-    is used to position the signing fields in the documents.</p>
-<p>DocuSign recommends that you enhance your application as needed to avoid the need
-    for the embedded sender view.
-</p>
-<p>For example, if the sender view is used to optionally
-    add additional documents to the envelope, enhance your app to provide the
-    needed feature (see example 13 for adding additional documents programmatically).
-</p>
+<h4>${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 <c:if test="${showDoc}">
     <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
 
 
-<p>API methods used:
-    <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a> and
-    <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createsender/">EnvelopeViews::createSender</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.

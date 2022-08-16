@@ -2,20 +2,14 @@
 <jsp:include page="../../../partials/head.jsp"/>
 
 
-<h4>Set template tab values</h4>
-<p>
-    This example sets the value of a template's tabs. It includes setting
-    radio button and checkbox tabs.
-</p>
-<p>The example also sets custom metadata in the envelope via the envelope custom fields feature.</p>
+<h4>${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 
 <c:if test="${showDoc}">
     <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
 
-<p>API method used:
-    <a target='_blank' href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 <p>
     View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
 </p>

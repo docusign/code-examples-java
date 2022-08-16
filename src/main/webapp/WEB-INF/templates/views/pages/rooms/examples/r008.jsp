@@ -1,19 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>8. Granting office access to a form group.</h4>
+<h4>8. ${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 
-<p>This example demonstrates how to assign an office to
-    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/rooms101/forms/managing-forms-rooms/">a form group</a>
-    for your DocuSign Rooms for Real Estate account. Granting office access to a form group will
-    enable you to filter which form groups are available based on that office.
-</p>
-
-<p>API method used:
-    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/reference/forms/formgroups/grantofficeaccesstoformgroup">FormGroups:GrantOfficeAccessToFormGroup</a>,
-    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/reference/forms/formgroups/getformgroups">FormGroups:GetFormGroups</a> and
-    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/reference/offices/offices/getoffices">Offices:GetOffices</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 
 <form class="eg" action="" method="post" data-busy="form">

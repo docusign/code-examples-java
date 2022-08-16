@@ -28,7 +28,7 @@ public class C004ControllerGetListClickwraps extends AbstractClickController {
 
     @Autowired
     public C004ControllerGetListClickwraps(DSConfiguration config, Session session, User user) {
-        super(config, "c004", "Get a list of clickwraps");
+        super(config, "c004");
         this.session = session;
         this.user = user;
     }
@@ -46,7 +46,7 @@ public class C004ControllerGetListClickwraps extends AbstractClickController {
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(clickwrapsResponse)
-                .withMessage("Results from the Click::getClickwraps method:")
+                .withMessage(this.codeExampleText.ResultsPageText)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

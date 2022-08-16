@@ -1,17 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>5. Get Rooms with filters.</h4>
+<h4>5. ${example.getExampleName()}</h4>
+<p>${example.getExampleDescriptionExtended()}</p>
 
-<p>This example demonstrates how to return rooms filtered by your parameters using the
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/guides">Rooms API</a>.
-    This specific code example filters for all rooms that have had their field data, updated within
-    the date range, as shown on the Details tab in the UI.
-</p>
-
-<p>API method used:
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Rooms/Rooms/GetRooms">Rooms::GetRooms</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <form class="eg" action="" method="post" data-busy="form">
 
