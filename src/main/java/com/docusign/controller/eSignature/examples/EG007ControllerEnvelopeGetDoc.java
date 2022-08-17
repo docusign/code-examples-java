@@ -57,13 +57,19 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController 
             return;
         }
 
+        boolean foundPdfp = false;
         ArrayList<OptionItem> documentOptions = new ArrayList<>();
         for (EnvelopeDocumentInfo docInfo : envelopeDocuments) {
+            if (docInfo.getName() == "PDF Portfolio") {
+              foundPdfp = true;
+            }
             OptionItem doc = new OptionItem(docInfo.getName(), docInfo.getDocumentId());
             documentOptions.add(doc);
         }
-        OptionItem pdfp = new OptionItem("PDF Portfolio", "portfolio");
-        documentOptions.add(pdfp);
+        if (! foundPdfp) {
+          OptionItem pdfp = new OptionItem("PDF Portfolio", "portfolio");
+          documentOptions.add(pdfp);
+        }
 
         model.addAttribute(MODEL_DOCUMENT_OPTIONS, documentOptions);
     }

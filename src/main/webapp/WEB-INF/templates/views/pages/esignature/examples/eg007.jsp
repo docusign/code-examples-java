@@ -58,7 +58,7 @@
                 <label for="docSelect">Document selection</label>
                 <select class="custom-select" id="docSelect"
                         name="docSelect" aria-describedby="emailHelp">
-                    <c:forEach begin="0" end="${documentOptions.size()}" varStatus="loop">
+                    <c:forEach begin="0" end="${documentOptions.size() - 1}" varStatus="loop">
                         <option value="${documentOptions[loop.index].documentId}">
                                 ${documentOptions[loop.index].text}
                         </option>
