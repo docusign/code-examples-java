@@ -94,8 +94,17 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController 
 
         // Process results
         List<EnvelopeDocumentInfo> envelopeDocuments = session.getEnvelopeDocuments();
-        EnvelopeDocumentInfo pdfp = new EnvelopeDocumentInfo("PDF Portfolio", "content", "portfolio");
-        envelopeDocuments.add(pdfp);
+        boolean foundPdfp = false;
+        for (EnvelopeDocumentInfo envDoc : envelopeDocuments) {
+            if (envDoc.getName() == "PDF Portfolio") {
+              foundPdfp = true;
+            }
+        }
+
+        if (! foundPdfp) {
+            EnvelopeDocumentInfo pdfp = new EnvelopeDocumentInfo("PDF Portfolio", "content", "portfolio");
+            envelopeDocuments.add(pdfp);
+        }
         EnvelopeDocumentInfo docItem = find(envelopeDocuments, documentId);
 
         String docName = docItem.getName();
