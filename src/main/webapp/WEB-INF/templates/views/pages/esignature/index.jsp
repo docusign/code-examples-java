@@ -30,8 +30,8 @@
     <h2>${group.getName()}</h2>
 
     <c:forEach var="example" items="${group.getExamples()}">
-      <h4 id="${String.format("example%03d", example.getExampleNumber())}">
-        <a href="${String.format("eg%03d", example.getExampleNumber())}">
+      <h4 id="${String.format('example%03d', example.getExampleNumber())}">
+        <a href="${String.format('eg%03d', example.getExampleNumber())}">
             ${example.getExampleName()}
         </a>
       </h4>

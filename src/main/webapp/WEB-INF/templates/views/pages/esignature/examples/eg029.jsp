@@ -42,7 +42,7 @@
                 </select>
                 <c:if test="${empty listBrands}">
                     <small class="form-text text-muted">There are no brands
-                        created in your account. Create ones at the <a href='eg027'>'Create brand'</a> page.
+                        created in your account. Create ones at the <a href='eg028'>'Create brand'</a> page.
                     </small>
                 </c:if>
             </div>
@@ -51,8 +51,8 @@
         </form>
     </c:when>
     <c:otherwise>
-        <p>Problem: please first create the brand(s) using <a href="eg027">example 27.</a><br/>Thank you.</p>
-        <form class="eg" action="eg027" method="get">
+        <p>Problem: please first create the brand(s) using <a href="eg028">Create a brand</a><br/>Thank you.</p>
+        <form class="eg" action="eg028" method="get">
             <button type="submit" class="btn btn-docu">Continue</button>
         </form>
     </c:otherwise>

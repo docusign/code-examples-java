@@ -23,7 +23,7 @@
     </c:when>
     <c:otherwise>
         <p>
-            Problem: please first bulk export user data using <a target="_blank" href="/a002">example 2</a>.<br />
+            Problem: please first bulk export user data using <a target="_blank" href="/a002">Send an envelope with a remote (email) signer and cc recipient.</a>.<br />
             Thank you.
         </p>
     </c:otherwise>

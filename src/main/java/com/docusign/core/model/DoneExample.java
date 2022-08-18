@@ -36,8 +36,8 @@ public class DoneExample {
     private String json;
     private StackTraceElement[] stackTrace;
     private String stackTracePrinted;
+    private String fixingInstructions;
     private Iterable<DiffField> diff;
-
 
 
     /**
@@ -80,6 +80,11 @@ public class DoneExample {
      */
     public DoneExample withMessage(String message) {
         this.message = message;
+        return this;
+    }
+
+    public DoneExample withFixingInstructions(String fixingInstructions) {
+        this.fixingInstructions = fixingInstructions;
         return this;
     }
 
