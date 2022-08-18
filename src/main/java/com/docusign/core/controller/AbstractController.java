@@ -42,7 +42,6 @@ public abstract class AbstractController {
     protected static final String DONE_EXAMPLE_PAGE_COMPARE = "pages/example_done_compare";
     protected static final String EXAMPLE_PENDING_PAGE = "pages/example_pending";
     protected static final String ERROR_PAGE = "error";
-
     private static final String EXAMPLE_TEXT = "example";
 
     @Autowired

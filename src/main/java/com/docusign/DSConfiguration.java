@@ -171,7 +171,7 @@ public class DSConfiguration {
         }
         else if (selectedApiIndex == ApiIndex.ROOMS)
         {
-            linkToManifest =roomsManifest;
+            linkToManifest = roomsManifest;
         }
         else if (selectedApiIndex == ApiIndex.MONITOR)
         {
@@ -209,8 +209,6 @@ public class DSConfiguration {
         bufferedReader.close();
         httpConnection.disconnect();
 
-        // Removing invalid symbols from the data
-        String a = stringBuilder.toString();
-        return a;
+        return stringBuilder.toString();
     }
 }
