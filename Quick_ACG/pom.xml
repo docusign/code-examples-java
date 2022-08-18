@@ -195,6 +195,17 @@
                                     </includes>
                                 </resource>
                                 <resource>
+                                    <targetPath>${basedir}/src/main/java/com/docusign/core/model/manifestModels</targetPath>
+                                    <directory>../src/main/java/com/docusign/core/model/manifestModels</directory>
+                                    <includes>
+                                        <include>AdditionalPage.java</include>
+                                        <include>CodeExampleText.java</include>
+                                        <include>LinkToAPIMethods.java</include>
+                                        <include>ManifestGroup.java</include>
+                                        <include>ManifestStructure.java</include>
+                                    </includes>
+                                </resource>
+                                <resource>
                                     <targetPath>${basedir}/src/main/java/com/docusign/core/security</targetPath>
                                     <directory>../src/main/java/com/docusign/core/security</directory>
                                     <includes>

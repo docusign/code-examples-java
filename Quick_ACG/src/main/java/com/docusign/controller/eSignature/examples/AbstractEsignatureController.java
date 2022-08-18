@@ -2,6 +2,7 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.core.model.manifestModels.CodeExampleText;
 import com.docusign.core.model.Session;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.api.EnvelopesApi;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
+import java.util.Arrays;
 
 /**
  * Abstract base class for all eSignature controllers.
@@ -34,16 +36,17 @@ public abstract class AbstractEsignatureController {
     protected Session session;
 
     protected final String exampleName;
-    protected final String title;
+    protected String title;
     private final String pagePath;
     protected final DSConfiguration config;
+    protected CodeExampleText codeExampleText;
     private static final String EXAMPLE_PAGES_PATH = "pages/esignature/examples/";
+    private static final String EXAMPLE_TEXT = "example";
 
-    public AbstractEsignatureController(DSConfiguration config, String exampleName, String title) {
+    public AbstractEsignatureController(DSConfiguration config, String exampleName) {
         this.config = config;
         this.exampleName = exampleName;
         this.pagePath = this.getExamplePagesPath() + exampleName;
-        this.title = title;
     }
 
     protected String getExamplePagesPath() {
@@ -89,6 +92,9 @@ public abstract class AbstractEsignatureController {
      * @param model the model data
      */
     protected void onInitModel(WorkArguments args, ModelMap model) {
+        this.codeExampleText = GetExampleText();
+        this.title = this.codeExampleText.PageTitle;
+
         Class<?> clazz = Objects.requireNonNullElse(getClass().getEnclosingClass(), getClass());
         String srcPath = String.join("", config.getExampleUrl(), clazz.getName().replace('.', '/'), ".java");
         model.addAttribute("csrfToken", "");
@@ -96,6 +102,7 @@ public abstract class AbstractEsignatureController {
         model.addAttribute("sourceFile", clazz.getSimpleName() + ".java");
         model.addAttribute("sourceUrl", srcPath);
         model.addAttribute("documentation", config.getDocumentationPath() + exampleName);
+        model.addAttribute(EXAMPLE_TEXT, this.codeExampleText);
     }
 
     /**
@@ -114,5 +121,25 @@ public abstract class AbstractEsignatureController {
 
     private String handleException(Exception exception, ModelMap model) {
         return ExceptionUtils.getStackTrace(exception);
+    }
+
+    protected CodeExampleText GetExampleText() {
+        var groups = config.getCodeExamplesText().Groups;
+        var exampleNumberToSearch = 1;
+
+        for(var i = 0; i < groups.size(); ++i)
+        {
+            CodeExampleText codeExampleText = (CodeExampleText) Arrays
+                    .stream(groups.get(i).Examples.toArray())
+                    .filter(x -> ((CodeExampleText) x).ExampleNumber == exampleNumberToSearch)
+                    .findFirst()
+                    .orElse(null);
+
+            if (codeExampleText != null)
+            {
+                return codeExampleText;
+            }
+        }
+        return null;
     }
 }
