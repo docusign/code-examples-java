@@ -78,7 +78,9 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
 
             DoneExample.createDefault(this.title)
                     .withJsonObject(formGroupFormToAssign)
-                    .withMessage(this.codeExampleText.ResultsPageText)
+                    .withMessage(this.codeExampleText.ResultsPageText
+                            .replaceFirst("\\{0}", String.valueOf(args.getOfficeId()))
+                            .replaceFirst("\\{1}", String.valueOf(args.getFormGroupId())))
                     .addToModel(model);
         } catch (ApiException apiException) {
             if (!apiException.getMessage().contains(FORM_ALREADY_EXISTS_ERROR_MESSAGE)) {

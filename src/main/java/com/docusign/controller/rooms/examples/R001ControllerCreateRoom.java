@@ -56,7 +56,8 @@ public class R001ControllerCreateRoom extends AbstractRoomsController {
         DoneExample.createDefault(this.title)
                 .withJsonObject(createdRoom)
                 .withMessage(this.codeExampleText.ResultsPageText
-                        .replaceFirst("\\{0}", createdRoom.getRoomId().toString())
+                        .replaceFirst("\\{0}", createdRoom.getName())
+                        .replaceFirst("\\{1}", createdRoom.getRoomId().toString())
                 )
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;

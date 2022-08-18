@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.ui.ModelMap;
 
@@ -106,6 +107,7 @@ public class DoneExample {
         if (object != null) {
             ObjectWriter writer = new ObjectMapper()
                     .registerModule(new JavaTimeModule())
+                    .registerModule(new JodaModule())
                     .setDateFormat(new SimpleDateFormat(DATETIME_PATTERN))
                     .setDefaultPrettyPrinter(new DefaultPrettyPrinter())
                     .writerWithDefaultPrettyPrinter();

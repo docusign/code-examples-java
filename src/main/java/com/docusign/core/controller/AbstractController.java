@@ -101,6 +101,9 @@ public abstract class AbstractController {
      * @throws Exception if calling API has failed
      */
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
+        this.codeExampleText = GetExampleText();
+        this.title = this.codeExampleText.PageTitle;
+
         Class<?> clazz = Objects.requireNonNullElse(getClass().getEnclosingClass(), getClass());
         String srcPath = String.join("", config.getExampleUrl(), clazz.getName().replace('.', '/'), ".java");
         model.addAttribute("csrfToken", "");
@@ -108,9 +111,6 @@ public abstract class AbstractController {
         model.addAttribute("sourceFile", clazz.getSimpleName() + ".java");
         model.addAttribute("sourceUrl", srcPath);
         model.addAttribute("documentation", config.getDocumentationPath() + exampleName);
-
-        this.codeExampleText = GetExampleText();
-        this.title = this.codeExampleText.PageTitle;
         model.addAttribute(EXAMPLE_TEXT, this.codeExampleText);
     }
 

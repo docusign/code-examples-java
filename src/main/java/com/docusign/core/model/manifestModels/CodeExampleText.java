@@ -27,5 +27,5 @@ public class CodeExampleText {
 
     public List<LinkToAPIMethods> LinksToAPIMethod = new ArrayList<>();
 
-    public List<AdditionalPage> AdditionalPages = new ArrayList<>();
+    public List<AdditionalPage> AdditionalPage = new ArrayList<>();
 }

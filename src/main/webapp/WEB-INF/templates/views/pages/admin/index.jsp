@@ -29,42 +29,45 @@
         <h2>${group.getName()}</h2>
 
         <c:forEach var="example" items="${group.getExamples()}">
-        <h4 id="${String.format("example%03d", example.getExampleNumber())}">
-            <a href="${String.format("a%03d", example.getExampleNumber())}">
-                    ${example.getExampleName()}
-            </a>
-        </h4>
+            <c:if test="${example.getSkipForLanguages() == null || !example.getSkipForLanguages().toLowerCase().contains('java')}">
+                <h4 id="${String.format("example%03d", example.getExampleNumber())}">
+                        ${example.getExampleNumber()}.
+                    <a href="${String.format("a%03d", example.getExampleNumber())}">
+                            ${example.getExampleName()}
+                    </a>
+                </h4>
 
-        <p>${example.getExampleDescription()}</p>
+                <p>${example.getExampleDescription()}</p>
 
-        <p>
-            <c:choose>
-                <c:when test="${example.getLinksToAPIMethod().size() == 1}">
-                    <span>API method used:</span>
-                </c:when>
-                <c:otherwise>
-                    <span>API methods used:</span>
-                </c:otherwise>
-            </c:choose>
+                <p>
+                    <c:choose>
+                        <c:when test="${example.getLinksToAPIMethod().size() == 1}">
+                            <span>API method used:</span>
+                        </c:when>
+                        <c:otherwise>
+                            <span>API methods used:</span>
+                        </c:otherwise>
+                    </c:choose>
 
-            <c:forEach var="link" items="${example.getLinksToAPIMethod()}">
-                <a href="${link.getPath()}">
-                        ${link.getPathName()}
-                </a>
+                    <c:forEach var="link" items="${example.getLinksToAPIMethod()}">
+                        <a href="${link.getPath()}">
+                                ${link.getPathName()}
+                        </a>
 
-                <c:choose>
-                    <c:when test="${example.getLinksToAPIMethod().size() == example.getLinksToAPIMethod().indexOf(link) + 1}">
-                        <span>.</span>
-                    </c:when>
-                    <c:when test="${example.getLinksToAPIMethod().size() - 1 == example.getLinksToAPIMethod().indexOf(link) + 1}">
-                        <span>and</span>
-                    </c:when>
-                    <c:otherwise>
-                        <span>,</span>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-        </p>
+                        <c:choose>
+                            <c:when test="${example.getLinksToAPIMethod().size() == example.getLinksToAPIMethod().indexOf(link) + 1}">
+                                <span>.</span>
+                            </c:when>
+                            <c:when test="${example.getLinksToAPIMethod().size() - 1 == example.getLinksToAPIMethod().indexOf(link) + 1}">
+                                <span>and</span>
+                            </c:when>
+                            <c:otherwise>
+                                <span>,</span>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </p>
+            </c:if>
         </c:forEach>
         </c:forEach>
 </div>
