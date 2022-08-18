@@ -16,8 +16,8 @@
 
 <c:choose>
     <c:when test="${not envelopeOk}">
-        <p>Problem: please first create an envelope using <a href="eg002">example 2.</a> <br/>
-            You will then need to use example 6 to create the list of documents.<br/>
+        <p>Problem: please first create an envelope using <a href="eg002">Send an envelope with a remote (email) signer and cc recipient..</a> <br/>
+            You will then need to use List an envelope's documents to create the list of documents.<br/>
             Thank you.</p>
 
         <form class="eg" action="eg002" method="get">
@@ -26,7 +26,7 @@
     </c:when>
     <c:when test="${not documentsOk}">
         <p>Problem: please first create a list of the envelope's documents using
-            <a href="eg006">example 6.</a> <br/>
+            <a href="eg006">List an envelope's documents.</a> <br/>
             Thank you.</p>
 
         <form class="eg" action="eg006" method="get">
@@ -42,7 +42,7 @@
                 <label for="docSelect">Document selection</label>
                 <select class="custom-select" id="docSelect"
                         name="docSelect" aria-describedby="emailHelp">
-                    <c:forEach begin="0" end="${documentOptions.size()}" varStatus="loop">
+                    <c:forEach begin="0" end="${documentOptions.size() - 1}" varStatus="loop">
                         <option value="${documentOptions[loop.index].documentId}">
                                 ${documentOptions[loop.index].text}
                         </option>

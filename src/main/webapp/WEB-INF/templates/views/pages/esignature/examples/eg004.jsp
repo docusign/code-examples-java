@@ -17,7 +17,7 @@
 
 <c:choose>
     <c:when test="${envelopeOk == true}">
-        <p>The envelope you created via example 2 will be queried.</p>
+        <p>The envelope you created via Send an envelope with a remote (email) signer and cc recipient will be queried.</p>
 
         <form class="eg" action="" method="post" data-busy="form">
             <input type="hidden" name="_csrf" value="${csrfToken}">
@@ -25,7 +25,7 @@
         </form>
     </c:when>
     <c:otherwise>
-        <p>Problem: please first create an envelope using <a href="eg002">example 2.</a> <br/>
+        <p>Problem: please first create an envelope using <a href="eg002">Send an envelope with a remote (email) signer and cc recipient.</a> <br/>
             Thank you.</p>
 
         <form class="eg" action="eg002" method="get">
