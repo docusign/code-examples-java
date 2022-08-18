@@ -71,8 +71,8 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
                 args.getRoomId());
 
         DoneExample.createDefault(this.title)
-                .withJsonObject(roomDocument)
                 .withMessage(this.codeExampleText.ResultsPageText)
+                .withJsonObject(roomDocument)
                 .addToModel(model);
         return DONE_EXAMPLE_PAGE;
     }

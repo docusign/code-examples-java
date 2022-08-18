@@ -31,6 +31,7 @@ public class EG013ControllerAddDocToTemplate extends AbstractEsignatureControlle
 
     private final Session session;
     private final User user;
+    private static final String SIGNER_CLIENT_ID = "1000";
 
     @Autowired
     public EG013ControllerAddDocToTemplate(DSConfiguration config, Session session, User user) {
@@ -61,13 +62,13 @@ public class EG013ControllerAddDocToTemplate extends AbstractEsignatureControlle
             envelopesApi,
             args.getSignerEmail(),
             args.getSignerName(),
-            args.getSignerClientId(),
+            SIGNER_CLIENT_ID,
             args.getCcEmail(),
             args.getCcName(),
-            args.getTemplateId(),
+            session.getTemplateId(),
             accountId,
-            args.getDsReturnUrl(),
-            args.getDsPingUrl(),
+            this.config.getDsReturnUrl(),
+            this.config.getDsPingUrl(),
             args
         );
         return new RedirectView(embeddedEnvelope.getUrl());

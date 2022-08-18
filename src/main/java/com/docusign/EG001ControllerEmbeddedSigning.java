@@ -49,7 +49,6 @@ public class EG001ControllerEmbeddedSigning extends AbstractEsignatureController
     @Override
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws Exception {
-        var a = config.getCodeExamplesText();
         String signerName = args.getSignerName();
         String signerEmail = args.getSignerEmail();
         String accountId = session.getAccountId();
