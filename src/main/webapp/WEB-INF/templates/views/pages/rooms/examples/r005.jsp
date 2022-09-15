@@ -2,8 +2,10 @@
 <jsp:include page="../../../partials/head.jsp"/>
 
 <h4>5. ${example.getExampleName()}</h4>
-<p>${example.getExampleDescriptionExtended()}</p>
-
+<p>${example.getExampleDescription()}</p>
+<p>
+    ${viewSourceFile}
+</p>
 <jsp:include page="../../links_to_api_methods.jsp" />
 
 <form class="eg" action="" method="post" data-busy="form">
@@ -19,7 +21,7 @@
                value="${endDate}" class="form-control" placeholder="yyyy-MM-dd">
     </div>
     <input type="hidden" name="_csrf" value="${csrfToken}">
-    <button type="submit" class="btn btn-docu">Submit</button>
+    <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>
 </form>
 
 <jsp:include page="../../../partials/foot.jsp"/>

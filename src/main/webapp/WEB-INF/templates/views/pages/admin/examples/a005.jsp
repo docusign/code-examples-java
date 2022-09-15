@@ -3,7 +3,7 @@
 
 
 <h4>5. ${example.getExampleName()}</h4>
-<p>${example.getExampleDescriptionExtended()}</p>
+<p>${example.getExampleDescription()}</p>
 
 
 <c:if test='${showDoc}'>
@@ -13,12 +13,12 @@
 <jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
-   View source file <a target='_blank' href='${sourceUrl}'>${sourceFile}</a> on GitHub.
+   ${viewSourceFile}
 </p>
   
   <form class="eg" action="" method="post" data-busy="form">
       <input type="hidden" name="csrf_token" value="${csrfToken}">
-      <button type="submit" class="btn btn-docu">Continue</button>
+      <button type="submit" class="btn btn-docu">${launcherTexts.getContinueButton()}</button>
   </form>
 
 <jsp:include page='../../../partials/foot.jsp'/>

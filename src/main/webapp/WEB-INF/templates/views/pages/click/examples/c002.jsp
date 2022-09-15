@@ -2,11 +2,11 @@
 <jsp:include page="../../../partials/head.jsp"/>
 
 <h4>2. ${example.getExampleName()}</h4>
-<p>${example.getExampleDescriptionExtended()}</p>
+<p>${example.getExampleDescription()}</p>
 
 <jsp:include page="../../links_to_api_methods.jsp" />
 <p>
-    View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
+    ${viewSourceFile}
 </p>
 
 <c:choose>
@@ -22,7 +22,7 @@
                 </select>
             </div>
             <input type="hidden" name="_csrf" value="${csrfToken}">
-            <button type="submit" class="btn btn-docu">Submit</button>
+            <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>
         </form>
     </c:when>
     <c:otherwise>

@@ -81,7 +81,7 @@ public class A003BulkExportUserData extends AbstractAdminController {
                 .bulkExportsUserData(bulkExportsApi, this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()));
         // Process results
         DoneExample
-                .createDefault(this.codeExampleText.ResultsPageHeader)
+                .createDefault(this.codeExampleText.ExampleName)
                 .withMessage(this.codeExampleText.ResultsPageText.replaceFirst("\\{0}", saveFilePath))
                 .withJsonObject(results).addToModel(model);
         return DONE_EXAMPLE_PAGE;

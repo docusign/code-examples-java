@@ -43,6 +43,7 @@ public abstract class AbstractController {
     protected static final String EXAMPLE_PENDING_PAGE = "pages/example_pending";
     protected static final String ERROR_PAGE = "error";
     private static final String EXAMPLE_TEXT = "example";
+    private static final String LAUNCHER_TEXTS = "launcherTexts";
 
     @Autowired
     private OAuth2ClientContext oAuth2ClientContext;
@@ -101,16 +102,23 @@ public abstract class AbstractController {
      */
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         this.codeExampleText = GetExampleText();
-        this.title = this.codeExampleText.PageTitle;
+        this.title = this.codeExampleText.ExampleName;
 
         Class<?> clazz = Objects.requireNonNullElse(getClass().getEnclosingClass(), getClass());
         String srcPath = String.join("", config.getExampleUrl(), clazz.getName().replace('.', '/'), ".java");
+        String viewSourceFile = config.getCodeExamplesText().SupportingTexts
+                .getViewSourceFile().replaceFirst(
+                        "\\{0}",
+                        "<a target='_blank' href='" + srcPath + "'>" + clazz.getSimpleName() + ".java" + "</a>"
+                );
         model.addAttribute("csrfToken", "");
         model.addAttribute("title", title);
+        model.addAttribute("viewSourceFile", viewSourceFile);
         model.addAttribute("sourceFile", clazz.getSimpleName() + ".java");
         model.addAttribute("sourceUrl", srcPath);
         model.addAttribute("documentation", config.getDocumentationPath() + exampleName);
         model.addAttribute(EXAMPLE_TEXT, this.codeExampleText);
+        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
     }
 
     /**

@@ -2,7 +2,7 @@
 <jsp:include page="../../../partials/head.jsp" />
 
 <h4>${example.getExampleName()}</h4>
-<p>${example.getExampleDescriptionExtended()}</p>
+<p>${example.getExampleDescription()}</p>
 <c:if test="${showDoc}">
     <p>
         <a target='_blank' href='${documentation}'>Documentation</a> about this example.
@@ -12,7 +12,7 @@
 
 <jsp:include page="../../links_to_api_methods.jsp" />
 <p>
-    View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
+    ${viewSourceFile}
 </p>
 
 <c:choose>
@@ -54,20 +54,20 @@
                 </select>
             </div>
             <input type="hidden" name="_csrf" value="${csrfToken}">
-            <button type="submit" class="btn btn-docu">Submit</button>
+            <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>
         </form>
     </c:when>
     <c:otherwise>
         <c:if test="${not templateOk}">
             <p>Problem: please create the template using <a href="eg008">Create a template.</a></p>
             <form class="eg" action="eg008" method="get">
-                <button type="submit" class="btn btn-docu">Continue</button>
+                <button type="submit" class="btn btn-docu">${launcherTexts.getContinueButton()}</button>
             </form>
         </c:if>
         <c:if test="${empty listBrands}">
             <p>Problem: please create the brand using <a href="eg028">Create a brand.</a></p>
             <form class="eg" action="eg028" method="get">
-                <button type="submit" class="btn btn-docu">Continue</button>
+                <button type="submit" class="btn btn-docu">${launcherTexts.getContinueButton()}</button>
             </form>
         </c:if>
     </c:otherwise>

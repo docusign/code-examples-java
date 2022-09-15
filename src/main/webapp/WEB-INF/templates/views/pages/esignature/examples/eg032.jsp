@@ -2,7 +2,7 @@
 <jsp:include page="../../../partials/head.jsp"/>
 
 <h4>${example.getExampleName()}</h4>
-<p>${example.getExampleDescriptionExtended()}</p>
+<p>${example.getExampleDescription()}</p>
 
 <c:if test="${showDoc}">
     <p><a target="_blank" href='${documentation}'>Documentation</a> about this example.</p>
@@ -11,7 +11,7 @@
 <jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
-    View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
+    ${viewSourceFile}
 </p>
 
 
@@ -43,7 +43,7 @@
     </div>
 
     <input type="hidden" name="_csrf" value="${csrfToken}">
-    <button type="submit" class="btn btn-docu">Submit</button>
+    <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>
 </form>
 
 <jsp:include page="../../../partials/foot.jsp"/>

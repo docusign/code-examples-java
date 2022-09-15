@@ -51,7 +51,7 @@ public class EG005ControllerEnvelopeRecipients extends AbstractEsignatureControl
                 envelopesApi,
                 session.getAccountId(),
                 session.getEnvelopeId());
-        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+        DoneExample.createDefault(this.codeExampleText.ExampleName)
                 .withJsonObject(recipients)
                 .withMessage(this.codeExampleText.ResultsPageText)
                 .addToModel(model);

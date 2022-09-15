@@ -2,7 +2,7 @@
 <jsp:include page="../../../partials/head.jsp" />
 
 <h4>${example.getExampleName()}</h4>
-<p>${example.getExampleDescriptionExtended()}</p>
+<p>${example.getExampleDescription()}</p>
 <c:if test="${showDoc}">
     <p>
         <a target='_blank' href='${documentation}'>Documentation</a> about
@@ -13,8 +13,7 @@
 
 <jsp:include page="../../links_to_api_methods.jsp" />
 <p>
-    View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a>
-    on GitHub.
+    ${viewSourceFile}
 </p>
 
 <c:choose>
@@ -47,13 +46,13 @@
                 </c:if>
             </div>
             <input type="hidden" name="_csrf" value="${csrfToken}">
-            <button type="submit" class="btn btn-docu">Submit</button>
+            <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>
         </form>
     </c:when>
     <c:otherwise>
         <p>Problem: please first create the brand(s) using <a href="eg028">Create a brand</a><br/>Thank you.</p>
         <form class="eg" action="eg028" method="get">
-            <button type="submit" class="btn btn-docu">Continue</button>
+            <button type="submit" class="btn btn-docu">${launcherTexts.getContinueButton()}</button>
         </form>
     </c:otherwise>
 </c:choose>

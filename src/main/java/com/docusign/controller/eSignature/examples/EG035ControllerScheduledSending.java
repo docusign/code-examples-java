@@ -74,7 +74,7 @@ public class EG035ControllerScheduledSending extends AbstractEsignatureControlle
 
         // process results
         session.setEnvelopeId(results.getEnvelopeId());
-        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+        DoneExample.createDefault(this.codeExampleText.ExampleName)
                 .withMessage(this.codeExampleText.ResultsPageText
                         .replaceFirst("\\{0}", results.getEnvelopeId())
                 )

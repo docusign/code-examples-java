@@ -86,7 +86,7 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
         // Step 4.1 end
 
         session.setEnvelopeId(results.getEnvelopeId());
-        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+        DoneExample.createDefault(this.codeExampleText.ExampleName)
                 .withJsonObject(results)
                 .withMessage(this.codeExampleText.ResultsPageText
                         .replaceFirst("\\{0}", results.getEnvelopeId())

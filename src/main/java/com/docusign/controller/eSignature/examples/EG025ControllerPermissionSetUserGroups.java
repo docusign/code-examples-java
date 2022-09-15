@@ -79,7 +79,7 @@ public class EG025ControllerPermissionSetUserGroups extends AbstractEsignatureCo
                     .addToModel(model);
             return ERROR_PAGE;
         }
-        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+        DoneExample.createDefault(this.codeExampleText.ExampleName)
                 .withJsonObject(newGroupInfo)
                 .withMessage(this.codeExampleText.ResultsPageText)
                 .addToModel(model);

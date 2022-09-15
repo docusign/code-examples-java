@@ -59,7 +59,7 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
             EnvelopeTemplate template = envelopeTemplateResults.getEnvelopeTemplates().get(0);
             session.setTemplateId(template.getTemplateId());
 
-            DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+            DoneExample.createDefault(this.codeExampleText.ExampleName)
                     .withMessage(
                             "The template already exists in your account." + this.codeExampleText.ResultsPageText
                             .replaceFirst("\\{0}", template.getName()).replaceFirst("\\{1}", template.getTemplateId()))
@@ -69,7 +69,7 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
 
             TemplateSummary template = CreateTemplateService.createTemplate(apiClient, accountId, CreateTemplateService.makeTemplate("Example Signer and CC template"));
             session.setTemplateId(template.getTemplateId());
-            DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+            DoneExample.createDefault(this.codeExampleText.ExampleName)
                     .withMessage(
                             "The template has been created!" + this.codeExampleText.ResultsPageText
                             .replaceFirst("\\{0}", template.getName()).replaceFirst("\\{1}", template.getTemplateId()))

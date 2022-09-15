@@ -54,7 +54,7 @@ public class EG018ControllerEnvelopeCustomFieldValues extends AbstractEsignature
                 session.getEnvelopeId()
         );
 
-        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+        DoneExample.createDefault(this.codeExampleText.ExampleName)
                 .withJsonObject(customFieldsEnvelope)
                 .withMessage(this.codeExampleText.ResultsPageText)
                 .addToModel(model);

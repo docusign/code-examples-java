@@ -91,7 +91,7 @@ public class A001AddActiveUser extends AbstractAdminController {
 
         // Process results
         DoneExample
-                .createDefault(this.codeExampleText.ResultsPageHeader)
+                .createDefault(this.codeExampleText.ExampleName)
                 .withMessage(this.codeExampleText.ResultsPageText)
                 .withJsonObject(result)
                 .addToModel(model);

@@ -45,6 +45,7 @@ public class IndexController {
     private static final String ATTR_EVENT = "event";
     private static final String ATTR_TITLE = "title";
     private static final String LAUNCHER_TEXTS = "launcherTexts";
+    private static final String CODE_EXAMPLE_GROUPS = "codeExampleGroups";
 
     @Autowired
     private Session session;
@@ -70,13 +71,15 @@ public class IndexController {
             return null;
         }
 
-        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().Groups.toArray());
+        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
+        model.addAttribute(CODE_EXAMPLE_GROUPS, config.getCodeExamplesText().Groups.toArray());
         return session.getApiIndexPath();
     }
 
     @GetMapping(path = "/ds/mustAuthenticate")
     public ModelAndView mustAuthenticateController(ModelMap model) throws IOException {
-        model.addAttribute(ATTR_TITLE, "Authenticate with DocuSign");
+        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
+        model.addAttribute(ATTR_TITLE, config.getCodeExamplesText().SupportingTexts.LoginPage.LoginButton);
         if (session.isRefreshToken() || config.getQuickstart().equals("true")) {
             config.setQuickstart("false");
 
@@ -95,7 +98,8 @@ public class IndexController {
     }
 
     @GetMapping(path = "/ds/selectApi")
-    public Object choseApiType() {
+    public Object choseApiType(ModelMap model) {
+        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
         return new ModelAndView("pages/ds_select_api");
     }
 

@@ -42,6 +42,7 @@ public abstract class AbstractEsignatureController {
     protected CodeExampleText codeExampleText;
     private static final String EXAMPLE_PAGES_PATH = "pages/esignature/examples/";
     private static final String EXAMPLE_TEXT = "example";
+    private static final String LAUNCHER_TEXTS = "launcherTexts";
 
     public AbstractEsignatureController(DSConfiguration config, String exampleName) {
         this.config = config;
@@ -103,6 +104,7 @@ public abstract class AbstractEsignatureController {
         model.addAttribute("sourceUrl", srcPath);
         model.addAttribute("documentation", config.getDocumentationPath() + exampleName);
         model.addAttribute(EXAMPLE_TEXT, this.codeExampleText);
+        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
     }
 
     /**
