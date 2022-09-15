@@ -20,7 +20,7 @@
         <input type="email" class="form-control" id="signerEmail" name="signerEmail"
                aria-describedby="emailHelp" placeholder="pat@example.com" required
                value="${locals.dsConfig.signerEmail}">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <small id="emailHelp" class="form-text text-muted">${launcherTexts.getHelpingTexts().getEmailWontBeShared()}</small>
     </div>
     <div class="form-group">
         <label for="signerName">Signer Name</label>
@@ -33,7 +33,7 @@
         <input type="email" class="form-control" id="signerNotCheckedEmail" name="signerNotCheckedEmail"
                aria-describedby="emailHelp" placeholder="pat@example.com" required
                value="${locals.dsConfig.signerEmail}">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <small id="emailHelp" class="form-text text-muted">${launcherTexts.getHelpingTexts().getEmailWontBeShared()}</small>
     </div>
     <div class="form-group">
         <label for="signerNotCheckedName">Signer Not Checked Name</label>
@@ -46,7 +46,7 @@
         <input type="email" class="form-control" id="signerCheckedEmail" name="signerCheckedEmail"
                aria-describedby="emailHelp" placeholder="pat@example.com" required
                value="${locals.dsConfig.signerEmail}">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <small id="emailHelp" class="form-text text-muted">${launcherTexts.getHelpingTexts().getEmailWontBeShared()}</small>
     </div>
     <div class="form-group">
         <label for="signerCheckedName">Signer Checked Name</label>

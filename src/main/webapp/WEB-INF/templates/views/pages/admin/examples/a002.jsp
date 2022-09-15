@@ -35,7 +35,7 @@
             <label for="email">Signer Email</label>
             <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
                 placeholder="some_email@example.com" required>
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <small id="emailHelp" class="form-text text-muted">${launcherTexts.getHelpingTexts().getEmailWontBeShared()}</small>
         </div>
 
         <div class="form-group">

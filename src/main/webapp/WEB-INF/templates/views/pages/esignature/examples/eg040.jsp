@@ -23,7 +23,7 @@
         <input type="email" class="form-control" id="signer1Email" name="signerEmail"
                aria-describedby="emailHelp" placeholder="pat@example.com" required
                value="${locals.dsConfig.signerEmail}" />
-        <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <small class="form-text text-muted">${launcherTexts.getHelpingTexts().getEmailWontBeShared()}</small>
     </div>
     <div class="form-group">
         <label for="signer1Name">Signer1 Name</label>
@@ -34,7 +34,7 @@
         <label for="signer2Email">Signer2 Email</label>
         <input type="email" class="form-control" id="signer2Email" name="signerEmail2"
                aria-describedby="emailHelp" placeholder="bob@mail.com" required />
-        <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <small class="form-text text-muted">${launcherTexts.getHelpingTexts().getEmailWontBeShared()}</small>
     </div>
     <div class="form-group">
         <label for="signer2Name">Signer2 Name</label>
@@ -44,7 +44,7 @@
         <label for="ccEmail">CC Email</label>
         <input type="email" class="form-control" id="ccEmail" name="ccEmail"
                aria-describedby="emailHelp" placeholder="pat@example.com" required />
-        <small class="form-text text-muted">The email for the cc recipient must be different from the signer emails.</small>
+        <small class="form-text text-muted">${launcherTexts.getHelpingTexts().getCCEmailShouldDifferFromSigner()}}</small>
     </div>
     <div class="form-group">
         <label for="ccName">CC Name</label>

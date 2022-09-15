@@ -19,7 +19,7 @@
         <input type="email" class="form-control" id="signerEmail" name="signerEmail"
                aria-describedby="emailHelp" placeholder="pat@example.com" required
                value="${locals.dsConfig.signerEmail}">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <small id="emailHelp" class="form-text text-muted">${launcherTexts.getHelpingTexts().getEmailWontBeShared()}</small>
     </div>
     <div class="form-group">
         <label for="signerName">Signer Name</label>
