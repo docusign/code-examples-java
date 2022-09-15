@@ -25,7 +25,7 @@
         <label for="phoneNumber">Signer Phone Number</label>
         <input type="text" class="form-control" id="phoneNumber" placeholder="415-555-1212" name="phoneNumber"
                value="" required>
-        <small id="emailHelp" class="form-text text-muted">This phone number will receive a notification. We'll never share your phone number with anyone else.</small>
+        <small id="emailHelp" class="form-text text-muted">${launcherTexts.getHelpingTexts().getPhoneNumberWillBeNotified()} ${launcherTexts.getHelpingTexts().getPhoneNumberWontBeShared()}}</small>
     </div>
     <div class="form-group">
         <label for="signerName">Signer Name</label>
@@ -42,7 +42,7 @@
         <label for="ccPhoneNumber">CC Phone Number</label>
         <input type="text" class="form-control" id="ccPhoneNumber" placeholder="415-555-1212" name="ccPhoneNumber"
                value="" required>
-        <small id="emailHelp" class="form-text text-muted">This phone number will receive a notification. We'll never share your phone number with anyone else.</small>
+        <small id="emailHelp" class="form-text text-muted">${launcherTexts.getHelpingTexts().getPhoneNumberWillBeNotified()} ${launcherTexts.getHelpingTexts().getPhoneNumberWontBeShared()}}</small>
     </div>
     <div class="form-group">
         <label for="ccName">CC Name</label>

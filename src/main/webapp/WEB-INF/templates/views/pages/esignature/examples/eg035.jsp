@@ -21,7 +21,7 @@
       <input type="email" class="form-control" id="signerEmail" name="signerEmail"
              aria-describedby="emailHelp" placeholder="pat@example.com" required
              value="${signerEmail}" />
-      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      <small id="emailHelp" class="form-text text-muted">${launcherTexts.getHelpingTexts().getEmailWontBeShared()}</small>
     </div>
     <div class="form-group">
       <label for="signer_name">Signer Name</label>
@@ -31,7 +31,7 @@
     <div class="form-group">
       <label for="resumeDate">Resume Date</label>
       <input type="date" class="form-control" id="resumeDate" name="resumeDate" required />
-      <small id="dateHelp" class="form-text text-muted">Please choose a date in the future.</small>
+      <small id="dateHelp" class="form-text text-muted">${launcherTexts.getHelpingTexts().getChooseDateInTheFuture()}}.</small>
     </div>
     <input type="hidden" name="csrfToken" value="${csrfToken}"/>
     <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>

@@ -114,8 +114,6 @@ public abstract class AbstractController {
         model.addAttribute("csrfToken", "");
         model.addAttribute("title", title);
         model.addAttribute("viewSourceFile", viewSourceFile);
-        model.addAttribute("sourceFile", clazz.getSimpleName() + ".java");
-        model.addAttribute("sourceUrl", srcPath);
         model.addAttribute("documentation", config.getDocumentationPath() + exampleName);
         model.addAttribute(EXAMPLE_TEXT, this.codeExampleText);
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
