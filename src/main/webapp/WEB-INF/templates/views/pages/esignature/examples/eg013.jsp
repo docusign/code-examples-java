@@ -4,7 +4,7 @@
 <h4>${example.getExampleName()}</h4>
 
 <c:if test="${templateOk}">
-    <p>${example.getExampleDescriptionExtended()}</p>
+    <p>${example.getExampleDescription()}</p>
 </c:if>
 
 <c:if test="${showDoc}">
@@ -14,7 +14,7 @@
 
 <jsp:include page="../../links_to_api_methods.jsp" />
 <p>
-    View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
+    ${viewSourceFile}
 </p>
 <c:choose>
     <c:when test="${templateOk}">
@@ -75,7 +75,7 @@
                 </select>
             </div>
             <input type="hidden" name="_csrf" value="${csrfToken}">
-            <button type="submit" class="btn btn-docu">Submit</button>
+            <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>
         </form>
     </c:when>
     <c:otherwise>
@@ -83,7 +83,7 @@
             Thank you.</p>
 
         <form class="eg" action="eg008" method="get">
-            <button type="submit" class="btn btn-docu">Continue</button>
+            <button type="submit" class="btn btn-docu">${launcherTexts.getContinueButton()}</button>
         </form>
     </c:otherwise>
 </c:choose>

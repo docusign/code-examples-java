@@ -2,7 +2,7 @@
 <jsp:include page='../../../partials/head.jsp'/>
 
 <h4>4a. ${example.getExampleName()}</h4>
-<p>${example.getExampleDescriptionExtended()}</p>
+<p>${example.getExampleDescription()}</p>
 <c:if test='${showDoc}'>
     <p><a target='_blank' rel="noopener noreferrer" href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
@@ -10,7 +10,7 @@
 
 <jsp:include page="../../links_to_api_methods.jsp" />
 <p>
-    View source file <a target='_blank' href='${sourceUrl}'>${sourceFile}</a> on GitHub.
+    ${viewSourceFile}
 </p>
 
 <c:choose>
@@ -18,7 +18,7 @@
         <p>Uses the import information that was received during previous step</p>
         <form class="eg" action="" method="post" data-busy="form">
             <input type="hidden" name="_csrf" value="${csrfToken}">
-            <button type="submit" class="btn btn-docu">Submit</button>
+            <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>
         </form>
     </c:when>
     <c:otherwise>

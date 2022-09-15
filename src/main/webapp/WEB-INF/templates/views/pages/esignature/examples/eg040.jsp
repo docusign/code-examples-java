@@ -9,12 +9,12 @@
     <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
 
-<p>API method used:
+<p>${launcherTexts.getAPIMethodUsed()}
     <a target ='_blank' href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
 </p>
 
 <p>
-    View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
+    ${viewSourceFile}
 </p>
 
 <form class="eg" action="" method="post" data-busy="form">
@@ -52,7 +52,7 @@
                required />
     </div>
     <input type="hidden" name="_csrf" value="${csrfToken}">
-    <button type="submit" class="btn btn-docu">Submit</button>
+    <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>
 </form>
 
 <jsp:include page="../../../partials/foot.jsp"/>

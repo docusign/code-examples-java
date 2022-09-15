@@ -8,7 +8,5 @@ import lombok.Setter;
 public class AdditionalPage {
     public String Name;
 
-    public String ResultsPageHeader;
-
     public String ResultsPageText;
 }

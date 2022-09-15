@@ -3,7 +3,7 @@
 
 
 <h4>9. ${example.getExampleName()}</h4>
-<p>${example.getExampleDescriptionExtended()}</p>
+<p>${example.getExampleDescription()}</p>
 
 <c:if test='${showDoc}'>
     <p><a target='_blank' rel="noopener noreferrer" href='${documentation}'>Documentation</a> about this example.</p>
@@ -12,7 +12,7 @@
 <jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
-   View source file <a target='_blank' href='${sourceUrl}'>${sourceFile}</a> on GitHub.
+   ${viewSourceFile}
 </p>
 
 <c:choose>
@@ -30,7 +30,7 @@
             </div>
 
             <input type="hidden" name="csrf_token" value="${csrfToken}"/>
-            <button type="submit" class="btn btn-primary">Continue</button>
+            <button type="submit" class="btn btn-primary">${launcherTexts.getContinueButton()}</button>
         </form>
     </c:when>
     <c:otherwise>

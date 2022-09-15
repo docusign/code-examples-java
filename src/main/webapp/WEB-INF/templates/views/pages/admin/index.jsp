@@ -9,7 +9,7 @@
         <tr>
             <td>
                 <h1 class='display-4'>Java Launcher</h1>
-                <p class='Xlead'>Run and explore DocuSign Admin API code examples with Authorization Code Grant or JWT Grant authentication</p>
+                <p class='Xlead'>${launcherTexts.getHomePageText()}</p>
             </td>
             <td>
                 <img src='/assets/banner-code.png' />
@@ -25,7 +25,7 @@
         <p><a target='_blank' href='${documentation}'>Documentation</a> on using OAuth Authorization Code Grant from a Java application.</p>
     </c:if>
 
-        <c:forEach var="group" items="${launcherTexts}">
+        <c:forEach var="group" items="${codeExampleGroups}">
         <h2>${group.getName()}</h2>
 
         <c:forEach var="example" items="${group.getExamples()}">
@@ -42,10 +42,10 @@
                 <p>
                     <c:choose>
                         <c:when test="${example.getLinksToAPIMethod().size() == 1}">
-                            <span>API method used:</span>
+                            <span>${launcherTexts.getAPIMethodUsed()}</span>
                         </c:when>
                         <c:otherwise>
-                            <span>API methods used:</span>
+                            <span>${launcherTexts.getAPIMethodUsedPlural()}</span>
                         </c:otherwise>
                     </c:choose>
 

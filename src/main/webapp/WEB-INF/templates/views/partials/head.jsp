@@ -29,43 +29,36 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">${launcherTexts.getHomeButton()} <span class="sr-only">(current)</span></a>
             </li>
             <c:choose>
                 <c:when test="${locals.user != null}">
                     <li>
                         <a class="nav-link" href="/logout" id="logout"
-                           data-busy="href">Logout <span class="sr-only">(current)</span></a>
+                           data-busy="href">${launcherTexts.getLogoutButton()} <span class="sr-only">(current)</span></a>
                     </li>
                 </c:when>
                 <c:otherwise>
                     <li>
                         <a class="nav-link" href="/ds/mustAuthenticate" id="login"
-                           data-busy="href">Login <span class="sr-only">(current)</span></a>
+                           data-busy="href">${launcherTexts.getLoginButton()} <span class="sr-only">(current)</span></a>
                     </li>
                 </c:otherwise>
             </c:choose>
             <li>
                 <a class="nav-link" href="/ds/selectApi" id="selectApi"
-                   data-busy="href">Choose API<span class="sr-only">(current)</span></a>
+                   data-busy="href">${launcherTexts.getChangeAPITypeButton()}<span class="sr-only">(current)</span></a>
             </li>
         </ul>
         <c:if test="${locals.user != null}">
            <span class="navbar-text">
-            Welcome ${locals.user.name}
+               ${launcherTexts.getWelcomeText()
+                       .replaceFirst("\\{0}", locals.user.name)
+                       .replaceFirst("\\{1}", locals.session.accountName)}
           </span>
         </c:if>
     </div>
 </nav>
-
-
-    <!-- <c:if test="${locals.session.accountName != null}">
-    <p>
-        DocuSign Account: ${locals.session.accountName}.
-    </p>
-    </c:if> -->
-
-
     <div class="col-md-12 feedback" id="feedback">
         <h3>Working...&nbsp;&nbsp;&nbsp;<span></span></h3>
     </div>
@@ -80,7 +73,7 @@
         </div>
     </section>
 
-    <p id="download-continue" class="feedback"><a href="/">Continue</a></p>
+    <p id="download-continue" class="feedback"><a href="/">${launcherTexts.getContinueButton()}</a></p>
 
     <c:choose>
         <c:when test="${locals.user == null}">

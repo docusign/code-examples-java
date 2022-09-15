@@ -21,7 +21,7 @@
     </c:if>
 
 
-<p><a href="/">Continue</a></p>
+<p><a href="/">${launcherTexts.getContinueButton()}</a></p>
 
 
 

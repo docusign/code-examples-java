@@ -58,7 +58,7 @@ public class EG027ControllerPermissionDelete extends AbstractEsignatureControlle
         PermissionDeleteService.permissionDelete(accountsApi, session.getAccountId(), curProfileId);
 
         // Step 4: Show 'done' (successful) page
-        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+        DoneExample.createDefault(this.codeExampleText.ExampleName)
                 .withMessage(this.codeExampleText.ResultsPageText
                         .replaceFirst("\\{0}", curProfileId)
                 )

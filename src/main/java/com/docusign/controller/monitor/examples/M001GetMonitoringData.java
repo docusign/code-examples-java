@@ -47,7 +47,7 @@ public class M001GetMonitoringData extends AbstractMonitorController {
         String monitoringDataCleaned = monitoringData.toString().replaceAll("'", "");
 
         // Process results
-        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+        DoneExample.createDefault(this.codeExampleText.ExampleName)
                 .withMessage(this.codeExampleText.ResultsPageText)
                 .withJsonObject(monitoringDataCleaned)
                 .addToModel(model);

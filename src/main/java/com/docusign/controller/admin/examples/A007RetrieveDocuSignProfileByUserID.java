@@ -40,7 +40,7 @@ public class A007RetrieveDocuSignProfileByUserID extends AbstractAdminController
                 getDocuSignProfileByUserId(usersApi, organizationId, args.getUserId());
         // Step 3 end
         DoneExample
-                .createDefault(this.codeExampleText.ResultsPageHeader)
+                .createDefault(this.codeExampleText.ExampleName)
                 .withMessage(this.codeExampleText.ResultsPageText)
                 .withJsonObject(usersResponse.getUsers()).addToModel(model);
 

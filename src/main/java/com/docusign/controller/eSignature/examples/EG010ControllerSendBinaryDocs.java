@@ -52,7 +52,7 @@ public class EG010ControllerSendBinaryDocs extends AbstractEsignatureController 
         String envelopeId = obj.getString("envelopeId");
         session.setEnvelopeId(envelopeId);
 
-        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+        DoneExample.createDefault(this.codeExampleText.ExampleName)
                 .withMessage(this.codeExampleText.ResultsPageText
                         .replaceFirst("\\{0}", envelopeId)
                 )

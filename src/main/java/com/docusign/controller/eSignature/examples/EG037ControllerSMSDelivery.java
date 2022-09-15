@@ -63,7 +63,7 @@ public class EG037ControllerSMSDelivery extends AbstractEsignatureController {
 
         // process results
         session.setEnvelopeId(envelopeSummary.getEnvelopeId());
-        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+        DoneExample.createDefault(this.codeExampleText.ExampleName)
                 .withMessage(this.codeExampleText.ResultsPageText
                         .replaceFirst("\\{0}", envelopeSummary.getEnvelopeId())
                 )

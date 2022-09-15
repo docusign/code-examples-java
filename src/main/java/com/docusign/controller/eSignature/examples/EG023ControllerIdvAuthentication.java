@@ -63,7 +63,7 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
         // Step 5 end
 
         session.setEnvelopeId(results.getEnvelopeId());
-        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+        DoneExample.createDefault(this.codeExampleText.ExampleName)
                 .withJsonObject(results)
                 .withMessage(this.codeExampleText.ResultsPageText
                         .replaceFirst("\\{0}", results.getEnvelopeId())

@@ -2,7 +2,7 @@
 <jsp:include page='../../../partials/head.jsp'/>
 
 <h4>7. ${example.getExampleName()}</h4>
-<p>${example.getExampleDescriptionExtended()}</p>
+<p>${example.getExampleDescription()}</p>
 
 <c:if test='${showDoc}'>
     <p><a target='_blank' rel="noopener noreferrer" href='${documentation}'>Documentation</a> about this example.</p>
@@ -11,7 +11,7 @@
 <jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
-    View source file <a target='_blank' href='${sourceUrl}'>${sourceFile}</a> on GitHub.
+    ${viewSourceFile}
 </p>
 
 <form class="eg" action="" method="post" data-busy="form">
@@ -23,6 +23,6 @@
 
     <br/>
     <input type="hidden" name="_csrf" value="${csrfToken}">
-    <button type="submit" class="btn btn-primary">Continue</button>
+    <button type="submit" class="btn btn-primary">${launcherTexts.getContinueButton()}</button>
 </div>
 </form>

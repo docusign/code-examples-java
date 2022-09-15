@@ -58,7 +58,7 @@ public class A005AuditUsers extends AbstractAdminController {
 
         // Process results
         DoneExample
-                .createDefault(this.codeExampleText.ResultsPageHeader)
+                .createDefault(this.codeExampleText.ExampleName)
                 .withMessage(this.codeExampleText.ResultsPageText)
                 .withJsonObject(resultsArr).addToModel(model);
         return DONE_EXAMPLE_PAGE;

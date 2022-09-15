@@ -68,7 +68,7 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
         // Step 2 end
 
-        // Submit a bulk list
+        // submit a bulk list
         // Step 3-1 start
         String accountId = session.getAccountId();
         BulkEnvelopesApi bulkEnvelopesApi = new BulkEnvelopesApi(apiClient);
@@ -93,7 +93,7 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
             // For 2000 recipients, it can take about an hour
             BulkSendBatchStatus status = bulkEnvelopesApi.getBulkSendBatchStatus(accountId, batchId);
             // Step 7 end
-            DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+            DoneExample.createDefault(this.codeExampleText.ExampleName)
                     .withJsonObject(status)
                     .withMessage(String.join(
                             "",
