@@ -3,6 +3,7 @@
 
 <h4>${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
+<p>${example.getNotes()}</p>
 
 <c:if test="${showDoc}">
     <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
