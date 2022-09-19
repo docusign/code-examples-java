@@ -8,6 +8,7 @@ import com.docusign.DSConfiguration;
 import com.docusign.admin.api.DsGroupsApi;
 import com.docusign.admin.api.ProductPermissionProfilesApi;
 import com.docusign.admin.api.UsersApi;
+import com.docusign.admin.client.ApiException;
 import com.docusign.admin.model.AddUserResponse;
 import com.docusign.admin.model.DSGroupListResponse;
 import com.docusign.admin.model.DSGroupRequest;
@@ -87,6 +88,11 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
         model.addAttribute("eSignProductId", eSignProductId);
 
         model.addAttribute("listGroups", groups);
+
+        if (groups.getTotalCount() == 0)
+        {
+            throw new ApiException(getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage);
+        }
     }
 
     @Override
@@ -118,10 +124,10 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
 
         // Process results
         DoneExample
-                .createDefault(this.codeExampleText.ExampleName)
-                .withMessage(this.codeExampleText.ResultsPageText)
+                .createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText)
                 .withJsonObject(result)
-                .addToModel(model);
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
 }

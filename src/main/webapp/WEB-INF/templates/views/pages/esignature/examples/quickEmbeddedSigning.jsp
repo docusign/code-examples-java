@@ -1,5 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:set var="formNumber" value="0" scope="page" />
+<c:set var="signerEmailInputNumber" value="0" scope="page" />
+<c:set var="signerNameInputNumber" value="1" scope="page" />
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -30,7 +34,9 @@
         <ul class="navbar-nav mr-auto"></ul>
         <c:if test="${locals.user != null}">
            <span class="navbar-text">
-            Welcome ${locals.user.name}
+               ${launcherTexts.getWelcomeText()
+                       .replaceFirst("\\{0}", locals.user.name)
+                       .replaceFirst("\\{1}", locals.session.accountName)}
           </span>
         </c:if>
     </div>
@@ -44,23 +50,68 @@
         <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
     </c:if>
 
-    <jsp:include page="../../links_to_api_methods.jsp" />
+    <p>
+        <c:choose>
+          <c:when test="${example.getLinksToAPIMethod().size() == 1}">
+            <span>${launcherTexts.getAPIMethodUsed()}</span>
+          </c:when>
+          <c:otherwise>
+            <span>${launcherTexts.getAPIMethodUsedPlural()}</span>
+          </c:otherwise>
+        </c:choose>
+      
+        <c:forEach var="link" items="${example.getLinksToAPIMethod()}">
+          <a href="${link.getPath()}">${link.getPathName()}</a>
+      
+          <c:choose>
+            <c:when test="${example.getLinksToAPIMethod().size() == example.getLinksToAPIMethod().indexOf(link) + 1}">
+              <span>.</span>
+            </c:when>
+            <c:when test="${example.getLinksToAPIMethod().size() - 1 == example.getLinksToAPIMethod().indexOf(link) + 1}">
+              <span>and</span>
+            </c:when>
+            <c:otherwise>
+              <span>,</span>
+            </c:otherwise>
+          </c:choose>
+        </c:forEach>
+      </p>
+      
     <p>
         ${viewSourceFile}
     </p>
 
     <form class="eg" action="" method="post" data-busy="form">
         <div class="form-group">
-            <label for="signerEmail">Signer Email</label>
-            <input type="email" class="form-control" id="signerEmail" name="signerEmail"
-                   aria-describedby="emailHelp" placeholder="pat@example.com" required
+            <label for="signerEmail">
+                ${example.getForms().get(formNumber).getInputs().get(signerEmailInputNumber).getInputName()}
+            </label>
+
+            <input type="email"
+                   class="form-control"
+                   id="signerEmail"
+                   name="signerEmail"
+                   aria-describedby="emailHelp"
+                   placeholder="${example.getForms().get(formNumber).getInputs().get(signerEmailInputNumber).getInputPlaceholder()}"
+                   required
                    value="${locals.dsConfig.signerEmail}">
-            <small id="emailHelp" class="form-text text-muted">${launcherTexts.getHelpingTexts().getEmailWontBeShared()}</small>
+
+            <small id="emailHelp" class="form-text text-muted">
+                ${launcherTexts.getHelpingTexts().getEmailWontBeShared()}
+            </small>
         </div>
         <div class="form-group">
-            <label for="signerName">Signer Name</label>
-            <input type="text" class="form-control" id="signerName" placeholder="Pat Johnson" name="signerName"
-                   value="${locals.dsConfig.signerName}" required>
+            <label for="signerName">
+                ${example.getForms().get(formNumber).getInputs().get(signerNameInputNumber).getInputName()}
+            </label>
+
+            <input type="text"
+                   class="form-control"
+                   id="signerName"
+                   placeholder="${example.getForms().get(formNumber).getInputs().get(signerNameInputNumber).getInputPlaceholder()}"
+                   name="signerName"
+                   value="${locals.dsConfig.signerName}"
+                   required>
         </div>
         <input type="hidden" name="_csrf" value="${csrfToken}">
         <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>

@@ -1,6 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
+<c:set var="formNumber" value="0" scope="page" />
+<c:set var="profileNameInputNumber" value="0" scope="page" />
+
 <h4>${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
 
@@ -17,7 +20,10 @@
 
 <form class="eg" action="" method="post" data-busy="form">
     <div class="form-group">
-        <label for="profileId">Select permission profile to update</label>
+        <label for="profileId">
+            ${example.getForms().get(formNumber).getInputs().get(profileNameInputNumber).getInputName()}
+        </label>
+
         <select id="profileId" name="profileId" class="form-control" onchange="GetSelectedTextValue(this)">
             <c:forEach items="${listProfiles}" var="profile">
                 <option value="${profile.permissionProfileId}" 
@@ -27,22 +33,6 @@
         </select>
     </div>
 
-<%--    <div class="form-group">--%>
-<%--        <label for="permissionProfileName">Profile Name (change it)</label>--%>
-<%--        <input type="text" class="form-control" id="permissionProfileName" name="permissionProfileName" value="${permissionProfileName}" required>--%>
-<%--    </div>--%>
-<%--    <c:if test="${empty permissions}">--%>
-<%--        <p>There is no account role settings is defined</p>--%>
-<%--    </c:if>--%>
-<%--    <table id="permisions">--%>
-<%--        <caption></caption>--%>
-<%--        <c:forEach items="${permisions}" var="property">--%>
-<%--            <tr>--%>
-<%--                <td>${property.name}</td>--%>
-<%--                <td><strong>${property.leftValue}</strong></td>--%>
-<%--            </tr>--%>
-<%--        </c:forEach>--%>
-<%--    </table>--%>
     <input type="hidden" name="_csrf" value="${csrfToken}">
     <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>
 </form>

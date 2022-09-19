@@ -21,8 +21,6 @@
 </c:if>
 
 <div class="container" style="margin-top: 40px" id="index-page">
-  <h2>Welcome</h2>
-  <p>This launcher both demonstrates use of common OAuth2 grant flows and multiple usage examples from the DocuSign Rooms REST API.</p>
     <c:if test="${showDoc == true}">
         <p><a target='_blank' href='${documentation}'>Documentation</a> on using OAuth Authorization Code Grant from a Java application.</p>
     </c:if>

@@ -1,6 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
+<c:set var="formNumber" value="0" scope="page" />
+<c:set var="roomNameInputNumber" value="0" scope="page" />
+<c:set var="templateInputNumber" value="1" scope="page" />
+
 <h4>2. ${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
 <p>
@@ -10,17 +14,29 @@
 
 <c:choose>
     <c:when test="${templateList.size() == 0}">
-        <p>Cannot find any templates. Please first <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/guides/templates#creating-a-room-template">create a template</a>.
+        <p>
+        ${example.getRedirectsToOtherCodeExamples().get(redirectNumber).getRedirectText()}
         </p>
     </c:when>
     <c:otherwise>
         <form class="eg" action="" method="post" data-busy="form">
             <div class="form-group">
-                <label for="roomName">Room Name</label>
-                <input type="text" class="form-control" id="roomName" placeholder="Please write room name" name="roomName" required>
+                <label for="roomName">
+                        ${example.getForms().get(formNumber).getInputs().get(roomNameInputNumber).getInputName()}
+                </label>
+
+                <input type="text"
+                       class="form-control"
+                       id="roomName"
+                       placeholder="${example.getForms().get(formNumber).getInputs().get(roomNameInputNumber).getInputPlaceholder()}"
+                       name="roomName"
+                       required>
             </div>
             <div class="form-group">
-                <label for="roomTemplate">Template</label>
+                <label for="roomTemplate">
+                        ${example.getForms().get(formNumber).getInputs().get(templateInputNumber).getInputName()}
+                </label>
+
                 <select id="roomTemplate" name="roomTemplateId" class="form-control">
                     <c:forEach items="${templateList}" var="template">
                         <option value="${template.roomTemplateId}">${template.name}</option>

@@ -59,7 +59,7 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
             // Return the refresh page
             DoneExample.createDefault("Request not complete")
             .withMessage("The request has not completed, please refresh this page")
-            .addToModel(model);
+            .addToModel(model, config);
             return EXAMPLE_PENDING_PAGE;
 
         }
@@ -70,10 +70,10 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
         
         // Process results
         DoneExample
-                .createDefault(this.codeExampleText.ExampleName)
-                .withMessage(this.codeExampleText.ResultsPageText)
+                .createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText)
                 .withJsonObject(result)
-                .addToModel(model);
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
 

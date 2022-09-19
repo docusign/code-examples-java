@@ -1,6 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
+<c:set var="formNumber" value="0" scope="page" />
+<c:set var="brandNameInputNumber" value="0" scope="page" />
+<c:set var="languageInputNumber" value="1" scope="page" />
+
 <h4>${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
 
@@ -17,15 +21,26 @@
 
 <form class="eg" action="" method="post" data-busy="form">
     <p>
-        <strong>New brand</strong>
+        ${example.getForms().get(formNumber).getFormName()}
     </p>
     <div class="form-group">
-        <label for="brandName">Brand name</label>
-        <input type="text" class="form-control" id="brandName" name="brandName"
-               aria-describedby="info" placeholder="New Brand" required>
+        <label for="brandName">
+            ${example.getForms().get(formNumber).getInputs().get(brandNameInputNumber).getInputName()}
+        </label>
+
+        <input type="text"
+               class="form-control"
+               id="brandName"
+               name="brandName"
+               aria-describedby="info"
+               placeholder="${example.getForms().get(formNumber).getInputs().get(brandNameInputNumber).getInputPlaceholder()}"
+               required>
     </div>
     <div class="form-group">
-        <label for="language">Brand language</label>
+        <label for="language">
+            ${example.getForms().get(formNumber).getInputs().get(languageInputNumber).getInputName()}
+        </label>
+
         <select id="language" name="language" class="form-control">
             <c:forEach items="${listLanguage}" var="language">
                 <option value="${language.code}">${language.name}</option>

@@ -69,21 +69,25 @@ public class A003BulkExportUserData extends AbstractAdminController {
         // Step 4 end
 
         // Step 5 start
-        String csvUri = data.getResults().get(0).getUrl();
-        String saveFilePath = BulkExportUserDataService.moveUserListExportToFile(
-                csvUri,
-                BEARER_AUTHENTICATION,
-                this.user.getAccessToken(),
-                BUFFER_SIZE
-        );
+        String saveFilePath = "";
+
+        if (!data.getResults().isEmpty()) {
+            String csvUri = data.getResults().get(0).getUrl();
+            saveFilePath = BulkExportUserDataService.moveUserListExportToFile(
+                    csvUri,
+                    BEARER_AUTHENTICATION,
+                    this.user.getAccessToken(),
+                    BUFFER_SIZE
+            );
+        }
 
         OrganizationExportsResponse results = BulkExportUserDataService
                 .bulkExportsUserData(bulkExportsApi, this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()));
         // Process results
         DoneExample
-                .createDefault(this.codeExampleText.ExampleName)
-                .withMessage(this.codeExampleText.ResultsPageText.replaceFirst("\\{0}", saveFilePath))
-                .withJsonObject(results).addToModel(model);
+                .createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText.replaceFirst("\\{0}", saveFilePath))
+                .withJsonObject(results).addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
 

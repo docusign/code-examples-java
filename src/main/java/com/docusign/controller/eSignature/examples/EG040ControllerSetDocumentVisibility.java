@@ -71,7 +71,7 @@ public class EG040ControllerSetDocumentVisibility extends AbstractEsignatureCont
         DoneExample.createDefault(title)
             .withMessage("The envelope has been created and sent!<br />Envelope ID "
             + envelopeSummary.getEnvelopeId() + ".")
-            .addToModel(model);
+            .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
 }

@@ -71,12 +71,12 @@ public class EG009ControllerUseTemplate extends AbstractEsignatureController {
                 envelope);
 
         session.setEnvelopeId(envelopeSummary.getEnvelopeId());
-        DoneExample.createDefault(this.codeExampleText.ExampleName)
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
                 .withJsonObject(envelopeSummary)
-                .withMessage(this.codeExampleText.ResultsPageText
+                .withMessage(getTextForCodeExample().ResultsPageText
                         .replaceFirst("\\{0}", envelopeSummary.getEnvelopeId())
                 )
-                .addToModel(model);
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
     // ***DS.snippet.0.end

@@ -63,12 +63,12 @@ public class EG002ControllerSigningViaEmail extends AbstractEsignatureController
 
         // process results
         session.setEnvelopeId(envelopeSummary.getEnvelopeId());
-        DoneExample.createDefault(this.codeExampleText.ExampleName)
-                .withMessage(this.codeExampleText.ResultsPageText
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText
                         .replaceFirst("\\{0}", envelopeSummary.getEnvelopeId())
                 )
                 .withJsonObject(envelopeSummary)
-                .addToModel(model);
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
 }

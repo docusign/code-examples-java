@@ -1,6 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
+<c:set var="formNumber" value="0" scope="page" />
+<c:set var="viewInputNumber" value="0" scope="page" />
+<c:set var="redirectToSecondCodeExample" value="href='eg002'" scope="page" />
+<c:set var="redirectNumber" value="0" scope="page" />
+
 <h4>${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
 
@@ -15,14 +20,16 @@
     ${viewSourceFile}
 </p>
 <c:if test="${not envelopeOk}">
-    <p><strong>Optional:</strong> to use the <em>Envelope's document view</em> please first create an envelope using
-        <a href="eg002">Send an envelope with a remote (email) signer and cc recipient.</a></p>
+    <p>${example.getRedirectsToOtherCodeExamples().get(redirectNumber).getRedirectText().replaceFirst("\\{0}", redirectToSecondCodeExample)}</p>
 </c:if>
 
 
 <form class="eg" action="" method="post" data-busy="form">
     <div class="form-group">
-        <label for="startingView">Starting View</label>
+        <label for="startingView">
+            ${example.getForms().get(formNumber).getInputs().get(viewInputNumber).getInputName()}
+        </label>
+
         <select id="startingView" name="startingView" class="form-control">
             <option value="frontPage" selected>Front page</option>
             <option value="envelope" ${envelopeOk ? '' : 'disabled="true"'} >

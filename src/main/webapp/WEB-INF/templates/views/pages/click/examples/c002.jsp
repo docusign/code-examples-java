@@ -1,6 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
+<c:set var="formNumber" value="0" scope="page" />
+<c:set var="clickwrapInputNumber" value="0" scope="page" />
+<c:set var="redirectToFirstCodeExample" value="href='c001'" scope="page" />
+<c:set var="redirectNumber" value="0" scope="page" />
+
 <h4>2. ${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
 
@@ -11,10 +16,13 @@
 
 <c:choose>
     <c:when test="${clickwraps['clickwraps'] != null }">
-        <p>Please choose a clickwrap to activate</p>
+        <p>${example.getForms().get(formNumber).getFormName()}</p>
         <form class="eg" action="" method="post" data-busy="form">
             <div class="form-group">
-                <label for="clickwrap">Clickwrap</label>
+                <label for="clickwrap">
+                        ${example.getForms().get(formNumber).getInputs().get(clickwrapInputNumber).getInputName()}
+                </label>
+
                 <select class="custom-select" id="clickwrap" name="clickwrap">
                     <c:forEach items="${clickwraps['clickwraps']}" var="clickwrap">
                         <option value="${clickwrap['clickwrapId']}:${clickwrap['versionNumber']}">${clickwrap['clickwrapName']}</option>
@@ -27,8 +35,7 @@
     </c:when>
     <c:otherwise>
         <p>
-            Problem: You do not have clickwraps to activate. Go to example#1 and create one: 
-            <a href="c001">create clickwrap.</a> <br/>
+                ${example.getRedirectsToOtherCodeExamples().get(redirectNumber).getRedirectText().replaceFirst("\\{0}", redirectToFirstCodeExample)}
         </p>
     </c:otherwise>
 </c:choose>

@@ -1,5 +1,6 @@
 package com.docusign.core.model;
 
+import com.docusign.DSConfiguration;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,6 +30,7 @@ public class DoneExample {
     private static final String MODEL_DONE_ATTRIBUTE = "done";
     private static final String DATETIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ssz";
     public static final int JSON_INDENT_FACTOR = 4;
+    private static final String LAUNCHER_TEXTS = "launcherTexts";
 
     private String title;
     private String name;
@@ -129,7 +131,8 @@ public class DoneExample {
      * Adds this object to model map using name 'done'
      * @param model the model object to add
      */
-    public void addToModel(ModelMap model) {
+    public void addToModel(ModelMap model, DSConfiguration config) {
         model.addAttribute(MODEL_DONE_ATTRIBUTE, this);
+        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
     }
 }

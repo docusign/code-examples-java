@@ -49,8 +49,8 @@ public class EG033ControllerUnpauseSignatureWorkflow extends AbstractEsignatureC
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(envelopeUpdateSummary)
-                .withMessage(this.codeExampleText.ResultsPageText)
-                .addToModel(model);
+                .withMessage(getTextForCodeExample().ResultsPageText)
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
     // ***DS.snippet.0.end
