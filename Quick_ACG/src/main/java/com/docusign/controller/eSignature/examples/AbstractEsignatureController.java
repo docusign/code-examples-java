@@ -94,7 +94,7 @@ public abstract class AbstractEsignatureController {
      */
     protected void onInitModel(WorkArguments args, ModelMap model) {
         this.codeExampleText = GetExampleText();
-        this.title = this.codeExampleText.PageTitle;
+        this.title = this.codeExampleText.ExampleName;
 
         Class<?> clazz = Objects.requireNonNullElse(getClass().getEnclosingClass(), getClass());
         String srcPath = String.join("", config.getExampleUrl(), clazz.getName().replace('.', '/'), ".java");

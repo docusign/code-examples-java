@@ -80,7 +80,7 @@ public class EG038ControllerResponsiveSigning extends AbstractEsignatureControll
 	   } catch (ApiException apiException) {
 		  DoneExample.createDefault(this.title)
 				.withMessage(FEATURE_WAS_DISABLED)
-				.addToModel(model);
+				.addToModel(model, config);
 	   }
 
 	   return new RedirectView(viewUrl.getUrl());

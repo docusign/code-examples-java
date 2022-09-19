@@ -105,6 +105,8 @@ public class IndexController {
 
     @RequestMapping(path = "/ds/selectApi", method = RequestMethod.POST)
     public Object getApiType(ModelMap model, @RequestBody MultiValueMap<String, String> formParams) throws IOException, URISyntaxException {
+        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
+
         if (!formParams.containsKey("selectApiType")) {
             model.addAttribute("message", "Select option with selectApiType name must be provided.");
             return new RedirectView("pages/error");
@@ -154,6 +156,7 @@ public class IndexController {
     public String returnController(@RequestParam(value = ATTR_STATE, required = false) String state,
             @RequestParam(value = ATTR_EVENT, required = false) String event,
             @RequestParam(value = "envelopeId", required = false) String envelopeId, ModelMap model) {
+        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
         model.addAttribute(ATTR_TITLE, "Return from DocuSign");
         model.addAttribute(ATTR_EVENT, event);
         model.addAttribute(ATTR_STATE, state);
