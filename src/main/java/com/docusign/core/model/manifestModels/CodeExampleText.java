@@ -15,17 +15,19 @@ public class CodeExampleText {
 
     public String ExampleDescription;
 
-    public String ExampleDescriptionExtended;
-
-    public String PageTitle;
-
-    public String ResultsPageHeader;
+    public String Notes;
 
     public String ResultsPageText;
 
     public String SkipForLanguages;
 
     public List<LinkToAPIMethods> LinksToAPIMethod = new ArrayList<>();
+
+    public List<CustomErrorTexts> CustomErrorTexts = new ArrayList<>();
+
+    public List<RedirectsToOtherCodeExamples> RedirectsToOtherCodeExamples = new ArrayList<>();
+
+    public List<Forms> Forms = new ArrayList<>();
 
     public List<AdditionalPage> AdditionalPage = new ArrayList<>();
 }

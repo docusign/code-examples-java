@@ -42,6 +42,7 @@ public abstract class AbstractEsignatureController {
     protected CodeExampleText codeExampleText;
     private static final String EXAMPLE_PAGES_PATH = "pages/esignature/examples/";
     private static final String EXAMPLE_TEXT = "example";
+    private static final String LAUNCHER_TEXTS = "launcherTexts";
 
     public AbstractEsignatureController(DSConfiguration config, String exampleName) {
         this.config = config;
@@ -93,7 +94,7 @@ public abstract class AbstractEsignatureController {
      */
     protected void onInitModel(WorkArguments args, ModelMap model) {
         this.codeExampleText = GetExampleText();
-        this.title = this.codeExampleText.PageTitle;
+        this.title = this.codeExampleText.ExampleName;
 
         Class<?> clazz = Objects.requireNonNullElse(getClass().getEnclosingClass(), getClass());
         String srcPath = String.join("", config.getExampleUrl(), clazz.getName().replace('.', '/'), ".java");
@@ -103,6 +104,7 @@ public abstract class AbstractEsignatureController {
         model.addAttribute("sourceUrl", srcPath);
         model.addAttribute("documentation", config.getDocumentationPath() + exampleName);
         model.addAttribute(EXAMPLE_TEXT, this.codeExampleText);
+        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
     }
 
     /**

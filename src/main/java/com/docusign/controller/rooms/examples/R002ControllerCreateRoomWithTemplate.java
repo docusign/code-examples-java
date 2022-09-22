@@ -74,11 +74,11 @@ public class R002ControllerCreateRoomWithTemplate extends AbstractRoomsControlle
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(createdRoom)
-                .withMessage(this.codeExampleText.ResultsPageText
+                .withMessage(getTextForCodeExample().ResultsPageText
                         .replaceFirst("\\{0}", createdRoom.getName())
                         .replaceFirst("\\{1}", createdRoom.getRoomId().toString())
                 )
-                .addToModel(model);
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
     // ***DS.snippet.0.end

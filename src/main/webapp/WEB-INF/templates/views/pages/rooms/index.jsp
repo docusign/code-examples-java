@@ -9,7 +9,7 @@
     <tr>
     <td>
       <h1 class="display-4">Java Launcher</h1>
-    <p class="Xlead">Welcome to the DocuSign Java examples using multiple OAuth flows (JWT and Authorization Code Grant).</p>
+    <p class="Xlead">${launcherTexts.getHomePageText()}</p>
     </td>
     <td>
         <img src="/assets/banner-code.png" />
@@ -21,13 +21,11 @@
 </c:if>
 
 <div class="container" style="margin-top: 40px" id="index-page">
-  <h2>Welcome</h2>
-  <p>This launcher both demonstrates use of common OAuth2 grant flows and multiple usage examples from the DocuSign Rooms REST API.</p>
     <c:if test="${showDoc == true}">
         <p><a target='_blank' href='${documentation}'>Documentation</a> on using OAuth Authorization Code Grant from a Java application.</p>
     </c:if>
 
-  <c:forEach var="group" items="${launcherTexts}">
+  <c:forEach var="group" items="${codeExampleGroups}">
     <h2>${group.getName()}</h2>
 
     <c:forEach var="example" items="${group.getExamples()}">
@@ -44,10 +42,10 @@
       <p>
         <c:choose>
           <c:when test="${example.getLinksToAPIMethod().size() == 1}">
-            <span>API method used:</span>
+            <span>${launcherTexts.getAPIMethodUsed()}</span>
           </c:when>
           <c:otherwise>
-            <span>API methods used:</span>
+            <span>${launcherTexts.getAPIMethodUsedPlural()}</span>
           </c:otherwise>
         </c:choose>
 

@@ -50,9 +50,9 @@ public class R007ControllerCreateFormGroup extends AbstractRoomsController {
         
         DoneExample.createDefault(this.title)
                 .withJsonObject(formGroup)
-                .withMessage(this.codeExampleText.ResultsPageText
+                .withMessage(getTextForCodeExample().ResultsPageText
                         .replaceFirst("\\{0}", formGroup.getName()))
-                .addToModel(model);
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
 }

@@ -69,12 +69,12 @@ public class EG029ControllerApplyBrandToEnvelope extends AbstractEsignatureContr
                 envelope
         );
 
-        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
                 .withJsonObject(envelopeSummary)
-                .withMessage(this.codeExampleText.ResultsPageText
+                .withMessage(getTextForCodeExample().ResultsPageText
                         .replaceFirst("\\{0}", envelopeSummary.getEnvelopeId())
                 )
-                .addToModel(model);
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
 }
