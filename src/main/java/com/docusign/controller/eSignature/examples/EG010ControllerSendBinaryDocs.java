@@ -52,11 +52,11 @@ public class EG010ControllerSendBinaryDocs extends AbstractEsignatureController 
         String envelopeId = obj.getString("envelopeId");
         session.setEnvelopeId(envelopeId);
 
-        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
-                .withMessage(this.codeExampleText.ResultsPageText
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText
                         .replaceFirst("\\{0}", envelopeId)
                 )
-                .addToModel(model);
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
     // ***DS.snippet.0.end

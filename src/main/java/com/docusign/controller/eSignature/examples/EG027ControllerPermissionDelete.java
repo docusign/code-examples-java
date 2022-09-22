@@ -49,20 +49,29 @@ public class EG027ControllerPermissionDelete extends AbstractEsignatureControlle
     }
 
     @Override
-    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
+    protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) {
         // Step 2: Construct your API headers
         AccountsApi accountsApi = createAccountsApi(session.getBasePath(), user.getAccessToken());
 
         // Step 3: Call the eSignature Rest API to delete profile
         String curProfileId = args.getProfileId();
-        PermissionDeleteService.permissionDelete(accountsApi, session.getAccountId(), curProfileId);
+        try {
+            PermissionDeleteService.permissionDelete(accountsApi, session.getAccountId(), curProfileId);
 
-        // Step 4: Show 'done' (successful) page
-        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
-                .withMessage(this.codeExampleText.ResultsPageText
-                        .replaceFirst("\\{0}", curProfileId)
-                )
-                .addToModel(model);
-        return DONE_EXAMPLE_PAGE;
+            // Step 4: Show 'done' (successful) page
+            DoneExample.createDefault(getTextForCodeExample().ExampleName)
+                    .withMessage(getTextForCodeExample().ResultsPageText.replaceFirst("\\{0}", curProfileId))
+                    .addToModel(model, config);
+
+            return DONE_EXAMPLE_PAGE;
+        } catch (ApiException e) {
+            new DoneExample()
+                    .withTitle(exampleName)
+                    .withName(title)
+                    .withMessage(getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage)
+                    .addToModel(model, config);
+
+            return ERROR_PAGE;
+        }
     }
 }

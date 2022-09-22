@@ -82,11 +82,11 @@ public class EG026ControllerPermissionChangeSingleSetting extends AbstractEsigna
                 curProfileId
         );
 
-        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
-                .withMessage(this.codeExampleText.ResultsPageText
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText
                         .replaceFirst("\\{0}", newProfile.getPermissionProfileId())
                 )
-                .addToModel(model);
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE_COMPARE;
     }
 }

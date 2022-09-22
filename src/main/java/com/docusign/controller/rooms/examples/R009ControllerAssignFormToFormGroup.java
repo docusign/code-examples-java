@@ -78,17 +78,22 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
 
             DoneExample.createDefault(this.title)
                     .withJsonObject(formGroupFormToAssign)
-                    .withMessage(this.codeExampleText.ResultsPageText
+                    .withMessage(getTextForCodeExample().ResultsPageText
                             .replaceFirst("\\{0}", String.valueOf(args.getOfficeId()))
                             .replaceFirst("\\{1}", String.valueOf(args.getFormGroupId())))
-                    .addToModel(model);
+                    .addToModel(model, config);
         } catch (ApiException apiException) {
-            if (!apiException.getMessage().contains(FORM_ALREADY_EXISTS_ERROR_MESSAGE)) {
-                throw apiException;
+            if (apiException.getMessage().contains(FORM_ALREADY_EXISTS_ERROR_MESSAGE)) {
+                DoneExample.createDefault(this.title)
+                        .withMessage(FORM_ALREADY_EXISTS_ERROR_MESSAGE)
+                        .addToModel(model, config);
+            } else if (apiException.getMessage().contains(getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessageCheck)) {
+                DoneExample.createDefault(this.title)
+                        .withMessage(getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage)
+                        .addToModel(model, config);
             }
-            DoneExample.createDefault(this.title)
-                    .withMessage(FORM_ALREADY_EXISTS_ERROR_MESSAGE)
-                    .addToModel(model);
+
+            throw apiException;
         }
         return DONE_EXAMPLE_PAGE;
     }

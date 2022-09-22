@@ -75,14 +75,17 @@ public class EG025ControllerPermissionSetUserGroups extends AbstractEsignatureCo
             new DoneExample()
                     .withTitle(exampleName)
                     .withName(title)
-                    .withMessage(errorDetails.getMessage())
-                    .addToModel(model);
+                    .withMessage(
+                            getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage
+                                    + "< br />Reason:"
+                                    + errorDetails.getMessage())
+                    .addToModel(model, config);
             return ERROR_PAGE;
         }
-        DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
                 .withJsonObject(newGroupInfo)
-                .withMessage(this.codeExampleText.ResultsPageText)
-                .addToModel(model);
+                .withMessage(getTextForCodeExample().ResultsPageText)
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
 }

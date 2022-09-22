@@ -1,9 +1,13 @@
 <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
 <jsp:include page='../../../partials/head.jsp'/>
 
+<c:set var="formNumber" value="0" scope="page" />
+<c:set var="permissionInputNumber" value="0" scope="page" />
+<c:set var="redirectToSecondCodeExample" value="href='a002'" scope="page" />
+<c:set var="redirectNumber" value="0" scope="page" />
 
 <h4>9. ${example.getExampleName()}</h4>
-<p>${example.getExampleDescriptionExtended()}</p>
+<p>${example.getExampleDescription()}</p>
 
 <c:if test='${showDoc}'>
     <p><a target='_blank' rel="noopener noreferrer" href='${documentation}'>Documentation</a> about this example.</p>
@@ -12,16 +16,19 @@
 <jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
-   View source file <a target='_blank' href='${sourceUrl}'>${sourceFile}</a> on GitHub.
+   ${viewSourceFile}
 </p>
 
 <c:choose>
     <c:when test="${emailAddress != null }">
-        <p>Delete user product permission profile for the following email: <b>${emailAddress}</b></p>
+        <p>${example.getForms().get(formNumber).getFormName().replaceFirst("\\{0}", emailAddress)}</p>
 
         <form class="eg" method="post" data-busy="form">
             <div class="form-group">
-                <label for="Products">Choose which product permission profile you would like to delete</label>
+                <label for="Products">
+                        ${example.getForms().get(formNumber).getInputs().get(permissionInputNumber).getInputName()}
+                </label>
+
                 <select id="Products" name="ProductId" class="form-control">
                     <c:forEach var="entry" items="${listProducts}">
                         <option value="<c:out value="${entry.key}"/>"><c:out value="${entry.value}"/></option>
@@ -30,13 +37,12 @@
             </div>
 
             <input type="hidden" name="csrf_token" value="${csrfToken}"/>
-            <button type="submit" class="btn btn-primary">Continue</button>
+            <button type="submit" class="btn btn-primary">${launcherTexts.getContinueButton()}</button>
         </form>
     </c:when>
     <c:otherwise>
         <p>
-            Problem: You do not have the user to change permissions for. Go to example#2 and create one:
-            <a href="a002">create active CLM/eSign User.</a> <br/>
+            ${example.getRedirectsToOtherCodeExamples().get(redirectNumber).getRedirectText().replaceFirst("\\{0}", redirectToSecondCodeExample)}
         </p>
     </c:otherwise>
 </c:choose>

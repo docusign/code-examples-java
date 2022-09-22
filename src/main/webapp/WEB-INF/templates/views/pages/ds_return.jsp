@@ -20,6 +20,6 @@
 </c:if>
 
 
-<p><a href="/">Continue</a></p>
+<p><a href="/">${launcherTexts.getContinueButton()}</a></p>
 
 <jsp:include page="../partials/foot.jsp"/>

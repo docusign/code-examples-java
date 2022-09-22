@@ -68,7 +68,7 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
         // Step 2 end
 
-        // Submit a bulk list
+        // submit a bulk list
         // Step 3-1 start
         String accountId = session.getAccountId();
         BulkEnvelopesApi bulkEnvelopesApi = new BulkEnvelopesApi(apiClient);
@@ -93,17 +93,29 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
             // For 2000 recipients, it can take about an hour
             BulkSendBatchStatus status = bulkEnvelopesApi.getBulkSendBatchStatus(accountId, batchId);
             // Step 7 end
-            DoneExample.createDefault(this.codeExampleText.ResultsPageHeader)
+            DoneExample.createDefault(getTextForCodeExample().ExampleName)
                     .withJsonObject(status)
                     .withMessage(String.join(
                             "",
                             "Bulk request queued to ", status.getQueued(), " user lists."))
-                    .withMessage(this.codeExampleText.ResultsPageText)
-                    .addToModel(model);
+                    .withMessage(getTextForCodeExample().ResultsPageText)
+                    .addToModel(model, config);
+
+            return DONE_EXAMPLE_PAGE;
         } catch (InterruptedException exception) {
             Thread.currentThread().interrupt();
-            return null;
+
+            new DoneExample()
+                    .withTitle(exampleName)
+                    .withName(title)
+                    .withMessage(
+                            getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage
+                                    + "< br />Reason:"
+                                    + exception.getMessage()
+                    )
+                    .addToModel(model, config);
+
+            return ERROR_PAGE;
         }
-        return DONE_EXAMPLE_PAGE;
     }
 }

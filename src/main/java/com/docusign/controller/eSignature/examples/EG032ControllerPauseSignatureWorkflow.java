@@ -62,10 +62,10 @@ public class EG032ControllerPauseSignatureWorkflow extends AbstractEsignatureCon
         this.session.setEnvelopeId(envelopeSummary.getEnvelopeId());
         DoneExample.createDefault(this.title)
                 .withJsonObject(envelopeSummary)
-                .withMessage(this.codeExampleText.ResultsPageText
+                .withMessage(getTextForCodeExample().ResultsPageText
                         .replaceFirst("\\{0}", this.session.getEnvelopeId())
                 )
-                .addToModel(model);
+                .addToModel(model, config);
 
         return DONE_EXAMPLE_PAGE;
     }
