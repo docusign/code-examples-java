@@ -31,7 +31,7 @@ public class EG005ControllerEnvelopeRecipients extends AbstractEsignatureControl
 
     @Autowired
     public EG005ControllerEnvelopeRecipients(DSConfiguration config, Session session, User user) {
-        super(config, "eg005", "List envelope recipients");
+        super(config, "eg005");
         this.session = session;
         this.user = user;
     }
@@ -51,10 +51,10 @@ public class EG005ControllerEnvelopeRecipients extends AbstractEsignatureControl
                 envelopesApi,
                 session.getAccountId(),
                 session.getEnvelopeId());
-        DoneExample.createDefault(title)
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
                 .withJsonObject(recipients)
-                .withMessage("Results from the EnvelopeRecipients::list method:")
-                .addToModel(model);
+                .withMessage(getTextForCodeExample().ResultsPageText)
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
     // ***DS.snippet.0.end

@@ -34,7 +34,7 @@ public class EG040ControllerSetDocumentVisibility extends AbstractEsignatureCont
 
     @Autowired
     public EG040ControllerSetDocumentVisibility(DSConfiguration config, Session session, User user) {
-        super(config, "eg040", "Set document visibility");
+        super(config, "eg040");
         this.session = session;
         this.user = user;
     }
@@ -71,7 +71,7 @@ public class EG040ControllerSetDocumentVisibility extends AbstractEsignatureCont
         DoneExample.createDefault(title)
             .withMessage("The envelope has been created and sent!<br />Envelope ID "
             + envelopeSummary.getEnvelopeId() + ".")
-            .addToModel(model);
+            .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
 }

@@ -32,7 +32,7 @@ public class EG038ControllerResponsiveSigning extends AbstractEsignatureControll
 
     @Autowired
     public EG038ControllerResponsiveSigning(DSConfiguration config, Session session, User user) {
-	   super(config, "eg038", "Use responsive signing");
+	   super(config, "eg038");
 	   this.session = session;
 	   this.user = user;
     }
@@ -80,7 +80,7 @@ public class EG038ControllerResponsiveSigning extends AbstractEsignatureControll
 	   } catch (ApiException apiException) {
 		  DoneExample.createDefault(this.title)
 				.withMessage(FEATURE_WAS_DISABLED)
-				.addToModel(model);
+				.addToModel(model, config);
 	   }
 
 	   return new RedirectView(viewUrl.getUrl());

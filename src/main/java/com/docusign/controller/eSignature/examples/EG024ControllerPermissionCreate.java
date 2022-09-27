@@ -31,7 +31,7 @@ public class EG024ControllerPermissionCreate extends AbstractEsignatureControlle
 
     @Autowired
     public EG024ControllerPermissionCreate(DSConfiguration config, Session session, User user) {
-        super(config, "eg024", "Creates a new permission profile");
+        super(config, "eg024");
         this.session = session;
         this.user = user;
     }
@@ -50,11 +50,13 @@ public class EG024ControllerPermissionCreate extends AbstractEsignatureControlle
                 args.getPermissionProfileName()
         );
 
-        DoneExample.createDefault(title)
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
                 .withJsonObject(newProfile)
-                .withMessage("The permission profile is created!<br />Permission profile ID: "
-                    + newProfile.getPermissionProfileId() + ".")
-                .addToModel(model);
+                .withMessage(getTextForCodeExample().ResultsPageText
+                        .replaceFirst("\\{0}", newProfile.getPermissionProfileId())
+                        .replaceFirst("\\{1}", newProfile.getPermissionProfileName())
+                )
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
 }

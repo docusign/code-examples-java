@@ -41,7 +41,7 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController 
 
     @Autowired
     public EG007ControllerEnvelopeGetDoc(DSConfiguration config, Session session, User user) {
-        super(config, "eg007", "Download a document");
+        super(config, "eg007");
         this.session = session;
         this.user = user;
     }

@@ -8,6 +8,7 @@ import com.docusign.DSConfiguration;
 import com.docusign.admin.api.DsGroupsApi;
 import com.docusign.admin.api.ProductPermissionProfilesApi;
 import com.docusign.admin.api.UsersApi;
+import com.docusign.admin.client.ApiException;
 import com.docusign.admin.model.AddUserResponse;
 import com.docusign.admin.model.DSGroupListResponse;
 import com.docusign.admin.model.DSGroupRequest;
@@ -34,14 +35,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/a002")
 public class A002CreateActiveCLMESignUser extends AbstractAdminController {
 
-
     private final User user;
     private final Session session;
 
     @Autowired
     public A002CreateActiveCLMESignUser(DSConfiguration config, Session session, User user) {
 
-        super(config, "a002", "Create new active user for CLM and eSignature");
+        super(config, "a002");
         this.user = user;
         this.session = session;
     }
@@ -88,6 +88,11 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
         model.addAttribute("eSignProductId", eSignProductId);
 
         model.addAttribute("listGroups", groups);
+
+        if (groups.getTotalCount() == 0)
+        {
+            throw new ApiException(getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage);
+        }
     }
 
     @Override
@@ -118,10 +123,11 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
         this.session.setEmailAddress(result.getEmail());
 
         // Process results
-        DoneExample.createDefault(title)
-        .withMessage("Results from MultiProductUserManagement:addOrUpdateUser method:")
-        .withJsonObject(result)
-        .addToModel(model);
+        DoneExample
+                .createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText)
+                .withJsonObject(result)
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
 }

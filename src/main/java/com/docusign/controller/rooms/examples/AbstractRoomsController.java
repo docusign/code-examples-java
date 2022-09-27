@@ -24,8 +24,8 @@ public abstract class AbstractRoomsController extends AbstractController {
 
     private static final String EXAMPLE_PAGES_PATH = "pages/rooms/examples/";
 
-    public AbstractRoomsController(DSConfiguration config, String exampleName, String title) {
-        super(config, exampleName, title);
+    public AbstractRoomsController(DSConfiguration config, String exampleName) {
+        super(config, exampleName);
     }
 
     protected String getExamplePagesPath() {

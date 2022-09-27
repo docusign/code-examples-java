@@ -26,13 +26,12 @@ import java.io.IOException;
 @RequestMapping("/eg034")
 public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureController {
 
-    private static final String NOT_ALLOWED_ERROR_MESSAGE = "Update to the workflow with recipient routing is not allowed";
     private final Session session;
     private final User user;
 
     @Autowired
     public EG034ControllerUseConditionalRecipients(DSConfiguration config, Session session, User user) {
-        super(config, "eg034", "Use conditional recipients.");
+        super(config, "eg034");
         this.session = session;
         this.user = user;
     }
@@ -66,20 +65,16 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
             this.session.setEnvelopeId(envelopeSummary.getEnvelopeId());
             DoneExample.createDefault(this.title)
                     .withJsonObject(envelopeSummary)
-                    .withMessage(
-                            "An envelope where the workflow is routed to different recipients based on the value of a transaction " +
-                                    "has been created and sent!<br/>Envelope ID "
-                                    + this.session.getEnvelopeId() + ".")
-                    .addToModel(model);
+                    .withMessage(getTextForCodeExample().ResultsPageText
+                        .replaceFirst("\\{0}", this.session.getEnvelopeId()))
+                    .addToModel(model, config);
         } catch (ApiException apiException) {
-            if (!apiException.getMessage().contains(NOT_ALLOWED_ERROR_MESSAGE)) {
+            if (!apiException.getMessage().contains(getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessageCheck)) {
                 throw apiException;
             }
             DoneExample.createDefault(this.title)
-                    .withMessage(NOT_ALLOWED_ERROR_MESSAGE + " for your account!<br/> " +
-                            "Please contact with our <a target='_blank' href='https://developers.docusign.com/support'> support team </a> " +
-                            "to resolve this issue.")
-                    .addToModel(model);
+                    .withMessage(getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage)
+                    .addToModel(model, config);
         }
 
         return DONE_EXAMPLE_PAGE;

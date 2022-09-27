@@ -41,7 +41,7 @@ public class A005AuditUsers extends AbstractAdminController {
 
     @Autowired
     public A005AuditUsers(DSConfiguration config, Session session, User user) {
-        super(config, "a005", "Audit Users");
+        super(config, "a005");
         this.user = user;
         this.session = session;
     }
@@ -57,8 +57,10 @@ public class A005AuditUsers extends AbstractAdminController {
         ArrayList<UserDrilldownResponse> resultsArr = AuditUsersService.auditUsers(usersApi, organizationId, accountId);
 
         // Process results
-        DoneExample.createDefault(title).withMessage("Results from eSignUserManagement:getUserProfiles method:")
-                .withJsonObject(resultsArr).addToModel(model);
+        DoneExample
+                .createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText)
+                .withJsonObject(resultsArr).addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
 

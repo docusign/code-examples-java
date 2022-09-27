@@ -1,68 +1,124 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>${title}.</h4>
+<c:set var="firstFormNumber" value="0" scope="page" />
+<c:set var="secondFormNumber" value="1" scope="page" />
+<c:set var="thirdFormNumber" value="2" scope="page" />
+<c:set var="signerEmailInputNumber" value="0" scope="page" />
+<c:set var="signerNameInputNumber" value="1" scope="page" />
 
-<p>
-    This topic demonstrates how to create an envelope where the workflow is routed to
-    different recipients based on the value of a transaction. The envelope includes a txt document.
-</p>
+<h4>${example.getExampleName()}</h4>
+<p>${example.getExampleDescription()}</p>
 
 <c:if test="${showDoc}">
     <p><a target="_blank" href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
-
-<p>API methods used:
-    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create">Envelopes::create</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
-    View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
+    ${viewSourceFile}
 </p>
 
 
 <form class="eg" action="" method="post" data-busy="form">
     <div class="form-group">
-        <label for="signerEmail">Signer Email</label>
-        <input type="email" class="form-control" id="signerEmail" name="signerEmail"
-               aria-describedby="emailHelp" placeholder="pat@example.com" required
+        <label for="signerEmail">
+            ${example.getForms().get(firstFormNumber).getInputs().get(signerEmailInputNumber).getInputPlaceholder()}
+        </label>
+
+        <input type="email"
+               class="form-control"
+               id="signerEmail"
+               name="signerEmail"
+               aria-describedby="emailHelp"
+               placeholder="${example.getForms().get(firstFormNumber).getInputs().get(signerEmailInputNumber).getInputPlaceholder()}"
+               required
                value="${locals.dsConfig.signerEmail}">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+
+        <small id="emailHelp" class="form-text text-muted">
+            ${launcherTexts.getHelpingTexts().getEmailWontBeShared()}
+        </small>
     </div>
     <div class="form-group">
-        <label for="signerName">Signer Name</label>
-        <input type="text" class="form-control" id="signerName" placeholder="Pat Johnson" name="signerName"
-               value="${locals.dsConfig.signerName}" required>
+        <label for="signerName">
+            ${example.getForms().get(firstFormNumber).getInputs().get(signerNameInputNumber).getInputPlaceholder()}
+        </label>
+
+        <input type="text"
+               class="form-control"
+               id="signerName"
+               placeholder="${example.getForms().get(firstFormNumber).getInputs().get(signerNameInputNumber).getInputPlaceholder()}"
+               name="signerName"
+               value="${locals.dsConfig.signerName}"
+               required>
     </div>
 
     <div class="form-group">
-        <label for="signerNotCheckedEmail">Signer Not Checked Email</label>
-        <input type="email" class="form-control" id="signerNotCheckedEmail" name="signerNotCheckedEmail"
-               aria-describedby="emailHelp" placeholder="pat@example.com" required
+        <label for="signerNotCheckedEmail">
+            ${example.getForms().get(secondFormNumber).getInputs().get(signerEmailInputNumber).getInputPlaceholder()}
+        </label>
+
+        <input type="email"
+               class="form-control"
+               id="signerNotCheckedEmail"
+               name="signerNotCheckedEmail"
+               aria-describedby="emailHelp"
+               placeholder="${example.getForms().get(secondFormNumber).getInputs().get(signerEmailInputNumber).getInputPlaceholder()}"
+               required
                value="${locals.dsConfig.signerEmail}">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+
+        <small id="emailHelp" class="form-text text-muted">
+            ${launcherTexts.getHelpingTexts().getEmailWontBeShared()}
+        </small>
     </div>
     <div class="form-group">
-        <label for="signerNotCheckedName">Signer Not Checked Name</label>
-        <input type="text" class="form-control" id="signerNotCheckedName" placeholder="Pat Johnson" name="signerNotCheckedName"
-               value="${locals.dsConfig.signerName}" required>
+        <label for="signerNotCheckedName">
+            ${example.getForms().get(secondFormNumber).getInputs().get(signerNameInputNumber).getInputPlaceholder()}
+        </label>
+
+        <input type="text"
+               class="form-control"
+               id="signerNotCheckedName"
+               placeholder="${example.getForms().get(secondFormNumber).getInputs().get(signerNameInputNumber).getInputPlaceholder()}"
+               name="signerNotCheckedName"
+               value="${locals.dsConfig.signerName}"
+               required>
     </div>
 
     <div class="form-group">
-        <label for="signerCheckedEmail">Signer Checked Email</label>
-        <input type="email" class="form-control" id="signerCheckedEmail" name="signerCheckedEmail"
-               aria-describedby="emailHelp" placeholder="pat@example.com" required
+        <label for="signerCheckedEmail">
+            ${example.getForms().get(thirdFormNumber).getInputs().get(signerEmailInputNumber).getInputPlaceholder()}
+        </label>
+
+        <input type="email"
+               class="form-control"
+               id="signerCheckedEmail"
+               name="signerCheckedEmail"
+               aria-describedby="emailHelp"
+               placeholder="${example.getForms().get(thirdFormNumber).getInputs().get(signerEmailInputNumber).getInputPlaceholder()}"
+               required
                value="${locals.dsConfig.signerEmail}">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+
+        <small id="emailHelp" class="form-text text-muted">
+            ${launcherTexts.getHelpingTexts().getEmailWontBeShared()}
+        </small>
     </div>
     <div class="form-group">
-        <label for="signerCheckedName">Signer Checked Name</label>
-        <input type="text" class="form-control" id="signerCheckedName" placeholder="Pat Johnson" name="signerCheckedName"
-               value="${locals.dsConfig.signerName}" required>
+        <label for="signerCheckedName">
+            ${example.getForms().get(thirdFormNumber).getInputs().get(signerNameInputNumber).getInputPlaceholder()}
+        </label>
+
+        <input type="text"
+               class="form-control"
+               id="signerCheckedName"
+               placeholder="${example.getForms().get(thirdFormNumber).getInputs().get(signerNameInputNumber).getInputPlaceholder()}"
+               name="signerCheckedName"
+               value="${locals.dsConfig.signerName}"
+               required>
     </div>
 
     <input type="hidden" name="_csrf" value="${csrfToken}">
-    <button type="submit" class="btn btn-docu">Submit</button>
+    <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>
 </form>
 
 <jsp:include page="../../../partials/foot.jsp"/>

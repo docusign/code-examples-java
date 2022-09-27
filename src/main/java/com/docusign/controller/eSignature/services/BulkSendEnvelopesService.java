@@ -33,7 +33,7 @@ public final class BulkSendEnvelopesService {
             String ccEmail2,
             String accountId
     ) throws ApiException, IOException {
-        // Step 3. Submit a bulk list
+        // Step 3. submit a bulk list
         BulkSendingList sendingList = BulkSendEnvelopesService.getSendingList(
             signerName,
             signerEmail,
