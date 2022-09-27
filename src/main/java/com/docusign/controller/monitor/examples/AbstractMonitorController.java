@@ -17,8 +17,8 @@ public abstract class AbstractMonitorController extends AbstractController {
 
     private static final String EXAMPLE_PAGES_PATH = "pages/monitor/examples/";
 
-    public AbstractMonitorController(DSConfiguration config, String exampleName, String title) {
-        super(config, exampleName, title);
+    public AbstractMonitorController(DSConfiguration config, String exampleName) {
+        super(config, exampleName);
     }
 
     protected String getExamplePagesPath() {

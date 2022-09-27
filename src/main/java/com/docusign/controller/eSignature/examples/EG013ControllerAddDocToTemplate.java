@@ -37,7 +37,7 @@ public class EG013ControllerAddDocToTemplate extends AbstractEsignatureControlle
 
     @Autowired
     public EG013ControllerAddDocToTemplate(DSConfiguration config, Session session, User user) {
-        super(config, "eg013", "Use embedded signing from template and extra doc");
+        super(config, "eg013");
         this.session = session;
         this.user = user;
     }
@@ -74,7 +74,5 @@ public class EG013ControllerAddDocToTemplate extends AbstractEsignatureControlle
             args
         );
         return new RedirectView(embeddedEnvelope.getUrl());
-
-    
-}
+    }
 }

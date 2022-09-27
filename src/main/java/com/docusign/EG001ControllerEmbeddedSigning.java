@@ -6,7 +6,6 @@ import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
-import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.RecipientViewRequest;
@@ -18,8 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
-
-import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -39,21 +36,19 @@ public class EG001ControllerEmbeddedSigning extends AbstractEsignatureController
     private static final int ANCHOR_OFFSET_Y = 20;
     private static final int ANCHOR_OFFSET_X = 10;
     private static final String SIGNER_CLIENT_ID = "1000";
-
     private final Session session;
     private final User user;
 
-
     @Autowired
-    public EG001ControllerEmbeddedSigning(DSConfiguration config, Session session, User user) {
-        super(config, Boolean.valueOf(config.getQuickACG()) ? "quickEmbeddedSigning" : "eg001", "Use embedded signing");
+    public EG001ControllerEmbeddedSigning(DSConfiguration config, Session session, User user){
+        super(config, Boolean.valueOf(config.getQuickACG()) ? "quickEmbeddedSigning" : "eg001");
         this.session = session;
         this.user = user;
     }
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model,
-                            HttpServletResponse response) throws ApiException, IOException {
+                            HttpServletResponse response) throws Exception {
         String signerName = args.getSignerName();
         String signerEmail = args.getSignerEmail();
         String accountId = session.getAccountId();

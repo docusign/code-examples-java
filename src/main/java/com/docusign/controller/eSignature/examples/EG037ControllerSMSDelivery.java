@@ -31,7 +31,7 @@ public class EG037ControllerSMSDelivery extends AbstractEsignatureController {
 
     @Autowired
     public EG037ControllerSMSDelivery(DSConfiguration config, Session session, User user) {
-        super(config, "eg037", "Request a signature by SMS delivery");
+        super(config, "eg037");
         this.session = session;
         this.user = user;
     }
@@ -63,11 +63,12 @@ public class EG037ControllerSMSDelivery extends AbstractEsignatureController {
 
         // process results
         session.setEnvelopeId(envelopeSummary.getEnvelopeId());
-        DoneExample.createDefault(title)
-                .withMessage("The envelope has been created and sent!<br />Envelope ID "
-                        + envelopeSummary.getEnvelopeId() + ".")
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText
+                        .replaceFirst("\\{0}", envelopeSummary.getEnvelopeId())
+                )
                 .withJsonObject(envelopeSummary)
-                .addToModel(model);
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
 }

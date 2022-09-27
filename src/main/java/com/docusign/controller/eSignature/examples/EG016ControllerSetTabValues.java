@@ -31,7 +31,7 @@ public class EG016ControllerSetTabValues extends AbstractEsignatureController {
 
     @Autowired
     public EG016ControllerSetTabValues(DSConfiguration config, Session session, User user) {
-        super(config, "eg016", "Set envelope tab values");
+        super(config, "eg016");
         this.session = session;
         this.user = user;
     }

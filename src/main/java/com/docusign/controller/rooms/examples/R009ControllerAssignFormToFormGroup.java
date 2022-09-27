@@ -37,7 +37,7 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
 
     @Autowired
     public R009ControllerAssignFormToFormGroup(DSConfiguration config, Session session, User user) {
-        super(config, "r009", "Assigning a form to a form group");
+        super(config, "r009");
         this.session = session;
         this.user = user;
     }
@@ -78,15 +78,22 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
 
             DoneExample.createDefault(this.title)
                     .withJsonObject(formGroupFormToAssign)
-                    .withMessage("A form has been assigned to a form group!")
-                    .addToModel(model);
+                    .withMessage(getTextForCodeExample().ResultsPageText
+                            .replaceFirst("\\{0}", String.valueOf(args.getOfficeId()))
+                            .replaceFirst("\\{1}", String.valueOf(args.getFormGroupId())))
+                    .addToModel(model, config);
         } catch (ApiException apiException) {
-            if (!apiException.getMessage().contains(FORM_ALREADY_EXISTS_ERROR_MESSAGE)) {
-                throw apiException;
+            if (apiException.getMessage().contains(FORM_ALREADY_EXISTS_ERROR_MESSAGE)) {
+                DoneExample.createDefault(this.title)
+                        .withMessage(FORM_ALREADY_EXISTS_ERROR_MESSAGE)
+                        .addToModel(model, config);
+            } else if (apiException.getMessage().contains(getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessageCheck)) {
+                DoneExample.createDefault(this.title)
+                        .withMessage(getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage)
+                        .addToModel(model, config);
             }
-            DoneExample.createDefault(this.title)
-                    .withMessage(FORM_ALREADY_EXISTS_ERROR_MESSAGE)
-                    .addToModel(model);
+
+            throw apiException;
         }
         return DONE_EXAMPLE_PAGE;
     }

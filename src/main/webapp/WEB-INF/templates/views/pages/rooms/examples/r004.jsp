@@ -1,23 +1,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>4. Adding forms to a room.</h4>
+<c:set var="formNumber" value="0" scope="page" />
+<c:set var="roomInputNumber" value="0" scope="page" />
+<c:set var="formInputNumber" value="1" scope="page" />
+<c:set var="redirectToFirstCodeExample" value="href='r001'" scope="page" />
+<c:set var="redirectNumber" value="0" scope="page" />
 
-<p>This example demonstrates how to attach forms to a room using the Rooms API.
+<h4>4. ${example.getExampleName()}</h4>
+<p>${example.getExampleDescription()}</p>
+<p>
+    ${viewSourceFile}
 </p>
-
-<p>API method used:
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Rooms/Rooms/GetRooms">Rooms::GetRooms</a>,
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Forms/FormLibraries/GetFormLibraries">FormLibraries::GetFormLibraryForms</a> and
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Rooms/Rooms/AddFormToRoom">Rooms::AddFormToRoom</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 
 <form class="eg" action="" method="post" data-busy="form">
     <c:choose>
         <c:when test="${roomList!=null}">
             <div class="form-group">
-                <label for="roomId">Room</label>
+                <label for="roomId">
+                        ${example.getForms().get(formNumber).getInputs().get(roomInputNumber).getInputName()}
+                </label>
+
                 <select id="roomId" name="roomId" class="form-control">
                     <option value="" label="Please select the room" disabled aria-selected="true"></option>
                     <c:forEach items="${roomList}" var="room">
@@ -27,13 +32,16 @@
             </div>
         </c:when>
         <c:otherwise>
-            <p>Problem: please first create a room using <a href="r001">example 1</a> </p>
+            ${example.getRedirectsToOtherCodeExamples().get(redirectNumber).getRedirectText().replaceFirst("\\{0}", redirectToFirstCodeExample)}
         </c:otherwise>
     </c:choose>
     <c:choose>
         <c:when test="${formList !=null}">
             <div class="form-group">
-                <label for="formId">Form</label>
+                <label for="formId">
+                        ${example.getForms().get(formNumber).getInputs().get(formInputNumber).getInputName()}
+                </label>
+
                 <c:choose>
                     <c:when test="${formList[0].libraryFormId !=null}">
                         <select id="formId" name="formId" class="form-control">
@@ -50,7 +58,7 @@
         </c:when>
     </c:choose>
     <input type="hidden" name="_csrf" value="${csrfToken}">
-    <button type="submit" class="btn btn-docu">Submit</button>
+    <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>
 </form>
 
 

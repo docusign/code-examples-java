@@ -1,21 +1,31 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>7. Creating a form group.</h4>
+<c:set var="formNumber" value="0" scope="page" />
+<c:set var="roomNameInputNumber" value="0" scope="page" />
 
-<p>This example demonstrates creating a form group for your DocuSign Rooms for Real Estate account.</p>
-
-<p>API methods used:
-    <a target="_blank" rel="noopener noreferrer" href="https://developers.docusign.com/docs/rooms-api/reference/forms/formgroups/createformgroup">FormGroups:CreateFormGroup</a>.
+<h4>7. ${example.getExampleName()}</h4>
+<p>${example.getExampleDescription()}</p>
+<p>
+    ${viewSourceFile}
 </p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <form class="eg" action="" method="post" data-busy="form">
     <div class="form-group">
-        <label for="formGroupName">Form Group Name</label>
-        <input type="text" class="form-control" id="formGroupName" placeholder="Please write form group name" name="formGroupName" required>
+        <label for="formGroupName">
+            ${example.getForms().get(formNumber).getInputs().get(roomNameInputNumber).getInputName()}
+        </label>
+
+        <input type="text"
+               class="form-control"
+               id="formGroupName"
+               placeholder="${example.getForms().get(formNumber).getInputs().get(roomNameInputNumber).getInputPlaceholder()}"
+               name="formGroupName"
+               required>
     </div>
     <input type="hidden" name="_csrf" value="${csrfToken}">
-    <button type="submit" class="btn btn-docu">Submit</button>
+    <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>
 </form>
 
 <jsp:include page="../../../partials/foot.jsp"/>

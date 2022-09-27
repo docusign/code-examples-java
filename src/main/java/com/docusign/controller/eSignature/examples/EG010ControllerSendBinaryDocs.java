@@ -30,7 +30,7 @@ public class EG010ControllerSendBinaryDocs extends AbstractEsignatureController 
 
     @Autowired
     public EG010ControllerSendBinaryDocs(DSConfiguration config, Session session, User user) {
-        super(config, "eg010", "Send envelope with multipart mime");
+        super(config, "eg010");
         this.session = session;
         this.user = user;
     }
@@ -52,9 +52,11 @@ public class EG010ControllerSendBinaryDocs extends AbstractEsignatureController 
         String envelopeId = obj.getString("envelopeId");
         session.setEnvelopeId(envelopeId);
 
-        DoneExample.createDefault(title)
-                .withMessage("The envelope has been created and sent!<br/>Envelope ID " + envelopeId + ".")
-                .addToModel(model);
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText
+                        .replaceFirst("\\{0}", envelopeId)
+                )
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
     // ***DS.snippet.0.end

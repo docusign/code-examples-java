@@ -40,7 +40,7 @@ public class EG036ControllerDelayedRouting extends AbstractEsignatureController 
 
     @Autowired
     public EG036ControllerDelayedRouting(DSConfiguration config, Session session, User user) {
-        super(config, "eg036", "Send an envelope with delayed routing");
+        super(config, "eg036");
         this.session = session;
         this.user = user;
     }
@@ -70,11 +70,12 @@ public class EG036ControllerDelayedRouting extends AbstractEsignatureController 
 
         // process results
         session.setEnvelopeId(results.getEnvelopeId());
-        DoneExample.createDefault(title)
-                .withMessage("The envelope has been created and sent!<br />Envelope ID "
-                        + results.getEnvelopeId() + ".")
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText
+                        .replaceFirst("\\{0}", results.getEnvelopeId())
+                )
                 .withJsonObject(results)
-                .addToModel(model);
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
 

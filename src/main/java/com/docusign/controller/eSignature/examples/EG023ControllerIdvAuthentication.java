@@ -38,7 +38,7 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
 
     @Autowired
     public EG023ControllerIdvAuthentication(DSConfiguration config, Session session, User user) {
-        super(config, "eg023", "ID Verification Authentication");
+        super(config, "eg023");
         this.session = session;
         this.user = user;
     }
@@ -53,7 +53,7 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
         logger.info("workflowId = " + workflowId);
         if (workflowId.equals(""))
         {
-            throw new ApiException(0, "Please contact <a href='https://support.docusign.com'>DocuSign Support</a> to enable IDV in your account.");
+            throw new ApiException(0, getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage);
         }
         // Step 4-1 start
         EnvelopeDefinition envelope = IdvAuthenticationService.createEnvelope(args.getSignerName(), args.getSignerEmail(), workflowId);
@@ -63,11 +63,12 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
         // Step 5 end
 
         session.setEnvelopeId(results.getEnvelopeId());
-        DoneExample.createDefault(title)
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
                 .withJsonObject(results)
-                .withMessage("The envelope has been created and sent!<br />Envelope ID "
-                        + results.getEnvelopeId() + ".")
-                .addToModel(model);
+                .withMessage(getTextForCodeExample().ResultsPageText
+                        .replaceFirst("\\{0}", results.getEnvelopeId())
+                )
+                .addToModel(model, config);
 
         return DONE_EXAMPLE_PAGE;
     }

@@ -44,7 +44,7 @@ public class A003BulkExportUserData extends AbstractAdminController {
 
     @Autowired
     public A003BulkExportUserData(DSConfiguration config, Session session, User user) {
-        super(config, "a003", "Bulk export user data");
+        super(config, "a003");
         this.session = session;
         this.user = user;
     }
@@ -69,20 +69,25 @@ public class A003BulkExportUserData extends AbstractAdminController {
         // Step 4 end
 
         // Step 5 start
-        String csvUri = data.getResults().get(0).getUrl();
-        String saveFilePath = BulkExportUserDataService.moveUserListExportToFile(
-                csvUri,
-                BEARER_AUTHENTICATION,
-                this.user.getAccessToken(),
-                BUFFER_SIZE
-        );
+        String saveFilePath = "";
+
+        if (!data.getResults().isEmpty()) {
+            String csvUri = data.getResults().get(0).getUrl();
+            saveFilePath = BulkExportUserDataService.moveUserListExportToFile(
+                    csvUri,
+                    BEARER_AUTHENTICATION,
+                    this.user.getAccessToken(),
+                    BUFFER_SIZE
+            );
+        }
 
         OrganizationExportsResponse results = BulkExportUserDataService
                 .bulkExportsUserData(bulkExportsApi, this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()));
         // Process results
-        DoneExample.createDefault(title)
-                .withMessage("User data exported to " + saveFilePath + "<br>from UserExport:getUserListExport method:")
-                .withJsonObject(results).addToModel(model);
+        DoneExample
+                .createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText.replaceFirst("\\{0}", saveFilePath))
+                .withJsonObject(results).addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
 
