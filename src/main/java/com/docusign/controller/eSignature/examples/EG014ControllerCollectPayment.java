@@ -44,7 +44,7 @@ public class EG014ControllerCollectPayment extends AbstractEsignatureController 
 
     @Autowired
     public EG014ControllerCollectPayment(DSConfiguration config, Session session, User user) {
-        super(config, "eg014", "Envelope sent");
+        super(config, "eg014");
         this.session = session;
         this.user = user;
     }
@@ -75,10 +75,11 @@ public class EG014ControllerCollectPayment extends AbstractEsignatureController 
         // Step 2. call Envelopes::create API method
         EnvelopeSummary envelopeSummary = CollectPaymentService.collectPayment(envelopesApi, envelope, session.getAccountId());
 
-        DoneExample.createDefault(title)
-                .withMessage(String.join("", "The envelope has been created and sent!<br/>Envelope ID ",
-                        envelopeSummary.getEnvelopeId(), "."))
-                .addToModel(model);
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText
+                        .replaceFirst("\\{0}", envelopeSummary.getEnvelopeId())
+                )
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
     // ***DS.snippet.0.end

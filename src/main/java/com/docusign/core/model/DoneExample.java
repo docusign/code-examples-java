@@ -1,9 +1,11 @@
 package com.docusign.core.model;
 
+import com.docusign.DSConfiguration;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.ui.ModelMap;
 
@@ -28,6 +30,7 @@ public class DoneExample {
     private static final String MODEL_DONE_ATTRIBUTE = "done";
     private static final String DATETIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ssz";
     public static final int JSON_INDENT_FACTOR = 4;
+    private static final String LAUNCHER_TEXTS = "launcherTexts";
 
     private String title;
     private String name;
@@ -111,6 +114,7 @@ public class DoneExample {
         if (object != null) {
             ObjectWriter writer = new ObjectMapper()
                     .registerModule(new JavaTimeModule())
+                    .registerModule(new JodaModule())
                     .setDateFormat(new SimpleDateFormat(DATETIME_PATTERN))
                     .setDefaultPrettyPrinter(new DefaultPrettyPrinter())
                     .writerWithDefaultPrettyPrinter();
@@ -127,7 +131,8 @@ public class DoneExample {
      * Adds this object to model map using name 'done'
      * @param model the model object to add
      */
-    public void addToModel(ModelMap model) {
+    public void addToModel(ModelMap model, DSConfiguration config) {
         model.addAttribute(MODEL_DONE_ATTRIBUTE, this);
+        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
     }
 }

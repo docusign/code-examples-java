@@ -37,7 +37,7 @@ public class R005ControllerGetRoomsWithFilters extends AbstractRoomsController {
 
     @Autowired
     public R005ControllerGetRoomsWithFilters(DSConfiguration config, Session session, User user) {
-        super(config, "r005", "Get Rooms with filters");
+        super(config, "r005");
         this.session = session;
         this.user = user;
     }
@@ -70,8 +70,8 @@ public class R005ControllerGetRoomsWithFilters extends AbstractRoomsController {
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(rooms)
-                .withMessage("Rooms has been filtered and returned!")
-                .addToModel(model);
+                .withMessage(getTextForCodeExample().ResultsPageText)
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
     // ***DS.snippet.0.end

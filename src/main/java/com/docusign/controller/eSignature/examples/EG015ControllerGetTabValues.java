@@ -31,7 +31,7 @@ public class EG015ControllerGetTabValues extends AbstractEsignatureController {
 
     @Autowired
     public EG015ControllerGetTabValues(DSConfiguration config, Session session, User user) {
-        super(config, "eg015", "Get Envelope Tabs");
+        super(config, "eg015");
         this.session = session;
         this.user = user;
     }
@@ -51,10 +51,10 @@ public class EG015ControllerGetTabValues extends AbstractEsignatureController {
                 envelopesApi,
                 session.getAccountId(),
                 session.getEnvelopeId());
-        DoneExample.createDefault(title)
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
                 .withJsonObject(envelopeFormData)
-                .withMessage("Results from the Envelope::GetFormData method:")
-                .addToModel(model);
+                .withMessage(getTextForCodeExample().ResultsPageText)
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
     // ***DS.snippet.0.end

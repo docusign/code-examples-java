@@ -1,0 +1,61 @@
+<!DOCTYPE module PUBLIC
+        "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
+        "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+<module name="Checker">
+    <module name="JavadocPackage"/>
+    <module name="TreeWalker">
+        <!-- Code convention checking -->
+        <!-- One statement per line, one declaration per line -->
+        <module name="OneStatementPerLine">
+            <property name="treatTryResourcesAsStatement" value="true"/>
+        </module>
+
+        <!-- If continuation lines are not indented automatically, indent them one tab stop -->
+        <module name="JavadocTagContinuationIndentation">
+            <property name="offset" value="2"/>
+            <property name="violateExecutionOnNonTightHtml" value="true"/>
+        </module>
+
+        <!-- Add at least one blank line between method definitions and property definitions -->
+        <module name="EmptyLineSeparator">
+            <property name="tokens" value="VARIABLE_DEF, METHOD_DEF"/>
+            <property name="allowMultipleEmptyLines" value="false"/>
+            <property name="allowMultipleEmptyLinesInsideClassMembers" value="false"/>
+        </module>
+
+        <!-- Only one declaration per line -->
+        <module name="MultipleVariableDeclarations"/>
+
+        <!-- Remove unnecessary parentheses -->
+        <module name="UnnecessaryParentheses"/>
+
+        <!-- Avoid Redundant Initializations -->
+        <module name="ExplicitInitialization"/>
+
+        <!-- Check using catch -->
+        <module name="IllegalCatch"/>
+
+        <!-- Other checking -->
+
+        <!-- Loops need braces except they are a single line statement -->
+        <module name="NeedBraces">
+            <property name="tokens" value="LITERAL_CASE, LITERAL_DEFAULT"/>
+            <property name="allowSingleLineStatement" value="true"/>
+        </module>
+
+        <!-- Class name should be a Hungarian notation, has to start with uppercase -->
+        <module name="TypeName"/>
+
+        <!-- Method name should have a Hungarian notation, has to start with lowercase -->
+        <module name="MethodName">
+            <property name="format" value="^[a-zA-Z](_?[a-zA-Z0-9]+)*$"/>
+            <property name="allowClassName" value="true"/>
+        </module>
+
+        <!-- Naming a variable in a loop can be one char, other variables have Hungarian notation -->
+        <module name="LocalVariableName">
+            <property name="format" value="^[a-z][_a-zA-Z0-9]+$"/>
+            <property name="allowOneCharVarInForLoop" value="true"/>
+        </module>
+    </module>
+</module>

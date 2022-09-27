@@ -21,8 +21,8 @@ public abstract class AbstractEsignatureController extends AbstractController {
     protected static final String MODEL_TEMPLATE_OK = "templateOk";
     private static final String EXAMPLE_PAGES_PATH = "pages/esignature/examples/";
 
-    public AbstractEsignatureController(DSConfiguration config, String exampleName, String title) {
-        super(config, exampleName, title);
+    public AbstractEsignatureController(DSConfiguration config, String exampleName) {
+        super(config, exampleName);
     }
 
     protected String getExamplePagesPath() {

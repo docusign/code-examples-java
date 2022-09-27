@@ -1,53 +1,89 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>Require Phone Authentication for a Recipient</h4>
-<p>Sends an envelope that requires entering a six-digit code from a text message or phone call for the purpose of multifactor authentication.</p>
-<p>The envelope includes a PDF file. Anchor text 
-    (<a href="https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/tabs/auto-place/">AutoPlace</a>)
-    is used to position the signing fields in the documents.</p>
+<c:set var="formNumber" value="0" scope="page" />
+<c:set var="countryCodeInputNumber" value="0" scope="page" />
+<c:set var="numberInputNumber" value="1" scope="page" />
+<c:set var="signerEmailInputNumber" value="2" scope="page" />
+<c:set var="signerNameInputNumber" value="3" scope="page" />
+
+<h4>${example.getExampleName()}</h4>
+<p>${example.getExampleDescription()}</p>
 
 <c:if test="${showDoc}">
     <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
 
-<p>API method used:
-    <a target='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/create/">Envelopes::create</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
-    View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
+    ${viewSourceFile}
 </p>
 
 
 <form class="eg" action="" method="post" data-busy="form">
     
     <div class="form-group">
-        <label for="countryCode">Signer Country Code</label>
-        <input type="text" class="form-control" id="countryCode" placeholder="1" name="countryCode"
-               value="" required>
+        <label for="countryCode">
+            ${example.getForms().get(formNumber).getInputs().get(countryCodeInputNumber).getInputName()}
+        </label>
+
+        <input type="text"
+               class="form-control"
+               id="countryCode"
+               placeholder="${example.getForms().get(formNumber).getInputs().get(countryCodeInputNumber).getInputPlaceholder()}"
+               name="countryCode"
+               value=""
+               required>
     </div>
 
     <div class="form-group">
-        <label for="phoneNumber">Signer Phone Number</label>
-        <input type="text" class="form-control" id="phoneNumber" placeholder="4155551212" name="phoneNumber"
-               value="" required>
+        <label for="phoneNumber">
+            ${example.getForms().get(formNumber).getInputs().get(numberInputNumber).getInputName()}
+        </label>
+
+        <input type="text"
+               class="form-control"
+               id="phoneNumber"
+               placeholder="${example.getForms().get(formNumber).getInputs().get(numberInputNumber).getInputPlaceholder()}"
+               name="phoneNumber"
+               value=""
+               required>
     </div>
 
     <div class="form-group">
-        <label for="signerEmail">Signer Email</label>
-        <input type="email" class="form-control" id="signerEmail" name="signerEmail"
-               aria-describedby="emailHelp" placeholder="pat@example.com" required
+        <label for="signerEmail">
+            ${example.getForms().get(formNumber).getInputs().get(signerEmailInputNumber).getInputName()}
+        </label>
+
+        <input type="email"
+               class="form-control"
+               id="signerEmail"
+               name="signerEmail"
+               aria-describedby="emailHelp"
+               placeholder="${example.getForms().get(formNumber).getInputs().get(signerEmailInputNumber).getInputPlaceholder()}"
+               required
                value="${locals.dsConfig.signerEmail}">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+
+        <small id="emailHelp" class="form-text text-muted">
+            ${launcherTexts.getHelpingTexts().getEmailWontBeShared()}
+        </small>
     </div>
     <div class="form-group">
-        <label for="signerName">Signer Name</label>
-        <input type="text" class="form-control" id="signerName" placeholder="Pat Johnson" name="signerName"
-               value="${locals.dsConfig.signerName}" required>
+        <label for="signerName">
+            ${example.getForms().get(formNumber).getInputs().get(signerNameInputNumber).getInputName()}
+        </label>
+
+        <input type="text"
+               class="form-control"
+               id="signerName"
+               placeholder="${example.getForms().get(formNumber).getInputs().get(signerNameInputNumber).getInputPlaceholder()}"
+               name="signerName"
+               value="${locals.dsConfig.signerName}"
+               required>
     </div>
     <input type="hidden" name="_csrf" value="${csrfToken}">
-    <button type="submit" class="btn btn-docu">Submit</button>
+    <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>
 </form>
 
 <jsp:include page="../../../partials/foot.jsp"/>

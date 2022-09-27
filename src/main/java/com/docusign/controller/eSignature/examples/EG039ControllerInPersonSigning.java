@@ -32,7 +32,7 @@ public class EG039ControllerInPersonSigning extends AbstractEsignatureController
 
     @Autowired
     public EG039ControllerInPersonSigning(DSConfiguration config, Session session, User user) {
-	   super(config, "eg039", "In-person signing");
+	   super(config, "eg039");
 	   this.session = session;
 	   this.user = user;
     }

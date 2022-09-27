@@ -1,49 +1,37 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>Get the tab data from an envelope.</h4>
+<c:set var="formNumber" value="0" scope="page" />
+<c:set var="redirectToNinthCodeExample" value="href='eg009'" scope="page" />
+<c:set var="redirectNumber" value="0" scope="page" />
 
-<p>Get the tab (field) values from an envelope for all of the envelope's recipients.</p>
-
-<p>
-    This method is used to read the updated tab values from
-    the envelope. The method can be used after the envelope is complete or while it is
-    still in progress.
-</p>
-
-
+<h4>${example.getExampleName()}</h4>
+<p>${example.getExampleDescription()}</p>
 
 <c:if test="${showDoc}">
 <p><a target='_blank' href='${documentation}'>Documentation</a> about this example.</p>
 </c:if>
 
-<p>
-    API method used:
-    <a target='_blank' href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeformdata/get/">EnvelopeFormData::get</a>.
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 <p>
-    View source file <a target="_blank" href="${sourceUrl}">${sourceFile}</a> on GitHub.
+    ${viewSourceFile}
 </p>
 
 <c:choose>
     <c:when test="${envelopeOk}">
-        <p>
-            The last envelope you created with this example launcher will be queried.
-            Recommendation:  use example 9, then this example, since example 9 includes many tabs of different types.
-        </p>
+        <p>${example.getForms().get(formNumber).getFormName()}</p>
 
         <form class="eg" action="" method="post" data-busy="form">
             <input type="hidden" name="_csrf" value="${csrfToken}">
-            <button type="submit" class="btn btn-docu">Continue</button>
+            <button type="submit" class="btn btn-docu">${launcherTexts.getContinueButton()}</button>
         </form>
     </c:when>
     <c:otherwise>
-        <p>Problem: please first create an envelope using <a href="eg009">example 9.</a> <br/>
-            Thank you.</p>
+        <p>${example.getRedirectsToOtherCodeExamples().get(redirectNumber).getRedirectText().replaceFirst("\\{0}", redirectToNinthCodeExample)}</p>
 
         <form class="eg" action="eg009" method="get">
-            <button type="submit" class="btn btn-docu">Continue</button>
+            <button type="submit" class="btn btn-docu">${launcherTexts.getContinueButton()}</button>
         </form>
     </c:otherwise>
 </c:choose>

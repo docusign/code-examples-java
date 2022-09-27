@@ -47,7 +47,7 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
 
     @Autowired
     public EG020ControllerPhoneAuthentication(DSConfiguration config, Session session, User user) {
-        super(config, "eg020", "Require Phone Authentication for a Recipient");
+        super(config, "eg020");
         this.session = session;
         this.user = user;
     }
@@ -78,7 +78,7 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
         logger.info("workflowId = " + workflowId);
         if (workflowId.equals(""))
         {
-            throw new ApiException(0, "Please contact <a href='https://support.docusign.com'>DocuSign Support</a> to enable Phone Auth in your account.");
+            throw new ApiException(0, getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage);
         }EnvelopeDefinition envelope = PhoneAuthenticationService.createEnvelope(args.getSignerName(), args.getSignerEmail(), args.getCountryCode(),
                 args.getPhoneNumber(), workflowId);
         // Step 4.1 start
@@ -86,10 +86,12 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
         // Step 4.1 end
 
         session.setEnvelopeId(results.getEnvelopeId());
-        DoneExample.createDefault(title).withJsonObject(results)
-                .withMessage(
-                        "The envelope has been created and sent!<br />Envelope ID " + results.getEnvelopeId() + ".")
-                .addToModel(model);
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+                .withJsonObject(results)
+                .withMessage(getTextForCodeExample().ResultsPageText
+                        .replaceFirst("\\{0}", results.getEnvelopeId())
+                )
+                .addToModel(model, config);
 
         return DONE_EXAMPLE_PAGE;
     }

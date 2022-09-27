@@ -5,6 +5,7 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 
+import com.docusign.core.model.manifestModels.CodeExampleText;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletResponse;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 
@@ -41,6 +41,8 @@ public abstract class AbstractController {
     protected static final String DONE_EXAMPLE_PAGE_COMPARE = "pages/example_done_compare";
     protected static final String EXAMPLE_PENDING_PAGE = "pages/example_pending";
     protected static final String ERROR_PAGE = "error";
+    private static final String EXAMPLE_TEXT = "example";
+    protected static final String LAUNCHER_TEXTS = "launcherTexts";
 
     @Autowired
     private OAuth2ClientContext oAuth2ClientContext;
@@ -49,15 +51,25 @@ public abstract class AbstractController {
     protected Session session;
 
     protected final String exampleName;
-    protected final String title;
+    private CodeExampleText codeExampleText;
+    protected String title;
     private final String pagePath;
     protected final DSConfiguration config;
 
-    public AbstractController(DSConfiguration config, String exampleName, String title) {
+    public AbstractController(DSConfiguration config, String exampleName) {
         this.config = config;
         this.exampleName = exampleName;
         this.pagePath = this.getExamplePagesPath() + exampleName;
-        this.title = title;
+    }
+
+    public CodeExampleText getTextForCodeExample() {
+        if (codeExampleText != null) {
+            return codeExampleText;
+        }
+
+        codeExampleText = GetExampleText();
+
+        return codeExampleText;
     }
 
     protected abstract String getExamplePagesPath();
@@ -98,13 +110,21 @@ public abstract class AbstractController {
      * @throws Exception if calling API has failed
      */
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
+        this.title = getTextForCodeExample().ExampleName;
+
         Class<?> clazz = Objects.requireNonNullElse(getClass().getEnclosingClass(), getClass());
         String srcPath = String.join("", config.getExampleUrl(), clazz.getName().replace('.', '/'), ".java");
+        String viewSourceFile = config.getCodeExamplesText().SupportingTexts
+                .getViewSourceFile().replaceFirst(
+                        "\\{0}",
+                        "<a target='_blank' href='" + srcPath + "'>" + clazz.getSimpleName() + ".java" + "</a>"
+                );
         model.addAttribute("csrfToken", "");
         model.addAttribute("title", title);
-        model.addAttribute("sourceFile", clazz.getSimpleName() + ".java");
-        model.addAttribute("sourceUrl", srcPath);
+        model.addAttribute("viewSourceFile", viewSourceFile);
         model.addAttribute("documentation", config.getDocumentationPath() + exampleName);
+        model.addAttribute(EXAMPLE_TEXT, getTextForCodeExample());
+        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
     }
 
     /**
@@ -122,18 +142,25 @@ public abstract class AbstractController {
         HttpServletResponse response) throws Exception;
 
     private String handleException(Exception exception, ModelMap model) {
+        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
         String stackTrace = ExceptionUtils.getStackTrace(exception);
-        String exceptionMessage = exception.getMessage();
-        String fixingInstructions = exceptionMessage.contains((CharSequence) model.getAttribute("caseForInstructions")) ?
-                (String) model.getAttribute("fixingInstructions") : null;
+        String exceptionMessage = "";
+        String fixingInstructions = "";
 
+        if (exception != null) {
+            exceptionMessage = exception.getMessage();
+            if(model.getAttribute("caseForInstructions") != null) {
+                fixingInstructions = exceptionMessage.contains((CharSequence) model.getAttribute("caseForInstructions")) ?
+                        (String) model.getAttribute("fixingInstructions") : null;
+            }
+        }
         new DoneExample()
             .withTitle(exampleName)
             .withName(title)
             .withMessage(exceptionMessage)
             .withFixingInstructions(fixingInstructions)
             .withStackTracePrinted(stackTrace)
-            .addToModel(model);
+            .addToModel(model, config);
         return ERROR_PAGE;
     }
 
@@ -142,5 +169,26 @@ public abstract class AbstractController {
         boolean tokenExpired = accessToken != null && accessToken.isExpired();
         session.setRefreshToken(tokenExpired);
         return tokenExpired;
+    }
+
+
+    protected CodeExampleText GetExampleText() {
+        var groups = config.getCodeExamplesText().Groups;
+        var exampleNumberToSearch =  Integer.parseInt(this.exampleName.replaceAll("\\D+", ""));
+
+        for(var i = 0; i < groups.size(); ++i)
+        {
+            CodeExampleText codeExampleText = (CodeExampleText) Arrays
+                    .stream(groups.get(i).Examples.toArray())
+                    .filter(x -> ((CodeExampleText) x).ExampleNumber == exampleNumberToSearch)
+                    .findFirst()
+                    .orElse(null);
+
+            if (codeExampleText != null)
+            {
+                return codeExampleText;
+            }
+        }
+        return null;
     }
 }

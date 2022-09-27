@@ -40,7 +40,7 @@ public class EG009ControllerUseTemplate extends AbstractEsignatureController {
 
     @Autowired
     public EG009ControllerUseTemplate(DSConfiguration config, Session session, User user) {
-        super(config, "eg009", "Envelope sent");
+        super(config, "eg009");
         this.session = session;
         this.user = user;
     }
@@ -71,11 +71,12 @@ public class EG009ControllerUseTemplate extends AbstractEsignatureController {
                 envelope);
 
         session.setEnvelopeId(envelopeSummary.getEnvelopeId());
-        DoneExample.createDefault(title)
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
                 .withJsonObject(envelopeSummary)
-                .withMessage("The envelope has been created and sent!<br/>Envelope ID "
-                        + envelopeSummary.getEnvelopeId() + ".")
-                .addToModel(model);
+                .withMessage(getTextForCodeExample().ResultsPageText
+                        .replaceFirst("\\{0}", envelopeSummary.getEnvelopeId())
+                )
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
     // ***DS.snippet.0.end

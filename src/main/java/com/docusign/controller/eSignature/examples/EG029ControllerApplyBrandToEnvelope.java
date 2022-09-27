@@ -36,7 +36,7 @@ public class EG029ControllerApplyBrandToEnvelope extends AbstractEsignatureContr
 
     @Autowired
     public EG029ControllerApplyBrandToEnvelope(DSConfiguration config, Session session, User user) {
-        super(config, "eg029", "Apply brand to envelope");
+        super(config, "eg029");
         this.session = session;
         this.user = user;
     }
@@ -69,11 +69,12 @@ public class EG029ControllerApplyBrandToEnvelope extends AbstractEsignatureContr
                 envelope
         );
 
-        DoneExample.createDefault(title)
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
                 .withJsonObject(envelopeSummary)
-                .withMessage("The envelope has been created and sent!<br />Envelope ID "
-                    + envelopeSummary.getEnvelopeId() + ".")
-                .addToModel(model);
+                .withMessage(getTextForCodeExample().ResultsPageText
+                        .replaceFirst("\\{0}", envelopeSummary.getEnvelopeId())
+                )
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
 }

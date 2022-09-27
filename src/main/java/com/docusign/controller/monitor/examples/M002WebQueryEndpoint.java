@@ -34,7 +34,7 @@ public class M002WebQueryEndpoint extends AbstractMonitorController {
 
     @Autowired
     public M002WebQueryEndpoint(DSConfiguration config, Session session, User user) {
-        super(config, "m002", "Query monitoring data with filters");
+        super(config, "m002");
         this.session = session;
         this.user = user;
     }
@@ -71,10 +71,10 @@ public class M002WebQueryEndpoint extends AbstractMonitorController {
         String queryResultCleaned = queryResult.toString().replaceAll("'", "");
 
         // Process results
-        DoneExample.createDefault(title)
-                .withMessage("Results from DataSet:postWebQuery method:")
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText)
                 .withJsonObject(queryResultCleaned)
-                .addToModel(model);
+                .addToModel(model, config);
 
         return DONE_EXAMPLE_PAGE;
     }

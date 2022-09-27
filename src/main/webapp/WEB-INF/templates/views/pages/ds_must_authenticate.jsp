@@ -2,8 +2,7 @@
 <jsp:include page="../partials/head.jsp" />
 
 <div style="margin:1% 5%;">
-    <h1 class="display-4">Please Authenticate with DocuSign</h1>
-    <p>Please choose your authentication type</p>
+    ${launcherTexts.getLoginPage().getLoginHeader()}
     <form class="eg" action="/ds/authenticate" method="post" data-busy="form">
         <div class="form-group">
         <select name="selectAuthType">
@@ -13,11 +12,11 @@
         </select>
     </div>
         <p class="lead" style="padding-top: .5rem;">
-            <button type="submit" class="btn btn-docu">Authenticate with DocuSign</button>
+            <button type="submit" class="btn btn-docu">${launcherTexts.getLoginPage().getLoginButton()}</button>
         </p>
 
     </form>
     <hr class="my-4">
-    <p>You need to authenticate with DocuSign to continue your request.</p>
+    <p>${launcherTexts.getLoginPage().getLoginHelperText()}</p>
 </div>
 <jsp:include page="../partials/foot.jsp" />

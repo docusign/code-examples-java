@@ -26,7 +26,7 @@ public class A006RetrieveDocuSignProfileByEmailAddress extends AbstractAdminCont
 
     @Autowired
     public A006RetrieveDocuSignProfileByEmailAddress(DSConfiguration config, User user) {
-        super(config, "a006", "Retrieve the user's DocuSign profile using an email address");
+        super(config, "a006");
         this.user = user;
     }
 
@@ -38,9 +38,10 @@ public class A006RetrieveDocuSignProfileByEmailAddress extends AbstractAdminCont
         UsersDrilldownResponse usersResponse = RetrieveDocuSignProfileByEmailAddress
                 .getDocuSignProfileByEmailAddress(usersApi, organizationId, args.getEmail());
         // Step 3 end
-        DoneExample.createDefault(title)
-                .withMessage("Results from getDSUserProfile_Email method:")
-                .withJsonObject(usersResponse.getUsers()).addToModel(model);
+        DoneExample
+                .createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText)
+                .withJsonObject(usersResponse.getUsers()).addToModel(model, config);
 
         return DONE_EXAMPLE_PAGE;
     }

@@ -35,7 +35,7 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
 
     @Autowired
     public A004CheckImportRequestStatus(DSConfiguration config, Session session, User user) {
-        super(config, "a004a", "Check request status");
+        super(config, "a004a");
         this.session = session;
         this.user = user;
     }
@@ -59,7 +59,7 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
             // Return the refresh page
             DoneExample.createDefault("Request not complete")
             .withMessage("The request has not completed, please refresh this page")
-            .addToModel(model);
+            .addToModel(model, config);
             return EXAMPLE_PENDING_PAGE;
 
         }
@@ -69,10 +69,11 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
         this.session.setImportId(null);
         
         // Process results
-        DoneExample.createDefault(title)
-                .withMessage("Admin API data response output:")
+        DoneExample
+                .createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText)
                 .withJsonObject(result)
-                .addToModel(model);
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
 

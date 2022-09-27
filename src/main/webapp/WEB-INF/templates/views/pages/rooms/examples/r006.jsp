@@ -1,28 +1,30 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>6. Creating an external form fill session.</h4>
+<c:set var="formOneNumber" value="0" scope="page" />
+<c:set var="formTwoNumber" value="1" scope="page" />
+<c:set var="documentsInputNumber" value="0" scope="page" />
+<c:set var="redirectToForthCodeExample" value="href='r004'" scope="page" />
+<c:set var="redirectForthNumber" value="0" scope="page" />
+<c:set var="redirectToFirstCodeExample" value="href='r001'" scope="page" />
+<c:set var="redirectFirstNumber" value="1" scope="page" />
 
-<p>The DocuSign Rooms API offers developers the option to have users fill out forms without
-    logging in to the Rooms UI through the use of an <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/guides/forms">external form fill session</a>.
-    This example demonstrates how to create an external form fill session using the
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/guides">Rooms API</a>:
-    the result of this code example is the URL for the form fill session, which you can embed in
-    your integration or send to the user.
+<h4>6. ${example.getExampleName()}</h4>
+<p>${example.getExampleDescription()}</p>
+<p>
+    ${viewSourceFile}
 </p>
-
-<p>API method used:
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Rooms/Rooms/GetRooms">Rooms::GetRooms</a>,
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Forms/FormLibraries/GetFormLibraries">FormLibraries::GetFormLibraries</a> and
-    <a target ='_blank' rel="noopener noreferrer" href="https://developers.docusign.com/rooms-api/reference/Forms/ExternalFormFillSessions/CreateExternalFormFillSession">ExternalFormFillSessions::CreateExternalFormFillSession</a>,
-</p>
+<jsp:include page="../../links_to_api_methods.jsp" />
 
 
 <form class="eg" action="" method="post" data-busy="form">
     <c:choose>
         <c:when test="${roomList!=null}">
             <div class="form-group">
-                <label for="roomId">Room</label>
+                <label for="roomId">
+                    ${example.getForms().get(formTwoNumber).getInputs().get(documentsInputNumber).getInputName()}
+                </label>
+
                 <select id="roomId" name="roomId" class="form-control">
                     <option value="" label="Please select the room" disabled aria-selected="true"></option>
                     <c:forEach items="${roomList}" var="room">
@@ -32,7 +34,7 @@
             </div>
         </c:when>
         <c:otherwise>
-            <p>Problem: please first create a room using <a href="r001.jsp">example 1</a></p>
+            ${example.getRedirectsToOtherCodeExamples().get(redirectFirstNumber).getRedirectText().replaceFirst("\\{0}", redirectToFirstCodeExample)}
         </c:otherwise>
     </c:choose>
     <c:choose>
@@ -40,7 +42,10 @@
             <c:choose>
                 <c:when test="${formList[0].libraryFormId !=null}">
                     <div class="form-group">
-                        <label for="formId">Form</label>
+                        <label for="formId">
+                            ${example.getForms().get(formOneNumber).getInputs().get(documentsInputNumber).getInputName()}
+                        </label>
+
                         <select id="formId" name="formId" class="form-control">
                             <c:forEach items="${formList}" var="form">
                                 <option value="${form.libraryFormId}" selected>${form.name}</option>
@@ -49,8 +54,7 @@
                     </div>
                 </c:when>
                 <c:otherwise>
-                    <p>Problem: selected rooms does not have any documents. Please first add form to a room using <a href="r004">example 4</a></p>
-                    <p>Thank you</p>
+                    ${example.getRedirectsToOtherCodeExamples().get(redirectForthNumber).getRedirectText().replaceFirst("\\{0}", redirectToForthCodeExample)}
                 </c:otherwise>
             </c:choose>
         </c:when>
@@ -58,7 +62,7 @@
 
 
     <input type="hidden" name="_csrf" value="${csrfToken}">
-    <button type="submit" class="btn btn-docu">Submit</button>
+    <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>
 </form>
 
 <jsp:include page="../../../partials/foot.jsp"/>

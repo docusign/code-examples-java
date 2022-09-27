@@ -195,6 +195,25 @@
                                     </includes>
                                 </resource>
                                 <resource>
+                                    <targetPath>${basedir}/src/main/java/com/docusign/core/model/manifestModels</targetPath>
+                                    <directory>../src/main/java/com/docusign/core/model/manifestModels</directory>
+                                    <includes>
+                                        <include>AdditionalPage.java</include>
+                                        <include>CodeExampleText.java</include>
+                                        <include>CustomErrorTexts.java</include>
+                                        <include>Forms.java</include>
+                                        <include>HelpingTexts.java</include>
+                                        <include>Inputs.java</include>
+                                        <include>LinkToAPIMethods.java</include>
+                                        <include>LoginPage.java</include>
+                                        <include>ManifestGroup.java</include>
+                                        <include>ManifestStructure.java</include>
+                                        <include>RedirectsToOtherCodeExamples.java</include>
+                                        <include>SelectAPIPage.java</include>
+                                        <include>SupportingTexts.java</include>
+                                    </includes>
+                                </resource>
+                                <resource>
                                     <targetPath>${basedir}/src/main/java/com/docusign/core/security</targetPath>
                                     <directory>../src/main/java/com/docusign/core/security</directory>
                                     <includes>

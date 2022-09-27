@@ -34,7 +34,7 @@ public class R008ControllerGrantOfficeAccessToFormGroup extends AbstractRoomsCon
 
     @Autowired
     public R008ControllerGrantOfficeAccessToFormGroup(DSConfiguration config, Session session, User user) {
-        super(config, "r008", "Granting office access to a form group");
+        super(config, "r008");
         this.session = session;
         this.user = user;
     }
@@ -75,15 +75,17 @@ public class R008ControllerGrantOfficeAccessToFormGroup extends AbstractRoomsCon
             // Step 5 End
 
             DoneExample.createDefault(this.title)
-                    .withMessage("Office has been granted access to a form group!")
-                    .addToModel(model);
+                    .withMessage(getTextForCodeExample().ResultsPageText
+                            .replaceFirst("\\{0}", String.valueOf(args.getOfficeId()))
+                            .replaceFirst("\\{1}", String.valueOf(args.getFormGroupId())))
+                    .addToModel(model, config);
         } catch (ApiException apiException) {
             if (!apiException.getMessage().contains(OFFICE_ALREADY_HAS_ACCESS_TO_FORM_GROUP_ERROR_MESSAGE)) {
                 throw apiException;
             }
             DoneExample.createDefault(this.title)
                     .withMessage("The selected office already has access to a form group!")
-                    .addToModel(model);
+                    .addToModel(model, config);
         }
         return DONE_EXAMPLE_PAGE;
     }
