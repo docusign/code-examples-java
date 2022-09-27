@@ -7,7 +7,7 @@
     <tr>
         <td>
             <h1 class='display-4'>Java Launcher</h1>
-            <p class='Xlead'>Welcome to the Java code examples for DocuSign Monitor API with JWT Grant authentication</p>
+            <p class='Xlead'>${launcherTexts.getHomePageText()}</p>
         </td>
         <td>
             <img src='/assets/banner-code.png' />
@@ -22,21 +22,51 @@
         <p><a target='_blank' href='${documentation}'>Documentation</a> on using OAuth Authorization Code Grant from a Java application.</p>
     </c:if>
 
-    <h2>Monitor API Code examples</h2>
+    <c:forEach var="group" items="${codeExampleGroups}">
+        <h2>${group.getName()}</h2>
 
-    <h4 id='example001'>1. <a href='m001'>Get monitoring data</a></h4>
-    <p> Demonstrates how to get and display all of your organization's monitoring data.</p>
-    <p>
-        API method used:
-        <a target ='_blank' rel='noopener noreferrer' href='https://developers.docusign.com/docs/monitor-api/reference/monitor/dataset/getstream/'>DataSet:getStream</a>
-    </p>
+        <c:forEach var="example" items="${group.getExamples()}">
+            <c:if test="${example.getSkipForLanguages() == null || !example.getSkipForLanguages().toLowerCase().contains('java')}">
+                <h4 id="${String.format("m%03d", example.getExampleNumber())}">
+                    ${example.getExampleNumber()}.
+                    <a href="${String.format("m%03d", example.getExampleNumber())}">
+                            ${example.getExampleName()}
+                    </a>
+                </h4>
 
-    <h4 id="example002">2. <a href="m002">Query monitoring data with filters</a></h4>
-    <p>Demonstrates how to query an organization's data based on specified filters and aggregations.</p>
-    <p>
-        API method used:
-        <a target='_blank' href="https://developers.docusign.com/docs/monitor-api/reference/monitor/dataset/postwebquery/">DataSet:postWebQuery</a>.
-    </p>
+                <p>${example.getExampleDescription()}</p>
+
+                <p>
+                    <c:choose>
+                        <c:when test="${example.getLinksToAPIMethod().size() == 1}">
+                            <span>${launcherTexts.getAPIMethodUsed()}</span>
+                        </c:when>
+                        <c:otherwise>
+                            <span>${launcherTexts.getAPIMethodUsedPlural()}</span>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <c:forEach var="link" items="${example.getLinksToAPIMethod()}">
+                        <a href="${link.getPath()}">
+                                ${link.getPathName()}
+                        </a>
+
+                        <c:choose>
+                            <c:when test="${example.getLinksToAPIMethod().size() == example.getLinksToAPIMethod().indexOf(link) + 1}">
+                                <span>.</span>
+                            </c:when>
+                            <c:when test="${example.getLinksToAPIMethod().size() - 1 == example.getLinksToAPIMethod().indexOf(link) + 1}">
+                                <span>and</span>
+                            </c:when>
+                            <c:otherwise>
+                                <span>,</span>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </p>
+            </c:if>
+        </c:forEach>
+    </c:forEach>
 </div>
 
 <!-- anchor-js is only for the index page -->

@@ -37,7 +37,7 @@ public class EG026ControllerPermissionChangeSingleSetting extends AbstractEsigna
 
     @Autowired
     public EG026ControllerPermissionChangeSingleSetting(DSConfiguration config, Session session, User user) {
-        super(config, "eg026", "Change single permission setting");
+        super(config, "eg026");
         this.session = session;
         this.user = user;
     }
@@ -82,8 +82,11 @@ public class EG026ControllerPermissionChangeSingleSetting extends AbstractEsigna
                 curProfileId
         );
 
-        DoneExample.createDefault(title).withMessage("The permission profile is updated!<br />Permission profile ID: "
-                + newProfile.getPermissionProfileId() + ".").addToModel(model);
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText
+                        .replaceFirst("\\{0}", newProfile.getPermissionProfileId())
+                )
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE_COMPARE;
     }
 }

@@ -31,7 +31,7 @@ public class EG018ControllerEnvelopeCustomFieldValues extends AbstractEsignature
 
     @Autowired
     public EG018ControllerEnvelopeCustomFieldValues(DSConfiguration config, Session session, User user) {
-        super(config, "eg018", "Get Envelope Custom Field Data");
+        super(config, "eg018");
         this.session = session;
         this.user = user;
     }
@@ -54,10 +54,10 @@ public class EG018ControllerEnvelopeCustomFieldValues extends AbstractEsignature
                 session.getEnvelopeId()
         );
 
-        DoneExample.createDefault(title)
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
                 .withJsonObject(customFieldsEnvelope)
-                .withMessage("Results from the Envelope::GetFormData method:")
-                .addToModel(model);
+                .withMessage(getTextForCodeExample().ResultsPageText)
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
     // ***DS.snippet.0.end

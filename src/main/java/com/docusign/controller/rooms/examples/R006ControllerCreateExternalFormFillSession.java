@@ -37,7 +37,7 @@ public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsCo
 
     @Autowired
     public R006ControllerCreateExternalFormFillSession(DSConfiguration config, Session session, User user) {
-        super(config, "r006", "Creating an external form fill session");
+        super(config, "r006");
         this.session = session;
         this.user = user;
     }
@@ -76,8 +76,8 @@ public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsCo
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(externalFormFillSession)
-                .withMessage("An external form fill session has been added!")
-                .addToModel(model);
+                .withMessage(getTextForCodeExample().ResultsPageText)
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
     // ***DS.snippet.0.end

@@ -33,7 +33,7 @@ public class C001ControllerCreateClickwrap extends AbstractClickController {
 
     @Autowired
     public C001ControllerCreateClickwrap(DSConfiguration config, Session session, User user) {
-        super(config, "c001", "Create a clickwrap");
+        super(config, "c001");
         this.session = session;
         this.user = user;
     }
@@ -61,8 +61,8 @@ public class C001ControllerCreateClickwrap extends AbstractClickController {
         this.session.setClickwrapVersionNumber(createdClickwrap.getVersionNumber());
         DoneExample.createDefault(this.title)
                 .withJsonObject(createdClickwrap)
-                .withMessage("The clickwrap " + createdClickwrap.getClickwrapName() + " has been created.")
-                .addToModel(model);
+                .withMessage(getTextForCodeExample().ResultsPageText.replaceFirst("\\{0}", createdClickwrap.getClickwrapName()))
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
     // ***DS.snippet.0.end

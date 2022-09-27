@@ -36,7 +36,7 @@ public class C003ControllerCreateNewVersionClickwrap extends AbstractClickContro
 
     @Autowired
     public C003ControllerCreateNewVersionClickwrap(DSConfiguration config, Session session, User user) {
-        super(config, "c003", "Create a new clickwrap version");
+        super(config, "c003");
         this.session = session;
         this.user = user;
     }
@@ -69,9 +69,10 @@ public class C003ControllerCreateNewVersionClickwrap extends AbstractClickContro
         this.session.setClickwrapVersionNumber(createdClickwrap.getVersionNumber());
         DoneExample.createDefault(this.title)
                 .withJsonObject(createdClickwrap)
-                .withMessage("Version " + createdClickwrap.getVersionNumber() + " of clickwrap " + 
-                createdClickwrap.getClickwrapName() + " has been created.")
-                .addToModel(model);
+                .withMessage(getTextForCodeExample().ResultsPageText
+                    .replaceFirst("\\{0}", createdClickwrap.getVersionNumber())
+                    .replaceFirst("\\{1}", createdClickwrap.getClickwrapName()))
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
     // ***DS.snippet.0.end
