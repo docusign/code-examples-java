@@ -18,28 +18,36 @@ public final class GetMonitoringDataService {
         // After each call, save the cursor and use it to make the next
         // call from the point where the previous one left off when iterating through
         // the monitoring records
-        do
-        {
-            if(!cursorValue.isEmpty())
-                options.setCursor(cursorValue);
-
-            CursoredResult cursoredResult = datasetApi.getStream("2.0", "monitor", options);
-
-            String endCursor = cursoredResult.getEndCursor();
-
-            // If the endCursor from the response is the same as the one that you already have,
-            // it means that you have reached the end of the records
-            if (endCursor.equals(cursorValue))
+        try {
+            
+            do
             {
-                complete = true;
+                if(!cursorValue.isEmpty())
+                    options.setCursor(cursorValue);
+
+                CursoredResult cursoredResult = datasetApi.getStream("2.0", "monitor", options);
+
+                String endCursor = cursoredResult.getEndCursor();
+
+                // If the endCursor from the response is the same as the one that you already have,
+                // it means that you have reached the end of the records
+                if (endCursor.equals(cursorValue))
+                {
+                    complete = true;
+                }
+                else
+                {
+                    cursorValue = endCursor;
+                    monitoringData.put(new JSONObject(cursoredResult));
+                }
             }
-            else
-            {
-                cursorValue = endCursor;
-                monitoringData.put(new JSONObject(cursoredResult));
-            }
+            while (!complete);
         }
-        while (!complete);
+    catch (Exception e) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Error", "You do not have Monitor enabled for your account, follow <a target='_blank' href='https://developers.docusign.com/docs/monitor-api/how-to/enable-monitor/'>How to enable Monitor for your account</a> to get it enabled.");
+        monitoringData.put(jsonObject);
+    }
 
         return monitoringData;
     }
