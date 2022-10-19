@@ -78,7 +78,7 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
         logger.info("workflowId = " + workflowId);
         if (workflowId.equals(""))
         {
-            throw new ApiException(0, getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage);
+            throw new ApiException(0, getTextForCodeExample(getAPITypeFromLink()).CustomErrorTexts.get(0).ErrorMessage);
         }EnvelopeDefinition envelope = PhoneAuthenticationService.createEnvelope(args.getSignerName(), args.getSignerEmail(), args.getCountryCode(),
                 args.getPhoneNumber(), workflowId);
         // Step 4.1 start
@@ -86,9 +86,9 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
         // Step 4.1 end
 
         session.setEnvelopeId(results.getEnvelopeId());
-        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+        DoneExample.createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
                 .withJsonObject(results)
-                .withMessage(getTextForCodeExample().ResultsPageText
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText
                         .replaceFirst("\\{0}", results.getEnvelopeId())
                 )
                 .addToModel(model, config);

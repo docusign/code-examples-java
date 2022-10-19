@@ -71,8 +71,8 @@ public class M002WebQueryEndpoint extends AbstractMonitorController {
         String queryResultCleaned = queryResult.toString().replaceAll("'", "");
 
         // Process results
-        DoneExample.createDefault(getTextForCodeExample().ExampleName)
-                .withMessage(getTextForCodeExample().ResultsPageText)
+        DoneExample.createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText)
                 .withJsonObject(queryResultCleaned)
                 .addToModel(model, config);
 

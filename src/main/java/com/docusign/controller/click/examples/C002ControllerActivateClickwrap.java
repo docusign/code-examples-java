@@ -64,7 +64,7 @@ public class C002ControllerActivateClickwrap extends AbstractClickController {
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(updatedClickwrap)
-                .withMessage(getTextForCodeExample().ResultsPageText)
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText)
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }

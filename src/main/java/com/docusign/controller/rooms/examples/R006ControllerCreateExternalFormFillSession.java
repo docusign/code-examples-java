@@ -76,7 +76,7 @@ public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsCo
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(externalFormFillSession)
-                .withMessage(getTextForCodeExample().ResultsPageText)
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText)
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }

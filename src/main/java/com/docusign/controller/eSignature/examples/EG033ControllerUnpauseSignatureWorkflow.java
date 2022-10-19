@@ -49,7 +49,7 @@ public class EG033ControllerUnpauseSignatureWorkflow extends AbstractEsignatureC
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(envelopeUpdateSummary)
-                .withMessage(getTextForCodeExample().ResultsPageText)
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText)
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }

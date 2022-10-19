@@ -75,8 +75,8 @@ public class EG014ControllerCollectPayment extends AbstractEsignatureController 
         // Step 2. call Envelopes::create API method
         EnvelopeSummary envelopeSummary = CollectPaymentService.collectPayment(envelopesApi, envelope, session.getAccountId());
 
-        DoneExample.createDefault(getTextForCodeExample().ExampleName)
-                .withMessage(getTextForCodeExample().ResultsPageText
+        DoneExample.createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText
                         .replaceFirst("\\{0}", envelopeSummary.getEnvelopeId())
                 )
                 .addToModel(model, config);

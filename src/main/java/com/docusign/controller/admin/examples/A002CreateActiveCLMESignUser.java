@@ -91,7 +91,7 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
 
         if (groups.getTotalCount() == 0)
         {
-            throw new ApiException(getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage);
+            throw new ApiException(getTextForCodeExample(getAPITypeFromLink()).CustomErrorTexts.get(0).ErrorMessage);
         }
     }
 
@@ -124,8 +124,8 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
 
         // Process results
         DoneExample
-                .createDefault(getTextForCodeExample().ExampleName)
-                .withMessage(getTextForCodeExample().ResultsPageText)
+                .createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText)
                 .withJsonObject(result)
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;

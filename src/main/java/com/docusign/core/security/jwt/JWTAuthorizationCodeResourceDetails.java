@@ -4,6 +4,7 @@ import com.docusign.DSConfiguration;
 import com.docusign.core.exception.LauncherException;
 import com.docusign.core.model.ApiType;
 import com.docusign.esign.client.ApiClient;
+import io.swagger.annotations.Api;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.security.oauth2.client.token.grant.redirect.AbstractRedirectResourceDetails;
 import org.springframework.util.FileCopyUtils;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,11 +46,9 @@ public class JWTAuthorizationCodeResourceDetails extends AbstractRedirectResourc
         return apiClient;
     }
 
-
     public List<String> getScopes() throws IOException {
         ApiType apiType = dsConfiguration.getSelectedApiType();
 
         return Arrays.asList(apiType.getScopes());
-
     }
 }
