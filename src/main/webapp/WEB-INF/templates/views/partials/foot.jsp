@@ -18,11 +18,15 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.5/core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+<script src="https://kit.fontawesome.com/a2fb399780.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 
 <script src="/assets/notify.min.js"></script>
 <!-- see https://notifyjs.jpillora.com/ -->
 <script src="/assets/eg_03.js"></script>
 <script src="/assets/site.js"></script>
+<script src="/assets/search.js"></script>
 
 <c:if test="${false}">
     <!-- For debugging: showing local values including session -->

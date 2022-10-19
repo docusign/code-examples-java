@@ -16,9 +16,16 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
@@ -46,6 +53,7 @@ public class IndexController {
     private static final String ATTR_TITLE = "title";
     private static final String LAUNCHER_TEXTS = "launcherTexts";
     private static final String CODE_EXAMPLE_GROUPS = "codeExampleGroups";
+    private static final String API_DATA = "APIData";
 
     @Autowired
     private Session session;
@@ -60,19 +68,20 @@ public class IndexController {
     private DSConfiguration config;
 
     @GetMapping(path = "/")
-    public String index(ModelMap model, HttpServletResponse response) throws IOException {
+    public String index(ModelMap model, HttpServletResponse response) throws Exception {
         model.addAttribute(ATTR_TITLE,"Home");
 
-        if (config.getQuickstart().equals("true") && config.getSelectedApiIndex().equals(ApiIndex.ESIGNATURE) &&
+        if (config.getQuickstart().equals("true") &&
                 !(SecurityContextHolder.getContext().getAuthentication() instanceof OAuth2Authentication)){
-            String site = config.getSelectedApiIndex().getPathOfFirstExample();
+            String site = ApiIndex.ESIGNATURE.getPathOfFirstExample();
             response.setStatus(response.SC_MOVED_TEMPORARILY);
             response.setHeader("Location", site);
             return null;
         }
 
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
-        model.addAttribute(CODE_EXAMPLE_GROUPS, config.getCodeExamplesText().Groups.toArray());
+        model.addAttribute(CODE_EXAMPLE_GROUPS, config.getCodeExamplesText().APIs.toArray());
+        model.addAttribute(API_DATA, config.loadFileData(config.getCodeExamplesManifest()));
         return session.getApiIndexPath();
     }
 

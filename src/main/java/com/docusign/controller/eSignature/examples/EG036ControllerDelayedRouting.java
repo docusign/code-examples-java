@@ -70,8 +70,8 @@ public class EG036ControllerDelayedRouting extends AbstractEsignatureController 
 
         // process results
         session.setEnvelopeId(results.getEnvelopeId());
-        DoneExample.createDefault(getTextForCodeExample().ExampleName)
-                .withMessage(getTextForCodeExample().ResultsPageText
+        DoneExample.createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText
                         .replaceFirst("\\{0}", results.getEnvelopeId())
                 )
                 .withJsonObject(results)

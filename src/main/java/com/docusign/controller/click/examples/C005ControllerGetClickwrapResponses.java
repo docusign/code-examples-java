@@ -59,7 +59,7 @@ public class C005ControllerGetClickwrapResponses extends AbstractClickController
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(clickwrapAgreementsResponse)
-                .withMessage(getTextForCodeExample().ResultsPageText)
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText)
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }

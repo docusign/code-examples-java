@@ -84,7 +84,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private List<String> getScopes() throws IOException {
         return Arrays.asList(dsConfiguration.getSelectedApiType().getScopes());
-
     }
 
     private OAuth2ClientAuthenticationProcessingFilter authCodeGrantFilter() throws IOException {

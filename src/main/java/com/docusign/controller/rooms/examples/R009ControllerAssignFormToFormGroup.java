@@ -78,7 +78,7 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
 
             DoneExample.createDefault(this.title)
                     .withJsonObject(formGroupFormToAssign)
-                    .withMessage(getTextForCodeExample().ResultsPageText
+                    .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText
                             .replaceFirst("\\{0}", String.valueOf(args.getOfficeId()))
                             .replaceFirst("\\{1}", String.valueOf(args.getFormGroupId())))
                     .addToModel(model, config);
@@ -87,9 +87,9 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
                 DoneExample.createDefault(this.title)
                         .withMessage(FORM_ALREADY_EXISTS_ERROR_MESSAGE)
                         .addToModel(model, config);
-            } else if (apiException.getMessage().contains(getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessageCheck)) {
+            } else if (apiException.getMessage().contains(getTextForCodeExample(getAPITypeFromLink()).CustomErrorTexts.get(0).ErrorMessageCheck)) {
                 DoneExample.createDefault(this.title)
-                        .withMessage(getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage)
+                        .withMessage(getTextForCodeExample(getAPITypeFromLink()).CustomErrorTexts.get(0).ErrorMessage)
                         .addToModel(model, config);
             }
 

@@ -82,20 +82,8 @@ public class DSConfiguration {
     @Value("${DS_ADMIN_BASE_PATH}")
     private String adminBasePath;
 
-    @Value("${AdminManifest}")
-    private String adminManifest;
-
-    @Value("${ESignatureManifest}")
-    private String eSignatureManifest;
-
-    @Value("${ClickManifest}")
-    private String clickManifest;
-
-    @Value("${RoomsManifest}")
-    private String roomsManifest;
-
-    @Value("${MonitorManifest}")
-    private String monitorManifest;
+    @Value("${CodeExamplesManifest}")
+    private String codeExamplesManifest;
 
     public String examplesApiPath = "examplesApi.json";
 
@@ -146,7 +134,7 @@ public class DSConfiguration {
         }
 
         try {
-            String json = loadFileData(getTextManifestDependingOnCurrentAPI());
+            String json = loadFileData(codeExamplesManifest);
             codeExamplesText = new ObjectMapper().readValue(json, ManifestStructure.class);
         } catch (JSONException | IOException e){
             e.printStackTrace();
@@ -157,35 +145,7 @@ public class DSConfiguration {
         return codeExamplesText;
     }
 
-    private String getTextManifestDependingOnCurrentAPI() throws IOException {
-        String linkToManifest = "";
-
-        ApiIndex selectedApiIndex = getSelectedApiIndex();
-        if (selectedApiIndex == ApiIndex.ESIGNATURE)
-        {
-            linkToManifest = eSignatureManifest;
-        }
-        else if (selectedApiIndex == ApiIndex.CLICK)
-        {
-            linkToManifest = clickManifest;
-        }
-        else if (selectedApiIndex == ApiIndex.ROOMS)
-        {
-            linkToManifest = roomsManifest;
-        }
-        else if (selectedApiIndex == ApiIndex.MONITOR)
-        {
-            linkToManifest = monitorManifest;
-        }
-        else if (selectedApiIndex == ApiIndex.ADMIN)
-        {
-            linkToManifest = adminManifest;
-        }
-
-        return linkToManifest;
-    }
-
-    private String loadFileData(String filePath) throws Exception {
+    public String loadFileData(String filePath) throws Exception {
         URL fullRequestPath = new URL(filePath);
         HttpURLConnection httpConnection = (HttpURLConnection) fullRequestPath.openConnection();
         httpConnection.setRequestMethod(HttpMethod.GET);

@@ -65,15 +65,15 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
             this.session.setEnvelopeId(envelopeSummary.getEnvelopeId());
             DoneExample.createDefault(this.title)
                     .withJsonObject(envelopeSummary)
-                    .withMessage(getTextForCodeExample().ResultsPageText
+                    .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText
                         .replaceFirst("\\{0}", this.session.getEnvelopeId()))
                     .addToModel(model, config);
         } catch (ApiException apiException) {
-            if (!apiException.getMessage().contains(getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessageCheck)) {
+            if (!apiException.getMessage().contains(getTextForCodeExample(getAPITypeFromLink()).CustomErrorTexts.get(0).ErrorMessageCheck)) {
                 throw apiException;
             }
             DoneExample.createDefault(this.title)
-                    .withMessage(getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage)
+                    .withMessage(getTextForCodeExample(getAPITypeFromLink()).CustomErrorTexts.get(0).ErrorMessage)
                     .addToModel(model, config);
         }
 
