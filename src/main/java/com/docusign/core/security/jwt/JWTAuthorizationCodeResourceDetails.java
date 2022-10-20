@@ -47,8 +47,14 @@ public class JWTAuthorizationCodeResourceDetails extends AbstractRedirectResourc
     }
 
     public List<String> getScopes() throws IOException {
-        ApiType apiType = dsConfiguration.getSelectedApiType();
+        ArrayList<String> scopes = new ArrayList<>();
 
-        return Arrays.asList(apiType.getScopes());
+        for (ApiType apiType : ApiType.values())
+        {
+            for(String scope : apiType.getScopes()){
+                scopes.add(scope);
+            }
+        }
+        return Arrays.asList(Arrays.stream(scopes.toArray()).distinct().toArray(String[]::new));
     }
 }

@@ -83,7 +83,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     private List<String> getScopes() throws IOException {
-        return Arrays.asList(dsConfiguration.getSelectedApiType().getScopes());
+        ArrayList<String> scopes = new ArrayList<>();
+
+        for (ApiType apiType : ApiType.values())
+        {
+            for(String scope : apiType.getScopes()){
+                scopes.add(scope);
+            }
+        }
+        return Arrays.asList(Arrays.stream(scopes.toArray()).distinct().toArray(String[]::new));
     }
 
     private OAuth2ClientAuthenticationProcessingFilter authCodeGrantFilter() throws IOException {
@@ -130,7 +138,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatcher("/**")
             .authorizeRequests()
             .antMatchers( "/", "/login**", "/error**", "/assets/**","/ds/mustAuthenticate**",
-                "/ds/authenticate**", "/ds/selectApi**")
+                "/ds/authenticate**")
             .permitAll()
             .anyRequest()
             .authenticated()

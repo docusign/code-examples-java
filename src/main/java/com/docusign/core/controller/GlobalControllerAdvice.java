@@ -45,15 +45,13 @@ import java.util.stream.Collectors;
 public class GlobalControllerAdvice {
 
     private static final String ERROR_ACCOUNT_NOT_FOUND = "Could not find account information for the user";
-    private static final String SELECTED_API_NOT_SUPPORTED = "Currently selected api is not supported by launcher. Please, check appsettings.json file.";
+    private static final String PATH_TO_HOMEPAGE = "/pages/esignature/index";
     private final DSConfiguration config;
     private final Session session;
     private final User user;
     private Optional<OAuth.Account> account;
-
     private AuthType authTypeSelected = AuthType.AGC;
     private ApiType apiTypeSelected = ApiType.ESIGNATURE;
-
 
     @Autowired
     public GlobalControllerAdvice(DSConfiguration config, Session session, User user, Optional<OAuth.Account> account) {
@@ -97,14 +95,7 @@ public class GlobalControllerAdvice {
     public Locals populateLocals() throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-
-        ApiIndex apiIndex = ApiIndex.ESIGNATURE;
-
-        if (config.getSelectedApiIndex() != null){
-            apiIndex = config.getSelectedApiIndex();
-        }
-
-        session.setApiIndexPath(apiIndex.toString());
+        session.setApiIndexPath(PATH_TO_HOMEPAGE);
 
         if (!(authentication instanceof OAuth2Authentication)) {
             return new Locals(config, session, null, "");
@@ -126,7 +117,7 @@ public class GlobalControllerAdvice {
             session.setAccountId(oauthAccount.getAccountId());
             session.setAccountName(oauthAccount.getAccountName());
             //TODO set this more efficiently with more APIs as they're added in
-            String basePath = this.getBaseUrl(apiIndex, oauthAccount) + apiIndex.getBaseUrlSuffix();
+            String basePath = this.getBaseUrl(config.getSelectedApiIndex(), oauthAccount) + config.getSelectedApiIndex().getBaseUrlSuffix();
             session.setBasePath(basePath);
         }
 
