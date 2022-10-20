@@ -67,6 +67,15 @@ public class M002WebQueryEndpoint extends AbstractMonitorController {
                 args.getEndDate()
         );
 
+        if (queryResult.has("Error"))
+        {
+            new DoneExample()
+                    .withTitle(getTextForCodeExample().ExampleName)
+                    .withName("")
+                    .withMessage(queryResult.getString("Error"))
+                    .addToModel(model, config);            
+            return ERROR_PAGE;
+        }
         // Cleaning the data from unsupported symbols
         String queryResultCleaned = queryResult.toString().replaceAll("'", "");
 
