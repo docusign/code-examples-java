@@ -9,7 +9,7 @@
         <relativePath />
     </parent>
 
-    <groupId>com.quickACG</groupId>
+    <groupId>com.docusign</groupId>
     <artifactId>code-examples-java-acg</artifactId>
     <version>1.0-SNAPSHOT</version>
 
