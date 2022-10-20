@@ -85,8 +85,6 @@ public class DSConfiguration {
     @Value("${CodeExamplesManifest}")
     private String codeExamplesManifest;
 
-    public String examplesApiPath = "examplesApi.json";
-
     public String apiTypeHeader = "ApiType";
 
     public String getDsReturnUrl() {
@@ -98,34 +96,19 @@ public class DSConfiguration {
     }
 
     public ApiType getSelectedApiType() throws IOException {
-        return ApiType.valueOf(getSelectedApi());
+        if (selectedApiType == null){
+            return ApiType.ESIGNATURE;
+        }
+
+        return ApiType.valueOf(selectedApiType);
     }
 
     public ApiIndex getSelectedApiIndex() throws IOException {
-        return ApiIndex.valueOf(getSelectedApi());
-    }
-
-    private String getSelectedApi() throws IOException {
-        if (selectedApiType != null){
-            return selectedApiType;
+        if (selectedApiType == null){
+            return ApiIndex.ESIGNATURE;
         }
 
-        if(Boolean.valueOf(quickACG)){
-            return ApiIndex.ESIGNATURE.name();
-        }
-
-        ClassPathResource resource = new ClassPathResource(examplesApiPath);
-        String source = StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
-        try {
-            Object apiTypeValues = new JSONObject(source).get(apiTypeHeader);
-            if (apiTypeValues == null ||  !EnumUtils.isValidEnum(ApiIndex.class, apiTypeValues.toString())) {
-                throw new JSONException(String.format("The wrong format of the %s file.", examplesApiPath));
-            }
-            selectedApiType = apiTypeValues.toString();
-        } catch (JSONException e){
-            e.printStackTrace();
-        }
-        return selectedApiType;
+        return ApiIndex.valueOf(selectedApiType);
     }
 
     public ManifestStructure getCodeExamplesText() {

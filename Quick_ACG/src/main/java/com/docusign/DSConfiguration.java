@@ -78,8 +78,6 @@ public class DSConfiguration {
     @Value("${DS_ADMIN_BASE_PATH}")
     private String adminBasePath;
 
-    public String examplesApiPath = "examplesApi.json";
-
     public String apiTypeHeader = "ApiType";
 
     @Value("${ESignatureManifest}")

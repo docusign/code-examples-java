@@ -106,50 +106,6 @@ public class IndexController {
         }
     }
 
-    @GetMapping(path = "/ds/selectApi")
-    public Object choseApiType(ModelMap model) {
-        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
-        return new ModelAndView("pages/ds_select_api");
-    }
-
-    @RequestMapping(path = "/ds/selectApi", method = RequestMethod.POST)
-    public Object getApiType(ModelMap model, @RequestBody MultiValueMap<String, String> formParams) throws IOException, URISyntaxException {
-        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
-
-        if (!formParams.containsKey("selectApiType")) {
-            model.addAttribute("message", "Select option with selectApiType name must be provided.");
-            return new RedirectView("pages/error");
-        }
-        List<String> selectApiTypeObject = formParams.get("selectApiType");
-        ApiType apiTypeSelected = ApiType.valueOf(selectApiTypeObject.get(0));
-        writeApiTypeIntoFile(apiTypeSelected);
-
-        return new ModelAndView("pages/ds_restart");
-    }
-
-    private void writeApiTypeIntoFile(ApiType apiTypeSelected) throws URISyntaxException, IOException {
-        JSONObject currentApiType = new JSONObject();
-        currentApiType.put(config.getApiTypeHeader(), apiTypeSelected.name());
-
-        Path exampleApiSourcePath = Paths.get("").resolve("src").resolve("main")
-            .resolve("resources").resolve(config.getExamplesApiPath());
-        if (Files.exists(exampleApiSourcePath)) {
-            try (BufferedWriter bufferedWriter = new BufferedWriter(
-                    new FileWriter(exampleApiSourcePath.toAbsolutePath().toString()))
-            ) {
-                bufferedWriter.write(currentApiType.toString());
-            }
-        } else {
-            // Works in case we create war and run it on 'tomcat' server
-            URL exampleApiURL = getClass().getClassLoader().getResource(config.getExamplesApiPath());
-            try (BufferedWriter bufferedWriter = new BufferedWriter(
-                    new FileWriter(new File(Objects.requireNonNull(exampleApiURL).toURI())))
-            ) {
-                bufferedWriter.write(currentApiType.toString());
-            }
-        }
-    }
-
     @RequestMapping(path = "/ds/authenticate", method = RequestMethod.POST)
     public RedirectView authenticate(ModelMap model, @RequestBody MultiValueMap<String, String> formParams) {
         if (!formParams.containsKey("selectAuthType")) {
