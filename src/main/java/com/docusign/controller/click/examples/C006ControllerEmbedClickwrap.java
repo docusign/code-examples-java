@@ -3,14 +3,12 @@ package com.docusign.controller.click.examples;
 import com.docusign.DSConfiguration;
 import com.docusign.click.api.AccountsApi;
 import com.docusign.click.client.ApiException;
-import com.docusign.click.model.ClickwrapVersionSummaryResponse;
 import com.docusign.click.model.ClickwrapVersionsResponse;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.controller.click.services.EmbedClickwrapService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -62,11 +60,24 @@ public class C006ControllerEmbedClickwrap extends AbstractClickController {
                 accountsApi, this.session.getAccountId(),
                 clickwrapId, fullName, email, company, title, date);
 
-        DoneExample.createDefault(this.title)
+        if (url == "Already Agreed")
+        {
+            new DoneExample()
+                    .withTitle(exampleName)
+                    .withName(title)
+                    .withMessage("The email address you provided was already use to agree to this elastic template, please provide a different email address if you want to view the agreement and agree to it")
+                    .addToModel(model, config);
+            return ERROR_PAGE;
+        }
+        else
+        {
+            String HTMLSnippet = "<p id='agreementStatus'>NOT AGREED</p><div id='ds-terms-of-service'></div><script src='https://stage.docusign.net/clickapi/sdk/latest/docusign-click.js'></script><script>docuSignClick.Clickwrap.render({agreementUrl: '" + url + "',onAgreed: function () {document.getElementById('agreementStatus').innerHTML = 'AGREED';}}, '#ds-terms-of-service');</script>";
+            DoneExample.createDefault(this.title)
                 .withJsonObject(url)
-                .withMessage(getTextForCodeExample().ResultsPageText)
+                .withMessage(getTextForCodeExample().ResultsPageText + HTMLSnippet)
                 .addToModel(model, config);
-        return DONE_EXAMPLE_PAGE;
+            return DONE_EXAMPLE_PAGE;
+        }
     }
     // ***DS.snippet.0.end
 }
