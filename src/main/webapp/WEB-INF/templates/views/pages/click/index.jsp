@@ -31,7 +31,6 @@
         <c:forEach var="example" items="${group.getExamples()}">
             <c:if test="${example.getSkipForLanguages() == null || !example.getSkipForLanguages().toLowerCase().contains('java')}">
                 <h4 id="${String.format("example%03d", example.getExampleNumber())}">
-                        ${example.getExampleNumber()}.
                     <a href="${String.format("c%03d", example.getExampleNumber())}">
                             ${example.getExampleName()}
                     </a>
