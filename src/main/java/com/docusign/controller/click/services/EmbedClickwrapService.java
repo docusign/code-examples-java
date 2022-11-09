@@ -33,7 +33,14 @@ public final class EmbedClickwrapService {
                 userAgreementRequest.setDocumentData(documentData);
                 ApiResponse<UserAgreementResponse> response = accountsApi.createHasAgreedWithHttpInfo(accountId, clickwrapId, userAgreementRequest);
 
-                return response.getData().getAgreementUrl();
+                if (response.getStatusCode() == 201)
+                {
+                    return response.getData().getAgreementUrl();
+                }
+                else 
+                {
+                    return "Already Agreed";
+                }
     }
 
     public static ClickwrapVersionsResponse getActiveClickwraps(
