@@ -4,7 +4,7 @@
 <c:set var="formNumber" value="0" scope="page" />
 <c:set var="clickwrapInputNumber" value="0" scope="page" />
 
-<h4>1. ${example.getExampleName()}</h4>
+<h4>${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
 <jsp:include page="../../links_to_api_methods.jsp" />
 <p>
