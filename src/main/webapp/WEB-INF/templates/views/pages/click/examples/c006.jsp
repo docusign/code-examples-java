@@ -20,7 +20,7 @@
 </p>
 
 <c:choose>
-    <c:when test="${clickwraps['clickwraps'] != null }">
+    <c:when test="${clickwraps['clickwraps'].size() > 0 }">
         <p>${example.getForms().get(formNumber).getFormName()}</p>
         <form class="eg" action="" method="post" data-busy="form">
             <div class="form-group">
