@@ -8,6 +8,7 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.controller.click.services.ActivateClickwrapService;
 import com.docusign.controller.click.services.EmbedClickwrapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,7 +40,10 @@ public class C006ControllerEmbedClickwrap extends AbstractClickController {
         super.onInitModel(args, model);
         AccountsApi accountsApi = createAccountsApiClient(this.session.getBasePath(), this.user.getAccessToken());
         ClickwrapVersionsResponse clickwraps = EmbedClickwrapService.getActiveClickwraps(accountsApi, this.session.getAccountId());
+        ClickwrapVersionsResponse inactiveClickwraps = ActivateClickwrapService.getInactiveClickwraps(accountsApi, this.session.getAccountId());
+        Boolean hasInactiveClickraps = (inactiveClickwraps.getClickwraps().size() > 0);
         model.addAttribute(MODEL_CLICKWRAPS, clickwraps);
+        model.addAttribute("hasInactiveClickraps", hasInactiveClickraps);
     }
 
     @Override

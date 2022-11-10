@@ -9,7 +9,9 @@
 <c:set var="jobTitleInputNumber" value="4" scope="page" />
 <c:set var="dateInputNumber" value="5" scope="page" />
 <c:set var="redirectToFirstCodeExample" value="href='c001'" scope="page" />
-<c:set var="redirectNumber" value="0" scope="page" />
+<c:set var="redirectToSecondCodeExample" value="href='c002'" scope="page" />
+<c:set var="redirectNumberTo1" value="0" scope="page" />
+<c:set var="redirectNumberTo2" value="1" scope="page" />
 
 <h4>${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
@@ -94,10 +96,19 @@
         </form>
     </c:when>
     <c:otherwise>
-        <p>
-                ${example.getRedirectsToOtherCodeExamples().get(redirectNumber).getRedirectText().replaceFirst("\\{0}", redirectToFirstCodeExample)}
-        </p>
-    </c:otherwise>
+        <c:choose>
+            <c:when test="${hasInactiveClickraps}">
+                <p>
+                    ${example.getRedirectsToOtherCodeExamples().get(redirectNumberTo2).getRedirectText().replaceFirst("\\{0}", redirectToSecondCodeExample)}
+                </p>
+            </c:when>
+            <c:otherwise>
+                <p>
+                    ${example.getRedirectsToOtherCodeExamples().get(redirectNumberTo1).getRedirectText().replaceFirst("\\{0}", redirectToFirstCodeExample)}
+                </p>
+            </c:otherwise>
+        </c:choose>
+   </c:otherwise>
 </c:choose>
 
 <jsp:include page="../../../partials/foot.jsp"/>
