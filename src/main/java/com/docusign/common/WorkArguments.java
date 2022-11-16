@@ -73,4 +73,8 @@ public class WorkArguments {
     private String clickwrapId;
     private String hostEmail;
     private String hostName;
+    private String fullName;
+    private String company;
+    private String title;
+    private String date;
 }
