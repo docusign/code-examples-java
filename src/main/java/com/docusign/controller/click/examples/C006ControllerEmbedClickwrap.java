@@ -69,7 +69,7 @@ public class C006ControllerEmbedClickwrap extends AbstractClickController {
             new DoneExample()
                     .withTitle(exampleName)
                     .withName(title)
-                    .withMessage("The email address you provided was already use to agree to this elastic template, please provide a different email address if you want to view the agreement and agree to it")
+                    .withMessage("The email address was already used to agree to this elastic template. Provide a different email address if you want to view the agreement and agree to it.")
                     .addToModel(model, config);
             return ERROR_PAGE;
         }
