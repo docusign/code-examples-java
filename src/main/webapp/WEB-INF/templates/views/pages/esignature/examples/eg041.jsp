@@ -2,8 +2,8 @@
 <jsp:include page="../../../partials/head.jsp"/>
 
 <c:set var="formNumber" value="0" scope="page" />
-<c:set var="signerNameInputNumber" value="0" scope="page" />
-<c:set var="signerEmailInputNumber" value="1" scope="page" />
+<c:set var="signerEmailInputNumber" value="0" scope="page" />
+<c:set var="signerNameInputNumber" value="1" scope="page" />
 <c:set var="countryCodeInputNumber" value="2" scope="page" />
 <c:set var="phoneNumberInputNumber" value="3" scope="page" />
 
@@ -21,19 +21,6 @@
 
 <form class="eg" action="" method="post" data-busy="form">
     <div class="form-group">
-        <label for="signerName">
-            ${example.getForms().get(formNumber).getInputs().get(signerNameInputNumber).getInputName()}
-        </label>
-
-        <input type="text"
-               class="form-control"
-               id="signerName"
-               placeholder="${example.getForms().get(formNumber).getInputs().get(signerNameInputNumber).getInputPlaceholder()}"
-               name="signerName"
-               value="${locals.dsConfig.signerName}"
-               required>
-    </div>
-    <div class="form-group">
         <label for="signerEmail">
             ${example.getForms().get(formNumber).getInputs().get(signerEmailInputNumber).getInputName()}
         </label>
@@ -50,6 +37,19 @@
         <small id="emailHelp" class="form-text text-muted">
             ${launcherTexts.getHelpingTexts().getEmailWontBeShared()}
         </small>
+    </div>
+    <div class="form-group">
+      <label for="signerName">
+          ${example.getForms().get(formNumber).getInputs().get(signerNameInputNumber).getInputName()}
+      </label>
+
+      <input type="text"
+             class="form-control"
+             id="signerName"
+             placeholder="${example.getForms().get(formNumber).getInputs().get(signerNameInputNumber).getInputPlaceholder()}"
+             name="signerName"
+             value="${locals.dsConfig.signerName}"
+             required>
     </div>
     <div class="form-group">
       <label for="countryCode">
