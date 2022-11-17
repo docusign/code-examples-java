@@ -13,6 +13,8 @@ public class CodeExampleText {
 
     public String ExampleName;
 
+    public String CFREnabled;
+
     public String ExampleDescription;
 
     public String Notes;
