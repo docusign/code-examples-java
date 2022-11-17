@@ -1,18 +1,24 @@
-package com.docusign;
+package com.docusign.controller.eSignature.examples;
 
+import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
-import com.docusign.controller.eSignature.examples.AbstractEsignatureController;
-import com.docusign.core.common.Utils;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
+import com.docusign.esign.client.ApiException;
+import com.docusign.esign.model.AccountIdentityVerificationResponse;
+import com.docusign.esign.model.AccountIdentityVerificationWorkflow;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.RecipientViewRequest;
 import com.docusign.esign.model.ViewUrl;
 
-import com.docusign.controller.eSignature.services.EmbeddedSigningService;
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.docusign.controller.eSignature.services.CfrEmbeddedSigningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,34 +35,22 @@ import javax.servlet.http.HttpServletResponse;
  * for the signer: the DocuSign signing is initiated from your site.
  */
 @Controller
-@RequestMapping("/eg001")
-public class EG001ControllerEmbeddedSigning extends AbstractEsignatureController {
+@RequestMapping("/eg041")
+public class EG041ControllerCfrEmbeddedSigning extends AbstractEsignatureController {
 
+    private static final Logger logger = LoggerFactory.getLogger(EG023ControllerIdvAuthentication.class);
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
     private static final String DOCUMENT_NAME = "Lorem Ipsum";
-    private static final int ANCHOR_OFFSET_Y = 20;
+    private static final int ANCHOR_OFFSET_Y = -30;
     private static final int ANCHOR_OFFSET_X = 10;
-    private static final String SIGNER_CLIENT_ID = "1000";
     private final Session session;
     private final User user;
 
     @Autowired
-    public EG001ControllerEmbeddedSigning(DSConfiguration config, Session session, User user){
-        super(config, Boolean.valueOf(config.getQuickACG()) ? "quickEmbeddedSigning" : "eg001");
+    public EG041ControllerCfrEmbeddedSigning(DSConfiguration config, Session session, User user){
+        super(config, "eg041");
         this.session = session;
         this.user = user;
-    }
-
-    @Override
-    protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
-      if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
-        session.setStatusCFR("enabled");
-        throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
-      }
-      if(config.getQuickstart().equals("true")){
-        config.setQuickstart("false");
-      }
-      super.onInitModel(args, model);
     }
 
     @Override
@@ -64,20 +58,49 @@ public class EG001ControllerEmbeddedSigning extends AbstractEsignatureController
                             HttpServletResponse response) throws Exception {
         String signerName = args.getSignerName();
         String signerEmail = args.getSignerEmail();
+        String signerClientId = args.getSignerEmail();
+        String countryCode = args.getCountryCode();
+        String phoneNumber = args.getPhoneNumber();
         String accountId = session.getAccountId();
 
+        // Step 2 start
+        ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
+        // Step 2 end
+
+        // Step 3 start
+        AccountsApi workflowDetails = new AccountsApi(apiClient);
+        AccountIdentityVerificationResponse workflowRes = workflowDetails.getAccountIdentityVerification(session.getAccountId());
+        List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getIdentityVerification();
+        String workflowId = "";
+        for (int i = 0; i < identityVerification.size(); i++)
+        {
+            if (identityVerification.get(i).getDefaultName().equals("SMS for access & signatures"))
+            {
+                workflowId = identityVerification.get(i).getWorkflowId();
+            }
+        }
+        // Step 3 end
+        logger.info("workflowId = " + workflowId);
+        if (workflowId.equals(""))
+        {
+            throw new ApiException(0, getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage);
+        }
+
+
         // Step 1. Create the envelope definition
-        EnvelopeDefinition envelope = EmbeddedSigningService.makeEnvelope(
-                signerEmail,
+        EnvelopeDefinition envelope = CfrEmbeddedSigningService.makeEnvelope(
                 signerName,
-                SIGNER_CLIENT_ID,
+                signerEmail,
+                countryCode,
+                phoneNumber,
+                workflowId,
+                signerClientId,
                 ANCHOR_OFFSET_Y,
                 ANCHOR_OFFSET_X,
                 DOCUMENT_FILE_NAME,
                 DOCUMENT_NAME);
 
         // Step 2. Call DocuSign to create the envelope
-        ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
         EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
 
@@ -85,13 +108,13 @@ public class EG001ControllerEmbeddedSigning extends AbstractEsignatureController
         session.setEnvelopeId(envelopeId);
 
         // Step 3. create the recipient view, the embedded signing
-        RecipientViewRequest viewRequest = EmbeddedSigningService.makeRecipientViewRequest(
+        RecipientViewRequest viewRequest = CfrEmbeddedSigningService.makeRecipientViewRequest(
                 signerEmail,
                 signerName,
                 config,
-                SIGNER_CLIENT_ID);
+                signerClientId);
 
-        ViewUrl viewUrl = EmbeddedSigningService.embeddedSigning(
+        ViewUrl viewUrl = CfrEmbeddedSigningService.embeddedSigning(
                 envelopesApi,
                 accountId,
                 envelopeId,
