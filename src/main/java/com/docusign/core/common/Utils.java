@@ -8,6 +8,13 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.http.HttpHeaders;
+
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
+import com.docusign.esign.api.AccountsApi;
+import com.docusign.esign.client.ApiClient;
+import com.docusign.esign.model.AccountInformation;
 
 
 public final class Utils {
@@ -72,5 +79,23 @@ public final class Utils {
                 .stream()
                 .filter(field -> !StringUtils.equals(field.getLeftValue(), field.getRightValue()))
                 .collect(Collectors.toList());
+    }
+
+    public static Boolean isCfr(String basePath, String accessToken, String accountId) throws Exception {
+      if(accessToken == null){
+
+      }
+      ApiClient apiClient = new ApiClient(basePath);
+      apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
+      AccountsApi accountsApi = new AccountsApi(apiClient);
+
+      AccountInformation accountInfo = accountsApi.getAccountInformation(accountId);
+      String isEnabled = accountInfo.getStatus21CFRPart11();
+
+      if(isEnabled != null && isEnabled.equals("enabled")){
+        return true;
+      } else {
+        return false;
+      }
     }
 }

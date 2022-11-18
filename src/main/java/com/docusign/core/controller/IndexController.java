@@ -2,10 +2,14 @@ package com.docusign.core.controller;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.ApiIndex;
+import com.docusign.core.common.Utils;
 import com.docusign.core.model.ApiType;
 import com.docusign.core.model.AuthType;
 import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import com.docusign.core.security.OAuthProperties;
+import com.docusign.esign.model.Group;
+import com.docusign.core.controller.AbstractController;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -46,9 +50,13 @@ public class IndexController {
     private static final String ATTR_TITLE = "title";
     private static final String LAUNCHER_TEXTS = "launcherTexts";
     private static final String CODE_EXAMPLE_GROUPS = "codeExampleGroups";
+    private static final String STATUS_CFR = "statusCFR";
 
     @Autowired
     private Session session;
+
+    @Autowired
+    private User user;
 
     @Autowired
     private OAuthProperties jwtGrantSso;
@@ -62,15 +70,26 @@ public class IndexController {
     @GetMapping(path = "/")
     public String index(ModelMap model, HttpServletResponse response) throws IOException {
         model.addAttribute(ATTR_TITLE,"Home");
-
+        Boolean isCFR = false;
+        if(user.getAccessToken() != null){
+          try {
+            isCFR = Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId());
+          } catch (Exception exception) {
+              return exception.toString();
+          }
+        }
         if (config.getQuickstart().equals("true") && config.getSelectedApiIndex().equals(ApiIndex.ESIGNATURE) &&
                 !(SecurityContextHolder.getContext().getAuthentication() instanceof OAuth2Authentication)){
-            String site = config.getSelectedApiIndex().getPathOfFirstExample();
-            response.setStatus(response.SC_MOVED_TEMPORARILY);
-            response.setHeader("Location", site);
-            return null;
+                String site = config.getSelectedApiIndex().getPathOfFirstExample();
+                response.setStatus(response.SC_MOVED_TEMPORARILY);
+                response.setHeader("Location", site);
+                return null;
         }
 
+        if (isCFR){
+          session.setStatusCFR("enabled");
+          model.addAttribute(STATUS_CFR, "enabled");
+        }
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
         model.addAttribute(CODE_EXAMPLE_GROUPS, config.getCodeExamplesText().Groups.toArray());
         return session.getApiIndexPath();
@@ -81,7 +100,7 @@ public class IndexController {
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
         model.addAttribute(ATTR_TITLE, config.getCodeExamplesText().SupportingTexts.LoginPage.LoginButton);
         if (session.isRefreshToken() || config.getQuickstart().equals("true")) {
-            config.setQuickstart("false");
+
 
             if  (config.getSelectedApiType().equals(ApiType.MONITOR)) {
                 return new ModelAndView(getRedirectView(AuthType.JWT));
