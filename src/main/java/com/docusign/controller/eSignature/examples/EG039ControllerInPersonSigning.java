@@ -3,6 +3,7 @@ package com.docusign.controller.eSignature.examples;
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
 import com.docusign.controller.eSignature.services.InPersonSigningService;
+import com.docusign.core.common.Utils;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
@@ -35,6 +36,15 @@ public class EG039ControllerInPersonSigning extends AbstractEsignatureController
 	   super(config, "eg039");
 	   this.session = session;
 	   this.user = user;
+    }
+
+    @Override
+    protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
+      if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
+        session.setStatusCFR("enabled");
+        throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
+      }
+        super.onInitModel(args, model);
     }
 
     @Override
