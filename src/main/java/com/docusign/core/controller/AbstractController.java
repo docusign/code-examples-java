@@ -43,6 +43,7 @@ public abstract class AbstractController {
     protected static final String ERROR_PAGE = "error";
     private static final String EXAMPLE_TEXT = "example";
     protected static final String LAUNCHER_TEXTS = "launcherTexts";
+    protected static final String REDIRECT_CFR_QUICKSTART = REDIRECT_PREFIX + "/eg041";
 
     @Autowired
     private OAuth2ClientContext oAuth2ClientContext;
@@ -84,7 +85,12 @@ public abstract class AbstractController {
             onInitModel(args, model);
             return pagePath;
         } catch (Exception exception) {
-            return handleException(exception, model);
+            if (config.getQuickstart().equals("true") && exception.getMessage() == config.getCodeExamplesText().getSupportingTexts().getCFRError()){
+              config.setQuickstart("false");
+              return handleRedirectToCfr(model);
+            } else {
+              return handleException(exception, model);
+            }
         }
     }
 
@@ -162,6 +168,10 @@ public abstract class AbstractController {
             .withStackTracePrinted(stackTrace)
             .addToModel(model, config);
         return ERROR_PAGE;
+    }
+
+    private String handleRedirectToCfr(ModelMap model) {
+      return REDIRECT_CFR_QUICKSTART;
     }
 
     private boolean isTokenExpired() {
