@@ -3,6 +3,7 @@ package com.docusign.controller.eSignature.services;
 import com.docusign.DSConfiguration;
 import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
 import com.docusign.esign.api.EnvelopesApi;
+import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
@@ -11,19 +12,33 @@ import java.util.Collections;
 
 public final class EmbeddedSigningService {
     public static ViewUrl embeddedSigning(
-            EnvelopesApi envelopesApi,
+            ApiClient apiClient,
             String accountId,
             String envelopeId,
             RecipientViewRequest viewRequest
     ) throws ApiException {
+        EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
+
         return envelopesApi.createRecipientView(accountId, envelopeId, viewRequest);
+    }
+
+    public static String createEnvelope(
+            ApiClient apiClient,
+            String accountId,
+            EnvelopeDefinition envelope
+    ) throws ApiException {
+        EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
+        EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
+
+        return envelopeSummary.getEnvelopeId();
     }
 
     public static RecipientViewRequest makeRecipientViewRequest(
             String signerEmail,
             String signerName,
-            DSConfiguration config,
-            String clientUserId
+            String clientUserId,
+            String dsReturnURL,
+            String pingURL
     ) {
         RecipientViewRequest viewRequest = new RecipientViewRequest();
         // Set the url where you want the recipient to go once they are done signing
@@ -34,7 +49,7 @@ public final class EmbeddedSigningService {
         // the session mechanism of your web framework. Query parameters
         // can be changed/spoofed very easily.
         String stateValue = "?state=123";
-        viewRequest.setReturnUrl(config.getDsReturnUrl() + stateValue);
+        viewRequest.setReturnUrl(dsReturnURL + stateValue);
 
         // How has your app authenticated the user? In addition to your app's
         // authentication, you can include authenticate steps from DocuSign.
@@ -56,7 +71,7 @@ public final class EmbeddedSigningService {
         // NOTE: The pings will only be sent if the pingUrl is an https address
         String pingFrequency = "600";
         viewRequest.setPingFrequency(pingFrequency); // seconds
-        viewRequest.setPingUrl(config.getDsPingUrl());
+        viewRequest.setPingUrl(pingURL);
 
         return viewRequest;
     }

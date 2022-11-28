@@ -2,6 +2,7 @@ package com.docusign.controller.eSignature.services;
 
 import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
 import com.docusign.esign.api.EnvelopesApi;
+import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
@@ -13,6 +14,16 @@ public final class SetTabValuesService {
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_salary.docx";
     private static final String DOCUMENT_NAME = "Lorem Ipsum";
     private static final String SIGNER_CLIENT_ID = "1000";
+
+    public static EnvelopeSummary createEnvelope(
+            EnvelopesApi envelopesApi,
+            String accountId,
+            EnvelopeDefinition envelope
+    ) throws ApiException {
+        EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
+
+        return envelopeSummary;
+    }
 
     public static ViewUrl createRecipientView(
             EnvelopesApi envelopesApi,

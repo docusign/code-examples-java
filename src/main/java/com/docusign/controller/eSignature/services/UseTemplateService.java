@@ -2,9 +2,12 @@ package com.docusign.controller.eSignature.services;
 
 import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
 import com.docusign.esign.api.EnvelopesApi;
+import com.docusign.esign.api.TemplatesApi;
+import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
+import com.docusign.esign.model.EnvelopeTemplateResults;
 import com.docusign.esign.model.TemplateRole;
 
 import java.util.Arrays;
@@ -16,6 +19,14 @@ public final class UseTemplateService {
             EnvelopeDefinition envelope
     ) throws ApiException {
         return envelopesApi.createEnvelope(accountId, envelope);
+    }
+
+    public static EnvelopeTemplateResults listTemplates(
+            ApiClient apiClient,
+            String accountId
+    ) throws ApiException {
+        TemplatesApi templatesApi = new TemplatesApi(apiClient);
+        return templatesApi.listTemplates(accountId);
     }
 
     public static EnvelopeDefinition makeEnvelope(
