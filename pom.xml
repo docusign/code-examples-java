@@ -17,6 +17,9 @@
     <name>Docusign Java Tutorial</name>
 
     <properties>
+        <project.build.sourceDirectory>src/main</project.build.sourceDirectory>
+        <project.build.testSourceDirectory>src/test/java</project.build.testSourceDirectory>
+
         <java.version>11</java.version>
         <oauth2.version>2.5.6</oauth2.version>
         <commonsio.version>2.11.0</commonsio.version>
@@ -25,6 +28,7 @@
         <click.version>1.2.2</click.version>
         <monitor.version>1.1.0</monitor.version>
         <admin.version>1.1.0</admin.version>
+        <junit-version>4.13.1</junit-version>
     </properties>
 
     <dependencies>
@@ -123,15 +127,34 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
             <version>2.4.4</version>
         </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit-version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.7.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -161,17 +184,12 @@
 
 
     <dependencyManagement>
-
         <dependencies>
-
-
             <dependency>
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcprov-jdk15on</artifactId>
                 <version>1.69</version>
             </dependency>
-
         </dependencies>
-
     </dependencyManagement>
 </project>
