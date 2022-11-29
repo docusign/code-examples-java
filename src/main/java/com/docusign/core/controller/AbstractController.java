@@ -8,8 +8,9 @@ import com.docusign.core.model.Session;
 import com.docusign.core.model.manifestModels.CodeExampleText;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.client.OAuth2ClientContext;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
+//import org.springframework.security.oauth2.client.OAuth2ClientContext;
+//import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,8 +46,8 @@ public abstract class AbstractController {
     protected static final String LAUNCHER_TEXTS = "launcherTexts";
     protected static final String REDIRECT_CFR_QUICKSTART = REDIRECT_PREFIX + "/eg041";
 
-    @Autowired
-    private OAuth2ClientContext oAuth2ClientContext;
+//    @Autowired
+//    private OAuth2ClientContext oAuth2ClientContext;
 
     @Autowired
     protected Session session;
@@ -175,10 +176,12 @@ public abstract class AbstractController {
     }
 
     private boolean isTokenExpired() {
-        OAuth2AccessToken accessToken = oAuth2ClientContext.getAccessToken();
-        boolean tokenExpired = accessToken != null && accessToken.isExpired();
-        session.setRefreshToken(tokenExpired);
-        return tokenExpired;
+
+//        OAuth2AccessToken accessToken = oAuth2ClientContext.getAccessToken();
+//        boolean tokenExpired = accessToken != null && accessToken.isExpired();
+//        session.setRefreshToken(tokenExpired);
+//        return tokenExpired;
+        return false;
     }
 
 
