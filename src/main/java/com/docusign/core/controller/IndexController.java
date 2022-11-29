@@ -70,14 +70,17 @@ public class IndexController {
     @GetMapping(path = "/")
     public String index(ModelMap model, HttpServletResponse response) throws IOException {
         model.addAttribute(ATTR_TITLE,"Home");
+
         Boolean isCFR = false;
-        if(user.getAccessToken() != null){
+
+        if(user.getAccessToken() != null && config.getSelectedApiType().equals(ApiType.ESIGNATURE)){
           try {
             isCFR = Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId());
           } catch (Exception exception) {
               return exception.toString();
           }
         }
+
         if (config.getQuickstart().equals("true") && config.getSelectedApiIndex().equals(ApiIndex.ESIGNATURE) &&
                 !(SecurityContextHolder.getContext().getAuthentication() instanceof OAuth2Authentication)){
                 String site = config.getSelectedApiIndex().getPathOfFirstExample();
@@ -100,7 +103,7 @@ public class IndexController {
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
         model.addAttribute(ATTR_TITLE, config.getCodeExamplesText().SupportingTexts.LoginPage.LoginButton);
         if (session.isRefreshToken() || config.getQuickstart().equals("true")) {
-
+            config.setQuickstart("false");
 
             if  (config.getSelectedApiType().equals(ApiType.MONITOR)) {
                 return new ModelAndView(getRedirectView(AuthType.JWT));
