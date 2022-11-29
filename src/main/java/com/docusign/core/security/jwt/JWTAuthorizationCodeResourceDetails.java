@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.security.oauth2.client.token.grant.redirect.AbstractRedirectResourceDetails;
+//import org.springframework.security.oauth2.client.token.grant.redirect.AbstractRedirectResourceDetails;
 import org.springframework.util.FileCopyUtils;
 import java.io.IOException;
 import java.util.Arrays;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class JWTAuthorizationCodeResourceDetails extends AbstractRedirectResourceDetails {
+public class JWTAuthorizationCodeResourceDetails /*extends AbstractRedirectResourceDetails*/ {
 
     private String privateKeyPath;
     private String impersonatedUserGuid;

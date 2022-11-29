@@ -14,13 +14,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.OAuth2Request;
-import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
+//import org.springframework.security.oauth2.common.OAuth2AccessToken;
+//import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
+//import org.springframework.security.oauth2.provider.OAuth2Authentication;
+//import org.springframework.security.oauth2.provider.OAuth2Request;
+//import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 
-public class JWTUserInfoTokenService implements ResourceServerTokenServices {
+public class JWTUserInfoTokenService /*implements ResourceServerTokenServices*/ {
 
     private static final String AUTHORITIES = "ROLE_USER";
 
@@ -32,7 +32,7 @@ public class JWTUserInfoTokenService implements ResourceServerTokenServices {
         apiClient = resource.getApiClient();
     }
 
-    @Override
+/*    @Override
     public OAuth2Authentication loadAuthentication(String accessToken) throws AuthenticationException, InvalidTokenException {
         UserInfo userInfo;
         try {
@@ -41,13 +41,14 @@ public class JWTUserInfoTokenService implements ResourceServerTokenServices {
             throw new AuthenticationServiceException("Cannot authenticate", e);
         }
         return convert(userInfo, resource.getClientId());
-    }
+    }*/
 
-    @Override
+/*    @Override
     public OAuth2AccessToken readAccessToken(String accessToken) {
         throw new UnsupportedOperationException("Not supported: read access token");
-    }
+    }*/
 
+/*
     private static OAuth2Authentication convert(UserInfo userInfo, String clientId) {
         List<Account> accounts = userInfo.getAccounts();
         Object principal = userInfo.getName() == null ? "unknown" : userInfo.getName();
@@ -64,4 +65,5 @@ public class JWTUserInfoTokenService implements ResourceServerTokenServices {
         token.setDetails(details);
         return new OAuth2Authentication(request, token);
     }
+*/
 }
