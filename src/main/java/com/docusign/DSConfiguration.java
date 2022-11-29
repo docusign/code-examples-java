@@ -97,6 +97,8 @@ public class DSConfiguration {
     @Value("${MonitorManifest}")
     private String monitorManifest;
 
+    public String configFilePath = "application.json";
+
     public String examplesApiPath = "examplesApi.json";
 
     public String apiTypeHeader = "ApiType";
