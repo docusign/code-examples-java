@@ -5,12 +5,20 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 
+import com.docusign.core.model.User;
 import com.docusign.core.model.manifestModels.CodeExampleText;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.oauth2.client.OAuth2ClientContext;
 //import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +26,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletResponse;
 
+import java.time.Instant;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -46,11 +56,14 @@ public abstract class AbstractController {
     protected static final String LAUNCHER_TEXTS = "launcherTexts";
     protected static final String REDIRECT_CFR_QUICKSTART = REDIRECT_PREFIX + "/eg041";
 
-//    @Autowired
-//    private OAuth2ClientContext oAuth2ClientContext;
+    //@Autowired
+    //private OAuth2ClientContext oAuth2ClientContext;
 
     @Autowired
     protected Session session;
+
+    @Autowired
+    private OAuth2AuthorizedClientService authorizedClientService;
 
     protected final String exampleName;
     private CodeExampleText codeExampleText;
@@ -176,12 +189,20 @@ public abstract class AbstractController {
     }
 
     private boolean isTokenExpired() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-//        OAuth2AccessToken accessToken = oAuth2ClientContext.getAccessToken();
-//        boolean tokenExpired = accessToken != null && accessToken.isExpired();
-//        session.setRefreshToken(tokenExpired);
-//        return tokenExpired;
-        return false;
+        OAuth2AuthenticationToken oauth = (OAuth2AuthenticationToken) authentication;
+        OAuth2User oauthUser = oauth.getPrincipal();
+        OAuth2AuthorizedClient oauthClient = authorizedClientService.loadAuthorizedClient(
+                oauth.getAuthorizedClientRegistrationId(),
+                oauthUser.getName()
+        );
+        OAuth2AccessToken accessToken = oauthClient.getAccessToken();
+        boolean tokenExpired = accessToken != null && (accessToken.getExpiresAt().isBefore(Instant.now())
+                || accessToken.getExpiresAt().equals(Instant.now()));
+        session.setRefreshToken(tokenExpired);
+
+        return tokenExpired;
     }
 
 
