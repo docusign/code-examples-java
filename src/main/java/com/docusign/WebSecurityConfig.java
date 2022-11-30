@@ -32,6 +32,7 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequest
 import org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
@@ -158,20 +159,29 @@ public class WebSecurityConfig {
 //            .logout().logoutSuccessUrl("/").permitAll()
 //            .and()
 //            .csrf().disable()
-                .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers("/", "/error**", "/assets/**", "/ds/mustAuthenticate**",
-                                "/ds/authenticate**", "/ds/selectApi**")
-                        .permitAll()
-
-                        .anyRequest().authenticated()
-                )
-                .oauth2Login(Customizer.withDefaults())
-                .oauth2Client(Customizer.withDefaults())
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/")
-                )
-                .csrf().disable();
-
+                .authorizeHttpRequests(authorize -> {
+                                try {
+                                    authorize
+                                            .antMatchers("/", "/error**", "/assets/**", "/ds/mustAuthenticate**",
+                                                    "/ds/authenticate**", "/ds/selectApi**")
+                                            .permitAll()
+                                            .anyRequest().authenticated()
+                                            .and()
+                                            .exceptionHandling()
+                                            .authenticationEntryPoint(
+                                                    new LoginUrlAuthenticationEntryPoint("/ds/mustAuthenticate")
+                                            );
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                    )
+                    .oauth2Login(Customizer.withDefaults())
+                    .oauth2Client(Customizer.withDefaults())
+                    .logout(logout -> logout
+                            .logoutSuccessUrl("/")
+                    )
+                    .csrf().disable();
 //        http.apply(new CombinedAuthenticationConfigurer(Arrays.asList(authCodeGrantFilter(), jwtGrantFilter())));
         return  http.build();
     }
