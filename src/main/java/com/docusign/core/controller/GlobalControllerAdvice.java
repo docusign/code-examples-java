@@ -124,10 +124,14 @@ public class GlobalControllerAdvice {
                 oauthUser.getName()
         );
 
-
         if (oauth.isAuthenticated()) {
             user.setName(oauthUser.getAttribute("name"));
-            user.setAccessToken(oauthClient.getAccessToken().getTokenValue());
+            
+            if (oauthClient != null){
+                user.setAccessToken(oauthClient.getAccessToken().getTokenValue());
+            } else {
+                user.setAccessToken(((OAuth.OAuthToken) oauthUser.getAttribute("access_token")).getAccessToken());
+            }
 
             if (account.isEmpty()) {
                 account = Optional.ofNullable(getDefaultAccountInfo(getOAuthAccounts(oauthUser)));

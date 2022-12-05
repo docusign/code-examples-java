@@ -7,6 +7,7 @@ import com.docusign.core.model.Session;
 
 import com.docusign.core.model.User;
 import com.docusign.core.model.manifestModels.CodeExampleText;
+import com.docusign.esign.client.auth.OAuth;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.oauth2.client.OAuth2ClientContext;
@@ -190,16 +191,22 @@ public abstract class AbstractController {
 
     private boolean isTokenExpired() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+        boolean tokenExpired;
         OAuth2AuthenticationToken oauth = (OAuth2AuthenticationToken) authentication;
         OAuth2User oauthUser = oauth.getPrincipal();
         OAuth2AuthorizedClient oauthClient = authorizedClientService.loadAuthorizedClient(
                 oauth.getAuthorizedClientRegistrationId(),
                 oauthUser.getName()
         );
-        OAuth2AccessToken accessToken = oauthClient.getAccessToken();
-        boolean tokenExpired = accessToken != null && (accessToken.getExpiresAt().isBefore(Instant.now())
-                || accessToken.getExpiresAt().equals(Instant.now()));
+
+        if (oauthClient != null){
+            OAuth2AccessToken accessToken = oauthClient.getAccessToken();
+            tokenExpired = accessToken != null && accessToken.getExpiresAt().isBefore(Instant.now());
+        } else {
+            OAuth.OAuthToken accessToken = (OAuth.OAuthToken) oauthUser.getAttribute("access_token");
+            tokenExpired = accessToken != null && accessToken.getExpiresIn() >= Instant.now().toEpochMilli();
+        }
+
         session.setRefreshToken(tokenExpired);
 
         return tokenExpired;

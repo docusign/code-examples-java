@@ -8,6 +8,7 @@ import com.docusign.core.model.AuthType;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.core.security.OAuthProperties;
+import com.docusign.core.security.jwt.JWTAuthenticationMethod;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -103,16 +104,38 @@ public class IndexController {
     public ModelAndView mustAuthenticateController(ModelMap model) throws IOException {
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
         model.addAttribute(ATTR_TITLE, config.getCodeExamplesText().SupportingTexts.LoginPage.LoginButton);
+
+        if (config.getIsConsentRedirectActivated()) {
+            config.setIsConsentRedirectActivated(false);
+
+            return new ModelAndView(JWTAuthenticationMethod.loginUsingJWT(
+                    config.getSelectedApiType(),
+                    config.getUserId(),
+                    config.getImpersonatedUserId(),
+                    config.getBaseURL(),
+                    config));
+        }
+
         if (session.isRefreshToken() || config.getQuickstart().equals("true")) {
             config.setQuickstart("false");
 
             if (config.getSelectedApiType().equals(ApiType.MONITOR)) {
-                return new ModelAndView(getRedirectView(AuthType.JWT));
+                return new ModelAndView(JWTAuthenticationMethod.loginUsingJWT(
+                        config.getSelectedApiType(),
+                        config.getUserId(),
+                        config.getImpersonatedUserId(),
+                        config.getBaseURL(),
+                        config));
             }
 
             return new ModelAndView(getRedirectView(session.getAuthTypeSelected()));
         } else if (config.getSelectedApiType().equals(ApiType.MONITOR)) {
-            return new ModelAndView(getRedirectView(AuthType.JWT));
+            return new ModelAndView(JWTAuthenticationMethod.loginUsingJWT(
+                    config.getSelectedApiType(),
+                    config.getUserId(),
+                    config.getImpersonatedUserId(),
+                    config.getBaseURL(),
+                    config));
         } else {
             return new ModelAndView("pages/ds_must_authenticate");
         }
@@ -200,14 +223,24 @@ public class IndexController {
     }
 
     @RequestMapping(path = "/ds/authenticate", method = RequestMethod.POST)
-    public RedirectView authenticate(ModelMap model, @RequestBody MultiValueMap<String, String> formParams) {
+    public RedirectView authenticate(ModelMap model, @RequestBody MultiValueMap<String, String> formParams) throws IOException {
         if (!formParams.containsKey("selectAuthType")) {
             model.addAttribute("message", "Select option with selectAuthType name must be provided.");
             return new RedirectView("pages/error");
         }
         List<String> selectAuthTypeObject = formParams.get("selectAuthType");
         AuthType authTypeSelected = AuthType.valueOf(selectAuthTypeObject.get(0));
-        return getRedirectView(authTypeSelected);
+
+        if (authTypeSelected.equals(AuthType.JWT)){
+            return JWTAuthenticationMethod.loginUsingJWT(
+                    config.getSelectedApiType(),
+                    config.getUserId(),
+                    config.getImpersonatedUserId(),
+                    config.getBaseURL(),
+                    config);
+        }else {
+            return getRedirectView(authTypeSelected);
+        }
     }
 
     @GetMapping(path = "/ds-return")
