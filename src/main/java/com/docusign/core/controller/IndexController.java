@@ -16,6 +16,8 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -59,6 +62,9 @@ public class IndexController {
 
     @Autowired
     private User user;
+
+    @Autowired
+    private RequestCache requestCache;
 
     @Autowired
     private OAuthProperties jwtGrantSso;
@@ -101,9 +107,13 @@ public class IndexController {
     }
 
     @GetMapping(path = "/ds/mustAuthenticate")
-    public ModelAndView mustAuthenticateController(ModelMap model) throws IOException {
+    public ModelAndView mustAuthenticateController(ModelMap model, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
         model.addAttribute(ATTR_TITLE, config.getCodeExamplesText().SupportingTexts.LoginPage.LoginButton);
+
+        SavedRequest savedRequest = requestCache.getRequest(req, resp);
+        var redirectURL = savedRequest != null && "GET".equals(savedRequest.getMethod()) ?
+                        savedRequest.getRedirectUrl() : "/";
 
         if (config.getIsConsentRedirectActivated()) {
             config.setIsConsentRedirectActivated(false);
@@ -114,7 +124,8 @@ public class IndexController {
                     config.getUserId(),
                     config.getImpersonatedUserId(),
                     config.getBaseURL(),
-                    config));
+                    config,
+                    "/"));
         }
 
         if (session.isRefreshToken() || config.getQuickstart().equals("true")) {
@@ -128,7 +139,8 @@ public class IndexController {
                         config.getUserId(),
                         config.getImpersonatedUserId(),
                         config.getBaseURL(),
-                        config));
+                        config,
+                        redirectURL));
             }
 
             return new ModelAndView(getRedirectView(session.getAuthTypeSelected()));
@@ -140,7 +152,8 @@ public class IndexController {
                     config.getUserId(),
                     config.getImpersonatedUserId(),
                     config.getBaseURL(),
-                    config));
+                    config,
+                    redirectURL));
         } else {
             return new ModelAndView("pages/ds_must_authenticate");
         }
@@ -228,11 +241,16 @@ public class IndexController {
     }
 
     @RequestMapping(path = "/ds/authenticate", method = RequestMethod.POST)
-    public RedirectView authenticate(ModelMap model, @RequestBody MultiValueMap<String, String> formParams) throws IOException {
+    public RedirectView authenticate(ModelMap model, @RequestBody MultiValueMap<String, String> formParams, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if (!formParams.containsKey("selectAuthType")) {
             model.addAttribute("message", "Select option with selectAuthType name must be provided.");
             return new RedirectView("pages/error");
         }
+
+        SavedRequest savedRequest = requestCache.getRequest(req, resp);
+        var redirectURL = savedRequest != null && "GET".equals(savedRequest.getMethod()) ?
+                savedRequest.getRedirectUrl() : "/";
+
         List<String> selectAuthTypeObject = formParams.get("selectAuthType");
         AuthType authTypeSelected = AuthType.valueOf(selectAuthTypeObject.get(0));
 
@@ -243,7 +261,8 @@ public class IndexController {
                     config.getUserId(),
                     config.getImpersonatedUserId(),
                     config.getBaseURL(),
-                    config);
+                    config,
+                    redirectURL);
         }else {
             return getRedirectView(authTypeSelected);
         }
