@@ -37,6 +37,8 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.web.filter.CompositeFilter;
 
 import javax.servlet.Filter;
@@ -143,6 +145,11 @@ public class WebSecurityConfig {
 //    }
 
     @Bean
+    public RequestCache requestCache() {
+        return new HttpSessionRequestCache();
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
 //            .antMatcher("/**")
@@ -176,6 +183,7 @@ public class WebSecurityConfig {
                                 }
                             }
                     )
+                    .requestCache().requestCache(requestCache()).and()
                     .oauth2Login(Customizer.withDefaults())
                     .oauth2Client(Customizer.withDefaults())
                     .logout(logout -> logout

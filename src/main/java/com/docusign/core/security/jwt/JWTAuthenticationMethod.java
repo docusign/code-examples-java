@@ -24,7 +24,8 @@ public class JWTAuthenticationMethod {
             String userId,
             String impersonatedUserId,
             String baseURL,
-            DSConfiguration configuration) {
+            DSConfiguration configuration,
+            String redirectURL) {
         List<String> scopes = Arrays.asList(apiType.getScopes());
 
         try {
@@ -72,7 +73,7 @@ public class JWTAuthenticationMethod {
             }
         }
 
-        return new RedirectView("/");
+        return new RedirectView(redirectURL);
     }
 
     private static void setSpringSecurityAuthentication(
