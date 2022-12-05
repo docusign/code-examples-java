@@ -107,6 +107,7 @@ public class IndexController {
 
         if (config.getIsConsentRedirectActivated()) {
             config.setIsConsentRedirectActivated(false);
+            this.session.setAuthTypeSelected(AuthType.JWT);
 
             return new ModelAndView(JWTAuthenticationMethod.loginUsingJWT(
                     config.getSelectedApiType(),
@@ -120,6 +121,8 @@ public class IndexController {
             config.setQuickstart("false");
 
             if (config.getSelectedApiType().equals(ApiType.MONITOR)) {
+                this.session.setAuthTypeSelected(AuthType.JWT);
+
                 return new ModelAndView(JWTAuthenticationMethod.loginUsingJWT(
                         config.getSelectedApiType(),
                         config.getUserId(),
@@ -130,6 +133,8 @@ public class IndexController {
 
             return new ModelAndView(getRedirectView(session.getAuthTypeSelected()));
         } else if (config.getSelectedApiType().equals(ApiType.MONITOR)) {
+            this.session.setAuthTypeSelected(AuthType.JWT);
+
             return new ModelAndView(JWTAuthenticationMethod.loginUsingJWT(
                     config.getSelectedApiType(),
                     config.getUserId(),
@@ -232,6 +237,7 @@ public class IndexController {
         AuthType authTypeSelected = AuthType.valueOf(selectAuthTypeObject.get(0));
 
         if (authTypeSelected.equals(AuthType.JWT)){
+            this.session.setAuthTypeSelected(AuthType.JWT);
             return JWTAuthenticationMethod.loginUsingJWT(
                     config.getSelectedApiType(),
                     config.getUserId(),
