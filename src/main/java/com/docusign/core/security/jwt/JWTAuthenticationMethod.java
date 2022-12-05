@@ -9,9 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.awt.*;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -43,7 +41,6 @@ public class JWTAuthenticationMethod {
             String accessToken = oAuthToken.getAccessToken();
             OAuth.UserInfo userInfo = apiClient.getUserInfo(accessToken);
             String accountId = userInfo.getAccounts().get(0).getAccountId();
-            String basePath = userInfo.getAccounts().get(0).getBaseUri();
 
             JWTAuthenticationMethod.setSpringSecurityAuthentication(scopes, oAuthToken, userInfo, accountId);
         }
