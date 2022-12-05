@@ -40,6 +40,8 @@ public class DSConfiguration {
 
     private ManifestStructure codeExamplesText;
 
+    public Boolean isConsentRedirectActivated = false;
+
     @Value("${DS_TARGET_ACCOUNT_ID}")
     private String targetAccountId;
 
@@ -63,6 +65,15 @@ public class DSConfiguration {
 
     @Value("${Gateway_Account_Id}")
     private String gatewayAccountId;
+
+    @Value("${jwt.grant.client.client-id}")
+    private String userId;
+
+    @Value("${jwt.grant.client.impersonated-user-guid}")
+    private String impersonatedUserId;
+
+    @Value("${jwt.grant.client.base-url}")
+    private String baseURL;
 
     @Value("${Gateway_Name}")
     private String gatewayName;
