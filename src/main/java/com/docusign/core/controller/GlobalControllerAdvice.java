@@ -3,22 +3,14 @@ package com.docusign.core.controller;
 import com.docusign.DSConfiguration;
 import com.docusign.common.ApiIndex;
 import com.docusign.core.model.*;
-
-import com.docusign.esign.client.auth.OAuth;
-
 import com.docusign.core.utils.AccountsConverter;
-
-import java.io.IOException;
-import java.util.stream.Collectors;
+import com.docusign.esign.client.auth.OAuth;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.oauth2.provider.OAuth2Authentication;
-//import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -27,6 +19,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -164,7 +157,11 @@ public class GlobalControllerAdvice {
 
     private static List<OAuth.Account> getOAuthAccounts(OAuth2User user) {
         List<Map<String, Object>> oauthAccounts = user.getAttribute("accounts");
-        return Objects.requireNonNull(oauthAccounts).stream()
+        if(oauthAccounts == null){
+            return new ArrayList<>();
+        }
+
+        return oauthAccounts.stream()
             .map(AccountsConverter::convert)
             .collect(Collectors.toList());
     }

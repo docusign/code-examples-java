@@ -5,8 +5,12 @@ import com.docusign.core.model.ApiType;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.client.auth.OAuth;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.DefaultOAuth2AuthenticatedPrincipal;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
@@ -14,34 +18,38 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class JWTAuthenticationMethod {
 
     public static final String CONSENT_REQUIRED = "consent_required";
 
+    private static final long TOKEN_EXPIRATION_IN_SECONDS = 3600;
+
+    public static final String REQUEST_CONSENT_LINK = "https://%s/oauth/auth?prompt=login&response_type=code&scope=%s&client_id=%s&redirect_uri=%s";
+
+    public static final String CONSENT_REDIRECT_URL = "http://localhost:8080/login%26type%3Djwt";
+
     public static RedirectView loginUsingJWT(
-            ApiType apiType,
-            String userId,
-            String impersonatedUserId,
-            String baseURL,
             DSConfiguration configuration,
-            String redirectURL) {
-        List<String> scopes = Arrays.asList(apiType.getScopes());
+            String redirectURL) throws IOException {
+        List<String> scopes = Arrays.asList(configuration.getSelectedApiType().getScopes());
 
         try {
-            ApiClient apiClient = new ApiClient("https://demo.docusign.net/restapi");
-            apiClient.setOAuthBasePath("account-d.docusign.com");
-            byte[] privateKeyBytes = Files.readAllBytes(Paths.get("src/main/resources/private.key"));
+            ApiClient apiClient = new ApiClient(configuration.getBasePath());
+            byte[] privateKeyBytes = Files.readAllBytes(Paths.get(configuration.getPrivateKeyPath()));
 
             OAuth.OAuthToken oAuthToken = apiClient.requestJWTUserToken(
-                    userId,
-                    impersonatedUserId,
+                    configuration.getUserId(),
+                    configuration.getImpersonatedUserId(),
                     scopes,
                     privateKeyBytes,
-                    3600);
+                    TOKEN_EXPIRATION_IN_SECONDS);
             String accessToken = oAuthToken.getAccessToken();
             OAuth.UserInfo userInfo = apiClient.getUserInfo(accessToken);
-            String accountId = userInfo.getAccounts().get(0).getAccountId();
+            String accountId = userInfo.getAccounts().size() > 0 ?
+                    userInfo.getAccounts().get(0).getAccountId()
+                    : "";
 
             JWTAuthenticationMethod.setSpringSecurityAuthentication(scopes, oAuthToken, userInfo, accountId);
         }
@@ -52,13 +60,11 @@ public class JWTAuthenticationMethod {
                 String consent_scopes = String.join("%20", scopes) + "%20impersonation";
 
                 var consent_url = String.format(
-                    "https://%s/oauth/auth?prompt=login&response_type=code&scope=%s" +
-                    "&client_id=%s" +
-                    "&redirect_uri=%s",
-                    baseURL,
+                    REQUEST_CONSENT_LINK,
+                    configuration.getBaseURL(),
                     consent_scopes,
-                    userId,
-                    "http://localhost:8080/jwt");
+                    configuration.getUserId(),
+                    CONSENT_REDIRECT_URL);
 
                 System.err.println("\nC O N S E N T   R E Q U I R E D" +
                     "\nAsk the user who will be impersonated to run the following URL: " +
@@ -92,7 +98,7 @@ public class JWTAuthenticationMethod {
         principal.setAccounts(userInfo.getAccounts());
         principal.setAccessToken(oAuthToken);
 
-        OAuth2AuthenticationToken token = new OAuth2AuthenticationToken(principal, null, accountId);
+        OAuth2AuthenticationToken token = new OAuth2AuthenticationToken(principal, principal.getAuthorities(), accountId);
 
         SecurityContextHolder.getContext().setAuthentication(token);
     }

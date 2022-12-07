@@ -4,20 +4,15 @@ import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
-
-import com.docusign.core.model.User;
 import com.docusign.core.model.manifestModels.CodeExampleText;
 import com.docusign.esign.client.auth.OAuth;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.oauth2.client.OAuth2ClientContext;
-//import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -26,9 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletResponse;
-
 import java.time.Instant;
-import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -56,9 +49,6 @@ public abstract class AbstractController {
     private static final String EXAMPLE_TEXT = "example";
     protected static final String LAUNCHER_TEXTS = "launcherTexts";
     protected static final String REDIRECT_CFR_QUICKSTART = REDIRECT_PREFIX + "/eg041";
-
-    //@Autowired
-    //private OAuth2ClientContext oAuth2ClientContext;
 
     @Autowired
     protected Session session;
@@ -204,7 +194,8 @@ public abstract class AbstractController {
             tokenExpired = accessToken != null && accessToken.getExpiresAt().isBefore(Instant.now());
         } else {
             OAuth.OAuthToken accessToken = (OAuth.OAuthToken) oauthUser.getAttribute("access_token");
-            tokenExpired = accessToken != null && accessToken.getExpiresIn() >= Instant.now().toEpochMilli();
+            Long expirationTime = System.currentTimeMillis() + accessToken.getExpiresIn() * 1000L;
+            tokenExpired = accessToken != null && expirationTime < System.currentTimeMillis();
         }
 
         session.setRefreshToken(tokenExpired);
