@@ -7,11 +7,11 @@ import com.docusign.core.model.ApiType;
 import com.docusign.core.model.AuthType;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.core.security.OAuthProperties;
 import com.docusign.core.security.jwt.JWTAuthenticationMethod;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -67,12 +67,6 @@ public class IndexController {
     private RequestCache requestCache;
 
     @Autowired
-    private OAuthProperties jwtGrantSso;
-
-    @Autowired
-    private OAuthProperties authCodeGrantSso;
-
-    @Autowired
     private DSConfiguration config;
 
     @GetMapping(path = "/")
@@ -111,21 +105,13 @@ public class IndexController {
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
         model.addAttribute(ATTR_TITLE, config.getCodeExamplesText().SupportingTexts.LoginPage.LoginButton);
 
-        SavedRequest savedRequest = requestCache.getRequest(req, resp);
-        var redirectURL = savedRequest != null && "GET".equals(savedRequest.getMethod()) ?
-                        savedRequest.getRedirectUrl() : "/";
+        String redirectURL = getRedirectURLForJWTAuthentication(req, resp);
 
         if (config.getIsConsentRedirectActivated()) {
             config.setIsConsentRedirectActivated(false);
             this.session.setAuthTypeSelected(AuthType.JWT);
 
-            return new ModelAndView(JWTAuthenticationMethod.loginUsingJWT(
-                    config.getSelectedApiType(),
-                    config.getUserId(),
-                    config.getImpersonatedUserId(),
-                    config.getBaseURL(),
-                    config,
-                    "/"));
+            return new ModelAndView(JWTAuthenticationMethod.loginUsingJWT(config, redirectURL));
         }
 
         if (session.isRefreshToken() || config.getQuickstart().equals("true")) {
@@ -134,26 +120,14 @@ public class IndexController {
             if (config.getSelectedApiType().equals(ApiType.MONITOR)) {
                 this.session.setAuthTypeSelected(AuthType.JWT);
 
-                return new ModelAndView(JWTAuthenticationMethod.loginUsingJWT(
-                        config.getSelectedApiType(),
-                        config.getUserId(),
-                        config.getImpersonatedUserId(),
-                        config.getBaseURL(),
-                        config,
-                        redirectURL));
+                return new ModelAndView(JWTAuthenticationMethod.loginUsingJWT(config, redirectURL));
             }
 
             return new ModelAndView(getRedirectView(session.getAuthTypeSelected()));
         } else if (config.getSelectedApiType().equals(ApiType.MONITOR)) {
             this.session.setAuthTypeSelected(AuthType.JWT);
 
-            return new ModelAndView(JWTAuthenticationMethod.loginUsingJWT(
-                    config.getSelectedApiType(),
-                    config.getUserId(),
-                    config.getImpersonatedUserId(),
-                    config.getBaseURL(),
-                    config,
-                    redirectURL));
+            return new ModelAndView(JWTAuthenticationMethod.loginUsingJWT(config, redirectURL));
         } else {
             return new ModelAndView("pages/ds_must_authenticate");
         }
@@ -205,11 +179,11 @@ public class IndexController {
     }
 
     private void writeCorrectScopesIntoApplication(ApiType apiTypeSelected) throws IOException {
-        Path applicationJsonSourcePath = Paths.get("").resolve("src").resolve("main")
-                .resolve("resources").resolve(config.getConfigFilePath());
+        Path applicationJsonSourcePath = Paths.get(config.getConfigFilePath());
 
         List lines = Files.readAllLines(applicationJsonSourcePath, StandardCharsets.UTF_8);
-        StringBuilder stringBuilder = new StringBuilder(1024);
+        StringBuilder stringBuilder = new StringBuilder();
+
         for (Object line : lines) {
             stringBuilder.append(line);
         }
@@ -217,9 +191,9 @@ public class IndexController {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-
         JsonObject originalJsonValue = gson.fromJson(originalJsonValueString, JsonObject.class);
-        JsonObject acgConfigurationValues = originalJsonValue.getAsJsonObject("spring")
+        JsonObject acgConfigurationValues = originalJsonValue
+                .getAsJsonObject("spring")
                 .getAsJsonObject("security")
                 .getAsJsonObject("oauth2")
                 .getAsJsonObject("client")
@@ -247,24 +221,39 @@ public class IndexController {
             return new RedirectView("pages/error");
         }
 
-        SavedRequest savedRequest = requestCache.getRequest(req, resp);
-        var redirectURL = savedRequest != null && "GET".equals(savedRequest.getMethod()) ?
-                savedRequest.getRedirectUrl() : "/";
+        String redirectURL = getRedirectURLForJWTAuthentication(req, resp);
 
         List<String> selectAuthTypeObject = formParams.get("selectAuthType");
         AuthType authTypeSelected = AuthType.valueOf(selectAuthTypeObject.get(0));
 
         if (authTypeSelected.equals(AuthType.JWT)){
             this.session.setAuthTypeSelected(AuthType.JWT);
-            return JWTAuthenticationMethod.loginUsingJWT(
-                    config.getSelectedApiType(),
-                    config.getUserId(),
-                    config.getImpersonatedUserId(),
-                    config.getBaseURL(),
-                    config,
-                    redirectURL);
+            return JWTAuthenticationMethod.loginUsingJWT(config,redirectURL);
         }else {
             return getRedirectView(authTypeSelected);
+        }
+    }
+
+    private String getRedirectURLForJWTAuthentication(HttpServletRequest req, HttpServletResponse resp){
+        SavedRequest savedRequest = requestCache.getRequest(req, resp);
+
+        String[] examplesCodes = new String[] {
+                ApiIndex.CLICK.getExamplesPathCode(),
+                ApiIndex.ESIGNATURE.getExamplesPathCode(),
+                ApiIndex.MONITOR.getExamplesPathCode(),
+                ApiIndex.ADMIN.getExamplesPathCode(),
+                ApiIndex.ROOMS.getExamplesPathCode(),
+        };
+        if (savedRequest != null){
+            Integer indexOfExampleCodeInRedirect = StringUtils.indexOfAny(savedRequest.getRedirectUrl(), examplesCodes);
+            Boolean hasExampleNumber = savedRequest.getRedirectUrl()
+                    .substring(indexOfExampleCodeInRedirect)
+                    .matches(".*\\d.*");
+
+            return "GET".equals(savedRequest.getMethod()) && indexOfExampleCodeInRedirect != -1 && hasExampleNumber?
+                    savedRequest.getRedirectUrl() : "/";
+        } else {
+            return "/";
         }
     }
 
@@ -288,10 +277,10 @@ public class IndexController {
     }
 
     private String getLoginPath(AuthType authTypeSelected) {
-        OAuthProperties oAuth2SsoProperties = authCodeGrantSso;
+        String loginPath = config.getAcgRedirectURL();
         if (authTypeSelected.equals(AuthType.JWT)) {
-            oAuth2SsoProperties = jwtGrantSso;
+            loginPath = config.getJwtRedirectURL();
         }
-        return oAuth2SsoProperties.getLoginPath();
+        return loginPath;
     }
 }
