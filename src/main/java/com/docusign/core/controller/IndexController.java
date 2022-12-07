@@ -246,11 +246,9 @@ public class IndexController {
         };
         if (savedRequest != null){
             Integer indexOfExampleCodeInRedirect = StringUtils.indexOfAny(savedRequest.getRedirectUrl(), examplesCodes);
-            Boolean hasExampleNumber = savedRequest.getRedirectUrl()
-                    .substring(indexOfExampleCodeInRedirect)
-                    .matches(".*\\d.*");
 
-            return "GET".equals(savedRequest.getMethod()) && indexOfExampleCodeInRedirect != -1 && hasExampleNumber?
+            return "GET".equals(savedRequest.getMethod()) && indexOfExampleCodeInRedirect != -1 &&
+                    savedRequest.getRedirectUrl().substring(indexOfExampleCodeInRedirect).matches(".*\\d.*") ?
                     savedRequest.getRedirectUrl() : "/";
         } else {
             return "/";
