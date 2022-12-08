@@ -244,15 +244,19 @@ public class IndexController {
                 ApiIndex.ADMIN.getExamplesPathCode(),
                 ApiIndex.ROOMS.getExamplesPathCode(),
         };
+
         if (savedRequest != null){
             Integer indexOfExampleCodeInRedirect = StringUtils.indexOfAny(savedRequest.getRedirectUrl(), examplesCodes);
 
-            return "GET".equals(savedRequest.getMethod()) && indexOfExampleCodeInRedirect != -1 &&
-                    savedRequest.getRedirectUrl().substring(indexOfExampleCodeInRedirect).matches(".*\\d.*") ?
-                    savedRequest.getRedirectUrl() : "/";
-        } else {
-            return "/";
+            if (indexOfExampleCodeInRedirect != -1) {
+                Boolean hasNumbers = savedRequest.getRedirectUrl().substring(indexOfExampleCodeInRedirect).matches(".*\\d.*");
+
+                return "GET".equals(savedRequest.getMethod()) && hasNumbers ?
+                        savedRequest.getRedirectUrl() : "/";
+            }
         }
+
+        return "/";
     }
 
     @GetMapping(path = "/ds-return")
