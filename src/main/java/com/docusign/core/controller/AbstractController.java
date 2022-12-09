@@ -193,9 +193,8 @@ public abstract class AbstractController {
             OAuth2AccessToken accessToken = oauthClient.getAccessToken();
             tokenExpired = accessToken != null && accessToken.getExpiresAt().isBefore(Instant.now());
         } else {
-            OAuth.OAuthToken accessToken = (OAuth.OAuthToken) oauthUser.getAttribute("access_token");
-            Long expirationTime = System.currentTimeMillis() + accessToken.getExpiresIn() * 1000L;
-            tokenExpired = accessToken != null && expirationTime < System.currentTimeMillis();
+            OAuth.OAuthToken accessToken = oauthUser.getAttribute("access_token");
+            tokenExpired = accessToken != null && this.session.getTokenExpirationTime() < System.currentTimeMillis();
         }
 
         session.setRefreshToken(tokenExpired);

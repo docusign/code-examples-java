@@ -1,16 +1,13 @@
 package com.docusign.core.security.jwt;
 
 import com.docusign.DSConfiguration;
-import com.docusign.core.model.ApiType;
+import com.docusign.core.model.Session;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.client.auth.OAuth;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.DefaultOAuth2AuthenticatedPrincipal;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
@@ -18,7 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class JWTAuthenticationMethod {
 
@@ -30,7 +26,10 @@ public class JWTAuthenticationMethod {
 
     public static final String CONSENT_REDIRECT_URL = "http://localhost:8080/login%26type%3Djwt";
 
-    public static RedirectView loginUsingJWT(
+    @Autowired
+    protected Session session;
+
+    public RedirectView loginUsingJWT(
             DSConfiguration configuration,
             String redirectURL) throws IOException {
         List<String> scopes = Arrays.asList(configuration.getSelectedApiType().getScopes());
@@ -51,7 +50,7 @@ public class JWTAuthenticationMethod {
                     userInfo.getAccounts().get(0).getAccountId()
                     : "";
 
-            JWTAuthenticationMethod.setSpringSecurityAuthentication(scopes, oAuthToken, userInfo, accountId);
+            setSpringSecurityAuthentication(scopes, oAuthToken, userInfo, accountId);
         }
         catch (ApiException | IOException exp)
         {
@@ -82,7 +81,7 @@ public class JWTAuthenticationMethod {
         return new RedirectView(redirectURL);
     }
 
-    private static void setSpringSecurityAuthentication(
+    private void setSpringSecurityAuthentication(
             List<String> scopes,
             OAuth.OAuthToken oAuthToken,
             OAuth.UserInfo userInfo,
@@ -98,8 +97,9 @@ public class JWTAuthenticationMethod {
         principal.setAccounts(userInfo.getAccounts());
         principal.setAccessToken(oAuthToken);
 
-        OAuth2AuthenticationToken token = new OAuth2AuthenticationToken(principal, principal.getAuthorities(), accountId);
+        this.session.setTokenExpirationTime(System.currentTimeMillis() + oAuthToken.getExpiresIn() * 1000L);
 
+        OAuth2AuthenticationToken token = new OAuth2AuthenticationToken(principal, principal.getAuthorities(), accountId);
         SecurityContextHolder.getContext().setAuthentication(token);
     }
 }
