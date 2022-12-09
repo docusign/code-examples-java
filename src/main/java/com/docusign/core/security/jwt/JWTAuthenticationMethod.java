@@ -24,13 +24,11 @@ public class JWTAuthenticationMethod {
 
     public static final String REQUEST_CONSENT_LINK = "https://%s/oauth/auth?prompt=login&response_type=code&scope=%s&client_id=%s&redirect_uri=%s";
 
-    public static final String CONSENT_REDIRECT_URL = "http://localhost:8080/login%26type%3Djwt";
-
-    @Autowired
-    protected Session session;
+    public static final String CONSENT_REDIRECT_URL = "http://localhost:8080/login/oauth2/code/jwt";
 
     public RedirectView loginUsingJWT(
             DSConfiguration configuration,
+            Session session,
             String redirectURL) throws IOException {
         List<String> scopes = Arrays.asList(configuration.getSelectedApiType().getScopes());
 
@@ -50,7 +48,7 @@ public class JWTAuthenticationMethod {
                     userInfo.getAccounts().get(0).getAccountId()
                     : "";
 
-            setSpringSecurityAuthentication(scopes, oAuthToken, userInfo, accountId);
+            setSpringSecurityAuthentication(scopes, oAuthToken, userInfo, accountId, session);
         }
         catch (ApiException | IOException exp)
         {
@@ -85,7 +83,8 @@ public class JWTAuthenticationMethod {
             List<String> scopes,
             OAuth.OAuthToken oAuthToken,
             OAuth.UserInfo userInfo,
-            String accountId) {
+            String accountId,
+            Session session) {
         JWTOAuth2User principal = new JWTOAuth2User();
         principal.setAuthorities(scopes);
         principal.setCreated(userInfo.getCreated());
@@ -97,7 +96,7 @@ public class JWTAuthenticationMethod {
         principal.setAccounts(userInfo.getAccounts());
         principal.setAccessToken(oAuthToken);
 
-        this.session.setTokenExpirationTime(System.currentTimeMillis() + oAuthToken.getExpiresIn() * 1000L);
+        session.setTokenExpirationTime(System.currentTimeMillis() + oAuthToken.getExpiresIn() * 1000L);
 
         OAuth2AuthenticationToken token = new OAuth2AuthenticationToken(principal, principal.getAuthorities(), accountId);
         SecurityContextHolder.getContext().setAuthentication(token);
