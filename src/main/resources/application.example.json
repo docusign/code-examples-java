@@ -4,7 +4,7 @@
   "DS_SIGNER_NAME": "{SIGNER_NAME}",
   "DS_SIGNER_EMAIL": "{SIGNER_EMAIL}",
   "DS_APP_URL": "http://localhost:8080",
-  "DS_TARGET_ACCOUNT_ID": "{IMPERSONATED_USER_ID}",
+  "DS_TARGET_ACCOUNT_ID": "{DS_TARGET_ACCOUNT_ID}",
   "DS_BASE_PATH": "https://demo.docusign.net",
   "DS_ROOMS_BASE_PATH": "https://demo.rooms.docusign.com",
   "DS_CLICK_BASE_PATH": "https://demo.docusign.net",
@@ -16,18 +16,48 @@
   "Gateway_Display_Name": "{DS_PAYMENT_GATEWAY_DISPLAY_NAME}",
 
   "authorization.code.grant.client.scope": "signature",
-  "authorization.code.grant.sso.redirect-url": "&type=acg",
-  "authorization.code.grant.client.client-id": "{INTEGRATION_KEY_AUTH_CODE}",
-  "authorization.code.grant.client.client-secret": "{SECRET_KEY}",
-  "authorization.code.grant.client.access-token-uri": "https://account-d.docusign.com/oauth/token",
-  "authorization.code.grant.client.user-authorization-uri": "https://account-d.docusign.com/oauth/auth?prompt=login",
-
-  "jwt.grant.sso.redirect-url": "&type=jwt",
-  "jwt.grant.client.scope": "signature impersonation",
+  "authorization.code.grant.sso.redirect-url": "/oauth2/authorization/acg",
+  "jwt.grant.sso.redirect-url": "/oauth2/authorization/jwt",
   "jwt.grant.client.base-url": "account-d.docusign.com",
-  "jwt.grant.client.client-id": "{INTEGRATION_KEY_JWT}",
-  "jwt.grant.client.private-key-path": "src/main/resources/private.key",
-  "jwt.grant.client.impersonated-user-guid": "{IMPERSONATED_USER_ID}",
+  "spring": {
+    "security": {
+      "oauth2": {
+        "client": {
+          "registration": {
+            "acg": {
+              "client-id": "{INTEGRATION_KEY_AUTH_CODE}",
+              "client-secret": "{SECRET_KEY}",
+              "client-authentication-method": "client_secret_basic",
+              "authorization-grant-type": "authorization_code",
+              "redirect-uri": "{baseUrl}/login/oauth2/code/acg",
+              "scope": "signature"
+            },
+            "jwt": {
+              "client-id": "{INTEGRATION_KEY_JWT}",
+              "impersonated-user-guid": "{IMPERSONATED_USER_ID}",
+              "private-key-path": "src/main/resources/private.key",
+              "authorization-grant-type": "authorization_code",
+              "redirect-uri": "{baseUrl}/login/oauth2/code/jwt"
+            }
+          },
+          "provider": {
+            "acg": {
+              "authorization-uri": "https://account-d.docusign.com/oauth/auth?prompt=login",
+              "token-uri": "https://account-d.docusign.com/oauth/token",
+              "user-info-uri": "https://account-d.docusign.com/oauth/userinfo",
+              "user-name-attribute": "sub"
+            },
+            "jwt": {
+              "authorization-uri": "https://account-d.docusign.com/oauth/auth?prompt=login",
+              "token-uri": "https://account-d.docusign.com/oauth/token",
+              "user-info-uri": "https://account-d.docusign.com/oauth/userinfo",
+              "user-name-attribute": "sub"
+            }
+          }
+        }
+      }
+    }
+  },
 
   "common.client.resource.user-info-uri": "https://account-d.docusign.com/oauth/userinfo",
   "com.docusign.github.example-uri": "https://github.com/docusign/code-examples-java/blob/master/src/main/java/",

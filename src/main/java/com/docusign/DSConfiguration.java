@@ -1,6 +1,5 @@
 package com.docusign;
 
-
 import com.docusign.common.ApiIndex;
 import com.docusign.core.model.ApiType;
 import com.docusign.core.model.manifestModels.ManifestStructure;
@@ -40,6 +39,8 @@ public class DSConfiguration {
 
     private ManifestStructure codeExamplesText;
 
+    public Boolean isConsentRedirectActivated = false;
+
     @Value("${DS_TARGET_ACCOUNT_ID}")
     private String targetAccountId;
 
@@ -63,6 +64,24 @@ public class DSConfiguration {
 
     @Value("${Gateway_Account_Id}")
     private String gatewayAccountId;
+
+    @Value("${spring.security.oauth2.client.registration.jwt.client-id}")
+    private String userId;
+
+    @Value("${jwt.grant.sso.redirect-url}")
+    private String jwtRedirectURL;
+
+    @Value("${authorization.code.grant.sso.redirect-url}")
+    private String acgRedirectURL;
+
+    @Value("${spring.security.oauth2.client.registration.jwt.private-key-path}")
+    private String privateKeyPath;
+
+    @Value("${spring.security.oauth2.client.registration.jwt.impersonated-user-guid}")
+    private String impersonatedUserId;
+
+    @Value("${jwt.grant.client.base-url}")
+    private String baseURL;
 
     @Value("${Gateway_Name}")
     private String gatewayName;
@@ -96,6 +115,8 @@ public class DSConfiguration {
 
     @Value("${MonitorManifest}")
     private String monitorManifest;
+
+    public String configFilePath = "src/main/resources/application.json";
 
     public String examplesApiPath = "examplesApi.json";
 

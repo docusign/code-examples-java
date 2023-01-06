@@ -7,13 +7,16 @@ import com.docusign.core.model.User;
 import java.io.IOException;
 import java.util.*;
 
-import com.docusign.core.security.OAuthProperties;
+import com.docusign.core.utils.AccountsConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +26,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.docusign.esign.client.auth.OAuth;
 import java.util.stream.Collectors;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import javax.servlet.http.HttpServletResponse;
@@ -45,7 +47,7 @@ public class IndexController {
     private Optional<OAuth.Account> account;
 
     @Autowired
-    private OAuthProperties authCodeGrantSso;
+    private OAuth2AuthorizedClientService authorizedClientService;
 
     @Autowired
     public IndexController(DSConfiguration config, Session session, User user, Optional<OAuth.Account> account) {
@@ -85,7 +87,7 @@ public class IndexController {
     }
 
     private String getLoginPath() {
-        return authCodeGrantSso.getLoginPath();
+        return config.getAcgRedirectURL();
     }
 
     @ModelAttribute("documentOptions")
@@ -102,26 +104,29 @@ public class IndexController {
     public Object populateLocals() throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (!(authentication instanceof OAuth2Authentication)) {
+        if (!(authentication instanceof OAuth2AuthenticationToken)) {
             return new RedirectView("/");
         }
 
-        OAuth2Authentication oauth = (OAuth2Authentication) authentication;
-        OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) oauth.getDetails();
-        Authentication oauthUser = oauth.getUserAuthentication();
+        OAuth2AuthenticationToken oauth = (OAuth2AuthenticationToken) authentication;
+        OAuth2User oauthUser = oauth.getPrincipal();
+        OAuth2AuthorizedClient oauthClient = authorizedClientService.loadAuthorizedClient(
+                oauth.getAuthorizedClientRegistrationId(),
+                oauthUser.getName()
+        );
 
-        if (oauthUser != null && oauthUser.isAuthenticated()) {
-            user.setName(oauthUser.getName());
-            user.setAccessToken(details.getTokenValue());
+        if (oauth.isAuthenticated()) {
+            user.setName(oauthUser.getAttribute("name"));
+            user.setAccessToken(oauthClient.getAccessToken().getTokenValue());
 
             if (account.isEmpty()) {
-                account = Optional.ofNullable(getDefaultAccountInfo(getOAuthAccounts(oauth)));
+                account = Optional.ofNullable(getDefaultAccountInfo(getOAuthAccounts(oauthUser)));
             }
 
             OAuth.Account oauthAccount = account.orElseThrow(() -> new NoSuchElementException(ERROR_ACCOUNT_NOT_FOUND));
             session.setAccountId(oauthAccount.getAccountId());
             session.setAccountName(oauthAccount.getAccountName());
-            //TODO set this more efficiently with more APIs as they're added in
+            // TODO set this more efficiently with more APIs as they're added in
             String basePath = this.getBaseUrl(oauthAccount) + "/restapi";
             session.setBasePath(basePath);
         }
@@ -133,12 +138,14 @@ public class IndexController {
         return oauthAccount.getBaseUri();
     }
 
-    @SuppressWarnings("unchecked")
-    private static List<OAuth.Account> getOAuthAccounts(OAuth2Authentication oauth) {
-        Map<?, ?> userAuthenticationDetails = (Map<?, ?>) oauth.getUserAuthentication().getDetails();
-        List<Map<String, Object>> oauthAccounts = (ArrayList<Map<String, Object>>) userAuthenticationDetails.get("accounts");
+    private static List<OAuth.Account> getOAuthAccounts(OAuth2User user) {
+        List<Map<String, Object>> oauthAccounts = user.getAttribute("accounts");
+        if(oauthAccounts == null){
+            return new ArrayList<>();
+        }
+
         return oauthAccounts.stream()
-                .map(IndexController::convert)
+                .map(AccountsConverter::convert)
                 .collect(Collectors.toList());
     }
 
