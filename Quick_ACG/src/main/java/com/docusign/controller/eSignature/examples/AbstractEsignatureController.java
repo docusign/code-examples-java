@@ -4,14 +4,10 @@ import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.model.manifestModels.CodeExampleText;
 import com.docusign.core.model.Session;
-import com.docusign.esign.api.AccountsApi;
-import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.oauth2.client.OAuth2ClientContext;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,9 +24,6 @@ import java.util.Arrays;
 public abstract class AbstractEsignatureController {
 
     protected static final String BEARER_AUTHENTICATION = "Bearer ";
-
-    @Autowired
-    private OAuth2ClientContext oAuth2ClientContext;
 
     @Autowired
     protected Session session;
@@ -92,7 +85,7 @@ public abstract class AbstractEsignatureController {
      * @param args
      * @param model the model data
      */
-    protected void onInitModel(WorkArguments args, ModelMap model) {
+    protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         this.codeExampleText = GetExampleText();
         this.title = this.codeExampleText.ExampleName;
 
