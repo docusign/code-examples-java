@@ -1,125 +1,53 @@
 package com.docusign;
-import com.docusign.core.security.OAuthProperties;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2SsoProperties;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.oauth2.client.OAuth2ClientContext;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
-import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
-import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
-import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
-import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
-import org.springframework.security.web.DefaultSecurityFilterChain;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
-import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
-import org.springframework.web.filter.CompositeFilter;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
 
-import javax.servlet.Filter;
-import java.io.IOException;
-import java.util.*;
-
-@EnableOAuth2Client
-@Configuration
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    private OAuth2ClientContext oAuth2ClientContext;
-
-    @Bean
-    @ConfigurationProperties("authorization.code.grant.sso")
-    public OAuthProperties authCodeGrantSso() {
-        return new OAuthProperties();
-    }
+@EnableWebSecurity
+public class WebSecurityConfig {
 
     @Autowired
     public DSConfiguration dsConfiguration;
 
     @Bean
-    @ConfigurationProperties("authorization.code.grant.client")
-    public AuthorizationCodeResourceDetails authCodeGrantClient() {
-        return new AuthorizationCodeResourceDetails();
+    public RequestCache requestCache() {
+        return new HttpSessionRequestCache();
     }
 
     @Bean
-    @ConfigurationProperties("common.client.resource")
-    public ResourceServerProperties userInfoResource() {
-        return new ResourceServerProperties();
-    }
-
-    @Bean
-    public FilterRegistrationBean<OAuth2ClientContextFilter> oAuth2ClientFilterRegistration(OAuth2ClientContextFilter oAuth2ClientContextFilter) {
-        FilterRegistrationBean<OAuth2ClientContextFilter> registration = new FilterRegistrationBean<>();
-        registration.setFilter(oAuth2ClientContextFilter);
-        registration.setOrder(-100);
-        return registration;
-    }
-
-    private List<String> getScopes() {
-        return Arrays.asList(new String[]{"signature"});
-    }
-
-    private OAuth2ClientAuthenticationProcessingFilter authCodeGrantFilter() throws IOException {
-        OAuth2SsoProperties authCodeGrantSso = authCodeGrantSso();
-        AuthorizationCodeResourceDetails authCodeGrantClient = authCodeGrantClient();
-    	
-        List<String> scopes = this.getScopes();
-        if (scopes != null) {
-            authCodeGrantClient.setScope(scopes);
-        }
-
-        ResourceServerProperties userInfoResource = userInfoResource();
-        OAuth2ClientAuthenticationProcessingFilter filter =
-            new OAuth2ClientAuthenticationProcessingFilter(authCodeGrantSso.getLoginPath());
-        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(authCodeGrantClient, oAuth2ClientContext);
-        filter.setRestTemplate(restTemplate);
-        ResourceServerTokenServices tokenServices = new UserInfoTokenServices(userInfoResource.getUserInfoUri(),
-            authCodeGrantClient.getClientId());
-        filter.setTokenServices(tokenServices);
-        return filter;
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .antMatcher("/**")
-            .authorizeRequests()
-            .antMatchers( "/", "/login**", "/error**", "/assets/**","/ds/mustAuthenticate**",
-                "/ds/authenticate**")
-            .permitAll()
-            .anyRequest()
-            .authenticated()
-            .and()
-            .exceptionHandling()
-            .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/ds/mustAuthenticate"))
-            .and()
-            .logout().logoutSuccessUrl("/").permitAll()
-            .and()
-            .csrf().disable();
-        http.apply(new CombinedAuthenticationConfigurer(Arrays.asList(authCodeGrantFilter())));
-    }
+                .authorizeHttpRequests(authorize -> {
+                    try {
+                        authorize
+                                .antMatchers("/", "/error**", "/assets/**", "/ds/mustAuthenticate**",
+                                        "/ds/authenticate**", "/ds/selectApi**")
+                                .permitAll()
+                                .anyRequest().authenticated()
+                                .and()
+                                .exceptionHandling()
+                                .authenticationEntryPoint(
+                                        new LoginUrlAuthenticationEntryPoint("/ds/mustAuthenticate")
+                                );
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .requestCache().requestCache(requestCache()).and()
+                .oauth2Login(Customizer.withDefaults())
+                .oauth2Client(Customizer.withDefaults())
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/")
+                )
+                .csrf().disable();
 
-    private static class CombinedAuthenticationConfigurer
-        extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
-
-        CompositeFilter filter = new CompositeFilter();
-
-        CombinedAuthenticationConfigurer(List<Filter> filters) {
-            filter.setFilters(filters);
-        }
-
-        @Override
-        public void configure(HttpSecurity builder) {
-            builder.addFilterAfter(this.filter,
-                AbstractPreAuthenticatedProcessingFilter.class);
-        }
+        return  http.build();
     }
 }

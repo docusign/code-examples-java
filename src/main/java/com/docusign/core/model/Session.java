@@ -38,4 +38,5 @@ public class Session implements Serializable {
     private String emailAddress;
     private UUID orgId;
     public UUID bulkListId;
+    public Long tokenExpirationTime;
 }
