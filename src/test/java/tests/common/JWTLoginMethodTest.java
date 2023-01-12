@@ -26,7 +26,6 @@ public final class JWTLoginMethodTest {
         try
         {
             ApiClient apiClient = new ApiClient(testConfig.getHost());
-            apiClient.setOAuthBasePath(testConfig.getOAuthBasePath());
             List<String> scopes = Arrays.asList(apiType.getScopes());
 
             byte[] privateKeyBytes = Files.readAllBytes(Paths.get(testConfig.getPrivateKey()));

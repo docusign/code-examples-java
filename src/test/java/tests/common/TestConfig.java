@@ -1,6 +1,8 @@
 package tests.common;
 
-import com.docusign.esign.client.ApiClient;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
 import org.json.JSONException;
@@ -49,7 +51,7 @@ public class TestConfig {
 
     public TestConfig() throws IOException {
         PathToDocuments = System.getProperty("user.dir") + "//src//main//resources//";
-        Host = "https://demo.docusign.net/restapi";
+        Host = "https://demo.docusign.net";
         OAuthBasePath = "account-d.docusign.com";
         PrivateKey = PathToDocuments + "private.key";
 
@@ -58,8 +60,20 @@ public class TestConfig {
         String source = new String(Files.readAllBytes(Paths.get(file.getPath())));
 
         try {
-            Object impersonatedUserId = new JSONObject(source).get("jwt.grant.client.impersonated-user-guid");
-            Object clientId = new JSONObject(source).get("jwt.grant.client.client-id");
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+            JsonObject originalJsonValue = gson.fromJson(source, JsonObject.class);
+            JsonObject jwtConfigurationValues = originalJsonValue
+                    .getAsJsonObject("spring")
+                    .getAsJsonObject("security")
+                    .getAsJsonObject("oauth2")
+                    .getAsJsonObject("client")
+                    .getAsJsonObject("registration")
+                    .getAsJsonObject("jwt")
+                    .getAsJsonObject();
+
+            Object impersonatedUserId = jwtConfigurationValues.get("impersonated-user-guid").toString();
+            Object clientId = jwtConfigurationValues.get("client-id").toString();
             Object signerEmail = new JSONObject(source).get("DS_SIGNER_EMAIL");
             Object signerName = new JSONObject(source).get("DS_SIGNER_NAME");
             Object basePath = new JSONObject(source).get("DS_BASE_PATH");
@@ -68,8 +82,8 @@ public class TestConfig {
                 throw new JSONException("The wrong format of the application.json file.");
             }
 
-            ImpersonatedUserId = impersonatedUserId.toString();
-            ClientId = clientId.toString();
+            ImpersonatedUserId = impersonatedUserId.toString().replace("\"", "");
+            ClientId = clientId.toString().replace("\"", "");
             SignerEmail = signerEmail.toString();
             SignerName = signerName.toString();
             BasePath = basePath.toString();
