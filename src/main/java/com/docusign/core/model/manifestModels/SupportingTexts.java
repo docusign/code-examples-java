@@ -30,6 +30,8 @@ public class SupportingTexts {
 
     public String WelcomeText;
 
+    public String CFRError;
+
     public LoginPage LoginPage;
 
     public SelectAPIPage SelectAPIPage;

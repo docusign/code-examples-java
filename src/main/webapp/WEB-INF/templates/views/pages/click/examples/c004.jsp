@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../../partials/head.jsp"/>
 
-<h4>4. ${example.getExampleName()}</h4>
+<h4>${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
 
 <jsp:include page="../../links_to_api_methods.jsp" />

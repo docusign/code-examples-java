@@ -9,7 +9,7 @@
         <relativePath />
     </parent>
 
-    <groupId>com.quickACG</groupId>
+    <groupId>com.docusign</groupId>
     <artifactId>code-examples-java-acg</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -35,11 +35,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>org.springframework.security.oauth.boot</groupId>
-            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-            <version>${oauth2.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -192,6 +193,21 @@
                                     <includes>
                                         <include>Locals.java</include>
                                         <include>User.java</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <targetPath>${basedir}/src/main/java/com/docusign/core/common</targetPath>
+                                    <directory>../src/main/java/com/docusign/core/common</directory>
+                                    <includes>
+                                        <include>Utils.java</include>
+                                        <include>DiffField.java</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <targetPath>${basedir}/src/main/java/com/docusign/core/utils</targetPath>
+                                    <directory>../src/main/java/com/docusign/core/utils</directory>
+                                    <includes>
+                                        <include>AccountsConverter.java</include>
                                     </includes>
                                 </resource>
                                 <resource>

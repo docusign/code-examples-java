@@ -49,8 +49,10 @@ public abstract class AbstractMonitorController extends AbstractController {
     protected static ApiClient createApiClient(String accessToken, Session session) {
 
         // Step 2 start
-        ApiClient apiClient = new ApiClient(session.getBasePath());
+        ApiClient apiClient = new ApiClient(ApiClient.DEMO_REST_BASEPATH);
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + accessToken);
+        apiClient.setBasePath(ApiClient.DEMO_REST_BASEPATH);
+
         // Step 2 end
         return apiClient;
     }

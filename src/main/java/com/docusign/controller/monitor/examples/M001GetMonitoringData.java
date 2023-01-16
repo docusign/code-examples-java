@@ -42,6 +42,15 @@ public class M001GetMonitoringData extends AbstractMonitorController {
         // step 1 end
 
         JSONArray monitoringData = GetMonitoringDataService.getMonitoringData(createDataSetApi(accessToken, this.session));
+        if (monitoringData.getJSONObject(0).has("Error"))
+        {
+            new DoneExample()
+                    .withTitle(getTextForCodeExample().ExampleName)
+                    .withName("")
+                    .withMessage(monitoringData.getJSONObject(0).getString("Error"))
+                    .addToModel(model, config);            
+            return ERROR_PAGE;
+        }
 
         // Cleaning the data from wrong symbols
         String monitoringDataCleaned = monitoringData.toString().replaceAll("'", "");

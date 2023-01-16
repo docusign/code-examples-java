@@ -2,6 +2,7 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.core.common.Utils;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
@@ -32,6 +33,15 @@ public class EG033ControllerUnpauseSignatureWorkflow extends AbstractEsignatureC
         super(config, "eg033");
         this.session = session;
         this.user = user;
+    }
+
+    @Override
+    protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
+      if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
+        session.setStatusCFR("enabled");
+        throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
+      }
+        super.onInitModel(args, model);
     }
 
     @Override

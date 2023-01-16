@@ -10,9 +10,11 @@ public enum ApiIndex {
     private final String baseUrlSuffix;
     private final String firstExamplePath;
 
+
     ApiIndex(final String baseUrlSuffix, final String firstExamplePath) {
         this.baseUrlSuffix = baseUrlSuffix;
         this.firstExamplePath = firstExamplePath;
+        this.examplesPathCode = examplesPathCode;
     }
 
     public String getBaseUrlSuffix() {

@@ -19,19 +19,25 @@ public final class WebQueryEndpointService {
             String accountId,
             String filterStartDate,
             String filterEndDate) throws ApiException {
-        AggregateResult aggregateResult = datasetApi.postWebQuery(
-                API_VERSION,
-                NAME_OF_DATASET,
-                prepareWebQueryOptions(accountId, filterStartDate, filterEndDate));
-        
-        AggregateResultResult methodResult = null;
-        List<AggregateResultResult> aggregateResultList = aggregateResult.getResult();
-        // Step 4 end
-        if (aggregateResultList != null && !aggregateResultList.isEmpty()) {
-            methodResult = aggregateResultList.get(0);
-        }
+        try {
+            AggregateResult aggregateResult = datasetApi.postWebQuery(
+                    API_VERSION,
+                    NAME_OF_DATASET,
+                    prepareWebQueryOptions(accountId, filterStartDate, filterEndDate));
+            
+            AggregateResultResult methodResult = null;
+            List<AggregateResultResult> aggregateResultList = aggregateResult.getResult();
+            // Step 4 end
+            if (aggregateResultList != null && !aggregateResultList.isEmpty()) {
+                methodResult = aggregateResultList.get(0);
+            }
 
-        return new JSONObject(methodResult);
+            return new JSONObject(methodResult);
+        } catch (Exception e) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("Error", "You do not have Monitor enabled for your account, follow <a target='_blank' href='https://developers.docusign.com/docs/monitor-api/how-to/enable-monitor/'>How to enable Monitor for your account</a> to get it enabled.");
+            return jsonObject;
+        }
     }
 
     // Step 3 start

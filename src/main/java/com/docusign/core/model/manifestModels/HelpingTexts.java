@@ -19,4 +19,14 @@ public class HelpingTexts {
     public String ChooseDateInTheFuture;
 
     public String PhoneNumberWillBeNotified;
+
+    public String DynamicContentValue;
+    
+    public String DynamicContentNote;
+
+    public String EmbedClickwrapURL;
+
+    public String NOTAGREED;
+
+    public String AGREED;
 }

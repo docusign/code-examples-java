@@ -24,6 +24,7 @@ public class Session implements Serializable {
     private String envelopeId;
     private String templateId;
     private String templateName;
+    private String statusCFR;
     private List<EnvelopeDocumentInfo> envelopeDocuments;
     private String permissionProfileId;
     private String permissionProfileName;
@@ -37,4 +38,5 @@ public class Session implements Serializable {
     private String emailAddress;
     private UUID orgId;
     public UUID bulkListId;
+    public Long tokenExpirationTime;
 }
