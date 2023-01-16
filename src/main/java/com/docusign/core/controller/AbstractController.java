@@ -81,7 +81,7 @@ public abstract class AbstractController {
         }
 
         config.setSelectedApiType(apiType.toString());
-        codeExampleText = GetExampleText(apiType);
+        codeExampleText = getTextForCodeExample();
 
         return codeExampleText;
     }
@@ -224,10 +224,10 @@ public abstract class AbstractController {
         }
     }
 
-    protected CodeExampleText GetExampleText(ApiType apiType) {
+    protected CodeExampleText getTextForCodeExample() {
         var manifestGroups = ((APIs) Arrays
                 .stream(config.getCodeExamplesText().APIs.toArray())
-                .filter(x -> apiType.name().toLowerCase().contains(((APIs) x).Name.toLowerCase()))
+                .filter(x -> getAPITypeFromLink().name().toLowerCase().contains(((APIs) x).Name.toLowerCase()))
                 .findFirst()
                 .orElse(null)).Groups;
 

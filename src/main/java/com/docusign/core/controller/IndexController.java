@@ -99,7 +99,7 @@ public class IndexController {
     private DSConfiguration config;
 
     @GetMapping(path = "/")
-    public String index(ModelMap model, HttpServletResponse response) throws IOException {
+    public String index(ModelMap model, HttpServletResponse response) throws Exception {
         model.addAttribute(ATTR_TITLE, "Home");
 
         Boolean isCFR = false;
@@ -114,7 +114,7 @@ public class IndexController {
 
         if (config.getQuickstart().equals("true") && config.getSelectedApiIndex().equals(ApiIndex.ESIGNATURE) &&
                 !(SecurityContextHolder.getContext().getAuthentication() instanceof OAuth2AuthenticationToken)) {
-            String site = ApiIndex.ESIGNATURE.getPathOfFirstExample()
+            String site = ApiIndex.ESIGNATURE.getPathOfFirstExample();
             response.setStatus(response.SC_MOVED_TEMPORARILY);
             response.setHeader("Location", site);
             return null;
