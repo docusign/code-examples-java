@@ -5,12 +5,9 @@ import com.docusign.WebSecurityConfig;
 import com.docusign.core.controller.AbstractController;
 import com.docusign.core.model.AuthType;
 import com.docusign.core.model.Session;
-import com.docusign.core.security.jwt.JWTAuthorizationCodeResourceDetails;
-import com.docusign.core.security.jwt.JWTOAuth2RestTemplate;
 import com.docusign.monitor.api.DataSetApi;
 import com.docusign.monitor.client.ApiClient;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -31,13 +28,10 @@ public abstract class AbstractMonitorController extends AbstractController {
 
     protected String ensureUsageOfJWTToken(String accessToken, Session session) {
         if (session.getAuthTypeSelected() != AuthType.JWT || accessToken.isEmpty()){
-            WebSecurityConfig securityConfig = new WebSecurityConfig();
-            JWTAuthorizationCodeResourceDetails jwtCodeGrantClient = securityConfig.jwtCodeGrantClient();
-
-            OAuth2RestTemplate restTemplate = new JWTOAuth2RestTemplate(jwtCodeGrantClient, oAuth2ClientContext);
-            return restTemplate.getAccessToken().toString();
+            return REDIRECT_AUTHENTICATION_PAGE;
+        } else {
+            return accessToken;
         }
-        return accessToken;
     }
 
     /**
