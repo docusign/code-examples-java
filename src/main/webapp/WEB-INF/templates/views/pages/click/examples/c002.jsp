@@ -6,7 +6,7 @@
 <c:set var="redirectToFirstCodeExample" value="href='c001'" scope="page" />
 <c:set var="redirectNumber" value="0" scope="page" />
 
-<h4>2. ${example.getExampleName()}</h4>
+<h4>${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
 
 <jsp:include page="../../links_to_api_methods.jsp" />
@@ -15,7 +15,7 @@
 </p>
 
 <c:choose>
-    <c:when test="${clickwraps['clickwraps'] != null }">
+    <c:when test="${clickwraps['clickwraps'].size() > 0 }">
         <p>${example.getForms().get(formNumber).getFormName()}</p>
         <form class="eg" action="" method="post" data-busy="form">
             <div class="form-group">

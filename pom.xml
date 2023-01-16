@@ -20,9 +20,9 @@
         <java.version>11</java.version>
         <oauth2.version>2.5.6</oauth2.version>
         <commonsio.version>2.11.0</commonsio.version>
-        <docusign.version>3.18.0</docusign.version>
+        <docusign.version>3.21.0</docusign.version>
         <rooms.version>1.1.0</rooms.version>
-        <click.version>1.0.0</click.version>
+        <click.version>1.2.2</click.version>
         <monitor.version>1.1.0</monitor.version>
         <admin.version>1.1.0</admin.version>
     </properties>
@@ -36,10 +36,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>org.springframework.security.oauth.boot</groupId>
-            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-            <version>${oauth2.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
 
         <dependency>
@@ -126,7 +126,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>2.4.4</version>
         </dependency>
     </dependencies>
 
@@ -160,10 +159,10 @@
 
 
 
-    <dependencyManagement>    
+    <dependencyManagement>
 
         <dependencies>
-        
+
 
             <dependency>
                 <groupId>org.bouncycastle</groupId>
