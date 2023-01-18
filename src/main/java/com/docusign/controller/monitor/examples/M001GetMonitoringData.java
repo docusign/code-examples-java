@@ -38,7 +38,7 @@ public class M001GetMonitoringData extends AbstractMonitorController {
 
         // Check, if you are using the JWT authentication
         // step 1 start
-        accessToken = ensureUsageOfJWTToken(accessToken, this.session);
+        ensureUsageOfJWTToken(accessToken, this.session);
         // step 1 end
 
         JSONArray monitoringData = GetMonitoringDataService.getMonitoringData(createDataSetApi(accessToken, this.session));

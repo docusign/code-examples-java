@@ -3,12 +3,11 @@ package com.docusign.core.controller;
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.model.ApiType;
+import com.docusign.core.model.AuthType;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 
 import com.docusign.core.model.manifestModels.APIs;
-import com.docusign.core.model.manifestModels.CodeExampleText;
-import com.docusign.core.model.manifestModels.ManifestGroup;
 import com.docusign.core.model.manifestModels.CodeExampleText;
 import com.docusign.esign.client.auth.OAuth;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletResponse;
 
-import java.util.ArrayList;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Objects;
@@ -94,8 +92,14 @@ public abstract class AbstractController {
             return REDIRECT_AUTHENTICATION_PAGE;
         }
 
+        if(getAPITypeFromLink() == ApiType.MONITOR && session.getAuthTypeSelected() != AuthType.JWT){
+            session.setMonitorExampleRedirect("/" + this.exampleName);
+            return REDIRECT_AUTHENTICATION_PAGE;
+        }
+
         try {
             onInitModel(args, model);
+            config.setSelectedApiType(getAPITypeFromLink().toString());
             return pagePath;
         } catch (Exception exception) {
             if (config.getQuickstart().equals("true") && exception.getMessage() == config.getCodeExamplesText().getSupportingTexts().getCFRError()){
