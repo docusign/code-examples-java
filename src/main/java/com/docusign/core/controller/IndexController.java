@@ -147,17 +147,17 @@ public class IndexController {
         if (session.isRefreshToken() || config.getQuickstart().equals("true")) {
             config.setQuickstart("false");
 
-            if (redirectURL.toLowerCase().contains("/m") || this.session.getMonitorExampleRedirect() != null) {
+            if (redirectURL.toLowerCase().contains("/m") || session.getMonitorExampleRedirect() != null) {
                 this.session.setAuthTypeSelected(AuthType.JWT);
-                redirectURL = redirectURL == "/" ? redirectURL : this.session.getMonitorExampleRedirect();
+                redirectURL = redirectURL != "/" ? redirectURL : session.getMonitorExampleRedirect();
                 this.session.setMonitorExampleRedirect(null);
                 return new ModelAndView(new JWTAuthenticationMethod().loginUsingJWT(config, session, redirectURL));
             }
 
             return new ModelAndView(getRedirectView(session.getAuthTypeSelected()));
-        } else if (redirectURL.toLowerCase().contains("/m") || this.session.getMonitorExampleRedirect() != null) {
+        } else if (redirectURL.toLowerCase().contains("/m") || session.getMonitorExampleRedirect() != null) {
             this.session.setAuthTypeSelected(AuthType.JWT);
-            redirectURL = redirectURL == "/" ? redirectURL : this.session.getMonitorExampleRedirect();
+            redirectURL = redirectURL != "/" ? redirectURL : session.getMonitorExampleRedirect();
             this.session.setMonitorExampleRedirect(null);
             return new ModelAndView(new JWTAuthenticationMethod().loginUsingJWT(config, session, redirectURL));
         } else {
