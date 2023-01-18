@@ -147,16 +147,18 @@ public class IndexController {
         if (session.isRefreshToken() || config.getQuickstart().equals("true")) {
             config.setQuickstart("false");
 
-            if (config.getSelectedApiType().equals(ApiType.MONITOR)) {
+            if (redirectURL.toLowerCase().contains("/m") || this.session.getMonitorExampleRedirect() != null) {
                 this.session.setAuthTypeSelected(AuthType.JWT);
-
+                redirectURL = redirectURL == "/" ? redirectURL : this.session.getMonitorExampleRedirect();
+                this.session.setMonitorExampleRedirect(null);
                 return new ModelAndView(new JWTAuthenticationMethod().loginUsingJWT(config, session, redirectURL));
             }
 
             return new ModelAndView(getRedirectView(session.getAuthTypeSelected()));
-        } else if (config.getSelectedApiType().equals(ApiType.MONITOR)) {
+        } else if (redirectURL.toLowerCase().contains("/m") || this.session.getMonitorExampleRedirect() != null) {
             this.session.setAuthTypeSelected(AuthType.JWT);
-
+            redirectURL = redirectURL == "/" ? redirectURL : this.session.getMonitorExampleRedirect();
+            this.session.setMonitorExampleRedirect(null);
             return new ModelAndView(new JWTAuthenticationMethod().loginUsingJWT(config, session, redirectURL));
         } else {
             return new ModelAndView("pages/ds_must_authenticate");
@@ -179,6 +181,7 @@ public class IndexController {
             this.session.setAuthTypeSelected(AuthType.JWT);
             return new JWTAuthenticationMethod().loginUsingJWT(config, session, redirectURL);
         }else {
+            this.session.setAuthTypeSelected(AuthType.AGC);
             return getRedirectView(authTypeSelected);
         }
     }

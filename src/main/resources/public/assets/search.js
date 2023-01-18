@@ -1,4 +1,4 @@
-let DS_SEARCH = (function () {
+﻿let DS_SEARCH = (function () {
     const API_TYPES = {
         ESIGNATURE: 'esignature',
         MONITOR: 'monitor',
@@ -7,11 +7,17 @@ let DS_SEARCH = (function () {
         ADMIN: 'admin',
     };
 
-    let processJSONData = function() {
-        let json_raw = $("#api_json_data").text(),
-            jsonData = json_raw ? JSON.parse(json_raw) : false;
+    let processJSONData = function () {
+        let json_raw = $("#api_json_data").text()
+            , json = json_raw ? JSON.parse(json_raw) : false;
 
-        return jsonData;
+        return json;
+    }
+
+    let processCFR11Value = function () {
+        let json_raw = $("#cfr11_data").text();
+
+        return json_raw;
     }
 
     function checkIfExampleMatches(example, matches) {
@@ -49,10 +55,9 @@ let DS_SEARCH = (function () {
         }
     }
 
-    let findCodeExamplesByKeywords = function(json, pattern) {
+    let findCodeExamplesByKeywords = function (json, pattern) {
         const options = {
             isCaseSensitive: false,
-            minMatchCharLength: pattern.length,
             threshold: -0.0,
             includeMatches: true,
             ignoreLocation: true,
@@ -64,16 +69,21 @@ let DS_SEARCH = (function () {
             ]
         };
 
-        const fuse = new Fuse(json, options);
+        let clearJSON = JSON.stringify(json).replace(/<\/?[^>]+(>|$)/g, "");
+        const fuse = new Fuse(JSON.parse(clearJSON), options);
 
-        var searchResults =  fuse.search(JSON.stringify(pattern))
+        var searchResults = fuse.search(JSON.stringify(pattern));
 
-        searchResults.forEach(searchResult => clearResultsAfterMatching(searchResult.item, searchResult.matches));
+
+
+        searchResults.forEach(searchResult => {
+            return clearResultsAfterMatching(searchResult.item, searchResult.matches)
+        });
 
         return searchResults;
     }
 
-    let getExamplesByAPIType = function(apiType, codeExamples) {
+    let getExamplesByAPIType = function (apiType, codeExamples) {
         let codeExamplesByAPI = codeExamples.find(x => x.Name.toLowerCase() === apiType);
 
         if (codeExamplesByAPI != null) {
@@ -83,7 +93,7 @@ let DS_SEARCH = (function () {
         }
     }
 
-    let getEnteredAPIType = function(inputValue) {
+    let getEnteredAPIType = function (inputValue) {
         const inputLength = inputValue.length;
 
         for (const key in API_TYPES) {
@@ -91,7 +101,7 @@ let DS_SEARCH = (function () {
                 const apiType = API_TYPES[key];
                 const comparedValue = apiType.substr(0, inputLength);
 
-                if(inputValue === comparedValue){
+                if (inputValue === comparedValue) {
                     return apiType;
                 }
             }
@@ -115,7 +125,9 @@ let DS_SEARCH = (function () {
         }
     }
 
-    let addCodeExampleToHomepage = function(codeExamples) {
+    let addCodeExampleToHomepage = function (codeExamples) {
+        var cfrPart11 = processCFR11Value();
+
         codeExamples.forEach(
             element => {
                 let linkToCodeExample = getLinkForApiType(element.Name.toLowerCase());
@@ -126,56 +138,55 @@ let DS_SEARCH = (function () {
 
                         group.Examples.forEach(
                             example => {
-                                if (!example.SkipForLanguages || !example.SkipForLanguages.toLowerCase().includes("c#"))
-                                {
-                                    $("#filtered_code_examples").append(
-                                        "<h4 id="
-                                        + "example".concat("0".repeat(3 - example.ExampleNumber.toString().length)).concat(example.ExampleNumber) + ">"
-                                        + "<a href = "
-                                        + linkToCodeExample.concat("0".repeat(3 - example.ExampleNumber.toString().length)).concat(example.ExampleNumber)
-                                        + " >"
-                                        + example.ExampleName
-                                        + "</a ></h4 >"
-                                    );
-
-                                    $("#filtered_code_examples").append("<p>" + example.ExampleDescription + "</p>");
-
-                                    $("#filtered_code_examples").append("<p>");
-
-                                    if (example.LinksToAPIMethod.length == 1)
-                                    {
-                                        $("#filtered_code_examples").append(processJSONData().SupportingTexts.APIMethodUsed);
-                                    }
-                                    else
-                                    {
-                                        $("#filtered_code_examples").append(processJSONData().SupportingTexts.APIMethodUsedPlural);
-                                    }
-
-                                    for (let index = 0; index < example.LinksToAPIMethod.length; index++) {
+                                if (!example.SkipForLanguages || !example.SkipForLanguages.toLowerCase().includes("c#")) {
+                                    if (element.Name.toLowerCase() !== API_TYPES.ESIGNATURE.toLowerCase() ||
+                                        ((example.CFREnabled == "AllAccounts") ||
+                                            ((cfrPart11 == "enabled") && (example.CFREnabled == "CFROnly")) ||
+                                            ((cfrPart11 != "enabled") && (example.CFREnabled == "NonCFR")))) {
                                         $("#filtered_code_examples").append(
-                                            " <a target='_blank' href='"
-                                            + example.LinksToAPIMethod[index].Path
-                                            + "'>"
-                                            + example.LinksToAPIMethod[index].PathName
-                                            + "</a>"
+                                            "<h4 id="
+                                            + "example".concat("0".repeat(3 - example.ExampleNumber.toString().length)).concat(example.ExampleNumber) + ">"
+                                            + "<a href = "
+                                            + linkToCodeExample.concat("0".repeat(3 - example.ExampleNumber.toString().length)).concat(example.ExampleNumber)
+                                            + " >"
+                                            + example.ExampleName
+                                            + "</a ></h4 >"
                                         );
 
-                                        if (index + 1 === example.LinksToAPIMethod.length)
-                                        {
-                                            $("#filtered_code_examples").append("<span></span>");
+                                        $("#filtered_code_examples").append("<p>" + example.ExampleDescription + "</p>");
+
+                                        $("#filtered_code_examples").append("<p>");
+
+                                        if (example.LinksToAPIMethod.length == 1) {
+                                            $("#filtered_code_examples").append(processJSONData().SupportingTexts.APIMethodUsed);
                                         }
-                                        else if (index + 1 === example.LinksToAPIMethod.length - 1)
-                                        {
-                                            $("#filtered_code_examples").append("<span> and </span>");
-                                        }
-                                        else
-                                        {
-                                            $("#filtered_code_examples").append("<span>, </span>");
+                                        else {
+                                            $("#filtered_code_examples").append(processJSONData().SupportingTexts.APIMethodUsedPlural);
                                         }
 
+                                        for (let index = 0; index < example.LinksToAPIMethod.length; index++) {
+                                            $("#filtered_code_examples").append(
+                                                " <a target='_blank' href='"
+                                                + example.LinksToAPIMethod[index].Path
+                                                + "'>"
+                                                + example.LinksToAPIMethod[index].PathName
+                                                + "</a>"
+                                            );
+
+                                            if (index + 1 === example.LinksToAPIMethod.length) {
+                                                $("#filtered_code_examples").append("<span></span>");
+                                            }
+                                            else if (index + 1 === example.LinksToAPIMethod.length - 1) {
+                                                $("#filtered_code_examples").append("<span> and </span>");
+                                            }
+                                            else {
+                                                $("#filtered_code_examples").append("<span>, </span>");
+                                            }
+
+                                        }
+
+                                        $("#filtered_code_examples").append("</p> ");
                                     }
-
-                                    $("#filtered_code_examples").append("</p> ");
                                 }
                             }
                         );
@@ -185,7 +196,7 @@ let DS_SEARCH = (function () {
         );
     }
 
-    let textCouldNotBeFound = function() {
+    let textCouldNotBeFound = function () {
         $("#filtered_code_examples").append(processJSONData().SupportingTexts.SearchFailed);
     }
 
@@ -200,6 +211,7 @@ let DS_SEARCH = (function () {
 })();
 
 const input = document.getElementById('code_example_search');
+const log = document.getElementById('values');
 
 input.addEventListener('input', updateValue);
 
@@ -208,28 +220,39 @@ function updateValue(esearchPattern) {
 
     const inputValue = esearchPattern.target.value.toLowerCase();
     const json = DS_SEARCH.processJSONData().APIs;
-    let tempJson = json;
-
-    if (inputValue === "")
-    {
-        DS_SEARCH.addCodeExampleToHomepage(tempJson);
+    if (inputValue === "") {
+        DS_SEARCH.addCodeExampleToHomepage(json);
     }
-    else
-    {
+    else {
         const apiType = DS_SEARCH.getEnteredAPIType(inputValue);
 
-        if (apiType !== null)
-        {
-            const adminExamples = DS_SEARCH.getExamplesByAPIType(apiType, tempJson);
+        if (apiType !== null) {
+            const adminExamples = DS_SEARCH.getExamplesByAPIType(apiType, json);
             DS_SEARCH.addCodeExampleToHomepage(adminExamples);
         }
-        else
-        {
-            const result = DS_SEARCH.findCodeExamplesByKeywords(tempJson, inputValue);
+        else {
+            const result = DS_SEARCH.findCodeExamplesByKeywords(json, inputValue);
             if (result.length < 1) {
                 DS_SEARCH.textCouldNotBeFound();
             } else {
                 result.forEach(x => {
+                    var api = json.filter(api => {
+                        return api.Name === x.item.Name;
+                    })[0];
+
+                    x.item.Groups.forEach((group, groupIndex) => {
+                        var unfilteredGroup = api.Groups.filter(apiGroup => {
+                            return apiGroup.Name === group.Name;
+                        })[0];
+
+                        group.Examples.forEach((example, index) => {
+                            var clearedExample = unfilteredGroup.Examples.filter(apiExample => {
+                                return apiExample.ExampleNumber === example.ExampleNumber;
+                            })[0];
+                            x.item.Groups[groupIndex].Examples[index] = clearedExample;
+                        });
+                    });
+
                     DS_SEARCH.addCodeExampleToHomepage([x.item]);
                 });
             }

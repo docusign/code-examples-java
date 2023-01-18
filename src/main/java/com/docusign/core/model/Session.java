@@ -39,4 +39,5 @@ public class Session implements Serializable {
     private UUID orgId;
     public UUID bulkListId;
     public Long tokenExpirationTime;
+    private String monitorExampleRedirect;
 }
