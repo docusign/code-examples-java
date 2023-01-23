@@ -92,7 +92,7 @@ public final class CreateTemplateService {
         return template;
     }
 
-    private static List createList() {
+    public static List createList() {
         List list = new List();
         list.setDocumentId(DOCUMENT_ID);
         list.setPageNumber(PAGE_NUMBER);
@@ -114,14 +114,14 @@ public final class CreateTemplateService {
         return list;
     }
 
-    private static ListItem createListItem(String color) {
+    public static ListItem createListItem(String color) {
         ListItem item = new ListItem();
         item.setText(color);
         item.setValue(color.toLowerCase(Locale.ENGLISH));
         return item;
     }
 
-    private static RadioGroup createRadioGroup() {
+    public static RadioGroup createRadioGroup() {
         RadioGroup radioGroup = new RadioGroup();
         radioGroup.setDocumentId(DOCUMENT_ID);
         radioGroup.setGroupName("radio1");
@@ -134,7 +134,7 @@ public final class CreateTemplateService {
         return radioGroup;
     }
 
-    private static Radio createRadio(String value, String xPosition) {
+    public static Radio createRadio(String value, String xPosition) {
         Radio radio = new Radio();
         radio.setPageNumber(PAGE_NUMBER);
         radio.setValue(value);
@@ -144,7 +144,7 @@ public final class CreateTemplateService {
         return radio;
     }
 
-    private static Checkbox createCheckbox(String label, String xPosition, String yPosition) {
+    public static Checkbox createCheckbox(String label, String xPosition, String yPosition) {
         Checkbox check = new Checkbox();
         check.setDocumentId(DOCUMENT_ID);
         check.setPageNumber(PAGE_NUMBER);
@@ -154,7 +154,7 @@ public final class CreateTemplateService {
         return check;
     }
 
-    private static Text createText(String label, String xPosition, String yPosition) {
+    public static Text createText(String label, String xPosition, String yPosition) {
         Text text = new Text();
         text.setDocumentId(DOCUMENT_ID);
         text.setPageNumber(PAGE_NUMBER);
@@ -169,7 +169,7 @@ public final class CreateTemplateService {
         return text;
     }
 
-    private static SignHere createSignHere() {
+    public static SignHere createSignHere() {
         SignHere signHere = new SignHere();
         signHere.setDocumentId(DOCUMENT_ID);
         signHere.setPageNumber(PAGE_NUMBER);

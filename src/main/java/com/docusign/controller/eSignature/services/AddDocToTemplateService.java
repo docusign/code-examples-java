@@ -50,17 +50,15 @@ public final class AddDocToTemplateService {
             dsReturnUrl,
             signerEmail,
             signerName,
-            signerClientId,
             dsPingUrl
         );
         return envelopesApi.createRecipientView(accountId, envelopeSummary.getEnvelopeId(), viewRequest);
     }
 
-    private static RecipientViewRequest makeRecipientViewRequest(
+    public static RecipientViewRequest makeRecipientViewRequest(
             String dsReturnUrl,
             String signerEmail,
             String signerName,
-            String signerClientId,
             String dsPingUrl
     ) {
         RecipientViewRequest viewRequest = new RecipientViewRequest();
@@ -77,7 +75,7 @@ public final class AddDocToTemplateService {
     // The envelope request object uses Composite Template to include in the envelope:
     // 1. A template stored on the DocuSign service
     // 2. An additional document which is a custom HTML source document
-    private static EnvelopeDefinition makeEnvelope(
+    public static EnvelopeDefinition makeEnvelope(
             String signerEmail,
             String signerName,
             String signerClientId,
@@ -147,7 +145,7 @@ public final class AddDocToTemplateService {
     }
 
     // Adding clientUserId transforms the template recipient into an embedded recipient
-    private static Signer createSigner(
+    public static Signer createSigner(
             String signerEmail,
             String signerName,
             String signerClientId
