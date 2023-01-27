@@ -55,11 +55,11 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
 
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
-      if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
-        session.setStatusCFR("enabled");
-        throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
-      }
         super.onInitModel(args, model);
+        if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
+            session.setStatusCFR("enabled");
+            throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
+        }
     }
 
     @Override
