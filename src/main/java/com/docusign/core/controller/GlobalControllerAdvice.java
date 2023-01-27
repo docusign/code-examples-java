@@ -123,29 +123,16 @@ public class GlobalControllerAdvice {
             }
 
             OAuth.Account oauthAccount = account.orElseThrow(() -> new NoSuchElementException(ERROR_ACCOUNT_NOT_FOUND));
+            session.setOauthAccount(oauthAccount);
             session.setAccountId(oauthAccount.getAccountId());
             session.setAccountName(oauthAccount.getAccountName());
 
             //TODO set this more efficiently with more APIs as they're added in
-            String basePath = this.getBaseUrl(config.getSelectedApiIndex(), oauthAccount) + config.getSelectedApiIndex().getBaseUrlSuffix();
+            String basePath = this.config.getBaseUrl(config.getSelectedApiIndex(), oauthAccount) + config.getSelectedApiIndex().getBaseUrlSuffix();
             session.setBasePath(basePath);
         }
 
         return new Locals(config, session, user, "");
-    }
-
-    private String getBaseUrl(ApiIndex apiIndex, OAuth.Account oauthAccount) {
-        if (apiIndex.equals(ApiIndex.ROOMS)) {
-            return this.config.getRoomsBasePath();
-        } else if (apiIndex.equals(ApiIndex.CLICK)) {
-            return this.config.getClickBasePath();
-        }  else if (apiIndex.equals(ApiIndex.MONITOR)) {
-            return this.config.getMonitorBasePath();
-        }  else if (apiIndex.equals(ApiIndex.ADMIN)) {
-            return this.config.getAdminBasePath();
-        } else {
-            return oauthAccount.getBaseUri();
-        }
     }
 
     private static List<OAuth.Account> getOAuthAccounts(OAuth2User user) {

@@ -39,11 +39,11 @@ public class EG037ControllerSMSDelivery extends AbstractEsignatureController {
 
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
-      if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
-        session.setStatusCFR("enabled");
-        throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
-      }
         super.onInitModel(args, model);
+        if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
+            session.setStatusCFR("enabled");
+            throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
+        }
     }
 
     @Override

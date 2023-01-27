@@ -3,17 +3,14 @@ package com.docusign;
 import com.docusign.common.ApiIndex;
 import com.docusign.core.model.ApiType;
 import com.docusign.core.model.manifestModels.ManifestStructure;
+import com.docusign.esign.client.auth.OAuth;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.EnumUtils;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StreamUtils;
 
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.HttpHeaders;
@@ -22,7 +19,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 
 @Component
 @Getter
@@ -112,6 +108,20 @@ public class DSConfiguration {
 
     public String getDsPingUrl() {
         return appUrl + "/";
+    }
+
+    public String getBaseUrl(ApiIndex apiIndex, OAuth.Account oauthAccount) {
+        if (apiIndex.equals(ApiIndex.ROOMS)) {
+            return roomsBasePath;
+        } else if (apiIndex.equals(ApiIndex.CLICK)) {
+            return clickBasePath;
+        }  else if (apiIndex.equals(ApiIndex.MONITOR)) {
+            return monitorBasePath;
+        }  else if (apiIndex.equals(ApiIndex.ADMIN)) {
+            return adminBasePath;
+        } else {
+            return oauthAccount.getBaseUri();
+        }
     }
 
     public ApiType getSelectedApiType() throws IOException {

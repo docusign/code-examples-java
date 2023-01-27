@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Objects;
@@ -99,7 +100,6 @@ public abstract class AbstractController {
 
         try {
             onInitModel(args, model);
-            config.setSelectedApiType(getAPITypeFromLink().toString());
             return pagePath;
         } catch (Exception exception) {
             if (config.getQuickstart().equals("true") && exception.getMessage() == config.getCodeExamplesText().getSupportingTexts().getCFRError()){
@@ -135,6 +135,7 @@ public abstract class AbstractController {
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         this.title = getTextForCodeExample(getAPITypeFromLink()).ExampleName;
 
+        this.checkTheCurrentApiTypeAndBaseUrl();
         Class<?> clazz = Objects.requireNonNullElse(getClass().getEnclosingClass(), getClass());
         String srcPath = String.join("", config.getExampleUrl(), clazz.getName().replace('.', '/'), ".java");
         String viewSourceFile = config.getCodeExamplesText().SupportingTexts
@@ -148,6 +149,12 @@ public abstract class AbstractController {
         model.addAttribute("documentation", config.getDocumentationPath() + exampleName);
         model.addAttribute(EXAMPLE_TEXT, getTextForCodeExample(getAPITypeFromLink()));
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
+    }
+
+    public void checkTheCurrentApiTypeAndBaseUrl() throws IOException {
+        config.setSelectedApiType(getAPITypeFromLink().toString());
+        String basePath = this.config.getBaseUrl(config.getSelectedApiIndex(), session.getOauthAccount()) + config.getSelectedApiIndex().getBaseUrlSuffix();
+        session.setBasePath(basePath);
     }
 
     /**
