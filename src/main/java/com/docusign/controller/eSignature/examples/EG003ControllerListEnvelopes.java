@@ -44,8 +44,8 @@ public class EG003ControllerListEnvelopes extends AbstractEsignatureController {
                 envelopesApi,
                 session.getAccountId());
 
-        DoneExample.createDefault(getTextForCodeExample().ExampleName)
-                .withMessage(getTextForCodeExample().ResultsPageText)
+        DoneExample.createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText)
                 .withJsonObject(envelopesInformation)
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;

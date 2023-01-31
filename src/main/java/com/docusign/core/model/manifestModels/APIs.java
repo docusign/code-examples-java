@@ -8,8 +8,8 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ManifestStructure {
-    public SupportingTexts SupportingTexts;
+public class APIs {
+    public String Name;
 
-    public List<APIs> APIs = new ArrayList<APIs>();
+    public List<ManifestGroup> Groups = new ArrayList<ManifestGroup>();
 }

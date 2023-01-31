@@ -75,7 +75,7 @@ public class R008ControllerGrantOfficeAccessToFormGroup extends AbstractRoomsCon
             // Step 5 End
 
             DoneExample.createDefault(this.title)
-                    .withMessage(getTextForCodeExample().ResultsPageText
+                    .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText
                             .replaceFirst("\\{0}", String.valueOf(args.getOfficeId()))
                             .replaceFirst("\\{1}", String.valueOf(args.getFormGroupId())))
                     .addToModel(model, config);

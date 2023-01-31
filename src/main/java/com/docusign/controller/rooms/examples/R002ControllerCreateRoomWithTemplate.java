@@ -74,7 +74,7 @@ public class R002ControllerCreateRoomWithTemplate extends AbstractRoomsControlle
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(createdRoom)
-                .withMessage(getTextForCodeExample().ResultsPageText
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText
                         .replaceFirst("\\{0}", createdRoom.getName())
                         .replaceFirst("\\{1}", createdRoom.getRoomId().toString())
                 )

@@ -60,9 +60,9 @@ public class EG028ControllerCreateBrand extends AbstractEsignatureController {
                 session.getAccountId()
         );
 
-        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+        DoneExample.createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
                 .withJsonObject(brandsResponse)
-                .withMessage(getTextForCodeExample().ResultsPageText
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText
                         .replaceFirst("\\{0}", brandsResponse.getBrands().get(0).getBrandId())
                 )
                 .addToModel(model, config);
