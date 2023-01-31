@@ -38,7 +38,7 @@ public class M001GetMonitoringData extends AbstractMonitorController {
 
         // Check, if you are using the JWT authentication
         // step 1 start
-        accessToken = ensureUsageOfJWTToken(accessToken, this.session);
+        ensureUsageOfJWTToken(accessToken, this.session);
         // step 1 end
 
         JSONArray monitoringData = GetMonitoringDataService.getMonitoringData(createDataSetApi(accessToken, this.session));
@@ -56,8 +56,8 @@ public class M001GetMonitoringData extends AbstractMonitorController {
         String monitoringDataCleaned = monitoringData.toString().replaceAll("'", "");
 
         // Process results
-        DoneExample.createDefault(getTextForCodeExample().ExampleName)
-                .withMessage(getTextForCodeExample().ResultsPageText)
+        DoneExample.createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText)
                 .withJsonObject(monitoringDataCleaned)
                 .addToModel(model, config);
 

@@ -58,8 +58,8 @@ public class A005AuditUsers extends AbstractAdminController {
 
         // Process results
         DoneExample
-                .createDefault(getTextForCodeExample().ExampleName)
-                .withMessage(getTextForCodeExample().ResultsPageText)
+                .createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText)
                 .withJsonObject(resultsArr).addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
