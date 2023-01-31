@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="assets/favicon.ico">
+    <link rel="icon" href="/assets/favicon.ico">
 
     <title>${title}</title>
 
@@ -45,10 +45,6 @@
                     </li>
                 </c:otherwise>
             </c:choose>
-            <li>
-                <a class="nav-link" href="/ds/selectApi" id="selectApi"
-                   data-busy="href">${launcherTexts.getChangeAPITypeButton()}<span class="sr-only">(current)</span></a>
-            </li>
         </ul>
         <c:if test="${locals.user != null}">
            <span class="navbar-text">

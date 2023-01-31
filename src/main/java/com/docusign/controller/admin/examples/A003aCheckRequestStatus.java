@@ -54,8 +54,8 @@ public class A003aCheckRequestStatus extends AbstractAdminController {
 
         // Process results
         DoneExample
-                .createDefault(getTextForCodeExample().ExampleName)
-                .withMessage(getTextForCodeExample().AdditionalPage.get(0).ResultsPageText)
+                .createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).AdditionalPage.get(0).ResultsPageText)
                 .withJsonObject(result)
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;

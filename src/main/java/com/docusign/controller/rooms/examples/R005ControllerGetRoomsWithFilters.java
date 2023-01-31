@@ -70,7 +70,7 @@ public class R005ControllerGetRoomsWithFilters extends AbstractRoomsController {
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(rooms)
-                .withMessage(getTextForCodeExample().ResultsPageText)
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText)
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
