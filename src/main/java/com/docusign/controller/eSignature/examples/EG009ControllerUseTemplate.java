@@ -49,8 +49,7 @@ public class EG009ControllerUseTemplate extends AbstractEsignatureController {
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
-        TemplatesApi templatesApi = new TemplatesApi(apiClient);
-        EnvelopeTemplateResults templates = templatesApi.listTemplates(session.getAccountId());
+        EnvelopeTemplateResults templates = UseTemplateService.listTemplates(apiClient, session.getAccountId());
         model.addAttribute(MODEL_LIST_TEMPLATE, templates.getEnvelopeTemplates());
     }
 
@@ -71,9 +70,9 @@ public class EG009ControllerUseTemplate extends AbstractEsignatureController {
                 envelope);
 
         session.setEnvelopeId(envelopeSummary.getEnvelopeId());
-        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+        DoneExample.createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
                 .withJsonObject(envelopeSummary)
-                .withMessage(getTextForCodeExample().ResultsPageText
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText
                         .replaceFirst("\\{0}", envelopeSummary.getEnvelopeId())
                 )
                 .addToModel(model, config);

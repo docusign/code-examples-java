@@ -50,7 +50,7 @@ public class EG016ControllerSetTabValues extends AbstractEsignatureController {
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
 
         // Step 5. Call the eSignature REST API
-        EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
+        EnvelopeSummary envelopeSummary = SetTabValuesService.createEnvelope(envelopesApi, accountId, envelope);
 
         String envelopeId = envelopeSummary.getEnvelopeId();
         session.setEnvelopeId(envelopeId);

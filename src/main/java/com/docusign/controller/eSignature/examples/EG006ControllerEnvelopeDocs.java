@@ -77,9 +77,9 @@ public class EG006ControllerEnvelopeDocs extends AbstractEsignatureController {
             envelopeDocItems.add(new EnvelopeDocumentInfo(documentName, doc.getType(), doc.getDocumentId()));
         }
 
-        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+        DoneExample.createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
             .withJsonObject(envelopeDocumentsResult)
-            .withMessage(getTextForCodeExample().ResultsPageText)
+            .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText)
             .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }

@@ -1,20 +1,23 @@
 package com.docusign.common;
 
 public enum ApiIndex {
-    ESIGNATURE("/pages/esignature/index", "/restapi", "/eg001"),
-    ROOMS("/pages/rooms/index", "/restapi", "/r001"),
-    CLICK("/pages/click/index", "/clickapi", "/c001"),
-    MONITOR("/pages/monitor/index", "", "/m001"),
-    ADMIN("/pages/admin/index", "/management", "/a001");
+    ESIGNATURE("/pages/esignature/index", "/restapi", "/eg001", "/eg"),
+    ROOMS("/pages/rooms/index", "/restapi", "/r001", "/r"),
+    CLICK("/pages/click/index", "/clickapi", "/c001", "/c"),
+    MONITOR("/pages/monitor/index", "", "/m001", "/m"),
+    ADMIN("/pages/admin/index", "/management", "/a001", "/a");
 
     private final String indexPath;
     private final String baseUrlSuffix;
     private final String firstExamplePath;
 
-    ApiIndex(final String indexPath, final String baseUrlSuffix, final String firstExamplePath) {
+    private final String examplesPathCode;
+
+    ApiIndex(final String indexPath, final String baseUrlSuffix, final String firstExamplePath, final String examplesPathCode) {
         this.indexPath = indexPath;
         this.baseUrlSuffix = baseUrlSuffix;
         this.firstExamplePath = firstExamplePath;
+        this.examplesPathCode = examplesPathCode;
     }
 
     public String getBaseUrlSuffix() {
@@ -23,6 +26,10 @@ public enum ApiIndex {
 
     public String getPathOfFirstExample() {
         return firstExamplePath;
+    }
+
+    public String getExamplesPathCode() {
+        return examplesPathCode;
     }
 
     @Override

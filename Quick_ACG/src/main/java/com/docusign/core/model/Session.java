@@ -20,6 +20,7 @@ public class Session implements Serializable {
     private String accountId;
     private String accountName;
     private String basePath;
+    private String statusCFR;
     private String roomsBasePath;
     private String envelopeId;
     private String templateId;

@@ -11,5 +11,5 @@ import java.util.List;
 public class ManifestStructure {
     public SupportingTexts SupportingTexts;
 
-    public List<ManifestGroup> Groups = new ArrayList<ManifestGroup>();
+    public List<APIs> APIs = new ArrayList<APIs>();
 }

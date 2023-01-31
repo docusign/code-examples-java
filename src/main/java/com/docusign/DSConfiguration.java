@@ -1,20 +1,16 @@
 package com.docusign;
 
-
 import com.docusign.common.ApiIndex;
 import com.docusign.core.model.ApiType;
 import com.docusign.core.model.manifestModels.ManifestStructure;
+import com.docusign.esign.client.auth.OAuth;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.EnumUtils;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StreamUtils;
 
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.HttpHeaders;
@@ -23,7 +19,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 
 @Component
 @Getter
@@ -39,6 +34,8 @@ public class DSConfiguration {
     private String selectedApiType;
 
     private ManifestStructure codeExamplesText;
+
+    public Boolean isConsentRedirectActivated = false;
 
     @Value("${DS_TARGET_ACCOUNT_ID}")
     private String targetAccountId;
@@ -64,6 +61,24 @@ public class DSConfiguration {
     @Value("${Gateway_Account_Id}")
     private String gatewayAccountId;
 
+    @Value("${spring.security.oauth2.client.registration.jwt.client-id}")
+    private String userId;
+
+    @Value("${jwt.grant.sso.redirect-url}")
+    private String jwtRedirectURL;
+
+    @Value("${authorization.code.grant.sso.redirect-url}")
+    private String acgRedirectURL;
+
+    @Value("${spring.security.oauth2.client.registration.jwt.private-key-path}")
+    private String privateKeyPath;
+
+    @Value("${spring.security.oauth2.client.registration.jwt.impersonated-user-guid}")
+    private String impersonatedUserId;
+
+    @Value("${jwt.grant.client.base-url}")
+    private String baseURL;
+
     @Value("${Gateway_Name}")
     private String gatewayName;
 
@@ -82,22 +97,8 @@ public class DSConfiguration {
     @Value("${DS_ADMIN_BASE_PATH}")
     private String adminBasePath;
 
-    @Value("${AdminManifest}")
-    private String adminManifest;
-
-    @Value("${ESignatureManifest}")
-    private String eSignatureManifest;
-
-    @Value("${ClickManifest}")
-    private String clickManifest;
-
-    @Value("${RoomsManifest}")
-    private String roomsManifest;
-
-    @Value("${MonitorManifest}")
-    private String monitorManifest;
-
-    public String examplesApiPath = "examplesApi.json";
+    @Value("${CodeExamplesManifest}")
+    private String codeExamplesManifest;
 
     public String apiTypeHeader = "ApiType";
 
@@ -109,35 +110,34 @@ public class DSConfiguration {
         return appUrl + "/";
     }
 
+    public String getBaseUrl(ApiIndex apiIndex, OAuth.Account oauthAccount) {
+        if (apiIndex.equals(ApiIndex.ROOMS)) {
+            return roomsBasePath;
+        } else if (apiIndex.equals(ApiIndex.CLICK)) {
+            return clickBasePath;
+        }  else if (apiIndex.equals(ApiIndex.MONITOR)) {
+            return monitorBasePath;
+        }  else if (apiIndex.equals(ApiIndex.ADMIN)) {
+            return adminBasePath;
+        } else {
+            return oauthAccount.getBaseUri();
+        }
+    }
+
     public ApiType getSelectedApiType() throws IOException {
-        return ApiType.valueOf(getSelectedApi());
+        if (selectedApiType == null){
+            return ApiType.ESIGNATURE;
+        }
+
+        return ApiType.valueOf(selectedApiType);
     }
 
     public ApiIndex getSelectedApiIndex() throws IOException {
-        return ApiIndex.valueOf(getSelectedApi());
-    }
-
-    private String getSelectedApi() throws IOException {
-        if (selectedApiType != null){
-            return selectedApiType;
+        if (selectedApiType == null){
+            return ApiIndex.ESIGNATURE;
         }
 
-        if(Boolean.valueOf(quickACG)){
-            return ApiIndex.ESIGNATURE.name();
-        }
-
-        ClassPathResource resource = new ClassPathResource(examplesApiPath);
-        String source = StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
-        try {
-            Object apiTypeValues = new JSONObject(source).get(apiTypeHeader);
-            if (apiTypeValues == null ||  !EnumUtils.isValidEnum(ApiIndex.class, apiTypeValues.toString())) {
-                throw new JSONException(String.format("The wrong format of the %s file.", examplesApiPath));
-            }
-            selectedApiType = apiTypeValues.toString();
-        } catch (JSONException e){
-            e.printStackTrace();
-        }
-        return selectedApiType;
+        return ApiIndex.valueOf(selectedApiType);
     }
 
     public ManifestStructure getCodeExamplesText() {
@@ -146,7 +146,7 @@ public class DSConfiguration {
         }
 
         try {
-            String json = loadFileData(getTextManifestDependingOnCurrentAPI());
+            String json = loadFileData(codeExamplesManifest);
             codeExamplesText = new ObjectMapper().readValue(json, ManifestStructure.class);
         } catch (JSONException | IOException e){
             e.printStackTrace();
@@ -157,35 +157,7 @@ public class DSConfiguration {
         return codeExamplesText;
     }
 
-    private String getTextManifestDependingOnCurrentAPI() throws IOException {
-        String linkToManifest = "";
-
-        ApiIndex selectedApiIndex = getSelectedApiIndex();
-        if (selectedApiIndex == ApiIndex.ESIGNATURE)
-        {
-            linkToManifest = eSignatureManifest;
-        }
-        else if (selectedApiIndex == ApiIndex.CLICK)
-        {
-            linkToManifest = clickManifest;
-        }
-        else if (selectedApiIndex == ApiIndex.ROOMS)
-        {
-            linkToManifest = roomsManifest;
-        }
-        else if (selectedApiIndex == ApiIndex.MONITOR)
-        {
-            linkToManifest = monitorManifest;
-        }
-        else if (selectedApiIndex == ApiIndex.ADMIN)
-        {
-            linkToManifest = adminManifest;
-        }
-
-        return linkToManifest;
-    }
-
-    private String loadFileData(String filePath) throws Exception {
+    public String loadFileData(String filePath) throws Exception {
         URL fullRequestPath = new URL(filePath);
         HttpURLConnection httpConnection = (HttpURLConnection) fullRequestPath.openConnection();
         httpConnection.setRequestMethod(HttpMethod.GET);

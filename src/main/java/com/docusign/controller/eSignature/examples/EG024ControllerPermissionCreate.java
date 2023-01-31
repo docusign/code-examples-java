@@ -50,9 +50,9 @@ public class EG024ControllerPermissionCreate extends AbstractEsignatureControlle
                 args.getPermissionProfileName()
         );
 
-        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+        DoneExample.createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
                 .withJsonObject(newProfile)
-                .withMessage(getTextForCodeExample().ResultsPageText
+                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText
                         .replaceFirst("\\{0}", newProfile.getPermissionProfileId())
                         .replaceFirst("\\{1}", newProfile.getPermissionProfileName())
                 )

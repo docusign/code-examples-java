@@ -33,9 +33,7 @@ public final class WebQueryEndpointService {
             }
 
             return new JSONObject(methodResult);
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("Error", "You do not have Monitor enabled for your account, follow <a target='_blank' href='https://developers.docusign.com/docs/monitor-api/how-to/enable-monitor/'>How to enable Monitor for your account</a> to get it enabled.");
             return jsonObject;

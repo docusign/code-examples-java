@@ -49,6 +49,7 @@ public class EG001ControllerEmbeddedSigning extends AbstractEsignatureController
 
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
+      super.onInitModel(args, model);
       if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
         session.setStatusCFR("enabled");
         throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
@@ -56,7 +57,6 @@ public class EG001ControllerEmbeddedSigning extends AbstractEsignatureController
       if(config.getQuickstart().equals("true")){
         config.setQuickstart("false");
       }
-      super.onInitModel(args, model);
     }
 
     @Override
@@ -78,21 +78,20 @@ public class EG001ControllerEmbeddedSigning extends AbstractEsignatureController
 
         // Step 2. Call DocuSign to create the envelope
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
-        EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
-        EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
 
-        String envelopeId = envelopeSummary.getEnvelopeId();
+        String envelopeId = EmbeddedSigningService.createEnvelope(apiClient, session.getAccountId(), envelope);
         session.setEnvelopeId(envelopeId);
 
         // Step 3. create the recipient view, the embedded signing
         RecipientViewRequest viewRequest = EmbeddedSigningService.makeRecipientViewRequest(
                 signerEmail,
                 signerName,
-                config,
-                SIGNER_CLIENT_ID);
+                SIGNER_CLIENT_ID,
+                config.getDsReturnUrl(),
+                config.getDsPingUrl());
 
         ViewUrl viewUrl = EmbeddedSigningService.embeddedSigning(
-                envelopesApi,
+                apiClient,
                 accountId,
                 envelopeId,
                 viewRequest
