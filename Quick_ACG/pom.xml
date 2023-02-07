@@ -215,6 +215,7 @@
                                     <directory>../src/main/java/com/docusign/core/model/manifestModels</directory>
                                     <includes>
                                         <include>AdditionalPage.java</include>
+                                        <include>APIs.java</include>
                                         <include>CodeExampleText.java</include>
                                         <include>CustomErrorTexts.java</include>
                                         <include>Forms.java</include>
