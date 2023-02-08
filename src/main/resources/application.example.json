@@ -15,9 +15,11 @@
   "Gateway_Account_Id": "{GATEWAY_ACCOUNT_ID}",
   "Gateway_Display_Name": "{DS_PAYMENT_GATEWAY_DISPLAY_NAME}",
 
+  "authorization.code.grant.client.scope": "signature",
   "authorization.code.grant.sso.redirect-url": "/oauth2/authorization/acg",
   "jwt.grant.sso.redirect-url": "/oauth2/authorization/jwt",
   "jwt.grant.client.base-url": "account-d.docusign.com",
+
   "spring": {
     "security": {
       "oauth2": {
@@ -57,6 +59,13 @@
       }
     }
   },
+
+  "ESignatureManifest": "https://raw.githubusercontent.com/docusign/code-examples-csharp/master/manifest/eSignatureManifest.json",
+  "ClickManifest": "https://raw.githubusercontent.com/docusign/code-examples-csharp/master/manifest/ClickManifest.json",
+  "RoomsManifest": "https://raw.githubusercontent.com/docusign/code-examples-csharp/master/manifest/RoomsManifest.json",
+  "MonitorManifest": "https://raw.githubusercontent.com/docusign/code-examples-csharp/master/manifest/MonitorManifest.json",
+  "AdminManifest": "https://raw.githubusercontent.com/docusign/code-examples-csharp/master/manifest/AdminManifest.json",
+
 
   "common.client.resource.user-info-uri": "https://account-d.docusign.com/oauth/userinfo",
   "com.docusign.github.example-uri": "https://github.com/docusign/code-examples-java/blob/master/src/main/java/",

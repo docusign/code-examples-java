@@ -236,8 +236,9 @@ public abstract class AbstractController {
     }
 
     protected CodeExampleText getTextForCodeExample() {
+        var groups = config.getCodeExamplesText().Groups;
         var manifestGroups = ((APIs) Arrays
-                .stream(config.getCodeExamplesText().APIs.toArray())
+                .stream(groups.toArray())
                 .filter(x -> getAPITypeFromLink().name().toLowerCase().contains(((APIs) x).Name.toLowerCase()))
                 .findFirst()
                 .orElse(null)).Groups;
