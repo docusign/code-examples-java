@@ -4,15 +4,10 @@ import com.docusign.core.model.manifestModels.ManifestStructure;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.EnumUtils;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StreamUtils;
-
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.HttpHeaders;
 import java.io.BufferedReader;
@@ -20,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 
 @Component
 @Getter
@@ -37,7 +31,8 @@ public class DSConfiguration {
 
     @Value("${authorization.code.grant.sso.redirect-url}")
     private String acgRedirectURL;
-    
+
+
     private ManifestStructure codeExamplesText;
 
     @Value("${DS_TARGET_ACCOUNT_ID}")
@@ -48,6 +43,9 @@ public class DSConfiguration {
 
     @Value("${DS_BASE_PATH}")
     private String basePath;
+
+    @Value("${jwt.grant.client.base-url}")
+    private String baseURL;
 
     @Value("${DS_ROOMS_BASE_PATH}")
     private String roomsBasePath;
@@ -81,6 +79,8 @@ public class DSConfiguration {
     @Value("${DS_ADMIN_BASE_PATH}")
     private String adminBasePath;
 
+    public String examplesApiPath = "examplesApi.json";
+    
     public String apiTypeHeader = "ApiType";
 
     @Value("${ESignatureManifest}")
