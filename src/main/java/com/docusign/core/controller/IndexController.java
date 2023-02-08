@@ -125,7 +125,7 @@ public class IndexController {
             model.addAttribute(STATUS_CFR, "enabled");
         }
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
-        model.addAttribute(CODE_EXAMPLE_GROUPS, config.getCodeExamplesText().APIs.toArray());
+        model.addAttribute(CODE_EXAMPLE_GROUPS, config.getCodeExamplesText().Groups);
         model.addAttribute(API_DATA, config.loadFileData(config.getCodeExamplesManifest()));
         return session.getApiIndexPath();
     }
