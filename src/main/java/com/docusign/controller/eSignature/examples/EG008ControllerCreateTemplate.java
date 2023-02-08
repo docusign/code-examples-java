@@ -59,9 +59,9 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
             EnvelopeTemplate template = envelopeTemplateResults.getEnvelopeTemplates().get(0);
             session.setTemplateId(template.getTemplateId());
 
-            DoneExample.createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
+            DoneExample.createDefault(getTextForCodeExample().ExampleName)
                     .withMessage(
-                            "The template already exists in your account." + getTextForCodeExample(getAPITypeFromLink()).ResultsPageText
+                            "The template already exists in your account." + getTextForCodeExample().ResultsPageText
                             .replaceFirst("\\{0}", template.getName()).replaceFirst("\\{1}", template.getTemplateId()))
                     .addToModel(model, config);
         } else {
@@ -69,9 +69,9 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
 
             TemplateSummary template = CreateTemplateService.createTemplate(apiClient, accountId, CreateTemplateService.makeTemplate("Example Signer and CC template"));
             session.setTemplateId(template.getTemplateId());
-            DoneExample.createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
+            DoneExample.createDefault(getTextForCodeExample().ExampleName)
                     .withMessage(
-                            "The template has been created!" + getTextForCodeExample(getAPITypeFromLink()).ResultsPageText
+                            "The template has been created!" + getTextForCodeExample().ResultsPageText
                             .replaceFirst("\\{0}", template.getName()).replaceFirst("\\{1}", template.getTemplateId()))
                     .addToModel(model, config);
         }

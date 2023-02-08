@@ -70,8 +70,8 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
         
         // Process results
         DoneExample
-                .createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
-                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText)
+                .createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText)
                 .withJsonObject(result)
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;

@@ -39,11 +39,11 @@ public class EG037ControllerSMSDelivery extends AbstractEsignatureController {
 
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
+      if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
+        session.setStatusCFR("enabled");
+        throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
+      }
         super.onInitModel(args, model);
-        if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
-            session.setStatusCFR("enabled");
-            throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
-        }
     }
 
     @Override
@@ -73,8 +73,8 @@ public class EG037ControllerSMSDelivery extends AbstractEsignatureController {
 
         // process results
         session.setEnvelopeId(envelopeSummary.getEnvelopeId());
-        DoneExample.createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
-                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText
                         .replaceFirst("\\{0}", envelopeSummary.getEnvelopeId())
                 )
                 .withJsonObject(envelopeSummary)

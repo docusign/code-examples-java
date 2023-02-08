@@ -52,8 +52,8 @@ public class EG010ControllerSendBinaryDocs extends AbstractEsignatureController 
         String envelopeId = obj.getString("envelopeId");
         session.setEnvelopeId(envelopeId);
 
-        DoneExample.createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
-                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText
                         .replaceFirst("\\{0}", envelopeId)
                 )
                 .addToModel(model, config);

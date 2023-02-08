@@ -1,6 +1,5 @@
 package com.docusign.core.model;
 
-import com.docusign.esign.client.auth.OAuth;
 import lombok.Data;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -38,8 +37,6 @@ public class Session implements Serializable {
     private String importId;
     private String emailAddress;
     private UUID orgId;
-    private OAuth.Account oauthAccount;
     public UUID bulkListId;
     public Long tokenExpirationTime;
-    private String monitorExampleRedirect;
 }
