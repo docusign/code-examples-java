@@ -69,7 +69,7 @@ public class C003ControllerCreateNewVersionClickwrap extends AbstractClickContro
         this.session.setClickwrapVersionNumber(createdClickwrap.getVersionNumber());
         DoneExample.createDefault(this.title)
                 .withJsonObject(createdClickwrap)
-                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText
+                .withMessage(getTextForCodeExample().ResultsPageText
                     .replaceFirst("\\{0}", createdClickwrap.getVersionNumber())
                     .replaceFirst("\\{1}", createdClickwrap.getClickwrapName()))
                 .addToModel(model, config);

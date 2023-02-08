@@ -20,7 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public final class SigningViaEmailTest {
-    protected static final String BEARER_AUTHENTICATION = "Bearer ";
+    private static final String BEARER_AUTHENTICATION = "Bearer ";
     private static final String HTML_DOCUMENT_FILE_NAME = "templates/candy-bonbon.ftl";
     private static final String HTML_DOCUMENT_NAME = "Order acknowledgement";
     private static final String PDF_DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";

@@ -1,7 +1,6 @@
 package com.docusign.controller.monitor.examples;
 
 import com.docusign.DSConfiguration;
-import com.docusign.WebSecurityConfig;
 import com.docusign.core.controller.AbstractController;
 import com.docusign.core.model.AuthType;
 import com.docusign.core.model.Session;
@@ -9,7 +8,6 @@ import com.docusign.monitor.api.DataSetApi;
 import com.docusign.monitor.client.ApiClient;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Abstract base class for all Monitor controllers.
@@ -27,12 +25,12 @@ public abstract class AbstractMonitorController extends AbstractController {
         return AbstractMonitorController.EXAMPLE_PAGES_PATH;
     }
 
-    protected ModelAndView ensureUsageOfJWTToken(String accessToken, Session session) {
+    protected String ensureUsageOfJWTToken(String accessToken, Session session) {
         if (session.getAuthTypeSelected() != AuthType.JWT || accessToken.isEmpty()){
-            return new ModelAndView("pages/ds_must_authenticate");
+            return REDIRECT_SELECT_API_PAGE;
+        } else {
+            return accessToken;
         }
-
-        return null;
     }
 
     /**

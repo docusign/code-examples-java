@@ -93,12 +93,12 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
             // For 2000 recipients, it can take about an hour
             BulkSendBatchStatus status = bulkEnvelopesApi.getBulkSendBatchStatus(accountId, batchId);
             // Step 7 end
-            DoneExample.createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
+            DoneExample.createDefault(getTextForCodeExample().ExampleName)
                     .withJsonObject(status)
                     .withMessage(String.join(
                             "",
                             "Bulk request queued to ", status.getQueued(), " user lists."))
-                    .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText)
+                    .withMessage(getTextForCodeExample().ResultsPageText)
                     .addToModel(model, config);
 
             return DONE_EXAMPLE_PAGE;
@@ -109,7 +109,7 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
                     .withTitle(exampleName)
                     .withName(title)
                     .withMessage(
-                            getTextForCodeExample(getAPITypeFromLink()).CustomErrorTexts.get(0).ErrorMessage
+                            getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage
                                     + "< br />Reason:"
                                     + exception.getMessage()
                     )

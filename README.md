@@ -125,7 +125,7 @@ Also, in order to select JSON Web Token authentication in the launcher, in src/m
    1. Add the launcher’s redirect URI. Under **Additional settings**, select **+ ADD URI**, and set a redirect URI of http://localhost:8080/login&type=jwt. Select **SAVE**.   
    1. Set a name and email address for the signer. In application.json, save an email address as `DS_SIGNER_EMAIL` and a name as `DS_SIGNER_NAME`.  
 **Note:** Protect your personal information. Please make sure that application.json will not be stored in your source code repository.  
-1. Run the launcher: `java -Dspring.profiles.active=dev -jar target/code-examples-java-1.0-SNAPSHOT.war`  
+1. Run the launcher: `mvn exec:java -Dexec.mainClass="com.docusign.jwtconsoleapp.JWTConsoleApp"`  (`mvn exec:java -D"exec.mainClass"="com.docusign.jwtconsoleapp.JWTConsoleApp"`)
    The launcher automatically opens.  
 1. On the black navigation bar, select **Login**.
 1. From the picklist, select **JSON Web Token (JWT) grant** > **Authenticate with DocuSign**.
