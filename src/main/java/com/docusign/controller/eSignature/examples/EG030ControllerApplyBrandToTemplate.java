@@ -85,9 +85,9 @@ public class EG030ControllerApplyBrandToTemplate extends AbstractEsignatureContr
                 envelope
         );
 
-        DoneExample.createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
+        DoneExample.createDefault(getTextForCodeExample().ExampleName)
                 .withJsonObject(envelopeSummary)
-                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText
+                .withMessage(getTextForCodeExample().ResultsPageText
                         .replaceFirst("\\{0}", envelopeSummary.getEnvelopeId())
                 )
                 .addToModel(model, config);

@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public final class AddDocToTemplateTest {
-    protected static final String BEARER_AUTHENTICATION = "Bearer ";
+    private static final String BEARER_AUTHENTICATION = "Bearer ";
     private final String SIGNER_CLIENT_ID = "1000";
     private static final String HTML_DOCUMENT_FILE_NAME = "templates/candy-bonbon2.ftl";
     private static final String HTML_DOCUMENT_NAME = "Appendix 1--Sales order";

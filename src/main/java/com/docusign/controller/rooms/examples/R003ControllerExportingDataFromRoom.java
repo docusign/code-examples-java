@@ -61,7 +61,7 @@ public class R003ControllerExportingDataFromRoom extends AbstractRoomsController
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(fieldData)
-                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText)
+                .withMessage(getTextForCodeExample().ResultsPageText)
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }

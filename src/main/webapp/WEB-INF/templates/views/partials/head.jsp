@@ -45,6 +45,10 @@
                     </li>
                 </c:otherwise>
             </c:choose>
+            <li>
+                <a class="nav-link" href="/ds/selectApi" id="selectApi"
+                   data-busy="href">${launcherTexts.getChangeAPITypeButton()}<span class="sr-only">(current)</span></a>
+            </li>
         </ul>
         <c:if test="${locals.user != null}">
            <span class="navbar-text">

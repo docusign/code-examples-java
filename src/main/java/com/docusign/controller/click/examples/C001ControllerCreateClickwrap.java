@@ -61,7 +61,7 @@ public class C001ControllerCreateClickwrap extends AbstractClickController {
         this.session.setClickwrapVersionNumber(createdClickwrap.getVersionNumber());
         DoneExample.createDefault(this.title)
                 .withJsonObject(createdClickwrap)
-                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText.replaceFirst("\\{0}", createdClickwrap.getClickwrapName()))
+                .withMessage(getTextForCodeExample().ResultsPageText.replaceFirst("\\{0}", createdClickwrap.getClickwrapName()))
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }

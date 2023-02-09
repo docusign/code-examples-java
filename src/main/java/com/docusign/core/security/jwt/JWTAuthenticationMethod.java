@@ -1,11 +1,11 @@
 package com.docusign.core.security.jwt;
 
 import com.docusign.DSConfiguration;
-import com.docusign.core.model.ApiType;
 import com.docusign.core.model.Session;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.client.auth.OAuth;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.servlet.view.RedirectView;
@@ -13,7 +13,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,11 +29,8 @@ public class JWTAuthenticationMethod {
     public RedirectView loginUsingJWT(
             DSConfiguration configuration,
             Session session,
-            String redirectURL) {
-        List<String> scopes = new ArrayList<>();
-        for(var scope : ApiType.values()){
-            scopes.addAll(Arrays.asList(scope.getScopes()));
-        }
+            String redirectURL) throws IOException {
+        List<String> scopes = Arrays.asList(configuration.getSelectedApiType().getScopes());
 
         try {
             ApiClient apiClient = new ApiClient(configuration.getBasePath());

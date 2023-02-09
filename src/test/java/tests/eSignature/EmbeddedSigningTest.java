@@ -17,7 +17,7 @@ import java.util.Collections;
 
 public final class EmbeddedSigningTest {
     private final String RedirectUrl = "https://developers.docusign.com/platform/auth/consent";
-    protected static final String BEARER_AUTHENTICATION = "Bearer ";
+    private static final String BEARER_AUTHENTICATION = "Bearer ";
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
     private static final String DOCUMENT_NAME = "Lorem Ipsum";
     private static final int ANCHOR_OFFSET_Y = 20;

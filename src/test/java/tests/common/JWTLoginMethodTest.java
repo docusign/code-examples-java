@@ -7,9 +7,11 @@ import com.docusign.esign.client.auth.OAuth;
 import org.junit.Assert;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
@@ -17,8 +19,8 @@ import java.util.List;
 public final class JWTLoginMethodTest {
 
     private static final String RedirectUrl = "https://developers.docusign.com/platform/auth/consent";
-    public static final String CONSENT_REQUIRED_MESSAGE = "Consent required, please provide consent in browser window and then run this app again.";
-    public static final String CONSENT_REQUIRED_KEYWORD = "consent_required";
+    private static final String CONSENT_REQUIRED_MESSAGE = "Consent required, please provide consent in browser window and then run this app again.";
+    private static final String CONSENT_REQUIRED_KEYWORD = "consent_required";
 
     public static void RequestJWTUserToken_CorrectInputValues_ReturnOAuthToken(ApiType apiType) throws IOException {
         TestConfig testConfig = TestConfig.getInstance();
@@ -28,7 +30,10 @@ public final class JWTLoginMethodTest {
             ApiClient apiClient = new ApiClient(testConfig.getHost());
             List<String> scopes = Arrays.asList(apiType.getScopes());
 
-            byte[] privateKeyBytes = Files.readAllBytes(Paths.get(testConfig.getPrivateKey()));
+            byte[] privateKeyBytes = Files.exists(Path.of(testConfig.getPrivateKeyPath())) ?
+                    Files.readAllBytes(Paths.get(testConfig.getPrivateKeyPath()))
+                    : testConfig.getPrivateKey().getBytes();
+
             OAuth.OAuthToken oAuthToken = apiClient.requestJWTUserToken(
                     testConfig.getClientId(),
                     testConfig.getImpersonatedUserId(),
