@@ -1,0 +1,41 @@
+{
+  "quickstart" :"{QUICKSTART_VALUE}",
+  "quickACG": "{QUICK_ACG_VALUE}",
+  "DS_SIGNER_NAME": "{SIGNER_NAME}",
+  "DS_SIGNER_EMAIL": "{SIGNER_EMAIL}",
+  "DS_APP_URL": "http://localhost:8080",
+  "DS_TARGET_ACCOUNT_ID": "{IMPERSONATED_USER_ID}",
+  "DS_BASE_PATH": "https://demo.docusign.net",
+  "DS_ROOMS_BASE_PATH": "https://demo.rooms.docusign.com",
+  "DS_CLICK_BASE_PATH": "https://demo.docusign.net",
+  "DS_MONITOR_BASE_PATH": "https://lens-d.docusign.net",
+  "DS_ADMIN_BASE_PATH": "https://api-d.docusign.net",
+
+  "Gateway_Name": "{DS_PAYMENT_GATEWAY_NAME}",
+  "Gateway_Account_Id": "{GATEWAY_ACCOUNT_ID}",
+  "Gateway_Display_Name": "{DS_PAYMENT_GATEWAY_DISPLAY_NAME}",
+
+  "authorization.code.grant.client.scope": "signature",
+  "authorization.code.grant.sso.redirect-url": "&type=acg",
+  "authorization.code.grant.client.client-id": "{INTEGRATION_KEY_AUTH_CODE}",
+  "authorization.code.grant.client.client-secret": "{SECRET_KEY}",
+  "authorization.code.grant.client.access-token-uri": "https://account-d.docusign.com/oauth/token",
+  "authorization.code.grant.client.user-authorization-uri": "https://account-d.docusign.com/oauth/auth?prompt=login",
+
+  "common.client.resource.user-info-uri": "https://account-d.docusign.com/oauth/userinfo",
+  "com.docusign.github.example-uri": "https://github.com/docusign/code-examples-java/blob/master/src/main/java/",
+  "com.docusign.documentation-path": "",
+
+  "ESignatureManifest": "https://raw.githubusercontent.com/docusign/code-examples-csharp/master/manifest/eSignatureManifest.json",
+
+  "server.tomcat.additional-tld-skip-patterns": "*jaxb*.jar",
+  "server.servlet.session.tracking-modes": "cookie",
+  "server.servlet.session.persistent": false,
+  "server.error.include-stacktrace": "always",
+  "server.error.whitelabel.enabled": false,
+
+  "spring.session.store-type": "none",
+  "spring.mvc.view.prefix": "/WEB-INF/templates/views/",
+  "spring.mvc.view.suffix": ".jsp",
+  "spring.jmx.enabled": false
+}
