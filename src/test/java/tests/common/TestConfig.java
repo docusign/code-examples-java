@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Getter
@@ -30,6 +31,8 @@ public class TestConfig {
 
     private String OAuthBasePath;
 
+    private String PrivateKeyPath;
+
     private String PrivateKey;
 
     private String AccessToken;
@@ -38,7 +41,7 @@ public class TestConfig {
 
     private String TemplateId;
 
-    public String PathToDocuments;
+    private String PathToDocuments;
 
     private static TestConfig single_instance = null;
 
@@ -53,40 +56,47 @@ public class TestConfig {
         PathToDocuments = System.getProperty("user.dir") + "//src//main//resources//";
         Host = "https://demo.docusign.net";
         OAuthBasePath = "account-d.docusign.com";
-        PrivateKey = PathToDocuments + "private.key";
-
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("application.json").getFile());
-        String source = new String(Files.readAllBytes(Paths.get(file.getPath())));
+        PrivateKeyPath = PathToDocuments + "private.key";
+        BasePath = "https://demo.docusign.net";
 
         try {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            var isFilePresentInTheRepository = Files.exists(Path.of(PathToDocuments + "application.json"));
 
-            JsonObject originalJsonValue = gson.fromJson(source, JsonObject.class);
-            JsonObject jwtConfigurationValues = originalJsonValue
-                    .getAsJsonObject("spring")
-                    .getAsJsonObject("security")
-                    .getAsJsonObject("oauth2")
-                    .getAsJsonObject("client")
-                    .getAsJsonObject("registration")
-                    .getAsJsonObject("jwt")
-                    .getAsJsonObject();
+            if (isFilePresentInTheRepository) {
+                String source = new String(Files.readAllBytes(Paths.get(PathToDocuments + "application.json")));
 
-            Object impersonatedUserId = jwtConfigurationValues.get("impersonated-user-guid").toString();
-            Object clientId = jwtConfigurationValues.get("client-id").toString();
-            Object signerEmail = new JSONObject(source).get("DS_SIGNER_EMAIL");
-            Object signerName = new JSONObject(source).get("DS_SIGNER_NAME");
-            Object basePath = new JSONObject(source).get("DS_BASE_PATH");
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-            if (impersonatedUserId == null || clientId == null || signerEmail == null || signerName == null) {
-                throw new JSONException("The wrong format of the application.json file.");
+                JsonObject originalJsonValue = gson.fromJson(source, JsonObject.class);
+                JsonObject jwtConfigurationValues = originalJsonValue
+                        .getAsJsonObject("spring")
+                        .getAsJsonObject("security")
+                        .getAsJsonObject("oauth2")
+                        .getAsJsonObject("client")
+                        .getAsJsonObject("registration")
+                        .getAsJsonObject("jwt")
+                        .getAsJsonObject();
+
+                Object impersonatedUserId = jwtConfigurationValues.get("impersonated-user-guid").toString();
+                Object clientId = jwtConfigurationValues.get("client-id").toString();
+                Object signerEmail = new JSONObject(source).get("DS_SIGNER_EMAIL");
+                Object signerName = new JSONObject(source).get("DS_SIGNER_NAME");
+
+                if (impersonatedUserId == null || clientId == null || signerEmail == null || signerName == null) {
+                    throw new JSONException("The wrong format of the application.json file.");
+                }
+
+                ImpersonatedUserId = impersonatedUserId.toString().replace("\"", "");
+                ClientId = clientId.toString().replace("\"", "");
+                SignerEmail = signerEmail.toString();
+                SignerName = signerName.toString();
+            } else {
+                ImpersonatedUserId = System.getenv("IMPERSONATED_USER_ID");
+                ClientId = System.getenv("CLIENT_ID");
+                SignerEmail = System.getenv("SIGNER_EMAIL");
+                SignerName = System.getenv("SIGNER_NAME");
+                PrivateKey = System.getenv("PRIVATE_KEY");
             }
-
-            ImpersonatedUserId = impersonatedUserId.toString().replace("\"", "");
-            ClientId = clientId.toString().replace("\"", "");
-            SignerEmail = signerEmail.toString();
-            SignerName = signerName.toString();
-            BasePath = basePath.toString();
         } catch (JSONException e){
             e.printStackTrace();
         }

@@ -5,7 +5,6 @@ import com.docusign.admin.api.UsersApi;
 import com.docusign.admin.model.*;
 import com.docusign.common.WorkArguments;
 import com.docusign.controller.admin.services.AddActiveUserService;
-import com.docusign.core.model.ApiType;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
@@ -92,8 +91,8 @@ public class A001AddActiveUser extends AbstractAdminController {
 
         // Process results
         DoneExample
-                .createDefault(getTextForCodeExample(getAPITypeFromLink()).ExampleName)
-                .withMessage(getTextForCodeExample(getAPITypeFromLink()).ResultsPageText)
+                .createDefault(getTextForCodeExample().ExampleName)
+                .withMessage(getTextForCodeExample().ResultsPageText)
                 .withJsonObject(result)
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;

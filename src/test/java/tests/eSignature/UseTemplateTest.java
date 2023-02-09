@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public final class UseTemplateTest {
-    protected static final String BEARER_AUTHENTICATION = "Bearer ";
+    private static final String BEARER_AUTHENTICATION = "Bearer ";
     private TestConfig testConfig;
     private static String basePathAddition = "/restapi";
     private final ApiClient apiClient;
