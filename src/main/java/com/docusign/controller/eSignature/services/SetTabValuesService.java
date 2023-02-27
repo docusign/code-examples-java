@@ -1,14 +1,25 @@
 package com.docusign.controller.eSignature.services;
 
-import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
-import com.docusign.esign.api.EnvelopesApi;
-import com.docusign.esign.client.ApiClient;
-import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.*;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
+
+import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
+import com.docusign.esign.api.EnvelopesApi;
+import com.docusign.esign.client.ApiException;
+import com.docusign.esign.model.CustomFields;
+import com.docusign.esign.model.Document;
+import com.docusign.esign.model.EnvelopeDefinition;
+import com.docusign.esign.model.EnvelopeSummary;
+import com.docusign.esign.model.Numerical;
+import com.docusign.esign.model.RecipientViewRequest;
+import com.docusign.esign.model.Recipients;
+import com.docusign.esign.model.SignHere;
+import com.docusign.esign.model.Signer;
+import com.docusign.esign.model.Tabs;
+import com.docusign.esign.model.Text;
+import com.docusign.esign.model.TextCustomField;
+import com.docusign.esign.model.ViewUrl;
 
 public final class SetTabValuesService {
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_salary.docx";
@@ -134,18 +145,19 @@ public final class SetTabValuesService {
 
         Integer salary = 123000;
 
-        Text textSalary = new Text();
-        textSalary.setAnchorString("/salary/");
-        textSalary.setAnchorUnits("pixels");
-        textSalary.setAnchorYOffset("-9");
-        textSalary.setAnchorXOffset("5");
-        textSalary.setFont("helvetica");
-        textSalary.setFontSize("size11");
-        textSalary.setBold("true");
-        textSalary.setValue(String.format("$ %d", salary));
-        textSalary.setLocked("true");
-        textSalary.setTabId("salary");
-        textSalary.setTabLabel("salary");
+        Numerical numericalSalary = new Numerical();
+        numericalSalary.setValidationType("Currency");
+        numericalSalary.setPageNumber("1");
+        numericalSalary.setDocumentId("1");
+        numericalSalary.setXPosition("210");
+        numericalSalary.setYPosition("235");
+        numericalSalary.setFont("helvetica");
+        numericalSalary.setFontSize("size11");
+        numericalSalary.setBold("true");
+        numericalSalary.setNumericalValue(String.format("%d", salary));
+        numericalSalary.setLocked("true");
+        numericalSalary.setTabId("salary");
+        numericalSalary.setTabLabel("salary");
 
         TextCustomField salaryCustomField = new TextCustomField();
         salaryCustomField.setName("salary");
@@ -158,7 +170,8 @@ public final class SetTabValuesService {
 
         Tabs tabs = new Tabs();
         tabs.setSignHereTabs(Collections.singletonList(signHere));
-        tabs.setTextTabs(Arrays.asList(textLegal, textFamiliar, textSalary));
+        tabs.setTextTabs(Arrays.asList(textLegal, textFamiliar));
+        tabs.setNumericalTabs(Arrays.asList(numericalSalary));
 
         signer.setTabs(tabs);
 
@@ -169,7 +182,7 @@ public final class SetTabValuesService {
         EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
         envelopeDefinition.setEmailSubject("Please sign this document from the Java SDK");
         envelopeDefinition.setRecipients(recipients);
-        Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "3");
+        Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
         envelopeDefinition.setDocuments(Collections.singletonList(doc));
         envelopeDefinition.setCustomFields(cf);
         // Request that the envelope be sent by setting |status| to "sent".
