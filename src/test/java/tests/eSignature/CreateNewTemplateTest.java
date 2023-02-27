@@ -20,7 +20,7 @@ import java.util.Locale;
 
 public final class CreateNewTemplateTest {
     private static final String BEARER_AUTHENTICATION = "Bearer ";
-    private static final String TEMPLATE_NAME = "Example Signer and CC template";
+    private static final String TEMPLATE_NAME = "Example Signer and CC template v2";
     private TestConfig testConfig;
     private static final String PDF_DOCUMENT_FILE_NAME = "World_Wide_Corp_fields.pdf";
     private static final String PDF_DOCUMENT_NAME = "Lorem Ipsum";

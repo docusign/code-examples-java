@@ -59,8 +59,9 @@ public final class CreateTemplateService {
         signer1Tabs.setRadioGroupTabs(Collections.singletonList(createRadioGroup()));
         signer1Tabs.setSignHereTabs(Collections.singletonList(createSignHere()));
         signer1Tabs.textTabs(Arrays.asList(
-                createText("text", "153", "230"),
-                createText("numbersOnly", "153", "260")));
+                createText("text", "153", "230")));
+        signer1Tabs.numericalTabs(Arrays.asList(         
+                createNumerical("numericalCurrency", "153", "260")));
 
         // create a signer recipient to sign the document, identified by name and email
         // routingOrder (lower means earlier) determines the order of deliveries
@@ -168,6 +169,23 @@ public final class CreateTemplateService {
         text.setRequired(FALSE);
         return text;
     }
+
+    public static Numerical createNumerical(String label, String xPosition, String yPosition) {
+        Numerical numerical = new Numerical();
+        numerical.setValidationType("Currency");
+        numerical.setDocumentId(DOCUMENT_ID);
+        numerical.setPageNumber(PAGE_NUMBER);
+        numerical.setXPosition(xPosition);
+        numerical.setYPosition(yPosition);
+        numerical.setFont("helvetica");
+        numerical.setFontSize("size14");
+        numerical.setTabLabel(label);
+        numerical.setHeight("23");
+        numerical.setWidth("84");
+        numerical.setRequired(FALSE);
+        return numerical;
+    }
+
 
     public static SignHere createSignHere() {
         SignHere signHere = new SignHere();
