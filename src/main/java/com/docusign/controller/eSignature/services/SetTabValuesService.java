@@ -151,6 +151,8 @@ public final class SetTabValuesService {
         numericalSalary.setDocumentId("1");
         numericalSalary.setXPosition("210");
         numericalSalary.setYPosition("235");
+        numericalSalary.setHeight("20");
+        numericalSalary.setWidth("70");
         numericalSalary.setFont("helvetica");
         numericalSalary.setFontSize("size11");
         numericalSalary.setBold("true");
