@@ -131,7 +131,7 @@ public final class SetTabValuesService {
         textLegal.setTabLabel("Legal Name");
 
         Text textFamiliar = new Text();
-        textFamiliar.setAnchorString("/familar/");
+        textFamiliar.setAnchorString("/familiar/");
         textFamiliar.setAnchorUnits("pixels");
         textFamiliar.setAnchorYOffset("-9");
         textFamiliar.setAnchorXOffset("5");
@@ -155,7 +155,6 @@ public final class SetTabValuesService {
         numericalSalary.setFontSize("size11");
         numericalSalary.setBold("true");
         numericalSalary.setNumericalValue(String.format("%d", salary));
-        numericalSalary.setLocked("true");
         numericalSalary.setTabId("salary");
         numericalSalary.setTabLabel("salary");
 
