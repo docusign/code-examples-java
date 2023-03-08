@@ -32,7 +32,7 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
 
     private final Session session;
     private final User user;
-    private static final String TEMPLATE_NAME = "Example Signer and CC template";
+    private static final String TEMPLATE_NAME = "Example Signer and CC template v2";
 
     @Autowired
     public EG008ControllerCreateTemplate(DSConfiguration config, Session session, User user) {
