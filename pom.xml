@@ -23,7 +23,7 @@
         <java.version>11</java.version>
         <oauth2.version>2.5.6</oauth2.version>
         <commonsio.version>2.11.0</commonsio.version>
-        <docusign.version>3.21.0</docusign.version>
+        <docusign.version>3.23.0</docusign.version>
         <rooms.version>1.1.0</rooms.version>
         <click.version>	1.2.2</click.version>
         <monitor.version>1.1.0</monitor.version>
