@@ -11,6 +11,7 @@ import com.docusign.esign.model.CustomFields;
 import com.docusign.esign.model.Document;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
+import com.docusign.esign.model.LocalePolicyTab;
 import com.docusign.esign.model.Numerical;
 import com.docusign.esign.model.RecipientViewRequest;
 import com.docusign.esign.model.Recipients;
@@ -159,6 +160,14 @@ public final class SetTabValuesService {
         numericalSalary.setNumericalValue(String.format("%d", salary));
         numericalSalary.setTabId("salary");
         numericalSalary.setTabLabel("salary");
+
+        LocalePolicyTab localePolicyTab = new LocalePolicyTab();
+        localePolicyTab.setCultureName("en-US");
+        localePolicyTab.setCurrencyCode("usd");
+        localePolicyTab.setCurrencyPositiveFormat("csym_1_comma_234_comma_567_period_89");
+        localePolicyTab.setCurrencyNegativeFormat("minus_csym_1_comma_234_comma_567_period_89");
+        localePolicyTab.setUseLongCurrencyFormat("true");
+        numericalSalary.setLocalePolicy(localePolicyTab);
 
         TextCustomField salaryCustomField = new TextCustomField();
         salaryCustomField.setName("salary");
