@@ -32,7 +32,7 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
 
     private final Session session;
     private final User user;
-    private static final String TEMPLATE_NAME = "Example Signer and CC template v2";
+    private static final String TEMPLATE_NAME = "Example Signer and CC template";
 
     @Autowired
     public EG008ControllerCreateTemplate(DSConfiguration config, Session session, User user) {
@@ -59,9 +59,9 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
             EnvelopeTemplate template = envelopeTemplateResults.getEnvelopeTemplates().get(0);
             session.setTemplateId(template.getTemplateId());
 
-            DoneExample.createDefault(getTextForCodeExample().ExampleName)
+            DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                     .withMessage(
-                            "The template already exists in your account." + getTextForCodeExample().ResultsPageText
+                            "The template already exists in your account." + getTextForCodeExampleByApiType().ResultsPageText
                             .replaceFirst("\\{0}", template.getName()).replaceFirst("\\{1}", template.getTemplateId()))
                     .addToModel(model, config);
         } else {
@@ -69,9 +69,9 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
 
             TemplateSummary template = CreateTemplateService.createTemplate(apiClient, accountId, CreateTemplateService.makeTemplate("Example Signer and CC template"));
             session.setTemplateId(template.getTemplateId());
-            DoneExample.createDefault(getTextForCodeExample().ExampleName)
+            DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                     .withMessage(
-                            "The template has been created!" + getTextForCodeExample().ResultsPageText
+                            "The template has been created!" + getTextForCodeExampleByApiType().ResultsPageText
                             .replaceFirst("\\{0}", template.getName()).replaceFirst("\\{1}", template.getTemplateId()))
                     .addToModel(model, config);
         }

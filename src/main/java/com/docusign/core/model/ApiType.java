@@ -15,8 +15,18 @@ public enum ApiType {
         this.scopes = scopes;
     }
 
-    public String getValue() {
-        return value;
+    public static ApiType getAPITypeFromLink(String exampleName) {
+        if (exampleName.contains("m")){
+            return ApiType.MONITOR;
+        }else if (exampleName.contains("a")){
+            return ApiType.ADMIN;
+        }else if (exampleName.contains("c")){
+            return ApiType.CLICK;
+        }else if (exampleName.contains("r")){
+            return ApiType.ROOMS;
+        }
+
+        return ApiType.ESIGNATURE;
     }
 
     public String[] getScopes() {

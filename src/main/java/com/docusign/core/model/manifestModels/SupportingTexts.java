@@ -24,6 +24,8 @@ public class SupportingTexts {
 
     public String LogoutButton;
 
+    public String SearchFailed;
+
     public String ChangeAPITypeButton;
 
     public String WelcomeText;

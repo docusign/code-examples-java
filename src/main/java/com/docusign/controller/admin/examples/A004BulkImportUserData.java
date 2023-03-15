@@ -46,8 +46,8 @@ public class A004BulkImportUserData extends AbstractAdminController {
         
         // Process results
         DoneExample
-                .createDefault(getTextForCodeExample().ExampleName)
-                .withMessage(getTextForCodeExample().ResultsPageText)
+                .createDefault(getTextForCodeExampleByApiType().ExampleName)
+                .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
                 .withJsonObject(result)
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;

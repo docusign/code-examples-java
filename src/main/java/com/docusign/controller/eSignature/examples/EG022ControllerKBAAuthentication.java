@@ -56,9 +56,9 @@ public class EG022ControllerKBAAuthentication extends AbstractEsignatureControll
         );
 
         session.setEnvelopeId(envelopeSummary.getEnvelopeId());
-        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+        DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                 .withJsonObject(envelopeSummary)
-                .withMessage(getTextForCodeExample().ResultsPageText
+                .withMessage(getTextForCodeExampleByApiType().ResultsPageText
                         .replaceFirst("\\{0}", envelopeSummary.getEnvelopeId())
                 )
                 .addToModel(model, config);

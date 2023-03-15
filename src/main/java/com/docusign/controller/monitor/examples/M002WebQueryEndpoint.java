@@ -56,7 +56,7 @@ public class M002WebQueryEndpoint extends AbstractMonitorController {
 
         // Check, if you are using the JWT authentication
         // step 1 start
-        accessToken = ensureUsageOfJWTToken(accessToken, this.session);
+        ensureUsageOfJWTToken(accessToken, this.session);
         String accountId = session.getAccountId();
         // step 1 end
 
@@ -80,8 +80,8 @@ public class M002WebQueryEndpoint extends AbstractMonitorController {
         String queryResultCleaned = queryResult.toString().replaceAll("'", "");
 
         // Process results
-        DoneExample.createDefault(getTextForCodeExample().ExampleName)
-                .withMessage(getTextForCodeExample().ResultsPageText)
+        DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
+                .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
                 .withJsonObject(queryResultCleaned)
                 .addToModel(model, config);
 

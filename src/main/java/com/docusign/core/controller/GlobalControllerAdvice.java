@@ -43,12 +43,11 @@ import java.util.stream.Collectors;
 public class GlobalControllerAdvice {
 
     private static final String ERROR_ACCOUNT_NOT_FOUND = "Could not find account information for the user";
-    private static final String SELECTED_API_NOT_SUPPORTED = "Currently selected api is not supported by launcher. Please, check appsettings.json file.";
+    private static final String PATH_TO_HOMEPAGE = "/pages/esignature/index";
     private final DSConfiguration config;
     private final Session session;
     private final User user;
     private Optional<OAuth.Account> account;
-
     private AuthType authTypeSelected = AuthType.AGC;
     private ApiType apiTypeSelected = ApiType.ESIGNATURE;
 
@@ -97,14 +96,7 @@ public class GlobalControllerAdvice {
     public Locals populateLocals() throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-
-        ApiIndex apiIndex = ApiIndex.ESIGNATURE;
-
-        if (config.getSelectedApiIndex() != null){
-            apiIndex = config.getSelectedApiIndex();
-        }
-
-        session.setApiIndexPath(apiIndex.toString());
+        session.setApiIndexPath(PATH_TO_HOMEPAGE);
 
         if (!(authentication instanceof OAuth2AuthenticationToken)) {
             return new Locals(config, session, null, "");
@@ -131,28 +123,16 @@ public class GlobalControllerAdvice {
             }
 
             OAuth.Account oauthAccount = account.orElseThrow(() -> new NoSuchElementException(ERROR_ACCOUNT_NOT_FOUND));
+            session.setOauthAccount(oauthAccount);
             session.setAccountId(oauthAccount.getAccountId());
             session.setAccountName(oauthAccount.getAccountName());
-            // TODO set this more efficiently with more APIs as they're added in
-            String basePath = this.getBaseUrl(apiIndex, oauthAccount) + apiIndex.getBaseUrlSuffix();
+
+            //TODO set this more efficiently with more APIs as they're added in
+            String basePath = this.config.getBaseUrl(config.getSelectedApiIndex(), oauthAccount) + config.getSelectedApiIndex().getBaseUrlSuffix();
             session.setBasePath(basePath);
         }
 
         return new Locals(config, session, user, "");
-    }
-
-    private String getBaseUrl(ApiIndex apiIndex, OAuth.Account oauthAccount) {
-        if (apiIndex.equals(ApiIndex.ROOMS)) {
-            return this.config.getRoomsBasePath();
-        } else if (apiIndex.equals(ApiIndex.CLICK)) {
-            return this.config.getClickBasePath();
-        }  else if (apiIndex.equals(ApiIndex.MONITOR)) {
-            return this.config.getMonitorBasePath();
-        }  else if (apiIndex.equals(ApiIndex.ADMIN)) {
-            return this.config.getAdminBasePath();
-        } else {
-            return oauthAccount.getBaseUri();
-        }
     }
 
     private static List<OAuth.Account> getOAuthAccounts(OAuth2User user) {

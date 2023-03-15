@@ -125,8 +125,8 @@ public class A008UpdateUserProductPermissionProfile extends AbstractAdminControl
 				    existingAccountId
 			 );
 
-	   DoneExample.createDefault(getTextForCodeExample().ExampleName)
-			 .withMessage(getTextForCodeExample().ResultsPageText)
+	   DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
+			 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
 			 .withJsonObject(productPermissionProfile)
 			 .addToModel(model, config);
 

@@ -8,11 +8,7 @@ import com.docusign.core.model.AuthType;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.core.security.jwt.JWTAuthenticationMethod;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -21,25 +17,19 @@ import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.List;
-import java.util.Objects;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class IndexController {
@@ -54,6 +44,7 @@ public class IndexController {
     private static final String LAUNCHER_TEXTS = "launcherTexts";
 
     private static final String CODE_EXAMPLE_GROUPS = "codeExampleGroups";
+    private static final String API_DATA = "APIData";
 
     private static final String STATUS_CFR = "statusCFR";
 
@@ -70,7 +61,7 @@ public class IndexController {
     private DSConfiguration config;
 
     @GetMapping(path = "/")
-    public String index(ModelMap model, HttpServletResponse response) throws IOException {
+    public String index(ModelMap model, HttpServletResponse response) throws Exception {
         model.addAttribute(ATTR_TITLE, "Home");
 
         Boolean isCFR = false;
@@ -85,7 +76,7 @@ public class IndexController {
 
         if (config.getQuickstart().equals("true") && config.getSelectedApiIndex().equals(ApiIndex.ESIGNATURE) &&
                 !(SecurityContextHolder.getContext().getAuthentication() instanceof OAuth2AuthenticationToken)) {
-            String site = config.getSelectedApiIndex().getPathOfFirstExample();
+            String site = ApiIndex.ESIGNATURE.getPathOfFirstExample();
             response.setStatus(response.SC_MOVED_TEMPORARILY);
             response.setHeader("Location", site);
             return null;
@@ -96,7 +87,8 @@ public class IndexController {
             model.addAttribute(STATUS_CFR, "enabled");
         }
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
-        model.addAttribute(CODE_EXAMPLE_GROUPS, config.getCodeExamplesText().Groups.toArray());
+        model.addAttribute(CODE_EXAMPLE_GROUPS, config.getCodeExamplesText().APIs.toArray());
+        model.addAttribute(API_DATA, config.loadFileData(config.getCodeExamplesManifest()));
         return session.getApiIndexPath();
     }
 
@@ -117,101 +109,23 @@ public class IndexController {
         if (session.isRefreshToken() || config.getQuickstart().equals("true")) {
             config.setQuickstart("false");
 
-            if (config.getSelectedApiType().equals(ApiType.MONITOR)) {
-                this.session.setAuthTypeSelected(AuthType.JWT);
-
-                return new ModelAndView(new JWTAuthenticationMethod().loginUsingJWT(config, session, redirectURL));
+            if (redirectURL.toLowerCase().contains("/m") || session.getMonitorExampleRedirect() != null) {
+                return checkForMonitorRedirects(redirectURL);
             }
 
             return new ModelAndView(getRedirectView(session.getAuthTypeSelected()));
-        } else if (config.getSelectedApiType().equals(ApiType.MONITOR)) {
-            this.session.setAuthTypeSelected(AuthType.JWT);
-
-            return new ModelAndView(new JWTAuthenticationMethod().loginUsingJWT(config, session, redirectURL));
+        } else if (redirectURL.toLowerCase().contains("/m") || session.getMonitorExampleRedirect() != null) {
+            return checkForMonitorRedirects(redirectURL);
         } else {
             return new ModelAndView("pages/ds_must_authenticate");
         }
     }
 
-    @GetMapping(path = "/ds/selectApi")
-    public Object choseApiType(ModelMap model) {
-        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
-        return new ModelAndView("pages/ds_select_api");
-    }
-
-    @RequestMapping(path = "/ds/selectApi", method = RequestMethod.POST)
-    public Object getApiType(ModelMap model, @RequestBody MultiValueMap<String, String> formParams) throws IOException, URISyntaxException {
-        model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
-
-        if (!formParams.containsKey("selectApiType")) {
-            model.addAttribute("message", "Select option with selectApiType name must be provided.");
-            return new RedirectView("pages/error");
-        }
-        List<String> selectApiTypeObject = formParams.get("selectApiType");
-        ApiType apiTypeSelected = ApiType.valueOf(selectApiTypeObject.get(0));
-        writeApiTypeIntoFile(apiTypeSelected);
-        writeCorrectScopesIntoApplication(apiTypeSelected);
-
-        return new ModelAndView("pages/ds_restart");
-    }
-
-    private void writeApiTypeIntoFile(ApiType apiTypeSelected) throws URISyntaxException, IOException {
-        JSONObject currentApiType = new JSONObject();
-        currentApiType.put(config.getApiTypeHeader(), apiTypeSelected.name());
-
-        Path exampleApiSourcePath = Paths.get("").resolve("src").resolve("main")
-                .resolve("resources").resolve(config.getExamplesApiPath());
-        if (Files.exists(exampleApiSourcePath)) {
-            try (BufferedWriter bufferedWriter = new BufferedWriter(
-                    new FileWriter(exampleApiSourcePath.toAbsolutePath().toString()))
-            ) {
-                bufferedWriter.write(currentApiType.toString());
-            }
-        } else {
-            // Works in case we create war and run it on 'tomcat' server
-            URL exampleApiURL = getClass().getClassLoader().getResource(config.getExamplesApiPath());
-            try (BufferedWriter bufferedWriter = new BufferedWriter(
-                    new FileWriter(new File(Objects.requireNonNull(exampleApiURL).toURI())))
-            ) {
-                bufferedWriter.write(currentApiType.toString());
-            }
-        }
-    }
-
-    private void writeCorrectScopesIntoApplication(ApiType apiTypeSelected) throws IOException {
-        Path applicationJsonSourcePath = Paths.get(config.getConfigFilePath());
-
-        List lines = Files.readAllLines(applicationJsonSourcePath, StandardCharsets.UTF_8);
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (Object line : lines) {
-            stringBuilder.append(line);
-        }
-        String originalJsonValueString = stringBuilder.toString();
-
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        JsonObject originalJsonValue = gson.fromJson(originalJsonValueString, JsonObject.class);
-        JsonObject acgConfigurationValues = originalJsonValue
-                .getAsJsonObject("spring")
-                .getAsJsonObject("security")
-                .getAsJsonObject("oauth2")
-                .getAsJsonObject("client")
-                .getAsJsonObject("registration")
-                .getAsJsonObject("acg")
-                .getAsJsonObject();
-
-        acgConfigurationValues.addProperty(
-                "scope",
-                String.join(", ", apiTypeSelected.getScopes())
-        );
-
-        Files.write(
-                applicationJsonSourcePath,
-                gson.toJson(originalJsonValue).getBytes(),
-                StandardOpenOption.CREATE,
-                StandardOpenOption.TRUNCATE_EXISTING
-        );
+    private ModelAndView checkForMonitorRedirects(String redirectURL){
+        this.session.setAuthTypeSelected(AuthType.JWT);
+        redirectURL = redirectURL != "/" ? redirectURL : session.getMonitorExampleRedirect();
+        this.session.setMonitorExampleRedirect(null);
+        return new ModelAndView(new JWTAuthenticationMethod().loginUsingJWT(config, session, redirectURL));
     }
 
     @RequestMapping(path = "/ds/authenticate", method = RequestMethod.POST)
@@ -230,6 +144,7 @@ public class IndexController {
             this.session.setAuthTypeSelected(AuthType.JWT);
             return new JWTAuthenticationMethod().loginUsingJWT(config, session, redirectURL);
         }else {
+            this.session.setAuthTypeSelected(AuthType.AGC);
             return getRedirectView(authTypeSelected);
         }
     }

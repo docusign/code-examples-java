@@ -39,11 +39,11 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
 
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
-      if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
-        session.setStatusCFR("enabled");
-        throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
-      }
         super.onInitModel(args, model);
+        if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
+            session.setStatusCFR("enabled");
+            throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
+        }
     }
 
     @Override
@@ -75,15 +75,15 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
             this.session.setEnvelopeId(envelopeSummary.getEnvelopeId());
             DoneExample.createDefault(this.title)
                     .withJsonObject(envelopeSummary)
-                    .withMessage(getTextForCodeExample().ResultsPageText
+                    .withMessage(getTextForCodeExampleByApiType().ResultsPageText
                         .replaceFirst("\\{0}", this.session.getEnvelopeId()))
                     .addToModel(model, config);
         } catch (ApiException apiException) {
-            if (!apiException.getMessage().contains(getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessageCheck)) {
+            if (!apiException.getMessage().contains(getTextForCodeExampleByApiType().CustomErrorTexts.get(0).ErrorMessageCheck)) {
                 throw apiException;
             }
             DoneExample.createDefault(this.title)
-                    .withMessage(getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage)
+                    .withMessage(getTextForCodeExampleByApiType().CustomErrorTexts.get(0).ErrorMessage)
                     .addToModel(model, config);
         }
 

@@ -51,9 +51,9 @@ public class EG015ControllerGetTabValues extends AbstractEsignatureController {
                 envelopesApi,
                 session.getAccountId(),
                 session.getEnvelopeId());
-        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+        DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                 .withJsonObject(envelopeFormData)
-                .withMessage(getTextForCodeExample().ResultsPageText)
+                .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
