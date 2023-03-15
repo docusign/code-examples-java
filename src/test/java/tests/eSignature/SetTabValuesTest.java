@@ -41,33 +41,33 @@ public final class SetTabValuesTest {
     public void MakeEnvelopeWithTabValues_CorrectInputValues_EnvelopeDefinition() throws IOException {
         // Arrange
         String emailSubject = "Please sign this document from the Java SDK";
-        String trueString = "true";
-        String recipientId = "1";
-        String anchorUnits = "pixels";
-        String font = "helvetica";
+        String initialId = "1";
         Integer salary = 123000;
-        String falseString = "false";
         String salaryString = "salary";
+        String fontSize = "size11";
+        String font = "helvetica";
+        String trueString = "true";
+        String falseString = "false";
 
         Signer signer = new Signer();
         signer.setEmail(testConfig.getSignerEmail());
         signer.setName(testConfig.getSignerName());
         signer.clientUserId(SIGNER_CLIENT_ID);
-        signer.recipientId(recipientId);
+        signer.recipientId(initialId);
 
         SignHere signHere = new SignHere();
         signHere.setAnchorString("/sn1");
-        signHere.setAnchorUnits(anchorUnits);
+        signHere.setAnchorUnits("pixels");
         signHere.setAnchorYOffset("10");
         signHere.setAnchorXOffset("20");
 
         Text textLegal = new Text();
         textLegal.setAnchorString("/legal/");
-        textLegal.setAnchorUnits(anchorUnits);
+        textLegal.setAnchorUnits("pixels");
         textLegal.setAnchorYOffset("-9");
         textLegal.setAnchorXOffset("5");
         textLegal.setFont(font);
-        textLegal.setFontSize("size11");
+        textLegal.setFontSize(fontSize);
         textLegal.setBold(trueString);
         textLegal.setValue(testConfig.getSignerName());
         textLegal.setLocked(falseString);
@@ -75,43 +75,54 @@ public final class SetTabValuesTest {
         textLegal.setTabLabel("Legal Name");
 
         Text textFamiliar = new Text();
-        textFamiliar.setAnchorString("/familar/");
-        textFamiliar.setAnchorUnits(anchorUnits);
+        textFamiliar.setAnchorString("/familiar/");
+        textFamiliar.setAnchorUnits("pixels");
         textFamiliar.setAnchorYOffset("-9");
         textFamiliar.setAnchorXOffset("5");
         textFamiliar.setFont(font);
-        textFamiliar.setFontSize("size11");
+        textFamiliar.setFontSize(fontSize);
         textFamiliar.setBold(trueString);
         textFamiliar.setValue(testConfig.getSignerName());
         textFamiliar.setLocked(falseString);
         textFamiliar.setTabId("familiar_name");
         textFamiliar.setTabLabel("Familiar Name");
 
-        Text textSalary = new Text();
-        textSalary.setAnchorString("/salary/");
-        textSalary.setAnchorUnits(anchorUnits);
-        textSalary.setAnchorYOffset("-9");
-        textSalary.setAnchorXOffset("5");
-        textSalary.setFont(font);
-        textSalary.setFontSize("size11");
-        textSalary.setBold(trueString);
-        textSalary.setValue(String.format("$ %d", salary));
-        textSalary.setLocked(trueString);
-        textSalary.setTabId(salaryString);
-        textSalary.setTabLabel(salaryString);
+        Numerical numericalSalary = new Numerical();
+        numericalSalary.setValidationType("Currency");
+        numericalSalary.setPageNumber(initialId);
+        numericalSalary.setDocumentId(initialId);
+        numericalSalary.setXPosition("210");
+        numericalSalary.setYPosition("235");
+        numericalSalary.setHeight("20");
+        numericalSalary.setWidth("70");
+        numericalSalary.setFont(font);
+        numericalSalary.setFontSize(fontSize);
+        numericalSalary.setBold(trueString);
+        numericalSalary.setNumericalValue(String.format("%d", salary));
+        numericalSalary.setTabId(salaryString);
+        numericalSalary.setTabLabel(salaryString);
+
+        LocalePolicyTab localePolicyTab = new LocalePolicyTab();
+        localePolicyTab.setCultureName("en-US");
+        localePolicyTab.setCurrencyCode("usd");
+        localePolicyTab.setCurrencyPositiveFormat("csym_1_comma_234_comma_567_period_89");
+        localePolicyTab.setCurrencyNegativeFormat("minus_csym_1_comma_234_comma_567_period_89");
+        localePolicyTab.setUseLongCurrencyFormat(trueString);
+        numericalSalary.setLocalePolicy(localePolicyTab);
 
         TextCustomField salaryCustomField = new TextCustomField();
         salaryCustomField.setName(salaryString);
         salaryCustomField.setRequired(falseString);
         salaryCustomField.setShow(trueString);
         salaryCustomField.setValue(String.valueOf(salary));
-
         CustomFields cf = new CustomFields();
         cf.setTextCustomFields(Collections.singletonList(salaryCustomField));
 
         Tabs tabs = new Tabs();
         tabs.setSignHereTabs(Collections.singletonList(signHere));
-        tabs.setTextTabs(Arrays.asList(textLegal, textFamiliar, textSalary));
+        tabs.setTextTabs(Arrays.asList(textLegal, textFamiliar));
+        tabs.setNumericalTabs(Arrays.asList(numericalSalary));
+
         signer.setTabs(tabs);
         Recipients recipients = new Recipients();
         recipients.setSigners(Collections.singletonList(signer));
@@ -119,7 +130,7 @@ public final class SetTabValuesTest {
         EnvelopeDefinition expectedEnvelopeDefinition = new EnvelopeDefinition();
         expectedEnvelopeDefinition.setEmailSubject(emailSubject);
         expectedEnvelopeDefinition.setRecipients(recipients);
-        Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "3");
+        Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, initialId);
         expectedEnvelopeDefinition.setDocuments(Collections.singletonList(doc));
         expectedEnvelopeDefinition.setCustomFields(cf);
         expectedEnvelopeDefinition.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);

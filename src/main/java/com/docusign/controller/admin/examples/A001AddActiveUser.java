@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.HttpHeaders;
-import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -91,8 +90,8 @@ public class A001AddActiveUser extends AbstractAdminController {
 
         // Process results
         DoneExample
-                .createDefault(getTextForCodeExample().ExampleName)
-                .withMessage(getTextForCodeExample().ResultsPageText)
+                .createDefault(getTextForCodeExampleByApiType().ExampleName)
+                .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
                 .withJsonObject(result)
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;

@@ -32,7 +32,6 @@ public class DSConfiguration {
     @Value("${authorization.code.grant.sso.redirect-url}")
     private String acgRedirectURL;
 
-
     private ManifestStructure codeExamplesText;
 
     @Value("${DS_TARGET_ACCOUNT_ID}")

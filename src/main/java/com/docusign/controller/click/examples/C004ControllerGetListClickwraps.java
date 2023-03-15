@@ -46,7 +46,7 @@ public class C004ControllerGetListClickwraps extends AbstractClickController {
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(clickwrapsResponse)
-                .withMessage(getTextForCodeExample().ResultsPageText)
+                .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }

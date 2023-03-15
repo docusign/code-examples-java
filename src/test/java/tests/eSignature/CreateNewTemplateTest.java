@@ -113,8 +113,9 @@ public final class CreateNewTemplateTest {
         signer1Tabs.setRadioGroupTabs(Collections.singletonList(CreateTemplateService.createRadioGroup()));
         signer1Tabs.setSignHereTabs(Collections.singletonList(CreateTemplateService.createSignHere()));
         signer1Tabs.textTabs(Arrays.asList(
-                CreateTemplateService.createText("text", textXPosition, "230"),
-                CreateTemplateService.createText("numbersOnly", textXPosition, "260")));
+                CreateTemplateService.createText("text", textXPosition, "230")));
+        signer1Tabs.numericalTabs(Arrays.asList(
+                CreateTemplateService.createNumerical("numericalCurrency", "153", "260")));
 
         Signer signer = new Signer();
         signer.setRoleName(EnvelopeHelpers.SIGNER_ROLE_NAME);

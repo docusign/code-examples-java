@@ -128,13 +128,24 @@
     let addCodeExampleToHomepage = function (codeExamples) {
         var cfrPart11 = processCFR11Value();
 
+        console.log(codeExamples);
+
         codeExamples.forEach(
             element => {
                 let linkToCodeExample = getLinkForApiType(element.Name.toLowerCase());
 
                 element.Groups.forEach(
                     group => {
-                        $("#filtered_code_examples").append("<h2>" + group.Name + "</h2>");
+                        var doesGroupHaveAnyAvailableExamples = group.Examples.every(example => {
+                            return (element.Name.toLowerCase() !== API_TYPES.ESIGNATURE.toLowerCase() ||
+                                ((example.CFREnabled == "AllAccounts") ||
+                                    ((cfrPart11 == "enabled") && (example.CFREnabled == "CFROnly")) ||
+                                    ((cfrPart11 != "enabled") && (example.CFREnabled == "NonCFR")))) == false
+                        })
+
+                        if (!doesGroupHaveAnyAvailableExamples){
+                            $("#filtered_code_examples").append("<h2>" + group.Name + "</h2>");
+                        }
 
                         group.Examples.forEach(
                             example => {

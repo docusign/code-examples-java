@@ -59,9 +59,9 @@ public class EG019ControllerAccessCodeAuthentication extends AbstractEsignatureC
         );
 
         session.setEnvelopeId(envelopeSummary.getEnvelopeId());
-        DoneExample.createDefault(getTextForCodeExample().ExampleName)
+        DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                 .withJsonObject(envelopeSummary)
-                .withMessage(getTextForCodeExample().ResultsPageText
+                .withMessage(getTextForCodeExampleByApiType().ResultsPageText
                         .replaceFirst("\\{0}", session.getEnvelopeId())
                 )
                 .addToModel(model, config);

@@ -39,11 +39,11 @@ public class EG032ControllerPauseSignatureWorkflow extends AbstractEsignatureCon
 
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
-      if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
-        session.setStatusCFR("enabled");
-        throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
-      }
         super.onInitModel(args, model);
+        if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
+                session.setStatusCFR("enabled");
+                throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
+        }
     }
 
     @Override
@@ -72,7 +72,7 @@ public class EG032ControllerPauseSignatureWorkflow extends AbstractEsignatureCon
         this.session.setEnvelopeId(envelopeSummary.getEnvelopeId());
         DoneExample.createDefault(this.title)
                 .withJsonObject(envelopeSummary)
-                .withMessage(getTextForCodeExample().ResultsPageText
+                .withMessage(getTextForCodeExampleByApiType().ResultsPageText
                         .replaceFirst("\\{0}", this.session.getEnvelopeId())
                 )
                 .addToModel(model, config);

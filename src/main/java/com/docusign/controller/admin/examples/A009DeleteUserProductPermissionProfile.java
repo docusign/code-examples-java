@@ -123,8 +123,8 @@ public class A009DeleteUserProductPermissionProfile extends AbstractAdminControl
 			 organizationId,
 			 existingAccountId);
 		//Step 5 end
-	   DoneExample.createDefault(getTextForCodeExample().ExampleName)
-			 .withMessage(getTextForCodeExample().ResultsPageText)
+	   DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
+			 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
 			 .withJsonObject(removeUserProductsRepsonse)
 			 .addToModel(model, config);
 

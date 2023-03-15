@@ -2,9 +2,14 @@ package com.docusign.core.controller;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.core.model.ApiType;
+import com.docusign.core.model.AuthType;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
+
+import com.docusign.core.model.manifestModels.APIs;
 import com.docusign.core.model.manifestModels.CodeExampleText;
+import com.docusign.core.model.manifestModels.ManifestGroup;
 import com.docusign.esign.client.auth.OAuth;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +26,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletResponse;
+
 import java.time.Instant;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -40,7 +46,7 @@ import java.util.Objects;
 public abstract class AbstractController {
 
     private static final String REDIRECT_PREFIX = "redirect:";
-    protected static final String REDIRECT_SELECT_API_PAGE = REDIRECT_PREFIX + "/ds/selectApi";
+    protected static final String REDIRECT_AUTHENTICATION_PAGE = REDIRECT_PREFIX + "/ds/mustAuthenticate";
     protected static final String BEARER_AUTHENTICATION = "Bearer ";
     protected static final String DONE_EXAMPLE_PAGE = "pages/example_done";
     protected static final String DONE_EXAMPLE_PAGE_COMPARE = "pages/example_done_compare";
@@ -68,12 +74,14 @@ public abstract class AbstractController {
         this.pagePath = this.getExamplePagesPath() + exampleName;
     }
 
-    public CodeExampleText getTextForCodeExample() {
+    public CodeExampleText getTextForCodeExampleByApiType() {
+        ApiType apiType = ApiType.getAPITypeFromLink(this.exampleName);
         if (codeExampleText != null) {
             return codeExampleText;
         }
 
-        codeExampleText = GetExampleText();
+        config.setSelectedApiType(apiType.toString());
+        codeExampleText = getTextForCodeExample();
 
         return codeExampleText;
     }
@@ -83,7 +91,12 @@ public abstract class AbstractController {
     @GetMapping
     public String get(WorkArguments args, ModelMap model) {
         if (isTokenExpired()) {
-            return REDIRECT_SELECT_API_PAGE;
+            return REDIRECT_AUTHENTICATION_PAGE;
+        }
+
+        if(ApiType.getAPITypeFromLink(this.exampleName) == ApiType.MONITOR && session.getAuthTypeSelected() != AuthType.JWT){
+            session.setMonitorExampleRedirect("/" + this.exampleName);
+            return REDIRECT_AUTHENTICATION_PAGE;
         }
 
         try {
@@ -102,7 +115,7 @@ public abstract class AbstractController {
     @PostMapping
     public Object create(WorkArguments args, ModelMap model, HttpServletResponse response) {
         if (isTokenExpired()) {
-            return REDIRECT_SELECT_API_PAGE;
+            return REDIRECT_AUTHENTICATION_PAGE;
         }
 
         try {
@@ -121,8 +134,9 @@ public abstract class AbstractController {
      * @throws Exception if calling API has failed
      */
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
-        this.title = getTextForCodeExample().ExampleName;
+        this.title = getTextForCodeExampleByApiType().ExampleName;
 
+        this.setTheCurrentApiTypeAndBaseUrl();
         Class<?> clazz = Objects.requireNonNullElse(getClass().getEnclosingClass(), getClass());
         String srcPath = String.join("", config.getExampleUrl(), clazz.getName().replace('.', '/'), ".java");
         String viewSourceFile = config.getCodeExamplesText().SupportingTexts
@@ -134,8 +148,14 @@ public abstract class AbstractController {
         model.addAttribute("title", title);
         model.addAttribute("viewSourceFile", viewSourceFile);
         model.addAttribute("documentation", config.getDocumentationPath() + exampleName);
-        model.addAttribute(EXAMPLE_TEXT, getTextForCodeExample());
+        model.addAttribute(EXAMPLE_TEXT, getTextForCodeExampleByApiType());
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
+    }
+
+    public void setTheCurrentApiTypeAndBaseUrl() {
+        config.setSelectedApiType(ApiType.getAPITypeFromLink(this.exampleName).toString());
+        String basePath = this.config.getBaseUrl(config.getSelectedApiIndex(), session.getOauthAccount()) + config.getSelectedApiIndex().getBaseUrlSuffix();
+        session.setBasePath(basePath);
     }
 
     /**
@@ -202,15 +222,17 @@ public abstract class AbstractController {
         return tokenExpired;
     }
 
+    protected CodeExampleText getTextForCodeExample() {
+        List<ManifestGroup> manifestGroups = config.getCodeExamplesText().APIs.stream()
+                .filter(x -> ApiType.getAPITypeFromLink(this.exampleName).name().toLowerCase().contains(((APIs) x).Name.toLowerCase()))
+                .findFirst()
+                .orElse(null).Groups;
 
-    protected CodeExampleText GetExampleText() {
-        var groups = config.getCodeExamplesText().Groups;
-        var exampleNumberToSearch =  Integer.parseInt(this.exampleName.replaceAll("\\D+", ""));
+        int exampleNumberToSearch =  Integer.parseInt(this.exampleName.replaceAll("\\D+", ""));
 
-        for(var i = 0; i < groups.size(); ++i)
+        for (ManifestGroup group : manifestGroups)
         {
-            CodeExampleText codeExampleText = (CodeExampleText) Arrays
-                    .stream(groups.get(i).Examples.toArray())
+            CodeExampleText codeExampleText = group.Examples.stream()
                     .filter(x -> ((CodeExampleText) x).ExampleNumber == exampleNumberToSearch)
                     .findFirst()
                     .orElse(null);

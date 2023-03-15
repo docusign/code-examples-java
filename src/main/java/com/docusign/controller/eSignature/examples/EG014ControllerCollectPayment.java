@@ -53,12 +53,12 @@ public class EG014ControllerCollectPayment extends AbstractEsignatureController 
 
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
+      super.onInitModel(args, model);
       if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
         session.setStatusCFR("enabled");
         throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
       }
-        super.onInitModel(args, model);
-        model.addAttribute(MODEL_GATEWAY_OK, null != config.getGatewayAccountId());
+      model.addAttribute(MODEL_GATEWAY_OK, null != config.getGatewayAccountId());
     }
 
     @Override
@@ -81,8 +81,8 @@ public class EG014ControllerCollectPayment extends AbstractEsignatureController 
         // Step 2. call Envelopes::create API method
         EnvelopeSummary envelopeSummary = CollectPaymentService.collectPayment(envelopesApi, envelope, session.getAccountId());
 
-        DoneExample.createDefault(getTextForCodeExample().ExampleName)
-                .withMessage(getTextForCodeExample().ResultsPageText
+        DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
+                .withMessage(getTextForCodeExampleByApiType().ResultsPageText
                         .replaceFirst("\\{0}", envelopeSummary.getEnvelopeId())
                 )
                 .addToModel(model, config);
