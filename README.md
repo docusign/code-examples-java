@@ -126,7 +126,7 @@ Also, in order to select JSON Web Token authentication in the launcher, in src/m
    1. Set a name and email address for the signer. In application.json, save an email address as `DS_SIGNER_EMAIL` and a name as `DS_SIGNER_NAME`.  
 **Note:** Protect your personal information. Please make sure that application.json will not be stored in your source code repository.  
 1. Run the launcher: `mvn exec:java -Dexec.mainClass="com.docusign.jwtconsoleapp.JWTConsoleApp"`  (`mvn exec:java -D"exec.mainClass"="com.docusign.jwtconsoleapp.JWTConsoleApp"`)
-   The launcher automatically opens.  
+   The launcher automatically opens.   
 1. On the black navigation bar, select **Login**.
 1. From the picklist, select **JSON Web Token (JWT) grant** > **Authenticate with DocuSign**.
 1. When prompted, log in to your DocuSign developer account. If this is your first time using the app, select **ACCEPT** at the consent window. 
