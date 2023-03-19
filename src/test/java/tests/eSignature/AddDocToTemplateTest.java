@@ -117,6 +117,7 @@ public final class AddDocToTemplateTest {
         String defaultIdOne = "1";
         String defaultIdTwo = "2";
         String anchorString = "**signature_1**";
+
         WorkArguments args = new WorkArguments();
         args.setSignerEmail(testConfig.getSignerEmail());
         args.setSignerName(testConfig.getSignerName());
@@ -125,18 +126,18 @@ public final class AddDocToTemplateTest {
         args.setItem(item);
         args.setQuantity(defaultIdOne);
 
-        CarbonCopy cc1 = new CarbonCopy();
-        cc1.setEmail(ccEmail);
-        cc1.setName(ccName);
-        cc1.setRoleName(EnvelopeHelpers.CC_ROLE_NAME);
-        cc1.setRecipientId(defaultIdTwo);
+        CarbonCopy cc = new CarbonCopy();
+        cc.setEmail(ccEmail);
+        cc.setName(ccName);
+        cc.setRoleName(EnvelopeHelpers.CC_ROLE_NAME);
+        cc.setRecipientId(defaultIdTwo);
 
-        CompositeTemplate compTemplate1 = new CompositeTemplate();
-        compTemplate1.setCompositeTemplateId(defaultIdOne);
+        CompositeTemplate compositeTemplate = new CompositeTemplate();
+        compositeTemplate.setCompositeTemplateId(defaultIdOne);
         ServerTemplate serverTemplates = new ServerTemplate();
         serverTemplates.setSequence(defaultIdOne);
         serverTemplates.setTemplateId(testConfig.getTemplateId());
-        compTemplate1.setServerTemplates(Collections.singletonList(serverTemplates));
+        compositeTemplate.setServerTemplates(Collections.singletonList(serverTemplates));
 
         InlineTemplate inlineTemplate = new InlineTemplate();
         inlineTemplate.setSequence(defaultIdTwo);
@@ -146,8 +147,8 @@ public final class AddDocToTemplateTest {
                         testConfig.getSignerName(),
                         SIGNER_CLIENT_ID
                 ),
-                cc1));
-        compTemplate1.setInlineTemplates(Collections.singletonList(inlineTemplate));
+                cc));
+        compositeTemplate.setInlineTemplates(Collections.singletonList(inlineTemplate));
 
         Tabs signer1Tabs = EnvelopeHelpers.createSingleSignerTab(
                 anchorString,
@@ -167,14 +168,14 @@ public final class AddDocToTemplateTest {
         compTemplate2.setCompositeTemplateId(defaultIdTwo);
         InlineTemplate inlineTemplate2 = new InlineTemplate();
         inlineTemplate2.setSequence(defaultIdOne);
-        inlineTemplate2.setRecipients(EnvelopeHelpers.createRecipients(signer1AddedDoc, cc1));
+        inlineTemplate2.setRecipients(EnvelopeHelpers.createRecipients(signer1AddedDoc, cc));
         compTemplate2.setInlineTemplates(Collections.singletonList(inlineTemplate2));
         compTemplate2.setDocument(EnvelopeHelpers.createDocument(htmlDoc, HTML_DOCUMENT_NAME,
                 DocumentType.HTML.getDefaultFileExtention(), defaultIdOne));
 
         EnvelopeDefinition expectedEnvelopeDefinition = new EnvelopeDefinition();
         expectedEnvelopeDefinition.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
-        expectedEnvelopeDefinition.setCompositeTemplates(Arrays.asList(compTemplate1, compTemplate2));
+        expectedEnvelopeDefinition.setCompositeTemplates(Arrays.asList(compositeTemplate, compTemplate2));
 
         // Act
         EnvelopeDefinition envelopeDefinition = AddDocToTemplateService.makeEnvelope(

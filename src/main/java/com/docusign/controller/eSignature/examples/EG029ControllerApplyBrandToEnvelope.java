@@ -45,7 +45,7 @@ public class EG029ControllerApplyBrandToEnvelope extends AbstractEsignatureContr
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
         AccountsApi accountsApi = createAccountsApi(session.getBasePath(), user.getAccessToken());
-        BrandsResponse brands = accountsApi.listBrands(session.getAccountId());
+        BrandsResponse brands = ApplyBrandToEnvelopeService.getBrands(accountsApi, session.getAccountId());
         model.addAttribute(MODEL_LIST_BRAND, brands.getBrands());
     }
 

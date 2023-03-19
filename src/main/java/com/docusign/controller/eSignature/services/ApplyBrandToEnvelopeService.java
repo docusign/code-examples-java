@@ -1,6 +1,7 @@
 package com.docusign.controller.eSignature.services;
 
 import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
+import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
@@ -21,6 +22,13 @@ public final class ApplyBrandToEnvelopeService {
             EnvelopeDefinition envelope
     ) throws ApiException {
         return envelopesApi.createEnvelope(accountId, envelope);
+    }
+
+    public static BrandsResponse getBrands(
+            AccountsApi accountsApi,
+            String accountId
+    ) throws ApiException {
+        return accountsApi.listBrands(accountId);
     }
 
     // Creates an envelope. The envelope has one recipient who should sign an

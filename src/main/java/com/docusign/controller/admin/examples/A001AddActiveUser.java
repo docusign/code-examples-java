@@ -2,7 +2,7 @@ package com.docusign.controller.admin.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.admin.api.UsersApi;
-import com.docusign.admin.model.*;
+import com.docusign.admin.model.NewUserResponse;
 import com.docusign.common.WorkArguments;
 import com.docusign.controller.admin.services.AddActiveUserService;
 import com.docusign.core.model.DoneExample;

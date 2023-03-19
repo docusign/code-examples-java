@@ -11,6 +11,7 @@ import com.docusign.esign.model.*;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public final class BulkSendEnvelopesService {
     private static final String BULK_SIGNER_EMAIL_PLACEHOLDER = "MultiBulkRecipients-%s@docusign.com";
@@ -19,6 +20,19 @@ public final class BulkSendEnvelopesService {
     private static final String DOCUMENT_NAME = "Lorem Ipsum";
     private static final int ANCHOR_OFFSET_Y = -5;
     private static final int ANCHOR_OFFSET_X = 15;
+
+    // Step 7 start
+    public static BulkSendBatchStatus getBulkSendBatchStatus(
+            BulkEnvelopesApi bulkEnvelopesApi,
+            String accountId,
+            String batchId,
+            long bulkRequestDelay
+    ) throws ApiException, InterruptedException {
+        TimeUnit.SECONDS.sleep(bulkRequestDelay);
+        // For 2000 recipients, it can take about an hour
+        return bulkEnvelopesApi.getBulkSendBatchStatus(accountId, batchId);
+    }
+    // Step 7 end
 
     public static String bulkSendEnvelopes(
             BulkEnvelopesApi bulkEnvelopesApi,
@@ -89,7 +103,7 @@ public final class BulkSendEnvelopesService {
     }
     // Step 3-2 end
 
-    private static BulkSendingCopy createBulkSending(
+    public static BulkSendingCopy createBulkSending(
             String signerName,
             String signerEmail,
             String ccName,
@@ -122,7 +136,7 @@ public final class BulkSendEnvelopesService {
     }
     // Step 4-2 end
 
-    private static CustomFields createCustomFields(String bulkListId) {
+    public static CustomFields createCustomFields(String bulkListId) {
         TextCustomField textCustomField = new TextCustomField()
                 .name("mailingListId")
                 .required(DsModelUtils.FALSE)
@@ -134,7 +148,7 @@ public final class BulkSendEnvelopesService {
                 .textCustomFields(List.of(textCustomField));
     }
 
-    private static Recipients createRecipients() {
+    public static Recipients createRecipients() {
         Signer signer = createSignerPlaceholder(EnvelopeHelpers.SIGNER_ROLE_NAME, "1", "1");
         CarbonCopy cc = createCCPlaceholder(EnvelopeHelpers.CC_ROLE_NAME, "2", "2");
         return new Recipients()
@@ -142,7 +156,7 @@ public final class BulkSendEnvelopesService {
                 .carbonCopies(List.of(cc));
     }
 
-    private static Signer createSignerPlaceholder(String roleName, String recipientId, String routingOrder) {
+    public static Signer createSignerPlaceholder(String roleName, String recipientId, String routingOrder) {
         return new Signer()
                 .name(String.format(BULK_SIGNER_NAME_PLACEHOLDER, roleName))
                 .email(String.format(BULK_SIGNER_EMAIL_PLACEHOLDER, roleName))
@@ -156,7 +170,7 @@ public final class BulkSendEnvelopesService {
                 .tabs(EnvelopeHelpers.createSingleSignerTab("/sn1/", ANCHOR_OFFSET_Y, ANCHOR_OFFSET_X));
     }
 
-    private static CarbonCopy createCCPlaceholder(String roleName, String recipientId, String routingOrder) {
+    public static CarbonCopy createCCPlaceholder(String roleName, String recipientId, String routingOrder) {
         return new CarbonCopy()
                 .name(String.format(BULK_SIGNER_NAME_PLACEHOLDER, roleName))
                 .email(String.format(BULK_SIGNER_EMAIL_PLACEHOLDER, roleName))

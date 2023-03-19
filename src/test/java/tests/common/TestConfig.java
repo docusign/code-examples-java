@@ -1,9 +1,15 @@
 package tests.common;
 
+import com.docusign.click.model.ClickwrapVersionSummaryResponse;
+import com.docusign.esign.model.Brand;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+
 import lombok.Getter;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import lombok.Setter;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,9 +45,15 @@ public class TestConfig {
 
     private String BasePath;
 
+    private String BatchId;
+
     private String TemplateId;
 
-    private String PathToDocuments;
+    private ClickwrapVersionSummaryResponse inactiveClickwrap;
+
+    private Brand brand;
+
+    public String PathToDocuments;
 
     private static TestConfig single_instance = null;
 

@@ -14,29 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.docusign.DSConfiguration;
-import com.docusign.esign.api.BulkEnvelopesApi;
-import com.docusign.esign.api.EnvelopesApi;
-import com.docusign.esign.client.ApiClient;
-import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.BulkSendBatchStatus;
-import com.docusign.esign.model.BulkSendRequest;
-import com.docusign.esign.model.BulkSendingCopy;
-import com.docusign.esign.model.BulkSendingCopyRecipient;
-import com.docusign.esign.model.BulkSendingList;
-import com.docusign.esign.model.CarbonCopy;
-import com.docusign.esign.model.CustomFields;
-import com.docusign.esign.model.Document;
-import com.docusign.esign.model.EnvelopeDefinition;
-import com.docusign.esign.model.Recipients;
-import com.docusign.esign.model.Signer;
-import com.docusign.esign.model.TextCustomField;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * This code example demonstrates how to send envelopes in bulk to multiple
@@ -87,13 +67,12 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
         );
 
         // Confirm successful bulk send
-        // Step 7 start
         try {
-            TimeUnit.SECONDS.sleep(BULK_REQUEST_DELAY);
-            // For 2000 recipients, it can take about an hour
-            BulkSendBatchStatus status = bulkEnvelopesApi.getBulkSendBatchStatus(accountId, batchId);
-            // Step 7 end
-            DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
+
+            BulkSendBatchStatus status = BulkSendEnvelopesService.getBulkSendBatchStatus(bulkEnvelopesApi, accountId, batchId, BULK_REQUEST_DELAY);
+
+            DoneExample.createDefault(getTextForCodeExample().ExampleName)
+
                     .withJsonObject(status)
                     .withMessage(String.join(
                             "",
