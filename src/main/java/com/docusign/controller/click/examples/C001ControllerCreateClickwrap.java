@@ -53,7 +53,8 @@ public class C001ControllerCreateClickwrap extends AbstractClickController {
                 DOCUMENT_ORDER);
 
         // Step 4. Call the v1 Click API
-        ClickwrapVersionSummaryResponse createdClickwrap = accountsApi.createClickwrap(
+        ClickwrapVersionSummaryResponse createdClickwrap = CreateClickwrapService.createClickwrap(
+                accountsApi,
                 this.session.getAccountId(),
                 clickwrapRequest);
 

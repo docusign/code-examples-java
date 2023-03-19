@@ -103,30 +103,33 @@ public final class CreateNewTemplateTest {
         String checkboxXPosition = "75";
         String defaultIdTwo = "2";
 
-        Tabs signer1Tabs = new Tabs();
-        signer1Tabs.setCheckboxTabs(Arrays.asList(
+        Tabs signerTabs = new Tabs();
+        signerTabs.setCheckboxTabs(Arrays.asList(
                 CreateTemplateService.createCheckbox("ckAuthorization", checkboxXPosition, "417"),
                 CreateTemplateService.createCheckbox("ckAuthentication", checkboxXPosition, "447"),
                 CreateTemplateService.createCheckbox("ckAgreement", checkboxXPosition, "478"),
                 CreateTemplateService.createCheckbox("ckAcknowledgement", checkboxXPosition, "508")));
-        signer1Tabs.setListTabs(Collections.singletonList(CreateTemplateService.createList()));
-        signer1Tabs.setRadioGroupTabs(Collections.singletonList(CreateTemplateService.createRadioGroup()));
-        signer1Tabs.setSignHereTabs(Collections.singletonList(CreateTemplateService.createSignHere()));
-        signer1Tabs.textTabs(Arrays.asList(
-                CreateTemplateService.createText("text", textXPosition, "230")));
-        signer1Tabs.numericalTabs(Arrays.asList(
-                CreateTemplateService.createNumerical("numericalCurrency", "153", "260")));
+
+        signerTabs.setListTabs(Collections.singletonList(CreateTemplateService.createList()));
+        signerTabs.setRadioGroupTabs(Collections.singletonList(CreateTemplateService.createRadioGroup()));
+        signerTabs.setSignHereTabs(Collections.singletonList(CreateTemplateService.createSignHere()));
+        signerTabs.textTabs(Arrays.asList(
+                CreateTemplateService.createText("text", textXPosition, "230")
+        ));
+        signerTabs.numericalTabs(Arrays.asList(
+            CreateTemplateService.createNumerical("number", textXPosition, checkboxXPosition)
+            ));  
 
         Signer signer = new Signer();
         signer.setRoleName(EnvelopeHelpers.SIGNER_ROLE_NAME);
         signer.setRecipientId(defaultIdOne);
         signer.setRoutingOrder(defaultIdOne);
-        signer.setTabs(signer1Tabs);
+        signer.setTabs(signerTabs);
 
-        CarbonCopy cc1 = new CarbonCopy();
-        cc1.setRoleName(EnvelopeHelpers.CC_ROLE_NAME);
-        cc1.setRoutingOrder(defaultIdTwo);
-        cc1.setRecipientId(defaultIdTwo);
+        CarbonCopy cc = new CarbonCopy();
+        cc.setRoleName(EnvelopeHelpers.CC_ROLE_NAME);
+        cc.setRoutingOrder(defaultIdTwo);
+        cc.setRecipientId(defaultIdTwo);
 
         EnvelopeTemplate expectedEnvelopeTemplate = new EnvelopeTemplate();
         expectedEnvelopeTemplate.setDocuments(Collections.singletonList(doc));
@@ -134,7 +137,7 @@ public final class CreateNewTemplateTest {
         expectedEnvelopeTemplate.setName(TEMPLATE_NAME);
         expectedEnvelopeTemplate.setDescription(description);
         expectedEnvelopeTemplate.setShared(falseString);
-        expectedEnvelopeTemplate.setRecipients(EnvelopeHelpers.createRecipients(signer, cc1));
+        expectedEnvelopeTemplate.setRecipients(EnvelopeHelpers.createRecipients(signer, cc));
         expectedEnvelopeTemplate.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_CREATED);
 
         // Act
@@ -309,7 +312,6 @@ public final class CreateNewTemplateTest {
         expectedSignHere.setYPosition(yPosition);
 
         // Act
-
         SignHere signHere = CreateTemplateService.createSignHere();
 
         // Assert
