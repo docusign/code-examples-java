@@ -24,6 +24,7 @@
         <click.version>1.0.0</click.version>
         <monitor.version>1.0.0</monitor.version>
         <admin.version>1.0.0-BETA</admin.version>
+        <esignature.version>4.0.0-RC1</esignature.version>
     </properties>
 
     <dependencies>
@@ -78,7 +79,8 @@
         <dependency>
             <groupId>com.docusign</groupId>
             <artifactId>docusign-esign-java</artifactId>
-            <version>${docusign.version}</version>
+            <version>${esignature.version}</version>
+            <classifier>shaded</classifier>
         </dependency>
 
         <dependency>
