@@ -77,4 +77,9 @@ public class WorkArguments {
     private String company;
     private String title;
     private String date;
+    private String candidateEmail;
+    private String candidateName;
+    private String managerName;
+    private String jobTitle;
+    private String salary;
 }
