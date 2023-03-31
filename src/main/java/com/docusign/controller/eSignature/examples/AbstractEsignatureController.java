@@ -4,6 +4,7 @@ import com.docusign.DSConfiguration;
 import com.docusign.core.controller.AbstractController;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.api.EnvelopesApi;
+import com.docusign.esign.api.TemplatesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.client.auth.OAuth;
@@ -51,6 +52,18 @@ public abstract class AbstractEsignatureController extends AbstractController {
     protected static EnvelopesApi createEnvelopesApi(String basePath, String userAccessToken) {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         return new EnvelopesApi(apiClient);
+    }
+
+    /**
+     * Creates a new instance of the eSignature TemplatesApi. This method
+     * creates an instance of the ApiClient class silently.
+     * @param basePath URL to eSignature REST API
+     * @param userAccessToken user's access token
+     * @return an instance of the {@link TemplatesApi}
+     */
+    protected static TemplatesApi createTemplatesApi(String basePath, String userAccessToken) {
+        ApiClient apiClient = createApiClient(basePath, userAccessToken);
+        return new TemplatesApi(apiClient);
     }
 
     /**
