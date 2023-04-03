@@ -25,6 +25,10 @@ public final class DocumentGenerationService {
 
     public static final String START_DATE = "Start_Date";
 
+    public static final String TEXT_BOX = "TextBox";
+
+    public static final String STRING_TRUE = "true";
+
     public String generateDocument(
             String accountId,
             String candidateEmail,
@@ -84,36 +88,36 @@ public final class DocumentGenerationService {
             String startDate) {
         DocGenFormField candidateNameField = new DocGenFormField();
         candidateNameField.setLabel(CANDIDATE_NAME);
-        candidateNameField.setRequired("true");
-        candidateNameField.setType("TextBox");
+        candidateNameField.setRequired(STRING_TRUE);
+        candidateNameField.setType(TEXT_BOX);
         candidateNameField.setName(CANDIDATE_NAME);
         candidateNameField.setValue(candidateName);
 
         DocGenFormField managerNameField = new DocGenFormField();
         managerNameField.setLabel(MANAGER_NAME);
-        managerNameField.setRequired("true");
-        managerNameField.setType("TextBox");
+        managerNameField.setRequired(STRING_TRUE);
+        managerNameField.setType(TEXT_BOX);
         managerNameField.setName(MANAGER_NAME);
         managerNameField.setValue(managerName);
 
         DocGenFormField jobTitleField = new DocGenFormField();
         jobTitleField.setLabel(JOB_TITLE);
-        jobTitleField.setRequired("true");
-        jobTitleField.setType("TextBox");
+        jobTitleField.setRequired(STRING_TRUE);
+        jobTitleField.setType(TEXT_BOX);
         jobTitleField.setName(JOB_TITLE);
         jobTitleField.setValue(jobTitle);
 
         DocGenFormField salaryField = new DocGenFormField();
         salaryField.setLabel(SALARY);
-        salaryField.setRequired("true");
-        salaryField.setType("TextBox");
+        salaryField.setRequired(STRING_TRUE);
+        salaryField.setType(TEXT_BOX);
         salaryField.setName(SALARY);
         salaryField.setValue(salary);
 
         DocGenFormField startDateField = new DocGenFormField();
         startDateField.setLabel(START_DATE);
-        startDateField.setRequired("true");
-        startDateField.setType("TextBox");
+        startDateField.setRequired(STRING_TRUE);
+        startDateField.setType(TEXT_BOX);
         startDateField.setName(START_DATE);
         startDateField.setValue(startDate);
 
@@ -155,32 +159,32 @@ public final class DocumentGenerationService {
 
         DocGenFormField candidateName = new DocGenFormField();
         candidateName.setLabel(CANDIDATE_NAME);
-        candidateName.setRequired("true");
-        candidateName.setType("TextBox");
+        candidateName.setRequired(STRING_TRUE);
+        candidateName.setType(TEXT_BOX);
         candidateName.setName(CANDIDATE_NAME);
 
         DocGenFormField managerName = new DocGenFormField();
         managerName.setLabel(MANAGER_NAME);
-        managerName.setRequired("true");
-        managerName.setType("TextBox");
+        managerName.setRequired(STRING_TRUE);
+        managerName.setType(TEXT_BOX);
         managerName.setName(MANAGER_NAME);
 
         DocGenFormField jobTitle = new DocGenFormField();
         jobTitle.setLabel(JOB_TITLE);
-        jobTitle.setRequired("true");
-        jobTitle.setType("TextBox");
+        jobTitle.setRequired(STRING_TRUE);
+        jobTitle.setType(TEXT_BOX);
         jobTitle.setName(JOB_TITLE);
 
         DocGenFormField salary = new DocGenFormField();
         salary.setLabel(SALARY);
-        salary.setRequired("true");
-        salary.setType("TextBox");
+        salary.setRequired(STRING_TRUE);
+        salary.setType(TEXT_BOX);
         salary.setName(SALARY);
 
         DocGenFormField startDate = new DocGenFormField();
         startDate.setLabel(START_DATE);
-        startDate.setRequired("true");
-        startDate.setType("TextBox");
+        startDate.setRequired(STRING_TRUE);
+        startDate.setType(TEXT_BOX);
         startDate.setName(START_DATE);
 
         document.setDocGenFormFields(Arrays.asList(candidateName, managerName, jobTitle, salary, startDate));
