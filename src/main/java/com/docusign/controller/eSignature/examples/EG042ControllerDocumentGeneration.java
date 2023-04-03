@@ -34,24 +34,20 @@ public class EG042ControllerDocumentGeneration extends AbstractEsignatureControl
     @Override
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws Exception {
-        String candidateEmail = args.getCandidateEmail();
-        String candidateName = args.getCandidateName();
-        String managerName = args.getManagerName();
-        String jobTitle = args.getJobTitle();
-        String salary = args.getSalary();
-        String startDate = args.getStartDate();
+        String basePath = session.getBasePath();
+        String accessToken = user.getAccessToken();
 
-        EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
-        TemplatesApi templatesApi = createTemplatesApi(session.getBasePath(), user.getAccessToken());
+        EnvelopesApi envelopesApi = createEnvelopesApi(basePath, accessToken);
+        TemplatesApi templatesApi = createTemplatesApi(basePath, accessToken);
 
-        String envelopeId = DocumentGenerationService.documentGeneration(
+        String envelopeId = (new DocumentGenerationService()).generateDocument(
                 session.getAccountId(),
-                candidateEmail,
-                candidateName,
-                managerName,
-                jobTitle,
-                salary,
-                startDate,
+                args.getCandidateEmail(),
+                args.getCandidateName(),
+                args.getManagerName(),
+                args.getJobTitle(),
+                args.getSalary(),
+                args.getStartDate(),
                 DOCUMENT_FILE_NAME,
                 envelopesApi,
                 templatesApi);

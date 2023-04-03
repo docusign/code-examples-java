@@ -10,8 +10,22 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 
+/**
+ * Document generation code example
+ */
 public final class DocumentGenerationService {
-    public static String documentGeneration(
+
+    public static final String CANDIDATE_NAME = "Candidate_Name";
+
+    public static final String MANAGER_NAME = "Manager_Name";
+
+    public static final String JOB_TITLE = "Job_Title";
+
+    public static final String SALARY = "Salary";
+
+    public static final String START_DATE = "Start_Date";
+
+    public String generateDocument(
             String accountId,
             String candidateEmail,
             String candidateName,
@@ -24,18 +38,23 @@ public final class DocumentGenerationService {
             TemplatesApi templatesApi
     ) throws ApiException, IOException {
         TemplateSummary template = templatesApi.createTemplate(accountId, makeTemplate(offerDocDocx));
-        String templateId = template.getTemplateId();
 
         EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(
                 accountId,
-                makeEnvelope(candidateEmail, candidateName, templateId)
-        );
+                makeEnvelope(candidateEmail, candidateName, template.getTemplateId()));
         String envelopeId = envelopeSummary.getEnvelopeId();
 
         EnvelopeDocumentsResult documents = envelopesApi.listDocuments(accountId, envelopeId);
-        String documentId = documents.getEnvelopeDocuments().stream().findFirst().get().getDocumentIdGuid();
 
-        DocGenFormFieldRequest formFields = formFields(
+        String documentId = "";
+        if (!documents.getEnvelopeDocuments().isEmpty()) {
+            EnvelopeDocument document = documents.getEnvelopeDocuments().get(0);
+            if (document != null){
+                documentId = document.getDocumentIdGuid();
+            }
+        }
+
+        DocGenFormFieldRequest formFields = getFormFields(
                 documentId,
                 candidateName,
                 managerName,
@@ -56,7 +75,7 @@ public final class DocumentGenerationService {
         return envelopeUpdateSummary.getEnvelopeId();
     }
 
-    public static DocGenFormFieldRequest formFields(
+    private DocGenFormFieldRequest getFormFields(
             String documentId,
             String candidateName,
             String managerName,
@@ -64,38 +83,38 @@ public final class DocumentGenerationService {
             String salary,
             String startDate) {
         DocGenFormField candidateNameField = new DocGenFormField();
-        candidateNameField.setLabel("Candidate_Name");
+        candidateNameField.setLabel(CANDIDATE_NAME);
         candidateNameField.setRequired("true");
         candidateNameField.setType("TextBox");
-        candidateNameField.setName("Candidate_Name");
+        candidateNameField.setName(CANDIDATE_NAME);
         candidateNameField.setValue(candidateName);
 
         DocGenFormField managerNameField = new DocGenFormField();
-        managerNameField.setLabel("Manager_Name");
+        managerNameField.setLabel(MANAGER_NAME);
         managerNameField.setRequired("true");
         managerNameField.setType("TextBox");
-        managerNameField.setName("Manager_Name");
+        managerNameField.setName(MANAGER_NAME);
         managerNameField.setValue(managerName);
 
         DocGenFormField jobTitleField = new DocGenFormField();
-        jobTitleField.setLabel("Job_Title");
+        jobTitleField.setLabel(JOB_TITLE);
         jobTitleField.setRequired("true");
         jobTitleField.setType("TextBox");
-        jobTitleField.setName("Job_Title");
+        jobTitleField.setName(JOB_TITLE);
         jobTitleField.setValue(jobTitle);
 
         DocGenFormField salaryField = new DocGenFormField();
-        salaryField.setLabel("Salary");
+        salaryField.setLabel(SALARY);
         salaryField.setRequired("true");
         salaryField.setType("TextBox");
-        salaryField.setName("Salary");
+        salaryField.setName(SALARY);
         salaryField.setValue(salary);
 
         DocGenFormField startDateField = new DocGenFormField();
-        startDateField.setLabel("Start_Date");
+        startDateField.setLabel(START_DATE);
         startDateField.setRequired("true");
         startDateField.setType("TextBox");
-        startDateField.setName("Start_Date");
+        startDateField.setName(START_DATE);
         startDateField.setValue(startDate);
 
         DocGenFormFields formFields = new DocGenFormFields();
@@ -113,21 +132,21 @@ public final class DocumentGenerationService {
         return docGenFormFieldRequest;
     }
 
-    public static EnvelopeDefinition makeEnvelope(String candidateEmail, String candidateName, String templateId) {
-        TemplateRole signer = new TemplateRole();
-        signer.setName(candidateName);
-        signer.setEmail(candidateEmail);
-        signer.setRoleName(EnvelopeHelpers.SIGNER_ROLE_NAME);
+    private EnvelopeDefinition makeEnvelope(String candidateEmail, String candidateName, String templateId) {
+        TemplateRole signerRole = new TemplateRole();
+        signerRole.setName(candidateName);
+        signerRole.setEmail(candidateEmail);
+        signerRole.setRoleName(EnvelopeHelpers.SIGNER_ROLE_NAME);
 
         EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
-        envelopeDefinition.setTemplateRoles(Collections.singletonList(signer));
+        envelopeDefinition.setTemplateRoles(Collections.singletonList(signerRole));
         envelopeDefinition.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_CREATED);
         envelopeDefinition.setTemplateId(templateId);
 
         return envelopeDefinition;
     }
 
-    public static EnvelopeTemplate makeTemplate(String offerDocDocx) throws IOException {
+    private EnvelopeTemplate makeTemplate(String offerDocDocx) throws IOException {
         String documentName = "Offer Letter Demo";
         Document document = EnvelopeHelpers.createDocumentFromFile(offerDocDocx, documentName,"1");
         document.setOrder("1");
@@ -135,34 +154,34 @@ public final class DocumentGenerationService {
         document.setIsDocGenDocument("true");
 
         DocGenFormField candidateName = new DocGenFormField();
-        candidateName.setLabel("Candidate_Name");
+        candidateName.setLabel(CANDIDATE_NAME);
         candidateName.setRequired("true");
         candidateName.setType("TextBox");
-        candidateName.setName("Candidate_Name");
+        candidateName.setName(CANDIDATE_NAME);
 
         DocGenFormField managerName = new DocGenFormField();
-        managerName.setLabel("Manager_Name");
+        managerName.setLabel(MANAGER_NAME);
         managerName.setRequired("true");
         managerName.setType("TextBox");
-        managerName.setName("Manager_Name");
+        managerName.setName(MANAGER_NAME);
 
         DocGenFormField jobTitle = new DocGenFormField();
-        jobTitle.setLabel("Job_Title");
+        jobTitle.setLabel(JOB_TITLE);
         jobTitle.setRequired("true");
         jobTitle.setType("TextBox");
-        jobTitle.setName("Job_Title");
+        jobTitle.setName(JOB_TITLE);
 
         DocGenFormField salary = new DocGenFormField();
-        salary.setLabel("Salary");
+        salary.setLabel(SALARY);
         salary.setRequired("true");
         salary.setType("TextBox");
-        salary.setName("Salary");
+        salary.setName(SALARY);
 
         DocGenFormField startDate = new DocGenFormField();
-        startDate.setLabel("Start_Date");
+        startDate.setLabel(START_DATE);
         startDate.setRequired("true");
         startDate.setType("TextBox");
-        startDate.setName("Start_Date");
+        startDate.setName(START_DATE);
 
         document.setDocGenFormFields(Arrays.asList(candidateName, managerName, jobTitle, salary, startDate));
 
@@ -190,7 +209,7 @@ public final class DocumentGenerationService {
         return template;
     }
 
-    public static SignHere createSignHere() {
+    private SignHere createSignHere() {
         SignHere signHere = new SignHere();
 
         signHere.setDocumentId("1");
