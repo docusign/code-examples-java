@@ -4,7 +4,23 @@ import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.api.TemplatesApi;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.*;
+import com.docusign.esign.model.DocGenFormFieldResponse;
+import com.docusign.esign.model.DocGenFormFields;
+import com.docusign.esign.model.EnvelopeSummary;
+import com.docusign.esign.model.TemplateSummary;
+import com.docusign.esign.model.DocGenFormFieldRequest;
+import com.docusign.esign.model.Envelope;
+import com.docusign.esign.model.EnvelopeUpdateSummary;
+import com.docusign.esign.model.TemplateTabs;
+import com.docusign.esign.model.SignHere;
+import com.docusign.esign.model.DateSigned;
+import com.docusign.esign.model.DocGenFormField;
+import com.docusign.esign.model.EnvelopeDefinition;
+import com.docusign.esign.model.TemplateRole;
+import com.docusign.esign.model.EnvelopeTemplate;
+import com.docusign.esign.model.Signer;
+import com.docusign.esign.model.Recipients;
+import com.docusign.esign.model.Document;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -14,7 +30,6 @@ import java.util.Collections;
  * Document generation code example
  */
 public final class DocumentGenerationService {
-
     public static final String CANDIDATE_NAME = "Candidate_Name";
 
     public static final String MANAGER_NAME = "Manager_Name";
@@ -28,6 +43,10 @@ public final class DocumentGenerationService {
     public static final String TEXT_BOX = "TextBox";
 
     public static final String STRING_TRUE = "true";
+
+    public static final String ANCHOR_UNITS = "pixels";
+
+    public static final String DEFAULT_ID = "1";
 
     public String generateDocument(
             String accountId,
@@ -44,8 +63,8 @@ public final class DocumentGenerationService {
         TemplateSummary template = templatesApi.createTemplate(accountId, makeTemplate());
         String templateId = template.getTemplateId();
 
-        templatesApi.updateDocument(accountId, templateId, "1", addDocumentTemplate(offerDocDocx));
-        templatesApi.createTabs(accountId, templateId, "1", prepareTabs());
+        templatesApi.updateDocument(accountId, templateId, DEFAULT_ID, addDocumentTemplate(offerDocDocx));
+        templatesApi.createTabs(accountId, templateId, DEFAULT_ID, prepareTabs());
 
         EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(
                 accountId,
@@ -94,7 +113,7 @@ public final class DocumentGenerationService {
         SignHere signHere = new SignHere();
 
         signHere.setAnchorString("Employee Signature");
-        signHere.setAnchorUnits("pixels");
+        signHere.setAnchorUnits(ANCHOR_UNITS);
         signHere.setAnchorXOffset("5");
         signHere.setAnchorYOffset("-22");
 
@@ -105,7 +124,7 @@ public final class DocumentGenerationService {
         DateSigned dateSigned = new DateSigned();
 
         dateSigned.setAnchorString("Date");
-        dateSigned.setAnchorUnits("pixels");
+        dateSigned.setAnchorUnits(ANCHOR_UNITS);
         dateSigned.setAnchorYOffset("-22");
 
         return dateSigned;
@@ -185,7 +204,7 @@ public final class DocumentGenerationService {
     private EnvelopeTemplate makeTemplate() {
         Signer signer = new Signer();
         signer.setRoleName(EnvelopeHelpers.SIGNER_ROLE_NAME);
-        signer.setRecipientId("1");
+        signer.setRecipientId(DEFAULT_ID);
         signer.setRoutingOrder("1");
 
         Recipients recipients = new Recipients();
@@ -203,7 +222,7 @@ public final class DocumentGenerationService {
 
     private static EnvelopeDefinition addDocumentTemplate(String offerDocDocx) throws IOException {
         String documentName = "OfferLetterDemo.docx";
-        Document document = EnvelopeHelpers.createDocumentFromFile(offerDocDocx, documentName,"1");
+        Document document = EnvelopeHelpers.createDocumentFromFile(offerDocDocx, documentName,DEFAULT_ID);
         document.setOrder("1");
         document.pages("1");
 
