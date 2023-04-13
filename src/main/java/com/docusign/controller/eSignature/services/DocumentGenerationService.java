@@ -41,20 +41,23 @@ public final class DocumentGenerationService {
             EnvelopesApi envelopesApi,
             TemplatesApi templatesApi
     ) throws ApiException, IOException {
-        TemplateSummary template = templatesApi.createTemplate(accountId, makeTemplate(offerDocDocx));
+        TemplateSummary template = templatesApi.createTemplate(accountId, makeTemplate());
+        String templateId = template.getTemplateId();
+
+        templatesApi.updateDocument(accountId, templateId, "1", addDocumentTemplate(offerDocDocx));
+        templatesApi.createTabs(accountId, templateId, "1", prepareTabs());
 
         EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(
                 accountId,
                 makeEnvelope(candidateEmail, candidateName, template.getTemplateId()));
         String envelopeId = envelopeSummary.getEnvelopeId();
 
-        EnvelopeDocumentsResult documents = envelopesApi.listDocuments(accountId, envelopeId);
-
+        DocGenFormFieldResponse formFieldResponse = envelopesApi.getEnvelopeDocGenFormFields(accountId, envelopeId);
         String documentId = "";
-        if (!documents.getEnvelopeDocuments().isEmpty()) {
-            EnvelopeDocument document = documents.getEnvelopeDocuments().get(0);
-            if (document != null){
-                documentId = document.getDocumentIdGuid();
+        if (!formFieldResponse.getDocGenFormFields().isEmpty()) {
+            DocGenFormFields docGenFormFields = formFieldResponse.getDocGenFormFields().get(0);
+            if (docGenFormFields != null){
+                documentId = docGenFormFields.getDocumentId();
             }
         }
 
@@ -66,10 +69,7 @@ public final class DocumentGenerationService {
                 salary,
                 startDate);
 
-        EnvelopesApi.UpdateEnvelopeDocGenFormFieldsOptions options = envelopesApi.new UpdateEnvelopeDocGenFormFieldsOptions();
-        options.setUpdateDocgenFormfieldsOnly("false");
-
-        envelopesApi.updateEnvelopeDocGenFormFields(accountId, envelopeId, formFields, options);
+        envelopesApi.updateEnvelopeDocGenFormFields(accountId, envelopeId, formFields);
 
         Envelope envelope = new Envelope();
         envelope.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
@@ -77,6 +77,38 @@ public final class DocumentGenerationService {
         EnvelopeUpdateSummary envelopeUpdateSummary = envelopesApi.update(accountId, envelopeId, envelope);
 
         return envelopeUpdateSummary.getEnvelopeId();
+    }
+
+    private TemplateTabs prepareTabs() {
+        SignHere signHere = createSignHere();
+        DateSigned dateSigned = createDateSigned();
+
+        TemplateTabs templateTabs = new TemplateTabs();
+        templateTabs.setSignHereTabs(Collections.singletonList(signHere));
+        templateTabs.setDateSignedTabs(Collections.singletonList(dateSigned));
+
+        return templateTabs;
+    }
+
+    private SignHere createSignHere() {
+        SignHere signHere = new SignHere();
+
+        signHere.setAnchorString("Employee Signature");
+        signHere.setAnchorUnits("pixels");
+        signHere.setAnchorXOffset("5");
+        signHere.setAnchorYOffset("-22");
+
+        return signHere;
+    }
+
+    public static DateSigned createDateSigned() {
+        DateSigned dateSigned = new DateSigned();
+
+        dateSigned.setAnchorString("Date");
+        dateSigned.setAnchorUnits("pixels");
+        dateSigned.setAnchorYOffset("-22");
+
+        return dateSigned;
     }
 
     private DocGenFormFieldRequest getFormFields(
@@ -150,60 +182,16 @@ public final class DocumentGenerationService {
         return envelopeDefinition;
     }
 
-    private EnvelopeTemplate makeTemplate(String offerDocDocx) throws IOException {
-        String documentName = "Offer Letter Demo";
-        Document document = EnvelopeHelpers.createDocumentFromFile(offerDocDocx, documentName,"1");
-        document.setOrder("1");
-        document.pages("1");
-        document.setIsDocGenDocument("true");
-
-        DocGenFormField candidateName = new DocGenFormField();
-        candidateName.setLabel(CANDIDATE_NAME);
-        candidateName.setRequired(STRING_TRUE);
-        candidateName.setType(TEXT_BOX);
-        candidateName.setName(CANDIDATE_NAME);
-
-        DocGenFormField managerName = new DocGenFormField();
-        managerName.setLabel(MANAGER_NAME);
-        managerName.setRequired(STRING_TRUE);
-        managerName.setType(TEXT_BOX);
-        managerName.setName(MANAGER_NAME);
-
-        DocGenFormField jobTitle = new DocGenFormField();
-        jobTitle.setLabel(JOB_TITLE);
-        jobTitle.setRequired(STRING_TRUE);
-        jobTitle.setType(TEXT_BOX);
-        jobTitle.setName(JOB_TITLE);
-
-        DocGenFormField salary = new DocGenFormField();
-        salary.setLabel(SALARY);
-        salary.setRequired(STRING_TRUE);
-        salary.setType(TEXT_BOX);
-        salary.setName(SALARY);
-
-        DocGenFormField startDate = new DocGenFormField();
-        startDate.setLabel(START_DATE);
-        startDate.setRequired(STRING_TRUE);
-        startDate.setType(TEXT_BOX);
-        startDate.setName(START_DATE);
-
-        document.setDocGenFormFields(Arrays.asList(candidateName, managerName, jobTitle, salary, startDate));
-
-        Tabs tabs = new Tabs();
-        tabs.setSignHereTabs(Collections.singletonList(createSignHere()));
-        tabs.setDateSignedTabs(Collections.singletonList(createDateSigned()));
-
+    private EnvelopeTemplate makeTemplate() {
         Signer signer = new Signer();
         signer.setRoleName(EnvelopeHelpers.SIGNER_ROLE_NAME);
         signer.setRecipientId("1");
         signer.setRoutingOrder("1");
-        signer.setTabs(tabs);
 
         Recipients recipients = new Recipients();
         recipients.setSigners(Collections.singletonList(signer));
 
         EnvelopeTemplate template = new EnvelopeTemplate();
-        template.setDocuments(Collections.singletonList(document));
         template.setEmailSubject("Please sign this document");
         template.setName("Example Template");
         template.setDescription("Example template created via the API");
@@ -213,25 +201,15 @@ public final class DocumentGenerationService {
         return template;
     }
 
-    private SignHere createSignHere() {
-        SignHere signHere = new SignHere();
+    private static EnvelopeDefinition addDocumentTemplate(String offerDocDocx) throws IOException {
+        String documentName = "OfferLetterDemo.docx";
+        Document document = EnvelopeHelpers.createDocumentFromFile(offerDocDocx, documentName,"1");
+        document.setOrder("1");
+        document.pages("1");
 
-        signHere.setDocumentId("1");
-        signHere.setPageNumber("1");
-        signHere.setXPosition("75");
-        signHere.setYPosition("415");
+        EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
+        envelopeDefinition.setDocuments(Collections.singletonList(document));
 
-        return signHere;
-    }
-
-    public static DateSigned createDateSigned() {
-        DateSigned dateSigned = new DateSigned();
-
-        dateSigned.setDocumentId("1");
-        dateSigned.setPageNumber("1");
-        dateSigned.setXPosition("290");
-        dateSigned.setYPosition("435");
-
-        return dateSigned;
+        return envelopeDefinition;
     }
 }
