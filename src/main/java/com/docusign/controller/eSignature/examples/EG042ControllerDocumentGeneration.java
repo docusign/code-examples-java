@@ -12,21 +12,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.view.RedirectView;
-
 import javax.servlet.http.HttpServletResponse;
 
-@Controller
-@RequestMapping("/eg042")
-public class EG042ControllerDocumentGeneration extends AbstractEsignatureController {
+import static com.docusign.controller.eSignature.examples.EG042ControllerDocumentGeneration.EG_042;
 
+@Controller
+@RequestMapping(EG_042)
+public class EG042ControllerDocumentGeneration extends AbstractEsignatureController {
+    public static final String EG_042 = "/eg042";
     private static final String DOCUMENT_FILE_NAME = "Offer_Letter_Demo.docx";
     private final Session session;
     private final User user;
 
     @Autowired
     public EG042ControllerDocumentGeneration(DSConfiguration config, Session session, User user) {
-        super(config, "eg042");
+        super(config, EG_042);
         this.session = session;
         this.user = user;
     }

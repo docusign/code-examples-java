@@ -31,21 +31,13 @@ import java.util.Collections;
  */
 public final class DocumentGenerationService {
     public static final String CANDIDATE_NAME = "Candidate_Name";
-
     public static final String MANAGER_NAME = "Manager_Name";
-
     public static final String JOB_TITLE = "Job_Title";
-
     public static final String SALARY = "Salary";
-
     public static final String START_DATE = "Start_Date";
-
     public static final String TEXT_BOX = "TextBox";
-
     public static final String STRING_TRUE = "true";
-
     public static final String ANCHOR_UNITS = "pixels";
-
     public static final String DEFAULT_ID = "1";
 
     public String generateDocument(
