@@ -4,10 +4,7 @@
 <c:set var="formNumber" value="0" scope="page" />
 <c:set var="candidateEmailIndex" value="0" scope="page" />
 <c:set var="candidateNameIndex" value="1" scope="page" />
-<c:set var="managerNameIndex" value="2" scope="page" />
-<c:set var="jobTitleIndex" value="3" scope="page" />
-<c:set var="salaryIndex" value="4" scope="page" />
-<c:set var="startDateIndex" value="5" scope="page" />
+
 
 <h4>${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
@@ -54,58 +51,7 @@
              name="candidateName"
              required>
     </div>
-    <div class="form-group">
-      <label for="managerName">
-          ${example.getForms().get(formNumber).getInputs().get(managerNameIndex).getInputName()}
-      </label>
-
-      <input type="tel"
-             class="form-control"
-             id="managerName"
-             name="managerName"
-             aria-describedby="accessHelp"
-             placeholder="${example.getForms().get(formNumber).getInputs().get(managerNameIndex).getInputPlaceholder()}"
-             required/>
-    </div>
-
-    <div class="form-group">
-        <label for="jobTitle">
-            ${example.getForms().get(formNumber).getInputs().get(jobTitleIndex).getInputName()}
-        </label>
-
-        <select class="form-control" id="jobTitle" name="jobTitle">
-            <option value="Software Engineer">Software Engineer</option>
-            <option value="Product Manager">Product Manager</option>
-            <option value="Sales Representative">Sales Representative</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="salary">
-            ${example.getForms().get(formNumber).getInputs().get(salaryIndex).getInputName()}
-        </label>
-
-        <input type="text"
-               class="form-control"
-               id="salary"
-               placeholder="${example.getForms().get(formNumber).getInputs().get(salaryIndex).getInputPlaceholder()}"
-               name="salary"
-               required>
-    </div>
-
-    <div class="form-group">
-        <label for="startDate">
-            ${example.getForms().get(formNumber).getInputs().get(startDateIndex).getInputName()}
-        </label>
-
-        <input type="date"
-               class="form-control"
-               id="startDate"
-               name="startDate"
-               aria-describedby="accessHelp"
-               placeholder="${example.getForms().get(formNumber).getInputs().get(startDateIndex).getInputPlaceholder()}"
-               required/>
-    </div>
+   
 
     <input type="hidden" name="_csrf" value="${csrfToken}">
     <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>
