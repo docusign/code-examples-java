@@ -31,10 +31,6 @@ import java.util.Collections;
  */
 public final class DocumentGenerationService {
     public static final String CANDIDATE_NAME = "Candidate_Name";
-    public static final String MANAGER_NAME = "Manager_Name";
-    public static final String JOB_TITLE = "Job_Title";
-    public static final String SALARY = "Salary";
-    public static final String START_DATE = "Start_Date";
     public static final String TEXT_BOX = "TextBox";
     public static final String STRING_TRUE = "true";
     public static final String ANCHOR_UNITS = "pixels";
@@ -44,10 +40,6 @@ public final class DocumentGenerationService {
             String accountId,
             String candidateEmail,
             String candidateName,
-            String managerName,
-            String jobTitle,
-            String salary,
-            String startDate,
             String offerDocDocx,
             EnvelopesApi envelopesApi,
             TemplatesApi templatesApi
@@ -74,11 +66,8 @@ public final class DocumentGenerationService {
 
         DocGenFormFieldRequest formFields = getFormFields(
                 documentId,
-                candidateName,
-                managerName,
-                jobTitle,
-                salary,
-                startDate);
+                candidateName
+               );
 
         envelopesApi.updateEnvelopeDocGenFormFields(accountId, envelopeId, formFields);
 
@@ -124,11 +113,8 @@ public final class DocumentGenerationService {
 
     private DocGenFormFieldRequest getFormFields(
             String documentId,
-            String candidateName,
-            String managerName,
-            String jobTitle,
-            String salary,
-            String startDate) {
+            String candidateName
+            ) {
         DocGenFormField candidateNameField = new DocGenFormField();
         candidateNameField.setLabel(CANDIDATE_NAME);
         candidateNameField.setRequired(STRING_TRUE);
@@ -136,41 +122,11 @@ public final class DocumentGenerationService {
         candidateNameField.setName(CANDIDATE_NAME);
         candidateNameField.setValue(candidateName);
 
-        DocGenFormField managerNameField = new DocGenFormField();
-        managerNameField.setLabel(MANAGER_NAME);
-        managerNameField.setRequired(STRING_TRUE);
-        managerNameField.setType(TEXT_BOX);
-        managerNameField.setName(MANAGER_NAME);
-        managerNameField.setValue(managerName);
-
-        DocGenFormField jobTitleField = new DocGenFormField();
-        jobTitleField.setLabel(JOB_TITLE);
-        jobTitleField.setRequired(STRING_TRUE);
-        jobTitleField.setType(TEXT_BOX);
-        jobTitleField.setName(JOB_TITLE);
-        jobTitleField.setValue(jobTitle);
-
-        DocGenFormField salaryField = new DocGenFormField();
-        salaryField.setLabel(SALARY);
-        salaryField.setRequired(STRING_TRUE);
-        salaryField.setType(TEXT_BOX);
-        salaryField.setName(SALARY);
-        salaryField.setValue(salary);
-
-        DocGenFormField startDateField = new DocGenFormField();
-        startDateField.setLabel(START_DATE);
-        startDateField.setRequired(STRING_TRUE);
-        startDateField.setType(TEXT_BOX);
-        startDateField.setName(START_DATE);
-        startDateField.setValue(startDate);
+      
 
         DocGenFormFields formFields = new DocGenFormFields();
         formFields.setDocGenFormFieldList(Arrays.asList(
-                candidateNameField,
-                managerNameField,
-                jobTitleField,
-                salaryField,
-                startDateField));
+                candidateNameField));
         formFields.setDocumentId(documentId);
 
         DocGenFormFieldRequest docGenFormFieldRequest = new DocGenFormFieldRequest();
