@@ -44,6 +44,10 @@ public class EG042ControllerDocumentGeneration extends AbstractEsignatureControl
                 session.getAccountId(),
                 args.getCandidateEmail(),
                 args.getCandidateName(),
+                args.getManagerName(),
+                args.getJobTitle(),
+                args.getSalary(),
+                args.getStartDate(),
                 DOCUMENT_FILE_NAME,
                 envelopesApi,
                 templatesApi);
