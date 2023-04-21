@@ -4,6 +4,7 @@ import com.docusign.DSConfiguration;
 import com.docusign.core.controller.AbstractController;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.api.EnvelopesApi;
+import com.docusign.esign.api.TemplatesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.client.auth.OAuth;
@@ -35,7 +36,7 @@ public abstract class AbstractEsignatureController extends AbstractController {
      * @param userAccessToken user's access token
      * @return an instance of the {@link ApiClient}
      */
-    protected static ApiClient createApiClient(String basePath, String userAccessToken) {
+    protected ApiClient createApiClient(String basePath, String userAccessToken) {
         ApiClient apiClient = new ApiClient(basePath);
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + userAccessToken);
         return apiClient;
@@ -48,9 +49,21 @@ public abstract class AbstractEsignatureController extends AbstractController {
      * @param userAccessToken user's access token
      * @return an instance of the {@link EnvelopesApi}
      */
-    protected static EnvelopesApi createEnvelopesApi(String basePath, String userAccessToken) {
+    protected EnvelopesApi createEnvelopesApi(String basePath, String userAccessToken) {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         return new EnvelopesApi(apiClient);
+    }
+
+    /**
+     * Creates a new instance of the eSignature TemplatesApi. This method
+     * creates an instance of the ApiClient class silently.
+     * @param basePath URL to eSignature REST API
+     * @param userAccessToken user's access token
+     * @return an instance of the {@link TemplatesApi}
+     */
+    protected TemplatesApi createTemplatesApi(String basePath, String userAccessToken) {
+        ApiClient apiClient = createApiClient(basePath, userAccessToken);
+        return new TemplatesApi(apiClient);
     }
 
     /**
@@ -60,7 +73,7 @@ public abstract class AbstractEsignatureController extends AbstractController {
      * @param userAccessToken user's access token
      * @return an instance of the {@link AccountsApi}
      */
-    protected static AccountsApi createAccountsApi(String basePath, String userAccessToken) {
+    protected AccountsApi createAccountsApi(String basePath, String userAccessToken) {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         return new AccountsApi(apiClient);
     }
@@ -71,7 +84,7 @@ public abstract class AbstractEsignatureController extends AbstractController {
      * @param userAccessToken user's access token
      * @return users email address
      */
-    protected static String getAuthenticatedUserEmail(String basePath, String userAccessToken) throws ApiException {
+    protected String getAuthenticatedUserEmail(String basePath, String userAccessToken) throws ApiException {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         OAuth.UserInfo userInfo = apiClient.getUserInfo(userAccessToken);
 
@@ -84,7 +97,7 @@ public abstract class AbstractEsignatureController extends AbstractController {
      * @param userAccessToken user's access token
      * @return users email address
      */
-    protected static String getAuthenticatedUserName(String basePath, String userAccessToken) throws ApiException {
+    protected String getAuthenticatedUserName(String basePath, String userAccessToken) throws ApiException {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         OAuth.UserInfo userInfo = apiClient.getUserInfo(userAccessToken);
 
