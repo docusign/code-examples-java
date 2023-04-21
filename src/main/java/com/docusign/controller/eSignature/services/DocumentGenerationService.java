@@ -130,37 +130,22 @@ public final class DocumentGenerationService {
             String salary,
             String startDate) {
         DocGenFormField candidateNameField = new DocGenFormField();
-        candidateNameField.setLabel(CANDIDATE_NAME);
-        candidateNameField.setRequired(STRING_TRUE);
-        candidateNameField.setType(TEXT_BOX);
         candidateNameField.setName(CANDIDATE_NAME);
         candidateNameField.setValue(candidateName);
 
         DocGenFormField managerNameField = new DocGenFormField();
-        managerNameField.setLabel(MANAGER_NAME);
-        managerNameField.setRequired(STRING_TRUE);
-        managerNameField.setType(TEXT_BOX);
         managerNameField.setName(MANAGER_NAME);
         managerNameField.setValue(managerName);
 
         DocGenFormField jobTitleField = new DocGenFormField();
-        jobTitleField.setLabel(JOB_TITLE);
-        jobTitleField.setRequired(STRING_TRUE);
-        jobTitleField.setType(TEXT_BOX);
         jobTitleField.setName(JOB_TITLE);
         jobTitleField.setValue(jobTitle);
 
         DocGenFormField salaryField = new DocGenFormField();
-        salaryField.setLabel(SALARY);
-        salaryField.setRequired(STRING_TRUE);
-        salaryField.setType(TEXT_BOX);
         salaryField.setName(SALARY);
         salaryField.setValue(salary);
 
         DocGenFormField startDateField = new DocGenFormField();
-        startDateField.setLabel(START_DATE);
-        startDateField.setRequired(STRING_TRUE);
-        startDateField.setType(TEXT_BOX);
         startDateField.setName(START_DATE);
         startDateField.setValue(startDate);
 
