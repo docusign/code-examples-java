@@ -52,17 +52,27 @@ public final class DocumentGenerationService {
             EnvelopesApi envelopesApi,
             TemplatesApi templatesApi
     ) throws ApiException, IOException {
+        // Step 2a start
         TemplateSummary template = templatesApi.createTemplate(accountId, makeTemplate());
         String templateId = template.getTemplateId();
+        // Step 2a end
 
+        // Step 3a start
         templatesApi.updateDocument(accountId, templateId, DEFAULT_ID, addDocumentTemplate(offerDocDocx));
+        // Step 3a end
+        
+        // Step 4a start
         templatesApi.createTabs(accountId, templateId, DEFAULT_ID, prepareTabs());
+        // Step 4a end
 
+        // Step 5a start
         EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(
                 accountId,
                 makeEnvelope(candidateEmail, candidateName, template.getTemplateId()));
         String envelopeId = envelopeSummary.getEnvelopeId();
+        // Step 5a end
 
+        // Step 6 start
         DocGenFormFieldResponse formFieldResponse = envelopesApi.getEnvelopeDocGenFormFields(accountId, envelopeId);
         String documentId = "";
         if (!formFieldResponse.getDocGenFormFields().isEmpty()) {
@@ -71,7 +81,8 @@ public final class DocumentGenerationService {
                 documentId = docGenFormFields.getDocumentId();
             }
         }
-
+        // Step 6 end
+        // Step 7a start
         DocGenFormFieldRequest formFields = getFormFields(
                 documentId,
                 candidateName,
@@ -81,15 +92,18 @@ public final class DocumentGenerationService {
                 startDate);
 
         envelopesApi.updateEnvelopeDocGenFormFields(accountId, envelopeId, formFields);
+        // Step 7a end
 
+        // Step 8 start
         Envelope envelope = new Envelope();
         envelope.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
 
         EnvelopeUpdateSummary envelopeUpdateSummary = envelopesApi.update(accountId, envelopeId, envelope);
-
+        // Step 8 end
         return envelopeUpdateSummary.getEnvelopeId();
     }
 
+    // Step 4b start
     private TemplateTabs prepareTabs() {
         SignHere signHere = createSignHere();
         DateSigned dateSigned = createDateSigned();
@@ -100,6 +114,7 @@ public final class DocumentGenerationService {
 
         return templateTabs;
     }
+
 
     private SignHere createSignHere() {
         SignHere signHere = new SignHere();
@@ -121,7 +136,9 @@ public final class DocumentGenerationService {
 
         return dateSigned;
     }
+        // Step 4b end
 
+    // Step 7b start
     private DocGenFormFieldRequest getFormFields(
             String documentId,
             String candidateName,
@@ -163,7 +180,9 @@ public final class DocumentGenerationService {
 
         return docGenFormFieldRequest;
     }
+    // Step 7b end
 
+    // Step 5b start
     private EnvelopeDefinition makeEnvelope(String candidateEmail, String candidateName, String templateId) {
         TemplateRole signerRole = new TemplateRole();
         signerRole.setName(candidateName);
@@ -177,7 +196,9 @@ public final class DocumentGenerationService {
 
         return envelopeDefinition;
     }
+    // Step 5b end
 
+    // Step 2b start
     private EnvelopeTemplate makeTemplate() {
         Signer signer = new Signer();
         signer.setRoleName(EnvelopeHelpers.SIGNER_ROLE_NAME);
@@ -196,7 +217,9 @@ public final class DocumentGenerationService {
 
         return template;
     }
+    // Step 2b end
 
+    // Step 3b start
     private static EnvelopeDefinition addDocumentTemplate(String offerDocDocx) throws IOException {
         String documentName = "OfferLetterDemo.docx";
         Document document = EnvelopeHelpers.createDocumentFromFile(offerDocDocx, documentName,DEFAULT_ID);
@@ -208,4 +231,5 @@ public final class DocumentGenerationService {
 
         return envelopeDefinition;
     }
+    // Step 3b stop
 }
