@@ -11,6 +11,7 @@ import com.docusign.controller.click.examples.ClickwrapHelper;
 import java.io.IOException;
 
 public final class CreateClickwrapService {
+    //ds-snippet-start:Click1Step3
     public static ClickwrapRequest createClickwrapRequest(
             String clickwrapName,
             String fileName,
@@ -33,6 +34,7 @@ public final class CreateClickwrapService {
                 .requireReacceptance(true)
                 .displaySettings(displaySettings);
     }
+    //ds-snippet-end:Click1Step3
 
     public static ClickwrapVersionSummaryResponse createClickwrap(
             AccountsApi accountsApi,
