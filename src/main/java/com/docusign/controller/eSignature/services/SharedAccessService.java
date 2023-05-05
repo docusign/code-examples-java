@@ -1,5 +1,6 @@
 package com.docusign.controller.eSignature.services;
 
+import com.docusign.core.utils.DateUtils;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.api.UsersApi;
@@ -7,15 +8,14 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public final class SharedAccessService {
 
     private static final int FROM_DATE_OFFSET_DAYS = 10;
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-    public static final String MANAGE = "manage";
+    private static final String MANAGE = "manage";
 
-    public static UserInformation checkIfAgentExists(UsersApi usersApi, String accountId, String agentEmail) {
+    public UserInformation getUserInfo(UsersApi usersApi, String accountId, String agentEmail) {
+        UserInformation userInformation = null;
         UsersApi.CallListOptions callListOptions = usersApi.new CallListOptions();
         callListOptions.setEmail(agentEmail);
 
@@ -23,18 +23,20 @@ public final class SharedAccessService {
             UserInformationList informationList = usersApi.callList(accountId, callListOptions);
 
             if (Integer.parseInt(informationList.getResultSetSize()) > 0) {
-                UserInformation userInformation = informationList.getUsers().stream().filter(user -> user.getUserStatus().equals("Active")).findFirst().get();
+                userInformation = informationList.getUsers().stream()
+                        .filter(user -> "Active".equals(user.getUserStatus())).findFirst().get();
 
                 return userInformation;
             }
         } catch (ApiException e) {
-            return null;
+            System.out.println(e.getMessage());
+            return userInformation;
         }
 
-        return null;
+        return userInformation;
     }
 
-    public static NewUsersSummary createAgent(
+    public NewUsersSummary createAgent(
             UsersApi usersApi,
             String accountId,
             String agentEmail,
@@ -52,7 +54,7 @@ public final class SharedAccessService {
         return usersApi.create(accountId, usersDefinition);
     }
 
-    public static void activateAgent(
+    public void activateAgent(
             AccountsApi accountsApi,
             String accountId,
             String userId,
@@ -75,13 +77,13 @@ public final class SharedAccessService {
         }
     }
 
-    public static EnvelopesInformation getEnvelopes(
+    public EnvelopesInformation getEnvelopeInfo(
             EnvelopesApi envelopesApi,
             String accountId
     ) throws ApiException {
         EnvelopesApi.ListStatusChangesOptions options = envelopesApi.new ListStatusChangesOptions();
         LocalDate date = LocalDate.now().minusDays(FROM_DATE_OFFSET_DAYS);
-        options.setFromDate(DATE_FORMATTER.format(date));
+        options.setFromDate(DateUtils.DATE_WITH_SLASH.format(date));
 
         return envelopesApi.listStatusChanges(accountId, options);
     }

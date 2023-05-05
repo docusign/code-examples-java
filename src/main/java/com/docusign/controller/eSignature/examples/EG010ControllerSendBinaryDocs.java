@@ -25,14 +25,9 @@ import java.io.IOException;
 @RequestMapping("/eg010")
 public class EG010ControllerSendBinaryDocs extends AbstractEsignatureController {
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public EG010ControllerSendBinaryDocs(DSConfiguration config, Session session, User user) {
-        super(config, "eg010");
-        this.session = session;
-        this.user = user;
+        super(config, "eg010", session, user);
     }
 
     @Override

@@ -41,14 +41,10 @@ import java.io.IOException;
 public class EG014ControllerCollectPayment extends AbstractEsignatureController {
 
     private static final String MODEL_GATEWAY_OK = "gatewayOk";
-    private final Session session;
-    private final User user;
 
     @Autowired
     public EG014ControllerCollectPayment(DSConfiguration config, Session session, User user) {
-        super(config, "eg014");
-        this.session = session;
-        this.user = user;
+        super(config, "eg014", session, user);
     }
 
     @Override

@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class IndexController {
+
     private static final String ATTR_ENVELOPE_ID = "qpEnvelopeId";
 
     private static final String ATTR_STATE = "state";
@@ -47,6 +48,8 @@ public class IndexController {
     private static final String API_DATA = "APIData";
 
     private static final String STATUS_CFR = "statusCFR";
+
+    public static final String LOCATION_HEADER = "Location";
 
     @Autowired
     private Session session;
@@ -71,7 +74,7 @@ public class IndexController {
             this.config.setAdditionalRedirect(true);
 
             response.setStatus(response.SC_MOVED_TEMPORARILY);
-            response.setHeader("Location", "/ds/mustAuthenticate");
+            response.setHeader(LOCATION_HEADER, "/ds/mustAuthenticate");
             return null;
         }
 
@@ -79,7 +82,7 @@ public class IndexController {
             this.config.setAdditionalRedirect(false);
 
             response.setStatus(response.SC_MOVED_TEMPORARILY);
-            response.setHeader("Location", "/eg043/listEnvelopes");
+            response.setHeader(LOCATION_HEADER, "/eg043/listEnvelopes");
             return null;
         }
 
@@ -95,7 +98,7 @@ public class IndexController {
                 !(SecurityContextHolder.getContext().getAuthentication() instanceof OAuth2AuthenticationToken)) {
             String site = ApiIndex.ESIGNATURE.getPathOfFirstExample();
             response.setStatus(response.SC_MOVED_TEMPORARILY);
-            response.setHeader("Location", site);
+            response.setHeader(LOCATION_HEADER, site);
             return null;
         }
 

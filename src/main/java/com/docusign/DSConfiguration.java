@@ -35,9 +35,9 @@ public class DSConfiguration {
 
     public Boolean isConsentRedirectActivated = false;
 
-    private boolean additionalRedirect = false;
+    private boolean additionalRedirect;
 
-    private boolean shareAccessExampleScenario = false;
+    private boolean shareAccessExampleScenario;
 
     private String principalUserId;
 

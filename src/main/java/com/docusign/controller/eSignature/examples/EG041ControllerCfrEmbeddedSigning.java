@@ -43,14 +43,10 @@ public class EG041ControllerCfrEmbeddedSigning extends AbstractEsignatureControl
     private static final String DOCUMENT_NAME = "Lorem Ipsum";
     private static final int ANCHOR_OFFSET_Y = -30;
     private static final int ANCHOR_OFFSET_X = 10;
-    private final Session session;
-    private final User user;
 
     @Autowired
     public EG041ControllerCfrEmbeddedSigning(DSConfiguration config, Session session, User user){
-        super(config, "eg041");
-        this.session = session;
-        this.user = user;
+        super(config, "eg041", session, user);
     }
 
     @Override

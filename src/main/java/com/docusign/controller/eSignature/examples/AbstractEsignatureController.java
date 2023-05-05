@@ -2,6 +2,8 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.core.controller.AbstractController;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.api.TemplatesApi;
@@ -21,10 +23,14 @@ public abstract class AbstractEsignatureController extends AbstractController {
 
     protected static final String MODEL_ENVELOPE_OK = "envelopeOk";
     protected static final String MODEL_TEMPLATE_OK = "templateOk";
+    protected final Session session;
+    protected final User user;
     private static final String EXAMPLE_PAGES_PATH = "pages/esignature/examples/";
 
-    public AbstractEsignatureController(DSConfiguration config, String exampleName) {
+    public AbstractEsignatureController(DSConfiguration config, String exampleName, Session session, User user) {
         super(config, exampleName);
+        this.session = session;
+        this.user = user;
     }
 
     protected String getExamplePagesPath() {
@@ -49,7 +55,7 @@ public abstract class AbstractEsignatureController extends AbstractController {
      * @param userAccessToken user's access token
      * @return an instance of the {@link OAuth.UserInfo}
      */
-    protected OAuth.UserInfo getCurrentUserId(String basePath, String userAccessToken) throws ApiException {
+    protected OAuth.UserInfo getCurrentUserInfo(String basePath, String userAccessToken) throws ApiException {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         return apiClient.getUserInfo(userAccessToken);
     }

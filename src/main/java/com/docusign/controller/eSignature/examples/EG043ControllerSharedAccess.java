@@ -36,14 +36,14 @@ public class EG043ControllerSharedAccess extends AbstractEsignatureController {
     public static final String LIST_ENVELOPES = "/listEnvelopes";
     public static final String ACT_ON_BEHALF = "X-DocuSign-Act-On-Behalf";
     public static final String HOME_PAGE = "/";
-    private final Session session;
-    private final User user;
+    public static final int AGENT_AUTHENTICATION_SUCCESSFULL = 0;
+    public static final int AGENT_WAS_NOT_ACTIVATED = 3;
+    public static final int NO_ENVELOPES_IN_USER_ACCOUNT = 2;
+    public static final int ENVELOPES_MOVED_TO_ACCOUNT = 1;
 
     @Autowired
     public EG043ControllerSharedAccess(DSConfiguration config, Session session, User user) {
-        super(config, EG_043);
-        this.session = session;
-        this.user = user;
+        super(config, EG_043, session, user);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class EG043ControllerSharedAccess extends AbstractEsignatureController {
 
         UsersApi usersApi = createUsersApi(basePath, accessToken);
 
-        UserInformation userInformation = (new SharedAccessService()).checkIfAgentExists(
+        UserInformation userInformation = (new SharedAccessService()).getUserInfo(
                 usersApi,
                 session.getAccountId(),
                 args.getAgentEmail()
@@ -89,15 +89,16 @@ public class EG043ControllerSharedAccess extends AbstractEsignatureController {
     }
 
     @RequestMapping(value = ACTIVATE_USER, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Object activateUser(ModelMap model) throws ApiException {
+    public String activateUser(ModelMap model) {
         String basePath = session.getBasePath();
         String accessToken = user.getAccessToken();
 
         AccountsApi accountsApi = createAccountsApi(basePath, accessToken);
-        OAuth.UserInfo user = getCurrentUserId(basePath, accessToken);
-        String userId = user.getSub();
 
         try {
+            OAuth.UserInfo user = getCurrentUserInfo(basePath, accessToken);
+            String userId = user.getSub();
+
             (new SharedAccessService()).activateAgent(
                     accountsApi,
                     session.getAccountId(),
@@ -109,12 +110,12 @@ public class EG043ControllerSharedAccess extends AbstractEsignatureController {
             this.config.setAdditionalRedirect(true);
 
             DoneExample.createDefault("Authenticate as the agent")
-                    .withMessage(getTextForCodeExampleByApiType().getAdditionalPage().get(0).ResultsPageText)
+                    .withMessage(getTextForCodeExampleByApiType().getAdditionalPage().get(AGENT_AUTHENTICATION_SUCCESSFULL).ResultsPageText)
                     .withRedirect(LOGOUT)
                     .addToModel(model, config);
         } catch(ApiException exception) {
             DoneExample.createDefault("Authenticate as the agent")
-                    .withMessage(getTextForCodeExampleByApiType().getAdditionalPage().get(3).ResultsPageText)
+                    .withMessage(getTextForCodeExampleByApiType().getAdditionalPage().get(AGENT_WAS_NOT_ACTIVATED).ResultsPageText)
                     .withRedirect(EG_043 + ACTIVATE_USER)
                     .addToModel(model, config);
         }
@@ -123,7 +124,7 @@ public class EG043ControllerSharedAccess extends AbstractEsignatureController {
     }
 
     @RequestMapping(value = LIST_ENVELOPES, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Object listEnvelopes(ModelMap model) throws ApiException {
+    public String listEnvelopes(ModelMap model) throws ApiException {
         String basePath = session.getBasePath();
         String accessToken = user.getAccessToken();
 
@@ -131,18 +132,18 @@ public class EG043ControllerSharedAccess extends AbstractEsignatureController {
         apiClient.addDefaultHeader(ACT_ON_BEHALF, this.config.getPrincipalUserId());
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
 
-        EnvelopesInformation envelopesInformation = (new SharedAccessService()).getEnvelopes(
+        EnvelopesInformation envelopesInformation = (new SharedAccessService()).getEnvelopeInfo(
                 envelopesApi,
                 session.getAccountId());
 
         if(envelopesInformation.getEnvelopes() == null || envelopesInformation.getEnvelopes().isEmpty()){
             DoneExample.createDefault("No envelopes in the principal user's account")
-                    .withMessage(getTextForCodeExampleByApiType().getAdditionalPage().get(2).ResultsPageText)
+                    .withMessage(getTextForCodeExampleByApiType().getAdditionalPage().get(NO_ENVELOPES_IN_USER_ACCOUNT).ResultsPageText)
                     .withRedirect(HOME_PAGE)
                     .addToModel(model, config);
         } else {
             DoneExample.createDefault("Principal's envelopes visible in the agent's Shared Access UI")
-                    .withMessage(getTextForCodeExampleByApiType().getAdditionalPage().get(1).ResultsPageText)
+                    .withMessage(getTextForCodeExampleByApiType().getAdditionalPage().get(ENVELOPES_MOVED_TO_ACCOUNT).ResultsPageText)
                     .withJson(envelopesInformation.toString())
                     .withRedirect(HOME_PAGE)
                     .addToModel(model, config);

@@ -33,14 +33,10 @@ import java.util.List;
 public class EG023ControllerIdvAuthentication extends AbstractEsignatureController {
 
     private static final Logger logger = LoggerFactory.getLogger(EG023ControllerIdvAuthentication.class);
-    private final Session session;
-    private final User user;
 
     @Autowired
     public EG023ControllerIdvAuthentication(DSConfiguration config, Session session, User user) {
-        super(config, "eg023");
-        this.session = session;
-        this.user = user;
+        super(config, "eg023", session, user);
     }
 
     @Override
