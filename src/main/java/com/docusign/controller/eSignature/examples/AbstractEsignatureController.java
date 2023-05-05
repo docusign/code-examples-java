@@ -5,6 +5,7 @@ import com.docusign.core.controller.AbstractController;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.api.TemplatesApi;
+import com.docusign.esign.api.UsersApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.client.auth.OAuth;
@@ -43,6 +44,17 @@ public abstract class AbstractEsignatureController extends AbstractController {
     }
 
     /**
+     * Gets the information about the currently logged user.
+     * @param basePath        URL to eSignature REST API
+     * @param userAccessToken user's access token
+     * @return an instance of the {@link OAuth.UserInfo}
+     */
+    protected OAuth.UserInfo getCurrentUserId(String basePath, String userAccessToken) throws ApiException {
+        ApiClient apiClient = createApiClient(basePath, userAccessToken);
+        return apiClient.getUserInfo(userAccessToken);
+    }
+
+    /**
      * Creates a new instance of the eSignature EnvelopesApi. This method
      * creates an instance of the ApiClient class silently.
      * @param basePath URL to eSignature REST API
@@ -52,6 +64,18 @@ public abstract class AbstractEsignatureController extends AbstractController {
     protected EnvelopesApi createEnvelopesApi(String basePath, String userAccessToken) {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         return new EnvelopesApi(apiClient);
+    }
+
+    /**
+     * Creates a new instance of the eSignature UsersApi. This method
+     * creates an instance of the ApiClient class silently.
+     * @param basePath URL to eSignature REST API
+     * @param userAccessToken user's access token
+     * @return an instance of the {@link UsersApi}
+     */
+    protected UsersApi createUsersApi(String basePath, String userAccessToken) {
+        ApiClient apiClient = createApiClient(basePath, userAccessToken);
+        return new UsersApi(apiClient);
     }
 
     /**

@@ -8,6 +8,8 @@ import lombok.Setter;
 public class HelpingTexts {
     public String EmailWontBeShared;
 
+    public String SaveAgentActivationCode;
+
     public String PhoneNumberWontBeShared;
 
     public String CCEmailShouldDifferFromSigner;

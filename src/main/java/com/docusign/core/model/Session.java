@@ -19,6 +19,7 @@ public class Session implements Serializable {
     private static final long serialVersionUID = 2695379118371574037L;
 
     private String accountId;
+    private String createdUserId;
     private String accountName;
     private String basePath;
     private String roomsBasePath;

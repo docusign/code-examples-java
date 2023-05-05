@@ -82,4 +82,7 @@ public class WorkArguments {
     private String managerName;
     private String jobTitle;
     private String salary;
+    private String agentEmail;
+    private String agentName;
+    private String activationCode;
 }
