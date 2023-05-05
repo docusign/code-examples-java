@@ -35,6 +35,12 @@ public class DSConfiguration {
 
     public Boolean isConsentRedirectActivated = false;
 
+    private boolean additionalRedirect;
+
+    private boolean shareAccessExampleScenario;
+
+    private String principalUserId;
+
     @Value("${DS_TARGET_ACCOUNT_ID}")
     private String targetAccountId;
 

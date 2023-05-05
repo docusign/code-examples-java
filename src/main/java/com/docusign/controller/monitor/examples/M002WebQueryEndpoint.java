@@ -6,6 +6,7 @@ import com.docusign.controller.monitor.services.WebQueryEndpointService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.core.utils.DateUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Get monitoring data<br />
@@ -28,7 +28,6 @@ public class M002WebQueryEndpoint extends AbstractMonitorController {
     private static final String MODEL_END_DATE = "endDate";
     private static final int FROM_DATE_OFFSET_DAYS = 10;
     private static final int FROM_DATE_FORWARD_DAYS = 1;
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final Session session;
     private final User user;
 
@@ -46,8 +45,8 @@ public class M002WebQueryEndpoint extends AbstractMonitorController {
         LocalDate endDate = LocalDate.now().plusDays(FROM_DATE_FORWARD_DAYS);
         LocalDate startDate = LocalDate.now().minusDays(FROM_DATE_OFFSET_DAYS);
 
-        model.addAttribute(MODEL_START_DATE, DATE_FORMATTER.format(startDate));
-        model.addAttribute(MODEL_END_DATE, DATE_FORMATTER.format(endDate));
+        model.addAttribute(MODEL_START_DATE, DateUtils.DATE_WITH_LINES.format(startDate));
+        model.addAttribute(MODEL_END_DATE, DateUtils.DATE_WITH_LINES.format(endDate));
     }
 
     @Override

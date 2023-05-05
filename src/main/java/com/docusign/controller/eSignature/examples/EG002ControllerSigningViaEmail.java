@@ -28,14 +28,9 @@ import java.io.IOException;
 @RequestMapping("/eg002")
 public class EG002ControllerSigningViaEmail extends AbstractEsignatureController {
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public EG002ControllerSigningViaEmail(DSConfiguration config, Session session, User user) {
-        super(config, "eg002");
-        this.session = session;
-        this.user = user;
+        super(config, "eg002", session, user);
     }
 
     @Override

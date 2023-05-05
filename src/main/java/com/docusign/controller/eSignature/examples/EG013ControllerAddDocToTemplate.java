@@ -31,15 +31,11 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/eg013")
 public class EG013ControllerAddDocToTemplate extends AbstractEsignatureController {
 
-    private final Session session;
-    private final User user;
     private final String SIGNER_CLIENT_ID = "1000";
 
     @Autowired
     public EG013ControllerAddDocToTemplate(DSConfiguration config, Session session, User user) {
-        super(config, "eg013");
-        this.session = session;
-        this.user = user;
+        super(config, "eg013", session, user);
     }
 
     @Override

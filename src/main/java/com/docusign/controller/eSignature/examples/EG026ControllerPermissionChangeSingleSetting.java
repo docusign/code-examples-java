@@ -32,14 +32,10 @@ public class EG026ControllerPermissionChangeSingleSetting extends AbstractEsigna
     private static final String MODEL_CUR_PROFILE_NAME = "permissionProfileName";
     private static final String MODEL_CUR_PROFILE_ID = "profileId";
     private static final String MODEL_LIST_PROFILES = "listProfiles";
-    private final Session session;
-    private final User user;
 
     @Autowired
     public EG026ControllerPermissionChangeSingleSetting(DSConfiguration config, Session session, User user) {
-        super(config, "eg026");
-        this.session = session;
-        this.user = user;
+        super(config, "eg026", session, user);
     }
 
     @GetMapping("/profile")

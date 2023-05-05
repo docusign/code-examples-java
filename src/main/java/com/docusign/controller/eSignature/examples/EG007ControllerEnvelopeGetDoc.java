@@ -36,14 +36,10 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController 
     private static final String MODEL_DOCUMENT_OPTIONS = "documentOptions";
     private static final String HTTP_CONTENT_DISPOSITION_VALUE = "inline;filename=";
     private static final String ZIP_EXTENSION = "zip";
-    private final Session session;
-    private final User user;
 
     @Autowired
     public EG007ControllerEnvelopeGetDoc(DSConfiguration config, Session session, User user) {
-        super(config, "eg007");
-        this.session = session;
-        this.user = user;
+        super(config, "eg007", session, user);
     }
 
     @Override

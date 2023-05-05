@@ -5,6 +5,7 @@ import com.docusign.common.WorkArguments;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.core.utils.DateUtils;
 import com.docusign.rooms.api.RoomsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.RoomSummaryList;
@@ -17,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 
 /**
  * Get Rooms with filters.
@@ -31,7 +30,6 @@ public class R005ControllerGetRoomsWithFilters extends AbstractRoomsController {
     private static final String MODEL_END_DATE = "endDate";
     private static final int FROM_DATE_OFFSET_DAYS = 10;
     private static final int FROM_DATE_FORWARD_DAYS = 1;
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final Session session;
     private final User user;
 
@@ -50,8 +48,8 @@ public class R005ControllerGetRoomsWithFilters extends AbstractRoomsController {
         LocalDateTime current = LocalDateTime.now().plusDays(FROM_DATE_FORWARD_DAYS);
         LocalDateTime past = LocalDateTime.now().minusDays(FROM_DATE_OFFSET_DAYS);
 
-        model.addAttribute(MODEL_START_DATE, DATE_FORMATTER.format(past));
-        model.addAttribute(MODEL_END_DATE, DATE_FORMATTER.format(current));
+        model.addAttribute(MODEL_START_DATE, DateUtils.DATE_WITH_LINES.format(past));
+        model.addAttribute(MODEL_END_DATE, DateUtils.DATE_WITH_LINES.format(current));
     }
 
     @Override

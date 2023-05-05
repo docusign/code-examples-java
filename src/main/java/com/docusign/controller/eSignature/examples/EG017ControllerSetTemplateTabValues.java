@@ -25,14 +25,10 @@ public class EG017ControllerSetTemplateTabValues extends AbstractEsignatureContr
 
     private static final String MODEL_LIST_TEMPLATE = "listTemplates";
     private static final String SIGNER_CLIENT_ID = "1000";
-    private final Session session;
-    private final User user;
 
     @Autowired
     public EG017ControllerSetTemplateTabValues(DSConfiguration config, Session session, User user) {
-        super(config, "eg017");
-        this.session = session;
-        this.user = user;
+        super(config, "eg017", session, user);
     }
 
     @Override

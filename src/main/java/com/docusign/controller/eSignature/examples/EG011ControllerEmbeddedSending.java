@@ -29,21 +29,16 @@ import java.io.IOException;
 @RequestMapping("/eg011")
 public class EG011ControllerEmbeddedSending extends AbstractEsignatureController {
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public EG011ControllerEmbeddedSending(DSConfiguration config, Session session, User user) {
-        super(config, "eg011");
-        this.session = session;
-        this.user = user;
+        super(config, "eg011", session, user);
     }
 
     @Override
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
             HttpServletResponse response) throws ApiException, IOException {
-        String accountId = session.getAccountId();
+        String accountId = this.session.getAccountId();
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
         // Step 1. Make the envelope with "created" (draft) status

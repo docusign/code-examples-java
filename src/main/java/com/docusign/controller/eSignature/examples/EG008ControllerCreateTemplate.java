@@ -30,15 +30,11 @@ import java.io.IOException;
 @RequestMapping("/eg008")
 public class EG008ControllerCreateTemplate extends AbstractEsignatureController {
 
-    private final Session session;
-    private final User user;
     private static final String TEMPLATE_NAME = "Example Signer and CC template";
 
     @Autowired
     public EG008ControllerCreateTemplate(DSConfiguration config, Session session, User user) {
-        super(config, "eg008");
-        this.session = session;
-        this.user = user;
+        super(config, "eg008", session, user);
     }
 
     @Override

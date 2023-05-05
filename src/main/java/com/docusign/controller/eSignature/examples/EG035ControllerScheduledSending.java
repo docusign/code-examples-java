@@ -35,14 +35,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/eg035")
 public class EG035ControllerScheduledSending extends AbstractEsignatureController {
-    private final Session session;
-    private final User user;
 
     @Autowired
     public EG035ControllerScheduledSending(DSConfiguration config, Session session, User user) {
-        super(config, "eg035");
-        this.session = session;
-        this.user = user;
+        super(config, "eg035", session, user);
     }
 
     @Override

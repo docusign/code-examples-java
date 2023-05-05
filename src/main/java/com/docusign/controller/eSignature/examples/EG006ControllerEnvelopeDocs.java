@@ -34,14 +34,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/eg006")
 public class EG006ControllerEnvelopeDocs extends AbstractEsignatureController {
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public EG006ControllerEnvelopeDocs(DSConfiguration config, Session session, User user) {
-        super(config, "eg006");
-        this.session = session;
-        this.user = user;
+        super(config, "eg006", session, user);
     }
 
     @Override

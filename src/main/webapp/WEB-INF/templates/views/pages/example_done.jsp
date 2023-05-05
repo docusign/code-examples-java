@@ -18,11 +18,15 @@
     <form action="a004a" method="POST">
         <input type="submit" class="btn btn-link" style="padding:0" value="Check the request status">
     </form>
-    </c:if>
+</c:if>
 
-
-<p><a href="/">${launcherTexts.getContinueButton()}</a></p>
-
-
+<c:choose>
+    <c:when test="${not empty done.redirect}">
+        <p><a href="${done.redirect}">${launcherTexts.getContinueButton()}</a></p>
+    </c:when>
+    <c:otherwise>
+        <p><a href="/">${launcherTexts.getContinueButton()}</a></p>
+    </c:otherwise>
+</c:choose>
 
 <jsp:include page="../partials/foot.jsp"/>

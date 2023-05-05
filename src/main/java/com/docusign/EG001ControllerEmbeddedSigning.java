@@ -37,14 +37,10 @@ public class EG001ControllerEmbeddedSigning extends AbstractEsignatureController
     private static final int ANCHOR_OFFSET_Y = 20;
     private static final int ANCHOR_OFFSET_X = 10;
     private static final String SIGNER_CLIENT_ID = "1000";
-    private final Session session;
-    private final User user;
 
     @Autowired
     public EG001ControllerEmbeddedSigning(DSConfiguration config, Session session, User user){
-        super(config, Boolean.valueOf(config.getQuickACG()) ? "quickEmbeddedSigning" : "eg001");
-        this.session = session;
-        this.user = user;
+        super(config, Boolean.valueOf(config.getQuickACG()) ? "quickEmbeddedSigning" : "eg001", session, user);
     }
 
     @Override
