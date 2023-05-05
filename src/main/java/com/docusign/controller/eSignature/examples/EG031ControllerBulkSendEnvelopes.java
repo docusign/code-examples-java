@@ -29,14 +29,10 @@ import java.io.IOException;
 public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureController {
 
     private static final long BULK_REQUEST_DELAY = 15L;
-    private final Session session;
-    private final User user;
 
     @Autowired
     public EG031ControllerBulkSendEnvelopes(DSConfiguration config, Session session, User user) {
-        super(config, "eg031");
-        this.session = session;
-        this.user = user;
+        super(config, "eg031", session, user);
     }
 
     @Override

@@ -31,14 +31,10 @@ import java.io.IOException;
 public class EG029ControllerApplyBrandToEnvelope extends AbstractEsignatureController {
 
     private static final String MODEL_LIST_BRAND = "listBrands";
-    private final Session session;
-    private final User user;
 
     @Autowired
     public EG029ControllerApplyBrandToEnvelope(DSConfiguration config, Session session, User user) {
-        super(config, "eg029");
-        this.session = session;
-        this.user = user;
+        super(config, "eg029", session, user);
     }
 
     @Override

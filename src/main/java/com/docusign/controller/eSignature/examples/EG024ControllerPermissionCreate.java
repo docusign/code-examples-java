@@ -26,14 +26,9 @@ import com.docusign.esign.model.PermissionProfile;
 @RequestMapping("/eg024")
 public class EG024ControllerPermissionCreate extends AbstractEsignatureController{
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public EG024ControllerPermissionCreate(DSConfiguration config, Session session, User user) {
-        super(config, "eg024");
-        this.session = session;
-        this.user = user;
+        super(config, "eg024", session, user);
     }
 
     @Override

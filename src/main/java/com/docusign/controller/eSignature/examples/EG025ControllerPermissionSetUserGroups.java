@@ -33,14 +33,10 @@ public class EG025ControllerPermissionSetUserGroups extends AbstractEsignatureCo
 
     private static final String MODEL_LIST_PROFILES = "listProfiles";
     private static final String MODEL_LIST_GROUPS = "listGroups";
-    private final Session session;
-    private final User user;
 
     @Autowired
     public EG025ControllerPermissionSetUserGroups(DSConfiguration config, Session session, User user) {
-        super(config, "eg025");
-        this.session = session;
-        this.user = user;
+        super(config, "eg025", session, user);
     }
 
     @Override

@@ -35,14 +35,10 @@ import javax.servlet.http.HttpServletResponse;
 public class EG009ControllerUseTemplate extends AbstractEsignatureController {
 
     private static final String MODEL_LIST_TEMPLATE = "listTemplates";
-    private final Session session;
-    private final User user;
 
     @Autowired
     public EG009ControllerUseTemplate(DSConfiguration config, Session session, User user) {
-        super(config, "eg009");
-        this.session = session;
-        this.user = user;
+        super(config, "eg009", session, user);
     }
 
     @Override

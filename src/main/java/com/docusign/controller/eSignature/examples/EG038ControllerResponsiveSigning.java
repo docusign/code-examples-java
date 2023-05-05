@@ -25,16 +25,12 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/eg038")
 public class EG038ControllerResponsiveSigning extends AbstractEsignatureController {
-    private final Session session;
-    private final User user;
     private static final String SIGNER_CLIENT_ID = "1000";
     private static final String FEATURE_WAS_DISABLED = "Please enable this feature in the developer account and try again.";
 
     @Autowired
     public EG038ControllerResponsiveSigning(DSConfiguration config, Session session, User user) {
-	   super(config, "eg038");
-	   this.session = session;
-	   this.user = user;
+	   super(config, "eg038", session, user);
     }
 
     @Override

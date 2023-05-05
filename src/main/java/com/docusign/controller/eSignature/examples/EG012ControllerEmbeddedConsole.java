@@ -29,14 +29,9 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/eg012")
 public class EG012ControllerEmbeddedConsole extends AbstractEsignatureController {
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public EG012ControllerEmbeddedConsole(DSConfiguration config, Session session, User user) {
-        super(config, "eg012");
-        this.session = session;
-        this.user = user;
+        super(config, "eg012", session, user);
     }
 
     @Override

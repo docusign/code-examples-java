@@ -26,14 +26,9 @@ import java.io.IOException;
 @RequestMapping("/eg016")
 public class EG016ControllerSetTabValues extends AbstractEsignatureController {
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public EG016ControllerSetTabValues(DSConfiguration config, Session session, User user) {
-        super(config, "eg016");
-        this.session = session;
-        this.user = user;
+        super(config, "eg016", session, user);
     }
 
     @Override

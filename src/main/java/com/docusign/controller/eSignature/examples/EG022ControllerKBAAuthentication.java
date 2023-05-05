@@ -26,14 +26,9 @@ import java.io.IOException;
 @RequestMapping("/eg022")
 public class EG022ControllerKBAAuthentication extends AbstractEsignatureController {
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public EG022ControllerKBAAuthentication(DSConfiguration config, Session session, User user) {
-        super(config, "eg022");
-        this.session = session;
-        this.user = user;
+        super(config, "eg022", session, user);
     }
 
     @Override

@@ -28,14 +28,10 @@ import java.io.IOException;
 public class EG028ControllerCreateBrand extends AbstractEsignatureController {
 
     private static final String MODEL_LIST_LANGUAGE = "listLanguage";
-    private final Session session;
-    private final User user;
 
     @Autowired
     public EG028ControllerCreateBrand(DSConfiguration config, Session session, User user) {
-        super(config, "eg028");
-        this.session = session;
-        this.user = user;
+        super(config, "eg028", session, user);
     }
 
     @Override

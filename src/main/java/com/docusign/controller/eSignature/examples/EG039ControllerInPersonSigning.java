@@ -29,13 +29,10 @@ public class EG039ControllerInPersonSigning extends AbstractEsignatureController
     private static final String DOCUMENT_NAME = "Lorem Ipsum";
     private static final int ANCHOR_OFFSET_Y = 10;
     private static final int ANCHOR_OFFSET_X = 20;
-    private final User user;
 
     @Autowired
     public EG039ControllerInPersonSigning(DSConfiguration config, Session session, User user) {
-	   super(config, "eg039");
-	   this.session = session;
-	   this.user = user;
+	   super(config, "eg039", session, user);
     }
 
     @Override

@@ -26,14 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/eg015")
 public class EG015ControllerGetTabValues extends AbstractEsignatureController {
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public EG015ControllerGetTabValues(DSConfiguration config, Session session, User user) {
-        super(config, "eg015");
-        this.session = session;
-        this.user = user;
+        super(config, "eg015", session, user);
     }
 
     @Override

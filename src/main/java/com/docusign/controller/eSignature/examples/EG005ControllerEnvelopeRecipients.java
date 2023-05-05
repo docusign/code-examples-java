@@ -26,14 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/eg005")
 public class EG005ControllerEnvelopeRecipients extends AbstractEsignatureController {
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public EG005ControllerEnvelopeRecipients(DSConfiguration config, Session session, User user) {
-        super(config, "eg005");
-        this.session = session;
-        this.user = user;
+        super(config, "eg005", session, user);
     }
 
     @Override

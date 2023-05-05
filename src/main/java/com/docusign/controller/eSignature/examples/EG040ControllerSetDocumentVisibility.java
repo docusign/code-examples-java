@@ -31,13 +31,10 @@ public class EG040ControllerSetDocumentVisibility extends AbstractEsignatureCont
     "<a href=\"https://developers.docusign.com/docs/esign-rest-api/how-to/set-document-visibility\">" +
     "How to set document visibility for envelope recipients</a> in the DocuSign Developer Center " +
     "for instructions on how to enable document visibility in your developer account.";
-    private final User user;
 
     @Autowired
     public EG040ControllerSetDocumentVisibility(DSConfiguration config, Session session, User user) {
-        super(config, "eg040");
-        this.session = session;
-        this.user = user;
+        super(config, "eg040", session, user);
     }
 
     @Override

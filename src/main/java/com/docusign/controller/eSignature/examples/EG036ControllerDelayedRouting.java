@@ -36,14 +36,10 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/eg036")
 public class EG036ControllerDelayedRouting extends AbstractEsignatureController {
-    private final Session session;
-    private final User user;
 
     @Autowired
     public EG036ControllerDelayedRouting(DSConfiguration config, Session session, User user) {
-        super(config, "eg036");
-        this.session = session;
-        this.user = user;
+        super(config, "eg036", session, user);
     }
 
     @Override
