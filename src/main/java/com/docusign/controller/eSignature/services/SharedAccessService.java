@@ -6,11 +6,13 @@ import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.api.UsersApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 
 public final class SharedAccessService {
-
+    private static final Logger logger = LoggerFactory.getLogger(SharedAccessService.class);
     private static final int FROM_DATE_OFFSET_DAYS = 10;
     private static final String MANAGE = "manage";
 
@@ -29,8 +31,7 @@ public final class SharedAccessService {
                 return userInformation;
             }
         } catch (ApiException e) {
-            System.out.println(e.getMessage());
-            return userInformation;
+            logger.error(e.getMessage());
         }
 
         return userInformation;
