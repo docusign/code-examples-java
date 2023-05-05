@@ -27,14 +27,10 @@ import java.util.Arrays;
 @Controller
 @RequestMapping("/eg037")
 public class EG037ControllerSMSDelivery extends AbstractEsignatureController {
-    private final Session session;
-    private final User user;
 
     @Autowired
     public EG037ControllerSMSDelivery(DSConfiguration config, Session session, User user) {
-        super(config, "eg037");
-        this.session = session;
-        this.user = user;
+        super(config, "eg037", session, user);
     }
 
     @Override

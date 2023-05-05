@@ -26,14 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/eg018")
 public class EG018ControllerEnvelopeCustomFieldValues extends AbstractEsignatureController {
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public EG018ControllerEnvelopeCustomFieldValues(DSConfiguration config, Session session, User user) {
-        super(config, "eg018");
-        this.session = session;
-        this.user = user;
+        super(config, "eg018", session, user);
     }
 
     @Override

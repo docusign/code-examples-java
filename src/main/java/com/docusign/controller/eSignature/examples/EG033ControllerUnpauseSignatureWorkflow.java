@@ -25,14 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/eg033")
 public class EG033ControllerUnpauseSignatureWorkflow extends AbstractEsignatureController {
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public EG033ControllerUnpauseSignatureWorkflow(DSConfiguration config, Session session, User user) {
-        super(config, "eg033");
-        this.session = session;
-        this.user = user;
+        super(config, "eg033", session, user);
     }
 
     @Override

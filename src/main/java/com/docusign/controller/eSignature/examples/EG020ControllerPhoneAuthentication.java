@@ -43,14 +43,10 @@ import java.io.IOException;
 public class EG020ControllerPhoneAuthentication extends AbstractEsignatureController {
 
     private static final Logger logger = LoggerFactory.getLogger(EG023ControllerIdvAuthentication.class);
-    private final Session session;
-    private final User user;
 
     @Autowired
     public EG020ControllerPhoneAuthentication(DSConfiguration config, Session session, User user) {
-        super(config, "eg020");
-        this.session = session;
-        this.user = user;
+        super(config, "eg020", session, user);
     }
 
     @Override

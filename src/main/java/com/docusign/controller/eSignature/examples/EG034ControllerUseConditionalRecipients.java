@@ -27,14 +27,9 @@ import java.io.IOException;
 @RequestMapping("/eg034")
 public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureController {
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public EG034ControllerUseConditionalRecipients(DSConfiguration config, Session session, User user) {
-        super(config, "eg034");
-        this.session = session;
-        this.user = user;
+        super(config, "eg034", session, user);
     }
 
     @Override

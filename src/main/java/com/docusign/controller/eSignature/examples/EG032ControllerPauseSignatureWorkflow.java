@@ -27,14 +27,9 @@ import java.io.IOException;
 @RequestMapping("/eg032")
 public class EG032ControllerPauseSignatureWorkflow extends AbstractEsignatureController {
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public EG032ControllerPauseSignatureWorkflow(DSConfiguration config, Session session, User user) {
-        super(config, "eg032");
-        this.session = session;
-        this.user = user;
+        super(config, "eg032", session, user);
     }
 
     @Override
