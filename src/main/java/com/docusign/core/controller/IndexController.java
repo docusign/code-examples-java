@@ -66,6 +66,23 @@ public class IndexController {
 
         Boolean isCFR = false;
 
+        if(this.config.isShareAccessExampleScenario()){
+            this.config.setShareAccessExampleScenario(false);
+            this.config.setAdditionalRedirect(true);
+
+            response.setStatus(response.SC_MOVED_TEMPORARILY);
+            response.setHeader("Location", "/ds/mustAuthenticate");
+            return null;
+        }
+
+        if(this.config.isAdditionalRedirect()){
+            this.config.setAdditionalRedirect(false);
+
+            response.setStatus(response.SC_MOVED_TEMPORARILY);
+            response.setHeader("Location", "/eg043/listEnvelopes");
+            return null;
+        }
+
         if (user.getAccessToken() != null && config.getSelectedApiType().equals(ApiType.ESIGNATURE)) {
             try {
                 isCFR = Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId());

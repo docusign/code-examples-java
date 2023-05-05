@@ -35,6 +35,7 @@ public class DoneExample {
     private String title;
     private String name;
     private String message;
+    private String redirect;
     private String json;
     private StackTraceElement[] stackTrace;
     private String stackTracePrinted;
