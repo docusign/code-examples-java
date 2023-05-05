@@ -27,8 +27,6 @@ public final class SharedAccessService {
             if (Integer.parseInt(informationList.getResultSetSize()) > 0) {
                 userInformation = informationList.getUsers().stream()
                         .filter(user -> "Active".equals(user.getUserStatus())).findFirst().get();
-
-                return userInformation;
             }
         } catch (ApiException e) {
             logger.error(e.getMessage());
