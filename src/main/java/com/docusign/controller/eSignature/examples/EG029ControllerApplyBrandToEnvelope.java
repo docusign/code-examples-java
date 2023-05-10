@@ -48,22 +48,28 @@ public class EG029ControllerApplyBrandToEnvelope extends AbstractEsignatureContr
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response)
             throws ApiException, IOException {
-        // Step 2: Construct your API headers
+        // Construct your API headers
+        //ds-snippet-start:eSign29Step2
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
+        //ds-snippet-end:eSign29Step2
 
-        // Step 3: Construct your envelope JSON body
+        // Construct your envelope JSON body
+        //ds-snippet-start:eSign29Step3
         EnvelopeDefinition envelope = ApplyBrandToEnvelopeService.makeEnvelope(
                 args.getSignerEmail(),
                 args.getSignerName(),
                 args.getBrandId()
         );
+        //ds-snippet-end:eSign29Step3
 
-        // Step 5: Call the eSignature REST API
+        // Call the eSignature REST API
+        //ds-snippet-start:eSign29Step4
         EnvelopeSummary envelopeSummary = ApplyBrandToEnvelopeService.applyBrandToEnvelope(
                 envelopesApi,
                 session.getAccountId(),
                 envelope
         );
+        //ds-snippet-end:eSign29Step4
 
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                 .withJsonObject(envelopeSummary)
