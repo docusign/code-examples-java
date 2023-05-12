@@ -66,6 +66,7 @@ public final class SMSDeliveryService {
         signer.setRecipientId("1");
         signer.setRoutingOrder("1");
         signer.setTabs(signerTabs);
+        signer.setDeliveryMethod("sms");
 
 
         // create a cc recipient to receive a copy of the documents, identified by name and phone number
@@ -78,6 +79,7 @@ public final class SMSDeliveryService {
         cc.setPhoneNumber(ccPhoneNumber);
         cc.setRecipientId("2");
         cc.setRoutingOrder("2");
+        cc.setDeliveryMethod("sms");
 
         // The order in the docs array determines the order in the envelope
         EnvelopeDefinition envelope = new EnvelopeDefinition();
