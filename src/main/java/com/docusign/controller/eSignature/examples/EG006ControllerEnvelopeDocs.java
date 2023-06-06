@@ -46,17 +46,18 @@ public class EG006ControllerEnvelopeDocs extends AbstractEsignatureController {
     }
 
     @Override
-    // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
+        //ds-snippet-start:eSign6Step2
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
+        //ds-snippet-end:eSign6Step2
 
-        // Step 1. List the envelope's documents
+        // List the envelope's documents
         EnvelopeDocumentsResult envelopeDocumentsResult = EnvelopeDocsService.envelopeDocs(
                 envelopesApi,
                 session.getAccountId(),
                 session.getEnvelopeId());
 
-        // Step 2. Process results
+        // Process results
         // Save the envelopeId and its list of documents in the session so
         // they can be used in example 7 (download a document)
         List<EnvelopeDocumentInfo> envelopeDocItems = new ArrayList<>();
@@ -78,5 +79,4 @@ public class EG006ControllerEnvelopeDocs extends AbstractEsignatureController {
             .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
-    // ***DS.snippet.0.end
 }
