@@ -31,4 +31,8 @@ public class HelpingTexts {
     public String NOTAGREED;
 
     public String AGREED;
+
+    public String EmailAddressOfUserToDelete;
+
+    public String UserIDOfUserToDelete;
 }
