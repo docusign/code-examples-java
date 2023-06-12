@@ -40,8 +40,16 @@ public class C002ControllerActivateClickwrap extends AbstractClickController {
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
         AccountsApi accountsApi = createAccountsApiClient(this.session.getBasePath(), this.user.getAccessToken());
-        ClickwrapVersionsResponse clickwraps = ActivateClickwrapService.getInactiveClickwraps(accountsApi, this.session.getAccountId());
-        model.addAttribute(MODEL_CLICKWRAPS, clickwraps);
+        ClickwrapVersionsResponse inactiveClickwraps = ActivateClickwrapService.getClickwrapsByStatus(
+                accountsApi,
+                this.session.getAccountId(),
+                "inactive");
+        ClickwrapVersionsResponse draftClickwraps = ActivateClickwrapService.getClickwrapsByStatus(
+                accountsApi,
+                this.session.getAccountId(),
+                "draft");
+        inactiveClickwraps.getClickwraps().addAll(draftClickwraps.getClickwraps());
+        model.addAttribute(MODEL_CLICKWRAPS, inactiveClickwraps);
     }
 
     @Override

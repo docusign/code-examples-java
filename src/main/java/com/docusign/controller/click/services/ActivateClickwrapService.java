@@ -25,12 +25,13 @@ public final class ActivateClickwrapService {
                 clickwrapRequest);
     }
 
-    public static ClickwrapVersionsResponse getInactiveClickwraps(
+    public static ClickwrapVersionsResponse getClickwrapsByStatus(
             AccountsApi accountsApi,
-            String accountId
+            String accountId,
+            String status
     ) throws ApiException{
         AccountsApi.GetClickwrapsOptions options = accountsApi.new GetClickwrapsOptions();
-        options.setStatus("inactive");
+        options.setStatus(status);
         return accountsApi.getClickwraps(accountId, options);
     }
 }

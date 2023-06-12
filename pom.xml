@@ -25,6 +25,7 @@
         <java.version>11</java.version>
         <oauth2.version>2.5.6</oauth2.version>
         <commonsio.version>2.11.0</commonsio.version>
+
         <esignature.version>4.3.0</esignature.version>
         <rooms.version>1.4.2</rooms.version>
         <click.version> 1.4.0</click.version>
@@ -33,6 +34,7 @@
         <swagger-core-version>2.2.8</swagger-core-version>
         <jackson-version>2.14.2</jackson-version>
         <jersey2.version>3.0.9</jersey2.version>
+
     </properties>
 
 
@@ -157,7 +159,6 @@
             <groupId>com.docusign</groupId>
             <artifactId>docusign-esign-java</artifactId>
             <version>${esignature.version}</version>
-            <classifier>shaded</classifier>
         </dependency>
 
         <dependency>
