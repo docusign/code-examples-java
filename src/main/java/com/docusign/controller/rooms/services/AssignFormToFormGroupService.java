@@ -13,13 +13,13 @@ public final class AssignFormToFormGroupService {
             UUID formId,
             UUID formGroupId
     ) throws ApiException {
-        // Step 5 Start
+        //ds-snippet-start:Rooms9Step5
         FormGroupFormToAssign formGroupFormToAssignRequest = new FormGroupFormToAssign()
                 .formId(formId);
-        // Step 5 End
-        // Step 6 Start
+        //ds-snippet-end:Rooms9Step5
+
         return formGroupsApi.assignFormGroupForm(
                 accountId, formGroupId, formGroupFormToAssignRequest);
-        // Step 6 End
+
     }
 }
