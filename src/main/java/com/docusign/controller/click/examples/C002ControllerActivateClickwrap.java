@@ -56,9 +56,10 @@ public class C002ControllerActivateClickwrap extends AbstractClickController {
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws ApiException {
-        // Step 2: Construct your API headers
+        //ds-snippet-start:Click2Step2
         AccountsApi accountsApi = createAccountsApiClient(this.session.getBasePath(), this.user.getAccessToken());
-
+        //ds-snippet-end:Click2Step2
+        
         String clickwrap = args.getClickwrap();
         String [] clickwrapData = clickwrap.split(":");
         String clickwrapId = clickwrapData[0];
