@@ -40,7 +40,7 @@ public class C006ControllerEmbedClickwrap extends AbstractClickController {
         super.onInitModel(args, model);
         AccountsApi accountsApi = createAccountsApiClient(this.session.getBasePath(), this.user.getAccessToken());
         ClickwrapVersionsResponse clickwraps = EmbedClickwrapService.getActiveClickwraps(accountsApi, this.session.getAccountId());
-        ClickwrapVersionsResponse inactiveClickwraps = ActivateClickwrapService.getInactiveClickwraps(accountsApi, this.session.getAccountId());
+        ClickwrapVersionsResponse inactiveClickwraps = ActivateClickwrapService.getClickwrapsByStatus(accountsApi, this.session.getAccountId(), "inactive");
         Boolean hasInactiveClickraps = (inactiveClickwraps.getClickwraps().size() > 0);
         model.addAttribute(MODEL_CLICKWRAPS, clickwraps);
         model.addAttribute("hasInactiveClickraps", hasInactiveClickraps);
