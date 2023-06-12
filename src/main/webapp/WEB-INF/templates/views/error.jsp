@@ -10,7 +10,6 @@
     <c:redirect url="${url[1]}${url[2]}" />
 
 </c:if>
-
 <c:if test="${done.fixingInstructions != null }">
     <h2>Problem: an error occurred</h2>
 

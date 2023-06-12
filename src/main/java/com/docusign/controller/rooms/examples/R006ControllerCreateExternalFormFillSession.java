@@ -60,6 +60,8 @@ public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsCo
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
+
+        
         // Step 2. Construct your API headers
         ExternalFormFillSessionsApi externalFormFillSessionsApi = createExternalFormFillSessionsApiClient(
                 this.session.getBasePath(), this.user.getAccessToken()
@@ -71,12 +73,14 @@ public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsCo
                     externalFormFillSessionsApi,
                     this.session.getAccountId(),
                     args.getFormId().toString(),
-                    args.getRoomId()
+                    args.getRoomId(),
+                    "http://localhost:8080"
                 );
 
         DoneExample.createDefault(this.title)
+                .withMessage(getTextForCodeExample().ResultsPageText)
                 .withJsonObject(externalFormFillSession)
-                .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
+                .withFormFill(externalFormFillSession.getUrl())
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }

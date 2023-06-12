@@ -22,6 +22,10 @@ public class HelpingTexts {
 
     public String PhoneNumberWillBeNotified;
 
+    public String EmailAddressOfUserToDelete;
+
+    public String UserIDOfUserToDelete;
+
     public String DynamicContentValue;
     
     public String DynamicContentNote;
@@ -31,8 +35,4 @@ public class HelpingTexts {
     public String NOTAGREED;
 
     public String AGREED;
-
-    public String EmailAddressOfUserToDelete;
-
-    public String UserIDOfUserToDelete;
 }

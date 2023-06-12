@@ -50,3 +50,4 @@ app.config
 Quick_ACG/target/*
 JWT Console App/target/*
 Quick_ACG/src/main/resources/application.json
+

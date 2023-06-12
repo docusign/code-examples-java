@@ -10,12 +10,14 @@ public final class CreateExternalFormFillSessionService {
             ExternalFormFillSessionsApi externalFormFillSessionsApi,
             String accountId,
             String formId,
-            Integer roomId
+            Integer roomId,
+            String xframeURL
     ) throws ApiException {
         // Step 3. Construct your request body
         ExternalFormFillSessionForCreate externalFormFillSessionForCreate = new ExternalFormFillSessionForCreate()
                 .formId(formId)
-                .roomId(roomId);
+                .roomId(roomId)
+                .xFrameAllowedUrl(xframeURL);
 
         // Step 4. Call the v2 Rooms API
         return externalFormFillSessionsApi.createExternalFormFillSession(

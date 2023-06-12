@@ -3,7 +3,6 @@ package com.docusign.controller.admin.examples;
 import com.docusign.DSConfiguration;
 import com.docusign.admin.api.BulkExportsApi;
 import com.docusign.admin.model.OrganizationExportResponse;
-import com.docusign.admin.model.OrganizationExportRequest;
 import com.docusign.admin.model.OrganizationExportsResponse;
 import com.docusign.common.WorkArguments;
 import com.docusign.controller.admin.services.BulkExportUserDataService;
@@ -11,24 +10,12 @@ import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.http.HttpHeaders;
-
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.MediaType;
 import java.util.concurrent.TimeUnit;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Paths;
 
 /**
  * How to bulk-export user data This example demonstrates how to bulk-export

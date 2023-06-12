@@ -10,21 +10,29 @@ import com.docusign.rooms.model.FormSummaryList;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public final class GetFormSummaryListService {
     public static List<FormSummary> getFormSummaryList(
-    	   FormLibrariesApi formLibrariesApi,
-	   String accountId
+            FormLibrariesApi formLibrariesApi,
+            String accountId
     ) throws ApiException {
-	   FormLibrarySummaryList formLibrarySummaryList = formLibrariesApi.getFormLibraries(accountId);
+        FormLibrarySummaryList formLibrarySummaryList = formLibrariesApi.getFormLibraries(accountId);
 
-	   List<FormSummary> forms = new ArrayList<>();
+        List<FormSummary> forms = new ArrayList<>();
+        int counter = 0; // Counter variable
 
-	   for (FormLibrarySummary formLibrarySummary : formLibrarySummaryList.getFormsLibrarySummaries()) {
-		  FormSummaryList formSummaryList = formLibrariesApi.getFormLibraryForms(
-				accountId,
-				formLibrarySummary.getFormsLibraryId());
-		  forms.addAll(formSummaryList.getForms());
-	   }
-	   return forms;
+        for (FormLibrarySummary formLibrarySummary : formLibrarySummaryList.getFormsLibrarySummaries()) {
+            FormSummaryList formSummaryList = formLibrariesApi.getFormLibraryForms(
+                    accountId,
+                    formLibrarySummary.getFormsLibraryId());
+            forms.addAll(formSummaryList.getForms());
+            counter += formSummaryList.getForms().size(); 
+
+            if (counter >= 3) {
+                break; 
+            }
+        }
+
+        return forms;
     }
 }

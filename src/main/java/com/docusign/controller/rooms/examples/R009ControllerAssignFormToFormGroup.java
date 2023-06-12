@@ -46,18 +46,18 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
 
-        //ds-snippet-start:Rooms9Step3
+        // Step 3 Start
         this.formGroupsApi = createFormGroupsApi(
                 this.session.getBasePath(), this.user.getAccessToken()
         );
         FormGroupSummaryList formGroupSummaryList = formGroupsApi.getFormGroups(this.session.getAccountId());
-        //ds-snippet-end:Rooms9Step3 
+        // Step 3 End 
 
-        //ds-snippet-start:Rooms9Step4
+        // Step 4 Start
         List<FormSummary> forms = GetFormSummaryListService.getFormSummaryList(
                 createFormLibrariesApi(session.getBasePath(), this.user.getAccessToken()),
                 this.session.getAccountId());
-        //ds-snippet-end:Rooms9Step4
+        // Step 4 End
 
         model.addAttribute(MODEL_FORM_GROUP_LIST, formGroupSummaryList.getFormGroups());
         model.addAttribute(MODEL_FORM_LIST, forms);
@@ -68,13 +68,13 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
         try {
-            //ds-snippet-start:Rooms9Step6
+            // Step 6 Start
             FormGroupFormToAssign formGroupFormToAssign = AssignFormToFormGroupService.assignFormToFormGroup(
                     this.formGroupsApi,
                     this.session.getAccountId(),
                     args.getFormId(),
                     args.getFormGroupId());
-            //ds-snippet-end:Rooms9Step6
+            // Step 6 End
 
             DoneExample.createDefault(this.title)
                     .withJsonObject(formGroupFormToAssign)

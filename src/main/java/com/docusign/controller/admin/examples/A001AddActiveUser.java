@@ -19,7 +19,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.HttpHeaders;
 import java.util.UUID;
 
 /**
@@ -44,17 +44,27 @@ public class A001AddActiveUser extends AbstractAdminController {
 
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
+
+        try {
+            
+     
         super.onInitModel(args, model);
+        System.out.println("super called");
         ApiClient apiClient = new ApiClient("https://demo.docusign.net/restapi");
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + user.getAccessToken());
-        
+        System.out.println("API client called");
         // Step 3 start
         AccountsApi accountsApi = new AccountsApi(apiClient);
+        System.out.println(this.user.getAccessToken());
+        System.out.println(this.session.getBasePath());
+
         UUID orgId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
+        System.out.println("we have an org id: "+ orgId);
         UUID accountId = this.getExistingAccountId(this.user.getAccessToken(), this.session.getBasePath(), orgId);
+        System.out.println("An accountID: "+ accountId);
         PermissionProfileInformation permissionsInfo = accountsApi.listPermissions(String.valueOf(accountId));
         // Step 3 end
-
+        System.out.println("and permissions info too: " + permissionsInfo);
         model.addAttribute(MODEL_LIST_PROFILES, permissionsInfo.getPermissionProfiles());
 
         // Step 4 start
@@ -63,10 +73,15 @@ public class A001AddActiveUser extends AbstractAdminController {
         // Step 4 end
 
         model.addAttribute(MODEL_LIST_GROUPS, groupInformation.getGroups());
+
+    } catch (Exception e) {
+        System.out.println(e.toString());
+    }
     }
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
+        System.out.println("doWork function called");
         String accessToken = this.user.getAccessToken();
         String basePath = this.session.getBasePath();
         // Create a users api instance

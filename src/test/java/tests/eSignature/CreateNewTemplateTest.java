@@ -117,7 +117,7 @@ public final class CreateNewTemplateTest {
                 CreateTemplateService.createText("text", textXPosition, "230")
         ));
         signerTabs.numericalTabs(Arrays.asList(
-            CreateTemplateService.createNumerical("number", textXPosition, checkboxXPosition)
+            CreateTemplateService.createNumerical("numericalCurrency", textXPosition, "260")
             ));  
 
         Signer signer = new Signer();

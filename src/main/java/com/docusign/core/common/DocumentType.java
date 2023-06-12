@@ -1,6 +1,6 @@
 package com.docusign.core.common;
 
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MediaType;
 
 /**
  * This enumeration represents supported document types for signing.

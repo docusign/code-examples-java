@@ -12,6 +12,7 @@ public final class GetMonitoringDataService {
         String cursorValue = "";
         JSONArray monitoringData = new JSONArray();
 
+        System.out.println("before optinos");
         DataSetApi.GetStreamOptions options = datasetApi.new GetStreamOptions();
 
         // First call the endpoint with no cursor to get the first records.
@@ -25,8 +26,9 @@ public final class GetMonitoringDataService {
                 if(!cursorValue.isEmpty())
                     options.setCursor(cursorValue);
 
+                System.out.println("options set: " + options);
                 CursoredResult cursoredResult = datasetApi.getStream("2.0", "monitor", options);
-
+                System.out.println("cursor results " + cursoredResult);
                 String endCursor = cursoredResult.getEndCursor();
 
                 // If the endCursor from the response is the same as the one that you already have,
@@ -44,6 +46,7 @@ public final class GetMonitoringDataService {
             while (!complete);
         }
     catch (Exception e) {
+        System.out.println(e);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("Error", "You do not have Monitor enabled for your account, follow <a target='_blank' href='https://developers.docusign.com/docs/monitor-api/how-to/enable-monitor/'>How to enable Monitor for your account</a> to get it enabled.");
         monitoringData.put(jsonObject);

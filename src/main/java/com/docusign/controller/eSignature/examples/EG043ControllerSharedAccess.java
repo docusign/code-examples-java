@@ -15,7 +15,6 @@ import com.docusign.esign.client.auth.OAuth;
 import com.docusign.esign.model.EnvelopesInformation;
 import com.docusign.esign.model.NewUsersSummary;
 import com.docusign.esign.model.UserInformation;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;

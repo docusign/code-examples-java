@@ -40,8 +40,10 @@ public class M001GetMonitoringData extends AbstractMonitorController {
         // step 1 start
         ensureUsageOfJWTToken(accessToken, this.session);
         // step 1 end
-
+        System.out.println(createDataSetApi(accessToken, this.session));
         JSONArray monitoringData = GetMonitoringDataService.getMonitoringData(createDataSetApi(accessToken, this.session));
+       System.out.println(monitoringData);
+
         if (monitoringData.getJSONObject(0).has("Error"))
         {
             new DoneExample()

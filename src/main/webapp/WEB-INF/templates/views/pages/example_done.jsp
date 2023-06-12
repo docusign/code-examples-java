@@ -7,9 +7,28 @@
 <c:if test="${not empty done.json}">
     <!-- Data from the server -->
     <div id="server_json_data" data-server-json-data='{"json": ${done.json}}' class="hidden"></div>
-    <p>
-        <pre class="json-display"><code id="json-display">${done.json}</code></pre>
-    </p>
+
+    <c:set var="formattedJson" value="${done.json.trim()}" />
+
+    <c:choose>
+        <c:when test="${formattedJson.contains('url')}">
+            <p>
+                <code>${formattedJson}</code>
+            </p>
+        </c:when>
+        <c:otherwise>
+            <p>
+                <pre class="json-display"><code id="json-display">${done.json}</code></pre>
+            </p>
+        </c:otherwise>
+    </c:choose>
+</c:if>
+
+
+
+<!-- Add the c:if condition for formFillUrl -->
+<c:if test="${not empty done.formFillUrl}">
+    <iframe src="${done.formFillUrl}" width="100%" height="500" frameborder="0"></iframe>
 </c:if>
 
 
