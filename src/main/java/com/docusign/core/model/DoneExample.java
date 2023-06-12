@@ -7,6 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import org.apache.jasper.tagplugins.jstl.core.Redirect;
+import org.apache.jasper.tagplugins.jstl.core.Url;
 import org.springframework.ui.ModelMap;
 
 import com.docusign.core.common.DiffField;
@@ -31,6 +34,7 @@ public class DoneExample {
     private static final String DATETIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ssz";
     public static final int JSON_INDENT_FACTOR = 4;
     private static final String LAUNCHER_TEXTS = "launcherTexts";
+    private String formFillUrl;
 
     private String title;
     private String name;
@@ -127,6 +131,16 @@ public class DoneExample {
         }
         return this;
     }
+
+
+    public DoneExample withFormFill(String url) {
+        if (url != null) {
+        this.formFillUrl = url;
+    }
+
+    return this;
+    }
+
 
     /**
      * Adds this object to model map using name 'done'

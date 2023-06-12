@@ -4,6 +4,9 @@ import com.docusign.monitor.api.DataSetApi;
 import com.docusign.monitor.model.AggregateResult;
 import com.docusign.monitor.model.AggregateResultResult;
 import com.docusign.monitor.model.WebQuery;
+
+import netscape.javascript.JSObject;
+
 import com.docusign.monitor.client.ApiException;
 import org.json.JSONObject;
 
@@ -31,8 +34,10 @@ public final class WebQueryEndpointService {
             if (aggregateResultList != null && !aggregateResultList.isEmpty()) {
                 methodResult = aggregateResultList.get(0);
             }
-
-            return new JSONObject(methodResult);
+            System.out.println("method Result: "+ methodResult);
+            JSONObject newObj = new JSONObject(methodResult);
+            System.out.println(newObj);
+            return newObj;
         } catch (Exception e) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("Error", "You do not have Monitor enabled for your account, follow <a target='_blank' href='https://developers.docusign.com/docs/monitor-api/how-to/enable-monitor/'>How to enable Monitor for your account</a> to get it enabled.");

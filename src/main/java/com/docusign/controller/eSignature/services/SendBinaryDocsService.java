@@ -15,8 +15,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.util.StreamUtils;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.HttpMethod;
+import jakarta.ws.rs.core.MediaType;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;

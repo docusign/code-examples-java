@@ -33,7 +33,7 @@
     "com.sun.*",
     "java.*",
     "javafx.*",
-    "javax.*",
+    "jakarta.*",
     "org.apache.*",
     "org.eclipse.*",
     "org.fordiac.*",

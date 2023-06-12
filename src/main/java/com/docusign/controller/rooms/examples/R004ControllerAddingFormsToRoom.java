@@ -6,6 +6,7 @@ import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.rooms.api.RoomsApi;
+import com.docusign.rooms.api.RoomsApi.GetRoomsOptions;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.FormSummary;
 import com.docusign.rooms.model.RoomDocument;
@@ -47,11 +48,13 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
         // Step 3. Obtain the desired form ID
-        RoomSummaryList roomSummaryList = roomsApi.getRooms(this.session.getAccountId());
+        GetRoomsOptions gro = roomsApi.new GetRoomsOptions();
+        gro.setCount(5);
+        RoomSummaryList roomSummaryList = roomsApi.getRooms(this.session.getAccountId(), gro); 
+       
         List<FormSummary> forms = GetFormSummaryListService.getFormSummaryList(
                 createFormLibrariesApi(session.getBasePath(), this.user.getAccessToken()),
                 this.session.getAccountId());
-
         model.addAttribute(MODEL_ROOM_LIST, roomSummaryList.getRooms());
         model.addAttribute(MODEL_FORM_LIST, forms);
     }

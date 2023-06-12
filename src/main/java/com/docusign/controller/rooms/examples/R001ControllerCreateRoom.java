@@ -40,19 +40,20 @@ public class R001ControllerCreateRoom extends AbstractRoomsController {
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
+                                System.out.println("output a");
         RoleSummary adminRole = GetAdminRolesService.getAdminRole(
                 createRolesApiClient(this.session.getBasePath(), this.user.getAccessToken()),
                 this.session.getAccountId());
-
+                System.out.println("output b");
         // Step 2: Construct your API headers
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
-
+        System.out.println("output c");
         // Step 3: Call the v2 Rooms API
         Room createdRoom = CreateRoomService.createRoomFromModel(
                 roomsApi,
                 this.session.getAccountId(),
                 CreateRoomService.createRoomModel(adminRole.getRoleId(), args.getRoomName()));
-
+                System.out.println("output d");
         DoneExample.createDefault(this.title)
                 .withJsonObject(createdRoom)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText

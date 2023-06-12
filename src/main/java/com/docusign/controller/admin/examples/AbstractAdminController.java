@@ -123,22 +123,23 @@ public abstract class AbstractAdminController extends AbstractController {
     UUID organizationId
   )
     throws Exception {
+      System.out.println("createUsers API called");
     UsersApi usersApi = createUsersApi(accessToken, basePath);
-
+    System.out.println("createUsers called succeeds");
     // set the signer email to get an information about that user
     // new GetUsersOptions() will throw "an enclosing instance that contains com.docusign.admin.api.UsersApi.GetUserProfilesOptions is required"
     // at compile time.  I used this workaround from stackOverflow:
     // https://stackoverflow.com/a/4297913/2226328
-
+    System.out.println("what email are we feedin ya? hmm??? " + configuration.getSignerEmail());
     GetUserProfilesOptions userProfilesOptions =
       usersApi.new GetUserProfilesOptions();
     userProfilesOptions.setEmail(configuration.getSignerEmail());
-
+    System.out.println("getUserProfiles called");
     UsersDrilldownResponse user = usersApi.getUserProfiles(
       organizationId,
       userProfilesOptions
     );
-
+    System.out.println("getUserProfiles succeeded");
     if (user.getUsers().isEmpty()) {
       throw new Exception("Could not get an account id from the request.");
     }
@@ -153,18 +154,25 @@ public abstract class AbstractAdminController extends AbstractController {
 
         ApiClient apiClient = createApiClient(accessToken, basePath);
         AccountsApi accounts = new AccountsApi(apiClient);
+        System.out.println("before Org id");
         OrganizationsResponse orgs = accounts.getOrganizations();
+        System.out.println("after orgs call");
         if (orgs.getOrganizations().isEmpty()) {
           throw new ApiException(
             "No organizations found on this account, please <a href='https://admindemo.docusign.com/create-organization'>create an organization first.</a>"
           );
         } else {
+          System.out.println("we're looking for a specific org id");
             orgId = orgs.getOrganizations().get(0).getId();
+            System.out.println("first found org id is: "+ orgId);
             session.setOrgId(orgId);
         }
       
     } else {
+      System.out.println("nothing found? try a 2nd way");
       orgId = session.getOrgId();
+
+      System.out.println("we have an org id: "+ orgId);
     }
 
     return orgId;
