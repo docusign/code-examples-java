@@ -13,15 +13,17 @@ public final class CreateExternalFormFillSessionService {
             Integer roomId,
             String xframeURL
     ) throws ApiException {
-        // Step 3. Construct your request body
+        // Construct your request body
         ExternalFormFillSessionForCreate externalFormFillSessionForCreate = new ExternalFormFillSessionForCreate()
                 .formId(formId)
                 .roomId(roomId)
                 .xFrameAllowedUrl(xframeURL);
 
         // Step 4. Call the v2 Rooms API
+        //ds-snippet-start:Rooms6Step4
         return externalFormFillSessionsApi.createExternalFormFillSession(
                 accountId, externalFormFillSessionForCreate
         );
+        //ds-snippet-end:Rooms6Step4
     }
 }

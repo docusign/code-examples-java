@@ -39,15 +39,18 @@ public class R007ControllerCreateFormGroup extends AbstractRoomsController {
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
 
+        //ds-snippet-start:Rooms7Step2
         FormGroupsApi formGroupsApi = createFormGroupsApi(
                 this.session.getBasePath(), this.user.getAccessToken()
         );
+        //ds-snippet-end:Rooms7Step2
+
 
         FormGroup formGroup = CreateFormGroupService.createFormGroup(
                 formGroupsApi,
                 this.session.getAccountId(),
                 args.getFormGroupName());
-        
+
         DoneExample.createDefault(this.title)
                 .withJsonObject(formGroup)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText

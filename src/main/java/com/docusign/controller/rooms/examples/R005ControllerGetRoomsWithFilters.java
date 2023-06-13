@@ -57,15 +57,19 @@ public class R005ControllerGetRoomsWithFilters extends AbstractRoomsController {
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
         // Step 2: Construct your API headers
+        //ds-snippet-start:Rooms5Step2
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
+        //ds-snippet-end:Rooms5Step2
 
         // Step 4. Call the v2 Rooms API
+        //ds-snippet-start:Rooms5Step4
         RoomSummaryList rooms = GetRoomsWithFiltersService.getRoomsWithFilters(
                 roomsApi,
                 this.session.getAccountId(),
                 args.getStartDate(),
                 args.getEndDate());
-
+        //ds-snippet-end:Rooms5Step4
+        
         DoneExample.createDefault(this.title)
                 .withJsonObject(rooms)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)

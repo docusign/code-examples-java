@@ -51,14 +51,18 @@ public class R003ControllerExportingDataFromRoom extends AbstractRoomsController
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
         // Step 2: Construct your API headers
+        //ds-snippet-start:Rooms3Step2
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
+        //ds-snippet-end:Rooms3Step2
 
         // Step 3: Call the v2 Rooms API
+        //ds-snippet-start:Rooms3Step3
         FieldData fieldData = ExportingDataFromRoomService.exportDataFromRoom(
                 roomsApi,
                 this.session.getAccountId(),
                 args.getRoomId());
-
+        //ds-snippet-end:Rooms3Step3
+        
         DoneExample.createDefault(this.title)
                 .withJsonObject(fieldData)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
