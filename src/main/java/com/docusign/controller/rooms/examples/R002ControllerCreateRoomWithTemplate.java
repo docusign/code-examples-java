@@ -45,11 +45,12 @@ public class R002ControllerCreateRoomWithTemplate extends AbstractRoomsControlle
         super.onInitModel(args, model);
 
         // Step 3: Retrieve a Rooms Template ID
+        //ds-snippet-start:Rooms2Step3
         RoomTemplatesApi templatesApi = createRoomTemplatesApiClient(
                 this.session.getBasePath(),
                 this.user.getAccessToken());
         RoomTemplatesSummaryList templatesSummaryList = templatesApi.getRoomTemplates(this.session.getAccountId());
-
+        //ds-snippet-end:Rooms2Step3
         model.addAttribute(MODEL_TEMPLATES_LIST, templatesSummaryList.getRoomTemplates());
     }
 
@@ -61,9 +62,12 @@ public class R002ControllerCreateRoomWithTemplate extends AbstractRoomsControlle
                 this.session.getAccountId());
 
         // Step 2: Construct your API headers
+        //ds-snippet-start:Rooms2Step2
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
+        //ds-snippet-end:Rooms2Step2
 
         // Step 4: Call the v2 Rooms API
+        //ds-snippet-start:Rooms2Step4
         Room createdRoom = CreateRoomWithTemplateService.createRoomFromModel(
                 roomsApi,
                 this.session.getAccountId(),
@@ -71,7 +75,7 @@ public class R002ControllerCreateRoomWithTemplate extends AbstractRoomsControlle
                         adminRole.getRoleId(),
                         args.getRoomName(),
                         args.getRoomTemplateId()));
-
+        //ds-snippet-end:Rooms2Step4
         DoneExample.createDefault(this.title)
                 .withJsonObject(createdRoom)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText

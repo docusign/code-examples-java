@@ -63,11 +63,14 @@ public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsCo
 
         
         // Step 2. Construct your API headers
+        //ds-snippet-start:Rooms6Step2
         ExternalFormFillSessionsApi externalFormFillSessionsApi = createExternalFormFillSessionsApiClient(
                 this.session.getBasePath(), this.user.getAccessToken()
         );
+        //ds-snippet-end:Rooms6Step2
 
         // Step 3. Call the v2 Rooms API
+        //ds-snippet-start:Rooms6Step3
         ExternalFormFillSession externalFormFillSession = CreateExternalFormFillSessionService
                 .createExternalFormFillSession(
                     externalFormFillSessionsApi,
@@ -76,6 +79,7 @@ public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsCo
                     args.getRoomId(),
                     "http://localhost:8080"
                 );
+        //ds-snippet-end:Rooms6Step3
 
         DoneExample.createDefault(this.title)
                 .withMessage(getTextForCodeExample().ResultsPageText)

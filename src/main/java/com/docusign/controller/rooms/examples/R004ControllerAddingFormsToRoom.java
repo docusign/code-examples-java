@@ -48,6 +48,7 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
         // Step 3. Obtain the desired form ID
+        //ds-snippet-start:Rooms4Step3
         GetRoomsOptions gro = roomsApi.new GetRoomsOptions();
         gro.setCount(5);
         RoomSummaryList roomSummaryList = roomsApi.getRooms(this.session.getAccountId(), gro); 
@@ -55,6 +56,8 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
         List<FormSummary> forms = GetFormSummaryListService.getFormSummaryList(
                 createFormLibrariesApi(session.getBasePath(), this.user.getAccessToken()),
                 this.session.getAccountId());
+
+        //ds-snippet-end:Rooms4Step3
         model.addAttribute(MODEL_ROOM_LIST, roomSummaryList.getRooms());
         model.addAttribute(MODEL_FORM_LIST, forms);
     }
@@ -64,15 +67,19 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
         // Step 2. Construct your API headers
+        //ds-snippet-start:Rooms4Step2
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
-        
+        //ds-snippet-end:Rooms4Step2
+
         // Step 4. Call the v2 Rooms API
+        //ds-snippet-start:Rooms4Step4
         RoomDocument roomDocument = AddingFormsToRoomService.addFormsToRoom(
                 roomsApi,
                 this.session.getAccountId(),
                 args.getFormId(),
                 args.getRoomId());
-
+        //ds-snippet-end:Rooms4Step4
+        
         DoneExample.createDefault(this.title)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
                 .withJsonObject(roomDocument)

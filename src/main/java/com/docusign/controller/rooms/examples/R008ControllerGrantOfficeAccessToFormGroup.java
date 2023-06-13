@@ -43,18 +43,20 @@ public class R008ControllerGrantOfficeAccessToFormGroup extends AbstractRoomsCon
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
 
+        //ds-snippet-start:Rooms8Step2
         this.formGroupsApi = createFormGroupsApi(
                 this.session.getBasePath(), this.user.getAccessToken()
         );
+        //ds-snippet-end:Rooms8Step2
 
-        // Step 3 Start
+        //ds-snippet-start:Rooms8Step3
         OfficesApi officesApi = createOfficesApiClient(this.session.getBasePath(), this.user.getAccessToken());
         OfficeSummaryList officeSummaryList = officesApi.getOffices(this.session.getAccountId());
-        // Step 3 End
+        //ds-snippet-end:Rooms8Step3
 
-        // Step 4 Start
+        //ds-snippet-start:Rooms8Step4
         FormGroupSummaryList formGroupSummaryList = formGroupsApi.getFormGroups(this.session.getAccountId());
-        // Step 4 End
+        //ds-snippet-end:Rooms8Step4
 
         model.addAttribute(MODEL_FORM_GROUP_LIST, formGroupSummaryList.getFormGroups());
         model.addAttribute(MODEL_OFFICE_LIST, officeSummaryList.getOfficeSummaries());
@@ -66,13 +68,13 @@ public class R008ControllerGrantOfficeAccessToFormGroup extends AbstractRoomsCon
                             HttpServletResponse response) throws IOException, ApiException {
 
         try {
-            // Step 5 Start
+            //ds-snippet-start:Rooms8Step5
             GrantOfficeAccessToFormGroupService.grantOfficeAccessToFormGroup(
                     this.formGroupsApi,
                     this.session.getAccountId(),
                     args.getFormGroupId(),
                     args.getOfficeId());
-            // Step 5 End
+        //ds-snippet-end:Rooms8Step5
 
             DoneExample.createDefault(this.title)
                     .withMessage(getTextForCodeExampleByApiType().ResultsPageText

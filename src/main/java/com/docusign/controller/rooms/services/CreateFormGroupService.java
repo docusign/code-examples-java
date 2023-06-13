@@ -11,13 +11,13 @@ public final class CreateFormGroupService {
             String accountId,
             String formGroupName
     ) throws ApiException {
-        // Step 3 Start
+        //ds-snippet-start:Rooms7Step3
         FormGroupForCreate formGroupForCreate = new FormGroupForCreate()
                 .name(formGroupName);
-        // Step 3 End
+        //ds-snippet-end:Rooms7Step3
 
-        // Step 4 Start
+        //ds-snippet-start:Rooms7Step4
         return formGroupsApi.createFormGroup(accountId, formGroupForCreate);
-        // Step 4 End
+        //ds-snippet-end:Rooms7Step4
     }
 }

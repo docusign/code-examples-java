@@ -46,14 +46,20 @@ public class R001ControllerCreateRoom extends AbstractRoomsController {
                 this.session.getAccountId());
                 System.out.println("output b");
         // Step 2: Construct your API headers
+        //ds-snippet-start:Rooms1Step2
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
+        //ds-snippet-end:Rooms1Step2
         System.out.println("output c");
+
         // Step 3: Call the v2 Rooms API
+        //ds-snippet-start:Rooms1Step3
         Room createdRoom = CreateRoomService.createRoomFromModel(
                 roomsApi,
                 this.session.getAccountId(),
                 CreateRoomService.createRoomModel(adminRole.getRoleId(), args.getRoomName()));
                 System.out.println("output d");
+        //ds-snippet-end:Rooms1Step3
+        
         DoneExample.createDefault(this.title)
                 .withJsonObject(createdRoom)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText
