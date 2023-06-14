@@ -38,24 +38,23 @@ public class A003BulkExportUserData extends AbstractAdminController {
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
-        // Step 3 start
+        //ds-snippet-start:Admin3Step3
         BulkExportsApi bulkExportsApi = createBulkExportsApi(this.user.getAccessToken(), this.session.getBasePath());
 
         OrganizationExportResponse bulkList = BulkExportUserDataService.createUserListExport(
                 bulkExportsApi,
                 this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()));
-        // Step 3 end
+        //ds-snippet-end:Admin3Step3
 
         TimeUnit.SECONDS.sleep(30);
 
-        // Step 4 start
+        //ds-snippet-start:Admin3Step4
         OrganizationExportResponse data = BulkExportUserDataService.bulkExportUserData(
                 bulkExportsApi,
                 this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()),
                 bulkList.getId());
-        // Step 4 end
+        //ds-snippet-end:Admin3Step4
 
-        // Step 5 start
         String saveFilePath = "";
 
         if (!data.getResults().isEmpty()) {
