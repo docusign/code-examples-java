@@ -27,7 +27,7 @@
         <commonsio.version>2.11.0</commonsio.version>
 
         <esignature.version>4.3.0</esignature.version>
-        <rooms.version>1.4.2</rooms.version>
+        <rooms.version>1.4.3</rooms.version>
         <click.version> 1.4.0</click.version>
         <monitor.version>1.3.0</monitor.version>
         <admin.version>1.2.0</admin.version>
