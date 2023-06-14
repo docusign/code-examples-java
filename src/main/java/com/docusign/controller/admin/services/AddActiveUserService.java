@@ -19,6 +19,7 @@ public  class AddActiveUserService {
             UUID organizationId,
             UUID accountId) throws Exception
     {
+        //ds-snippet-start:Admin1Step5
         java.util.List<GroupRequest> groups = new ArrayList<>();
         groups.add(new GroupRequest().id(Long.valueOf(groupId)));
 
@@ -39,10 +40,10 @@ public  class AddActiveUserService {
                 .firstName(firstName)
                 .lastName(lastName)
                 .autoActivateMemberships(true);
-        // Step 5 end
+        //ds-snippet-end:Admin1Step5
 
-        // Step 6 start
+        //ds-snippet-start:Admin1Step6
         return usersApi.createUser(organizationId, accountUserRequest);
-        // Step 6 end
+        //ds-snippet-end:Admin1Step6
     }
 }

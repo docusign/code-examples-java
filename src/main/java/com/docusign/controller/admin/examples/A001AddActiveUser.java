@@ -46,14 +46,17 @@ public class A001AddActiveUser extends AbstractAdminController {
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
 
         try {
-            
-     
+
+
         super.onInitModel(args, model);
         System.out.println("super called");
+        //ds-snippet-start:Admin1Step2
         ApiClient apiClient = new ApiClient("https://demo.docusign.net/restapi");
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + user.getAccessToken());
+        //ds-snippet-start:Admin1Step2
         System.out.println("API client called");
-        // Step 3 start
+
+        //ds-snippet-start:Admin1Step3
         AccountsApi accountsApi = new AccountsApi(apiClient);
         System.out.println(this.user.getAccessToken());
         System.out.println(this.session.getBasePath());
@@ -63,14 +66,14 @@ public class A001AddActiveUser extends AbstractAdminController {
         UUID accountId = this.getExistingAccountId(this.user.getAccessToken(), this.session.getBasePath(), orgId);
         System.out.println("An accountID: "+ accountId);
         PermissionProfileInformation permissionsInfo = accountsApi.listPermissions(String.valueOf(accountId));
-        // Step 3 end
+        //ds-snippet-end:Admin1Step3
         System.out.println("and permissions info too: " + permissionsInfo);
         model.addAttribute(MODEL_LIST_PROFILES, permissionsInfo.getPermissionProfiles());
 
-        // Step 4 start
+        //ds-snippet-start:Admin1Step4
         GroupsApi groupsApi = new GroupsApi(apiClient);
         GroupInformation groupInformation = groupsApi.listGroups(String.valueOf(accountId));
-        // Step 4 end
+        //ds-snippet-end:Admin1Step4
 
         model.addAttribute(MODEL_LIST_GROUPS, groupInformation.getGroups());
 
@@ -90,8 +93,9 @@ public class A001AddActiveUser extends AbstractAdminController {
         // Collect ids needed for the request
         UUID organizationId = this.getOrganizationId(accessToken, basePath);
 
-        // Step 5 start
+        //ds-snippet-start:Admin1Step5
         UUID accountId = this.getExistingAccountId(accessToken, basePath, organizationId);
+        //ds-snippet-end:Admin1Step5
         NewUserResponse result = AddActiveUserService.createNewActiveUser(
                 args.getGroupId(),
                 args.getProfileId(),
