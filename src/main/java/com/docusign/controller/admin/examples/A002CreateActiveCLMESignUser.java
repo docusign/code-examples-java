@@ -52,12 +52,12 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
         UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
         UUID accountId = this.getExistingAccountId(user.getAccessToken(), session.getBasePath(), organizationId);
 
-        // Step 3 start
+        //ds-snippet-start:Admin2Step3
         ProductPermissionProfilesApi permissionsInfo = this.createProductPermissionProfilesApi(user.getAccessToken(),
                 session.getBasePath());
         ProductPermissionProfilesResponse profiles = permissionsInfo.getProductPermissionProfiles(organizationId,
                 accountId);
-        ProductPermissionProfileResponse clmProfiles = null; 
+        ProductPermissionProfileResponse clmProfiles = null;
         ProductPermissionProfileResponse eSignProfiles = null;
         UUID clmProductId = null;
         UUID eSignProductId = null;
@@ -72,12 +72,12 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
                 eSignProfiles = eachOne;
             }
         }
-        // Step 3 end
-        
-        // Step 4 start
+        //ds-snippet-end:Admin2Step3
+
+        //ds-snippet-start:Admin2Step4
         DsGroupsApi groupsApi = this.createDSGroupsApi(user.getAccessToken(), session.getBasePath());
         DSGroupListResponse groups = groupsApi.getDSGroups(organizationId, accountId);
-        // Step 4 end
+        //ds-snippet-end:Admin2Step4
 
         // set CLM permission profiles
         model.addAttribute("listCLM", clmProfiles);

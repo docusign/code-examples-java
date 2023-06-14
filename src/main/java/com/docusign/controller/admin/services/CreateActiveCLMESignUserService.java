@@ -23,7 +23,7 @@ public class CreateActiveCLMESignUserService {
             UUID organizationId,
             UUID accountId
     ) throws Exception{
-        // Step 5 start
+        //ds-snippet-start:Admin2Step5
         ProductPermissionProfileRequest clm = new ProductPermissionProfileRequest();
         ProductPermissionProfileRequest eSign = new ProductPermissionProfileRequest();
         clm.setPermissionProfileId(clmProfileId);
@@ -46,10 +46,10 @@ public class CreateActiveCLMESignUserService {
                 .lastName(lastName)
                 .autoActivateMemberships(true)
                 .email(email);
-        // Step 5 end
+        //ds-snippet-end:Admin2Step5
 
-        // Step 6 start
+        //ds-snippet-start:Admin2Step6
         return usersApi.addOrUpdateUser(organizationId, accountId, multiProductUserAddRequest);
-        // Step 6 end
+        //ds-snippet-end:Admin2Step6
     }
 }
