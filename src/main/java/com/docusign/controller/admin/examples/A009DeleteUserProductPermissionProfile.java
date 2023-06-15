@@ -59,7 +59,7 @@ public class A009DeleteUserProductPermissionProfile extends AbstractAdminControl
 			 UsersApi usersApi = createUsersApi(this.user.getAccessToken(), this.session.getBasePath());
 			 RetrieveDocuSignProfileByEmailAddress.getDocuSignProfileByEmailAddress(usersApi, organizationId, emailAddress);
 
-       //ds-snippet-start:Admin9Step3
+       		//ds-snippet-start:Admin9Step3
 			 ProductPermissionProfilesApi productPermissionProfilesApi = this.createProductPermissionProfilesApi(
 				    user.getAccessToken(),
 				    session.getBasePath()
@@ -117,14 +117,14 @@ public class A009DeleteUserProductPermissionProfile extends AbstractAdminControl
 			 this.user.getAccessToken(),
 			 this.session.getBasePath());
 
-     //ds-snippet-start:Admin9Step5
+    	//ds-snippet-start:Admin9Step5
 	   RemoveUserProductsResponse removeUserProductsRepsonse = DeleteUserProductPermissionProfileById.deleteUserProductPermissionProfile(
 			 productPermissionProfilesApi,
 			 args.getProductId(),
 			 this.session.getEmailAddress(),
 			 organizationId,
 			 existingAccountId);
-		 //ds-snippet-end:Admin9Step5
+		//ds-snippet-end:Admin9Step5
 	   DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
 			 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
 			 .withJsonObject(removeUserProductsRepsonse)
