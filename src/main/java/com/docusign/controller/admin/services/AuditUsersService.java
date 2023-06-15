@@ -24,7 +24,7 @@ public class AuditUsersService {
     ) throws ApiException {
         ArrayList<UserDrilldownResponse> auditedUsers = new ArrayList<>();
 
-        // Step 3 start
+        //ds-snippet-start:Admin5Step3
         UsersApi.GetUsersOptions options = usersApi.new GetUsersOptions();
         options.setAccountId(accountId);
         TimeZone tz = TimeZone.getTimeZone(timeZoneId);
@@ -35,16 +35,16 @@ public class AuditUsersService {
         String nowAsISO = df.format(new Date(System.currentTimeMillis() - tenDaysBeforeToday));
         options.setLastModifiedSince(nowAsISO);
         OrganizationUsersResponse modifiedUsers = usersApi.getUsers(organizationId, options);
-        // Step 3 end
+        //ds-snippet-end:Admin5Step3
 
-        // Step 5 start
+        //ds-snippet-start:Admin5Step5
         for (OrganizationUserResponse user : modifiedUsers.getUsers()) {
             UsersApi.GetUserProfilesOptions profilesOptions = usersApi.new GetUserProfilesOptions();
             profilesOptions.setEmail(user.getEmail());
             UsersDrilldownResponse res = usersApi.getUserProfiles(organizationId, profilesOptions);
             auditedUsers.add(res.getUsers().get(0));
         }
-        // Step 5 end
+        //ds-snippet-end:Admin5Step5
 
         return auditedUsers;
     }
