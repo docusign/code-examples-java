@@ -67,7 +67,7 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
 
         // Clear the import ID to remove 'Check Status link' from the results page
         this.session.setImportId(null);
-        
+
         // Process results
         DoneExample
                 .createDefault(getTextForCodeExampleByApiType().ExampleName)
@@ -80,12 +80,12 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
     protected OrganizationImportResponse checkRequestStatus(String accessToken) throws Exception {
         // Create a bulk exports api instance
         BulkImportsApi bulkImportsApi = createBulkImportsApi(accessToken, this.session.getBasePath());
-        // Step 4a start
+        //ds-snippet-start:Admin4Step4
         return CheckImportRequestStatusService.checkRequestStatus(
                 bulkImportsApi,
                 this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath()),
                 UUID.fromString(this.session.getImportId()));
-        // Step 4a end
+        //ds-snippet-end:Admin4Step4
     }
-    
+
 }

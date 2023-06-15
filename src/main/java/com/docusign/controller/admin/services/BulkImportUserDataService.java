@@ -14,11 +14,11 @@ public class BulkImportUserDataService {
         UUID accountId
     ) throws Exception{
         // Make sure you're using a verified domain for auto-activation to work properly
-        // Step 3 start
+        //ds-snippet-start:Admin4Step3
         String csvUserData = String.format(BULK_IMPORT_TEXT, accountId, accountId);
         byte[] csvDataInBytes = csvUserData.getBytes(StandardCharsets.UTF_8);
 
         return bulkImportsApi.createBulkImportSingleAccountAddUsersRequest(organizationId, accountId, csvDataInBytes);
-        // Step 3 end
+        //ds-snippet-end:Admin4Step3
     }
 }
