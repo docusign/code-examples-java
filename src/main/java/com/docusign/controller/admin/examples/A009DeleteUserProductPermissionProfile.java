@@ -58,7 +58,8 @@ public class A009DeleteUserProductPermissionProfile extends AbstractAdminControl
 
 			 UsersApi usersApi = createUsersApi(this.user.getAccessToken(), this.session.getBasePath());
 			 RetrieveDocuSignProfileByEmailAddress.getDocuSignProfileByEmailAddress(usersApi, organizationId, emailAddress);
-             //Step 3 start
+
+       //ds-snippet-start:Admin9Step3
 			 ProductPermissionProfilesApi productPermissionProfilesApi = this.createProductPermissionProfilesApi(
 				    user.getAccessToken(),
 				    session.getBasePath()
@@ -68,7 +69,7 @@ public class A009DeleteUserProductPermissionProfile extends AbstractAdminControl
 			 userProductPermissionProfilesByEmailOptions.setEmail(emailAddress);
 			 UserProductPermissionProfilesResponse userProductPermissionProfilesByEmail = productPermissionProfilesApi
 				    .getUserProductPermissionProfilesByEmail(organizationId, existingAccountId, userProductPermissionProfilesByEmailOptions);
-			 //Step 3 end
+			 //ds-snippet-end:Admin9Step3
 			 for (ProductPermissionProfileResponse profileResponse : userProductPermissionProfilesByEmail.getProductPermissionProfiles()) {
 				if (profileResponse.getProductName().equals("CLM")) {
 				    clmProfiles = profileResponse
@@ -115,14 +116,15 @@ public class A009DeleteUserProductPermissionProfile extends AbstractAdminControl
 	   ProductPermissionProfilesApi productPermissionProfilesApi = createProductPermissionProfilesApi(
 			 this.user.getAccessToken(),
 			 this.session.getBasePath());
-	   //Step 5 start
+
+     //ds-snippet-start:Admin9Step5
 	   RemoveUserProductsResponse removeUserProductsRepsonse = DeleteUserProductPermissionProfileById.deleteUserProductPermissionProfile(
 			 productPermissionProfilesApi,
 			 args.getProductId(),
 			 this.session.getEmailAddress(),
 			 organizationId,
 			 existingAccountId);
-		//Step 5 end
+		 //ds-snippet-end:Admin9Step5
 	   DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
 			 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
 			 .withJsonObject(removeUserProductsRepsonse)
