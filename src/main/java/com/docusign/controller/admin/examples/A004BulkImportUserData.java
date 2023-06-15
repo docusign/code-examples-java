@@ -43,7 +43,7 @@ public class A004BulkImportUserData extends AbstractAdminController {
         OrganizationImportResponse result = bulkImportUserData(this.user.getAccessToken());
 
         this.session.setImportId(result.getId().toString());
-        
+
         // Process results
         DoneExample
                 .createDefault(getTextForCodeExampleByApiType().ExampleName)
@@ -58,10 +58,10 @@ public class A004BulkImportUserData extends AbstractAdminController {
         UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
         UUID accountId = this.getExistingAccountId(accessToken, this.session.getBasePath(), organizationId);
         // Make sure you're using a verified domain for auto-activation to work properly
-        // Step 3 start
+        //ds-snippet-start:Admin4Step3
         BulkImportsApi bulkImportsApi = createBulkImportsApi(accessToken, this.session.getBasePath());
-        
+
         return BulkImportUserDataService.bulkImportUserData(bulkImportsApi, organizationId, accountId);
-        // Step 3 end
+        //ds-snippet-end:Admin4Step3
     }
 }
