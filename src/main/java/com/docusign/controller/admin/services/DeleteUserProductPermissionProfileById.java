@@ -20,7 +20,7 @@ public class DeleteUserProductPermissionProfileById {
 	   var userProductProfileDeleteRequest = new UserProductProfileDeleteRequest();
 	   userProductProfileDeleteRequest.setProductIds(Collections.singletonList(productId));
 	   userProductProfileDeleteRequest.setUserEmail(emailAddress);
-	   //ds-snippet-start:Admin9Step4
+	   //ds-snippet-end:Admin9Step4
 
 	   return productPermissionProfilesApi.removeUserProductPermission(
 			 organizationId,
