@@ -33,12 +33,12 @@ public class A007RetrieveDocuSignProfileByUserID extends AbstractAdminController
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
         UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
-        // Step 3 start
+        //ds-snippet-start:Admin7Step3
         UsersApi usersApi = createUsersApi(this.user.getAccessToken(), this.session.getBasePath());
 
         UsersDrilldownResponse usersResponse = RetrieveDocuSignProfileByUserId.
                 getDocuSignProfileByUserId(usersApi, organizationId, args.getUserId());
-        // Step 3 end
+        //ds-snippet-end:Admin7Step3
         DoneExample
                 .createDefault(getTextForCodeExampleByApiType().ExampleName)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
