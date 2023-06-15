@@ -33,11 +33,11 @@ public class A006RetrieveDocuSignProfileByEmailAddress extends AbstractAdminCont
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
         UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
-        // Step 3 start
+        //ds-snippet-start:Admin6Step3
         UsersApi usersApi = createUsersApi(this.user.getAccessToken(), this.session.getBasePath());
         UsersDrilldownResponse usersResponse = RetrieveDocuSignProfileByEmailAddress
                 .getDocuSignProfileByEmailAddress(usersApi, organizationId, args.getEmail());
-        // Step 3 end
+        //ds-snippet-end:Admin6Step3
         DoneExample
                 .createDefault(getTextForCodeExampleByApiType().ExampleName)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
