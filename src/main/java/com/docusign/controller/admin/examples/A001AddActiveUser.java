@@ -53,7 +53,7 @@ public class A001AddActiveUser extends AbstractAdminController {
         //ds-snippet-start:Admin1Step2
         ApiClient apiClient = new ApiClient("https://demo.docusign.net/restapi");
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + user.getAccessToken());
-        //ds-snippet-start:Admin1Step2
+        //ds-snippet-end:Admin1Step2
         System.out.println("API client called");
 
         //ds-snippet-start:Admin1Step3
