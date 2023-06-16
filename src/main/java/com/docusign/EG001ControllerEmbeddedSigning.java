@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /**
- * Use embedded signing.<br/>
+ * Use embedded signing.
  * This example sends an envelope, and then uses embedded signing
  * for the first signer. Embedded signing provides a smoother user experience
  * for the signer: the DocuSign signing is initiated from your site.
@@ -62,7 +62,8 @@ public class EG001ControllerEmbeddedSigning extends AbstractEsignatureController
         String signerEmail = args.getSignerEmail();
         String accountId = session.getAccountId();
 
-        // Step 1. Create the envelope definition
+        // Create the envelope definition
+        //ds-snippet-start:eSign1Step3
         EnvelopeDefinition envelope = EmbeddedSigningService.makeEnvelope(
                 signerEmail,
                 signerName,
@@ -72,13 +73,15 @@ public class EG001ControllerEmbeddedSigning extends AbstractEsignatureController
                 DOCUMENT_FILE_NAME,
                 DOCUMENT_NAME);
 
-        // Step 2. Call DocuSign to create the envelope
+        // Call DocuSign to create the envelope
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
 
         String envelopeId = EmbeddedSigningService.createEnvelope(apiClient, session.getAccountId(), envelope);
+        //ds-snippet-end
         session.setEnvelopeId(envelopeId);
 
-        // Step 3. create the recipient view, the embedded signing
+        // Create the recipient view, the embedded signing
+        //ds-snippet-start:eSign1Step5
         RecipientViewRequest viewRequest = EmbeddedSigningService.makeRecipientViewRequest(
                 signerEmail,
                 signerName,
@@ -93,10 +96,11 @@ public class EG001ControllerEmbeddedSigning extends AbstractEsignatureController
                 viewRequest
         );
 
-        // Step 4. Redirect the user to the embedded signing
+        // Redirect the user to the embedded signing
         // Don't use an iFrame!
         // State can be stored/recovered using the framework's session or a
         // query parameter on the returnUrl (see the makeRecipientViewRequest method)
         return new RedirectView(viewUrl.getUrl());
+        //ds-snippet-end
     }
 }
