@@ -82,8 +82,8 @@ public class DSConfiguration {
     
     public String apiTypeHeader = "ApiType";
 
-    @Value("${ESignatureManifest}")
-    private String eSignatureManifest;
+    @Value("${CodeExamplesManifest}")
+    private String codeExamplesManifest;
 
     public String getDsReturnUrl() {
         return appUrl + "/ds-return";
@@ -99,7 +99,7 @@ public class DSConfiguration {
         }
 
         try {
-            String json = loadFileData(eSignatureManifest);
+            String json = loadFileData(codeExamplesManifest);
             codeExamplesText = new ObjectMapper().readValue(json, ManifestStructure.class);
         } catch (JSONException | IOException e){
             e.printStackTrace();
