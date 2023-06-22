@@ -2,8 +2,11 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.core.model.User;
+import com.docusign.core.model.manifestModels.APIs;
 import com.docusign.core.model.manifestModels.CodeExampleText;
 import com.docusign.core.model.Session;
+import com.docusign.core.model.manifestModels.ManifestGroup;
 import com.docusign.esign.client.ApiClient;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Objects;
 import java.util.Arrays;
 
@@ -36,9 +40,12 @@ public abstract class AbstractEsignatureController {
     private static final String EXAMPLE_PAGES_PATH = "pages/esignature/examples/";
     private static final String EXAMPLE_TEXT = "example";
     private static final String LAUNCHER_TEXTS = "launcherTexts";
+    protected final User user;
 
-    public AbstractEsignatureController(DSConfiguration config, String exampleName) {
+    public AbstractEsignatureController(DSConfiguration config, String exampleName, Session session, User user) {
         this.config = config;
+        this.session = session;
+        this.user = user;
         this.exampleName = exampleName;
         this.pagePath = this.getExamplePagesPath() + exampleName;
     }
@@ -119,13 +126,14 @@ public abstract class AbstractEsignatureController {
     }
 
     protected CodeExampleText GetExampleText() {
-        var groups = config.getCodeExamplesText().Groups;
+        List<ManifestGroup> eSignatureManifestGroups = config.getCodeExamplesText().APIs.stream()
+                .filter(x -> "esignature".contains(((APIs) x).Name.toLowerCase()))
+                .findFirst()
+                .orElse(null).Groups;
         var exampleNumberToSearch = 1;
 
-        for(var i = 0; i < groups.size(); ++i)
-        {
-            CodeExampleText codeExampleText = (CodeExampleText) Arrays
-                    .stream(groups.get(i).Examples.toArray())
+        for (ManifestGroup group : eSignatureManifestGroups) {
+            CodeExampleText codeExampleText = group.Examples.stream()
                     .filter(x -> ((CodeExampleText) x).ExampleNumber == exampleNumberToSearch)
                     .findFirst()
                     .orElse(null);
