@@ -41,14 +41,13 @@ public abstract class AbstractMonitorController extends AbstractController {
      * @param session active session
      * @return an instance of the {@link com.docusign.monitor.client.ApiClient}
      */
-    protected static ApiClient createApiClient(String accessToken, Session session) {
+    protected ApiClient createApiClient(String accessToken, Session session) {
 
-        // Step 2 start
-        ApiClient apiClient = new ApiClient(ApiClient.DEMO_REST_BASEPATH);
+        //ds-snippet-start:Monitor1Step2
+        ApiClient apiClient = new ApiClient(config.getMonitorBasePath());
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + accessToken);
-        apiClient.setBasePath(ApiClient.DEMO_REST_BASEPATH);
-
-        // Step 2 end
+        apiClient.setBasePath(config.getMonitorBasePath());
+        //ds-snippet-end:Monitor1Step2
         return apiClient;
     }
 
@@ -59,7 +58,7 @@ public abstract class AbstractMonitorController extends AbstractController {
      * @param session active session
      * @return an instance of the {@link DataSetApi}
      */
-    protected static DataSetApi createDataSetApi(String accessToken, Session session) {
+    protected DataSetApi createDataSetApi(String accessToken, Session session) {
         ApiClient apiClient = createApiClient(accessToken, session);
         return new DataSetApi(apiClient);
     }
