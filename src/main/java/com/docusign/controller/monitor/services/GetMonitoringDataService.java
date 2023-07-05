@@ -20,7 +20,7 @@ public final class GetMonitoringDataService {
         // call from the point where the previous one left off when iterating through
         // the monitoring records
         try {
-            
+            //ds-snippet-start:Monitor1Step3
             do
             {
                 if(!cursorValue.isEmpty())
@@ -44,6 +44,7 @@ public final class GetMonitoringDataService {
                 }
             }
             while (!complete);
+            //ds-snippet-end:Monitor1Step3
         }
     catch (Exception e) {
         System.out.println(e);
