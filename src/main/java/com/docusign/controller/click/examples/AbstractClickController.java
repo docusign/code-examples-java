@@ -39,7 +39,7 @@ public abstract class AbstractClickController extends AbstractController {
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + userAccessToken);
         apiClient.addAuthorization("docusignAccessCode", new OAuth());
         return apiClient;
-        //ds-snippet-start:ClickJavaStep2
+        //ds-snippet-end:ClickJavaStep2
     }
 
     /**
