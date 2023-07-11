@@ -34,10 +34,12 @@ public abstract class AbstractClickController extends AbstractController {
      * @return an instance of the {@link ApiClient}
      */
     protected static ApiClient createApiClient(String basePath, String userAccessToken) {
+        //ds-snippet-start:ClickJavaStep2
         ApiClient apiClient = new ApiClient(basePath);
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + userAccessToken);
         apiClient.addAuthorization("docusignAccessCode", new OAuth());
         return apiClient;
+        //ds-snippet-start:ClickJavaStep2
     }
 
     /**
