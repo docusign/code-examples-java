@@ -39,9 +39,11 @@ public class C004ControllerGetListClickwraps extends AbstractClickController {
         // Step 2: Construct your API headers
         AccountsApi accountsApi = createAccountsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
+        //ds-snippet-start:Click4Step3
         ClickwrapVersionsResponse clickwrapsResponse = GetListClickwrapsService.getListClickwrap(
                 accountsApi,
                 this.session.getAccountId());
+        //ds-snippet-end:Click4Step3
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(clickwrapsResponse)
@@ -49,5 +51,4 @@ public class C004ControllerGetListClickwraps extends AbstractClickController {
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
-    // ***DS.snippet.0.end
 }
