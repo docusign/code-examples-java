@@ -52,10 +52,12 @@ public class C005ControllerGetClickwrapResponses extends AbstractClickController
         AccountsApi accountsApi = createAccountsApiClient(this.session.getBasePath(), this.user.getAccessToken());
 
         // Step 3: Call the v1 Click API
+        //ds-snippet-start:Click5Step3
         ClickwrapAgreementsResponse clickwrapAgreementsResponse = GetClickwrapResponsesService.getClickwrapResponses(
                 accountsApi,
                 this.session.getAccountId(),
                 args.getClickwrapId());
+        //ds-snippet-end:Click5Step3
 
         DoneExample.createDefault(this.title)
                 .withJsonObject(clickwrapAgreementsResponse)
@@ -63,5 +65,4 @@ public class C005ControllerGetClickwrapResponses extends AbstractClickController
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
-    // ***DS.snippet.0.end
 }
