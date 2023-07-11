@@ -39,7 +39,6 @@ public class C001ControllerCreateClickwrap extends AbstractClickController {
     }
 
     @Override
-    // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
         // Step 2. Construct your API headers
