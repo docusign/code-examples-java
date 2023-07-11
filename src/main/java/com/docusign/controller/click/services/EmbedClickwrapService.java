@@ -22,6 +22,7 @@ public final class EmbedClickwrapService {
             String date
             ) throws ApiException {
 
+                //ds-snippet-start:Click6Step3
                 UserAgreementRequest userAgreementRequest = new UserAgreementRequest();
                 userAgreementRequest.setClientUserId(email);
                 Map<String, String> documentData = new HashMap<String, String>();
@@ -31,6 +32,8 @@ public final class EmbedClickwrapService {
                 documentData.put("title", title);
                 documentData.put("date", date);
                 userAgreementRequest.setDocumentData(documentData);
+                //ds-snippet-end:Click6Step3
+                //ds-snippet-start:Click6Step4
                 ApiResponse<UserAgreementResponse> response = accountsApi.createHasAgreedWithHttpInfo(accountId, clickwrapId, userAgreementRequest);
 
                 if (response.getStatusCode() == 201)
@@ -41,6 +44,7 @@ public final class EmbedClickwrapService {
                 {
                     return "Already Agreed";
                 }
+                //ds-snippet-end:Click6Step4
     }
 
     public static ClickwrapVersionsResponse getActiveClickwraps(

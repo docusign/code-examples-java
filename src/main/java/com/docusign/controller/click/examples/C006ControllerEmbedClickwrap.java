@@ -47,7 +47,6 @@ public class C006ControllerEmbedClickwrap extends AbstractClickController {
     }
 
     @Override
-    // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws ApiException {
         // Step 2: Construct your API headers
@@ -83,5 +82,4 @@ public class C006ControllerEmbedClickwrap extends AbstractClickController {
             return DONE_EXAMPLE_PAGE;
         }
     }
-    // ***DS.snippet.0.end
 }
