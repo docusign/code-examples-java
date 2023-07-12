@@ -18,12 +18,15 @@ public final class CreateNewVersionClickwrapService {
             String clickwrapId
     ) throws ApiException {
         // Step 4: Call the v1 Click API
+        //ds-snippet-start:Click3Step4
         return accountsApi.createClickwrapVersion(
                 accountId,
                 clickwrapId,
                 clickwrapRequest);
+        //ds-snippet-end:Click3Step4
     }
 
+    //ds-snippet-start:Click3Step3
     public static ClickwrapRequest createClickwrapRequest(
             String fileName,
             String documentName,
@@ -47,4 +50,5 @@ public final class CreateNewVersionClickwrapService {
                 .status(ClickwrapHelper.STATUS_ACTIVE)
                 .displaySettings(displaySettings);
     }
+    //ds-snippet-end:Click3Step3
 }
