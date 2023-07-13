@@ -12,20 +12,23 @@ import com.docusign.esign.model.ViewUrl;
 import java.io.IOException;
 
 public final class EmbeddedSendingService {
+    //ds-snippet-start:eSign11Step3
     public static ViewUrl createSenderView(
         EnvelopesApi envelopesApi,
         String accountId,
         String envelopeId,
         String dsReturnUrl
     ) throws ApiException {
-        // Step 2. Create the sender view.
+        // Create the sender view.
         // Set the url where you want the recipient to go once they are done
         // signing should typically be a callback route somewhere in your app.
         ReturnUrlRequest viewRequest = new ReturnUrlRequest();
         viewRequest.setReturnUrl(dsReturnUrl);
         return envelopesApi.createSenderView(accountId, envelopeId, viewRequest);
     }
+    //ds-snippet-end:eSign11Step3
 
+    //ds-snippet-start:eSign11Step2
     public static EnvelopeSummary createEnvelopeWithDraftStatus(
         EnvelopesApi envelopesApi,
         String signerEmail,
@@ -46,4 +49,5 @@ public final class EmbeddedSendingService {
             args);
         return envelopesApi.createEnvelope(accountId, env);
     }
+    //ds-snippet-end:eSign11Step2
 }
