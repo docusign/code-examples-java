@@ -51,7 +51,9 @@ public class EG017ControllerSetTemplateTabValues extends AbstractEsignatureContr
         String templateId = args.getTemplateId();
 
         // Step 2. Construct your API headers
+        //ds-snippet-start:eSign17Step2
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
+        //ds-snippet-end:eSign17Step2
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
         
         // Step 3. is shown in the makeEnvelope method below
@@ -65,9 +67,11 @@ public class EG017ControllerSetTemplateTabValues extends AbstractEsignatureContr
                 SIGNER_CLIENT_ID);
 
         // Step 5. Call the eSignature REST API
+        //ds-snippet-start:eSign17Step5
         EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
         String envelopeId = envelopeSummary.getEnvelopeId();
         session.setEnvelopeId(envelopeId);
+        //ds-snippet-end:eSign17Step5
 
         // Step 6. Create the view request
         RecipientViewRequest viewRequest = SetTemplateTabValuesService.makeRecipientViewRequest(
