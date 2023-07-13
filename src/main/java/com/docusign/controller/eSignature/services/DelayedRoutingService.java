@@ -35,8 +35,7 @@ public class DelayedRoutingService {
 	   // both document 2 and 3 since they use the same anchor string for
 	   // their "signer 1" tabs.
 
-	   // Step 2 start
-
+	   //ds-snippet-start:eSign36Step2
 	   Tabs signer1Tabs = EnvelopeHelpers.createSignerTabs(
 			 EnvelopeHelpers.createSignHere("/sn1/", ANCHOR_OFFSET_Y, ANCHOR_OFFSET_X));
 
@@ -95,7 +94,7 @@ public class DelayedRoutingService {
 	   envelope.setStatus(status);
 
 	   return envelope;
-
-	   // Step 2 end
+	   //ds-snippet-end:eSign36Step2
+	   
     }
 }

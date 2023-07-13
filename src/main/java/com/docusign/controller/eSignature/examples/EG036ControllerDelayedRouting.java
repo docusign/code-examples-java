@@ -69,9 +69,9 @@ public class EG036ControllerDelayedRouting extends AbstractEsignatureController 
                 args.getDelay(),
                 args.getStatus());
 
-        // Step 3 start
+        //ds-snippet-start:eSign36Step3
         EnvelopeSummary results = envelopesApi.createEnvelope(session.getAccountId(), envelope);
-        // Step 3 end
+        //ds-snippet-end:eSign36Step3
 
 
         // process results
