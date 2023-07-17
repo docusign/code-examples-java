@@ -1,28 +1,17 @@
 package com.docusign.controller.admin.examples;
 
 import com.docusign.DSConfiguration;
-import com.docusign.admin.api.AccountsApi;
-import com.docusign.admin.api.BulkExportsApi;
-import com.docusign.admin.api.BulkImportsApi;
-import com.docusign.admin.api.DsGroupsApi;
-import com.docusign.admin.api.ProductPermissionProfilesApi;
-import com.docusign.admin.api.UsersApi;
+import com.docusign.admin.api.*;
 import com.docusign.admin.api.UsersApi.GetUserProfilesOptions;
 import com.docusign.admin.client.ApiClient;
 import com.docusign.admin.client.ApiException;
-import com.docusign.admin.client.auth.AccessTokenListener;
-import com.docusign.admin.client.auth.OAuth.Account;
-import com.docusign.admin.client.auth.OAuth.Organization;
-import com.docusign.admin.model.OrganizationAccountsRequest;
 import com.docusign.admin.model.OrganizationsResponse;
-import com.docusign.admin.model.ProductPermissionProfileResponse;
 import com.docusign.admin.model.UsersDrilldownResponse;
 import com.docusign.core.controller.AbstractController;
-import com.docusign.core.model.Session;
-import com.docusign.esign.api.GroupsApi;
-//import com.docusign.esign.client.ApiClient;
-import com.docusign.esign.api.OrganizationsApi;
 import java.util.UUID;
+
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 
@@ -33,11 +22,15 @@ import org.springframework.stereotype.Controller;
 public abstract class AbstractAdminController extends AbstractController {
 
   private final DSConfiguration configuration;
+  protected final User user;
+  protected final Session session;
   private static final String EXAMPLE_PAGES_PATH = "pages/admin/examples/";
 
-  public AbstractAdminController(DSConfiguration config, String exampleName) {
+  public AbstractAdminController(DSConfiguration config, String exampleName, User user, Session session) {
     super(config, exampleName);
     this.configuration = config;
+    this.user = user;
+    this.session = session;
   }
 
   protected String getExamplePagesPath() {
@@ -77,7 +70,40 @@ public abstract class AbstractAdminController extends AbstractController {
     String basePath
   ) {
     ApiClient apiClient = createApiClient(accessToken, basePath);
+    apiClient.addDefaultHeader("Content-Type", "application/json");
     return new UsersApi(apiClient);
+  }
+
+  /**
+   * Creates a new instance of the AccountsApi. This method
+   * creates an instance of the AccountsApi class silently.
+   * @param accessToken user's access token
+   * @param basePath basePath to the server
+   * @return an instance of the {@link AccountsApi}
+   */
+  protected static AccountsApi createAccountsApi(
+          String accessToken,
+          String basePath
+  ) {
+    ApiClient apiClient = createApiClient(accessToken, basePath);
+    apiClient.addDefaultHeader("Content-Type", "application/json");
+    return new AccountsApi(apiClient);
+  }
+
+  /**
+   * Creates a new instance of the OrganizationsApi. This method
+   * creates an instance of the OrganizationsApi class silently.
+   * @param accessToken user's access token
+   * @param basePath basePath to the server
+   * @return an instance of the {@link OrganizationsApi}
+   */
+  protected static OrganizationsApi createOrganizationsApi(
+          String accessToken,
+          String basePath
+  ) {
+    ApiClient apiClient = createApiClient(accessToken, basePath);
+    apiClient.addDefaultHeader("Content-Type", "application/json");
+    return new OrganizationsApi(apiClient);
   }
 
   /**

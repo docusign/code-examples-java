@@ -30,8 +30,6 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/a009")
 public class A009DeleteUserProductPermissionProfile extends AbstractAdminController {
-
-    private final User user;
     private final Hashtable<UUID, String> products = new Hashtable<>();
     public static UUID clmProductId = UUID.fromString("37f013eb-7012-4588-8028-357b39fdbd00");
     public static UUID eSignatureProductId = UUID.fromString("f6406c68-225c-4e9b-9894-64152a26fa83");
@@ -40,8 +38,7 @@ public class A009DeleteUserProductPermissionProfile extends AbstractAdminControl
 
     @Autowired
     public A009DeleteUserProductPermissionProfile(DSConfiguration config, Session session, User user) {
-	   super(config, "a009");
-	   this.user = user;
+	   super(config, "a009", user, session);
     }
 
     @Override

@@ -35,14 +35,12 @@ import java.util.UUID;
 @RequestMapping("/a008")
 public class A008UpdateUserProductPermissionProfile extends AbstractAdminController {
 
-    private final User user;
     private final Hashtable<UUID, String> products = new Hashtable<>();
     private ProductPermissionProfilesResponse productPermissionProfiles;
 
     @Autowired
     public A008UpdateUserProductPermissionProfile(DSConfiguration config, Session session, User user) {
-	   super(config, "a008");
-	   this.user = user;
+	   super(config, "a008", user, session);
     }
 
     @Override

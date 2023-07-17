@@ -32,54 +32,46 @@ public class A001AddActiveUser extends AbstractAdminController {
 
     private static final String MODEL_LIST_PROFILES = "listProfiles";
     private static final String MODEL_LIST_GROUPS = "listGroups";
-    private final User user;
-    private final Session session;
-
     @Autowired
     public A001AddActiveUser(DSConfiguration config, Session session, User user) {
-        super(config, "a001");
-        this.user = user;
-        this.session = session;
+        super(config, "a001", user, session);
     }
 
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
 
         try {
+            super.onInitModel(args, model);
+            System.out.println("super called");
+            //ds-snippet-start:Admin1Step2
+            ApiClient apiClient = new ApiClient("https://demo.docusign.net/restapi");
+            apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + user.getAccessToken());
+            //ds-snippet-end:Admin1Step2
+            System.out.println("API client called");
 
+            //ds-snippet-start:Admin1Step3
+            AccountsApi accountsApi = new AccountsApi(apiClient);
+            System.out.println(this.user.getAccessToken());
+            System.out.println(this.session.getBasePath());
 
-        super.onInitModel(args, model);
-        System.out.println("super called");
-        //ds-snippet-start:Admin1Step2
-        ApiClient apiClient = new ApiClient("https://demo.docusign.net/restapi");
-        apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + user.getAccessToken());
-        //ds-snippet-end:Admin1Step2
-        System.out.println("API client called");
+            UUID orgId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
+            System.out.println("we have an org id: "+ orgId);
+            UUID accountId = this.getExistingAccountId(this.user.getAccessToken(), this.session.getBasePath(), orgId);
+            System.out.println("An accountID: "+ accountId);
+            PermissionProfileInformation permissionsInfo = accountsApi.listPermissions(String.valueOf(accountId));
+            //ds-snippet-end:Admin1Step3
+            System.out.println("and permissions info too: " + permissionsInfo);
+            model.addAttribute(MODEL_LIST_PROFILES, permissionsInfo.getPermissionProfiles());
 
-        //ds-snippet-start:Admin1Step3
-        AccountsApi accountsApi = new AccountsApi(apiClient);
-        System.out.println(this.user.getAccessToken());
-        System.out.println(this.session.getBasePath());
+            //ds-snippet-start:Admin1Step4
+            GroupsApi groupsApi = new GroupsApi(apiClient);
+            GroupInformation groupInformation = groupsApi.listGroups(String.valueOf(accountId));
+            //ds-snippet-end:Admin1Step4
 
-        UUID orgId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
-        System.out.println("we have an org id: "+ orgId);
-        UUID accountId = this.getExistingAccountId(this.user.getAccessToken(), this.session.getBasePath(), orgId);
-        System.out.println("An accountID: "+ accountId);
-        PermissionProfileInformation permissionsInfo = accountsApi.listPermissions(String.valueOf(accountId));
-        //ds-snippet-end:Admin1Step3
-        System.out.println("and permissions info too: " + permissionsInfo);
-        model.addAttribute(MODEL_LIST_PROFILES, permissionsInfo.getPermissionProfiles());
-
-        //ds-snippet-start:Admin1Step4
-        GroupsApi groupsApi = new GroupsApi(apiClient);
-        GroupInformation groupInformation = groupsApi.listGroups(String.valueOf(accountId));
-        //ds-snippet-end:Admin1Step4
-
-        model.addAttribute(MODEL_LIST_GROUPS, groupInformation.getGroups());
-
-    } catch (Exception e) {
-        System.out.println(e.toString());
-    }
+            model.addAttribute(MODEL_LIST_GROUPS, groupInformation.getGroups());
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
     @Override
