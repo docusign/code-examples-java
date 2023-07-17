@@ -14,7 +14,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
-import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 
@@ -26,14 +25,9 @@ import java.util.UUID;
 @RequestMapping("/a004")
 public class A004BulkImportUserData extends AbstractAdminController {
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public A004BulkImportUserData(DSConfiguration config, Session session, User user) {
-        super(config, "a004");
-        this.session = session;
-        this.user = user;
+        super(config, "a004", user, session);
     }
 
     @Override

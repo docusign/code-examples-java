@@ -26,14 +26,9 @@ import java.util.UUID;
 public class A003aCheckRequestStatus extends AbstractAdminController {
     private static final String MODEL_EXPORT_OK = "exportOk";
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public A003aCheckRequestStatus(DSConfiguration config, Session session, User user) {
-        super(config, "a003a");
-        this.session = session;
-        this.user = user;
+        super(config, "a003a", user, session);
     }
 
     @Override

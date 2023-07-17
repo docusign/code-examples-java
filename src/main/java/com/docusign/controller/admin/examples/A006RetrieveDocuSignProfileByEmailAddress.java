@@ -6,6 +6,7 @@ import com.docusign.admin.model.UsersDrilldownResponse;
 import com.docusign.common.WorkArguments;
 import com.docusign.controller.admin.services.RetrieveDocuSignProfileByEmailAddress;
 import com.docusign.core.model.DoneExample;
+import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,12 +23,9 @@ import java.util.UUID;
 @RequestMapping("/a006")
 public class A006RetrieveDocuSignProfileByEmailAddress extends AbstractAdminController {
 
-    private final User user;
-
     @Autowired
-    public A006RetrieveDocuSignProfileByEmailAddress(DSConfiguration config, User user) {
-        super(config, "a006");
-        this.user = user;
+    public A006RetrieveDocuSignProfileByEmailAddress(DSConfiguration config, User user, Session session) {
+        super(config, "a006", user, session);
     }
 
     @Override

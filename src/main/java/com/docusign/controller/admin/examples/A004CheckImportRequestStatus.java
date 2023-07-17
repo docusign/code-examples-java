@@ -30,14 +30,10 @@ import java.util.UUID;
 @RequestMapping("/a004a")
 public class A004CheckImportRequestStatus extends AbstractAdminController {
     private static final String MODEL_IMPORT_OK = "importOk";
-    private final Session session;
-    private final User user;
 
     @Autowired
     public A004CheckImportRequestStatus(DSConfiguration config, Session session, User user) {
-        super(config, "a004a");
-        this.session = session;
-        this.user = user;
+        super(config, "a004a", user, session);
     }
 
     @Override

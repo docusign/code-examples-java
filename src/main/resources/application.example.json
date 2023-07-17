@@ -29,7 +29,7 @@
               "client-authentication-method": "client_secret_basic",
               "authorization-grant-type": "authorization_code",
               "redirect-uri": "{baseUrl}/login/oauth2/code/acg",
-              "scope": "user_write, signature, impersonation, group_read, organization_read, permission_read, user_read, account_read, domain_read, identity_provider_read, click.manage, click.send, dtr.rooms.read, dtr.rooms.write, dtr.documents.read, dtr.documents.write, dtr.profile.read, dtr.profile.write, dtr.company.read, dtr.company.write, room_forms"
+              "scope": "user_write, signature, impersonation, group_read, organization_read, permission_read, user_read, account_read, domain_read, identity_provider_read, user_data_redact, click.manage, click.send, dtr.rooms.read, dtr.rooms.write, dtr.documents.read, dtr.documents.write, dtr.profile.read, dtr.profile.write, dtr.company.read, dtr.company.write, room_forms"
             },
             "jwt": {
               "client-id": "{INTEGRATION_KEY_JWT}",

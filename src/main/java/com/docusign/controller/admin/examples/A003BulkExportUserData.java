@@ -26,14 +26,10 @@ import java.util.concurrent.TimeUnit;
 public class A003BulkExportUserData extends AbstractAdminController {
 
     private static final int BUFFER_SIZE = 4096;
-    private final Session session;
-    private final User user;
 
     @Autowired
     public A003BulkExportUserData(DSConfiguration config, Session session, User user) {
-        super(config, "a003");
-        this.session = session;
-        this.user = user;
+        super(config, "a003", user, session);
     }
 
     @Override
