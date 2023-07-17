@@ -20,10 +20,13 @@ public class UserDataManagementService {
 		  UUID userId,
 		  UUID accountId
     ) throws Exception {
+		//ds-snippet-start:Admin11Step3
 		IndividualMembershipDataRedactionRequest membershipDataRedaction = new IndividualMembershipDataRedactionRequest();
 		membershipDataRedaction.userId(userId);
-
+		//ds-snippet-end:Admin11Step3
+		//ds-snippet-start:Admin11Step4
 		return accountsApi.redactIndividualMembershipData(accountId, membershipDataRedaction);
+		//ds-snippet-end:Admin11Step4
     }
 
 	public IndividualUserDataRedactionResponse deleteUserDataFromOrganizationByEmail(
@@ -48,10 +51,13 @@ public class UserDataManagementService {
 			memberships.accountId(user.getMemberships().get(0).getAccountId());
 		}
 
+		//ds-snippet-start:Admin12Step3
 		IndividualUserDataRedactionRequest userRedactionRequest = new IndividualUserDataRedactionRequest();
 		userRedactionRequest.setUserId(user.getId());
 		userRedactionRequest.setMemberships(Arrays.asList(memberships));
-
+		//ds-snippet-end:Admin12Step3
+		//ds-snippet-start:Admin12Step4
 		return organizationsApi.redactIndividualUserData(organizationId, userRedactionRequest);
+		//ds-snippet-end:Admin12Step4
 	}
 }
