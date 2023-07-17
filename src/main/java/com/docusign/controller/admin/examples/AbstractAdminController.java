@@ -51,8 +51,7 @@ public abstract class AbstractAdminController extends AbstractController {
     ApiClient apiClient = new ApiClient(basePath);
     apiClient.addDefaultHeader(
       HttpHeaders.AUTHORIZATION,
-      BEARER_AUTHENTICATION + accessToken
-    );
+      BEARER_AUTHENTICATION + accessToken );
     // Step 2 end
 
     return apiClient;
