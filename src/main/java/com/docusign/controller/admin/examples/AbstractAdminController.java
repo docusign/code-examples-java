@@ -47,12 +47,12 @@ public abstract class AbstractAdminController extends AbstractController {
     String accessToken,
     String basePath
   ) {
-    // Step 2 start
+    //ds-snippet-start:AdminJavaStep2
     ApiClient apiClient = new ApiClient(basePath);
     apiClient.addDefaultHeader(
       HttpHeaders.AUTHORIZATION,
       BEARER_AUTHENTICATION + accessToken );
-    // Step 2 end
+    //ds-snippet-end:AdminJavaStep2
 
     return apiClient;
   }
@@ -192,7 +192,7 @@ public abstract class AbstractAdminController extends AbstractController {
             System.out.println("first found org id is: "+ orgId);
             session.setOrgId(orgId);
         }
-      
+
     } else {
       System.out.println("nothing found? try a 2nd way");
       orgId = session.getOrgId();
