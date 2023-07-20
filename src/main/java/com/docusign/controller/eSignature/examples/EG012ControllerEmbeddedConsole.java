@@ -41,7 +41,6 @@ public class EG012ControllerEmbeddedConsole extends AbstractEsignatureController
     }
 
     @Override
-    // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
         args.setDsReturnUrl(config.getDsReturnUrl());
 
@@ -57,5 +56,4 @@ public class EG012ControllerEmbeddedConsole extends AbstractEsignatureController
 
         return new RedirectView(viewUrl.getUrl());
     }
-    // ***DS.snippet.0.end
 }
