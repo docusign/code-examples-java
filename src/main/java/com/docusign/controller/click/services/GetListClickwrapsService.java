@@ -10,6 +10,8 @@ public final class GetListClickwrapsService {
             String accountId
     ) throws ApiException{
         // Step 3: Call the v1 Click API
+        //ds-snippet-start:Click4Step3
         return accountsApi.getClickwraps(accountId);
+        //ds-snippet-end:Click4Step3
     }
 }
