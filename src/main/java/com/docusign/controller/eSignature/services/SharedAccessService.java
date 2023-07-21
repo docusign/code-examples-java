@@ -42,6 +42,7 @@ public final class SharedAccessService {
             String agentName,
             String activation
     ) throws ApiException {
+        //ds-snippet-start:eSign43Step3
         UserInformation user = new UserInformation();
         user.email(agentEmail);
         user.userName(agentName);
@@ -51,6 +52,7 @@ public final class SharedAccessService {
         usersDefinition.addNewUsersItem(user);
 
         return usersApi.create(accountId, usersDefinition);
+        //ds-snippet-end:eSign43Step3
     }
 
     public void activateAgent(
@@ -64,6 +66,7 @@ public final class SharedAccessService {
         UserAuthorizations userAuthorizations = accountsApi.getAgentUserAuthorizations(accountId, createdUserId, options);
 
         if (userAuthorizations.getAuthorizations() == null || userAuthorizations.getAuthorizations().isEmpty() ) {
+            //ds-snippet-start:eSign43Step4
             AuthorizationUser user = new AuthorizationUser();
             user.userId(createdUserId);
             user.accountId(accountId);
@@ -73,6 +76,7 @@ public final class SharedAccessService {
             userAuthorizationCreateRequest.permission(MANAGE);
 
             accountsApi.createUserAuthorization(accountId, userId, userAuthorizationCreateRequest);
+           //ds-snippet-end:eSign43Step4
         }
     }
 
@@ -80,10 +84,12 @@ public final class SharedAccessService {
             EnvelopesApi envelopesApi,
             String accountId
     ) throws ApiException {
+        //ds-snippet-start:eSign43Step5
         EnvelopesApi.ListStatusChangesOptions options = envelopesApi.new ListStatusChangesOptions();
         LocalDate date = LocalDate.now().minusDays(FROM_DATE_OFFSET_DAYS);
         options.setFromDate(DateUtils.DATE_WITH_SLASH.format(date));
 
         return envelopesApi.listStatusChanges(accountId, options);
+        //ds-snippet-end:eSign43Step5
     }
 }
