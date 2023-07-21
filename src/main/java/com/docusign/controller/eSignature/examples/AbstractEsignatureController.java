@@ -44,8 +44,10 @@ public abstract class AbstractEsignatureController extends AbstractController {
      * @return an instance of the {@link ApiClient}
      */
     protected ApiClient createApiClient(String basePath, String userAccessToken) {
+        //ds-snippet-start:eSignJavaStep2
         ApiClient apiClient = new ApiClient(basePath);
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + userAccessToken);
+        //ds-snippet-end:eSignJavaStep2
         return apiClient;
     }
 
