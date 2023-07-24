@@ -42,7 +42,6 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
     }
 
     @Override
-    // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response)
             throws ApiException, IOException
     {
@@ -50,6 +49,7 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
         EnvelopesApi envelopesApi = createEnvelopesApi(this.session.getBasePath(), this.user.getAccessToken());
 
         // Step 3: Construct your envelope JSON body
+        //ds-snippet-start:eSign34Step3
         EnvelopeDefinition envelope = UseConditionalRecipientsService.createEnvelope(
                 args.getSignerNotCheckedName(),
                 args.getSignerNotCheckedEmail(),
@@ -58,6 +58,7 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
                 args.getSignerName(),
                 args.getSignerEmail()
         );
+        //ds-snippet-end:eSign34Step3
 
         // Step 4: Call the eSignature REST API
         try {
@@ -84,5 +85,4 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
 
         return DONE_EXAMPLE_PAGE;
     }
-    // ***DS.snippet.0.end
 }
