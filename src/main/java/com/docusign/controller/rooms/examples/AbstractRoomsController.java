@@ -45,9 +45,11 @@ public abstract class AbstractRoomsController extends AbstractController {
      * @return an instance of the {@link ApiClient}
      */
     protected static ApiClient createApiClient(String basePath, String userAccessToken) {
+        //ds-snippet-start:Rooms6Step2
         ApiClient apiClient = new ApiClient(basePath);
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + userAccessToken);
         apiClient.addAuthorization("docusignAccessCode", new OAuth());
+        //ds-snippet-end:Rooms6Step2
         return apiClient;
     }
 
