@@ -76,13 +76,14 @@ public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsCo
                 this.session.getAccountId(),
                 sessionToCreate);
         //ds-snippet-end:Rooms6Step4
-
+        //ds-snippet-start:Rooms6Step5
         DoneExample.createDefault(this.title)
                 .withMessage(getTextForCodeExample().ResultsPageText)
                 .withJsonObject(formFillSession)
                 .withFormFill(formFillSession.getUrl())
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
+        //ds-snippet-end:Rooms6Step5
     }
     // ***DS.snippet.0.end
 }
