@@ -26,9 +26,6 @@ import java.io.IOException;
 @RequestMapping("/r001")
 public class R001ControllerCreateRoom extends AbstractRoomsController {
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public R001ControllerCreateRoom(DSConfiguration config, Session session, User user) {
         super(config, "r001");
@@ -40,16 +37,16 @@ public class R001ControllerCreateRoom extends AbstractRoomsController {
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
-                                System.out.println("output a");
+
         RoleSummary adminRole = GetAdminRolesService.getAdminRole(
                 createRolesApiClient(this.session.getBasePath(), this.user.getAccessToken()),
                 this.session.getAccountId());
-                System.out.println("output b");
+
         // Step 2: Construct your API headers
         //ds-snippet-start:Rooms1Step2
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
         //ds-snippet-end:Rooms1Step2
-        System.out.println("output c");
+
 
         // Step 3: Call the v2 Rooms API
         //ds-snippet-start:Rooms1Step3
@@ -57,7 +54,6 @@ public class R001ControllerCreateRoom extends AbstractRoomsController {
                 roomsApi,
                 this.session.getAccountId(),
                 CreateRoomService.createRoomModel(adminRole.getRoleId(), args.getRoomName()));
-                System.out.println("output d");
         //ds-snippet-end:Rooms1Step3
         
         DoneExample.createDefault(this.title)

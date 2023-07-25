@@ -27,8 +27,6 @@ import java.io.IOException;
 public class R003ControllerExportingDataFromRoom extends AbstractRoomsController {
 
     private static final String MODEL_ROOM_LIST = "roomList";
-    private final Session session;
-    private final User user;
 
     @Autowired
     public R003ControllerExportingDataFromRoom(DSConfiguration config, Session session, User user) {

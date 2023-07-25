@@ -2,6 +2,7 @@ package com.docusign.controller.rooms.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.rooms.services.ExternalFormSessionService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
@@ -9,10 +10,9 @@ import com.docusign.rooms.api.ExternalFormFillSessionsApi;
 import com.docusign.rooms.api.RoomsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.ExternalFormFillSession;
-import com.docusign.rooms.model.FormSummary;
+import com.docusign.rooms.model.ExternalFormFillSessionForCreate;
+import com.docusign.rooms.model.RoomDocumentList;
 import com.docusign.rooms.model.RoomSummaryList;
-import com.docusign.controller.rooms.services.CreateExternalFormFillSessionService;
-import com.docusign.controller.rooms.services.GetFormSummaryListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Creating an external form fill session.
@@ -29,11 +28,8 @@ import java.util.List;
 @RequestMapping("/r006")
 public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsController {
 
-    private static final String MODEL_FORM_LIST = "formList";
-    private static final String MODEL_ROOM_LIST = "roomList";
-
-    private final Session session;
-    private final User user;
+    private static final String MODEL_ROOMS_LIST = "roomsList";
+    private static final String MODEL_DOCUMENTS_LIST = "documentsList";
 
     @Autowired
     public R006ControllerCreateExternalFormFillSession(DSConfiguration config, Session session, User user) {
@@ -45,46 +41,46 @@ public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsCo
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
+
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
-        RoomSummaryList roomSummaryList = roomsApi.getRooms(this.session.getAccountId());
+        RoomSummaryList rooms = (new ExternalFormSessionService()).getRooms(roomsApi, this.session.getAccountId());
 
-        List<FormSummary> forms = GetFormSummaryListService.getFormSummaryList(
-                createFormLibrariesApi(session.getBasePath(), this.user.getAccessToken()),
-                this.session.getAccountId());
+        Integer roomsId = args.getRoomId();
 
-        model.addAttribute(MODEL_ROOM_LIST, roomSummaryList.getRooms());
-        model.addAttribute(MODEL_FORM_LIST, forms);
+        if (roomsId != null) {
+            RoomDocumentList documents = (new ExternalFormSessionService()).getDocuments(roomsApi, this.session.getAccountId(), roomsId);
+            model.addAttribute(MODEL_DOCUMENTS_LIST, documents.getDocuments());
+        }
+
+        model.addAttribute(MODEL_ROOMS_LIST, rooms.getRooms());
     }
 
     @Override
-    // ***DS.snippet.0.start
+    //ds-snippet-start:Rooms6Step2
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
-
-        
-        // Step 2. Construct your API headers
-        //ds-snippet-start:Rooms6Step2
         ExternalFormFillSessionsApi externalFormFillSessionsApi = createExternalFormFillSessionsApiClient(
-                this.session.getBasePath(), this.user.getAccessToken()
-        );
+            this.session.getBasePath(), this.user.getAccessToken());
         //ds-snippet-end:Rooms6Step2
 
-        // Step 3. Call the v2 Rooms API
         //ds-snippet-start:Rooms6Step3
-        ExternalFormFillSession externalFormFillSession = CreateExternalFormFillSessionService
-                .createExternalFormFillSession(
-                    externalFormFillSessionsApi,
-                    this.session.getAccountId(),
-                    args.getFormId().toString(),
-                    args.getRoomId(),
-                    "http://localhost:8080"
-                );
+        ExternalFormFillSessionForCreate sessionToCreate = new ExternalFormFillSessionForCreate();
+        sessionToCreate.setRoomId(args.getRoomId());
+        sessionToCreate.setFormId(args.getDocumentId());
+        sessionToCreate.setXFrameAllowedUrl("http://localhost:8080");
         //ds-snippet-end:Rooms6Step3
+        
+        //ds-snippet-start:Rooms6Step4
+        ExternalFormFillSession formFillSession = (new ExternalFormSessionService()).createSession(
+                externalFormFillSessionsApi,
+                this.session.getAccountId(),
+                sessionToCreate);
+        //ds-snippet-end:Rooms6Step4
 
         DoneExample.createDefault(this.title)
                 .withMessage(getTextForCodeExample().ResultsPageText)
-                .withJsonObject(externalFormFillSession)
-                .withFormFill(externalFormFillSession.getUrl())
+                .withJsonObject(formFillSession)
+                .withFormFill(formFillSession.getUrl())
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }

@@ -4,7 +4,7 @@
 <c:set var="formNumber" value="0" scope="page" />
 <c:set var="roomNameInputNumber" value="0" scope="page" />
 
-<h4>1. ${example.getExampleName()}</h4>
+<h4>${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
 
 <p>

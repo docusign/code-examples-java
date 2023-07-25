@@ -71,6 +71,7 @@ public class WorkArguments {
     private String delay;
     private String clickwrap;
     private String clickwrapId;
+    private String documentId;
     private String hostEmail;
     private String hostName;
     private String fullName;

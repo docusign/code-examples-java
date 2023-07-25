@@ -28,8 +28,6 @@ public class R008ControllerGrantOfficeAccessToFormGroup extends AbstractRoomsCon
     private static final String MODEL_OFFICE_LIST = "officeList";
     private static final String MODEL_FORM_GROUP_LIST = "formGroupList";
     private static final String OFFICE_ALREADY_HAS_ACCESS_TO_FORM_GROUP_ERROR_MESSAGE = "OFFICE_ALREADY_HAS_ACCESS_TO_FORM_GROUP";
-    private final Session session;
-    private final User user;
     private FormGroupsApi formGroupsApi;
 
     @Autowired

@@ -5,7 +5,7 @@
 <c:set var="roomNameInputNumber" value="0" scope="page" />
 <c:set var="templateInputNumber" value="1" scope="page" />
 
-<h4>2. ${example.getExampleName()}</h4>
+<h4>${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
 <p>
     ${viewSourceFile}
