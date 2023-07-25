@@ -56,12 +56,10 @@ public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsCo
     }
 
     @Override
-    //ds-snippet-start:Rooms6Step2
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
         ExternalFormFillSessionsApi externalFormFillSessionsApi = createExternalFormFillSessionsApiClient(
             this.session.getBasePath(), this.user.getAccessToken());
-        //ds-snippet-end:Rooms6Step2
 
         //ds-snippet-start:Rooms6Step3
         ExternalFormFillSessionForCreate sessionToCreate = new ExternalFormFillSessionForCreate();
