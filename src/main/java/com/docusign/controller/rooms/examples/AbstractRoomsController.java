@@ -3,6 +3,8 @@ package com.docusign.controller.rooms.examples;
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
 import com.docusign.core.controller.AbstractController;
+import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import com.docusign.rooms.api.*;
 import com.docusign.rooms.client.ApiClient;
 import com.docusign.rooms.client.ApiException;
@@ -23,6 +25,10 @@ import java.util.stream.Collectors;
 public abstract class AbstractRoomsController extends AbstractController {
 
     private static final String EXAMPLE_PAGES_PATH = "pages/rooms/examples/";
+
+    protected Session session;
+
+    protected User user;
 
     public AbstractRoomsController(DSConfiguration config, String exampleName) {
         super(config, exampleName);

@@ -31,8 +31,6 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
     private static final String MODEL_FORM_LIST = "formList";
     private static final String MODEL_FORM_GROUP_LIST = "formGroupList";
     private static final String FORM_ALREADY_EXISTS_ERROR_MESSAGE = "Form in the form group already exists";
-    private final Session session;
-    private final User user;
     private FormGroupsApi formGroupsApi;
 
     @Autowired

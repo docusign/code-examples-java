@@ -30,8 +30,6 @@ public class R005ControllerGetRoomsWithFilters extends AbstractRoomsController {
     private static final String MODEL_END_DATE = "endDate";
     private static final int FROM_DATE_OFFSET_DAYS = 10;
     private static final int FROM_DATE_FORWARD_DAYS = 1;
-    private final Session session;
-    private final User user;
 
     @Autowired
     public R005ControllerGetRoomsWithFilters(DSConfiguration config, Session session, User user) {

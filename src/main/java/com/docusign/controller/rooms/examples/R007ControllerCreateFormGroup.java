@@ -24,9 +24,6 @@ import java.io.IOException;
 @RequestMapping("/r007")
 public class R007ControllerCreateFormGroup extends AbstractRoomsController {
 
-    private final Session session;
-    private final User user;
-
     @Autowired
     public R007ControllerCreateFormGroup(DSConfiguration config, Session session, User user) {
         super(config, "r007");

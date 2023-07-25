@@ -7,7 +7,7 @@
 <c:set var="redirectToSeventhCodeExample" value="href='r007'" scope="page" />
 <c:set var="redirectNumber" value="0" scope="page" />
 
-<h4>8. ${example.getExampleName()}</h4>
+<h4>${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
 <p>
     ${viewSourceFile}

@@ -32,8 +32,6 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
 
     private static final String MODEL_FORM_LIST = "formList";
     private static final String MODEL_ROOM_LIST = "roomList";
-    private final Session session;
-    private final User user;
 
     @Autowired
     public R004ControllerAddingFormsToRoom(DSConfiguration config, Session session, User user) {

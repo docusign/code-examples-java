@@ -5,7 +5,7 @@
 <c:set var="startDateInputNumber" value="0" scope="page" />
 <c:set var="endDateInputNumber" value="1" scope="page" />
 
-<h4>5. ${example.getExampleName()}</h4>
+<h4>${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
 <p>
     ${viewSourceFile}
