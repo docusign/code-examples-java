@@ -26,7 +26,7 @@ public class ScheduledSendlingService {
 	   // for matching anchor strings.
 
 	   // Step 2 start
-
+       //ds-snippet-start:eSign35Step2
 	   Tabs signerTabs = EnvelopeHelpers.createSignerTabs(
 			 EnvelopeHelpers.createSignHere("/sn1/", ANCHOR_OFFSET_Y, ANCHOR_OFFSET_X));
 
@@ -67,6 +67,7 @@ public class ScheduledSendlingService {
 	   envelope.setStatus(status);
 
 	   return envelope;
+	   //ds-snippet-end:eSign35Step2
 
 	   // Step 2 end
     }

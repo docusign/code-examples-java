@@ -62,7 +62,9 @@ public class EG035ControllerScheduledSending extends AbstractEsignatureControlle
                 args.getStatus());
 
         // Step 3 start
+        //ds-snippet-start:eSign35Step3
         EnvelopeSummary results = envelopesApi.createEnvelope(session.getAccountId(), envelope);
+        //ds-snippet-end:eSign35Step3
         // Step 3 end
 
         System.out.println("ENVELOPE");
