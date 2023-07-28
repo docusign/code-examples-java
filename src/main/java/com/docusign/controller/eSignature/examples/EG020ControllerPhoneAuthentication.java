@@ -63,12 +63,10 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
             throws ApiException, IOException {
         String accountId = session.getAccountId();
 
-        // Step 2 start
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
-        // Step 2 end
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
 
-        // Step 3 start
+        //ds-snippet-start:eSign20Step3
         AccountsApi workflowDetails = new AccountsApi(apiClient);
         AccountIdentityVerificationResponse workflowRes = workflowDetails.getAccountIdentityVerification(session.getAccountId());
         List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getIdentityVerification();
@@ -80,16 +78,19 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
                 workflowId = identityVerification.get(i).getWorkflowId();
             }
         }
-        // Step 3 end
+        //ds-snippet-end:eSign20Step3
         logger.info("workflowId = " + workflowId);
         if (workflowId.equals(""))
         {
             throw new ApiException(0, getTextForCodeExampleByApiType().CustomErrorTexts.get(0).ErrorMessage);
-        }EnvelopeDefinition envelope = PhoneAuthenticationService.createEnvelope(args.getSignerName(), args.getSignerEmail(), args.getCountryCode(),
+        }
+        //ds-snippet-start:eSign20Step5      
+        EnvelopeDefinition envelope = PhoneAuthenticationService.createEnvelope(args.getSignerName(), args.getSignerEmail(), args.getCountryCode(),
                 args.getPhoneNumber(), workflowId);
-        // Step 4.1 start
+        //ds-snippet-end:eSign20Step5      
+        //ds-snippet-start:eSign20Step4
         EnvelopeSummary results = PhoneAuthenticationService.phoneAuthentication(envelopesApi, accountId, envelope);
-        // Step 4.1 end
+        //ds-snippet-end:eSign20Step4
 
         session.setEnvelopeId(results.getEnvelopeId());
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
