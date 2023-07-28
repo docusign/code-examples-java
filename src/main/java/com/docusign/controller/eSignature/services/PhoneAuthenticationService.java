@@ -22,7 +22,7 @@ public final class PhoneAuthenticationService {
         return envelopesApi.createEnvelope(accountId, envelope);
     }
 
-    // Step 4.2 start
+    //ds-snippet-start:eSign20Step4
     public static EnvelopeDefinition createEnvelope(String signerName, String signerEmail, String countryCode,
                                                      String phone, String workFlowId) throws IOException {
         Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
@@ -77,5 +77,5 @@ public final class PhoneAuthenticationService {
 
         return envelope;
     }
-    // Step 4.2 end
+    //ds-snippet-end:eSign20Step4
 }
