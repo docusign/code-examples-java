@@ -6,6 +6,7 @@ import com.docusign.rooms.model.FieldDataForCreate;
 import com.docusign.rooms.model.Room;
 import com.docusign.rooms.model.RoomForCreate;
 
+//ds-snippet-start:Rooms1Step4
 public final class CreateRoomService {
     public static Room createRoomFromModel(
             RoomsApi roomsApi,
@@ -14,6 +15,7 @@ public final class CreateRoomService {
     ) throws ApiException {
         return roomsApi.createRoom(accountId, roomForCreate);
     }
+//ds-snippet-end:Rooms1Step4
 
     public static RoomForCreate createRoomModel(Integer roleId, String roomName) {
         return new RoomForCreate()
