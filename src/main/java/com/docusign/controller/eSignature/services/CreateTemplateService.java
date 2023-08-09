@@ -45,6 +45,7 @@ public final class CreateTemplateService {
     // recipient 2 - cc
     // The template will be sent first to the signer.
     // After it is signed, a copy is sent to the cc person.
+    //ds-snippet-start:eSign8Step2
     public static EnvelopeTemplate makeTemplate(String templateName) throws IOException {
         Document doc = EnvelopeHelpers.createDocumentFromFile(PDF_DOCUMENT_FILE_NAME, PDF_DOCUMENT_NAME, "1");
 
@@ -195,4 +196,5 @@ public final class CreateTemplateService {
         signHere.setYPosition("148");
         return signHere;
     }
+    //ds-snippet-end:eSign8Step2
 }
