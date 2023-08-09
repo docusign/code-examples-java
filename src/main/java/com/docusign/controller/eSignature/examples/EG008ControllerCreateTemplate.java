@@ -38,7 +38,6 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
     }
 
     @Override
-    // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws ApiException, IOException {
         // Step 1. list existing templates
@@ -63,7 +62,9 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
         } else {
             session.setTemplateName(TEMPLATE_NAME);
 
+            //ds-snippet-start:eSign8Step3
             TemplateSummary template = CreateTemplateService.createTemplate(apiClient, accountId, CreateTemplateService.makeTemplate("Example Signer and CC template"));
+            //ds-snippet-end:eSign8Step3
             session.setTemplateId(template.getTemplateId());
             DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                     .withMessage(
@@ -73,5 +74,4 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
         }
         return DONE_EXAMPLE_PAGE;
     }
-    // ***DS.snippet.0.end
 }
