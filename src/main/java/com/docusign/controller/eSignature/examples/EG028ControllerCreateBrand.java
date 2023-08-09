@@ -47,6 +47,7 @@ public class EG028ControllerCreateBrand extends AbstractEsignatureController {
         AccountsApi accountsApi = createAccountsApi(session.getBasePath(), user.getAccessToken());
 
         // Step 3: Construct your brand JSON body
+        //ds-snippet-start:eSign28Step3
         String language = args.getLanguage();
 
         BrandsResponse brandsResponse = CreateBrandService.createBrand(
@@ -55,6 +56,7 @@ public class EG028ControllerCreateBrand extends AbstractEsignatureController {
                 language,
                 session.getAccountId()
         );
+        //ds-snippet-end:eSign28Step3
 
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                 .withJsonObject(brandsResponse)

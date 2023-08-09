@@ -19,7 +19,9 @@ public final class CreateBrandService {
                 .defaultBrandLanguage(language)
                 .brandLanguages(List.of(language));
 
-        // Step 5: Call the eSignature REST API
+        // Step 4. Call the eSignature REST API
+        //ds-snippet-start:eSign28Step4
         return accountsApi.createBrand(accountId, brand);
+        //ds-snippet-end:eSign28Step4
     }
 }
