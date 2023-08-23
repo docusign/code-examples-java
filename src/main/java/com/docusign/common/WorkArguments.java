@@ -52,6 +52,7 @@ public class WorkArguments {
     private UUID formGroupId;
     private String startDate;
     private String endDate;
+    private String deliveryMethod;
     private String ccPhoneNumber;
     private String countryCode;
     private String ccCountryCode;

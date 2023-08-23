@@ -56,6 +56,7 @@ public class EG037ControllerSMSDelivery extends AbstractEsignatureController {
                 args.getCountryCode(),
                 args.getPhoneNumber(),
                 args.getSignerName(),
+                args.getDeliveryMethod(),
                 args.getCcCountryCode(),
                 args.getCcPhoneNumber(),
                 args.getCcName(),

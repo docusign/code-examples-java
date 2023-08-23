@@ -1,15 +1,12 @@
 package com.docusign.controller.eSignature.services;
 
-import com.docusign.common.WorkArguments;
 import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
-import com.docusign.core.common.DocumentType;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 
 public final class SMSDeliveryService {
     private static final String PDF_DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
@@ -42,6 +39,7 @@ public final class SMSDeliveryService {
             String countryCode,
             String signersPhoneNumber,
             String signerName,
+            String deliveryMethod,
             String ccCountryCode,
             String carbonCopyPhoneNumber,
             String ccName,
@@ -69,7 +67,7 @@ public final class SMSDeliveryService {
         signer.setRecipientId("1");
         signer.setRoutingOrder("1");
         signer.setTabs(signerTabs);
-        signer.setDeliveryMethod("sms");
+        signer.setDeliveryMethod(deliveryMethod);
 
 
         // create a cc recipient to receive a copy of the documents, identified by name and phone number
@@ -82,7 +80,7 @@ public final class SMSDeliveryService {
         cc.setPhoneNumber(ccPhoneNumber);
         cc.setRecipientId("2");
         cc.setRoutingOrder("2");
-        cc.setDeliveryMethod("sms");
+        cc.setDeliveryMethod(deliveryMethod);
 
         // The order in the docs array determines the order in the envelope
         EnvelopeDefinition envelope = new EnvelopeDefinition();

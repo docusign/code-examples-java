@@ -5,9 +5,13 @@
 <c:set var="countryCodeInputNumber" value="0" scope="page" />
 <c:set var="numberInputNumber" value="1" scope="page" />
 <c:set var="signerNameInputNumber" value="2" scope="page" />
+<c:set var="deliveryMethod" value="6" scope="page" />
 <c:set var="ccCountryCodeInputNumber" value="3" scope="page" />
 <c:set var="ccNumberInputNumber" value="4" scope="page" />
 <c:set var="ccSignerNameInputNumber" value="5" scope="page" />
+<c:set var="sms" value="7" scope="page" />
+<c:set var="whatsapp" value="8" scope="page" />
+
 
 <h4>${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
@@ -22,7 +26,11 @@
 </p>
 
 <form class="eg" action="" method="post" data-busy="form">
-
+    <div class="form-group">
+      <label for="deliveryMethod">${example.getForms().get(formNumber).getInputs().get(deliveryMethod).getInputName()}</label><br>
+      <input type="radio" checked="checked" name="deliveryMethod" id="delivery_method1" value="SMS"/> ${example.getForms().get(formNumber).getInputs().get(sms).getInputName()} &nbsp;
+      <input type="radio" name="deliveryMethod" id="delivery_method2" value="WhatsApp"/> ${example.getForms().get(formNumber).getInputs().get(whatsapp).getInputName()} <br>
+    </div> 
     <div class="form-group">
         <label for="countryCode">
             ${example.getForms().get(formNumber).getInputs().get(countryCodeInputNumber).getInputName()}
