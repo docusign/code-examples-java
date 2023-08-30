@@ -22,6 +22,7 @@ public final class SigningViaEmailService {
     private static final int ANCHOR_OFFSET_Y = 10;
     private static final int ANCHOR_OFFSET_X = 20;
 
+    //ds-snippet-start:eSign2Step3
     public static EnvelopeSummary signingViaEmail(
         EnvelopesApi envelopesApi,
         String accountId,
@@ -29,6 +30,7 @@ public final class SigningViaEmailService {
     ) throws ApiException {
         return envelopesApi.createEnvelope(accountId, envelope);
     }
+    //ds-snippet-end:eSign2Step3
 
     // document 1 (html) has tag **signature_1**
     // document 2 (docx) has tag /sn1/
@@ -39,6 +41,8 @@ public final class SigningViaEmailService {
     // recipient 2 - cc
     // The envelope will be sent first to the signer. After it is signed,
     // a copy is sent to the cc person.
+    
+    //ds-snippet-start:eSign2Step2
     public static EnvelopeDefinition makeEnvelope(
         String signerEmail,
         String signerName,
@@ -91,4 +95,5 @@ public final class SigningViaEmailService {
 
         return envelope;
     }
+    //ds-snippet-end:eSign2Step2
 }
