@@ -13,6 +13,7 @@ import com.docusign.esign.model.TemplateRole;
 import java.util.Arrays;
 
 public final class UseTemplateService {
+    //ds-snippet-start:eSign9Step3
     public static EnvelopeSummary createEnvelopeTemplate(
             EnvelopesApi envelopesApi,
             String accountId,
@@ -20,6 +21,7 @@ public final class UseTemplateService {
     ) throws ApiException {
         return envelopesApi.createEnvelope(accountId, envelope);
     }
+    //ds-snippet-end:eSign9Step3
 
     public static EnvelopeTemplateResults listTemplates(
             ApiClient apiClient,
@@ -29,6 +31,7 @@ public final class UseTemplateService {
         return templatesApi.listTemplates(accountId);
     }
 
+    //ds-snippet-start:eSign9Step2
     public static EnvelopeDefinition makeEnvelope(
             String signerName,
             String signerEmail,
@@ -53,4 +56,5 @@ public final class UseTemplateService {
 
         return envelope;
     }
+    //ds-snippet-end:eSign9Step2
 }
