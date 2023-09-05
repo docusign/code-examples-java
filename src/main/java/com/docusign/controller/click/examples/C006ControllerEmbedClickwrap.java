@@ -74,7 +74,7 @@ public class C006ControllerEmbedClickwrap extends AbstractClickController {
         }
         else
         {
-            String HTMLSnippet = "<p id='agreementStatus'>NOT AGREED</p><div id='ds-terms-of-service'></div><script src='https://stage.docusign.net/clickapi/sdk/latest/docusign-click.js'></script><script>docuSignClick.Clickwrap.render({agreementUrl: '" + url + "',onAgreed: function () {document.getElementById('agreementStatus').innerHTML = 'AGREED';}}, '#ds-terms-of-service');</script>";
+            String HTMLSnippet = "<p id='agreementStatus'>NOT AGREED</p><div id='ds-terms-of-service'></div><script src='https://demo.docusign.net/clickapi/sdk/latest/docusign-click.js'></script><script>docuSignClick.Clickwrap.render({agreementUrl: '" + url + "',onAgreed: function () {document.getElementById('agreementStatus').innerHTML = 'AGREED';}}, '#ds-terms-of-service');</script>";
             DoneExample.createDefault(this.title)
                 .withJsonObject(url)
                 .withMessage(getTextForCodeExample().ResultsPageText + HTMLSnippet)
