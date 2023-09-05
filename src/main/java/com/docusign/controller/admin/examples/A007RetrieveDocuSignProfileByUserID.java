@@ -37,10 +37,11 @@ public class A007RetrieveDocuSignProfileByUserID extends AbstractAdminController
         UsersDrilldownResponse usersResponse = RetrieveDocuSignProfileByUserId.
                 getDocuSignProfileByUserId(usersApi, organizationId, args.getUserId());
         //ds-snippet-end:Admin7Step3
+
         DoneExample
                 .createDefault(getTextForCodeExampleByApiType().ExampleName)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
-                .withJsonObject(usersResponse.getUsers()).addToModel(model, config);
+                .withJsonObject(usersResponse).addToModel(model, config);
 
         return DONE_EXAMPLE_PAGE;
     }
