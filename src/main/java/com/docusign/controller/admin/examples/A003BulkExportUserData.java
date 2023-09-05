@@ -53,7 +53,7 @@ public class A003BulkExportUserData extends AbstractAdminController {
 
         String saveFilePath = "";
 
-        if (!data.getResults().isEmpty()) {
+        if (data.getResults() != null && !data.getResults().isEmpty()) {
             String csvUri = data.getResults().get(0).getUrl();
             saveFilePath = BulkExportUserDataService.moveUserListExportToFile(
                     csvUri,
