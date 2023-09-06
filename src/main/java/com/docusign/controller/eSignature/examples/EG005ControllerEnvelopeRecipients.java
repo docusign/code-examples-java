@@ -38,9 +38,9 @@ public class EG005ControllerEnvelopeRecipients extends AbstractEsignatureControl
     }
 
     @Override
-    // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
-        // Step 1. get envelope recipients
+        // Get envelope recipients
+        //ds-snippet-start:eSign5Step2
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
         Recipients recipients = EnvelopeRecipientsService.envelopeRecipients(
                 envelopesApi,
@@ -51,6 +51,6 @@ public class EG005ControllerEnvelopeRecipients extends AbstractEsignatureControl
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
+        //ds-snippet-end:eSign5Step2
     }
-    // ***DS.snippet.0.end
 }
