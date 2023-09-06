@@ -40,12 +40,9 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
             throws ApiException, IOException {
 
         // Construct your API headers
-        // Step 2 start
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
-        // Step 2 end
 
         // submit a bulk list
-        // Step 3-1 start
         String accountId = session.getAccountId();
         BulkEnvelopesApi bulkEnvelopesApi = new BulkEnvelopesApi(apiClient);
         String batchId = BulkSendEnvelopesService.bulkSendEnvelopes(
