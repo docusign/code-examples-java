@@ -87,4 +87,9 @@ public class WorkArguments {
     private String agentEmail;
     private String agentName;
     private String activationCode;
+    private UUID sourceAccountId;
+    private String targetAccountName;
+    private String targetAccountFirstName;
+    private String targetAccountLastName;
+    private String targetAccountEmail;
 }

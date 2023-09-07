@@ -5,7 +5,7 @@ public enum ApiType {
     ROOMS("Rooms API", new String[]{"signature", "dtr.rooms.read", "dtr.rooms.write", "dtr.documents.read", "dtr.documents.write", "dtr.profile.read", "dtr.profile.write", "dtr.company.read", "dtr.company.write", "room_forms"}),
     CLICK("Click API", new String[] {"click.manage", "click.send"}),
     MONITOR("Monitor API", new String[] {"signature", "impersonation"}),
-    ADMIN("Admin API",  new String[] {"user_write", "signature", "impersonation", "group_read", "organization_read", "permission_read", "user_read", "account_read", "domain_read", "identity_provider_read", "user_data_redact"});
+    ADMIN("Admin API",  new String[] {"user_write", "signature", "impersonation", "group_read", "organization_read", "permission_read", "user_read", "account_read", "domain_read", "identity_provider_read", "user_data_redact", "asset_group_account_read", "asset_group_account_clone_write", "asset_group_account_clone_read"});
 
     final String value;
     final String[] scopes;
