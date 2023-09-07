@@ -223,10 +223,24 @@ public abstract class AbstractAdminController extends AbstractController {
    * creates an instance of the AdminGroupsApi class silently.
    * @param accessToken user's access token
    * @param basePath basePath to the server
-   * @return an instance of the {@link AdminGroupsApi}
+   * @return an instance of the {@link DsGroupsApi}
    */
   protected DsGroupsApi createDSGroupsApi(String accessToken, String basePath) {
     ApiClient apiClient = createApiClient(accessToken, basePath);
     return new DsGroupsApi(apiClient);
+  }
+
+  /**
+   * Creates a new instance of the ProvisionAssetGroupApi. This method
+   * creates an instance of the ProvisionAssetGroupApi class silently.
+   * @param accessToken user's access token
+   * @param basePath basePath to the server
+   * @return an instance of the {@link ProvisionAssetGroupApi}
+   */
+  protected ProvisionAssetGroupApi createProvisionAssetGroupApi(String accessToken, String basePath) {
+    //ds-snippet-start:Admin12Step2
+    ApiClient apiClient = createApiClient(accessToken, basePath);
+    return new ProvisionAssetGroupApi(apiClient);
+    //ds-snippet-end:Admin12Step2
   }
 }
