@@ -44,25 +44,24 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
 
-        //ds-snippet-start:Rooms9Step3
+        //ds-snippet-start:Rooms9Step4
         this.formGroupsApi = createFormGroupsApi(
                 this.session.getBasePath(), this.user.getAccessToken()
         );
         FormGroupSummaryList formGroupSummaryList = formGroupsApi.getFormGroups(this.session.getAccountId());
-        //ds-snippet-end:Rooms9Step3
+        //ds-snippet-end:Rooms9Step4
 
-        //ds-snippet-start:Rooms9Step4
+        //ds-snippet-start:Rooms9Step3
         List<FormSummary> forms = GetFormSummaryListService.getFormSummaryList(
                 createFormLibrariesApi(session.getBasePath(), this.user.getAccessToken()),
                 this.session.getAccountId());
-        //ds-snippet-end:Rooms9Step4
+        //ds-snippet-end:Rooms9Step3
 
         model.addAttribute(MODEL_FORM_GROUP_LIST, formGroupSummaryList.getFormGroups());
         model.addAttribute(MODEL_FORM_LIST, forms);
     }
 
     @Override
-    // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
         try {
