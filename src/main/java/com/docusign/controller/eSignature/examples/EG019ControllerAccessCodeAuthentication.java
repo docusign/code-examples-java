@@ -33,7 +33,6 @@ public class EG019ControllerAccessCodeAuthentication extends AbstractEsignatureC
     }
 
     @Override
-    // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws ApiException, IOException {
         // Step 1: Construct your API headers
@@ -63,5 +62,4 @@ public class EG019ControllerAccessCodeAuthentication extends AbstractEsignatureC
 
         return DONE_EXAMPLE_PAGE;
     }
-    // ***DS.snippet.0.end
 }
