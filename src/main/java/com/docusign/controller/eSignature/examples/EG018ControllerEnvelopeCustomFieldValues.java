@@ -38,7 +38,6 @@ public class EG018ControllerEnvelopeCustomFieldValues extends AbstractEsignature
     }
 
     @Override
-    // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
         //ds-snippet-start:eSign18Step2
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
