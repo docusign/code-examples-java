@@ -71,7 +71,7 @@ public final class AddDocToTemplateService {
                 signerName,
                 dsPingUrl);
     }
-    //ds-snippet-end:eSign13Step4
+        //ds-snippet-end:eSign13Step4
 
     // The envelope request object uses Composite Template to include in the envelope:
     // 1. A template stored on the DocuSign service
