@@ -74,7 +74,7 @@ public class EG030ControllerApplyBrandToTemplate extends AbstractEsignatureContr
         // Step 3: Construct your envelope JSON body
         EnvelopeDefinition envelope = makeEnvelope(args, session.getTemplateId());
 
-        // Step 5: Call the eSignature REST API
+        // Step 4: Call the eSignature REST API
         EnvelopeSummary envelopeSummary = ApplyBrandToTemplateService.applyBrandToTemplate(
                 envelopesApi,
                 session.getAccountId(),
@@ -90,6 +90,7 @@ public class EG030ControllerApplyBrandToTemplate extends AbstractEsignatureContr
         return DONE_EXAMPLE_PAGE;
     }
 
+    //ds-snippet-start:eSign30Step3
     private static EnvelopeDefinition makeEnvelope(WorkArguments args, String templateId) {
         TemplateRole signer = new TemplateRole()
                 .email(args.getSignerEmail())
@@ -107,4 +108,5 @@ public class EG030ControllerApplyBrandToTemplate extends AbstractEsignatureContr
                 .brandId(args.getBrandId())
                 .status(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
     }
+    //ds-snippet-end:eSign30Step3
 }

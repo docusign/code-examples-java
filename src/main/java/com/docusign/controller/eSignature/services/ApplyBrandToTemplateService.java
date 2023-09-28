@@ -15,7 +15,9 @@ public final class ApplyBrandToTemplateService {
             String accountId,
             EnvelopeDefinition envelope
     ) throws ApiException {
+        //ds-snippet-start:eSign30Step4
         return envelopesApi.createEnvelope(accountId, envelope);
+        //ds-snippet-end:eSign30Step4
     }
 
     public static EnvelopeDefinition makeEnvelope(
