@@ -46,10 +46,11 @@ public class EG032ControllerPauseSignatureWorkflow extends AbstractEsignatureCon
             throws ApiException, IOException
     {
 
-        // Step 2: Construct your API headers
+        //ds-snippet-start:eSign32Step2
         EnvelopesApi envelopesApi = createEnvelopesApi(this.session.getBasePath(), this.user.getAccessToken());
-
-        // Step 3: Construct your envelope JSON body
+        //ds-snippet-end:eSign32Step2
+        
+        // Construct your envelope JSON body
         EnvelopeDefinition envelope = PauseSignatureWorkflowService.createEnvelope(
                 args.getSignerName(),
                 args.getSignerEmail(),
@@ -57,12 +58,13 @@ public class EG032ControllerPauseSignatureWorkflow extends AbstractEsignatureCon
                 args.getSignerEmail2()
         );
 
-        // Step 4: Call the eSignature REST API
+        //ds-snippet-start:eSign32Step4
         EnvelopeSummary envelopeSummary = PauseSignatureWorkflowService.pauseSignatureWorkflow(
                 envelopesApi,
                 this.session.getAccountId(),
                 envelope
         );
+        //ds-snippet-end:eSign32Step4
 
         this.session.setEnvelopeId(envelopeSummary.getEnvelopeId());
         DoneExample.createDefault(this.title)
