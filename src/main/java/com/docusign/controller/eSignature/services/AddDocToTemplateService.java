@@ -41,11 +41,11 @@ public final class AddDocToTemplateService {
                 args
         );
 
-        // Step 3 start
+        //ds-snippet-start:eSign13Step3
         EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
-        // Step 3 end
+        //ds-snippet-end:eSign13Step3
 
-        // Step 4 start
+        //ds-snippet-start:eSign13Step4
         RecipientViewRequest viewRequest = AddDocToTemplateService.makeRecipientViewRequest(
             dsReturnUrl,
             signerEmail,
@@ -71,10 +71,12 @@ public final class AddDocToTemplateService {
                 signerName,
                 dsPingUrl);
     }
+    //ds-snippet-end:eSign13Step4
 
     // The envelope request object uses Composite Template to include in the envelope:
     // 1. A template stored on the DocuSign service
     // 2. An additional document which is a custom HTML source document
+    //ds-snippet-start:eSign13Step2
     public static EnvelopeDefinition makeEnvelope(
             String signerEmail,
             String signerName,
@@ -143,6 +145,7 @@ public final class AddDocToTemplateService {
 
         return envelopeDefinition;
     }
+    //ds-snippet-end:eSign13Step2
 
     // Adding clientUserId transforms the template recipient into an embedded recipient
     public static Signer createSigner(
