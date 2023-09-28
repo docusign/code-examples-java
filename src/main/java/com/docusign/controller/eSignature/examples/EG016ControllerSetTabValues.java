@@ -40,23 +40,28 @@ public class EG016ControllerSetTabValues extends AbstractEsignatureController {
 
         EnvelopeDefinition envelope = SetTabValuesService.makeEnvelope(signerEmail, signerName);
 
-        // Step 2. Construct your API headers
+        //ds-snippet-start:eSign16Step2
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
+        //ds-snippet-end:eSign16Step2
 
-        // Step 5. Call the eSignature REST API
+        // Call the eSignature REST API
+        //ds-snippet-start:eSign16Step4
         EnvelopeSummary envelopeSummary = SetTabValuesService.createEnvelope(envelopesApi, accountId, envelope);
+        //ds-snippet-end:eSign16Step4                    
 
         String envelopeId = envelopeSummary.getEnvelopeId();
         session.setEnvelopeId(envelopeId);
 
-        // Step 6. Create the view request
+        // Create the view request
+        //ds-snippet-start:eSign16Step5
         RecipientViewRequest viewRequest = SetTabValuesService.makeRecipientViewRequest(
                 signerEmail,
                 signerName,
                 config.getDsReturnUrl(),
                 config.getDsPingUrl());
         ViewUrl viewUrl = SetTabValuesService.createRecipientView(envelopesApi, accountId, envelopeId, viewRequest);
+        //ds-snippet-end:eSign16Step5
 
         // State can be stored/recovered using the framework's session or a
         // query parameter on the returnUrl (see the makeRecipientViewRequest method)

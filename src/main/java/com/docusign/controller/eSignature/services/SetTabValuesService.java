@@ -101,7 +101,8 @@ public final class SetTabValuesService {
         return viewRequest;
     }
 
-    // Step 4. Construct your request body
+    // Construct your request body
+    //ds-snippet-start:eSign16Step3
     public static EnvelopeDefinition makeEnvelope(String signerEmail, String signerName) throws IOException {
         // Create a signer recipient to sign the document, identified by name and email
         // We set the clientUserId to enable embedded signing for the recipient
@@ -111,7 +112,7 @@ public final class SetTabValuesService {
         signer.clientUserId(SIGNER_CLIENT_ID);
         signer.recipientId("1");
 
-        // Step 3. Create tabs and CustomFields
+        // Create tabs and CustomFields
         SignHere signHere = new SignHere();
         signHere.setAnchorString("/sn1");
         signHere.setAnchorUnits("pixels");
@@ -201,4 +202,5 @@ public final class SetTabValuesService {
 
         return envelopeDefinition;
     }
+    //ds-snippet-end:eSign16Step3
 }
