@@ -38,19 +38,20 @@ public class EG015ControllerGetTabValues extends AbstractEsignatureController {
     }
 
     @Override
-    // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
-        // Step 1. get envelope recipients
+        //ds-snippet-start:eSign15Step2
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
+        //ds-snippet-end:eSign15Step2
+        //ds-snippet-start:eSign15Step3
         EnvelopeFormData envelopeFormData = GetTabValuesService.getTabValues(
                 envelopesApi,
                 session.getAccountId(),
                 session.getEnvelopeId());
+        //ds-snippet-end:eSign15Step3
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                 .withJsonObject(envelopeFormData)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
-    // ***DS.snippet.0.end
 }
