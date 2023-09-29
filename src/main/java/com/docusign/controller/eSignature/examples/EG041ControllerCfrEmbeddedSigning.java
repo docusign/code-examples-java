@@ -59,11 +59,9 @@ public class EG041ControllerCfrEmbeddedSigning extends AbstractEsignatureControl
         String phoneNumber = args.getPhoneNumber();
         String accountId = session.getAccountId();
 
-        // Step 2 start
+        //ds-snippet-start:eSign41Step2
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
-        // Step 2 end
 
-        // Step 3 start
         AccountsApi workflowDetails = new AccountsApi(apiClient);
         AccountIdentityVerificationResponse workflowRes = workflowDetails.getAccountIdentityVerification(session.getAccountId());
         List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getIdentityVerification();
@@ -75,15 +73,16 @@ public class EG041ControllerCfrEmbeddedSigning extends AbstractEsignatureControl
                 workflowId = identityVerification.get(i).getWorkflowId();
             }
         }
-        // Step 3 end
+        //ds-snippet-end:eSign41Step2
+
         logger.info("workflowId = " + workflowId);
         if (workflowId.equals(""))
         {
             throw new ApiException(0, getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage);
         }
 
-
-        // Step 1. Create the envelope definition
+        // Create the envelope definition
+        //ds-snippet-start:eSign41Step4
         EnvelopeDefinition envelope = CfrEmbeddedSigningService.makeEnvelope(
                 signerName,
                 signerEmail,
@@ -96,26 +95,33 @@ public class EG041ControllerCfrEmbeddedSigning extends AbstractEsignatureControl
                 DOCUMENT_FILE_NAME,
                 DOCUMENT_NAME);
 
-        // Step 2. Call DocuSign to create the envelope
+        // Call DocuSign to create the envelope
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
         EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
 
         String envelopeId = envelopeSummary.getEnvelopeId();
+        //ds-snippet-end:eSign41Step4
+
         session.setEnvelopeId(envelopeId);
 
-        // Step 3. create the recipient view, the embedded signing
+        // create the recipient view, the embedded signing
+        //ds-snippet-start:eSign41Step5
         RecipientViewRequest viewRequest = CfrEmbeddedSigningService.makeRecipientViewRequest(
                 signerEmail,
                 signerName,
                 config,
                 signerClientId);
 
+        //ds-snippet-end:eSign41Step5
+
+        //ds-snippet-start:eSign41Step6
         ViewUrl viewUrl = CfrEmbeddedSigningService.embeddedSigning(
                 envelopesApi,
                 accountId,
                 envelopeId,
                 viewRequest
         );
+        //ds-snippet-end:eSign41Step6
 
         // Step 4. Redirect the user to the embedded signing
         // Don't use an iFrame!
