@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public final class CfrEmbeddedSigningService {
+    //ds-snippet-start:eSign41Step6
     public static ViewUrl embeddedSigning(
             EnvelopesApi envelopesApi,
             String accountId,
@@ -19,7 +20,9 @@ public final class CfrEmbeddedSigningService {
     ) throws ApiException {
         return envelopesApi.createRecipientView(accountId, envelopeId, viewRequest);
     }
+    //ds-snippet-end:eSign41Step6
 
+    //ds-snippet-start:eSign41Step5
     public static RecipientViewRequest makeRecipientViewRequest(
             String signerEmail,
             String signerName,
@@ -61,7 +64,9 @@ public final class CfrEmbeddedSigningService {
 
         return viewRequest;
     }
+    //ds-snippet-end:eSign41Step5
 
+    //ds-snippet-start:eSign41Step3
     public static EnvelopeDefinition makeEnvelope(
             String signerName,
             String signerEmail,
@@ -115,4 +120,5 @@ public final class CfrEmbeddedSigningService {
 
         return envelopeDefinition;
     }
+    //ds-snippet-end:eSign41Step3
 }
