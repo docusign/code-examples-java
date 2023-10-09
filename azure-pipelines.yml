@@ -5,13 +5,10 @@
 resources:
   repositories:
   - repository: IntegrationTests
-    type: git
-    name: launcher-automation/IntegrationTests
-    ref: azure-pipelines
-    trigger:
-      branches:
-        include:
-          - azure-pipelines
+    type: github
+    name: docusign/launcher-automation
+    ref: main
+    endpoint: docusign
 
 pr:
 - master
