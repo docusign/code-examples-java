@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 resources:
   repositories:
-  - repository: IntegrationTests
+  - repository: launcher-automation
     type: github
     name: docusign/launcher-automation
     ref: main
@@ -21,7 +21,7 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 - checkout: self
-- checkout: IntegrationTests
+- checkout: launcher-automation
 
 - script: dir $(Build.SourcesDirectory)
 
@@ -54,7 +54,7 @@ steps:
 - script: |
     echo "place config.properties"
     echo $(tests_config_properties.secureFilePath)
-    cp $(tests_config_properties.secureFilePath) IntegrationTests/src/main/resources/config.properties
+    cp $(tests_config_properties.secureFilePath) launcher-automation/src/main/resources/config.properties
   displayName: 'place config.properties'
 
 - task: DownloadSecureFile@1
@@ -103,7 +103,7 @@ steps:
   displayName: 'start java app'
 
 - script: |
-    cd IntegrationTests
+    cd launcher-automation
     mvn clean test -DsuiteXmlFile="java_suite.xml"
   displayName: 'Java app tests'
 
