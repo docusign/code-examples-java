@@ -51,7 +51,7 @@ steps:
   name: tests_config_properties
   displayName: 'download config.properties'
   inputs:
-    secureFile: 'tests_config.properties'
+    secureFile: 'java-php.config.properties'
 
 
 - script: |
@@ -107,7 +107,7 @@ steps:
 
 - script: |
     cd IntegrationTests
-    mvn clean test -DsuiteXmlFile="java.xml"
+    mvn clean test -DsuiteXmlFile="java_suite.xml"
   displayName: 'Java app tests'
 
 - script: |
