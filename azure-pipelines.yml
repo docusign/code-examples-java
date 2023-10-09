@@ -8,7 +8,7 @@ resources:
     type: github
     name: docusign/launcher-automation
     ref: main
-    endpoint: 36ab975c-8349-4441-a118-1c98e584198b
+    endpoint: launcherAutomationServiceConnection
 
 pr:
 - master
