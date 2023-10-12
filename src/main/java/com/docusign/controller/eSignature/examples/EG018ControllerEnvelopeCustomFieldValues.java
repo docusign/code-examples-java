@@ -38,16 +38,17 @@ public class EG018ControllerEnvelopeCustomFieldValues extends AbstractEsignature
     }
 
     @Override
-    // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
-        // Step 2. Construct your API headers
+        //ds-snippet-start:eSign18Step2
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
-        // Step 3. Call the eSignature REST API
+        //ds-snippet-end:eSign18Step2
+        //ds-snippet-start:eSign18Step3
         CustomFieldsEnvelope customFieldsEnvelope = EnvelopeCustomFieldValuesService.envelopeCustomFieldValues(
                 envelopesApi,
                 session.getAccountId(),
                 session.getEnvelopeId()
         );
+        //ds-snippet-end:eSign18Step3
 
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                 .withJsonObject(customFieldsEnvelope)
@@ -55,5 +56,4 @@ public class EG018ControllerEnvelopeCustomFieldValues extends AbstractEsignature
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
-    // ***DS.snippet.0.end
 }

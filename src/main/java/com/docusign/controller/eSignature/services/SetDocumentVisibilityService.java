@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.*;
 
 public final class SetDocumentVisibilityService {
-    // Step 3 start    
+    //ds-snippet-start:eSign40Step3  
     public static EnvelopeDefinition makeEnvelope(
             String signerEmail,
             String signerName,
@@ -93,5 +93,5 @@ public final class SetDocumentVisibilityService {
 
         return new Document[]{documentHTML, documentDOCX, documentPDF};
     }
-    // Step 3 end
+    //ds-snippet-end:eSign40Step3
 }
