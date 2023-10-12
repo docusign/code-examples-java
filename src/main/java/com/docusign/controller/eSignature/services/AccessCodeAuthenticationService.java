@@ -17,9 +17,12 @@ public final class AccessCodeAuthenticationService {
             String accountId,
             EnvelopeDefinition envelope
     ) throws ApiException {
+       //ds-snippet-start:eSign19Step4
         return envelopesApi.createEnvelope(accountId, envelope);
+       //ds-snippet-end:eSign19Step4
     }
 
+    //ds-snippet-start:eSign19Step3
     public static EnvelopeDefinition createEnvelope(
             String signerName,
             String signerEmail,
@@ -43,4 +46,5 @@ public final class AccessCodeAuthenticationService {
 
         return envelope;
     }
+    //ds-snippet-end:eSign19Step3
 }

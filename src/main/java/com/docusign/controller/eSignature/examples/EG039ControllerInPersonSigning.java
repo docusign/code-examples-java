@@ -58,15 +58,15 @@ public class EG039ControllerInPersonSigning extends AbstractEsignatureController
 	   EnvelopeDefinition envelope = InPersonSigningService.makeEnvelope(hostEmail, hostName, signerName,
 		  ANCHOR_OFFSET_Y, ANCHOR_OFFSET_X, DOCUMENT_FILE_NAME, DOCUMENT_NAME);
 
-	   // Step 3 start
+	   //ds-snippet-start:eSign39Step3
 	   ApiClient apiClient = createApiClient(basePath, accessToken);
 	   EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
 
 	   EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
-	   // Step 3 end
-	   // Step 5 start
+	   //ds-snippet-end:eSign39Step3
+	   //ds-snippet-start:eSign39Step5
 	   RecipientViewRequest viewRequest = InPersonSigningService.makeRecipientViewRequest(hostEmail, hostName, config);
-	   // Step 5 end
+	   //ds-snippet-end:eSign39Step5
 
 	   ViewUrl viewUrl = InPersonSigningService.inPersonSigning(
 		  envelopesApi,

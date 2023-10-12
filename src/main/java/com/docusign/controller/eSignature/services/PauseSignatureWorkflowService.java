@@ -22,6 +22,7 @@ public final class PauseSignatureWorkflowService {
         return envelopesApi.createEnvelope(accountId, envelope);
     }
 
+    //ds-snippet-start:eSign32Step3
     public static EnvelopeDefinition createEnvelope(
             String signerName,
             String signerEmail,
@@ -80,4 +81,5 @@ public final class PauseSignatureWorkflowService {
 
         return envelope;
     }
+    //ds-snippet-end:eSign32Step3
 }
