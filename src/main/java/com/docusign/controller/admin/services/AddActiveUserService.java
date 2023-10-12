@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public  class AddActiveUserService {
-
+    //ds-snippet-start:Admin1Step5
     public static NewUserResponse createNewActiveUser(
             String groupId,
             String profileId,
@@ -19,7 +19,6 @@ public  class AddActiveUserService {
             UUID organizationId,
             UUID accountId) throws Exception
     {
-        //ds-snippet-start:Admin1Step5
         java.util.List<GroupRequest> groups = new ArrayList<>();
         groups.add(new GroupRequest().id(Long.valueOf(groupId)));
 
