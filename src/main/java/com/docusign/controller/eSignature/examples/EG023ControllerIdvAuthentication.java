@@ -41,9 +41,7 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException, IOException {
-        // Step 2 start
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
-        // Step 2 end
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
         String workflowId = IdvAuthenticationService.retrieveWorkflowId(apiClient, session.getAccountId());
         logger.info("workflowId = " + workflowId);
@@ -51,12 +49,10 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
         {
             throw new ApiException(0, getTextForCodeExampleByApiType().CustomErrorTexts.get(0).ErrorMessage);
         }
-        // Step 4-1 start
         EnvelopeDefinition envelope = IdvAuthenticationService.createEnvelope(args.getSignerName(), args.getSignerEmail(), workflowId);
-        // Step 4-1 end
-        // Step 5 start
+        //ds-snippet-start:eSign23Step5
         EnvelopeSummary results = IdvAuthenticationService.idvAuthentication(envelopesApi, session.getAccountId(), envelope);
-        // Step 5 end
+        //ds-snippet-end:eSign23Step5
 
         session.setEnvelopeId(results.getEnvelopeId());
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
