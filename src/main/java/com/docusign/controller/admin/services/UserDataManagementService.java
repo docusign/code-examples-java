@@ -51,13 +51,13 @@ public class UserDataManagementService {
 			memberships.accountId(user.getMemberships().get(0).getAccountId());
 		}
 
-		//ds-snippet-start:Admin11Step3
+		//ds-snippet-start:Admin10Step3
 		IndividualUserDataRedactionRequest userRedactionRequest = new IndividualUserDataRedactionRequest();
 		userRedactionRequest.setUserId(user.getId());
 		userRedactionRequest.setMemberships(Arrays.asList(memberships));
-		//ds-snippet-end:Admin11Step3
-		//ds-snippet-start:Admin11Step4
+		//ds-snippet-end:Admin10Step3
+		//ds-snippet-start:Admin10Step4
 		return organizationsApi.redactIndividualUserData(organizationId, userRedactionRequest);
-		//ds-snippet-end:Admin11Step4
+		//ds-snippet-end:Admin10Step4
 	}
 }
