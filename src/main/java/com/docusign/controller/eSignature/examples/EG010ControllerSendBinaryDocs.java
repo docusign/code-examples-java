@@ -31,7 +31,6 @@ public class EG010ControllerSendBinaryDocs extends AbstractEsignatureController 
     }
 
     @Override
-    // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws IOException {
         String responseString = SendBinaryDocsService.sendBinaryDocs(
                 args,
@@ -54,5 +53,4 @@ public class EG010ControllerSendBinaryDocs extends AbstractEsignatureController 
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
-    // ***DS.snippet.0.end
 }

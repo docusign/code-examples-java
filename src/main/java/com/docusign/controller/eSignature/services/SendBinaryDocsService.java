@@ -48,7 +48,6 @@ public final class SendBinaryDocsService {
             String accountId,
             String accessToken
     ) throws IOException {
-        // Step 1. Gather documents and their headers
         List<DocumentInfo> documents = List.of(
                 new DocumentInfo(HTML_DOCUMENT_NAME, "1", DocumentType.HTML,
                         EnvelopeHelpers.createHtmlFromTemplateFile(HTML_DOCUMENT_FILE_NAME, "args", args)
@@ -59,7 +58,7 @@ public final class SendBinaryDocsService {
                         EnvelopeHelpers.readFile(PDF_DOCUMENT_FILE_NAME))
         );
 
-        // Step 2. Make the envelope JSON request body
+        // Make the envelope JSON request body
         JSONObject envelopeJSON = SendBinaryDocsService.makeEnvelopeJSON(
             signerName,
             signerEmail,
@@ -67,7 +66,7 @@ public final class SendBinaryDocsService {
             ccEmail,
             documents);
 
-        // Step 3. Create the multipart body
+        // Create the multipart body
         URL uri = new URL(String.format("%s/v2.1/accounts/%s/envelopes", basePath, accountId));
         String contentType = String.join(
                 "",
@@ -81,6 +80,7 @@ public final class SendBinaryDocsService {
         connection.setDoOutput(true);
 
         // See https://developers.docusign.com/esign-rest-api/guides/requests-and-responses
+        //ds-snippet-start:eSign10Step4
         DataOutputStream buffer = new DataOutputStream(connection.getOutputStream());
         SendBinaryDocsService.writeBoundaryHeader(buffer, MediaType.APPLICATION_JSON, "form-data");
         buffer.writeBytes(envelopeJSON.toString(DoneExample.JSON_INDENT_FACTOR));
@@ -102,6 +102,7 @@ public final class SendBinaryDocsService {
 
         return StreamUtils.copyToString(connection.getInputStream(), StandardCharsets.UTF_8);
     }
+    //ds-snippet-end:eSign10Step4
 
     private static void writeBoundaryHeader(
             DataOutputStream buffer,
@@ -136,6 +137,7 @@ public final class SendBinaryDocsService {
     // recipient 2 - cc
     // The envelope will be sent first to the signer.
     // After it is signed, a copy is sent to the cc person.
+    //ds-snippet-start:eSign10Step3
     private static JSONObject makeEnvelopeJSON(
             String signerName,
             String signerEmail,
@@ -189,6 +191,7 @@ public final class SendBinaryDocsService {
 
         return envelopeJSON;
     }
+    //ds-snippet-end:eSign10Step3
     @Value
     public static class DocumentInfo {
         String name;
