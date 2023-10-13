@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 public final class ResponsiveSigningService {
-    // Step 2 start
+    //ds-snippet-start:eSign38Step2
     private static final String HTML_DOCUMENT_FILE_NAME = "templates/order-form.ftl";
     public static EnvelopeDefinition makeEnvelope(
             String signerEmail,
@@ -85,5 +85,5 @@ public final class ResponsiveSigningService {
 
         return viewRequest;
     }
-    // Step 2 end
+    //ds-snippet-end:eSign38Step2
 }
