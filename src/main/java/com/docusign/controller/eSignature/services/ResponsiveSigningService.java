@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public final class ResponsiveSigningService {
-    // Step 2 start
+    //ds-snippet-start:eSign38Step2
     private static final String TRUE = "true";
     private static final String FALSE = "false";
     private static final int L1_PRICE = 5;
@@ -136,5 +136,5 @@ public final class ResponsiveSigningService {
 
         return viewRequest;
     }
-    // Step 2 end
+    //ds-snippet-end:eSign38Step2
 }

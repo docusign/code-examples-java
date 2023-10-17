@@ -26,14 +26,16 @@ public final class CollectPaymentService {
     private static final String DEFAULT_FONT_SIZE = "size11";
     private static final String ANCHOR_UNITS = "pixels";
 
+    //ds-snippet-start:eSign14Step4
     public static EnvelopeSummary collectPayment(
             EnvelopesApi envelopesApi,
             EnvelopeDefinition envelope,
             String accountId
             ) throws ApiException {
-        // Step 2. call Envelopes::create API method
+        // Call Envelopes::create API method
         return envelopesApi.createEnvelope(accountId, envelope);
     }
+    //ds-snippet-end:eSign14Step4
     // document 1 (html) has multiple tags:
     // /l1q/ and /l2q/ -- quantities: drop down
     // /l1e/ and /l2e/ -- extended: payment lines
@@ -44,6 +46,7 @@ public final class CollectPaymentService {
     // recipient 2 - cc
     // The envelope will be sent first to the signer.
     // After it is signed, a copy is sent to the cc person.
+    //ds-snippet-start:eSign14Step3
     public static EnvelopeDefinition makeEnvelope(
             String signerEmail,
             String signerName,
@@ -184,4 +187,5 @@ public final class CollectPaymentService {
                 .locked(TRUE)
                 .disableAutoSize(FALSE);
     }
+    //ds-snippet-end:eSign14Step3
 }

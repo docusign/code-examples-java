@@ -16,6 +16,7 @@ public class PermissionCreateService {
     ) throws ApiException {
         // Step 3. Construct your request body
         // We're extending the AccountSettings class with AccountSettingsPatch to include the signingUIVersion which is missing in the swagger spec at this time.
+        //ds-snippet-start:eSign24Step3
         Gson gson = new Gson();
         String signingUiVersion = "1";
         AccountRoleSettings settings = DsModelUtils.createDefaultRoleSettings();
@@ -24,8 +25,11 @@ public class PermissionCreateService {
         PermissionProfile profile = new PermissionProfile()
                 .permissionProfileName(permissionProfileName)
                 .settings(newSettings);
+        //ds-snippet-end:eSign24Step3
 
         // Step 4. Call the eSignature REST API
+        //ds-snippet-start:eSign24Step4
         return accountsApi.createPermissionProfile(accountId, profile);
+        //ds-snippet-end:eSign24Step4
     }
 }

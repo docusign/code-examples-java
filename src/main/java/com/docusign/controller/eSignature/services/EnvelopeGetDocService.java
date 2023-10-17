@@ -12,7 +12,9 @@ public final class EnvelopeGetDocService {
             String envelopeId,
             String documentId
     ) throws ApiException {
+        //ds-snippet-start:eSign7Step3
         return envelopesApi.getDocument(accountId, envelopeId, documentId);
+        //ds-snippet-end:eSign7Step3
     }
 
     public static String addExtension(String fileName, String extension) {

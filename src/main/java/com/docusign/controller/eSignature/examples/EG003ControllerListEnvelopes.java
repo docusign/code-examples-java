@@ -32,12 +32,13 @@ public class EG003ControllerListEnvelopes extends AbstractEsignatureController {
     }
 
     @Override
-    // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
+        //ds-snippet-start:eSign3Step2
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
         EnvelopesInformation envelopesInformation = ListEnvelopesServices.listEnvelopes(
                 envelopesApi,
                 session.getAccountId());
+        //ds-snippet-end:eSign3Step2
 
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
@@ -45,5 +46,4 @@ public class EG003ControllerListEnvelopes extends AbstractEsignatureController {
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
-    // ***DS.snippet.0.end
 }
