@@ -24,7 +24,7 @@ public final class IdvAuthenticationService {
     }
 
     public static String retrieveWorkflowId(ApiClient apiClient, String accountId) throws ApiException {
-        // Step 3 start
+        //ds-snippet-start:eSign23Step3
         AccountsApi workflowDetails = new AccountsApi(apiClient);
         AccountIdentityVerificationResponse workflowRes = workflowDetails.getAccountIdentityVerification(accountId);
         List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getIdentityVerification();
@@ -37,9 +37,10 @@ public final class IdvAuthenticationService {
             }
         }
         return  workflowId;
-        // Step 3 end
+        //ds-snippet-end:eSign23Step3
     }
 
+    //ds-snippet-start:eSign23Step4
     public static EnvelopeDefinition createEnvelope(
             String signerName,
             String signerEmail,
@@ -99,4 +100,5 @@ public final class IdvAuthenticationService {
         envelopeDefinition.setDocuments(Collections.singletonList(doc1));
         return envelopeDefinition;
     }
+    //ds-snippet-end:eSign23Step4
 }

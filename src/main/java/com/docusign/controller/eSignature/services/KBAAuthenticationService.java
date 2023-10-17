@@ -17,9 +17,12 @@ public final class KBAAuthenticationService {
             String accountId,
             EnvelopeDefinition envelope
     ) throws ApiException {
+        //ds-snippet-start:eSign22Step4
         return envelopesApi.createEnvelope(accountId, envelope);
+        //ds-snippet-end:eSign22Step4
     }
 
+    //ds-snippet-start:eSign22Step3
     public static Signer setSignHereAndSignerForEnvelope(
             String signerName,
             String signerEmail) throws IOException {
@@ -69,4 +72,5 @@ public final class KBAAuthenticationService {
 
         return envelope;
     }
+    //ds-snippet-end:eSign22Step3
 }
