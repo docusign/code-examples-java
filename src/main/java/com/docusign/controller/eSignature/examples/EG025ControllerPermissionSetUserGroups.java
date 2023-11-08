@@ -48,24 +48,28 @@ public class EG025ControllerPermissionSetUserGroups extends AbstractEsignatureCo
         PermissionProfileInformation permissionsInfo = accountsApi.listPermissions(accountId);
         model.addAttribute(MODEL_LIST_PROFILES, permissionsInfo.getPermissionProfiles());
 
+        //ds-snippet-start:eSign25Step4
         GroupsApi groupsApi = new GroupsApi(accountsApi.getApiClient());
         GroupInformation groupInformation = groupsApi.listGroups(accountId);
         model.addAttribute(MODEL_LIST_GROUPS, groupInformation.getGroups());
+        //ds-snippet-end:eSign25Step4
     }
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
-        // Step 2: Construct your API headers
+        // Construct your API headers
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
 
+        //ds-snippet-start:eSign25Step3
         GroupInformation newGroupInfo = PermissionSetUserGroupsService.permissionSetUserGroups(
                 apiClient,
                 args.getGroupId(),
                 args.getProfileId(),
                 session.getAccountId()
         );
+        //ds-snippet-end:eSign25Step3
 
-        // Step 4: Show result
+        // Show result
         ErrorDetails errorDetails = newGroupInfo.getGroups().get(0).getErrorDetails();
         if (errorDetails != null) {
             new DoneExample()
