@@ -22,7 +22,7 @@ public class CreateActiveCLMESignUserService {
             UsersApi usersApi,
             UUID organizationId,
             UUID accountId
-    ) throws Exception{
+    ) throws Exception {
         //ds-snippet-start:Admin2Step5
         ProductPermissionProfileRequest clm = new ProductPermissionProfileRequest();
         ProductPermissionProfileRequest eSign = new ProductPermissionProfileRequest();

@@ -9,6 +9,7 @@ import com.docusign.esign.model.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public final class CfrEmbeddedSigningService {
     //ds-snippet-start:eSign41Step6
@@ -81,8 +82,6 @@ public final class CfrEmbeddedSigningService {
     ) throws IOException {
         // Create a signer recipient to sign the document, identified by name and email
         // We set the clientUserId to enable embedded signing for the recipient
-
-
         RecipientIdentityPhoneNumber phoneNumber = new RecipientIdentityPhoneNumber();
         phoneNumber.setCountryCode(countryCode);
         phoneNumber.setNumber(number);
@@ -90,12 +89,12 @@ public final class CfrEmbeddedSigningService {
         RecipientIdentityInputOption inputOption = new RecipientIdentityInputOption();
         inputOption.setName("phone_number_list");
         inputOption.setValueType("PhoneNumberList");
-        inputOption.setPhoneNumberList(Arrays.asList(phoneNumber));
+        inputOption.setPhoneNumberList(List.of(phoneNumber));
 
         RecipientIdentityVerification identityVerifcation = new RecipientIdentityVerification();
 
         identityVerifcation.setWorkflowId(workflowId);
-        identityVerifcation.setInputOptions(Arrays.asList(inputOption));
+        identityVerifcation.setInputOptions(List.of(inputOption));
 
         Signer signer = new Signer();
         signer.setEmail(signerEmail);

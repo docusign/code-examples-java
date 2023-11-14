@@ -8,5 +8,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class OptionItem {
     private String text;
+
     private String documentId;
 }

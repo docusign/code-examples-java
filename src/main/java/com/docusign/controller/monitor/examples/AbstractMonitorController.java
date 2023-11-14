@@ -1,7 +1,6 @@
 package com.docusign.controller.monitor.examples;
 
 import com.docusign.DSConfiguration;
-import com.docusign.WebSecurityConfig;
 import com.docusign.core.controller.AbstractController;
 import com.docusign.core.model.AuthType;
 import com.docusign.core.model.Session;
@@ -28,7 +27,7 @@ public abstract class AbstractMonitorController extends AbstractController {
     }
 
     protected ModelAndView ensureUsageOfJWTToken(String accessToken, Session session) {
-        if (session.getAuthTypeSelected() != AuthType.JWT || accessToken.isEmpty()){
+        if (session.getAuthTypeSelected() != AuthType.JWT || accessToken.isEmpty()) {
             return new ModelAndView("pages/ds_must_authenticate");
         }
 
@@ -37,8 +36,9 @@ public abstract class AbstractMonitorController extends AbstractController {
 
     /**
      * Creates new instance of the Monitor API client.
+     *
      * @param accessToken user's access token
-     * @param session active session
+     * @param session     active session
      * @return an instance of the {@link com.docusign.monitor.client.ApiClient}
      */
     protected ApiClient createApiClient(String accessToken, Session session) {
@@ -54,8 +54,9 @@ public abstract class AbstractMonitorController extends AbstractController {
     /**
      * Creates a new instance of the DataSetApi. This method
      * creates an instance of the ApiClient class silently.
+     *
      * @param accessToken user's access token
-     * @param session active session
+     * @param session     active session
      * @return an instance of the {@link DataSetApi}
      */
     protected DataSetApi createDataSetApi(String accessToken, Session session) {

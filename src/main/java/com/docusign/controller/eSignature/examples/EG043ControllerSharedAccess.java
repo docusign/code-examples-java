@@ -30,14 +30,23 @@ import static com.docusign.controller.eSignature.examples.EG043ControllerSharedA
 @RequestMapping(EG_043)
 public class EG043ControllerSharedAccess extends AbstractEsignatureController {
     public static final String EG_043 = "/eg043";
+
     public static final String ACTIVATE_USER = "/activateUser";
+
     public static final String LOGOUT = "/logout";
+
     public static final String LIST_ENVELOPES = "/listEnvelopes";
+
     public static final String ACT_ON_BEHALF = "X-DocuSign-Act-On-Behalf";
+
     public static final String HOME_PAGE = "/";
+
     public static final int AGENT_AUTHENTICATION_SUCCESSFULL = 0;
+
     public static final int AGENT_WAS_NOT_ACTIVATED = 3;
+
     public static final int NO_ENVELOPES_IN_USER_ACCOUNT = 2;
+
     public static final int ENVELOPES_MOVED_TO_ACCOUNT = 1;
 
     @Autowired
@@ -112,7 +121,7 @@ public class EG043ControllerSharedAccess extends AbstractEsignatureController {
                     .withMessage(getTextForCodeExampleByApiType().getAdditionalPage().get(AGENT_AUTHENTICATION_SUCCESSFULL).ResultsPageText)
                     .withRedirect(LOGOUT)
                     .addToModel(model, config);
-        } catch(ApiException exception) {
+        } catch (ApiException exception) {
             DoneExample.createDefault("Authenticate as the agent")
                     .withMessage(getTextForCodeExampleByApiType().getAdditionalPage().get(AGENT_WAS_NOT_ACTIVATED).ResultsPageText)
                     .withRedirect(EG_043 + ACTIVATE_USER)
@@ -135,7 +144,7 @@ public class EG043ControllerSharedAccess extends AbstractEsignatureController {
                 envelopesApi,
                 session.getAccountId());
 
-        if(envelopesInformation.getEnvelopes() == null || envelopesInformation.getEnvelopes().isEmpty()){
+        if (envelopesInformation.getEnvelopes() == null || envelopesInformation.getEnvelopes().isEmpty()) {
             DoneExample.createDefault("No envelopes in the principal user's account")
                     .withMessage(getTextForCodeExampleByApiType().getAdditionalPage().get(NO_ENVELOPES_IN_USER_ACCOUNT).ResultsPageText)
                     .withRedirect(HOME_PAGE)

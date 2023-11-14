@@ -21,18 +21,18 @@ public class JWTAuthenticationMethod {
 
     public static final String CONSENT_REQUIRED = "consent_required";
 
-    private static final long TOKEN_EXPIRATION_IN_SECONDS = 3600;
-
     public static final String REQUEST_CONSENT_LINK = "https://%s/oauth/auth?prompt=login&response_type=code&scope=%s&client_id=%s&redirect_uri=%s";
 
     public static final String CONSENT_REDIRECT_URL = "http://localhost:8080/login/oauth2/code/jwt";
+
+    private static final long TOKEN_EXPIRATION_IN_SECONDS = 3600;
 
     public RedirectView loginUsingJWT(
             DSConfiguration configuration,
             Session session,
             String redirectURL) {
         List<String> scopes = new ArrayList<>();
-        for(ApiType scope : ApiType.values()){
+        for (ApiType scope : ApiType.values()) {
             scopes.addAll(Arrays.asList(scope.getScopes()));
         }
 
@@ -53,26 +53,23 @@ public class JWTAuthenticationMethod {
                     : "";
 
             setSpringSecurityAuthentication(scopes, oAuthToken, userInfo, accountId, session);
-        }
-        catch (ApiException | IOException exp)
-        {
-            if (exp.getMessage().contains(CONSENT_REQUIRED))
-            {
+        } catch (ApiException | IOException exp) {
+            if (exp.getMessage().contains(CONSENT_REQUIRED)) {
                 String consent_scopes = String.join("%20", scopes) + "%20impersonation";
 
                 var consent_url = String.format(
-                    REQUEST_CONSENT_LINK,
-                    configuration.getBaseURL(),
-                    consent_scopes,
-                    configuration.getUserId(),
-                    CONSENT_REDIRECT_URL);
+                        REQUEST_CONSENT_LINK,
+                        configuration.getBaseURL(),
+                        consent_scopes,
+                        configuration.getUserId(),
+                        CONSENT_REDIRECT_URL);
 
                 System.err.println("\nC O N S E N T   R E Q U I R E D" +
-                    "\nAsk the user who will be impersonated to run the following URL: " +
-                    "\n" + consent_url +
-                    "\n\nIt will ask the user to login and to approve access by your application." +
-                    "\nAlternatively, an Administrator can use Organization Administration to" +
-                    "\npre-approve one or more users.");
+                        "\nAsk the user who will be impersonated to run the following URL: " +
+                        "\n" + consent_url +
+                        "\n\nIt will ask the user to login and to approve access by your application." +
+                        "\nAlternatively, an Administrator can use Organization Administration to" +
+                        "\npre-approve one or more users.");
 
                 configuration.setIsConsentRedirectActivated(true);
 

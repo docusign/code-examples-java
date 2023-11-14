@@ -17,6 +17,7 @@ import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -25,14 +26,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 @Controller
 public class IndexController {
+
+    public static final String LOCATION_HEADER = "Location";
 
     private static final String ATTR_ENVELOPE_ID = "qpEnvelopeId";
 
@@ -45,11 +42,10 @@ public class IndexController {
     private static final String LAUNCHER_TEXTS = "launcherTexts";
 
     private static final String CODE_EXAMPLE_GROUPS = "codeExampleGroups";
+
     private static final String API_DATA = "APIData";
 
     private static final String STATUS_CFR = "statusCFR";
-
-    public static final String LOCATION_HEADER = "Location";
 
     @Autowired
     private Session session;
@@ -69,7 +65,7 @@ public class IndexController {
 
         Boolean isCFR = false;
 
-        if(this.config.isShareAccessExampleScenario()){
+        if (this.config.isShareAccessExampleScenario()) {
             this.config.setShareAccessExampleScenario(false);
             this.config.setAdditionalRedirect(true);
 
@@ -78,7 +74,7 @@ public class IndexController {
             return null;
         }
 
-        if(this.config.isAdditionalRedirect()){
+        if (this.config.isAdditionalRedirect()) {
             this.config.setAdditionalRedirect(false);
 
             response.setStatus(response.SC_MOVED_TEMPORARILY);
@@ -141,7 +137,7 @@ public class IndexController {
         }
     }
 
-    private ModelAndView checkForMonitorRedirects(String redirectURL){
+    private ModelAndView checkForMonitorRedirects(String redirectURL) {
         this.session.setAuthTypeSelected(AuthType.JWT);
         redirectURL = redirectURL != "/" ? redirectURL : session.getMonitorExampleRedirect();
         this.session.setMonitorExampleRedirect(null);
@@ -160,19 +156,19 @@ public class IndexController {
         List<String> selectAuthTypeObject = formParams.get("selectAuthType");
         AuthType authTypeSelected = AuthType.valueOf(selectAuthTypeObject.get(0));
 
-        if (authTypeSelected.equals(AuthType.JWT)){
+        if (authTypeSelected.equals(AuthType.JWT)) {
             this.session.setAuthTypeSelected(AuthType.JWT);
             return new JWTAuthenticationMethod().loginUsingJWT(config, session, redirectURL);
-        }else {
+        } else {
             this.session.setAuthTypeSelected(AuthType.AGC);
             return getRedirectView(authTypeSelected);
         }
     }
 
-    private String getRedirectURLForJWTAuthentication(HttpServletRequest req, HttpServletResponse resp){
+    private String getRedirectURLForJWTAuthentication(HttpServletRequest req, HttpServletResponse resp) {
         SavedRequest savedRequest = requestCache.getRequest(req, resp);
 
-        String[] examplesCodes = new String[] {
+        String[] examplesCodes = new String[]{
                 ApiIndex.CLICK.getExamplesPathCode(),
                 ApiIndex.ESIGNATURE.getExamplesPathCode(),
                 ApiIndex.MONITOR.getExamplesPathCode(),
@@ -180,7 +176,7 @@ public class IndexController {
                 ApiIndex.ROOMS.getExamplesPathCode(),
         };
 
-        if (savedRequest != null){
+        if (savedRequest != null) {
             Integer indexOfExampleCodeInRedirect = StringUtils.indexOfAny(savedRequest.getRedirectUrl(), examplesCodes);
 
             if (indexOfExampleCodeInRedirect != -1) {

@@ -2,14 +2,15 @@ package com.docusign.controller.rooms.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.rooms.services.GrantOfficeAccessToFormGroupService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.rooms.api.FormGroupsApi;
 import com.docusign.rooms.api.OfficesApi;
 import com.docusign.rooms.client.ApiException;
-import com.docusign.rooms.model.*;
-import com.docusign.controller.rooms.services.GrantOfficeAccessToFormGroupService;
+import com.docusign.rooms.model.FormGroupSummaryList;
+import com.docusign.rooms.model.OfficeSummaryList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,8 +27,11 @@ import java.io.IOException;
 public class R008ControllerGrantOfficeAccessToFormGroup extends AbstractRoomsController {
 
     private static final String MODEL_OFFICE_LIST = "officeList";
+
     private static final String MODEL_FORM_GROUP_LIST = "formGroupList";
+
     private static final String OFFICE_ALREADY_HAS_ACCESS_TO_FORM_GROUP_ERROR_MESSAGE = "OFFICE_ALREADY_HAS_ACCESS_TO_FORM_GROUP";
+
     private FormGroupsApi formGroupsApi;
 
     @Autowired
@@ -72,7 +76,7 @@ public class R008ControllerGrantOfficeAccessToFormGroup extends AbstractRoomsCon
                     this.session.getAccountId(),
                     args.getFormGroupId(),
                     args.getOfficeId());
-        //ds-snippet-end:Rooms8Step5
+            //ds-snippet-end:Rooms8Step5
 
             DoneExample.createDefault(this.title)
                     .withMessage(getTextForCodeExampleByApiType().ResultsPageText

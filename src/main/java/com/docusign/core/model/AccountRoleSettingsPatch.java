@@ -7,21 +7,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class AccountRoleSettingsPatch extends AccountRoleSettings {
 
     @JsonProperty("signingUiVersion")
-    private String signingUiVersion = null;
+    private String signingUiVersion = "";
 
     public AccountRoleSettings signingUiVersion(String signingUiVersion) {
         this.signingUiVersion = signingUiVersion;
         return this;
     }
-
-    /**
-     *
-     * @return signingUiVersion
-     **/
-    @Schema(example = "null", description = "")
-    public String getSigningUiVersion() {
-        return signingUiVersion;
-    }
-
-
 }

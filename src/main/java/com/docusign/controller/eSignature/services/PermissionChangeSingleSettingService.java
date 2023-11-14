@@ -21,7 +21,7 @@ public final class PermissionChangeSingleSettingService {
         //ds-snippet-start:eSign26Step3
         PermissionProfileInformation permissionsInfo = accountsApi.listPermissions(accountId);
         PermissionProfile profile = PermissionChangeSingleSettingService.findProfile(
-                permissionsInfo.getPermissionProfiles(), curProfileId)
+                        permissionsInfo.getPermissionProfiles(), curProfileId)
                 .orElseThrow(NoSuchElementException::new);
         //ds-snippet-end:eSign26Step3
 

@@ -6,7 +6,7 @@ import com.docusign.admin.model.*;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public  class AddActiveUserService {
+public class AddActiveUserService {
     //ds-snippet-start:Admin1Step5
     public static NewUserResponse createNewActiveUser(
             String groupId,

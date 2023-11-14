@@ -23,8 +23,7 @@ public final class InPersonSigningService {
     public static RecipientViewRequest makeRecipientViewRequest(
             String hostEmail,
             String hostName,
-            DSConfiguration config)
-    {
+            DSConfiguration config) {
         String stateValue = "?state=123";
         String authenticationMethod = "none";
         String pingFrequency = "600";

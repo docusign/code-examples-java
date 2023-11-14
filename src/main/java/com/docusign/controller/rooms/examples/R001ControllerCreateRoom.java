@@ -2,6 +2,8 @@ package com.docusign.controller.rooms.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.rooms.services.CreateRoomService;
+import com.docusign.controller.rooms.services.GetAdminRolesService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
@@ -9,8 +11,6 @@ import com.docusign.rooms.api.RoomsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.RoleSummary;
 import com.docusign.rooms.model.Room;
-import com.docusign.controller.rooms.services.CreateRoomService;
-import com.docusign.controller.rooms.services.GetAdminRolesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -47,7 +47,6 @@ public class R001ControllerCreateRoom extends AbstractRoomsController {
         RoomsApi roomsApi = createRoomsApiClient(this.session.getBasePath(), this.user.getAccessToken());
         //ds-snippet-end:Rooms1Step2
 
-
         // Step 3: Call the v2 Rooms API
         //ds-snippet-start:Rooms1Step3
         Room createdRoom = CreateRoomService.createRoomFromModel(
@@ -55,7 +54,7 @@ public class R001ControllerCreateRoom extends AbstractRoomsController {
                 this.session.getAccountId(),
                 CreateRoomService.createRoomModel(adminRole.getRoleId(), args.getRoomName()));
         //ds-snippet-end:Rooms1Step3
-        
+
         DoneExample.createDefault(this.title)
                 .withJsonObject(createdRoom)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText

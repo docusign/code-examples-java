@@ -2,6 +2,7 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.eSignature.services.UnpauseSignatureWorkflowService;
 import com.docusign.core.common.Utils;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
@@ -9,7 +10,6 @@ import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeUpdateSummary;
-import com.docusign.controller.eSignature.services.UnpauseSignatureWorkflowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,10 +32,10 @@ public class EG033ControllerUnpauseSignatureWorkflow extends AbstractEsignatureC
 
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
-      if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
-        session.setStatusCFR("enabled");
-        throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
-      }
+        if (Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())) {
+            session.setStatusCFR("enabled");
+            throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
+        }
         super.onInitModel(args, model);
     }
 

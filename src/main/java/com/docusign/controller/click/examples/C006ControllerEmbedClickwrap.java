@@ -5,11 +5,11 @@ import com.docusign.click.api.AccountsApi;
 import com.docusign.click.client.ApiException;
 import com.docusign.click.model.ClickwrapVersionsResponse;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.click.services.ActivateClickwrapService;
+import com.docusign.controller.click.services.EmbedClickwrapService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.controller.click.services.ActivateClickwrapService;
-import com.docusign.controller.click.services.EmbedClickwrapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,7 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 public class C006ControllerEmbedClickwrap extends AbstractClickController {
 
     private static final String MODEL_CLICKWRAPS = "clickwraps";
+
     private final Session session;
+
     private final User user;
 
     @Autowired
@@ -41,7 +43,7 @@ public class C006ControllerEmbedClickwrap extends AbstractClickController {
         AccountsApi accountsApi = createAccountsApiClient(this.session.getBasePath(), this.user.getAccessToken());
         ClickwrapVersionsResponse clickwraps = EmbedClickwrapService.getActiveClickwraps(accountsApi, this.session.getAccountId());
         ClickwrapVersionsResponse inactiveClickwraps = ActivateClickwrapService.getClickwrapsByStatus(accountsApi, this.session.getAccountId(), "inactive");
-        Boolean hasInactiveClickraps = (inactiveClickwraps.getClickwraps().size() > 0);
+        Boolean hasInactiveClickraps = inactiveClickwraps.getClickwraps().size() > 0;
         model.addAttribute(MODEL_CLICKWRAPS, clickwraps);
         model.addAttribute("hasInactiveClickraps", hasInactiveClickraps);
     }
@@ -63,8 +65,7 @@ public class C006ControllerEmbedClickwrap extends AbstractClickController {
                 accountsApi, this.session.getAccountId(),
                 clickwrapId, fullName, email, company, title, date);
 
-        if (url == "Already Agreed")
-        {
+        if (url == "Already Agreed") {
             new DoneExample()
                     .withTitle(exampleName)
                     .withName(title)
@@ -74,11 +75,12 @@ public class C006ControllerEmbedClickwrap extends AbstractClickController {
         }
         else
         {
-            String HTMLSnippet = "<p id='agreementStatus'>NOT AGREED</p><div id='ds-terms-of-service'></div><script src='https://demo.docusign.net/clickapi/sdk/latest/docusign-click.js'></script><script>docuSignClick.Clickwrap.render({agreementUrl: '" + url + "',onAgreed: function () {document.getElementById('agreementStatus').innerHTML = 'AGREED';}}, '#ds-terms-of-service');</script>";
+            String htmlSnippet = "<p id='agreementStatus'>NOT AGREED</p><div id='ds-terms-of-service'></div><script src='https://demo.docusign.net/clickapi/sdk/latest/docusign-click.js'></script><script>docuSignClick.Clickwrap.render({agreementUrl: '" + url + "',onAgreed: function () {document.getElementById('agreementStatus').innerHTML = 'AGREED';}}, '#ds-terms-of-service');</script>";
+            
             DoneExample.createDefault(this.title)
-                .withJsonObject(url)
-                .withMessage(getTextForCodeExample().ResultsPageText + HTMLSnippet)
-                .addToModel(model, config);
+                    .withJsonObject(url)
+                    .withMessage(getTextForCodeExample().ResultsPageText + htmlSnippet)
+                    .addToModel(model, config);
             return DONE_EXAMPLE_PAGE;
         }
     }

@@ -2,6 +2,7 @@ package com.docusign.controller.rooms.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.rooms.services.GetRoomsWithFiltersService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
@@ -9,7 +10,6 @@ import com.docusign.core.utils.DateUtils;
 import com.docusign.rooms.api.RoomsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.RoomSummaryList;
-import com.docusign.controller.rooms.services.GetRoomsWithFiltersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -27,8 +27,11 @@ import java.time.LocalDateTime;
 public class R005ControllerGetRoomsWithFilters extends AbstractRoomsController {
 
     private static final String MODEL_START_DATE = "startDate";
+
     private static final String MODEL_END_DATE = "endDate";
+
     private static final int FROM_DATE_OFFSET_DAYS = 10;
+
     private static final int FROM_DATE_FORWARD_DAYS = 1;
 
     @Autowired
@@ -67,7 +70,7 @@ public class R005ControllerGetRoomsWithFilters extends AbstractRoomsController {
                 args.getStartDate(),
                 args.getEndDate());
         //ds-snippet-end:Rooms5Step4
-        
+
         DoneExample.createDefault(this.title)
                 .withJsonObject(rooms)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)

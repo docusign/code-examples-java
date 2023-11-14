@@ -2,6 +2,7 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.eSignature.services.CfrEmbeddedSigningService;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.AccountsApi;
@@ -18,7 +19,6 @@ import com.docusign.esign.model.ViewUrl;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.docusign.controller.eSignature.services.CfrEmbeddedSigningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 
 /**
@@ -38,14 +39,18 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/eg041")
 public class EG041ControllerCfrEmbeddedSigning extends AbstractEsignatureController {
 
-    private static final Logger logger = LoggerFactory.getLogger(EG023ControllerIdvAuthentication.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EG023ControllerIdvAuthentication.class);
+
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
+
     private static final String DOCUMENT_NAME = "Lorem Ipsum";
+
     private static final int ANCHOR_OFFSET_Y = -30;
+
     private static final int ANCHOR_OFFSET_X = 10;
 
     @Autowired
-    public EG041ControllerCfrEmbeddedSigning(DSConfiguration config, Session session, User user){
+    public EG041ControllerCfrEmbeddedSigning(DSConfiguration config, Session session, User user) {
         super(config, "eg041", session, user);
     }
 
@@ -66,18 +71,14 @@ public class EG041ControllerCfrEmbeddedSigning extends AbstractEsignatureControl
         AccountIdentityVerificationResponse workflowRes = workflowDetails.getAccountIdentityVerification(session.getAccountId());
         List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getIdentityVerification();
         String workflowId = "";
-        for (int i = 0; i < identityVerification.size(); i++)
-        {
-            if (identityVerification.get(i).getDefaultName().equals("SMS for access & signatures"))
-            {
+        for (int i = 0; i < identityVerification.size(); i++) {
+            if (identityVerification.get(i).getDefaultName().equals("SMS for access & signatures")) {
                 workflowId = identityVerification.get(i).getWorkflowId();
             }
         }
         //ds-snippet-end:eSign41Step2
-
-        logger.info("workflowId = " + workflowId);
-        if (workflowId.equals(""))
-        {
+        LOGGER.info("workflowId = " + workflowId);
+        if (workflowId.isEmpty()) {
             throw new ApiException(0, getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage);
         }
 

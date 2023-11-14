@@ -10,20 +10,20 @@ import java.util.Collections;
 
 public final class SetTemplateTabValuesService {
     public static ViewUrl setTemplateTabValues(
-        EnvelopesApi envelopesApi,
-        String accountId,
-        String envelopeId,
-        RecipientViewRequest viewRequest
+            EnvelopesApi envelopesApi,
+            String accountId,
+            String envelopeId,
+            RecipientViewRequest viewRequest
     ) throws ApiException {
         return envelopesApi.createRecipientView(accountId, envelopeId, viewRequest);
     }
 
     public static RecipientViewRequest makeRecipientViewRequest(
-        String signerEmail,
-        String signerName,
-        String dsReturnUrl,
-        String clientUserId,
-        String dsPingUrl
+            String signerEmail,
+            String signerName,
+            String dsReturnUrl,
+            String clientUserId,
+            String dsPingUrl
     ) {
         //ds-snippet-start:eSign17Step6
         RecipientViewRequest viewRequest = new RecipientViewRequest();
@@ -46,13 +46,13 @@ public final class SetTemplateTabValuesService {
     }
 
     public static EnvelopeDefinition makeEnvelope(
-        String signerEmail,
-        String signerName,
-        String ccEmail,
-        String ccName,
-        String templateId,
-        String clientUserId
-    ){
+            String signerEmail,
+            String signerName,
+            String ccEmail,
+            String ccName,
+            String templateId,
+            String clientUserId
+    ) {
         // Create a signer recipient to sign the document, identified by name and email
         // We set the clientUserId to enable embedded signing for the recipient
 
@@ -65,11 +65,11 @@ public final class SetTemplateTabValuesService {
         list1.setTabLabel("list");
 
         // Checkboxes
-        Checkbox ck1 =  new Checkbox();
+        Checkbox ck1 = new Checkbox();
         ck1.setTabLabel("ckAuthorization");
         ck1.setSelected("true");
 
-        Checkbox ck2 =  new Checkbox();
+        Checkbox ck2 = new Checkbox();
         ck2.setTabLabel("ckAgreement");
         ck2.setSelected("true");
 
@@ -80,7 +80,6 @@ public final class SetTemplateTabValuesService {
         RadioGroup rg = new RadioGroup();
         rg.setGroupName("radio1");
         rg.setRadios(Collections.singletonList(radio));
-
 
         Text txt = new Text();
         txt.setTabLabel("text");
@@ -104,7 +103,6 @@ public final class SetTemplateTabValuesService {
         txtExtra.setLocked("false");
         txtExtra.setTabId("name");
 
-
         // Add the tabs model (including the SignHere tab) to the signer.
         // The Tabs object wants arrays of the different field/tab types
         // Tabs are set per recipient / signer
@@ -115,7 +113,6 @@ public final class SetTemplateTabValuesService {
         tabs.setRadioGroupTabs(Collections.singletonList(rg));
         tabs.setCheckboxTabs(Arrays.asList(ck1, ck2));
         tabs.setListTabs(Collections.singletonList(list1));
-
 
         // create a signer recipient to sign the document, identified by name and email
         // We're setting the parameters via the object creation
@@ -140,11 +137,9 @@ public final class SetTemplateTabValuesService {
         customField.setRequired("false");
         customField.show("true"); //Yes, include in the CoC
 
-
         CustomFields cf = new CustomFields();
         cf.setTextCustomFields(Collections.singletonList(customField));
         //ds-snippet-end:eSign17Step3
-
 
         // Next, create the top level envelope definition and populate it.
         //ds-snippet-start:eSign17Step4

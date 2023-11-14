@@ -9,22 +9,22 @@ import java.util.UUID;
 
 public class DeleteUserProductPermissionProfileById {
     public static RemoveUserProductsResponse deleteUserProductPermissionProfile(
-		  ProductPermissionProfilesApi productPermissionProfilesApi,
-		  UUID productId,
-		  String emailAddress,
-		  UUID organizationId,
-		  UUID accountId
+            ProductPermissionProfilesApi productPermissionProfilesApi,
+            UUID productId,
+            String emailAddress,
+            UUID organizationId,
+            UUID accountId
     ) throws Exception {
 
-	   //ds-snippet-start:Admin9Step4
-	   var userProductProfileDeleteRequest = new UserProductProfileDeleteRequest();
-	   userProductProfileDeleteRequest.setProductIds(Collections.singletonList(productId));
-	   userProductProfileDeleteRequest.setUserEmail(emailAddress);
-	   //ds-snippet-end:Admin9Step4
+        //ds-snippet-start:Admin9Step4
+        var userProductProfileDeleteRequest = new UserProductProfileDeleteRequest();
+        userProductProfileDeleteRequest.setProductIds(Collections.singletonList(productId));
+        userProductProfileDeleteRequest.setUserEmail(emailAddress);
+        //ds-snippet-end:Admin9Step4
 
-	   return productPermissionProfilesApi.removeUserProductPermission(
-			 organizationId,
-			 accountId,
-			 userProductProfileDeleteRequest);
+        return productPermissionProfilesApi.removeUserProductPermission(
+                organizationId,
+                accountId,
+                userProductProfileDeleteRequest);
     }
 }

@@ -2,17 +2,16 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.eSignature.services.UseTemplateService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
-import com.docusign.esign.api.TemplatesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.EnvelopeTemplateResults;
-import com.docusign.controller.eSignature.services.UseTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

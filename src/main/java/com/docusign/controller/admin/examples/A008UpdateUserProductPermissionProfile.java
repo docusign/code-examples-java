@@ -3,17 +3,17 @@ package com.docusign.controller.admin.examples;
 import com.docusign.DSConfiguration;
 import com.docusign.admin.api.ProductPermissionProfilesApi;
 import com.docusign.admin.api.UsersApi;
-import com.docusign.admin.model.*;
+import com.docusign.admin.client.ApiException;
+import com.docusign.admin.model.PermissionProfileResponse21;
+import com.docusign.admin.model.ProductPermissionProfileResponse;
+import com.docusign.admin.model.ProductPermissionProfilesResponse;
+import com.docusign.admin.model.UserProductPermissionProfilesResponse;
 import com.docusign.common.WorkArguments;
 import com.docusign.controller.admin.services.RetrieveDocuSignProfileByEmailAddress;
 import com.docusign.controller.admin.services.UpdateUserProductPermissionProfileByEmail;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -36,99 +36,100 @@ import java.util.UUID;
 public class A008UpdateUserProductPermissionProfile extends AbstractAdminController {
 
     private final Hashtable<UUID, String> products = new Hashtable<>();
+
     private ProductPermissionProfilesResponse productPermissionProfiles;
 
     @Autowired
     public A008UpdateUserProductPermissionProfile(DSConfiguration config, Session session, User user) {
-	   super(config, "a008", user, session);
+        super(config, "a008", user, session);
     }
 
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
-	   super.onInitModel(args, model);
-	   UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
-	   UUID existingAccountId = this.getExistingAccountId(user.getAccessToken(), session.getBasePath(), organizationId);
-	   String emailAddress = this.session.getEmailAddress();
-	   ProductPermissionProfileResponse permissionProfiles = null;
-	   UUID clmProductId = null;
-	   UUID eSignProductId = null;
+        super.onInitModel(args, model);
+        UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
+        UUID existingAccountId = this.getExistingAccountId(user.getAccessToken(), session.getBasePath(), organizationId);
+        String emailAddress = this.session.getEmailAddress();
+        ProductPermissionProfileResponse permissionProfiles = null;
+        UUID clmProductId = null;
+        UUID eSignProductId = null;
 
-	   if (emailAddress != null) {
-	       try {
-			 UsersApi usersApi = createUsersApi(this.user.getAccessToken(), this.session.getBasePath());
-			 RetrieveDocuSignProfileByEmailAddress.getDocuSignProfileByEmailAddress(usersApi, organizationId, emailAddress);
+        if (emailAddress != null) {
+            try {
+                UsersApi usersApi = createUsersApi(this.user.getAccessToken(), this.session.getBasePath());
+                RetrieveDocuSignProfileByEmailAddress.getDocuSignProfileByEmailAddress(usersApi, organizationId, emailAddress);
 
-			 ProductPermissionProfilesApi productPermissionProfilesApi = this.createProductPermissionProfilesApi(
-				    user.getAccessToken(),
-				    session.getBasePath()
-			 );
-			 productPermissionProfiles = productPermissionProfilesApi.getProductPermissionProfiles(organizationId, existingAccountId);
+                ProductPermissionProfilesApi productPermissionProfilesApi = this.createProductPermissionProfilesApi(
+                        user.getAccessToken(),
+                        session.getBasePath()
+                );
+                productPermissionProfiles = productPermissionProfilesApi.getProductPermissionProfiles(organizationId, existingAccountId);
 
-			 for (ProductPermissionProfileResponse profileResponse : productPermissionProfiles.getProductPermissionProfiles()) {
-				if (profileResponse.getProductName().equals("CLM")) {
-				    clmProductId = profileResponse.getProductId();
-				} else {
-				    permissionProfiles = profileResponse;
-				    eSignProductId = profileResponse.getProductId();
-				}
-			 }
+                for (ProductPermissionProfileResponse profileResponse : productPermissionProfiles.getProductPermissionProfiles()) {
+                    if (profileResponse.getProductName().equals("CLM")) {
+                        clmProductId = profileResponse.getProductId();
+                    } else {
+                        permissionProfiles = profileResponse;
+                        eSignProductId = profileResponse.getProductId();
+                    }
+                }
 
-			 products.put(eSignProductId, "eSignature");
-			 products.put(clmProductId, "CLM");
+                products.put(eSignProductId, "eSignature");
+                products.put(clmProductId, "CLM");
 
-			 model.addAttribute("listPermissionProfiles", permissionProfiles);
-			 model.addAttribute("listProducts", products);
-			 model.addAttribute("emailAddress", emailAddress);
-		  } catch(Exception e) {
-			 model.addAttribute("emailAddress", null);
-		  }
-	   } else {
-		  model.addAttribute("emailAddress", null);
-	   }
+                model.addAttribute("listPermissionProfiles", permissionProfiles);
+                model.addAttribute("listProducts", products);
+                model.addAttribute("emailAddress", emailAddress);
+            } catch (ApiException e) {
+                model.addAttribute("emailAddress", null);
+            }
+        } else {
+            model.addAttribute("emailAddress", null);
+        }
     }
 
     @RequestMapping(value = "/getPermissionProfiles", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     List<PermissionProfileResponse21> getPermissionProfiles(@RequestParam(value = "productId") UUID productId) {
-	   List<PermissionProfileResponse21> permissionProfiles = null;
-	   for (ProductPermissionProfileResponse profileResponse : productPermissionProfiles.getProductPermissionProfiles()) {
-		  if (profileResponse.getProductId().equals(productId)) {
-			 permissionProfiles = profileResponse.getPermissionProfiles();
-		  }
-	   }
+        List<PermissionProfileResponse21> permissionProfiles = null;
+        for (ProductPermissionProfileResponse profileResponse : productPermissionProfiles.getProductPermissionProfiles()) {
+            if (profileResponse.getProductId().equals(productId)) {
+                permissionProfiles = profileResponse.getPermissionProfiles();
+            }
+        }
 
-	   return permissionProfiles;
+        return permissionProfiles;
     }
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
-	   UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
-	   UUID existingAccountId = this.getExistingAccountId(
-			 this.user.getAccessToken(),
-			 this.session.getBasePath(),
-			 organizationId
-	   );
+        UUID organizationId = this.getOrganizationId(this.user.getAccessToken(), this.session.getBasePath());
+        UUID existingAccountId = this.getExistingAccountId(
+                this.user.getAccessToken(),
+                this.session.getBasePath(),
+                organizationId
+        );
 
-	   ProductPermissionProfilesApi productPermissionProfilesApi = createProductPermissionProfilesApi(
-			 this.user.getAccessToken(),
-			 this.session.getBasePath());
+        ProductPermissionProfilesApi productPermissionProfilesApi = createProductPermissionProfilesApi(
+                this.user.getAccessToken(),
+                this.session.getBasePath());
 
-	   UserProductPermissionProfilesResponse productPermissionProfile = UpdateUserProductPermissionProfileByEmail
-			 .updateUserProductPermissionProfile(
-				    productPermissionProfilesApi,
-				    args.getPermissionProfileId(),
-				    args.getProductId(),
-				    this.session.getEmailAddress(),
-				    organizationId,
-				    existingAccountId
-			 );
+        UserProductPermissionProfilesResponse productPermissionProfile = UpdateUserProductPermissionProfileByEmail
+                .updateUserProductPermissionProfile(
+                        productPermissionProfilesApi,
+                        args.getPermissionProfileId(),
+                        args.getProductId(),
+                        this.session.getEmailAddress(),
+                        organizationId,
+                        existingAccountId
+                );
 
-	   DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
-			 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
-			 .withJsonObject(productPermissionProfile)
-			 .addToModel(model, config);
+        DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
+                .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
+                .withJsonObject(productPermissionProfile)
+                .addToModel(model, config);
 
-	   return DONE_EXAMPLE_PAGE;
+        return DONE_EXAMPLE_PAGE;
     }
 
 }

@@ -29,6 +29,7 @@ import java.io.IOException;
 public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsController {
 
     private static final String MODEL_ROOMS_LIST = "roomsList";
+
     private static final String MODEL_DOCUMENTS_LIST = "documentsList";
 
     @Autowired
@@ -59,7 +60,7 @@ public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsCo
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws IOException, ApiException {
         ExternalFormFillSessionsApi externalFormFillSessionsApi = createExternalFormFillSessionsApiClient(
-            this.session.getBasePath(), this.user.getAccessToken());
+                this.session.getBasePath(), this.user.getAccessToken());
 
         //ds-snippet-start:Rooms6Step3
         ExternalFormFillSessionForCreate sessionToCreate = new ExternalFormFillSessionForCreate();
@@ -67,7 +68,7 @@ public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsCo
         sessionToCreate.setFormId(args.getDocumentId());
         sessionToCreate.setXFrameAllowedUrl("http://localhost:8080");
         //ds-snippet-end:Rooms6Step3
-        
+
         //ds-snippet-start:Rooms6Step4
         ExternalFormFillSession formFillSession = (new ExternalFormSessionService()).createSession(
                 externalFormFillSessionsApi,

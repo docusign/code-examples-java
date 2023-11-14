@@ -228,7 +228,7 @@
                 <configuration>
                     <configLocation>checkstyle.xml</configLocation>
                     <violationSeverity>warning</violationSeverity>
-                    <failOnViolation>false</failOnViolation>
+                    <failOnViolation>true</failOnViolation>
                 </configuration>
             </plugin>
         </plugins>

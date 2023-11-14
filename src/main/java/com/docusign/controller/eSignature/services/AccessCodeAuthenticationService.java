@@ -10,6 +10,7 @@ import java.util.Collections;
 
 public final class AccessCodeAuthenticationService {
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
+
     private static final String DOCUMENT_NAME = "Lorem";
 
     public static EnvelopeSummary accessCodeAuthentication(

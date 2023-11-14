@@ -1,9 +1,10 @@
 package com.docusign.core.common;
 
+import lombok.Value;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import lombok.Value;
 
 
 /**
@@ -13,8 +14,8 @@ public final class Languages {
 
     private static final List<Lang> SUPPORTED_LANGUAGES = createList();
 
-    private Languages() {}
-
+    private Languages() {
+    }
 
     public static List<Lang> getSupportedLanguages() {
         return Collections.unmodifiableList(SUPPORTED_LANGUAGES);
@@ -71,7 +72,8 @@ public final class Languages {
 
     @Value
     public static class Lang {
-		private String code;
+        private String code;
+
         private String name;
 
     }

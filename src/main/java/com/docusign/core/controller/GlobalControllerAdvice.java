@@ -1,7 +1,6 @@
 package com.docusign.core.controller;
 
 import com.docusign.DSConfiguration;
-import com.docusign.common.ApiIndex;
 import com.docusign.core.model.*;
 import com.docusign.core.utils.AccountsConverter;
 import com.docusign.esign.client.auth.OAuth;
@@ -43,13 +42,20 @@ import java.util.stream.Collectors;
 public class GlobalControllerAdvice {
 
     private static final String ERROR_ACCOUNT_NOT_FOUND = "Could not find account information for the user";
+
     private static final String PATH_TO_HOMEPAGE = "/pages/esignature/index";
+
     private final DSConfiguration config;
+
     private final Session session;
+
     private final User user;
+
     private Optional<OAuth.Account> account;
-    private AuthType authTypeSelected = AuthType.AGC;
-    private ApiType apiTypeSelected = ApiType.ESIGNATURE;
+
+    private final AuthType authTypeSelected = AuthType.AGC;
+
+    private final ApiType apiTypeSelected = ApiType.ESIGNATURE;
 
     @Autowired
     private OAuth2AuthorizedClientService authorizedClientService;
@@ -60,6 +66,35 @@ public class GlobalControllerAdvice {
         this.session = session;
         this.user = user;
         this.account = account;
+    }
+
+    private static List<OAuth.Account> getOAuthAccounts(OAuth2User user) {
+        List<Map<String, Object>> oauthAccounts = user.getAttribute("accounts");
+        if (oauthAccounts == null) {
+            return new ArrayList<>();
+        }
+
+        return oauthAccounts.stream()
+                .map(AccountsConverter::convert)
+                .collect(Collectors.toList());
+    }
+
+    private static OAuth.Account getDefaultAccount(List<OAuth.Account> accounts) {
+        for (OAuth.Account oauthAccount : accounts) {
+            if ("true".equals(oauthAccount.getIsDefault())) {
+                return oauthAccount;
+            }
+        }
+        return null;
+    }
+
+    private static OAuth.Account getAccountById(List<OAuth.Account> accounts, String accountId) {
+        for (OAuth.Account oauthAccount : accounts) {
+            if (StringUtils.equals(oauthAccount.getAccountId(), accountId)) {
+                return oauthAccount;
+            }
+        }
+        return null;
     }
 
     @ModelAttribute("authTypes")
@@ -111,8 +146,8 @@ public class GlobalControllerAdvice {
 
         if (oauth.isAuthenticated()) {
             user.setName(oauthUser.getAttribute("name"));
-            
-            if (oauthClient != null){
+
+            if (oauthClient != null) {
                 user.setAccessToken(oauthClient.getAccessToken().getTokenValue());
             } else {
                 user.setAccessToken(((OAuth.OAuthToken) oauthUser.getAttribute("access_token")).getAccessToken());
@@ -135,43 +170,14 @@ public class GlobalControllerAdvice {
         return new Locals(config, session, user, "");
     }
 
-    private static List<OAuth.Account> getOAuthAccounts(OAuth2User user) {
-        List<Map<String, Object>> oauthAccounts = user.getAttribute("accounts");
-        if(oauthAccounts == null){
-            return new ArrayList<>();
-        }
-
-        return oauthAccounts.stream()
-            .map(AccountsConverter::convert)
-            .collect(Collectors.toList());
-    }
-
     private OAuth.Account getDefaultAccountInfo(List<OAuth.Account> accounts) {
         String targetAccountId = config.getTargetAccountId();
         if (StringUtils.isNotBlank(targetAccountId)) {
             OAuth.Account account = getAccountById(accounts, targetAccountId);
-            if(account != null) {
+            if (account != null) {
                 return account;
             }
         }
         return getDefaultAccount(accounts);
-    }
-
-    private static OAuth.Account getDefaultAccount(List<OAuth.Account> accounts) {
-        for (OAuth.Account oauthAccount : accounts) {
-            if ("true".equals(oauthAccount.getIsDefault())) {
-                return oauthAccount;
-            }
-        }
-        return null;
-    }
-
-    private static OAuth.Account getAccountById(List<OAuth.Account> accounts, String accountId) {
-        for (OAuth.Account oauthAccount : accounts) {
-            if (StringUtils.equals(oauthAccount.getAccountId(), accountId)) {
-                return oauthAccount;
-            }
-        }
-        return null;
     }
 }

@@ -4,7 +4,8 @@ import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
 
 public final class SetDocumentVisibilityService {
     //ds-snippet-start:eSign40Step3  
@@ -48,15 +49,14 @@ public final class SetDocumentVisibilityService {
             String signerEmail,
             String signerName,
             String signerEmail2,
-            String signerName2)
-    {
+            String signerName2) {
         Signer signer1 = new Signer();
 
         signer1.setEmail(signerEmail);
         signer1.setName(signerName);
         signer1.setRecipientId("1");
         signer1.setRoutingOrder("1");
-        signer1.setExcludedDocuments(Arrays.asList(new String[]{"2", "3"}));
+        signer1.setExcludedDocuments(Arrays.asList("2", "3"));
         signer1.setTabs(EnvelopeHelpers.createSingleSignerTab("**signature_1**", 10, 20));
 
         Signer signer2 = new Signer();
@@ -65,17 +65,16 @@ public final class SetDocumentVisibilityService {
         signer2.setName(signerName2);
         signer2.setRecipientId("2");
         signer2.setRoutingOrder("1");
-        signer2.setExcludedDocuments(Arrays.asList(new String[]{"1"}));
+        signer2.setExcludedDocuments(Arrays.asList("1"));
         signer2.setTabs(EnvelopeHelpers.createSingleSignerTab("/sn1/", 10, 20));
 
-        return new Signer[] {signer1, signer2};
+        return new Signer[]{signer1, signer2};
     }
 
     private static Document[] prepareDocumentsForSending(
             String documentFileNamePDF,
             String documentFileNameDOCX,
-            String documentFileNameHTML) throws IOException
-    {
+            String documentFileNameHTML) throws IOException {
         Document documentHTML = EnvelopeHelpers.createDocumentFromFile(
                 documentFileNameHTML,
                 "Order acknowledgement",

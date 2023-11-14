@@ -1,6 +1,16 @@
 package com.docusign;
 
-import java.io.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
+
+import java.awt.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -10,17 +20,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
 
-import java.awt.Desktop;
-
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
-
 @Slf4j
-@SpringBootApplication(exclude={JmxAutoConfiguration.class})
+@SpringBootApplication(exclude = {JmxAutoConfiguration.class})
 @ComponentScan(basePackages = "com.docusign")
 @Import(WebSecurityConfig.class)
 
@@ -32,7 +33,7 @@ public class App {
         ClassLoader classLoader = App.class.getClassLoader();
         URL applicationJsonURL = classLoader.getResource("application.json");
 
-        if (applicationJsonURL != null){
+        if (applicationJsonURL != null) {
             SpringApplication.run(App.class, args);
             openHomePage();
         } else {
@@ -46,16 +47,16 @@ public class App {
                     while ((len = inputStream.read(buffer)) != -1) {
                         out.write(buffer, 0, len);
                     }
-                } catch (Exception e) {
-                    System.out.println("File applicationJsonMissingError.html could not be accessed.");
+                } catch (IOException e) {
+                    log.error("File applicationJsonMissingError.html could not be accessed.");
                 }
 
                 Desktop.getDesktop().browse(path.toUri());
             }
 
-            System.out.println("");
-            System.out.println("Please, add the application.json file to the resources folder.");
-            System.out.println("");
+            log.info("");
+            log.info("Please, add the application.json file to the resources folder.");
+            log.info("");
         }
     }
 
@@ -64,7 +65,7 @@ public class App {
         try {
             Desktop.getDesktop().browse(new URI("http://localhost:8080"));
         } catch (URISyntaxException use) {
-            System.err.println("Invalid URI in App.openHomePage()");
+            log.error("Invalid URI in App.openHomePage()");
         }
     }
 
@@ -72,7 +73,7 @@ public class App {
         try {
             FileSystems.newFileSystem(new URI(""), Collections.emptyMap());
             log.info("FileSystem initialized successfully");
-        } catch (Exception e) {
+        } catch (FileSystemAlreadyExistsException | URISyntaxException | IOException e) {
             if (e instanceof FileSystemAlreadyExistsException) {
                 log.info("FileSystem is already initialized");
             } else {

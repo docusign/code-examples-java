@@ -2,15 +2,15 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.eSignature.services.PauseSignatureWorkflowService;
 import com.docusign.core.common.Utils;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
+import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
-import com.docusign.core.model.User;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
-import com.docusign.controller.eSignature.services.PauseSignatureWorkflowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -35,16 +35,15 @@ public class EG032ControllerPauseSignatureWorkflow extends AbstractEsignatureCon
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
-        if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
-                session.setStatusCFR("enabled");
-                throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
+        if (Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())) {
+            session.setStatusCFR("enabled");
+            throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
         }
     }
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response)
-            throws ApiException, IOException
-    {
+            throws ApiException, IOException {
 
         //ds-snippet-start:eSign32Step2
         EnvelopesApi envelopesApi = createEnvelopesApi(this.session.getBasePath(), this.user.getAccessToken());

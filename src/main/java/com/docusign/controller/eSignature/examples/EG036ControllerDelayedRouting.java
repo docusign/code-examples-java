@@ -9,23 +9,15 @@ import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.DelayedRouting;
 import com.docusign.esign.model.EnvelopeDefinition;
-import com.docusign.esign.model.EnvelopeDelayRule;
 import com.docusign.esign.model.EnvelopeSummary;
-import com.docusign.esign.model.Signer;
-import com.docusign.esign.model.Tabs;
-import com.docusign.esign.model.Workflow;
-import com.docusign.esign.model.WorkflowStep;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.io.IOException;
-import java.util.Arrays;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 /**
@@ -44,10 +36,10 @@ public class EG036ControllerDelayedRouting extends AbstractEsignatureController 
 
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
-      if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
-        session.setStatusCFR("enabled");
-        throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
-      }
+        if (Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())) {
+            session.setStatusCFR("enabled");
+            throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
+        }
         super.onInitModel(args, model);
     }
 
@@ -73,7 +65,6 @@ public class EG036ControllerDelayedRouting extends AbstractEsignatureController 
         EnvelopeSummary results = envelopesApi.createEnvelope(session.getAccountId(), envelope);
         //ds-snippet-end:eSign36Step3
 
-
         // process results
         session.setEnvelopeId(results.getEnvelopeId());
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
@@ -84,6 +75,4 @@ public class EG036ControllerDelayedRouting extends AbstractEsignatureController 
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
-
-
 }

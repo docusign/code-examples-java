@@ -14,14 +14,19 @@ import tests.common.TestConfig;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 public final class PermissionCreateTest {
     private static final String BEARER_AUTHENTICATION = "Bearer ";
-    private TestConfig testConfig;
-    private static String basePathAddition = "/restapi";
+
+    private static final String basePathAddition = "/restapi";
+
     private final ApiClient apiClient;
+
     private final AccountsApi accountsApi;
+
+    private final TestConfig testConfig;
 
     public PermissionCreateTest() throws IOException {
         JWTLoginMethodTest.RequestJWTUserToken_CorrectInputValues_ReturnOAuthToken(ApiType.ESIGNATURE);
@@ -37,7 +42,7 @@ public final class PermissionCreateTest {
         // Arrange
         byte[] byteArray = new byte[8];
         new Random().nextBytes(byteArray);
-        var permissionName = new String(byteArray, Charset.forName("UTF-8"));
+        var permissionName = new String(byteArray, StandardCharsets.UTF_8);
 
         // Act
         PermissionProfile permissionProfile = PermissionCreateService.createNewProfile(

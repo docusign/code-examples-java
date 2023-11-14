@@ -14,16 +14,26 @@ import java.util.Collections;
 
 public final class CollectPaymentService {
     private static final String HTML_DOCUMENT_FILE_NAME = "templates/order-form.ftl";
+
     private static final String HTML_DOCUMENT_NAME = "Order form";
+
     // Order form constants
     private static final String TRUE = "true";
+
     private static final String FALSE = "false";
+
     private static final int L1_PRICE = 5;
+
     private static final int L2_PRICE = 150;
+
     private static final int ANCHOR_OFFSET_Y = 10;
+
     private static final int ANCHOR_OFFSET_X = 20;
+
     private static final String DEFAULT_FONT = "helvetica";
+
     private static final String DEFAULT_FONT_SIZE = "size11";
+
     private static final String ANCHOR_UNITS = "pixels";
 
     //ds-snippet-start:eSign14Step4
@@ -31,7 +41,7 @@ public final class CollectPaymentService {
             EnvelopesApi envelopesApi,
             EnvelopeDefinition envelope,
             String accountId
-            ) throws ApiException {
+    ) throws ApiException {
         // Call Envelopes::create API method
         return envelopesApi.createEnvelope(accountId, envelope);
     }
@@ -47,6 +57,7 @@ public final class CollectPaymentService {
     // The envelope will be sent first to the signer.
     // After it is signed, a copy is sent to the cc person.
     //ds-snippet-start:eSign14Step3
+
     public static EnvelopeDefinition makeEnvelope(
             String signerEmail,
             String signerName,

@@ -29,10 +29,8 @@ public final class IdvAuthenticationService {
         AccountIdentityVerificationResponse workflowRes = workflowDetails.getAccountIdentityVerification(accountId);
         List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getIdentityVerification();
         String workflowId = "";
-        for (int i = 0; i < identityVerification.size(); i++)
-        {
-            if (identityVerification.get(i).getDefaultName().equals("DocuSign ID Verification"))
-            {
+        for (int i = 0; i < identityVerification.size(); i++) {
+            if (identityVerification.get(i).getDefaultName().equals("DocuSign ID Verification")) {
                 workflowId = identityVerification.get(i).getWorkflowId();
             }
         }
@@ -40,7 +38,6 @@ public final class IdvAuthenticationService {
         //ds-snippet-end:eSign23Step3
     }
 
-    //ds-snippet-start:eSign23Step4
     public static EnvelopeDefinition createEnvelope(
             String signerName,
             String signerEmail,
@@ -50,7 +47,6 @@ public final class IdvAuthenticationService {
         envelopeDefinition.setEmailSubject("Please sign");
         envelopeDefinition.setEmailBlurb("Sample text for email body");
         envelopeDefinition.setStatus("Sent");
-
 
         byte[] fileBytes = new byte[0];
         try {

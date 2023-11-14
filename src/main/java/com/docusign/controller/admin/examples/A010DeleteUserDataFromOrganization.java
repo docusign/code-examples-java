@@ -26,29 +26,29 @@ public class A010DeleteUserDataFromOrganization extends AbstractAdminController 
 
     @Autowired
     public A010DeleteUserDataFromOrganization(DSConfiguration config, User user, Session session) {
-	   super(config, "a010", user, session);
+        super(config, "a010", user, session);
     }
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
-		String accessToken = this.user.getAccessToken();
-		String basePath = this.session.getBasePath();
+        String accessToken = this.user.getAccessToken();
+        String basePath = this.session.getBasePath();
 
-		UUID organizationId = this.getOrganizationId(accessToken, basePath);
-		UsersApi usersApi = createUsersApi(accessToken, basePath);
-		OrganizationsApi organizationsApi = createOrganizationsApi(accessToken, basePath);
+        UUID organizationId = this.getOrganizationId(accessToken, basePath);
+        UsersApi usersApi = createUsersApi(accessToken, basePath);
+        OrganizationsApi organizationsApi = createOrganizationsApi(accessToken, basePath);
 
-		IndividualUserDataRedactionResponse individualUserDataRedactionResponse = (new UserDataManagementService()).deleteUserDataFromOrganizationByEmail(
-			usersApi,
-			organizationsApi,
-			args.getEmail(),
-			organizationId);
+        IndividualUserDataRedactionResponse individualUserDataRedactionResponse = (new UserDataManagementService()).deleteUserDataFromOrganizationByEmail(
+                usersApi,
+                organizationsApi,
+                args.getEmail(),
+                organizationId);
 
-		DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
-			.withMessage(getTextForCodeExampleByApiType().ResultsPageText)
-			.withJsonObject(individualUserDataRedactionResponse)
-			.addToModel(model, config);
+        DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
+                .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
+                .withJsonObject(individualUserDataRedactionResponse)
+                .addToModel(model, config);
 
-		return DONE_EXAMPLE_PAGE;
+        return DONE_EXAMPLE_PAGE;
     }
 }

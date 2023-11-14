@@ -9,8 +9,9 @@ public class ExampleException extends RuntimeException {
 
     /**
      * Constructs a new exception with the specified detail message and cause.
+     *
      * @param message the detail message, which is kept as member
-     * @param cause the cause, which is saved as member
+     * @param cause   the cause, which is saved as member
      */
     public ExampleException(String message, Throwable cause) {
         super(message, cause);

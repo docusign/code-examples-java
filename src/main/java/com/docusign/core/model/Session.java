@@ -18,29 +18,53 @@ import java.util.UUID;
 public class Session implements Serializable {
     private static final long serialVersionUID = 2695379118371574037L;
 
-    private String accountId;
-    private String createdUserId;
-    private String accountName;
-    private String basePath;
-    private String roomsBasePath;
-    private String envelopeId;
-    private String templateId;
-    private String templateName;
-    private String statusCFR;
-    private List<EnvelopeDocumentInfo> envelopeDocuments;
-    private String permissionProfileId;
-    private String permissionProfileName;
-    private String apiIndexPath;
-    private AuthType authTypeSelected =  AuthType.AGC;
-    private boolean refreshToken = false;
-    private String clickwrapId;
-    private String clickwrapVersionNumber;
-    private String exportId;
-    private String importId;
-    private String emailAddress;
-    private UUID orgId;
-    private OAuth.Account oauthAccount;
     public UUID bulkListId;
+
     public Long tokenExpirationTime;
+
+    private String accountId;
+
+    private String createdUserId;
+
+    private String accountName;
+
+    private String basePath;
+
+    private String roomsBasePath;
+
+    private String envelopeId;
+
+    private String templateId;
+
+    private String templateName;
+
+    private String statusCFR;
+
+    private List<EnvelopeDocumentInfo> envelopeDocuments;
+
+    private String permissionProfileId;
+
+    private String permissionProfileName;
+
+    private String apiIndexPath;
+
+    private AuthType authTypeSelected = AuthType.AGC;
+
+    private boolean refreshToken;
+
+    private String clickwrapId;
+
+    private String clickwrapVersionNumber;
+
+    private String exportId;
+
+    private String importId;
+
+    private String emailAddress;
+
+    private UUID orgId;
+
+    private OAuth.Account oauthAccount;
+
     private String monitorExampleRedirect;
 }

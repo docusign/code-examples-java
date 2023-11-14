@@ -11,7 +11,9 @@ import java.util.Collections;
 
 public final class PauseSignatureWorkflowService {
     private static final String DOCUMENT_FILE_NAME = "Welcome.txt";
+
     private static final String DOCUMENT_ID = "1";
+
     private static final String DOCUMENT_NAME = "Welcome";
 
     public static EnvelopeSummary pauseSignatureWorkflow(

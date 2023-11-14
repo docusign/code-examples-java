@@ -6,11 +6,13 @@ import com.docusign.core.model.ApiType;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.*;
+import com.docusign.esign.model.EnvelopeDefinition;
+import com.docusign.esign.model.EnvelopeSummary;
+import com.docusign.esign.model.EnvelopeTemplateResults;
+import com.docusign.esign.model.TemplateRole;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.HttpHeaders;
-
 import tests.common.JWTLoginMethodTest;
 import tests.common.TestConfig;
 
@@ -19,10 +21,14 @@ import java.util.Arrays;
 
 public final class UseTemplateTest {
     private static final String BEARER_AUTHENTICATION = "Bearer ";
-    private TestConfig testConfig;
-    private static String basePathAddition = "/restapi";
+
+    private static final String basePathAddition = "/restapi";
+
     private final ApiClient apiClient;
+
     private final EnvelopesApi envelopesApi;
+
+    private final TestConfig testConfig;
 
     public UseTemplateTest() throws IOException, ApiException {
         JWTLoginMethodTest.RequestJWTUserToken_CorrectInputValues_ReturnOAuthToken(ApiType.ESIGNATURE);

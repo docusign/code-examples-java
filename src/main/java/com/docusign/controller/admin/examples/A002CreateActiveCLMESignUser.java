@@ -1,9 +1,5 @@
 package com.docusign.controller.admin.examples;
 
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletResponse;
-
 import com.docusign.DSConfiguration;
 import com.docusign.admin.api.DsGroupsApi;
 import com.docusign.admin.api.ProductPermissionProfilesApi;
@@ -11,9 +7,6 @@ import com.docusign.admin.api.UsersApi;
 import com.docusign.admin.client.ApiException;
 import com.docusign.admin.model.AddUserResponse;
 import com.docusign.admin.model.DSGroupListResponse;
-import com.docusign.admin.model.DSGroupRequest;
-import com.docusign.admin.model.NewMultiProductUserAddRequest;
-import com.docusign.admin.model.ProductPermissionProfileRequest;
 import com.docusign.admin.model.ProductPermissionProfileResponse;
 import com.docusign.admin.model.ProductPermissionProfilesResponse;
 import com.docusign.common.WorkArguments;
@@ -21,11 +14,13 @@ import com.docusign.controller.admin.services.CreateActiveCLMESignUserService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 /**
  * Create new user This example demonstrates how to create a new user with
@@ -57,7 +52,6 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
         UUID eSignProductId = null;
         // filter by each type per response
         for (ProductPermissionProfileResponse eachOne : profiles.getProductPermissionProfiles()) {
-            // logger.info("ProductName = " + eachOne);
             if (eachOne.getProductName().equals("CLM")) {
                 clmProductId = eachOne.getProductId();
                 clmProfiles = eachOne;
@@ -83,8 +77,7 @@ public class A002CreateActiveCLMESignUser extends AbstractAdminController {
 
         model.addAttribute("listGroups", groups);
 
-        if (groups.getTotalCount() == 0)
-        {
+        if (groups.getTotalCount() == 0) {
             throw new ApiException(getTextForCodeExampleByApiType().CustomErrorTexts.get(0).ErrorMessage);
         }
     }

@@ -13,27 +13,18 @@ import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.AccountIdentityVerificationResponse;
 import com.docusign.esign.model.AccountIdentityVerificationWorkflow;
-import com.docusign.esign.model.Document;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
-import com.docusign.esign.model.RecipientIdentityInputOption;
-import com.docusign.esign.model.RecipientIdentityPhoneNumber;
-import com.docusign.esign.model.RecipientIdentityVerification;
-import com.docusign.esign.model.Recipients;
-import com.docusign.esign.model.SignHere;
-import com.docusign.esign.model.Signer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Example 020: Phone Authentication for recipient
@@ -42,7 +33,7 @@ import java.io.IOException;
 @RequestMapping("/eg020")
 public class EG020ControllerPhoneAuthentication extends AbstractEsignatureController {
 
-    private static final Logger logger = LoggerFactory.getLogger(EG023ControllerIdvAuthentication.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EG023ControllerIdvAuthentication.class);
 
     @Autowired
     public EG020ControllerPhoneAuthentication(DSConfiguration config, Session session, User user) {
@@ -52,7 +43,7 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
-        if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
+        if (Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())) {
             session.setStatusCFR("enabled");
             throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
         }
@@ -71,17 +62,14 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
         AccountIdentityVerificationResponse workflowRes = workflowDetails.getAccountIdentityVerification(session.getAccountId());
         List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getIdentityVerification();
         String workflowId = "";
-        for (int i = 0; i < identityVerification.size(); i++)
-        {
-            if (identityVerification.get(i).getDefaultName().equals("Phone Authentication"))
-            {
+        for (int i = 0; i < identityVerification.size(); i++) {
+            if (identityVerification.get(i).getDefaultName().equals("Phone Authentication")) {
                 workflowId = identityVerification.get(i).getWorkflowId();
             }
         }
         //ds-snippet-end:eSign20Step3
-        logger.info("workflowId = " + workflowId);
-        if (workflowId.equals(""))
-        {
+        LOGGER.info("workflowId = " + workflowId);
+        if (workflowId.equals("")) {
             throw new ApiException(0, getTextForCodeExampleByApiType().CustomErrorTexts.get(0).ErrorMessage);
         }
         //ds-snippet-start:eSign20Step5      

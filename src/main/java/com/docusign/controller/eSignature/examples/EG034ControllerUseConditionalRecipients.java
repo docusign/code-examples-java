@@ -2,6 +2,7 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.eSignature.services.UseConditionalRecipientsService;
 import com.docusign.core.common.Utils;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
@@ -10,7 +11,6 @@ import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
-import com.docusign.controller.eSignature.services.UseConditionalRecipientsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -35,7 +35,7 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
-        if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
+        if (Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())) {
             session.setStatusCFR("enabled");
             throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
         }
@@ -43,8 +43,7 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response)
-            throws ApiException, IOException
-    {
+            throws ApiException, IOException {
         // Step 2: Construct your API headers
         EnvelopesApi envelopesApi = createEnvelopesApi(this.session.getBasePath(), this.user.getAccessToken());
 
@@ -72,7 +71,7 @@ public class EG034ControllerUseConditionalRecipients extends AbstractEsignatureC
             DoneExample.createDefault(this.title)
                     .withJsonObject(envelopeSummary)
                     .withMessage(getTextForCodeExampleByApiType().ResultsPageText
-                        .replaceFirst("\\{0}", this.session.getEnvelopeId()))
+                            .replaceFirst("\\{0}", this.session.getEnvelopeId()))
                     .addToModel(model, config);
         } catch (ApiException apiException) {
             if (!apiException.getMessage().contains(getTextForCodeExampleByApiType().CustomErrorTexts.get(0).ErrorMessageCheck)) {

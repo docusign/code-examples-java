@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import javax.servlet.http.HttpServletResponse;
 
 import static com.docusign.controller.eSignature.examples.EG042ControllerDocumentGeneration.EG_042;
@@ -20,6 +21,7 @@ import static com.docusign.controller.eSignature.examples.EG042ControllerDocumen
 @RequestMapping(EG_042)
 public class EG042ControllerDocumentGeneration extends AbstractEsignatureController {
     public static final String EG_042 = "/eg042";
+
     private static final String DOCUMENT_FILE_NAME = "Offer_Letter_Demo.docx";
 
     @Autowired

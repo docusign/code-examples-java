@@ -2,17 +2,14 @@ package com.docusign;
 
 import com.docusign.common.WorkArguments;
 import com.docusign.controller.eSignature.examples.AbstractEsignatureController;
+import com.docusign.controller.eSignature.services.EmbeddedSigningService;
 import com.docusign.core.common.Utils;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.model.EnvelopeDefinition;
-import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.RecipientViewRequest;
 import com.docusign.esign.model.ViewUrl;
-
-import com.docusign.controller.eSignature.services.EmbeddedSigningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,26 +30,30 @@ import javax.servlet.http.HttpServletResponse;
 public class EG001ControllerEmbeddedSigning extends AbstractEsignatureController {
 
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
+
     private static final String DOCUMENT_NAME = "Lorem Ipsum";
+
     private static final int ANCHOR_OFFSET_Y = 20;
+
     private static final int ANCHOR_OFFSET_X = 10;
+
     private static final String SIGNER_CLIENT_ID = "1000";
 
     @Autowired
-    public EG001ControllerEmbeddedSigning(DSConfiguration config, Session session, User user){
+    public EG001ControllerEmbeddedSigning(DSConfiguration config, Session session, User user) {
         super(config, Boolean.valueOf(config.getQuickACG()) ? "quickEmbeddedSigning" : "eg001", session, user);
     }
 
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
-      super.onInitModel(args, model);
-      if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
-        session.setStatusCFR("enabled");
-        throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
-      }
-      if(config.getQuickstart().equals("true")){
-        config.setQuickstart("false");
-      }
+        super.onInitModel(args, model);
+        if (Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())) {
+            session.setStatusCFR("enabled");
+            throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
+        }
+        if (config.getQuickstart().equals("true")) {
+            config.setQuickstart("false");
+        }
     }
 
     @Override

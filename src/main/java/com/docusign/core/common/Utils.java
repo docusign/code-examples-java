@@ -1,37 +1,36 @@
 package com.docusign.core.common;
 
+import com.docusign.esign.api.AccountsApi;
+import com.docusign.esign.client.ApiClient;
+import com.docusign.esign.model.AccountInformation;
+import org.apache.commons.codec.binary.StringUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.http.HttpHeaders;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.commons.codec.binary.StringUtils;
-import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.http.HttpHeaders;
-
-import com.docusign.core.model.Session;
-import com.docusign.core.model.User;
-import com.docusign.esign.api.AccountsApi;
-import com.docusign.esign.client.ApiClient;
-import com.docusign.esign.model.AccountInformation;
-
 
 public final class Utils {
 
-    private Utils() {}
+    private Utils() {
+    }
 
     /**
      * Examines member values of simple Java objects. All values will be
      * represented as string. This functions creates a list of all non static
      * field values. One of the comparing object can be equal <code>null</code>
      * but not both.
-     * @param left the first comparing object
-     * @param right the second comparing object
+     *
+     * @param left       the first comparing object
+     * @param right      the second comparing object
      * @param formatName whether format member names
      * @return list of {@link DiffField} objects
      * @throws IllegalArgumentException if both of comparable objects is
-     * <code>null</code> or if objects belong to different classes
+     *                                  <code>null</code> or if objects belong to different classes
      */
     public static List<DiffField> compareFields(Object left, Object right, boolean formatName) {
         if (left == null && right == null) {
@@ -67,12 +66,13 @@ public final class Utils {
      * be represented as string. This functions creates a list of all non
      * static field values. One of the comparing object can be equal
      * <code>null</code> but not both.
-     * @param left the first comparing object
-     * @param right the second comparing object
+     *
+     * @param left       the first comparing object
+     * @param right      the second comparing object
      * @param formatName whether format member names
      * @return list of {@link DiffField} objects
      * @throws IllegalArgumentException if both of comparable objects is
-     * <code>null</code> or if objects belong to different classes
+     *                                  <code>null</code> or if objects belong to different classes
      */
     public static List<DiffField> findDifferentFields(Object left, Object right, boolean formatName) {
         return compareFields(left, right, formatName)
@@ -82,20 +82,16 @@ public final class Utils {
     }
 
     public static Boolean isCfr(String basePath, String accessToken, String accountId) throws Exception {
-      if(accessToken == null){
+        if (accessToken == null) {
 
-      }
-      ApiClient apiClient = new ApiClient(basePath);
-      apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
-      AccountsApi accountsApi = new AccountsApi(apiClient);
+        }
+        ApiClient apiClient = new ApiClient(basePath);
+        apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
+        AccountsApi accountsApi = new AccountsApi(apiClient);
 
-      AccountInformation accountInfo = accountsApi.getAccountInformation(accountId);
-      String isEnabled = accountInfo.getStatus21CFRPart11();
+        AccountInformation accountInfo = accountsApi.getAccountInformation(accountId);
+        String isEnabled = accountInfo.getStatus21CFRPart11();
 
-      if(isEnabled != null && isEnabled.equals("enabled")){
-        return true;
-      } else {
-        return false;
-      }
+        return isEnabled != null && isEnabled.equals("enabled");
     }
 }

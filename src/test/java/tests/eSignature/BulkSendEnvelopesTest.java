@@ -20,17 +20,28 @@ import java.util.List;
 
 public final class BulkSendEnvelopesTest {
     private static final String BEARER_AUTHENTICATION = "Bearer ";
+
     private static final long BULK_REQUEST_DELAY = 15L;
+
     private static final String BULK_SIGNER_EMAIL_PLACEHOLDER = "MultiBulkRecipients-%s@docusign.com";
+
     private static final String BULK_SIGNER_NAME_PLACEHOLDER = "Multi Bulk Recipients::%s";
+
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
+
     private static final String DOCUMENT_NAME = "Lorem Ipsum";
+
     private static final int ANCHOR_OFFSET_Y = -5;
+
     private static final int ANCHOR_OFFSET_X = 15;
-    private TestConfig testConfig;
-    private static String basePathAddition = "/restapi";
+
+    private static final String basePathAddition = "/restapi";
+
     private final ApiClient apiClient;
+
     private final BulkEnvelopesApi bulkEnvelopesApi;
+
+    private final TestConfig testConfig;
 
     public BulkSendEnvelopesTest() throws IOException {
         JWTLoginMethodTest.RequestJWTUserToken_CorrectInputValues_ReturnOAuthToken(ApiType.ESIGNATURE);
@@ -107,7 +118,7 @@ public final class BulkSendEnvelopesTest {
         String defaultIdTwo = "2";
         Signer signer = BulkSendEnvelopesService.createSignerPlaceholder(EnvelopeHelpers.SIGNER_ROLE_NAME, defaultId, defaultId);
         CarbonCopy carbonCopy = BulkSendEnvelopesService.createCCPlaceholder(EnvelopeHelpers.CC_ROLE_NAME, defaultIdTwo, defaultIdTwo);
-        Recipients expectedRecipients =  new Recipients()
+        Recipients expectedRecipients = new Recipients()
                 .signers(List.of(signer))
                 .carbonCopies(List.of(carbonCopy));
 
@@ -148,7 +159,7 @@ public final class BulkSendEnvelopesTest {
         String docId = "1";
         String emailSubject = "EG031 Please sign";
         Document document = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, docId);
-        EnvelopeDefinition expectedEnvelopeDefinition =  new EnvelopeDefinition()
+        EnvelopeDefinition expectedEnvelopeDefinition = new EnvelopeDefinition()
                 .documents(List.of(document))
                 .envelopeIdStamping(DsModelUtils.TRUE)
                 .emailSubject(emailSubject)

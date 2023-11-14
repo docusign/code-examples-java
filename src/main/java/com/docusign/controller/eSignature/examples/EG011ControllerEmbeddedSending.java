@@ -2,13 +2,13 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.eSignature.services.EmbeddedSendingService;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.ViewUrl;
-import com.docusign.controller.eSignature.services.EmbeddedSendingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -37,7 +37,7 @@ public class EG011ControllerEmbeddedSending extends AbstractEsignatureController
     @Override
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
-            HttpServletResponse response) throws ApiException, IOException {
+                            HttpServletResponse response) throws ApiException, IOException {
         String accountId = this.session.getAccountId();
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 

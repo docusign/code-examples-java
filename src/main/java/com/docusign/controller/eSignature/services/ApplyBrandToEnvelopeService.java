@@ -12,8 +12,11 @@ import java.util.List;
 
 public final class ApplyBrandToEnvelopeService {
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
+
     private static final String DOCUMENT_NAME = "EG025 Lorem Ipsum";
+
     private static final int ANCHOR_OFFSET_Y = 10;
+
     private static final int ANCHOR_OFFSET_X = 20;
 
     //ds-snippet-start:eSign29Step4

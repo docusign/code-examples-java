@@ -18,17 +18,25 @@ import tests.common.TestConfig;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 public final class CreateClickwrapTest {
     private static final String BEARER_AUTHENTICATION = "Bearer ";
-    private TestConfig testConfig;
+
     private static final String DOCUMENT_FILE_NAME = "TermsOfService.pdf";
+
     private static final Integer DOCUMENT_ORDER = 0;
+
     private static final String DOCUMENT_NAME = "Terms of Service";
-    private static String basePathAddition = "/clickapi";
+
+    private static final String basePathAddition = "/clickapi";
+
     private final ApiClient apiClient;
+
     private final AccountsApi accountsApi;
+
+    private final TestConfig testConfig;
 
     public CreateClickwrapTest() throws IOException {
         JWTLoginMethodTest.RequestJWTUserToken_CorrectInputValues_ReturnOAuthToken(ApiType.CLICK);
@@ -58,7 +66,7 @@ public final class CreateClickwrapTest {
                 .requireAccept(true)
                 .documentDisplay(documentDisplay);
 
-        ClickwrapRequest expectedClickwrapRequest =  new ClickwrapRequest()
+        ClickwrapRequest expectedClickwrapRequest = new ClickwrapRequest()
                 .addDocumentsItem(document)
                 .clickwrapName(clickwrapName)
                 .requireReacceptance(true)
@@ -81,7 +89,7 @@ public final class CreateClickwrapTest {
         // Arrange
         byte[] byteArray = new byte[8];
         new Random().nextBytes(byteArray);
-        String clickwrapName = new String(byteArray, Charset.forName("UTF-8"));
+        String clickwrapName = new String(byteArray, StandardCharsets.UTF_8);
 
         ClickwrapRequest clickwrapRequest = CreateClickwrapService.createClickwrapRequest(
                 clickwrapName,

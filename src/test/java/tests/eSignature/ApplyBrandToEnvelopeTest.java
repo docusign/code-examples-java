@@ -20,15 +20,24 @@ import java.util.List;
 
 public final class ApplyBrandToEnvelopeTest {
     private static final String BEARER_AUTHENTICATION = "Bearer ";
-    private TestConfig testConfig;
+
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
+
     private static final String DOCUMENT_NAME = "EG025 Lorem Ipsum";
+
     private static final int ANCHOR_OFFSET_Y = 10;
+
     private static final int ANCHOR_OFFSET_X = 20;
-    private static String basePathAddition = "/restapi";
+
+    private static final String basePathAddition = "/restapi";
+
     private final ApiClient apiClient;
+
     private final AccountsApi accountsApi;
+
     private final EnvelopesApi envelopesApi;
+
+    private final TestConfig testConfig;
 
     public ApplyBrandToEnvelopeTest() throws IOException {
         JWTLoginMethodTest.RequestJWTUserToken_CorrectInputValues_ReturnOAuthToken(ApiType.ESIGNATURE);
@@ -74,7 +83,7 @@ public final class ApplyBrandToEnvelopeTest {
         Recipients recipients = new Recipients();
         recipients.setSigners(Collections.singletonList(signer));
 
-        EnvelopeDefinition expectedEnvelopeDefinition =  new EnvelopeDefinition()
+        EnvelopeDefinition expectedEnvelopeDefinition = new EnvelopeDefinition()
                 .emailSubject(emailSubject)
                 .documents(List.of(document))
                 .recipients(recipients)

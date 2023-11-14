@@ -3,7 +3,7 @@ package tests.Click;
 import com.docusign.click.api.AccountsApi;
 import com.docusign.click.client.ApiClient;
 import com.docusign.click.client.ApiException;
-import com.docusign.click.model.*;
+import com.docusign.click.model.ClickwrapVersionSummaryResponse;
 import com.docusign.controller.click.services.ActivateClickwrapService;
 import com.docusign.core.model.ApiType;
 import org.junit.Assert;
@@ -16,10 +16,14 @@ import java.io.IOException;
 
 public final class ActivateClickwrapTest {
     private static final String BEARER_AUTHENTICATION = "Bearer ";
-    private TestConfig testConfig;
-    private static String basePathAddition = "/clickapi";
+
+    private static final String basePathAddition = "/clickapi";
+
     private final ApiClient apiClient;
+
     private final AccountsApi accountsApi;
+
+    private final TestConfig testConfig;
 
     public ActivateClickwrapTest() throws IOException, ApiException {
         JWTLoginMethodTest.RequestJWTUserToken_CorrectInputValues_ReturnOAuthToken(ApiType.CLICK);
@@ -43,7 +47,7 @@ public final class ActivateClickwrapTest {
                 testConfig.getAccountId(),
                 testConfig.getInactiveClickwrap().getClickwrapId(),
                 testConfig.getInactiveClickwrap().getVersionNumber()
-                );
+        );
 
         // Assert
         Assert.assertNotNull(clickwrapVersionSummaryResponse);

@@ -1,21 +1,14 @@
 package com.docusign.controller.rooms.examples;
 
 import com.docusign.DSConfiguration;
-import com.docusign.common.WorkArguments;
 import com.docusign.core.controller.AbstractController;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.rooms.api.*;
 import com.docusign.rooms.client.ApiClient;
-import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.client.auth.OAuth;
-import com.docusign.rooms.model.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 /**
@@ -34,13 +27,10 @@ public abstract class AbstractRoomsController extends AbstractController {
         super(config, exampleName);
     }
 
-    protected String getExamplePagesPath() {
-        return AbstractRoomsController.EXAMPLE_PAGES_PATH;
-    }
-
     /**
      * Creates new instance of the Rooms API client.
-     * @param basePath URL to eSignature REST API
+     *
+     * @param basePath        URL to eSignature REST API
      * @param userAccessToken user's access token
      * @return an instance of the {@link ApiClient}
      */
@@ -56,7 +46,8 @@ public abstract class AbstractRoomsController extends AbstractController {
     /**
      * Creates a new instance of the RoomsApi. This method
      * creates an instance of the ApiClient class silently.
-     * @param basePath URL to Rooms REST API
+     *
+     * @param basePath        URL to Rooms REST API
      * @param userAccessToken user's access token
      * @return an instance of the {@link RoomsApi}
      */
@@ -64,12 +55,12 @@ public abstract class AbstractRoomsController extends AbstractController {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         return new RoomsApi(apiClient);
     }
-    //ds-snippet-end:RoomsJavaStep2
 
     /**
      * Creates a new instance of the rooms RolesApi. This method
      * creates an instance of the ApiClient class silently.
-     * @param basePath URL to Rooms REST API
+     *
+     * @param basePath        URL to Rooms REST API
      * @param userAccessToken user's access token
      * @return an instance of the {@link RolesApi}
      */
@@ -77,11 +68,13 @@ public abstract class AbstractRoomsController extends AbstractController {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         return new RolesApi(apiClient);
     }
+    //ds-snippet-end:RoomsJavaStep2
 
     /**
      * Creates a new instance of the rooms OfficesApi. This method
      * creates an instance of the ApiClient class silently.
-     * @param basePath URL to Rooms REST API
+     *
+     * @param basePath        URL to Rooms REST API
      * @param userAccessToken user's access token
      * @return an instance of the {@link OfficesApi}
      */
@@ -93,14 +86,14 @@ public abstract class AbstractRoomsController extends AbstractController {
     /**
      * Creates a new instance of the rooms ExternalFormFillSessionsApi. This method
      * creates an instance of the ApiClient class silently.
-     * @param basePath URL to Rooms REST API
+     *
+     * @param basePath        URL to Rooms REST API
      * @param userAccessToken user's access token
      * @return an instance of the {@link ExternalFormFillSessionsApi}
      */
     protected static ExternalFormFillSessionsApi createExternalFormFillSessionsApiClient(
             String basePath,
-            String userAccessToken)
-    {
+            String userAccessToken) {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         return new ExternalFormFillSessionsApi(apiClient);
     }
@@ -108,7 +101,8 @@ public abstract class AbstractRoomsController extends AbstractController {
     /**
      * Creates a new instance of the rooms RoomTemplatesApi. This method
      * creates an instance of the ApiClient class silently.
-     * @param basePath URL to Rooms REST API
+     *
+     * @param basePath        URL to Rooms REST API
      * @param userAccessToken user's access token
      * @return an instance of the {@link RoomTemplatesApi}
      */
@@ -120,7 +114,8 @@ public abstract class AbstractRoomsController extends AbstractController {
     /**
      * Creates a new instance of the FormLibrariesApi. This method
      * creates an instance of the ApiClient class silently.
-     * @param basePath URL to Rooms REST API
+     *
+     * @param basePath        URL to Rooms REST API
      * @param userAccessToken user's access token
      * @return an instance of the {@link RoomsApi}
      */
@@ -132,12 +127,17 @@ public abstract class AbstractRoomsController extends AbstractController {
     /**
      * Creates a new instance of the FormGroupsApi. This method
      * creates an instance of the ApiClient class silently.
-     * @param basePath URL to Rooms REST API
+     *
+     * @param basePath        URL to Rooms REST API
      * @param userAccessToken user's access token
      * @return an instance of the {@link RoomsApi}
      */
     protected static FormGroupsApi createFormGroupsApi(String basePath, String userAccessToken) {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         return new FormGroupsApi(apiClient);
+    }
+
+    protected String getExamplePagesPath() {
+        return AbstractRoomsController.EXAMPLE_PAGES_PATH;
     }
 }

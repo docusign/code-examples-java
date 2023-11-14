@@ -25,28 +25,28 @@ public class A011DeleteUserDataFromAccount extends AbstractAdminController {
 
     @Autowired
     public A011DeleteUserDataFromAccount(DSConfiguration config, Session session, User user) {
-	   super(config, "a011", user, session);
+        super(config, "a011", user, session);
     }
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
-		String accessToken = this.user.getAccessToken();
-		String basePath = this.session.getBasePath();
+        String accessToken = this.user.getAccessToken();
+        String basePath = this.session.getBasePath();
 
-		UUID organizationId = this.getOrganizationId(accessToken, basePath);
-		UUID existingAccountId = this.getExistingAccountId(accessToken, basePath, organizationId);
-		AccountsApi accountsApi = createAccountsApi(accessToken, basePath);
+        UUID organizationId = this.getOrganizationId(accessToken, basePath);
+        UUID existingAccountId = this.getExistingAccountId(accessToken, basePath, organizationId);
+        AccountsApi accountsApi = createAccountsApi(accessToken, basePath);
 
-		IndividualUserDataRedactionResponse userDataRedactionResponse = (new UserDataManagementService()).deleteUserDataFromAccountByUserId(
-			accountsApi,
-			args.getUserId(),
-			existingAccountId);
+        IndividualUserDataRedactionResponse userDataRedactionResponse = (new UserDataManagementService()).deleteUserDataFromAccountByUserId(
+                accountsApi,
+                args.getUserId(),
+                existingAccountId);
 
-		DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
-			.withMessage(getTextForCodeExampleByApiType().ResultsPageText)
-			.withJsonObject(userDataRedactionResponse)
-			.addToModel(model, config);
+        DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
+                .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
+                .withJsonObject(userDataRedactionResponse)
+                .addToModel(model, config);
 
-		return DONE_EXAMPLE_PAGE;
+        return DONE_EXAMPLE_PAGE;
     }
 }
