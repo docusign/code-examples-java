@@ -14,10 +14,10 @@ import java.io.IOException;
 public final class EmbeddedSendingService {
     //ds-snippet-start:eSign11Step3
     public static ViewUrl createSenderView(
-        EnvelopesApi envelopesApi,
-        String accountId,
-        String envelopeId,
-        String dsReturnUrl
+            EnvelopesApi envelopesApi,
+            String accountId,
+            String envelopeId,
+            String dsReturnUrl
     ) throws ApiException {
         // Create the sender view.
         // Set the url where you want the recipient to go once they are done
@@ -30,23 +30,23 @@ public final class EmbeddedSendingService {
 
     //ds-snippet-start:eSign11Step2
     public static EnvelopeSummary createEnvelopeWithDraftStatus(
-        EnvelopesApi envelopesApi,
-        String signerEmail,
-        String signerName,
-        String ccEmail,
-        String ccName,
-        String status,
-        WorkArguments args,
-        String accountId
+            EnvelopesApi envelopesApi,
+            String signerEmail,
+            String signerName,
+            String ccEmail,
+            String ccName,
+            String status,
+            WorkArguments args,
+            String accountId
     ) throws IOException, ApiException {
         args.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_CREATED);
         EnvelopeDefinition env = SigningViaEmailService.makeEnvelope(
-            signerEmail,
-            signerName,
-            ccEmail,
-            ccName,
-            status,
-            args);
+                signerEmail,
+                signerName,
+                ccEmail,
+                ccName,
+                status,
+                args);
         return envelopesApi.createEnvelope(accountId, env);
     }
     //ds-snippet-end:eSign11Step2

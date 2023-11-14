@@ -32,8 +32,6 @@ public class A004BulkImportUserData extends AbstractAdminController {
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
-
-
         OrganizationImportResponse result = bulkImportUserData(this.user.getAccessToken());
 
         this.session.setImportId(result.getId().toString());

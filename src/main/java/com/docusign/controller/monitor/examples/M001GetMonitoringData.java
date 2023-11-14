@@ -2,10 +2,10 @@ package com.docusign.controller.monitor.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.monitor.services.GetMonitoringDataService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.controller.monitor.services.GetMonitoringDataService;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class M001GetMonitoringData extends AbstractMonitorController {
 
     private final Session session;
+
     private final User user;
 
     @Autowired
@@ -38,17 +39,14 @@ public class M001GetMonitoringData extends AbstractMonitorController {
 
         // Check, if you are using the JWT authentication
         ensureUsageOfJWTToken(accessToken, this.session);
-        // System.out.println(createDataSetApi(accessToken, this.session));
         JSONArray monitoringData = GetMonitoringDataService.getMonitoringData(createDataSetApi(accessToken, this.session));
 
-
-        if (monitoringData.getJSONObject(0).has("Error"))
-        {
+        if (monitoringData.getJSONObject(0).has("Error")) {
             new DoneExample()
                     .withTitle(getTextForCodeExample().ExampleName)
                     .withName("")
                     .withMessage(monitoringData.getJSONObject(0).getString("Error"))
-                    .addToModel(model, config);            
+                    .addToModel(model, config);
             return ERROR_PAGE;
         }
 

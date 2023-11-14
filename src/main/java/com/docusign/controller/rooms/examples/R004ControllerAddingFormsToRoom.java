@@ -2,6 +2,8 @@ package com.docusign.controller.rooms.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.rooms.services.AddingFormsToRoomService;
+import com.docusign.controller.rooms.services.GetFormSummaryListService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
@@ -11,8 +13,6 @@ import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.FormSummary;
 import com.docusign.rooms.model.RoomDocument;
 import com.docusign.rooms.model.RoomSummaryList;
-import com.docusign.controller.rooms.services.AddingFormsToRoomService;
-import com.docusign.controller.rooms.services.GetFormSummaryListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,6 +31,7 @@ import java.util.List;
 public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
 
     private static final String MODEL_FORM_LIST = "formList";
+
     private static final String MODEL_ROOM_LIST = "roomList";
 
     @Autowired
@@ -49,8 +50,8 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
         //ds-snippet-start:Rooms4Step3
         GetRoomsOptions gro = roomsApi.new GetRoomsOptions();
         gro.setCount(5);
-        RoomSummaryList roomSummaryList = roomsApi.getRooms(this.session.getAccountId(), gro); 
-       
+        RoomSummaryList roomSummaryList = roomsApi.getRooms(this.session.getAccountId(), gro);
+
         List<FormSummary> forms = GetFormSummaryListService.getFormSummaryList(
                 createFormLibrariesApi(session.getBasePath(), this.user.getAccessToken()),
                 this.session.getAccountId());
@@ -77,7 +78,7 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
                 args.getFormId(),
                 args.getRoomId());
         //ds-snippet-end:Rooms4Step4
-        
+
         DoneExample.createDefault(this.title)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
                 .withJsonObject(roomDocument)

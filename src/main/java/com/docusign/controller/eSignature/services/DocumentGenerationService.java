@@ -4,23 +4,7 @@ import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.api.TemplatesApi;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.DocGenFormFieldResponse;
-import com.docusign.esign.model.DocGenFormFields;
-import com.docusign.esign.model.EnvelopeSummary;
-import com.docusign.esign.model.TemplateSummary;
-import com.docusign.esign.model.DocGenFormFieldRequest;
-import com.docusign.esign.model.Envelope;
-import com.docusign.esign.model.EnvelopeUpdateSummary;
-import com.docusign.esign.model.TemplateTabs;
-import com.docusign.esign.model.SignHere;
-import com.docusign.esign.model.DateSigned;
-import com.docusign.esign.model.DocGenFormField;
-import com.docusign.esign.model.EnvelopeDefinition;
-import com.docusign.esign.model.TemplateRole;
-import com.docusign.esign.model.EnvelopeTemplate;
-import com.docusign.esign.model.Signer;
-import com.docusign.esign.model.Recipients;
-import com.docusign.esign.model.Document;
+import com.docusign.esign.model.*;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -31,14 +15,45 @@ import java.util.Collections;
  */
 public final class DocumentGenerationService {
     public static final String CANDIDATE_NAME = "Candidate_Name";
+
     public static final String MANAGER_NAME = "Manager_Name";
+
     public static final String JOB_TITLE = "Job_Title";
+
     public static final String SALARY = "Salary";
+
     public static final String START_DATE = "Start_Date";
+
     public static final String TEXT_BOX = "TextBox";
+
     public static final String STRING_TRUE = "true";
+
     public static final String ANCHOR_UNITS = "pixels";
+
     public static final String DEFAULT_ID = "1";
+
+    public static DateSigned createDateSigned() {
+        DateSigned dateSigned = new DateSigned();
+
+        dateSigned.setAnchorString("Date");
+        dateSigned.setAnchorUnits(ANCHOR_UNITS);
+        dateSigned.setAnchorYOffset("-22");
+
+        return dateSigned;
+    }
+
+    // Step 3b start
+    private static EnvelopeDefinition addDocumentTemplate(String offerDocDocx) throws IOException {
+        String documentName = "OfferLetterDemo.docx";
+        Document document = EnvelopeHelpers.createDocumentFromFile(offerDocDocx, documentName, DEFAULT_ID);
+        document.setOrder("1");
+        document.pages("1");
+
+        EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
+        envelopeDefinition.setDocuments(Collections.singletonList(document));
+
+        return envelopeDefinition;
+    }
 
     public String generateDocument(
             String accountId,
@@ -60,7 +75,7 @@ public final class DocumentGenerationService {
         // Step 3a start
         templatesApi.updateDocument(accountId, templateId, DEFAULT_ID, addDocumentTemplate(offerDocDocx));
         // Step 3a end
-        
+
         // Step 4a start
         templatesApi.createTabs(accountId, templateId, DEFAULT_ID, prepareTabs());
         // Step 4a end
@@ -77,7 +92,7 @@ public final class DocumentGenerationService {
         String documentId = "";
         if (!formFieldResponse.getDocGenFormFields().isEmpty()) {
             DocGenFormFields docGenFormFields = formFieldResponse.getDocGenFormFields().get(0);
-            if (docGenFormFields != null){
+            if (docGenFormFields != null) {
                 documentId = docGenFormFields.getDocumentId();
             }
         }
@@ -114,6 +129,7 @@ public final class DocumentGenerationService {
 
         return templateTabs;
     }
+    // Step 4b end
 
     private SignHere createSignHere() {
         SignHere signHere = new SignHere();
@@ -125,17 +141,7 @@ public final class DocumentGenerationService {
 
         return signHere;
     }
-
-    public static DateSigned createDateSigned() {
-        DateSigned dateSigned = new DateSigned();
-
-        dateSigned.setAnchorString("Date");
-        dateSigned.setAnchorUnits(ANCHOR_UNITS);
-        dateSigned.setAnchorYOffset("-22");
-
-        return dateSigned;
-    }
-        // Step 4b end
+    // Step 7b end
 
     // Step 7b start
     private DocGenFormFieldRequest getFormFields(
@@ -179,7 +185,7 @@ public final class DocumentGenerationService {
 
         return docGenFormFieldRequest;
     }
-    // Step 7b end
+    // Step 5b end
 
     // Step 5b start
     private EnvelopeDefinition makeEnvelope(String candidateEmail, String candidateName, String templateId) {
@@ -195,7 +201,7 @@ public final class DocumentGenerationService {
 
         return envelopeDefinition;
     }
-    // Step 5b end
+    // Step 2b end
 
     // Step 2b start
     private EnvelopeTemplate makeTemplate() {
@@ -215,20 +221,6 @@ public final class DocumentGenerationService {
         template.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_CREATED);
 
         return template;
-    }
-    // Step 2b end
-
-    // Step 3b start
-    private static EnvelopeDefinition addDocumentTemplate(String offerDocDocx) throws IOException {
-        String documentName = "OfferLetterDemo.docx";
-        Document document = EnvelopeHelpers.createDocumentFromFile(offerDocDocx, documentName,DEFAULT_ID);
-        document.setOrder("1");
-        document.pages("1");
-
-        EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
-        envelopeDefinition.setDocuments(Collections.singletonList(document));
-
-        return envelopeDefinition;
     }
     // Step 3b stop
 }

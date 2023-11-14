@@ -5,14 +5,14 @@ import com.docusign.core.model.ApiType;
 import com.docusign.core.model.manifestModels.ManifestStructure;
 import com.docusign.esign.client.auth.OAuth;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.ws.rs.HttpMethod;
+import jakarta.ws.rs.core.HttpHeaders;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
-import jakarta.ws.rs.HttpMethod;
-import jakarta.ws.rs.core.HttpHeaders;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -23,6 +23,10 @@ import java.net.URL;
 @Setter
 public class DSConfiguration {
 
+    public Boolean isConsentRedirectActivated = false;
+
+    public String apiTypeHeader = "ApiType";
+
     @Value("${com.docusign.github.example-uri}")
     private String exampleUrl;
 
@@ -32,8 +36,6 @@ public class DSConfiguration {
     private String selectedApiType;
 
     private ManifestStructure codeExamplesText;
-
-    public Boolean isConsentRedirectActivated = false;
 
     private boolean additionalRedirect;
 
@@ -104,8 +106,6 @@ public class DSConfiguration {
     @Value("${CodeExamplesManifest}")
     private String codeExamplesManifest;
 
-    public String apiTypeHeader = "ApiType";
-
     public String getDsReturnUrl() {
         return appUrl + "/ds-return";
     }
@@ -115,13 +115,13 @@ public class DSConfiguration {
     }
 
     public String getBaseUrl(ApiIndex apiIndex, OAuth.Account oauthAccount) {
-        if (apiIndex.equals(ApiIndex.ROOMS)) {
+        if (ApiIndex.ROOMS.equals(apiIndex)) {
             return roomsBasePath;
-        } else if (apiIndex.equals(ApiIndex.CLICK)) {
+        } else if (ApiIndex.CLICK.equals(apiIndex)) {
             return clickBasePath;
-        }  else if (apiIndex.equals(ApiIndex.MONITOR)) {
+        } else if (ApiIndex.MONITOR.equals(apiIndex)) {
             return monitorBasePath;
-        }  else if (apiIndex.equals(ApiIndex.ADMIN)) {
+        } else if (ApiIndex.ADMIN.equals(apiIndex)) {
             return adminBasePath;
         }
 
@@ -129,7 +129,7 @@ public class DSConfiguration {
     }
 
     public ApiType getSelectedApiType() {
-        if (selectedApiType == null){
+        if (selectedApiType == null) {
             return ApiType.ESIGNATURE;
         }
 
@@ -137,7 +137,7 @@ public class DSConfiguration {
     }
 
     public ApiIndex getSelectedApiIndex() {
-        if (selectedApiType == null){
+        if (selectedApiType == null) {
             return ApiIndex.ESIGNATURE;
         }
 
@@ -145,7 +145,7 @@ public class DSConfiguration {
     }
 
     public ManifestStructure getCodeExamplesText() {
-        if (codeExamplesText != null){
+        if (codeExamplesText != null) {
             return codeExamplesText;
         }
 

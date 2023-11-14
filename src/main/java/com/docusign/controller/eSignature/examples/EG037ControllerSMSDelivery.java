@@ -2,14 +2,15 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.eSignature.services.SMSDeliveryService;
 import com.docusign.core.common.Utils;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.*;
-import com.docusign.controller.eSignature.services.SMSDeliveryService;
+import com.docusign.esign.model.EnvelopeDefinition;
+import com.docusign.esign.model.EnvelopeSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Send an envelope with a remote (email) signer and cc recipient.<br />
@@ -36,7 +36,7 @@ public class EG037ControllerSMSDelivery extends AbstractEsignatureController {
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
-        if(Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())){
+        if (Utils.isCfr(session.getBasePath(), user.getAccessToken(), session.getAccountId())) {
             session.setStatusCFR("enabled");
             throw new Exception(config.getCodeExamplesText().getSupportingTexts().getCFRError());
         }

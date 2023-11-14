@@ -19,6 +19,8 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
+    - name: Check code with linters
+      run: mvn -U checkstyle:check
     - name: Download dependancies
       env:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}

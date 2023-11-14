@@ -2,6 +2,7 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.eSignature.services.SetTemplateTabValuesService;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
@@ -9,7 +10,6 @@ import com.docusign.esign.api.TemplatesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
-import com.docusign.controller.eSignature.services.SetTemplateTabValuesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,6 +24,7 @@ import java.io.IOException;
 public class EG017ControllerSetTemplateTabValues extends AbstractEsignatureController {
 
     private static final String MODEL_LIST_TEMPLATE = "listTemplates";
+
     private static final String SIGNER_CLIENT_ID = "1000";
 
     @Autowired
@@ -55,7 +56,7 @@ public class EG017ControllerSetTemplateTabValues extends AbstractEsignatureContr
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
         //ds-snippet-end:eSign17Step2
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
-        
+
         // Step 3. is shown in the makeEnvelope method below
         // Step 4. Construct your request body
         EnvelopeDefinition envelope = SetTemplateTabValuesService.makeEnvelope(

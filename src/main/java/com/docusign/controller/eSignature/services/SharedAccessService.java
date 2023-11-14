@@ -12,8 +12,10 @@ import org.slf4j.LoggerFactory;
 import java.time.LocalDate;
 
 public final class SharedAccessService {
-    private static final Logger logger = LoggerFactory.getLogger(SharedAccessService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SharedAccessService.class);
+
     private static final int FROM_DATE_OFFSET_DAYS = 10;
+
     private static final String MANAGE = "manage";
 
     public UserInformation getUserInfo(UsersApi usersApi, String accountId, String agentEmail) {
@@ -29,7 +31,7 @@ public final class SharedAccessService {
                         .filter(user -> "Active".equals(user.getUserStatus())).findFirst().get();
             }
         } catch (ApiException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
 
         return userInformation;
@@ -65,7 +67,7 @@ public final class SharedAccessService {
         options.setPermissions(MANAGE);
         UserAuthorizations userAuthorizations = accountsApi.getAgentUserAuthorizations(accountId, createdUserId, options);
 
-        if (userAuthorizations.getAuthorizations() == null || userAuthorizations.getAuthorizations().isEmpty() ) {
+        if (userAuthorizations.getAuthorizations() == null || userAuthorizations.getAuthorizations().isEmpty()) {
             //ds-snippet-start:eSign43Step4
             AuthorizationUser user = new AuthorizationUser();
             user.userId(createdUserId);
@@ -76,7 +78,7 @@ public final class SharedAccessService {
             userAuthorizationCreateRequest.permission(MANAGE);
 
             accountsApi.createUserAuthorization(accountId, userId, userAuthorizationCreateRequest);
-           //ds-snippet-end:eSign43Step4
+            //ds-snippet-end:eSign43Step4
         }
     }
 

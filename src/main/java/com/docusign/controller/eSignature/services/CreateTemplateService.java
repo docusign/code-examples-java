@@ -13,9 +13,13 @@ import java.util.Locale;
 
 public final class CreateTemplateService {
     private static final String PDF_DOCUMENT_FILE_NAME = "World_Wide_Corp_fields.pdf";
+
     private static final String PDF_DOCUMENT_NAME = "Lorem Ipsum";
+
     private static final String DOCUMENT_ID = "1";
+
     private static final String PAGE_NUMBER = "1";
+
     private static final String FALSE = "false";
 
     public static TemplateSummary createTemplate(
@@ -59,9 +63,9 @@ public final class CreateTemplateService {
         signer1Tabs.setListTabs(Collections.singletonList(createList()));
         signer1Tabs.setRadioGroupTabs(Collections.singletonList(createRadioGroup()));
         signer1Tabs.setSignHereTabs(Collections.singletonList(createSignHere()));
-        signer1Tabs.textTabs(Arrays.asList(
+        signer1Tabs.textTabs(java.util.List.of(
                 createText("text", "153", "230")));
-        signer1Tabs.numericalTabs(Arrays.asList(         
+        signer1Tabs.numericalTabs(java.util.List.of(
                 createNumerical("numericalCurrency", "153", "260")));
 
         // create a signer recipient to sign the document, identified by name and email
@@ -186,7 +190,6 @@ public final class CreateTemplateService {
         numerical.setRequired(FALSE);
         return numerical;
     }
-
 
     public static SignHere createSignHere() {
         SignHere signHere = new SignHere();

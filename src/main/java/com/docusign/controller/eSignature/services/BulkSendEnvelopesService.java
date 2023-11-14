@@ -15,10 +15,15 @@ import java.util.concurrent.TimeUnit;
 
 public final class BulkSendEnvelopesService {
     private static final String BULK_SIGNER_EMAIL_PLACEHOLDER = "MultiBulkRecipients-%s@docusign.com";
+
     private static final String BULK_SIGNER_NAME_PLACEHOLDER = "Multi Bulk Recipients::%s";
+
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
+
     private static final String DOCUMENT_NAME = "Lorem Ipsum";
+
     private static final int ANCHOR_OFFSET_Y = -5;
+
     private static final int ANCHOR_OFFSET_X = 15;
 
     //ds-snippet-start:eSign31Step7
@@ -48,14 +53,14 @@ public final class BulkSendEnvelopesService {
             String accountId
     ) throws ApiException, IOException {
         BulkSendingList sendingList = BulkSendEnvelopesService.getSendingList(
-            signerName,
-            signerEmail,
-            ccName,
-            ccEmail,
-            signerName2,
-            signerEmail2,
-            ccName2,
-            ccEmail2
+                signerName,
+                signerEmail,
+                ccName,
+                ccEmail,
+                signerName2,
+                signerEmail2,
+                ccName2,
+                ccEmail2
         );
 
         String bulkListId = bulkEnvelopesApi.createBulkSendList(accountId, sendingList).getListId();
@@ -82,14 +87,14 @@ public final class BulkSendEnvelopesService {
 
 //ds-snippet-start:eSign31Step3
     public static BulkSendingList getSendingList(
-        String signerName,
-        String signerEmail,
-        String ccName,
-        String ccEmail,
-        String signerName2,
-        String signerEmail2,
-        String ccName2,
-        String ccEmail2
+            String signerName,
+            String signerEmail,
+            String ccName,
+            String ccEmail,
+            String signerName2,
+            String signerEmail2,
+            String ccName2,
+            String ccEmail2
     ) {
         List<BulkSendingCopy> copies = List.of(
                 createBulkSending(signerName, signerEmail, ccName, ccEmail),

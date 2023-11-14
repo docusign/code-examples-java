@@ -15,9 +15,10 @@ import java.util.UUID;
 
 public class AuditUsersService {
     private static final String timeZoneId = "UTC";
+
     private static final String simpleDateFormat = "yyyy-MM-dd'T'HH:mm'Z'";
 
-    public static ArrayList<UserDrilldownResponse>  auditUsers(
+    public static ArrayList<UserDrilldownResponse> auditUsers(
             UsersApi usersApi,
             UUID organizationId,
             UUID accountId

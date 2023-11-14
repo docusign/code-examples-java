@@ -10,9 +10,9 @@ import com.docusign.esign.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.HttpHeaders;
-
 import tests.common.JWTLoginMethodTest;
 import tests.common.TestConfig;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,16 +20,26 @@ import java.util.Locale;
 
 public final class CreateNewTemplateTest {
     private static final String BEARER_AUTHENTICATION = "Bearer ";
+
     private static final String TEMPLATE_NAME = "Example Signer and CC template v2";
-    private TestConfig testConfig;
+
     private static final String PDF_DOCUMENT_FILE_NAME = "World_Wide_Corp_fields.pdf";
+
     private static final String PDF_DOCUMENT_NAME = "Lorem Ipsum";
+
     private static final String DOCUMENT_ID = "1";
+
     private static final String PAGE_NUMBER = "1";
+
     private static final String FALSE = "false";
-    private static String basePathAddition = "/restapi";
+
+    private static final String basePathAddition = "/restapi";
+
     private final ApiClient apiClient;
+
     private final EnvelopesApi envelopesApi;
+
+    private final TestConfig testConfig;
 
     public CreateNewTemplateTest() throws IOException {
         JWTLoginMethodTest.RequestJWTUserToken_CorrectInputValues_ReturnOAuthToken(ApiType.ESIGNATURE);
@@ -113,12 +123,12 @@ public final class CreateNewTemplateTest {
         signerTabs.setListTabs(Collections.singletonList(CreateTemplateService.createList()));
         signerTabs.setRadioGroupTabs(Collections.singletonList(CreateTemplateService.createRadioGroup()));
         signerTabs.setSignHereTabs(Collections.singletonList(CreateTemplateService.createSignHere()));
-        signerTabs.textTabs(Arrays.asList(
+        signerTabs.textTabs(java.util.List.of(
                 CreateTemplateService.createText("text", textXPosition, "230")
         ));
-        signerTabs.numericalTabs(Arrays.asList(
-            CreateTemplateService.createNumerical("numericalCurrency", textXPosition, "260")
-            ));  
+        signerTabs.numericalTabs(java.util.List.of(
+                CreateTemplateService.createNumerical("numericalCurrency", textXPosition, "260")
+        ));
 
         Signer signer = new Signer();
         signer.setRoleName(EnvelopeHelpers.SIGNER_ROLE_NAME);
@@ -141,7 +151,7 @@ public final class CreateNewTemplateTest {
         expectedEnvelopeTemplate.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_CREATED);
 
         // Act
-        EnvelopeTemplate envelopeTemplate =  CreateTemplateService.makeTemplate(TEMPLATE_NAME);
+        EnvelopeTemplate envelopeTemplate = CreateTemplateService.makeTemplate(TEMPLATE_NAME);
 
         // Assert
         Assert.assertNotNull(envelopeTemplate);

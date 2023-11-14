@@ -1,10 +1,5 @@
 package com.docusign.controller.eSignature.examples;
 
-import java.io.IOException;
-import java.util.Arrays;
-
-import javax.servlet.http.HttpServletResponse;
-
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
 import com.docusign.controller.eSignature.services.ScheduledSendlingService;
@@ -14,17 +9,16 @@ import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeDefinition;
-import com.docusign.esign.model.EnvelopeDelayRule;
 import com.docusign.esign.model.EnvelopeSummary;
-import com.docusign.esign.model.ScheduledSending;
-import com.docusign.esign.model.Signer;
-import com.docusign.esign.model.Tabs;
-import com.docusign.esign.model.Workflow;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 /**
@@ -35,6 +29,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/eg035")
 public class EG035ControllerScheduledSending extends AbstractEsignatureController {
+
+    private static final Logger log = LoggerFactory.getLogger(EG035ControllerScheduledSending.class);
 
     @Autowired
     public EG035ControllerScheduledSending(DSConfiguration config, Session session, User user) {
@@ -51,9 +47,8 @@ public class EG035ControllerScheduledSending extends AbstractEsignatureControlle
 
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
-
-        System.out.println("RESUMEDATE");
-        System.out.println(args.getResumeDate()+"T00:00:00Z");
+        log.info("RESUMEDATE");
+        log.info(args.getResumeDate() + "T00:00:00Z");
 
         EnvelopeDefinition envelope = ScheduledSendlingService.makeEnvelope(
                 args.getSignerEmail(),
@@ -67,8 +62,8 @@ public class EG035ControllerScheduledSending extends AbstractEsignatureControlle
         //ds-snippet-end:eSign35Step3
         // Step 3 end
 
-        System.out.println("ENVELOPE");
-        System.out.println(results.getEnvelopeId());
+        log.info("ENVELOPE");
+        log.info(results.getEnvelopeId());
 
         // process results
         session.setEnvelopeId(results.getEnvelopeId());
@@ -80,6 +75,4 @@ public class EG035ControllerScheduledSending extends AbstractEsignatureControlle
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
-
-
 }

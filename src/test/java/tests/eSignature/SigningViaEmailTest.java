@@ -12,27 +12,39 @@ import com.docusign.esign.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.HttpHeaders;
-
 import tests.common.JWTLoginMethodTest;
 import tests.common.TestConfig;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public final class SigningViaEmailTest {
     private static final String BEARER_AUTHENTICATION = "Bearer ";
+
     private static final String HTML_DOCUMENT_FILE_NAME = "templates/candy-bonbon.ftl";
+
     private static final String HTML_DOCUMENT_NAME = "Order acknowledgement";
+
     private static final String PDF_DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
+
     private static final String PDF_DOCUMENT_NAME = "Lorem Ipsum";
+
     private static final String DOCX_DOCUMENT_FILE_NAME = "World_Wide_Corp_Battle_Plan_Trafalgar.docx";
+
     private static final String DOCX_DOCUMENT_NAME = "Battle Plan";
+
     private static final int ANCHOR_OFFSET_Y = 10;
+
     private static final int ANCHOR_OFFSET_X = 20;
-    private TestConfig testConfig;
-    private static String basePathAddition = "/restapi";
+
+    private static final String basePathAddition = "/restapi";
+
     private final ApiClient apiClient;
+
     private final EnvelopesApi envelopesApi;
+
+    private final TestConfig testConfig;
 
     public SigningViaEmailTest() throws IOException {
         JWTLoginMethodTest.RequestJWTUserToken_CorrectInputValues_ReturnOAuthToken(ApiType.ESIGNATURE);

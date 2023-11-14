@@ -22,16 +22,26 @@ import java.util.Collections;
 
 public final class AddDocToTemplateTest {
     private static final String BEARER_AUTHENTICATION = "Bearer ";
-    private final String SIGNER_CLIENT_ID = "1000";
+
     private static final String HTML_DOCUMENT_FILE_NAME = "templates/candy-bonbon2.ftl";
+
     private static final String HTML_DOCUMENT_NAME = "Appendix 1--Sales order";
+
     private static final int ANCHOR_OFFSET_Y = 10;
+
     private static final int ANCHOR_OFFSET_X = 20;
+
+    private static final String basePathAddition = "/restapi";
+
+    private final String SIGNER_CLIENT_ID = "1000";
+
     private final String RedirectUrl = "https://developers.docusign.com/platform/auth/consent";
-    private TestConfig testConfig;
-    private static String basePathAddition = "/restapi";
+
     private final ApiClient apiClient;
+
     private final EnvelopesApi envelopesApi;
+
+    private final TestConfig testConfig;
 
     public AddDocToTemplateTest() throws IOException, ApiException {
         JWTLoginMethodTest.RequestJWTUserToken_CorrectInputValues_ReturnOAuthToken(ApiType.ESIGNATURE);

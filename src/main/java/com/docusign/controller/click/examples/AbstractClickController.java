@@ -3,11 +3,8 @@ package com.docusign.controller.click.examples;
 import com.docusign.DSConfiguration;
 import com.docusign.click.api.AccountsApi;
 import com.docusign.click.client.ApiClient;
-import com.docusign.click.client.ApiException;
 import com.docusign.click.client.auth.OAuth;
-import com.docusign.click.model.ClickwrapVersionResponse;
 import com.docusign.core.controller.AbstractController;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 
@@ -23,13 +20,10 @@ public abstract class AbstractClickController extends AbstractController {
         super(config, exampleName);
     }
 
-    protected String getExamplePagesPath() {
-        return AbstractClickController.EXAMPLE_PAGES_PATH;
-    }
-
     /**
      * Creates new instance of the Click API client.
-     * @param basePath URL to Click REST API
+     *
+     * @param basePath        URL to Click REST API
      * @param userAccessToken user's access token
      * @return an instance of the {@link ApiClient}
      */
@@ -45,13 +39,18 @@ public abstract class AbstractClickController extends AbstractController {
     /**
      * Creates a new instance of the ClickApi. This method
      * creates an instance of the ApiClient class silently.
-     * @param basePath URL to Click REST API
+     *
+     * @param basePath        URL to Click REST API
      * @param userAccessToken user's access token
      * @return an instance of the {@link AccountsApi}
      */
     protected static AccountsApi createAccountsApiClient(String basePath, String userAccessToken) {
         ApiClient apiClient = createApiClient(basePath, userAccessToken);
         return new AccountsApi(apiClient);
+    }
+
+    protected String getExamplePagesPath() {
+        return AbstractClickController.EXAMPLE_PAGES_PATH;
     }
 }
 

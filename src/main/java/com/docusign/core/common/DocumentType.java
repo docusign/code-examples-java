@@ -11,6 +11,7 @@ public enum DocumentType {
     PDF("pdf", "application/pdf");
 
     private final String defaultFileExtention;
+
     private final String mime;
 
     DocumentType(String defaultFileExtention, String mime) {

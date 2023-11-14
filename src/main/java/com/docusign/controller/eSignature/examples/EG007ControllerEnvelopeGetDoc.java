@@ -2,6 +2,7 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.eSignature.services.EnvelopeGetDocService;
 import com.docusign.core.common.DocumentType;
 import com.docusign.core.model.EnvelopeDocumentInfo;
 import com.docusign.core.model.OptionItem;
@@ -9,7 +10,6 @@ import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
-import com.docusign.controller.eSignature.services.EnvelopeGetDocService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -33,13 +33,25 @@ import java.util.List;
 public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController {
 
     private static final String MODEL_DOCUMENTS_OK = "documentsOk";
+
     private static final String MODEL_DOCUMENT_OPTIONS = "documentOptions";
+
     private static final String HTTP_CONTENT_DISPOSITION_VALUE = "inline;filename=";
+
     private static final String ZIP_EXTENSION = "zip";
 
     @Autowired
     public EG007ControllerEnvelopeGetDoc(DSConfiguration config, Session session, User user) {
         super(config, "eg007", session, user);
+    }
+
+    private EnvelopeDocumentInfo find(List<EnvelopeDocumentInfo> documents, String documentId) {
+        for (EnvelopeDocumentInfo docInfo : documents) {
+            if (StringUtils.equalsIgnoreCase(docInfo.getDocumentId(), documentId)) {
+                return docInfo;
+            }
+        }
+        throw new ExampleException("Requested document is not found.", null);
     }
 
     @Override
@@ -57,14 +69,14 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController 
         ArrayList<OptionItem> documentOptions = new ArrayList<>();
         for (EnvelopeDocumentInfo docInfo : envelopeDocuments) {
             if (docInfo.getName() == "PDF Portfolio") {
-              foundPdfp = true;
+                foundPdfp = true;
             }
             OptionItem doc = new OptionItem(docInfo.getName(), docInfo.getDocumentId());
             documentOptions.add(doc);
         }
-        if (! foundPdfp) {
-          OptionItem pdfp = new OptionItem("PDF Portfolio", "portfolio");
-          documentOptions.add(pdfp);
+        if (!foundPdfp) {
+            OptionItem pdfp = new OptionItem("PDF Portfolio", "portfolio");
+            documentOptions.add(pdfp);
         }
 
         model.addAttribute(MODEL_DOCUMENT_OPTIONS, documentOptions);
@@ -72,7 +84,7 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController 
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model,
-            HttpServletResponse response) throws ApiException, IOException {
+                            HttpServletResponse response) throws ApiException, IOException {
         // Step 2 start
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
         // Step 2 end
@@ -93,11 +105,12 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController 
         boolean foundPdfp = false;
         for (EnvelopeDocumentInfo envDoc : envelopeDocuments) {
             if (envDoc.getName() == "PDF Portfolio") {
-              foundPdfp = true;
+                foundPdfp = true;
+                break;
             }
         }
 
-        if (! foundPdfp) {
+        if (!foundPdfp) {
             EnvelopeDocumentInfo pdfp = new EnvelopeDocumentInfo("PDF Portfolio", "content", "portfolio");
             envelopeDocuments.add(pdfp);
         }
@@ -119,14 +132,5 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController 
         response.getOutputStream().write(envelopeDocument);
         response.flushBuffer();
         return null;
-    }
-
-    private static EnvelopeDocumentInfo find(List<EnvelopeDocumentInfo> documents, String documentId) {
-        for (EnvelopeDocumentInfo docInfo : documents) {
-            if (StringUtils.equalsIgnoreCase(docInfo.getDocumentId(), documentId)) {
-                return docInfo;
-            }
-        }
-        throw new ExampleException("Requested document is not found.", null);
     }
 }

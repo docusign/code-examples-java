@@ -26,10 +26,10 @@ public final class GetFormSummaryListService {
                     accountId,
                     formLibrarySummary.getFormsLibraryId());
             forms.addAll(formSummaryList.getForms());
-            counter += formSummaryList.getForms().size(); 
+            counter += formSummaryList.getForms().size();
 
             if (counter >= 3) {
-                break; 
+                break;
             }
         }
 

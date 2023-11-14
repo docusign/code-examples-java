@@ -4,8 +4,8 @@ import com.docusign.click.api.AccountsApi;
 import com.docusign.click.client.ApiException;
 import com.docusign.click.model.ClickwrapRequest;
 import com.docusign.click.model.ClickwrapVersionSummaryResponse;
-import com.docusign.controller.click.examples.ClickwrapHelper;
 import com.docusign.click.model.ClickwrapVersionsResponse;
+import com.docusign.controller.click.examples.ClickwrapHelper;
 
 
 public final class ActivateClickwrapService {
@@ -17,7 +17,7 @@ public final class ActivateClickwrapService {
         //ds-snippet-start:Click2Step3
         ClickwrapRequest clickwrapRequest = new ClickwrapRequest().status(ClickwrapHelper.STATUS_ACTIVE);
         //ds-snippet-end:Click2Step3
-        
+
         //ds-snippet-start:Click2Step4
         return accountsApi.updateClickwrapVersion(
                 accountId,
@@ -31,7 +31,7 @@ public final class ActivateClickwrapService {
             AccountsApi accountsApi,
             String accountId,
             String status
-    ) throws ApiException{
+    ) throws ApiException {
         AccountsApi.GetClickwrapsOptions options = accountsApi.new GetClickwrapsOptions();
         options.setStatus(status);
         return accountsApi.getClickwraps(accountId, options);

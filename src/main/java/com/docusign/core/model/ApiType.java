@@ -8,6 +8,7 @@ public enum ApiType {
     ADMIN("Admin API",  new String[] {"user_write", "signature", "impersonation", "group_read", "organization_read", "permission_read", "user_read", "account_read", "domain_read", "identity_provider_read", "user_data_redact", "asset_group_account_read", "asset_group_account_clone_write", "asset_group_account_clone_read"});
 
     final String value;
+
     final String[] scopes;
 
     ApiType(String value, String[] scopes) {
@@ -16,13 +17,13 @@ public enum ApiType {
     }
 
     public static ApiType getAPITypeFromLink(String exampleName) {
-        if (exampleName.contains("m")){
+        if (exampleName.contains("m")) {
             return ApiType.MONITOR;
-        }else if (exampleName.contains("a")){
+        } else if (exampleName.contains("a")) {
             return ApiType.ADMIN;
-        }else if (exampleName.contains("c")){
+        } else if (exampleName.contains("c")) {
             return ApiType.CLICK;
-        }else if (exampleName.contains("r")){
+        } else if (exampleName.contains("r")) {
             return ApiType.ROOMS;
         }
 

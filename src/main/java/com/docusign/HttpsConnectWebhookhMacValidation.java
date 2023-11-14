@@ -1,16 +1,24 @@
 package com.docusign;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 
-public class httpsconnectwebhookhmacvalidation {
+public class HttpsConnectWebhookhMacValidation {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(HttpsConnectWebhookhMacValidation.class);
+
     /*
      * Useful reference:
      * https://docs.oracle.com/javase/10/docs/api/javax/crypto/Mac.html
@@ -29,28 +37,22 @@ public class httpsconnectwebhookhmacvalidation {
     public static boolean HashIsValid(String secret, byte[] payload, String verify)
             throws InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
         String computedHash = ComputeHash(secret, payload);
-        boolean isEqual = MessageDigest.isEqual(computedHash.getBytes("UTF-8"),
-                verify.getBytes("UTF-8"));
+        boolean isEqual = MessageDigest.isEqual(computedHash.getBytes(StandardCharsets.UTF_8),
+                verify.getBytes(StandardCharsets.UTF_8));
         return isEqual;
     }
 
     public static void main(String[] args) {
 
-        System.out.println("DocuSign HMAC Tester");
+        LOGGER.info("DocuSign HMAC Tester");
         try {
-
-            Boolean response = httpsconnectwebhookhmacvalidation.HashIsValid("{DocuSign HMAC private key}",
+            Boolean response = HttpsConnectWebhookhMacValidation.HashIsValid("{DocuSign HMAC private key}",
                     Files.readAllBytes(Paths.get("payload.txt")), "{JSON response Signature}");
-            System.out.printf("is this HMAC Valid? ");
-            System.out.println(response);
-
+            LOGGER.info("is this HMAC Valid? ");
+            LOGGER.info(String.valueOf(response));
         } catch (Exception e) {
-
-            System.out.print("Error!!!  ");
-            System.out.print(e.getMessage());
-
+            LOGGER.error("Error!!!  ");
+            LOGGER.error(e.getMessage());
         }
-
     }
-
 }

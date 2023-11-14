@@ -8,6 +8,7 @@ import java.io.IOException;
 public class FileUtils {
     /**
      * Loads a file content and copy it into a byte array.
+     *
      * @param path the absolute path within the class path
      * @return the new byte array that has been loaded from the file
      * @throws IOException in case of I/O errors

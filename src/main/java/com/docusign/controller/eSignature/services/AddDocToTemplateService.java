@@ -14,8 +14,11 @@ import java.util.Collections;
 
 public final class AddDocToTemplateService {
     private static final String HTML_DOCUMENT_FILE_NAME = "templates/candy-bonbon2.ftl";
+
     private static final String HTML_DOCUMENT_NAME = "Appendix 1--Sales order";
+
     private static final int ANCHOR_OFFSET_Y = 10;
+
     private static final int ANCHOR_OFFSET_X = 20;
 
     public static ViewUrl addDocumentToTemplate(
@@ -47,10 +50,10 @@ public final class AddDocToTemplateService {
 
         //ds-snippet-start:eSign13Step4
         RecipientViewRequest viewRequest = AddDocToTemplateService.makeRecipientViewRequest(
-            dsReturnUrl,
-            signerEmail,
-            signerName,
-            dsPingUrl
+                dsReturnUrl,
+                signerEmail,
+                signerName,
+                dsPingUrl
         );
         return envelopesApi.createRecipientView(accountId, envelopeSummary.getEnvelopeId(), viewRequest);
     }
@@ -106,9 +109,9 @@ public final class AddDocToTemplateService {
         inlineTemplate.setSequence("2");
         inlineTemplate.setRecipients(EnvelopeHelpers.createRecipients(
                 createSigner(
-                     signerEmail,
-                     signerName,
-                     signerClientId
+                        signerEmail,
+                        signerName,
+                        signerClientId
                 ),
                 cc1));
         compTemplate1.setInlineTemplates(Collections.singletonList(inlineTemplate));
@@ -119,9 +122,9 @@ public final class AddDocToTemplateService {
                 ANCHOR_OFFSET_Y,
                 ANCHOR_OFFSET_X);
         Signer signer1AddedDoc = createSigner(
-            signerEmail,
-            signerName,
-            signerClientId
+                signerEmail,
+                signerName,
+                signerClientId
         );
         signer1AddedDoc.setTabs(signer1Tabs);
 

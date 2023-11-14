@@ -8,6 +8,8 @@ import com.docusign.core.model.DoneExample;
 import com.docusign.esign.model.CarbonCopy;
 import com.docusign.esign.model.Signer;
 import com.docusign.esign.model.Tabs;
+import jakarta.ws.rs.HttpMethod;
+import jakarta.ws.rs.core.MediaType;
 import lombok.Value;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,8 +17,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.util.StreamUtils;
 
 import javax.net.ssl.HttpsURLConnection;
-import jakarta.ws.rs.HttpMethod;
-import jakarta.ws.rs.core.MediaType;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -26,16 +26,25 @@ import java.util.List;
 
 public final class SendBinaryDocsService {
     private static final int ANCHOR_OFFSET_Y = 10;
+
     private static final int ANCHOR_OFFSET_X = 20;
+
     private static final String HYPHENS = "--";
+
     private static final String LINE_DELIMITER = "\r\n";
+
     private static final String BOUNDARY_DELIMITER = "multipartboundary_multipartboundary";
 
     private static final String HTML_DOCUMENT_FILE_NAME = "templates/candy-bonbon.ftl";
+
     private static final String HTML_DOCUMENT_NAME = "Order acknowledgement";
+
     private static final String PDF_DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
+
     private static final String PDF_DOCUMENT_NAME = "Lorem Ipsum";
+
     private static final String DOCX_DOCUMENT_FILE_NAME = "World_Wide_Corp_Battle_Plan_Trafalgar.docx";
+
     private static final String DOCX_DOCUMENT_NAME = "Battle Plan";
 
     public static String sendBinaryDocs(
@@ -60,11 +69,11 @@ public final class SendBinaryDocsService {
 
         // Make the envelope JSON request body
         JSONObject envelopeJSON = SendBinaryDocsService.makeEnvelopeJSON(
-            signerName,
-            signerEmail,
-            ccName,
-            ccEmail,
-            documents);
+                signerName,
+                signerEmail,
+                ccName,
+                ccEmail,
+                documents);
 
         // Create the multipart body
         URL uri = new URL(String.format("%s/v2.1/accounts/%s/envelopes", basePath, accountId));
@@ -192,11 +201,15 @@ public final class SendBinaryDocsService {
         return envelopeJSON;
     }
     //ds-snippet-end:eSign10Step3
+
     @Value
     public static class DocumentInfo {
         String name;
+
         String id;
+
         DocumentType docType;
+
         byte[] data;
     }
 }

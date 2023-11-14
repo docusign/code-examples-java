@@ -6,11 +6,10 @@ import com.docusign.click.client.ApiException;
 import com.docusign.click.model.ClickwrapVersionSummaryResponse;
 import com.docusign.click.model.ClickwrapVersionsResponse;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.click.services.ActivateClickwrapService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.controller.click.services.ActivateClickwrapService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,7 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 public class C002ControllerActivateClickwrap extends AbstractClickController {
 
     private static final String MODEL_CLICKWRAPS = "clickwraps";
+
     private final Session session;
+
     private final User user;
 
     @Autowired
@@ -57,9 +58,9 @@ public class C002ControllerActivateClickwrap extends AbstractClickController {
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws ApiException {
         AccountsApi accountsApi = createAccountsApiClient(this.session.getBasePath(), this.user.getAccessToken());
-        
+
         String clickwrap = args.getClickwrap();
-        String [] clickwrapData = clickwrap.split(":");
+        String[] clickwrapData = clickwrap.split(":");
         String clickwrapId = clickwrapData[0];
         String versionNumber = clickwrapData[1];
 

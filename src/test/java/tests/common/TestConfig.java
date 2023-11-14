@@ -5,16 +5,11 @@ import com.docusign.esign.model.Brand;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-
 import lombok.Getter;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import lombok.Setter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,6 +18,10 @@ import java.nio.file.Paths;
 @Getter
 @Setter
 public class TestConfig {
+    private static TestConfig single_instance = null;
+
+    public String PathToDocuments;
+
     private String ClientId;
 
     private String Host;
@@ -52,17 +51,6 @@ public class TestConfig {
     private ClickwrapVersionSummaryResponse inactiveClickwrap;
 
     private Brand brand;
-
-    public String PathToDocuments;
-
-    private static TestConfig single_instance = null;
-
-    public static TestConfig getInstance() throws IOException {
-        if (single_instance == null)
-            single_instance = new TestConfig();
-
-        return single_instance;
-    }
 
     public TestConfig() throws IOException {
         PathToDocuments = System.getProperty("user.dir") + "//src//main//resources//";
@@ -109,8 +97,16 @@ public class TestConfig {
                 SignerName = System.getenv("SIGNER_NAME");
                 PrivateKey = System.getenv("PRIVATE_KEY");
             }
-        } catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public static TestConfig getInstance() throws IOException {
+        if (single_instance == null) {
+            single_instance = new TestConfig();
+        }
+
+        return single_instance;
     }
 }

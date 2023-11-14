@@ -2,13 +2,13 @@ package com.docusign.controller.rooms.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.rooms.services.CreateFormGroupService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.rooms.api.FormGroupsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.FormGroup;
-import com.docusign.controller.rooms.services.CreateFormGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -41,7 +41,6 @@ public class R007ControllerCreateFormGroup extends AbstractRoomsController {
                 this.session.getBasePath(), this.user.getAccessToken()
         );
         //ds-snippet-end:Rooms7Step2
-
 
         FormGroup formGroup = CreateFormGroupService.createFormGroup(
                 formGroupsApi,

@@ -10,14 +10,17 @@ import com.docusign.esign.model.SettingsMetadata;
 public final class DsModelUtils {
 
     public static final String FALSE = "false";
+
     public static final String TRUE = "true";
 
-    private DsModelUtils() {}
+    private DsModelUtils() {
+    }
 
     /**
      * Creates {@link AccountRoleSettings} with default values. Now eSignature
      * API has an error. It requires a member 'signingUiVersion' but this class
      * doesn't contain such member.
+     *
      * @return a new AccountRoleSettings object
      */
     public static AccountRoleSettings createDefaultRoleSettings() {

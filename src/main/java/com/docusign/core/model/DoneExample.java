@@ -1,23 +1,18 @@
 package com.docusign.core.model;
 
 import com.docusign.DSConfiguration;
+import com.docusign.core.common.DiffField;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
-import org.apache.jasper.tagplugins.jstl.core.Redirect;
-import org.apache.jasper.tagplugins.jstl.core.Url;
-import org.springframework.ui.ModelMap;
-
-import com.docusign.core.common.DiffField;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.With;
+import org.springframework.ui.ModelMap;
 
 import java.text.SimpleDateFormat;
 
@@ -30,25 +25,50 @@ import java.text.SimpleDateFormat;
 @NoArgsConstructor
 @With
 public class DoneExample {
-    private static final String MODEL_DONE_ATTRIBUTE = "done";
-    private static final String DATETIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ssz";
     public static final int JSON_INDENT_FACTOR = 4;
+
+    private static final String MODEL_DONE_ATTRIBUTE = "done";
+
+    private static final String DATETIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ssz";
+
     private static final String LAUNCHER_TEXTS = "launcherTexts";
+
     private String formFillUrl;
 
     private String title;
+
     private String name;
+
     private String message;
+
     private String redirect;
+
     private String json;
+
     private StackTraceElement[] stackTrace;
+
     private String stackTracePrinted;
+
     private String fixingInstructions;
+
     private Iterable<DiffField> diff;
 
+    /**
+     * Creates default DoneExample object. This method initializes title and
+     * name members by the same value.
+     *
+     * @param title the title text
+     * @return created instance of this class
+     */
+    public static DoneExample createDefault(String title) {
+        return new DoneExample()
+                .withTitle(title)
+                .withName(title);
+    }
 
     /**
      * Creates DoneExample object with title. This method initializes title.
+     *
      * @param String title
      * @return created instance of this class
      */
@@ -59,6 +79,7 @@ public class DoneExample {
 
     /**
      * Creates DoneExample object with name. This method initializes name.
+     *
      * @param String name
      * @return created instance of this class
      */
@@ -67,21 +88,9 @@ public class DoneExample {
         return this;
     }
 
-
     /**
-     * Creates default DoneExample object. This method initializes title and
-     * name members by the same value.
-     * @param title the title text
-     * @return created instance of this class
-     */
-    public static DoneExample createDefault(String title) {
-        return new DoneExample()
-                .withTitle(title)
-                .withName(title);
-    }
-
-  /**
      * Creates DoneExample object with message. This method initializes message.
+     *
      * @param String message
      * @return created instance of this class
      */
@@ -97,6 +106,7 @@ public class DoneExample {
 
     /**
      * Creates DoneExample object with stackTrace. This method initializes error stack trace.
+     *
      * @param StackTraceElement[] stackTrace
      * @return created instance of this class
      */
@@ -112,6 +122,7 @@ public class DoneExample {
 
     /**
      * Creates a JSON text from the object and applies it to member
+     *
      * @param object the object to convert to JSON string
      * @return this object
      */
@@ -132,18 +143,17 @@ public class DoneExample {
         return this;
     }
 
-
     public DoneExample withFormFill(String url) {
         if (url != null) {
-        this.formFillUrl = url;
-    }
+            this.formFillUrl = url;
+        }
 
-    return this;
+        return this;
     }
-
 
     /**
      * Adds this object to model map using name 'done'
+     *
      * @param model the model object to add
      */
     public void addToModel(ModelMap model, DSConfiguration config) {

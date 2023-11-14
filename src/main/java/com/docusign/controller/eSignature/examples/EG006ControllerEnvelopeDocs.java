@@ -2,6 +2,7 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.eSignature.services.EnvelopeDocsService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.EnvelopeDocumentInfo;
 import com.docusign.core.model.Session;
@@ -10,17 +11,15 @@ import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeDocument;
 import com.docusign.esign.model.EnvelopeDocumentsResult;
-
-import java.util.ArrayList;
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
-import com.docusign.controller.eSignature.services.EnvelopeDocsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -73,9 +72,9 @@ public class EG006ControllerEnvelopeDocs extends AbstractEsignatureController {
         }
 
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
-            .withJsonObject(envelopeDocumentsResult)
-            .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
-            .addToModel(model, config);
+                .withJsonObject(envelopeDocumentsResult)
+                .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
+                .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
     // ***DS.snippet.0.end

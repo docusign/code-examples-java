@@ -1,30 +1,20 @@
 package com.docusign.controller.eSignature.services;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-
 import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
-import com.docusign.esign.model.CustomFields;
-import com.docusign.esign.model.Document;
-import com.docusign.esign.model.EnvelopeDefinition;
-import com.docusign.esign.model.EnvelopeSummary;
-import com.docusign.esign.model.LocalePolicyTab;
-import com.docusign.esign.model.Numerical;
-import com.docusign.esign.model.RecipientViewRequest;
-import com.docusign.esign.model.Recipients;
-import com.docusign.esign.model.SignHere;
-import com.docusign.esign.model.Signer;
-import com.docusign.esign.model.Tabs;
-import com.docusign.esign.model.Text;
-import com.docusign.esign.model.TextCustomField;
-import com.docusign.esign.model.ViewUrl;
+import com.docusign.esign.model.*;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public final class SetTabValuesService {
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_salary.docx";
+
     private static final String DOCUMENT_NAME = "Lorem Ipsum";
+
     private static final String SIGNER_CLIENT_ID = "1000";
 
     public static EnvelopeSummary createEnvelope(
@@ -182,7 +172,7 @@ public final class SetTabValuesService {
         Tabs tabs = new Tabs();
         tabs.setSignHereTabs(Collections.singletonList(signHere));
         tabs.setTextTabs(Arrays.asList(textLegal, textFamiliar));
-        tabs.setNumericalTabs(Arrays.asList(numericalSalary));
+        tabs.setNumericalTabs(List.of(numericalSalary));
 
         signer.setTabs(tabs);
 

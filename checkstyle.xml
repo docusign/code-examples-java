@@ -2,18 +2,11 @@
         "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
         "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
 <module name="Checker">
-    <module name="JavadocPackage"/>
     <module name="TreeWalker">
         <!-- Code convention checking -->
         <!-- One statement per line, one declaration per line -->
         <module name="OneStatementPerLine">
             <property name="treatTryResourcesAsStatement" value="true"/>
-        </module>
-
-        <!-- If continuation lines are not indented automatically, indent them one tab stop -->
-        <module name="JavadocTagContinuationIndentation">
-            <property name="offset" value="2"/>
-            <property name="violateExecutionOnNonTightHtml" value="true"/>
         </module>
 
         <!-- Add at least one blank line between method definitions and property definitions -->
@@ -31,9 +24,6 @@
 
         <!-- Avoid Redundant Initializations -->
         <module name="ExplicitInitialization"/>
-
-        <!-- Check using catch -->
-        <module name="IllegalCatch"/>
 
         <!-- Other checking -->
 

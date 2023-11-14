@@ -10,23 +10,32 @@ import com.docusign.esign.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.HttpHeaders;
-
 import tests.common.JWTLoginMethodTest;
 import tests.common.TestConfig;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public final class SetTabValuesTest {
-    private final String RedirectUrl = "https://developers.docusign.com/platform/auth/consent";
     private static final String BEARER_AUTHENTICATION = "Bearer ";
+
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_salary.docx";
+
     private static final String DOCUMENT_NAME = "Lorem Ipsum";
+
     private static final String SIGNER_CLIENT_ID = "1000";
-    private TestConfig testConfig;
-    private static String basePathAddition = "/restapi";
+
+    private static final String basePathAddition = "/restapi";
+
+    private final String RedirectUrl = "https://developers.docusign.com/platform/auth/consent";
+
     private final ApiClient apiClient;
+
     private final EnvelopesApi envelopesApi;
+
+    private final TestConfig testConfig;
 
     public SetTabValuesTest() throws IOException {
         JWTLoginMethodTest.RequestJWTUserToken_CorrectInputValues_ReturnOAuthToken(ApiType.ESIGNATURE);
@@ -121,7 +130,7 @@ public final class SetTabValuesTest {
         Tabs tabs = new Tabs();
         tabs.setSignHereTabs(Collections.singletonList(signHere));
         tabs.setTextTabs(Arrays.asList(textLegal, textFamiliar));
-        tabs.setNumericalTabs(Arrays.asList(numericalSalary));
+        tabs.setNumericalTabs(List.of(numericalSalary));
 
         signer.setTabs(tabs);
         Recipients recipients = new Recipients();

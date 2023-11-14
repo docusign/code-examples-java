@@ -2,6 +2,7 @@ package com.docusign.controller.rooms.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.rooms.services.ExportingDataFromRoomService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
@@ -9,7 +10,6 @@ import com.docusign.rooms.api.RoomsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.FieldData;
 import com.docusign.rooms.model.RoomSummaryList;
-import com.docusign.controller.rooms.services.ExportingDataFromRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -60,7 +60,7 @@ public class R003ControllerExportingDataFromRoom extends AbstractRoomsController
                 this.session.getAccountId(),
                 args.getRoomId());
         //ds-snippet-end:Rooms3Step3
-        
+
         DoneExample.createDefault(this.title)
                 .withJsonObject(fieldData)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)

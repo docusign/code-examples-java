@@ -6,10 +6,10 @@ import com.docusign.click.client.ApiException;
 import com.docusign.click.model.ClickwrapRequest;
 import com.docusign.click.model.ClickwrapVersionSummaryResponse;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.click.services.CreateClickwrapService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.controller.click.services.CreateClickwrapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,9 +26,13 @@ import java.io.IOException;
 public class C001ControllerCreateClickwrap extends AbstractClickController {
 
     private static final String DOCUMENT_FILE_NAME = "TermsOfService.pdf";
+
     private static final Integer DOCUMENT_ORDER = 0;
+
     private static final String DOCUMENT_NAME = "Terms of Service";
+
     private final Session session;
+
     private final User user;
 
     @Autowired

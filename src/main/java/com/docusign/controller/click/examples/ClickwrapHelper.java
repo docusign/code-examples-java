@@ -14,10 +14,11 @@ public class ClickwrapHelper {
     /**
      * Loads document from a file and creates a document object that represents
      * loaded document.
+     *
      * @param fileName name of the file to load document; the extension of the
-     * loading file determines an extension of the created document
-     * @param docName the name of the document; it may be differ from the file
-     * @param order order of the created document
+     *                 loading file determines an extension of the created document
+     * @param docName  the name of the document; it may be differ from the file
+     * @param order    order of the created document
      * @return the {@link Document} object
      * @throws IOException if document cannot be loaded due to some reason
      */
@@ -29,10 +30,11 @@ public class ClickwrapHelper {
 
     /**
      * Creates a document object from the raw data.
-     * @param data the raw data
-     * @param documentName the name of the document; it may be differ from the file
+     *
+     * @param data          the raw data
+     * @param documentName  the name of the document; it may be differ from the file
      * @param fileExtension the extension of the creating file
-     * @param order order of the created document
+     * @param order         order of the created document
      * @return the {@link Document} object
      */
     static Document createDocument(byte[] data, String documentName, String fileExtension, Integer order) {

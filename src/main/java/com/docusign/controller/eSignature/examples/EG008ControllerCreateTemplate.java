@@ -2,16 +2,15 @@ package com.docusign.controller.eSignature.examples;
 
 import com.docusign.DSConfiguration;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.eSignature.services.CreateTemplateService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.esign.api.TemplatesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeTemplate;
 import com.docusign.esign.model.EnvelopeTemplateResults;
 import com.docusign.esign.model.TemplateSummary;
-import com.docusign.controller.eSignature.services.CreateTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -57,7 +56,7 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
             DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                     .withMessage(
                             "The template already exists in your account." + getTextForCodeExampleByApiType().ResultsPageText
-                            .replaceFirst("\\{0}", template.getName()).replaceFirst("\\{1}", template.getTemplateId()))
+                                    .replaceFirst("\\{0}", template.getName()).replaceFirst("\\{1}", template.getTemplateId()))
                     .addToModel(model, config);
         } else {
             session.setTemplateName(TEMPLATE_NAME);
@@ -69,7 +68,7 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
             DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                     .withMessage(
                             "The template has been created!" + getTextForCodeExampleByApiType().ResultsPageText
-                            .replaceFirst("\\{0}", template.getName()).replaceFirst("\\{1}", template.getTemplateId()))
+                                    .replaceFirst("\\{0}", template.getName()).replaceFirst("\\{1}", template.getTemplateId()))
                     .addToModel(model, config);
         }
         return DONE_EXAMPLE_PAGE;

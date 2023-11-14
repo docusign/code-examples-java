@@ -27,7 +27,7 @@ public class HelpingTexts {
     public String UserIDOfUserToDelete;
 
     public String DynamicContentValue;
-    
+
     public String DynamicContentNote;
 
     public String EmbedClickwrapURL;

@@ -1,6 +1,5 @@
 package com.docusign.controller.eSignature.services;
 
-import com.docusign.DSConfiguration;
 import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
@@ -32,6 +31,7 @@ public final class EmbeddedSigningService {
 
         return envelopeSummary.getEnvelopeId();
     }
+
     //ds-snippet-start:eSign1Step4
     public static RecipientViewRequest makeRecipientViewRequest(
             String signerEmail,

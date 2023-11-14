@@ -12,11 +12,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.servlet.view.RedirectView;
-
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
@@ -42,24 +39,22 @@ public class A004CheckImportRequestStatus extends AbstractAdminController {
         model.addAttribute(MODEL_IMPORT_OK, StringUtils.isNotBlank(this.session.getImportId()));
     }
 
-
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
         // Redirects to the front facing example to avoid a Null Pointer Exception
-        if(this.session.getImportId() == null){
+        if (this.session.getImportId() == null) {
             return new RedirectView("a004");
         }
 
         OrganizationImportResponse result = checkRequestStatus(this.user.getAccessToken());
-        if (result.getStatus().equals("queued")){
+        if (result.getStatus().equals("queued")) {
             // Return the refresh page
             DoneExample.createDefault("Request not complete")
-            .withMessage("The request has not completed, please refresh this page")
-            .addToModel(model, config);
+                    .withMessage("The request has not completed, please refresh this page")
+                    .addToModel(model, config);
             return EXAMPLE_PENDING_PAGE;
 
         }
-
 
         // Clear the import ID to remove 'Check Status link' from the results page
         this.session.setImportId(null);

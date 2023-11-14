@@ -9,23 +9,32 @@ import com.docusign.esign.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.HttpHeaders;
-
 import tests.common.JWTLoginMethodTest;
 import tests.common.TestConfig;
+
 import java.io.IOException;
 import java.util.Collections;
 
 public final class EmbeddedSigningTest {
-    private final String RedirectUrl = "https://developers.docusign.com/platform/auth/consent";
     private static final String BEARER_AUTHENTICATION = "Bearer ";
+
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
+
     private static final String DOCUMENT_NAME = "Lorem Ipsum";
+
     private static final int ANCHOR_OFFSET_Y = 20;
+
     private static final int ANCHOR_OFFSET_X = 10;
+
     private static final String SIGNER_CLIENT_ID = "1000";
-    private TestConfig testConfig;
-    private static String basePathAddition = "/restapi";
+
+    private static final String basePathAddition = "/restapi";
+
+    private final String RedirectUrl = "https://developers.docusign.com/platform/auth/consent";
+
     private final ApiClient apiClient;
+
+    private final TestConfig testConfig;
 
     public EmbeddedSigningTest() throws IOException {
         JWTLoginMethodTest.RequestJWTUserToken_CorrectInputValues_ReturnOAuthToken(ApiType.ESIGNATURE);

@@ -1,11 +1,10 @@
 package com.docusign.core.common;
 
-import java.lang.reflect.Field;
-import java.util.Locale;
-
+import lombok.Value;
 import org.apache.commons.lang3.StringUtils;
 
-import lombok.Value;
+import java.lang.reflect.Field;
+import java.util.Locale;
 
 
 /**
@@ -17,15 +16,16 @@ import lombok.Value;
 public class DiffField {
 
     private String name;
+
     private String leftValue;
+
     private String rightValue;
 
-   
-
-	/**
+    /**
      * Creates an instance of the DiffField by a {@link Field} and two objects.
+     *
      * @param field the object which provides information about a single field of a class
-     * @param left the first comparing object, can be <code>null</code>
+     * @param left  the first comparing object, can be <code>null</code>
      * @param right the second comparing object, can be <code>null</code>
      * @return created object containing field name and string representation of values
      * @throws IllegalAccessException when an application tries to reflectively get a field
@@ -38,8 +38,9 @@ public class DiffField {
     /**
      * Creates an instance of the DiffField by {@link Field} and two objects.
      * Field name is formatted to better readability.
+     *
      * @param field the object which provides information about a single field of a class
-     * @param left the first comparing object, can be <code>null</code>
+     * @param left  the first comparing object, can be <code>null</code>
      * @param right the second comparing object, can be <code>null</code>
      * @return created object containing field name and string representation of values
      * @throws IllegalAccessException when an application tries to reflectively get a field
@@ -54,6 +55,7 @@ public class DiffField {
      * Convert a member name represented as string in a Camel style for better
      * readability. E.g. name 'permissionProfileName' will be transformed to
      * "permission profile name" string.
+     *
      * @param name the name of the field
      * @return formatted name
      */
@@ -68,6 +70,4 @@ public class DiffField {
         }
         return "" + field.get(object);
     }
-
-
 }

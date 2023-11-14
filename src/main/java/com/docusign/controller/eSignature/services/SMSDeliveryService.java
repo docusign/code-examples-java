@@ -10,10 +10,15 @@ import java.util.Arrays;
 
 public final class SMSDeliveryService {
     private static final String PDF_DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
+
     private static final String PDF_DOCUMENT_NAME = "Lorem Ipsum";
+
     private static final String DOCX_DOCUMENT_FILE_NAME = "World_Wide_Corp_Battle_Plan_Trafalgar.docx";
+
     private static final String DOCX_DOCUMENT_NAME = "Battle Plan";
+
     private static final int ANCHOR_OFFSET_Y = 10;
+
     private static final int ANCHOR_OFFSET_X = 20;
 
     //ds-snippet-start:eSign37Step3
@@ -68,7 +73,6 @@ public final class SMSDeliveryService {
         signer.setRoutingOrder("1");
         signer.setTabs(signerTabs);
         signer.setDeliveryMethod(deliveryMethod);
-
 
         // create a cc recipient to receive a copy of the documents, identified by name and phone number
         RecipientPhoneNumber ccPhoneNumber = new RecipientPhoneNumber();

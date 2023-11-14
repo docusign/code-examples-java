@@ -14,15 +14,25 @@ import java.util.Collections;
 public final class ResponsiveSigningService {
     //ds-snippet-start:eSign38Step2
     private static final String TRUE = "true";
+
     private static final String FALSE = "false";
+
     private static final int L1_PRICE = 5;
+
     private static final int L2_PRICE = 150;
+
     private static final int ANCHOR_OFFSET_Y = 10;
+
     private static final int ANCHOR_OFFSET_X = 20;
+
     private static final String DEFAULT_FONT = "helvetica";
+
     private static final String DEFAULT_FONT_SIZE = "size11";
+
     private static final String ANCHOR_UNITS = "pixels";
+
     private static final String HTML_DOCUMENT_FILE_NAME = "templates/order-form.ftl";
+
     public static EnvelopeDefinition makeEnvelope(
             String signerEmail,
             String signerName,

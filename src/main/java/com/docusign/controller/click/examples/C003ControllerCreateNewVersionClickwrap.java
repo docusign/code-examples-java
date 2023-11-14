@@ -6,12 +6,11 @@ import com.docusign.click.client.ApiException;
 import com.docusign.click.model.ClickwrapVersionSummaryResponse;
 import com.docusign.click.model.ClickwrapVersionsResponse;
 import com.docusign.common.WorkArguments;
+import com.docusign.controller.click.services.CreateNewVersionClickwrapService;
+import com.docusign.controller.click.services.GetListClickwrapsService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import com.docusign.controller.click.services.CreateNewVersionClickwrapService;
-import com.docusign.controller.click.services.GetListClickwrapsService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,10 +27,15 @@ import java.io.IOException;
 public class C003ControllerCreateNewVersionClickwrap extends AbstractClickController {
 
     private static final String MODEL_CLICKWRAPS = "clickwraps";
+
     private static final String DOCUMENT_FILE_NAME = "TermsOfService.pdf";
+
     private static final Integer DOCUMENT_ORDER = 0;
+
     private static final String DOCUMENT_NAME = "Terms of Service";
+
     private final Session session;
+
     private final User user;
 
     @Autowired
@@ -63,16 +67,14 @@ public class C003ControllerCreateNewVersionClickwrap extends AbstractClickContro
                 args.getClickwrapId()
         );
 
-
-
         this.session.setClickwrapId(createdClickwrap.getClickwrapId());
         this.session.setClickwrapVersionNumber(createdClickwrap.getVersionNumber());
         DoneExample.createDefault(this.title)
-                .withJsonObject(createdClickwrap)
-                .withMessage(getTextForCodeExampleByApiType().ResultsPageText
-                    .replaceFirst("\\{0}", createdClickwrap.getVersionNumber())
-                    .replaceFirst("\\{1}", createdClickwrap.getClickwrapName()))
-                .addToModel(model, config);
+            .withJsonObject(createdClickwrap)
+            .withMessage(getTextForCodeExampleByApiType().ResultsPageText
+            .replaceFirst("\\{0}", createdClickwrap.getVersionNumber())
+            .replaceFirst("\\{1}", createdClickwrap.getClickwrapName()))
+            .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }
     // ***DS.snippet.0.end

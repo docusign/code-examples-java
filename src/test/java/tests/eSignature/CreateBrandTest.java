@@ -14,14 +14,19 @@ import tests.common.TestConfig;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 public final class CreateBrandTest {
     private static final String BEARER_AUTHENTICATION = "Bearer ";
-    private TestConfig testConfig;
-    private static String basePathAddition = "/restapi";
+
+    private static final String basePathAddition = "/restapi";
+
     private final ApiClient apiClient;
+
     private final AccountsApi accountsApi;
+
+    private final TestConfig testConfig;
 
     public CreateBrandTest() throws IOException {
         JWTLoginMethodTest.RequestJWTUserToken_CorrectInputValues_ReturnOAuthToken(ApiType.ESIGNATURE);
@@ -37,7 +42,7 @@ public final class CreateBrandTest {
         // Arrange
         byte[] array = new byte[8];
         new Random().nextBytes(array);
-        var brandName = new String(array, Charset.forName("UTF-8"));
+        var brandName = new String(array, StandardCharsets.UTF_8);
         var defaultBrandLanguage = "en";
 
         // Act

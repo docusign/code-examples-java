@@ -8,7 +8,9 @@ public enum ApiIndex {
     ADMIN("/pages/admin/index", "/management", "/a001", "/a");
 
     private final String indexPath;
+
     private final String baseUrlSuffix;
+
     private final String firstExamplePath;
 
     private final String examplesPathCode;

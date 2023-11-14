@@ -7,13 +7,12 @@ import com.docusign.rooms.model.RoleSummaryList;
 
 public final class GetAdminRolesService {
     public static RoleSummary getAdminRole(RolesApi rolesApi, String accountId)
-		  throws ApiException
-    {
-	   RoleSummaryList roleSummaryList = rolesApi.getRoles(accountId);
-	   return roleSummaryList.getRoles()
-			 .stream()
-			 .filter(RoleSummary::isIsDefaultForAdmin)
-			 .findFirst()
-			 .get();
+            throws ApiException {
+        RoleSummaryList roleSummaryList = rolesApi.getRoles(accountId);
+        return roleSummaryList.getRoles()
+                .stream()
+                .filter(RoleSummary::isIsDefaultForAdmin)
+                .findFirst()
+                .get();
     }
 }

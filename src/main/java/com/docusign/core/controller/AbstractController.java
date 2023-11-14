@@ -6,8 +6,6 @@ import com.docusign.core.model.ApiType;
 import com.docusign.core.model.AuthType;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
-
-import com.docusign.core.model.manifestModels.APIs;
 import com.docusign.core.model.manifestModels.CodeExampleText;
 import com.docusign.core.model.manifestModels.ManifestGroup;
 import com.docusign.esign.client.auth.OAuth;
@@ -26,7 +24,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletResponse;
-
 import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
@@ -45,28 +42,41 @@ import java.util.Objects;
 @Controller
 public abstract class AbstractController {
 
-    private static final String REDIRECT_PREFIX = "redirect:";
-    protected static final String REDIRECT_AUTHENTICATION_PAGE = REDIRECT_PREFIX + "/ds/mustAuthenticate";
     protected static final String BEARER_AUTHENTICATION = "Bearer ";
+
     protected static final String DONE_EXAMPLE_PAGE = "pages/example_done";
+
     protected static final String DONE_EXAMPLE_PAGE_COMPARE = "pages/example_done_compare";
+
     protected static final String EXAMPLE_PENDING_PAGE = "pages/example_pending";
+
     protected static final String ERROR_PAGE = "error";
-    private static final String EXAMPLE_TEXT = "example";
+
     protected static final String LAUNCHER_TEXTS = "launcherTexts";
+
+    private static final String REDIRECT_PREFIX = "redirect:";
+
+    protected static final String REDIRECT_AUTHENTICATION_PAGE = REDIRECT_PREFIX + "/ds/mustAuthenticate";
+
     protected static final String REDIRECT_CFR_QUICKSTART = REDIRECT_PREFIX + "/eg041";
+
+    private static final String EXAMPLE_TEXT = "example";
+
+    protected final String exampleName;
+
+    protected final DSConfiguration config;
+
+    private final String pagePath;
 
     @Autowired
     protected Session session;
 
+    protected String title;
+
     @Autowired
     private OAuth2AuthorizedClientService authorizedClientService;
 
-    protected final String exampleName;
     private CodeExampleText codeExampleText;
-    protected String title;
-    private final String pagePath;
-    protected final DSConfiguration config;
 
     public AbstractController(DSConfiguration config, String exampleName) {
         this.config = config;
@@ -94,7 +104,7 @@ public abstract class AbstractController {
             return REDIRECT_AUTHENTICATION_PAGE;
         }
 
-        if(ApiType.getAPITypeFromLink(this.exampleName) == ApiType.MONITOR && session.getAuthTypeSelected() != AuthType.JWT){
+        if (ApiType.getAPITypeFromLink(this.exampleName) == ApiType.MONITOR && session.getAuthTypeSelected() != AuthType.JWT) {
             session.setMonitorExampleRedirect("/" + this.exampleName);
             return REDIRECT_AUTHENTICATION_PAGE;
         }
@@ -103,11 +113,11 @@ public abstract class AbstractController {
             onInitModel(args, model);
             return pagePath;
         } catch (Exception exception) {
-            if (config.getQuickstart().equals("true") && exception.getMessage() == config.getCodeExamplesText().getSupportingTexts().getCFRError()){
-              config.setQuickstart("false");
-              return handleRedirectToCfr(model);
+            if (config.getQuickstart().equals("true") && exception.getMessage() == config.getCodeExamplesText().getSupportingTexts().getCFRError()) {
+                config.setQuickstart("false");
+                return handleRedirectToCfr(model);
             } else {
-              return handleException(exception, model);
+                return handleException(exception, model);
             }
         }
     }
@@ -129,9 +139,9 @@ public abstract class AbstractController {
      * This method is called from the GET request and it should initialize a
      * model. Override this method if it is necessary to add example specific
      * attributes into the model.
-     * @param args the session attributes
+     *
+     * @param args  the session attributes
      * @param model the model data
-     * @throws Exception if calling API has failed
      */
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         this.title = getTextForCodeExampleByApiType().ExampleName;
@@ -161,8 +171,9 @@ public abstract class AbstractController {
     /**
      * This method is called from the POST request. Example pages must override
      * it. Overridden method should return an Object means URL to redirect.
-     * @param args the work arguments got from the current page
-     * @param model page model holder
+     *
+     * @param args     the work arguments got from the current page
+     * @param model    page model holder
      * @param response for HTTP-specific functionality in sending a response
      * @return {@link Object}. Possible types and values: <code>null</code>,
      * {@link String} representation of the URL or Spring RedirectView object,
@@ -170,7 +181,7 @@ public abstract class AbstractController {
      * @throws Exception if calling API has failed or if I/O operation has failed
      */
     protected abstract Object doWork(WorkArguments args, ModelMap model,
-        HttpServletResponse response) throws Exception;
+                                     HttpServletResponse response) throws Exception;
 
     private String handleException(Exception exception, ModelMap model) {
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
@@ -180,23 +191,23 @@ public abstract class AbstractController {
 
         if (exception != null) {
             exceptionMessage = exception.getMessage();
-            if(model.getAttribute("caseForInstructions") != null) {
+            if (model.getAttribute("caseForInstructions") != null) {
                 fixingInstructions = exceptionMessage.contains((CharSequence) model.getAttribute("caseForInstructions")) ?
                         (String) model.getAttribute("fixingInstructions") : null;
             }
         }
         new DoneExample()
-            .withTitle(exampleName)
-            .withName(title)
-            .withMessage(exceptionMessage)
-            .withFixingInstructions(fixingInstructions)
-            .withStackTracePrinted(stackTrace)
-            .addToModel(model, config);
+                .withTitle(exampleName)
+                .withName(title)
+                .withMessage(exceptionMessage)
+                .withFixingInstructions(fixingInstructions)
+                .withStackTracePrinted(stackTrace)
+                .addToModel(model, config);
         return ERROR_PAGE;
     }
 
     private String handleRedirectToCfr(ModelMap model) {
-      return REDIRECT_CFR_QUICKSTART;
+        return REDIRECT_CFR_QUICKSTART;
     }
 
     private boolean isTokenExpired() {
@@ -209,7 +220,7 @@ public abstract class AbstractController {
                 oauthUser.getName()
         );
 
-        if (oauthClient != null){
+        if (oauthClient != null) {
             OAuth2AccessToken accessToken = oauthClient.getAccessToken();
             tokenExpired = accessToken != null && accessToken.getExpiresAt().isBefore(Instant.now());
         } else {
@@ -224,21 +235,19 @@ public abstract class AbstractController {
 
     protected CodeExampleText getTextForCodeExample() {
         List<ManifestGroup> manifestGroups = config.getCodeExamplesText().APIs.stream()
-                .filter(x -> ApiType.getAPITypeFromLink(this.exampleName).name().toLowerCase().contains(((APIs) x).Name.toLowerCase()))
+                .filter(x -> ApiType.getAPITypeFromLink(this.exampleName).name().toLowerCase().contains(x.Name.toLowerCase()))
                 .findFirst()
                 .orElse(null).Groups;
 
-        int exampleNumberToSearch =  Integer.parseInt(this.exampleName.replaceAll("\\D+", ""));
+        int exampleNumberToSearch = Integer.parseInt(this.exampleName.replaceAll("\\D+", ""));
 
-        for (ManifestGroup group : manifestGroups)
-        {
+        for (ManifestGroup group : manifestGroups) {
             CodeExampleText codeExampleText = group.Examples.stream()
-                    .filter(x -> ((CodeExampleText) x).ExampleNumber == exampleNumberToSearch)
+                    .filter(x -> x.ExampleNumber == exampleNumberToSearch)
                     .findFirst()
                     .orElse(null);
 
-            if (codeExampleText != null)
-            {
+            if (codeExampleText != null) {
                 return codeExampleText;
             }
         }

@@ -14,19 +14,26 @@ import java.util.Arrays;
 public final class SigningViaEmailService {
 
     private static final String HTML_DOCUMENT_FILE_NAME = "templates/candy-bonbon.ftl";
+
     private static final String HTML_DOCUMENT_NAME = "Order acknowledgement";
+
     private static final String PDF_DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
+
     private static final String PDF_DOCUMENT_NAME = "Lorem Ipsum";
+
     private static final String DOCX_DOCUMENT_FILE_NAME = "World_Wide_Corp_Battle_Plan_Trafalgar.docx";
+
     private static final String DOCX_DOCUMENT_NAME = "Battle Plan";
+
     private static final int ANCHOR_OFFSET_Y = 10;
+
     private static final int ANCHOR_OFFSET_X = 20;
 
     //ds-snippet-start:eSign2Step3
     public static EnvelopeSummary signingViaEmail(
-        EnvelopesApi envelopesApi,
-        String accountId,
-        EnvelopeDefinition envelope
+            EnvelopesApi envelopesApi,
+            String accountId,
+            EnvelopeDefinition envelope
     ) throws ApiException {
         return envelopesApi.createEnvelope(accountId, envelope);
     }
@@ -41,15 +48,15 @@ public final class SigningViaEmailService {
     // recipient 2 - cc
     // The envelope will be sent first to the signer. After it is signed,
     // a copy is sent to the cc person.
-    
+
     //ds-snippet-start:eSign2Step2
     public static EnvelopeDefinition makeEnvelope(
-        String signerEmail,
-        String signerName,
-        String ccEmail,
-        String ccName,
-        String status,
-        WorkArguments args
+            String signerEmail,
+            String signerName,
+            String ccEmail,
+            String ccName,
+            String status,
+            WorkArguments args
     ) throws IOException {
         // The DocuSign platform searches throughout your envelope's documents
         // for matching anchor strings. So the signHere2 tab will be used in
