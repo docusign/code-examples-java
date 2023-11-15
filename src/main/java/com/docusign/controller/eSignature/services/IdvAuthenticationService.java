@@ -38,6 +38,7 @@ public final class IdvAuthenticationService {
         //ds-snippet-end:eSign23Step3
     }
 
+    //ds-snippet-start:eSign23Step4
     public static EnvelopeDefinition createEnvelope(
             String signerName,
             String signerEmail,
