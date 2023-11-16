@@ -73,7 +73,7 @@ public class App {
         try {
             FileSystems.newFileSystem(new URI(""), Collections.emptyMap());
             log.info("FileSystem initialized successfully");
-        } catch (FileSystemAlreadyExistsException | URISyntaxException | IOException e) {
+        } catch (Exception e) {
             if (e instanceof FileSystemAlreadyExistsException) {
                 log.info("FileSystem is already initialized");
             } else {
