@@ -5,6 +5,7 @@
         CLICK: 'click',
         ROOMS: 'rooms',
         ADMIN: 'admin',
+        CONNECT: 'connect'
     };
 
     let processJSONData = function () {
@@ -23,7 +24,7 @@
     function checkIfExampleMatches(example, matches) {
         const name = example.ExampleName;
         const description = example.ExampleDescription;
-        const pathNames = example.LinksToAPIMethod.map(a => a.PathName);
+        const pathNames = example.LinksToAPIMethod?.map(a => a.PathName);
 
         for (let i = 0; i < matches.length; i++) {
             if (name === matches[i].value || description === matches[i].value || pathNames.indexOf(matches[i].value) > -1) {
@@ -121,14 +122,14 @@
             case API_TYPES.MONITOR:
                 return "m";
             case API_TYPES.ESIGNATURE:
-                return "eg"
+                return "eg";
+            case API_TYPES.CONNECT:
+                return "con";
         }
     }
 
     let addCodeExampleToHomepage = function (codeExamples) {
         var cfrPart11 = processCFR11Value();
-
-        console.log(codeExamples);
 
         codeExamples.forEach(
             element => {
@@ -136,24 +137,15 @@
 
                 element.Groups.forEach(
                     group => {
-                        var doesGroupHaveAnyAvailableExamples = group.Examples.every(example => {
-                            return (element.Name.toLowerCase() !== API_TYPES.ESIGNATURE.toLowerCase() ||
-                                ((example.CFREnabled == "AllAccounts") ||
-                                    ((cfrPart11 == "enabled") && (example.CFREnabled == "CFROnly")) ||
-                                    ((cfrPart11 != "enabled") && (example.CFREnabled == "NonCFR")))) == false
-                        })
-
-                        if (!doesGroupHaveAnyAvailableExamples){
-                            $("#filtered_code_examples").append("<h2>" + group.Name + "</h2>");
-                        }
+                        $("#filtered_code_examples").append("<h2>" + group.Name + "</h2>");
 
                         group.Examples.forEach(
                             example => {
                                 if (!example.SkipForLanguages || !example.SkipForLanguages.toLowerCase().includes("c#")) {
                                     if (element.Name.toLowerCase() !== API_TYPES.ESIGNATURE.toLowerCase() ||
                                         ((example.CFREnabled == "AllAccounts") ||
-                                            ((cfrPart11 == "enabled") && (example.CFREnabled == "CFROnly")) ||
-                                            ((cfrPart11 != "enabled") && (example.CFREnabled == "NonCFR")))) {
+                                            ((cfrPart11 == "True") && (example.CFREnabled == "CFROnly")) ||
+                                            ((cfrPart11 != "True") && (example.CFREnabled == "NonCFR")))) {
                                         $("#filtered_code_examples").append(
                                             "<h4 id="
                                             + "example".concat("0".repeat(3 - example.ExampleNumber.toString().length)).concat(example.ExampleNumber) + ">"
@@ -167,33 +159,34 @@
                                         $("#filtered_code_examples").append("<p>" + example.ExampleDescription + "</p>");
 
                                         $("#filtered_code_examples").append("<p>");
-
-                                        if (example.LinksToAPIMethod.length == 1) {
-                                            $("#filtered_code_examples").append(processJSONData().SupportingTexts.APIMethodUsed);
-                                        }
-                                        else {
-                                            $("#filtered_code_examples").append(processJSONData().SupportingTexts.APIMethodUsedPlural);
-                                        }
-
-                                        for (let index = 0; index < example.LinksToAPIMethod.length; index++) {
-                                            $("#filtered_code_examples").append(
-                                                " <a target='_blank' href='"
-                                                + example.LinksToAPIMethod[index].Path
-                                                + "'>"
-                                                + example.LinksToAPIMethod[index].PathName
-                                                + "</a>"
-                                            );
-
-                                            if (index + 1 === example.LinksToAPIMethod.length) {
-                                                $("#filtered_code_examples").append("<span></span>");
-                                            }
-                                            else if (index + 1 === example.LinksToAPIMethod.length - 1) {
-                                                $("#filtered_code_examples").append("<span> and </span>");
+                                        if (example.LinksToAPIMethod != undefined && example.LinksToAPIMethod?.length !== 0) {
+                                            if (example.LinksToAPIMethod.length == 1) {
+                                                $("#filtered_code_examples").append(processJSONData().SupportingTexts.APIMethodUsed);
                                             }
                                             else {
-                                                $("#filtered_code_examples").append("<span>, </span>");
+                                                $("#filtered_code_examples").append(processJSONData().SupportingTexts.APIMethodUsedPlural);
                                             }
 
+                                            for (let index = 0; index < example.LinksToAPIMethod.length; index++) {
+                                                $("#filtered_code_examples").append(
+                                                    " <a target='_blank' href='"
+                                                    + example.LinksToAPIMethod[index].Path
+                                                    + "'>"
+                                                    + example.LinksToAPIMethod[index].PathName
+                                                    + "</a>"
+                                                );
+
+                                                if (index + 1 === example.LinksToAPIMethod.length) {
+                                                    $("#filtered_code_examples").append("<span></span>");
+                                                }
+                                                else if (index + 1 === example.LinksToAPIMethod.length - 1) {
+                                                    $("#filtered_code_examples").append("<span> and </span>");
+                                                }
+                                                else {
+                                                    $("#filtered_code_examples").append("<span>, </span>");
+                                                }
+
+                                            }
                                         }
 
                                         $("#filtered_code_examples").append("</p> ");
@@ -231,6 +224,7 @@ function updateValue(esearchPattern) {
 
     const inputValue = esearchPattern.target.value.toLowerCase();
     const json = DS_SEARCH.processJSONData().APIs;
+
     if (inputValue === "") {
         DS_SEARCH.addCodeExampleToHomepage(json);
     }

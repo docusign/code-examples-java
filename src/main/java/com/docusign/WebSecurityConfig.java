@@ -28,7 +28,7 @@ public class WebSecurityConfig {
                     try {
                         authorize
                                 .antMatchers("/", "/error**", "/assets/**", "/ds/mustAuthenticate**",
-                                        "/ds/authenticate**", "/ds/selectApi**")
+                                        "/ds/authenticate**", "/ds/selectApi**", "/con001")
                                 .permitAll()
                                 .anyRequest().authenticated()
                                 .and()

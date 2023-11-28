@@ -50,6 +50,9 @@
         <c:when test="${apis.getName().equals('Rooms')}">
           <c:set var="linkToCodeExample" value="r" scope="page" />
         </c:when>
+        <c:when test="${apis.getName().equals('Connect')}">
+          <c:set var="linkToCodeExample" value="con" scope="page" />
+        </c:when>
         <c:otherwise>
           <c:set var="linkToCodeExample" value="a" scope="page" />
         </c:otherwise>
@@ -73,6 +76,7 @@
           <p>${example.getExampleDescription()}</p>
 
           <p>
+          <c:if test="${example.getLinksToAPIMethod().size() != 0}">
             <c:choose>
               <c:when test="${example.getLinksToAPIMethod().size() == 1}">
                 <span>${launcherTexts.getAPIMethodUsed()}</span>
@@ -99,6 +103,7 @@
                 </c:otherwise>
               </c:choose>
             </c:forEach>
+          </c:if>
           </p>
         </c:if>
         </c:if>
