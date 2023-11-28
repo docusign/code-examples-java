@@ -74,7 +74,7 @@
     <c:choose>
         <c:when test="${locals.user == null}">
             <div class="container-full-bg">
-            <section id="content" style="margin-top:-60px!important; padding-top:30px!important;">
+            <section id="content" style="margin:0 90px 0 90px; padding:0 15px 0 15px;">
         </c:when>
         <c:otherwise>
             <div class="container">

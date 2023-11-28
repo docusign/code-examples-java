@@ -85,7 +85,7 @@ public abstract class AbstractController {
     }
 
     public CodeExampleText getTextForCodeExampleByApiType() {
-        ApiType apiType = ApiType.getAPITypeFromLink(this.exampleName);
+        ApiType apiType = ApiType.giveTypeByName(this.exampleName);
         if (codeExampleText != null) {
             return codeExampleText;
         }
@@ -100,11 +100,11 @@ public abstract class AbstractController {
 
     @GetMapping
     public String get(WorkArguments args, ModelMap model) {
-        if (isTokenExpired()) {
+        if (ApiType.giveTypeByName(this.exampleName) != ApiType.CONNECT && isTokenExpired()) {
             return REDIRECT_AUTHENTICATION_PAGE;
         }
 
-        if (ApiType.getAPITypeFromLink(this.exampleName) == ApiType.MONITOR && session.getAuthTypeSelected() != AuthType.JWT) {
+        if(ApiType.giveTypeByName(this.exampleName) == ApiType.MONITOR && session.getAuthTypeSelected() != AuthType.JWT){
             session.setMonitorExampleRedirect("/" + this.exampleName);
             return REDIRECT_AUTHENTICATION_PAGE;
         }
@@ -124,7 +124,7 @@ public abstract class AbstractController {
 
     @PostMapping
     public Object create(WorkArguments args, ModelMap model, HttpServletResponse response) {
-        if (isTokenExpired()) {
+        if (ApiType.giveTypeByName(this.exampleName) != ApiType.CONNECT && isTokenExpired()) {
             return REDIRECT_AUTHENTICATION_PAGE;
         }
 
@@ -163,8 +163,10 @@ public abstract class AbstractController {
     }
 
     public void setTheCurrentApiTypeAndBaseUrl() {
-        config.setSelectedApiType(ApiType.getAPITypeFromLink(this.exampleName).toString());
-        String basePath = this.config.getBaseUrl(config.getSelectedApiIndex(), session.getOauthAccount()) + config.getSelectedApiIndex().getBaseUrlSuffix();
+        config.setSelectedApiType(ApiType.giveTypeByName(this.exampleName).toString());
+        String basePath = session.getOauthAccount() != null ?
+                this.config.getBaseUrl(config.getSelectedApiIndex(), session.getOauthAccount()) + config.getSelectedApiIndex().getBaseUrlSuffix()
+                : null;
         session.setBasePath(basePath);
     }
 
@@ -235,7 +237,7 @@ public abstract class AbstractController {
 
     protected CodeExampleText getTextForCodeExample() {
         List<ManifestGroup> manifestGroups = config.getCodeExamplesText().APIs.stream()
-                .filter(x -> ApiType.getAPITypeFromLink(this.exampleName).name().toLowerCase().contains(x.Name.toLowerCase()))
+                .filter(x -> ApiType.giveTypeByName(this.exampleName).name().toLowerCase().contains(x.Name.toLowerCase()))
                 .findFirst()
                 .orElse(null).Groups;
 

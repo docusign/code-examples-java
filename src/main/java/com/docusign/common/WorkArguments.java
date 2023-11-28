@@ -171,4 +171,8 @@ public class WorkArguments {
     private String targetAccountLastName;
 
     private String targetAccountEmail;
+
+    private String hmacSecret;
+
+    private String jsonPayload;
 }
