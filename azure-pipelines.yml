@@ -1,0 +1,113 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+resources:
+  repositories:
+  - repository: launcher-automation
+    type: github
+    name: docusign/launcher-automation
+    ref: main
+    endpoint: launcherAutomationServiceConnection
+
+pr:
+- master
+- releases/*
+
+pool:
+  name: launcher-automation-pool
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+- checkout: self
+- checkout: launcher-automation
+
+- script: dir $(Build.SourcesDirectory)
+
+- task: DownloadSecureFile@1
+  name: java_dockerfile
+  displayName: 'download Dockerfile'
+  inputs:
+    secureFile: 'java.Dockerfile'
+
+- script: |
+    echo "place java.Dockerfile"
+    echo $(java_dockerfile.secureFilePath)
+    cp $(java_Dockerfile.secureFilePath) code-examples-java-private/Dockerfile
+  displayName: 'place Dockerfile'
+
+- script: |
+    allure –-version
+    java --version
+    javac --version
+    mvn --version
+    docker --version
+
+- task: DownloadSecureFile@1
+  name: tests_config_properties
+  displayName: 'download config.properties'
+  inputs:
+    secureFile: 'java-php.config.properties'
+
+
+- script: |
+    echo "place config.properties"
+    echo $(tests_config_properties.secureFilePath)
+    cp $(tests_config_properties.secureFilePath) launcher-automation/src/main/resources/config.properties
+  displayName: 'place config.properties'
+
+- task: DownloadSecureFile@1
+  name: java_application
+  displayName: 'download application.json'
+  inputs:
+    secureFile: 'java.application.json'
+
+
+- script: |
+    echo "place application.json"
+    cp $(java_application.secureFilePath) code-examples-java-private/src/main/resources/application.json
+  displayName: 'place application.json'
+
+
+- task: DownloadSecureFile@1
+  name: java_private_key
+  displayName: 'download private.key'
+  inputs:
+    secureFile: 'private.key'
+
+
+- script: |
+    echo "place private.key"
+    cp $(java_private_key.secureFilePath) code-examples-java-private/src/main/resources/private.key
+  displayName: 'place private.key'
+
+- script: dir $(Build.SourcesDirectory)
+
+- script: dir $(Build.SourcesDirectory)/code-examples-java-private
+
+- script: dir $(Build.SourcesDirectory)/code-examples-java-private/src/main/resources
+
+- task: Docker@2
+  displayName: Build java image
+  inputs:
+    command: build
+    repository: 'launcher-automation-java'
+    dockerfile: '$(Build.SourcesDirectory)/code-examples-java-private/Dockerfile'
+    buildContext: '$(Build.SourcesDirectory)/code-examples-java-private '
+    tags: |
+      latest
+
+- script: |
+    docker run -p 8080:8080 -d launcher-automation-java:latest
+  displayName: 'start java app'
+
+- script: |
+    cd launcher-automation
+    mvn clean test -DsuiteXmlFile="java_suite.xml"
+  displayName: 'Java app tests'
+
+- script: |
+    docker stop $(docker ps -a -q)
+    docker rm $(docker ps -a -q)
+  displayName: 'stop java app'
