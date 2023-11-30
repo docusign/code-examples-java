@@ -25,6 +25,7 @@ public class HttpsConnectWebhookhMacValidation {
      * https://docs.oracle.com/javase/10/docs/specs/security/standard-names.html#mac
      * -algorithms
      */
+    //ds-snippet-start:Connect1Step1
     private static String ComputeHash(String secret, byte[] payload)
             throws InvalidKeyException, NoSuchAlgorithmException {
         String digest = "HmacSHA256";
@@ -41,7 +42,7 @@ public class HttpsConnectWebhookhMacValidation {
                 verify.getBytes(StandardCharsets.UTF_8));
         return isEqual;
     }
-
+    //ds-snippet-end:Connect1Step1
     public static void main(String[] args) {
 
         LOGGER.info("DocuSign HMAC Tester");
