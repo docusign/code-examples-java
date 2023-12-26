@@ -97,8 +97,8 @@ For a list of code examples that use the Admin API, see the [How-to guides overv
 **Note:** If you downloaded this code using [Quickstart](https://developers.docusign.com/docs/esign-rest-api/quickstart/) from the DocuSign Developer Center, skip step 4 as it was automatically performed for you.
 
 1. Extract the Quickstart ZIP file or download or clone the code-examples-java repository.
-1. In your command-line environment, switch to the folder:  
-   `cd <Quickstart folder>` or `cd code-examples-java`
+1. In your command-line environment, switch to the :  
+   `cd <Quickstart >` or `cd code-examples-java`
 1. Package the code: `mvn package`
 1. To configure the launcher for [Authorization Code Grant](https://developers.docusign.com/platform/auth/authcode/) authentication, create a copy of the file src/main/resources/application.example.json and save the copy as src/main/resources/application.json.
    1. Add your User ID. On the [Apps and Keys](https://admindemo.docusign.com/authenticate?goTo=apiIntegratorKey) page, under **My Account Information**, copy the **User ID** GUID and save it in application.json as your `DS_TARGET_ACCOUNT_ID`.
@@ -109,26 +109,26 @@ For a list of code examples that use the Admin API, see the [How-to guides overv
 **Note:** Protect your personal information. Please make sure that application.json will not be stored in your source code repository.  
 
 #### Multiple code examples, Authorization Code Grant, and JWT Grant:
-1. $ cd <Quickstart folder>/
-1. $ mvn package -Dmaven.test.skip=true
-1. $ java -Dspring.profiles.active=dev -jar target/code-examples-java-1.0-SNAPSHOT.war
+1. $ `cd <Quickstart folder>`
+1. $ `mvn package -Dmaven.test.skip=true`
+1. $ `java -Dspring.profiles.active=dev -jar target/code-examples-java-1.0-SNAPSHOT.war`
  For Windows:   
-1. $ mvn package -D"maven.test.skip"="true"  
-1. $ java -D"spring.profiles.active"="dev" -jar target/code-examples-java-1.0-SNAPSHOT.war
+1. $ `mvn package -D"maven.test.skip"="true"`  
+1. $ `java -D"spring.profiles.active"="dev" -jar target/code-examples-java-1.0-SNAPSHOT.war`
 
 #### Authorization Code Grant embedded signing example:
 
-1. $ cd <Quickstart folder>/Quick_ACG
-1. $ mvn spring-boot:run -Drun.profiles=dev
+1. $ `cd <Quickstart folder>/Quick_ACG`
+1. $ `mvn spring-boot:run -Drun.profiles=dev`
 For Windows:
-1. $ mvn spring-boot:run -D"run.profiles"="dev"
+1. $ `mvn spring-boot:run -D"run.profiles"="dev"`
 
 #### JWT grant remote signing example:
-1. $ cd <Quickstart folder>/'JWT Console App'
-1. $ mvn compile
-1. $ mvn exec:java -Dexec.mainClass="com.docusign.jwtconsoleapp.JWTConsoleApp"
+1. $ `cd <Quickstart folder>/'JWT Console App'`
+1. $ `mvn compile`
+1. $ `mvn exec:java -Dexec.mainClass="com.docusign.jwtconsoleapp.JWTConsoleApp"`
   For Windows  
-1. $ mvn exec:java -D"exec.mainClass"="com.docusign.jwtconsoleapp.JWTConsoleApp"
+1. $ `mvn exec:java -D"exec.mainClass"="com.docusign.jwtconsoleapp.JWTConsoleApp"`
 
   
 ### Installation steps for JWT Grant authentication
