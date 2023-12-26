@@ -113,15 +113,15 @@ For a list of code examples that use the Admin API, see the [How-to guides overv
 1. $ mvn package -Dmaven.test.skip=true
 1. $ java -Dspring.profiles.active=dev -jar target/code-examples-java-1.0-SNAPSHOT.war
  For Windows:   
-1. # $ mvn package -D"maven.test.skip"="true"  
-1. # $ java -D"spring.profiles.active"="dev" -jar target/code-examples-java-1.0-SNAPSHOT.war
+1. $ mvn package -D"maven.test.skip"="true"  
+1. $ java -D"spring.profiles.active"="dev" -jar target/code-examples-java-1.0-SNAPSHOT.war
 
 #### Authorization Code Grant embedded signing example:
 
 1. $ cd <Quickstart folder>/Quick_ACG
 1. $ mvn spring-boot:run -Drun.profiles=dev
 For Windows:
-1. # $ mvn spring-boot:run -D"run.profiles"="dev"
+1. $ mvn spring-boot:run -D"run.profiles"="dev"
 
 #### JWT grant remote signing example:
 1. $ cd <Quickstart folder>/'JWT Console App'
