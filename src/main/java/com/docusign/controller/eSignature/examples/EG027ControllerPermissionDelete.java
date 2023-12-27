@@ -45,15 +45,17 @@ public class EG027ControllerPermissionDelete extends AbstractEsignatureControlle
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) {
-        // Step 2: Construct your API headers
+        // Construct your API headers
         AccountsApi accountsApi = createAccountsApi(session.getBasePath(), user.getAccessToken());
 
-        // Step 3: Call the eSignature Rest API to delete profile
+        // Call the eSignature Rest API to delete profile
+        //ds-snippet-start:eSign27Step3
         String curProfileId = args.getProfileId();
         try {
             PermissionDeleteService.permissionDelete(accountsApi, session.getAccountId(), curProfileId);
+            //ds-snippet-end:eSign27Step3
 
-            // Step 4: Show 'done' (successful) page
+            // Show 'done' (successful) page
             DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                     .withMessage(getTextForCodeExampleByApiType().ResultsPageText.replaceFirst("\\{0}", curProfileId))
                     .addToModel(model, config);
