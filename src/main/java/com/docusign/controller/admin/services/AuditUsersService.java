@@ -40,8 +40,12 @@ public class AuditUsersService {
 
         //ds-snippet-start:Admin5Step5
         for (OrganizationUserResponse user : modifiedUsers.getUsers()) {
+            //ds-snippet-end:Admin5Step5
+            //ds-snippet-start:Admin5Step4
             UsersApi.GetUserProfilesOptions profilesOptions = usersApi.new GetUserProfilesOptions();
             profilesOptions.setEmail(user.getEmail());
+            //ds-snippet-end:Admin5Step4
+            //ds-snippet-start:Admin5Step5
             UsersDrilldownResponse res = usersApi.getUserProfiles(organizationId, profilesOptions);
             auditedUsers.add(res.getUsers().get(0));
         }
