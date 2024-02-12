@@ -6,7 +6,8 @@ public enum ApiIndex {
     CLICK("/pages/click/index", "/clickapi", "/c001", "/c"),
     MONITOR("/pages/monitor/index", "", "/m001", "/m"),
     ADMIN("/pages/admin/index", "/management", "/a001", "/a"),
-    CONNECT("/pages/connect/index", "", "/con001", "/con");
+    CONNECT("/pages/connect/index", "", "/con001", "/con"),
+    WEBFORMS("/pages/webforms/index", "/restapi", "/web001", "/web");
     private final String indexPath;
 
     private final String baseUrlSuffix;
