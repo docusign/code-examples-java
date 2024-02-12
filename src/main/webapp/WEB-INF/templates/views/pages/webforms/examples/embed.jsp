@@ -21,6 +21,11 @@
 
 <p><a href="/">${launcherTexts.getContinueButton()}</a></p>
 
+<!--
+//ds-snippet-start:WebForms1Step6
+-->
+
+
 <script src='https://js.docusign.com/bundle.js'></script>
 
 <script>
@@ -66,5 +71,10 @@
 
     loadWebform();
 </script>
+
+<!--
+//ds-snippet-end:WebForms1Step6
+-->
+
 
 <jsp:include page="../../../partials/foot.jsp"/>
