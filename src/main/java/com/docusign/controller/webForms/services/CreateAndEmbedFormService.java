@@ -10,7 +10,6 @@ import com.docusign.webforms.model.CreateInstanceRequestBody;
 import com.docusign.webforms.model.WebFormInstance;
 import com.docusign.webforms.model.WebFormSummaryList;
 import com.docusign.webforms.model.WebFormValues;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -37,18 +36,17 @@ public final class CreateAndEmbedFormService {
         String targetString = "template-id";
 
         try {
-            ClassLoader rawPath = Thread.currentThread().getContextClassLoader();
-            String rootDir = Paths.get(Objects.requireNonNull(rawPath.getResource("")).toURI()).toString();
-            rootDir = StringUtils.remove(rootDir, "target\\classes");
-            rootDir = StringUtils.remove(rootDir, "file:/");
-            rootDir = StringUtils.replace(rootDir, "\\", "/");
+            var templateFilePath = CreateAndEmbedFormService.class.getClassLoader().getResource(fileName);
+            var templateFile = Paths.get(Objects.requireNonNull(templateFilePath).toURI());
 
-            String saveFilePath = rootDir + "src/main/resources/" + fileName;
-
-            String fileContent = new String(Files.readAllBytes(Paths.get(saveFilePath)));
+            String fileContent = new String(Files.readAllBytes(templateFile));
             String modifiedContent = fileContent.replace(targetString, templateId);
 
-            Files.write(Paths.get(saveFilePath), modifiedContent.getBytes());
+            var basePath = System.getProperty("user.dir");
+            var configFile = Paths.get(basePath, "demo_documents", fileName);
+
+            Files.createDirectories(Paths.get(basePath, "demo_documents"));
+            Files.write(configFile, modifiedContent.getBytes());
         } catch (IOException | URISyntaxException ex) {
             System.out.println("An error occurred: " + ex.getMessage());
         }
