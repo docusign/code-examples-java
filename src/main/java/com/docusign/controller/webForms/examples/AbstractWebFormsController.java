@@ -21,8 +21,10 @@ public abstract class AbstractWebFormsController extends AbstractController {
 
     protected User user;
 
-    public AbstractWebFormsController(DSConfiguration config, String exampleName) {
+    public AbstractWebFormsController(DSConfiguration config, String exampleName, Session session, User user) {
         super(config, exampleName);
+        this.session = session;
+        this.user = user;
     }
 
     /**

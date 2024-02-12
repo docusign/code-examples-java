@@ -46,15 +46,13 @@ public class WEB001ControllerCreateAndEmbedForm extends AbstractWebFormsControll
 
     @Autowired
     public WEB001ControllerCreateAndEmbedForm(DSConfiguration config, Session session, User user) {
-        super(config, "web001");
-        this.session = session;
-        this.user = user;
+        super(config, "web001", session, user);
     }
     
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
-        model.addAttribute(TEMPLATE_ID, session.getTemplateId());
+        model.addAttribute(TEMPLATE_ID, session.getWebformTemplateId());
     }
 
     @Override
@@ -63,7 +61,7 @@ public class WEB001ControllerCreateAndEmbedForm extends AbstractWebFormsControll
             ModelMap model,
             HttpServletResponse response
     ) throws ApiException, IOException, com.docusign.webforms.client.ApiException {
-        if (session.getTemplateId() == null) {
+        if (session.getWebformTemplateId() == null) {
             ApiClient eSignApiClient = createESignApiClient(session.getBasePath(), user.getAccessToken());
             String accountId = session.getAccountId();
             
@@ -74,21 +72,19 @@ public class WEB001ControllerCreateAndEmbedForm extends AbstractWebFormsControll
 
             if (Integer.parseInt(envelopeTemplateResults.getResultSetSize()) > 0) {
                 EnvelopeTemplate template = envelopeTemplateResults.getEnvelopeTemplates().get(0);
-                session.setTemplateId(template.getTemplateId());
+                session.setWebformTemplateId(template.getTemplateId());
             } else {
-                session.setTemplateName(TEMPLATE_NAME);
-                
                 TemplateSummary template = CreateTemplateService.createTemplate(
                     eSignApiClient,
                     accountId,
                     CreateAndEmbedFormService.prepareEnvelopeTemplate(TEMPLATE_NAME, DOCUMENT_FILE_NAME)
                 );
 
-                session.setTemplateId(template.getTemplateId());
+                session.setWebformTemplateId(template.getTemplateId());
             }
 
-            model.addAttribute(TEMPLATE_ID, session.getTemplateId());
-            CreateAndEmbedFormService.addTemplateIdToForm(WEB_FORM_CONFIG, session.getTemplateId());
+            model.addAttribute(TEMPLATE_ID, session.getWebformTemplateId());
+            CreateAndEmbedFormService.addTemplateIdToForm(WEB_FORM_CONFIG, session.getWebformTemplateId());
 
             return new RedirectView("web001");
         }
@@ -116,6 +112,7 @@ public class WEB001ControllerCreateAndEmbedForm extends AbstractWebFormsControll
                 formId
         );
 
+        session.setWebformTemplateId(null);
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
         model.addAttribute(INSTANCE_TOKEN, form.getInstanceToken());
         model.addAttribute(URL, form.getFormUrl());
