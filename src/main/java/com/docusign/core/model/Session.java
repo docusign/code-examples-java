@@ -60,6 +60,8 @@ public class Session implements Serializable {
 
     private String importId;
 
+    private String webformTemplateId;
+
     private String emailAddress;
 
     private UUID orgId;
