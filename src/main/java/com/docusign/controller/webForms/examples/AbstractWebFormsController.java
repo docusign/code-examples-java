@@ -46,10 +46,12 @@ public abstract class AbstractWebFormsController extends AbstractController {
             String basePath,
             String userAccessToken
     ) {
+       //ds-snippet-start:WebForms1Step2
         com.docusign.webforms.client.ApiClient apiClient = new com.docusign.webforms.client.ApiClient(basePath);
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + userAccessToken);
         apiClient.addAuthorization("docusignAccessCode", new com.docusign.webforms.client.auth.OAuth());
-        return apiClient;
+       //ds-snippet-end:WebForms1Step2
+       return apiClient;
     }
     
     protected String getExamplePagesPath() {

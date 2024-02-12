@@ -25,11 +25,13 @@ public final class CreateAndEmbedFormService {
         String userAccessToken,
         String search
     ) throws ApiException {
-        FormManagementApi formManagementApi = new FormManagementApi(apiClient);
+       //ds-snippet-start:WebForms1Step3
+       FormManagementApi formManagementApi = new FormManagementApi(apiClient);
         var option = formManagementApi.new ListFormsOptions();
         option.setSearch(search);
 
         return formManagementApi.listForms(userAccessToken, option);
+       //ds-snippet-end:WebForms1Step3
     }
 
     public static void addTemplateIdToForm(String fileName, String templateId) {
@@ -57,10 +59,9 @@ public final class CreateAndEmbedFormService {
         String accountId,
         String formId
     ) throws ApiException {
-        String clientUserId = "1234-5678-abcd-ijkl";
 
-        FormInstanceManagementApi formManagementApi = new FormInstanceManagementApi(apiClient);
-        WebFormValues formValues = new WebFormValues();
+       //ds-snippet-start:WebForms1Step4
+       WebFormValues formValues = new WebFormValues();
 
         formValues.putAll(Map.of(
             "PhoneNumber", "555-555-5555",
@@ -68,6 +69,11 @@ public final class CreateAndEmbedFormService {
             "Company", "Tally",
             "JobTitle", "Programmer Writer"
         ));
+       //ds-snippet-end:WebForms1Step4
+
+       //ds-snippet-start:WebForms1Step5
+       FormInstanceManagementApi formManagementApi = new FormInstanceManagementApi(apiClient);
+        String clientUserId = "1234-5678-abcd-ijkl";
 
         CreateInstanceRequestBody options = new CreateInstanceRequestBody()
             .clientUserId(clientUserId)
@@ -75,6 +81,7 @@ public final class CreateAndEmbedFormService {
             .expirationOffset(3600);
             
         return formManagementApi.createInstance(accountId, formId, options);
+       //ds-snippet-end:WebForms1Step5
     }
 
     public static EnvelopeTemplate prepareEnvelopeTemplate(String templateName, String documentPdf) throws IOException {
