@@ -32,17 +32,7 @@ public final class DocumentGenerationService {
 
     public static final String DEFAULT_ID = "1";
 
-    public static DateSigned createDateSigned() {
-        DateSigned dateSigned = new DateSigned();
-
-        dateSigned.setAnchorString("Date");
-        dateSigned.setAnchorUnits(ANCHOR_UNITS);
-        dateSigned.setAnchorYOffset("-22");
-
-        return dateSigned;
-    }
-
-    // Step 3b start
+    //ds-snippet-start:eSign42Step3
     private static EnvelopeDefinition addDocumentTemplate(String offerDocDocx) throws IOException {
         String documentName = "OfferLetterDemo.docx";
         Document document = EnvelopeHelpers.createDocumentFromFile(offerDocDocx, documentName, DEFAULT_ID);
@@ -54,6 +44,7 @@ public final class DocumentGenerationService {
 
         return envelopeDefinition;
     }
+    //ds-snippet-end:eSign42Step3
 
     public String generateDocument(
             String accountId,
@@ -67,27 +58,27 @@ public final class DocumentGenerationService {
             EnvelopesApi envelopesApi,
             TemplatesApi templatesApi
     ) throws ApiException, IOException {
-        // Step 2a start
+        //ds-snippet-start:eSign42Step2
         TemplateSummary template = templatesApi.createTemplate(accountId, makeTemplate());
         String templateId = template.getTemplateId();
-        // Step 2a end
+        //ds-snippet-end:eSign42Step2
 
-        // Step 3a start
+        //ds-snippet-start:eSign42Step3
         templatesApi.updateDocument(accountId, templateId, DEFAULT_ID, addDocumentTemplate(offerDocDocx));
-        // Step 3a end
+        //ds-snippet-end:eSign42Step3
 
-        // Step 4a start
+        //ds-snippet-start:eSign42Step4
         templatesApi.createTabs(accountId, templateId, DEFAULT_ID, prepareTabs());
-        // Step 4a end
+        //ds-snippet-end:eSign42Step4
 
-        // Step 5a start
+        //ds-snippet-start:eSign42Step5
         EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(
                 accountId,
                 makeEnvelope(candidateEmail, candidateName, template.getTemplateId()));
         String envelopeId = envelopeSummary.getEnvelopeId();
-        // Step 5a end
+        //ds-snippet-end:eSign42Step5
 
-        // Step 6 start
+        //ds-snippet-start:eSign42Step6
         DocGenFormFieldResponse formFieldResponse = envelopesApi.getEnvelopeDocGenFormFields(accountId, envelopeId);
         String documentId = "";
         if (!formFieldResponse.getDocGenFormFields().isEmpty()) {
@@ -96,8 +87,9 @@ public final class DocumentGenerationService {
                 documentId = docGenFormFields.getDocumentId();
             }
         }
-        // Step 6 end
-        // Step 7a start
+        //ds-snippet-end:eSign42Step6
+
+        //ds-snippet-start:eSign42Step7
         DocGenFormFieldRequest formFields = getFormFields(
                 documentId,
                 candidateName,
@@ -107,18 +99,18 @@ public final class DocumentGenerationService {
                 startDate);
 
         envelopesApi.updateEnvelopeDocGenFormFields(accountId, envelopeId, formFields);
-        // Step 7a end
+        //ds-snippet-end:eSign42Step7
 
-        // Step 8 start
+        //ds-snippet-start:eSign42Step8
         Envelope envelope = new Envelope();
         envelope.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
 
         EnvelopeUpdateSummary envelopeUpdateSummary = envelopesApi.update(accountId, envelopeId, envelope);
-        // Step 8 end
+        //ds-snippet-end:eSign42Step8
         return envelopeUpdateSummary.getEnvelopeId();
     }
 
-    // Step 4b start
+    //ds-snippet-start:eSign42Step4
     private TemplateTabs prepareTabs() {
         SignHere signHere = createSignHere();
         DateSigned dateSigned = createDateSigned();
@@ -129,7 +121,6 @@ public final class DocumentGenerationService {
 
         return templateTabs;
     }
-    // Step 4b end
 
     private SignHere createSignHere() {
         SignHere signHere = new SignHere();
@@ -141,9 +132,19 @@ public final class DocumentGenerationService {
 
         return signHere;
     }
-    // Step 7b end
 
-    // Step 7b start
+    private DateSigned createDateSigned() {
+      DateSigned dateSigned = new DateSigned();
+
+      dateSigned.setAnchorString("Date");
+      dateSigned.setAnchorUnits(ANCHOR_UNITS);
+      dateSigned.setAnchorYOffset("-22");
+
+      return dateSigned;
+    }
+    //ds-snippet-end:eSign42Step4
+
+    //ds-snippet-start:eSign42Step7
     private DocGenFormFieldRequest getFormFields(
             String documentId,
             String candidateName,
@@ -185,9 +186,9 @@ public final class DocumentGenerationService {
 
         return docGenFormFieldRequest;
     }
-    // Step 5b end
+    //ds-snippet-end:eSign42Step7
 
-    // Step 5b start
+    //ds-snippet-start:eSign42Step5
     private EnvelopeDefinition makeEnvelope(String candidateEmail, String candidateName, String templateId) {
         TemplateRole signerRole = new TemplateRole();
         signerRole.setName(candidateName);
@@ -201,9 +202,9 @@ public final class DocumentGenerationService {
 
         return envelopeDefinition;
     }
-    // Step 2b end
+    //ds-snippet-end:eSign42Step5
 
-    // Step 2b start
+    //ds-snippet-start:eSign42Step2
     private EnvelopeTemplate makeTemplate() {
         Signer signer = new Signer();
         signer.setRoleName(EnvelopeHelpers.SIGNER_ROLE_NAME);
@@ -222,5 +223,5 @@ public final class DocumentGenerationService {
 
         return template;
     }
-    // Step 3b stop
+    //ds-snippet-end:eSign42Step2
 }
