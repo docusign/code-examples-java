@@ -13,7 +13,7 @@ public final class ListEnvelopesServices {
     public static EnvelopesInformation listEnvelopes(EnvelopesApi envelopesApi, String accountId) throws ApiException {
         EnvelopesApi.ListStatusChangesOptions options = envelopesApi.new ListStatusChangesOptions();
         LocalDate date = LocalDate.now().minusDays(FROM_DATE_OFFSET_DAYS);
-        options.setFromDate(DateUtils.DATE_WITH_SLASH.format(date));
+        options.setFromDate(DateUtils.DATE_WITH_LINES.format(date));
         return envelopesApi.listStatusChanges(accountId, options);
     }
 }

@@ -43,8 +43,9 @@ public class HttpsConnectWebhookhMacValidation {
         return isEqual;
     }
     //ds-snippet-end:Connect1Step1
-    public static void main(String[] args) {
 
+    public static void main(String[] args)
+    {
         LOGGER.info("DocuSign HMAC Tester");
         try {
             Boolean response = HttpsConnectWebhookhMacValidation.HashIsValid("{DocuSign HMAC private key}",
