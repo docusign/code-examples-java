@@ -79,7 +79,7 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
             DoneExample.createDefault(this.title)
                     .withJsonObject(formGroupFormToAssign)
                     .withMessage(getTextForCodeExampleByApiType().ResultsPageText
-                            .replaceFirst("\\{0}", String.valueOf(args.getOfficeId()))
+                            .replaceFirst("\\{0}", String.valueOf(args.getFormId()))
                             .replaceFirst("\\{1}", String.valueOf(args.getFormGroupId())))
                     .addToModel(model, config);
         } catch (ApiException apiException) {
