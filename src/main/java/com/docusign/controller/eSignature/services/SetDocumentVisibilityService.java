@@ -32,6 +32,7 @@ public final class SetDocumentVisibilityService {
         recipients.setCarbonCopies(Collections.singletonList(carbonCopy));
 
         EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
+        envelopeDefinition.setEnforceSignerVisibility("true");
         envelopeDefinition.setEmailSubject("Please sign this document set");
         envelopeDefinition.setRecipients(recipients);
 
