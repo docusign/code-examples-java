@@ -4,8 +4,13 @@ import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
+
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.StreamUtils;
 
 public final class SetDocumentVisibilityService {
     //ds-snippet-start:eSign40Step3  
@@ -32,10 +37,15 @@ public final class SetDocumentVisibilityService {
         recipients.setCarbonCopies(Collections.singletonList(carbonCopy));
 
         EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
+        envelopeDefinition.setEnforceSignerVisibility("true");
         envelopeDefinition.setEmailSubject("Please sign this document set");
         envelopeDefinition.setRecipients(recipients);
 
         envelopeDefinition.setDocuments(Arrays.asList(prepareDocumentsForSending(
+                signerEmail,
+                signerName,
+                ccEmail,
+                ccName,
                 documentFileNamePDF,
                 documentFileNameDOCX,
                 documentFileNameHTML)));
@@ -72,12 +82,26 @@ public final class SetDocumentVisibilityService {
     }
 
     private static Document[] prepareDocumentsForSending(
+            String signerEmail,
+            String signerName,
+            String ccEmail,
+            String ccName,
             String documentFileNamePDF,
             String documentFileNameDOCX,
             String documentFileNameHTML) throws IOException {
-        Document documentHTML = EnvelopeHelpers.createDocumentFromFile(
-                documentFileNameHTML,
+        ClassPathResource resource = new ClassPathResource(documentFileNameHTML);
+        String documentHTMLContentsString = StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
+        documentHTMLContentsString = documentHTMLContentsString.replace("{USER_EMAIL}", signerEmail);
+        documentHTMLContentsString = documentHTMLContentsString.replace("{USER_FULLNAME}", signerName);
+        documentHTMLContentsString = documentHTMLContentsString.replace("{CC_EMAIL}", ccEmail);
+        documentHTMLContentsString = documentHTMLContentsString.replace("{CC_NAME}", ccName);
+        byte[] documentHTMLContentsBytes = documentHTMLContentsString.getBytes(StandardCharsets.UTF_8);
+        String extension = FilenameUtils.getExtension(documentFileNameHTML);
+        
+        Document documentHTML = EnvelopeHelpers.createDocument(
+                documentHTMLContentsBytes,
                 "Order acknowledgement",
+                extension,
                 "1");
 
         Document documentDOCX = EnvelopeHelpers.createDocumentFromFile(

@@ -103,6 +103,9 @@ public class DSConfiguration {
     @Value("${DS_ADMIN_BASE_PATH}")
     private String adminBasePath;
 
+    @Value("${DS_WEBFORMS_BASE_PATH}")
+    private String webFormsBasePath;
+
     @Value("${DS_MAESTRO_BASE_PATH}")
     private String maestroBasePath;
 

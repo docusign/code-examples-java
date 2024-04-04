@@ -49,13 +49,15 @@ public class EG006ControllerEnvelopeDocs extends AbstractEsignatureController {
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException {
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
-        // Step 1. List the envelope's documents
+        // List the envelope's documents
+        //ds-snippet-start:eSign6Step3
         EnvelopeDocumentsResult envelopeDocumentsResult = EnvelopeDocsService.envelopeDocs(
                 envelopesApi,
                 session.getAccountId(),
                 session.getEnvelopeId());
-
-        // Step 2. Process results
+        //ds-snippet-end:eSign6Step3
+        
+        // Process results
         // Save the envelopeId and its list of documents in the session so
         // they can be used in example 7 (download a document)
         List<EnvelopeDocumentInfo> envelopeDocItems = new ArrayList<>();
