@@ -34,8 +34,6 @@ public class SupportingTexts {
 
     public String CFRError;
 
-    public String ContactSupportToEnableFeature;
-
     public LoginPage LoginPage;
 
     public SelectAPIPage SelectAPIPage;

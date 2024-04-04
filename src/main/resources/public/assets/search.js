@@ -6,7 +6,7 @@
         ROOMS: 'rooms',
         ADMIN: 'admin',
         CONNECT: 'connect',
-        MAESTRO: "maestro"
+        MAESTRO: "maestro",
         CONNECT: 'connect',
         WEBFORMS: 'webforms'
     };
