@@ -22,7 +22,15 @@ public final class DocumentGenerationService {
 
     public static final String SALARY = "Salary";
 
+    public static final String BONUS = "Bonus";
+
     public static final String START_DATE = "Start_Date";
+
+    public static final String COMPENSATION_PACKAGE = "Compensation_Package";
+
+    public static final String COMPENSATION_COMPONENT = "Compensation_Component";
+
+    public static final String DETAILS = "Details";
 
     public static final String TEXT_BOX = "TextBox";
 
@@ -34,7 +42,7 @@ public final class DocumentGenerationService {
 
     //ds-snippet-start:eSign42Step3
     private static EnvelopeDefinition addDocumentTemplate(String offerDocDocx) throws IOException {
-        String documentName = "OfferLetterDemo.docx";
+        String documentName = "OfferLetterDynamicTable.docx";
         Document document = EnvelopeHelpers.createDocumentFromFile(offerDocDocx, documentName, DEFAULT_ID);
         document.setOrder("1");
         document.pages("1");
@@ -164,21 +172,41 @@ public final class DocumentGenerationService {
         jobTitleField.setName(JOB_TITLE);
         jobTitleField.setValue(jobTitle);
 
-        DocGenFormField salaryField = new DocGenFormField();
-        salaryField.setName(SALARY);
-        salaryField.setValue(salary);
-
         DocGenFormField startDateField = new DocGenFormField();
         startDateField.setName(START_DATE);
         startDateField.setValue(startDate);
+
+        DocGenFormField compensationPackageField = new DocGenFormField();
+        compensationPackageField.setName(COMPENSATION_PACKAGE);
+        compensationPackageField.setType("TableRow");
+        compensationPackageField.setRowValues(Arrays.asList(
+            new DocGenFormFieldRowValue()
+                .docGenFormFieldList(Arrays.asList(
+                    new DocGenFormField()
+                        .name(COMPENSATION_COMPONENT)
+                        .value(SALARY),
+                    new DocGenFormField()
+                        .name(DETAILS)
+                        .value(salary)
+                )),
+            new DocGenFormFieldRowValue()
+                .docGenFormFieldList(Arrays.asList(
+                    new DocGenFormField()
+                        .name(COMPENSATION_COMPONENT)
+                        .value(BONUS),
+                    new DocGenFormField()
+                        .name(DETAILS)
+                        .value("You will be eligible for a bonus of up to 20 percent based on your performance.")
+                ))
+        ));
 
         DocGenFormFields formFields = new DocGenFormFields();
         formFields.setDocGenFormFieldList(Arrays.asList(
                 candidateNameField,
                 managerNameField,
                 jobTitleField,
-                salaryField,
-                startDateField));
+                startDateField,
+                compensationPackageField));
         formFields.setDocumentId(documentId);
 
         DocGenFormFieldRequest docGenFormFieldRequest = new DocGenFormFieldRequest();
