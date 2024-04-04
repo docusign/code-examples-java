@@ -67,4 +67,10 @@ public class Session implements Serializable {
     private OAuth.Account oauthAccount;
 
     private String monitorExampleRedirect;
+
+    private String workflowId;
+
+    private String instanceId;
+
+    private Boolean isWorkflowPublished = false;
 }
