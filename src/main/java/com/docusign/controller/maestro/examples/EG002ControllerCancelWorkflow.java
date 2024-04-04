@@ -24,6 +24,7 @@ import java.security.NoSuchAlgorithmException;
 public class EG002ControllerCancelWorkflow extends AbstractMaestroController {
 
     private static final String MODEL_WORKFLOW_ID = "workflowId";
+
     private static final String MODEL_INSTANCE_ID = "instanceId";
 
     @Autowired
