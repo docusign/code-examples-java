@@ -4,9 +4,11 @@ public enum ApiIndex {
     ESIGNATURE("/pages/esignature/index", "/restapi", "/eg001", "/eg"),
     ROOMS("/pages/rooms/index", "/restapi", "/r001", "/r"),
     CLICK("/pages/click/index", "/clickapi", "/c001", "/c"),
+    MAESTRO("/pages/maestro/index", "", "/mae001", "/mae"),
     MONITOR("/pages/monitor/index", "", "/m001", "/m"),
     ADMIN("/pages/admin/index", "/management", "/a001", "/a"),
     CONNECT("/pages/connect/index", "", "/con001", "/con");
+
     private final String indexPath;
 
     private final String baseUrlSuffix;
