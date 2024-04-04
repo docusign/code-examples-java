@@ -7,7 +7,8 @@ public enum ApiIndex {
     MAESTRO("/pages/maestro/index", "", "/mae001", "/mae"),
     MONITOR("/pages/monitor/index", "", "/m001", "/m"),
     ADMIN("/pages/admin/index", "/management", "/a001", "/a"),
-    CONNECT("/pages/connect/index", "", "/con001", "/con");
+    CONNECT("/pages/connect/index", "", "/con001", "/con"),
+    WEBFORMS("/pages/webforms/index", "/restapi", "/web001", "/web");
 
     private final String indexPath;
 

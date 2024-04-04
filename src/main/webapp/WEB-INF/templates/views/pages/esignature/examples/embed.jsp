@@ -35,7 +35,7 @@
 
 <p><a href="/">Continue</a></p>
 
-<script src='http://js.docusign.com/bundle.js'></script>
+<script src='https://js.docusign.com/bundle.js'></script>
 <script>
     window.DocuSign.loadDocuSign('${integrationKey}')
         .then((docusign) => {
