@@ -42,7 +42,7 @@ public final class DocumentGenerationService {
 
     //ds-snippet-start:eSign42Step3
     private static EnvelopeDefinition addDocumentTemplate(String offerDocDocx) throws IOException {
-        String documentName = "OfferLetterDynamicTable.docx";
+        String documentName = "OfferLetterDemo.docx";
         Document document = EnvelopeHelpers.createDocumentFromFile(offerDocDocx, documentName, DEFAULT_ID);
         document.setOrder("1");
         document.pages("1");
