@@ -68,7 +68,7 @@
       <h2>${group.getName()}</h2>
 
       <c:forEach var="example" items="${group.getExamples()}">
-        <c:if test="${example.getSkipForLanguages() == null || example.getSkipForLanguages().toLowerCase().equals('java')}">
+        <c:if test="${example.getSkipForLanguages() == null || !example.getSkipForLanguages().toLowerCase().contains('java')}">
         <c:if test="${!apis.getName().equals('eSignature') ||
           ((example.getCFREnabled() == 'AllAccounts') ||
           (statusCFR == 'enabled' && example.getCFREnabled() == 'CFROnly') ||
