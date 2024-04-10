@@ -144,7 +144,7 @@ public final class DocumentGenerationService {
     private DateSigned createDateSigned() {
       DateSigned dateSigned = new DateSigned();
 
-      dateSigned.setAnchorString("Date");
+      dateSigned.setAnchorString("Date Signed");
       dateSigned.setAnchorUnits(ANCHOR_UNITS);
       dateSigned.setAnchorYOffset("-22");
 
