@@ -6,6 +6,8 @@
         ROOMS: 'rooms',
         ADMIN: 'admin',
         CONNECT: 'connect',
+        MAESTRO: "maestro",
+        CONNECT: 'connect',
         WEBFORMS: 'webforms'
     };
 
@@ -128,6 +130,8 @@
                 return "con";
             case API_TYPES.WEBFORMS:
                 return "web";
+            case API_TYPES.MAESTRO:
+                return "mae";
         }
     }
 
@@ -144,7 +148,7 @@
 
                         group.Examples.forEach(
                             example => {
-                                if (!example.SkipForLanguages || !example.SkipForLanguages.toLowerCase().includes("c#")) {
+                                if (!example.SkipForLanguages || !example.SkipForLanguages.toLowerCase().includes("java")) {
                                     if (element.Name.toLowerCase() !== API_TYPES.ESIGNATURE.toLowerCase() ||
                                         ((example.CFREnabled == "AllAccounts") ||
                                             ((cfrPart11 == "True") && (example.CFREnabled == "CFROnly")) ||
