@@ -135,13 +135,13 @@ public final class CreateWorkflowService {
                 prepareProperty("step", "ccEmail", triggerId));
         variables.put(
                 "envelopeId_step2",
-                prepareProperty("step", "envelopeId", "step2"));
+                prepareProperty("step", "envelopeId", "step2", "String"));
         variables.put(
                 "combinedDocumentsBase64_step2",
-                prepareProperty("step", "combinedDocumentsBase64", "step2"));
+                prepareProperty("step", "combinedDocumentsBase64", "step2", "File"));
         variables.put(
                 "fields.signer.text.value_step2",
-                prepareProperty("step", "fields.signer.text.value", "step2"));
+                prepareProperty("step", "fields.signer.text.value", "step2", "String"));
 
         return variables;
     }
