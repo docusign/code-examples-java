@@ -45,7 +45,9 @@ public class EG003ControllerGetWorkflowStatus extends AbstractMaestroController 
             ModelMap model,
             HttpServletResponse response
     ) throws ApiException, IOException, NoSuchAlgorithmException, InvalidKeyException, com.docusign.maestro.client.ApiException {
+        //ds-snippet-start:Maestro3Step2
         ApiClient apiClient = createApiClient(config.getMaestroBasePath(), user.getAccessToken());
+        //ds-snippet-end:Maestro3Step2
 
         WorkflowInstance instance = GetWorkflowInstanceService.getWorkflowInstance(
                 apiClient,

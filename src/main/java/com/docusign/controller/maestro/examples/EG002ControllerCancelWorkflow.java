@@ -45,7 +45,9 @@ public class EG002ControllerCancelWorkflow extends AbstractMaestroController {
             ModelMap model,
             HttpServletResponse response
     ) throws ApiException, IOException, NoSuchAlgorithmException, InvalidKeyException, com.docusign.maestro.client.ApiException {
+        //ds-snippet-start:Maestro2Step2
         ApiClient apiClient = createApiClient(config.getMaestroBasePath(), user.getAccessToken());
+        //ds-snippet-end:Maestro2Step2
 
         CancelResponse cancelResponse = CancelWorkflowInstanceService.cancelWorkflowInstance(
                 apiClient,
