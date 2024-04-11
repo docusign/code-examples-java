@@ -11,6 +11,7 @@
   "DS_MONITOR_BASE_PATH": "https://lens-d.docusign.net",
   "DS_ADMIN_BASE_PATH": "https://api-d.docusign.net",
   "DS_WEBFORMS_BASE_PATH": "https://apps-d.docusign.com/api/webforms/v1.1",
+  "DS_MAESTRO_BASE_PATH": "https://demo.services.docusign.net/",
 
   "Gateway_Name": "{DS_PAYMENT_GATEWAY_NAME}",
   "Gateway_Account_Id": "{GATEWAY_ACCOUNT_ID}",
@@ -30,7 +31,7 @@
               "client-authentication-method": "client_secret_basic",
               "authorization-grant-type": "authorization_code",
               "redirect-uri": "{baseUrl}/login/oauth2/code/acg",
-              "scope": "user_write, signature, impersonation, group_read, organization_read, permission_read, user_read, account_read, domain_read, identity_provider_read, user_data_redact, click.manage, click.send, dtr.rooms.read, dtr.rooms.write, dtr.documents.read, dtr.documents.write, dtr.profile.read, dtr.profile.write, dtr.company.read, dtr.company.write, room_forms, asset_group_account_read, asset_group_account_clone_write, asset_group_account_clone_read, webforms_read, webforms_instance_read, webforms_instance_write"
+              "scope": "user_write, signature, impersonation, group_read, organization_read, permission_read, user_read, account_read, domain_read, identity_provider_read, user_data_redact, click.manage, click.send, dtr.rooms.read, dtr.rooms.write, dtr.documents.read, dtr.documents.write, dtr.profile.read, dtr.profile.write, dtr.company.read, dtr.company.write, room_forms, asset_group_account_read, asset_group_account_clone_write, asset_group_account_clone_read, webforms_read, webforms_instance_read, webforms_instance_write, aow_manage"
             },
             "jwt": {
               "client-id": "{INTEGRATION_KEY_JWT}",

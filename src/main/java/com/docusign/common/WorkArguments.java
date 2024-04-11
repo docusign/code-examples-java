@@ -175,4 +175,6 @@ public class WorkArguments {
     private String hmacSecret;
 
     private String jsonPayload;
+
+    private String instanceName;
 }

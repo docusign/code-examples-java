@@ -122,15 +122,16 @@ public class IndexController {
             return new ModelAndView(new JWTAuthenticationMethod().loginUsingJWT(config, session, redirectURL));
         }
 
+        boolean isRedirectToMonitor = redirectURL.toLowerCase().contains("/m") && !redirectURL.toLowerCase().contains("/mae");
         if (session.isRefreshToken() || config.getQuickstart().equals("true")) {
             config.setQuickstart("false");
 
-            if (redirectURL.toLowerCase().contains("/m") || session.getMonitorExampleRedirect() != null) {
+            if (isRedirectToMonitor || session.getMonitorExampleRedirect() != null) {
                 return checkForMonitorRedirects(redirectURL);
             }
 
             return new ModelAndView(getRedirectView(session.getAuthTypeSelected()));
-        } else if (redirectURL.toLowerCase().contains("/m") || session.getMonitorExampleRedirect() != null) {
+        } else if (isRedirectToMonitor || session.getMonitorExampleRedirect() != null) {
             return checkForMonitorRedirects(redirectURL);
         } else {
             return new ModelAndView("pages/ds_must_authenticate");
@@ -174,6 +175,7 @@ public class IndexController {
                 ApiIndex.MONITOR.getExamplesPathCode(),
                 ApiIndex.ADMIN.getExamplesPathCode(),
                 ApiIndex.ROOMS.getExamplesPathCode(),
+                ApiIndex.MAESTRO.getExamplesPathCode(),
         };
 
         if (savedRequest != null) {
