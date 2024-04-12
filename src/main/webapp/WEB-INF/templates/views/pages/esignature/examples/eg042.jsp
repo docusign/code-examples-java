@@ -8,6 +8,7 @@
 <c:set var="jobTitleIndex" value="3" scope="page" />
 <c:set var="salaryIndex" value="4" scope="page" />
 <c:set var="startDateIndex" value="5" scope="page" />
+<c:set var="rsusIndex" value="6" scope="page" />
 
 <h4>${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
@@ -89,6 +90,19 @@
                id="salary"
                placeholder="${example.getForms().get(formNumber).getInputs().get(salaryIndex).getInputPlaceholder()}"
                name="salary"
+               required>
+    </div>
+
+    <div class="form-group">
+        <label for="rsus">
+            ${example.getForms().get(formNumber).getInputs().get(rsusIndex).getInputName()}
+        </label>
+
+        <input type="number"
+               class="form-control"
+               id="rsus"
+               placeholder="${example.getForms().get(formNumber).getInputs().get(rsusIndex).getInputPlaceholder()}"
+               name="rsus"
                required>
     </div>
 
