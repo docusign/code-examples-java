@@ -24,6 +24,8 @@ public final class DocumentGenerationService {
 
     public static final String BONUS = "Bonus";
 
+    public static final String RSUS = "RSUs";
+
     public static final String START_DATE = "Start_Date";
 
     public static final String COMPENSATION_PACKAGE = "Compensation_Package";
@@ -61,6 +63,7 @@ public final class DocumentGenerationService {
             String managerName,
             String jobTitle,
             String salary,
+            String rsus,
             String startDate,
             String offerDocDocx,
             EnvelopesApi envelopesApi,
@@ -104,6 +107,7 @@ public final class DocumentGenerationService {
                 managerName,
                 jobTitle,
                 salary,
+                rsus,
                 startDate);
 
         envelopesApi.updateEnvelopeDocGenFormFields(accountId, envelopeId, formFields);
@@ -159,6 +163,7 @@ public final class DocumentGenerationService {
             String managerName,
             String jobTitle,
             String salary,
+            String rsus,
             String startDate) {
         DocGenFormField candidateNameField = new DocGenFormField();
         candidateNameField.setName(CANDIDATE_NAME);
@@ -187,7 +192,7 @@ public final class DocumentGenerationService {
                         .value(SALARY),
                     new DocGenFormField()
                         .name(DETAILS)
-                        .value(salary)
+                        .value("$" + salary)
                 )),
             new DocGenFormFieldRowValue()
                 .docGenFormFieldList(Arrays.asList(
@@ -196,7 +201,16 @@ public final class DocumentGenerationService {
                         .value(BONUS),
                     new DocGenFormField()
                         .name(DETAILS)
-                        .value("You will be eligible for a bonus of up to 20 percent based on your performance.")
+                        .value("20%")
+                )),
+            new DocGenFormFieldRowValue()
+                .docGenFormFieldList(Arrays.asList(
+                    new DocGenFormField()
+                        .name(COMPENSATION_COMPONENT)
+                        .value(RSUS),
+                    new DocGenFormField()
+                        .name(DETAILS)
+                        .value(rsus)
                 ))
         ));
 

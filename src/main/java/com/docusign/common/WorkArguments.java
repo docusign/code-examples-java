@@ -156,6 +156,8 @@ public class WorkArguments {
 
     private String salary;
 
+    private String rsus;
+
     private String agentEmail;
 
     private String agentName;
