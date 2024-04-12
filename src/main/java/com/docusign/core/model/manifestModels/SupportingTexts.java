@@ -8,6 +8,8 @@ import lombok.Setter;
 public class SupportingTexts {
     public String HomePageText;
 
+    public String ContactSupportToEnableFeature;
+
     public String ViewSourceFile;
 
     public String APIMethodUsed;
@@ -31,8 +33,6 @@ public class SupportingTexts {
     public String WelcomeText;
 
     public String CFRError;
-
-    public String ContactSupportToEnableFeature;
 
     public LoginPage LoginPage;
 
