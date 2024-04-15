@@ -99,6 +99,7 @@
         </label>
 
         <input type="number"
+               min="0"
                class="form-control"
                id="rsus"
                placeholder="${example.getForms().get(formNumber).getInputs().get(rsusIndex).getInputPlaceholder()}"
