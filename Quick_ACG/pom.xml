@@ -154,7 +154,7 @@
                                     <targetPath>${basedir}/src/main/resources/public/assets</targetPath>
                                     <directory>../src/main/resources/public/assets</directory>
                                     <includes>
-                                        <include>favicon.ico</include>
+                                        <include>favicon.png</include>
                                         <include>css.css</include>
                                     </includes>
                                 </resource>
