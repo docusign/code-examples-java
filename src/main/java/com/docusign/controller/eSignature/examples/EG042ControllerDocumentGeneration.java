@@ -22,7 +22,7 @@ import static com.docusign.controller.eSignature.examples.EG042ControllerDocumen
 public class EG042ControllerDocumentGeneration extends AbstractEsignatureController {
     public static final String EG_042 = "/eg042";
 
-    private static final String DOCUMENT_FILE_NAME = "Offer_Letter_Demo.docx";
+    private static final String DOCUMENT_FILE_NAME = "Offer_Letter_Dynamic_Table.docx";
 
     @Autowired
     public EG042ControllerDocumentGeneration(DSConfiguration config, Session session, User user) {
@@ -45,6 +45,7 @@ public class EG042ControllerDocumentGeneration extends AbstractEsignatureControl
                 args.getManagerName(),
                 args.getJobTitle(),
                 args.getSalary(),
+                args.getRsus(),
                 args.getStartDate(),
                 DOCUMENT_FILE_NAME,
                 envelopesApi,
