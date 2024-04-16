@@ -8,6 +8,7 @@
 <c:set var="jobTitleIndex" value="3" scope="page" />
 <c:set var="salaryIndex" value="4" scope="page" />
 <c:set var="startDateIndex" value="5" scope="page" />
+<c:set var="rsusIndex" value="6" scope="page" />
 
 <h4>${example.getExampleName()}</h4>
 <p>${example.getExampleDescription()}</p>
@@ -75,8 +76,7 @@
 
         <select class="form-control" id="jobTitle" name="jobTitle">
             <option value="Software Engineer">Software Engineer</option>
-            <option value="Product Manager">Product Manager</option>
-            <option value="Sales Representative">Sales Representative</option>
+            <option value="Account Executive">Account Executive</option>
         </select>
     </div>
 
@@ -90,6 +90,20 @@
                id="salary"
                placeholder="${example.getForms().get(formNumber).getInputs().get(salaryIndex).getInputPlaceholder()}"
                name="salary"
+               required>
+    </div>
+
+    <div class="form-group">
+        <label for="rsus">
+            ${example.getForms().get(formNumber).getInputs().get(rsusIndex).getInputName()}
+        </label>
+
+        <input type="number"
+               min="0"
+               class="form-control"
+               id="rsus"
+               placeholder="${example.getForms().get(formNumber).getInputs().get(rsusIndex).getInputPlaceholder()}"
+               name="rsus"
                required>
     </div>
 
