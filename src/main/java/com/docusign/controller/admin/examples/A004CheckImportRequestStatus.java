@@ -9,7 +9,6 @@ import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +27,6 @@ import java.util.UUID;
 public class A004CheckImportRequestStatus extends AbstractAdminController {
     private static final String MODEL_IMPORT_OK = "importOk";
 
-    @Autowired
     public A004CheckImportRequestStatus(DSConfiguration config, Session session, User user) {
         super(config, "a004a", user, session);
     }

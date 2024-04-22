@@ -7,7 +7,6 @@ import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.client.ApiClient;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +30,6 @@ public class EG044ControllerFocusedView extends AbstractEsignatureController {
 
     public static final String DOCUMENTATION = "documentation";
 
-    @Autowired
     public EG044ControllerFocusedView(DSConfiguration config, Session session, User user){
         super(config, "eg044", session, user);
     }

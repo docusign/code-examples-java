@@ -11,7 +11,6 @@ import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +40,6 @@ public class EG014ControllerCollectPayment extends AbstractEsignatureController 
 
     private static final String MODEL_GATEWAY_OK = "gatewayOk";
 
-    @Autowired
     public EG014ControllerCollectPayment(DSConfiguration config, Session session, User user) {
         super(config, "eg014", session, user);
     }

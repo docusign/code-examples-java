@@ -10,7 +10,6 @@ import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.PermissionProfile;
 import com.docusign.esign.model.PermissionProfileInformation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +34,6 @@ public class EG026ControllerPermissionChangeSingleSetting extends AbstractEsigna
 
     private static final String MODEL_LIST_PROFILES = "listProfiles";
 
-    @Autowired
     public EG026ControllerPermissionChangeSingleSetting(DSConfiguration config, Session session, User user) {
         super(config, "eg026", session, user);
     }

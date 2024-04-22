@@ -11,7 +11,6 @@ import com.docusign.rooms.api.RoomsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.RoleSummary;
 import com.docusign.rooms.model.Room;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +25,6 @@ import java.io.IOException;
 @RequestMapping("/r001")
 public class R001ControllerCreateRoom extends AbstractRoomsController {
 
-    @Autowired
     public R001ControllerCreateRoom(DSConfiguration config, Session session, User user) {
         super(config, "r001");
         this.session = session;

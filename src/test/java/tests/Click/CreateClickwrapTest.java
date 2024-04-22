@@ -10,14 +10,13 @@ import com.docusign.click.model.Document;
 import com.docusign.controller.click.examples.ClickwrapHelper;
 import com.docusign.controller.click.services.CreateClickwrapService;
 import com.docusign.core.model.ApiType;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import tests.common.JWTLoginMethodTest;
 import tests.common.TestConfig;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
@@ -80,8 +79,8 @@ public final class CreateClickwrapTest {
                 DOCUMENT_ORDER);
 
         // Assert
-        Assert.assertNotNull(clickwrapRequest);
-        Assert.assertEquals(expectedClickwrapRequest, clickwrapRequest);
+        Assertions.assertNotNull(clickwrapRequest);
+        Assertions.assertEquals(expectedClickwrapRequest, clickwrapRequest);
     }
 
     @Test
@@ -106,7 +105,7 @@ public final class CreateClickwrapTest {
         testConfig.setInactiveClickwrap(clickwrapVersionSummaryResponse);
 
         // Assert
-        Assert.assertNotNull(clickwrapVersionSummaryResponse);
-        Assert.assertEquals(clickwrapName, clickwrapVersionSummaryResponse.getClickwrapName());
+        Assertions.assertNotNull(clickwrapVersionSummaryResponse);
+        Assertions.assertEquals(clickwrapName, clickwrapVersionSummaryResponse.getClickwrapName());
     }
 }

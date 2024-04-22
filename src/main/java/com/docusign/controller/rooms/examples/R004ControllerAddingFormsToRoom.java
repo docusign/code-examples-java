@@ -13,7 +13,6 @@ import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.FormSummary;
 import com.docusign.rooms.model.RoomDocument;
 import com.docusign.rooms.model.RoomSummaryList;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +33,6 @@ public class R004ControllerAddingFormsToRoom extends AbstractRoomsController {
 
     private static final String MODEL_ROOM_LIST = "roomList";
 
-    @Autowired
     public R004ControllerAddingFormsToRoom(DSConfiguration config, Session session, User user) {
         super(config, "r004");
         this.session = session;

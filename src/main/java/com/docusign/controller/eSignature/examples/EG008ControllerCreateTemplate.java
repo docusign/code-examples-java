@@ -11,7 +11,6 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeTemplate;
 import com.docusign.esign.model.EnvelopeTemplateResults;
 import com.docusign.esign.model.TemplateSummary;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +30,6 @@ public class EG008ControllerCreateTemplate extends AbstractEsignatureController 
 
     private static final String TEMPLATE_NAME = "Example Signer and CC template";
 
-    @Autowired
     public EG008ControllerCreateTemplate(DSConfiguration config, Session session, User user) {
         super(config, "eg008", session, user);
     }

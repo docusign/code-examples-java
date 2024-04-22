@@ -10,7 +10,6 @@ import com.docusign.rooms.api.RoomsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.FieldData;
 import com.docusign.rooms.model.RoomSummaryList;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +27,6 @@ public class R003ControllerExportingDataFromRoom extends AbstractRoomsController
 
     private static final String MODEL_ROOM_LIST = "roomList";
 
-    @Autowired
     public R003ControllerExportingDataFromRoom(DSConfiguration config, Session session, User user) {
         super(config, "r003");
         this.session = session;

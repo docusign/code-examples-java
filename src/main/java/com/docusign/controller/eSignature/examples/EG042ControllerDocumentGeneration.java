@@ -8,7 +8,6 @@ import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.api.TemplatesApi;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ public class EG042ControllerDocumentGeneration extends AbstractEsignatureControl
 
     private static final String DOCUMENT_FILE_NAME = "Offer_Letter_Dynamic_Table.docx";
 
-    @Autowired
     public EG042ControllerDocumentGeneration(DSConfiguration config, Session session, User user) {
         super(config, EG_042, session, user);
     }
