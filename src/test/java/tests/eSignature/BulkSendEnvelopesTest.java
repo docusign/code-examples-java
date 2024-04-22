@@ -8,8 +8,8 @@ import com.docusign.esign.api.BulkEnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import tests.common.JWTLoginMethodTest;
 import tests.common.TestConfig;
@@ -77,8 +77,8 @@ public final class BulkSendEnvelopesTest {
                 routingOrder);
 
         // Assert
-        Assert.assertNotNull(carbonCopy);
-        Assert.assertEquals(expectedCarbonCopy, carbonCopy);
+        Assertions.assertNotNull(carbonCopy);
+        Assertions.assertEquals(expectedCarbonCopy, carbonCopy);
     }
 
     @Test
@@ -107,8 +107,8 @@ public final class BulkSendEnvelopesTest {
                 routingOrder);
 
         // Assert
-        Assert.assertNotNull(signer);
-        Assert.assertEquals(expectedSigner, signer);
+        Assertions.assertNotNull(signer);
+        Assertions.assertEquals(expectedSigner, signer);
     }
 
     @Test
@@ -126,8 +126,8 @@ public final class BulkSendEnvelopesTest {
         Recipients recipients = BulkSendEnvelopesService.createRecipients();
 
         // Assert
-        Assert.assertNotNull(recipients);
-        Assert.assertEquals(expectedRecipients, recipients);
+        Assertions.assertNotNull(recipients);
+        Assertions.assertEquals(expectedRecipients, recipients);
     }
 
     @Test
@@ -149,8 +149,8 @@ public final class BulkSendEnvelopesTest {
         CustomFields customFields = BulkSendEnvelopesService.createCustomFields(bulkListId);
 
         // Assert
-        Assert.assertNotNull(customFields);
-        Assert.assertEquals(expectedCustomFields, customFields);
+        Assertions.assertNotNull(customFields);
+        Assertions.assertEquals(expectedCustomFields, customFields);
     }
 
     @Test
@@ -170,8 +170,8 @@ public final class BulkSendEnvelopesTest {
         EnvelopeDefinition envelopeDefinition = BulkSendEnvelopesService.makeEnvelope();
 
         // Assert
-        Assert.assertNotNull(envelopeDefinition);
-        Assert.assertEquals(expectedEnvelopeDefinition, envelopeDefinition);
+        Assertions.assertNotNull(envelopeDefinition);
+        Assertions.assertEquals(expectedEnvelopeDefinition, envelopeDefinition);
     }
 
     @Test
@@ -205,8 +205,8 @@ public final class BulkSendEnvelopesTest {
         );
 
         // Assert
-        Assert.assertNotNull(bulkSendingCopy);
-        Assert.assertEquals(expectedBulkSendingCopy, bulkSendingCopy);
+        Assertions.assertNotNull(bulkSendingCopy);
+        Assertions.assertEquals(expectedBulkSendingCopy, bulkSendingCopy);
     }
 
     @Test
@@ -241,8 +241,8 @@ public final class BulkSendEnvelopesTest {
         );
 
         // Assert
-        Assert.assertNotNull(bulkSendingList);
-        Assert.assertEquals(expectedBulkSendingList, bulkSendingList);
+        Assertions.assertNotNull(bulkSendingList);
+        Assertions.assertEquals(expectedBulkSendingList, bulkSendingList);
     }
 
     @Test
@@ -272,7 +272,7 @@ public final class BulkSendEnvelopesTest {
         testConfig.setBatchId(batchId);
 
         // Assert
-        Assert.assertNotNull(batchId);
+        Assertions.assertNotNull(batchId);
     }
 
     @Test
@@ -289,6 +289,6 @@ public final class BulkSendEnvelopesTest {
         );
 
         // Assert
-        Assert.assertNotNull(bulkSendBatchStatus);
+        Assertions.assertNotNull(bulkSendBatchStatus);
     }
 }

@@ -4,7 +4,7 @@ import com.docusign.core.model.ApiType;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.client.auth.OAuth;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 import java.awt.*;
 import java.io.IOException;
@@ -44,8 +44,8 @@ public final class JWTLoginMethodTest {
             OAuth.UserInfo userInfo = apiClient.getUserInfo(accessToken);
             String accountId = userInfo.getAccounts().get(0).getAccountId();
 
-            Assert.assertNotNull(accessToken);
-            Assert.assertNotNull(accountId);
+            Assertions.assertNotNull(accessToken);
+            Assertions.assertNotNull(accountId);
             testConfig.setAccessToken(accessToken);
             testConfig.setAccountId(accountId);
         } catch (ApiException exp) {

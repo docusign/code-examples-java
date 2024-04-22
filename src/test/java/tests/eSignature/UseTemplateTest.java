@@ -10,8 +10,8 @@ import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.EnvelopeTemplateResults;
 import com.docusign.esign.model.TemplateRole;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import tests.common.JWTLoginMethodTest;
 import tests.common.TestConfig;
@@ -48,7 +48,7 @@ public final class UseTemplateTest {
         EnvelopeTemplateResults templates = UseTemplateService.listTemplates(apiClient, testConfig.getAccountId());
 
         // Assert
-        Assert.assertNotNull(templates);
+        Assertions.assertNotNull(templates);
     }
 
     @Test
@@ -81,8 +81,8 @@ public final class UseTemplateTest {
         );
 
         // Assert
-        Assert.assertNotNull(envelopeDefinition);
-        Assert.assertEquals(expectedEnvelopeDefinition, envelopeDefinition);
+        Assertions.assertNotNull(envelopeDefinition);
+        Assertions.assertEquals(expectedEnvelopeDefinition, envelopeDefinition);
     }
 
     @Test
@@ -106,7 +106,7 @@ public final class UseTemplateTest {
                 envelopeDefinition);
 
         // Assert
-        Assert.assertNotNull(envelopeSummary);
-        Assert.assertNotNull(envelopeSummary.getEnvelopeId());
+        Assertions.assertNotNull(envelopeSummary);
+        Assertions.assertNotNull(envelopeSummary.getEnvelopeId());
     }
 }

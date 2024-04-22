@@ -2,7 +2,6 @@ package com.docusign.core.model;
 
 import com.docusign.esign.model.AccountRoleSettings;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
 
 public class AccountRoleSettingsPatch extends AccountRoleSettings {
 

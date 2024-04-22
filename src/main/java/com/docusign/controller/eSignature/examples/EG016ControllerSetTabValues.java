@@ -12,7 +12,6 @@ import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.RecipientViewRequest;
 import com.docusign.esign.model.ViewUrl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +25,6 @@ import java.io.IOException;
 @RequestMapping("/eg016")
 public class EG016ControllerSetTabValues extends AbstractEsignatureController {
 
-    @Autowired
     public EG016ControllerSetTabValues(DSConfiguration config, Session session, User user) {
         super(config, "eg016", session, user);
     }

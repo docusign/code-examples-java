@@ -10,7 +10,6 @@ import com.docusign.core.model.User;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.BrandsResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +28,6 @@ public class EG028ControllerCreateBrand extends AbstractEsignatureController {
 
     private static final String MODEL_LIST_LANGUAGE = "listLanguage";
 
-    @Autowired
     public EG028ControllerCreateBrand(DSConfiguration config, Session session, User user) {
         super(config, "eg028", session, user);
     }

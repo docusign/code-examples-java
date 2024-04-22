@@ -9,7 +9,6 @@ import com.docusign.core.model.User;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.PermissionProfile;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +26,6 @@ import java.io.IOException;
 @RequestMapping("/eg024")
 public class EG024ControllerPermissionCreate extends AbstractEsignatureController {
 
-    @Autowired
     public EG024ControllerPermissionCreate(DSConfiguration config, Session session, User user) {
         super(config, "eg024", session, user);
     }
