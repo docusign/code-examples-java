@@ -10,7 +10,6 @@ import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeFormData;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/eg015")
 public class EG015ControllerGetTabValues extends AbstractEsignatureController {
 
-    @Autowired
     public EG015ControllerGetTabValues(DSConfiguration config, Session session, User user) {
         super(config, "eg015", session, user);
     }

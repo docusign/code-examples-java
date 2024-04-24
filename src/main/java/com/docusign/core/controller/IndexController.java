@@ -17,7 +17,10 @@ import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -145,7 +148,7 @@ public class IndexController {
         return new ModelAndView(new JWTAuthenticationMethod().loginUsingJWT(config, session, redirectURL));
     }
 
-    @RequestMapping(path = "/ds/authenticate", method = RequestMethod.POST)
+    @PostMapping("/ds/authenticate")
     public RedirectView authenticate(ModelMap model, @RequestBody MultiValueMap<String, String> formParams, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if (!formParams.containsKey("selectAuthType")) {
             model.addAttribute("message", "Select option with selectAuthType name must be provided.");
@@ -195,7 +198,7 @@ public class IndexController {
     @GetMapping(path = "/ds-return")
     public String returnController(@RequestParam(value = ATTR_STATE, required = false) String state,
                                    @RequestParam(value = ATTR_EVENT, required = false) String event,
-                                   @RequestParam(value = "envelopeId", required = false) String envelopeId, ModelMap model) {
+                                   @RequestParam(required = false) String envelopeId, ModelMap model) {
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
         model.addAttribute(ATTR_TITLE, "Return from DocuSign");
         model.addAttribute(ATTR_EVENT, event);

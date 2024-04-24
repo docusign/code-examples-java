@@ -12,7 +12,6 @@ import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +35,6 @@ public class EG040ControllerSetDocumentVisibility extends AbstractEsignatureCont
             "How to set document visibility for envelope recipients</a> in the Docusign Developer Center " +
             "for instructions on how to enable document visibility in your developer account.";
 
-    @Autowired
     public EG040ControllerSetDocumentVisibility(DSConfiguration config, Session session, User user) {
         super(config, "eg040", session, user);
     }

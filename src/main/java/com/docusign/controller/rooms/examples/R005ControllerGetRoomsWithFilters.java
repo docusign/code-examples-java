@@ -10,7 +10,6 @@ import com.docusign.core.utils.DateUtils;
 import com.docusign.rooms.api.RoomsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.RoomSummaryList;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +33,6 @@ public class R005ControllerGetRoomsWithFilters extends AbstractRoomsController {
 
     private static final int FROM_DATE_FORWARD_DAYS = 1;
 
-    @Autowired
     public R005ControllerGetRoomsWithFilters(DSConfiguration config, Session session, User user) {
         super(config, "r005");
         this.session = session;

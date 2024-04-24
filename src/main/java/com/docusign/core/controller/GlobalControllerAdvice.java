@@ -60,7 +60,6 @@ public class GlobalControllerAdvice {
     @Autowired
     private OAuth2AuthorizedClientService authorizedClientService;
 
-    @Autowired
     public GlobalControllerAdvice(DSConfiguration config, Session session, User user, Optional<OAuth.Account> account) {
         this.config = config;
         this.session = session;

@@ -12,7 +12,6 @@ import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.FormGroupFormToAssign;
 import com.docusign.rooms.model.FormGroupSummaryList;
 import com.docusign.rooms.model.FormSummary;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +35,6 @@ public class R009ControllerAssignFormToFormGroup extends AbstractRoomsController
 
     private FormGroupsApi formGroupsApi;
 
-    @Autowired
     public R009ControllerAssignFormToFormGroup(DSConfiguration config, Session session, User user) {
         super(config, "r009");
         this.session = session;

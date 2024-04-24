@@ -9,7 +9,6 @@ import com.docusign.controller.click.services.GetListClickwrapsService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +26,6 @@ public class C004ControllerGetListClickwraps extends AbstractClickController {
 
     private final User user;
 
-    @Autowired
     public C004ControllerGetListClickwraps(DSConfiguration config, Session session, User user) {
         super(config, "c004");
         this.session = session;

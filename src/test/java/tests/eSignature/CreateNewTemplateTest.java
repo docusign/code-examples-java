@@ -7,8 +7,8 @@ import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import tests.common.JWTLoginMethodTest;
 import tests.common.TestConfig;
@@ -59,8 +59,8 @@ public final class CreateNewTemplateTest {
                 TEMPLATE_NAME);
 
         // Assert
-        Assert.assertNotNull(envelopeTemplateResults);
-        Assert.assertTrue(Integer.parseInt(envelopeTemplateResults.getResultSetSize()) > 0);
+        Assertions.assertNotNull(envelopeTemplateResults);
+        Assertions.assertTrue(Integer.parseInt(envelopeTemplateResults.getResultSetSize()) > 0);
 
         EnvelopeTemplate template = envelopeTemplateResults.getEnvelopeTemplates().get(0);
         testConfig.setTemplateId(template.getTemplateId());
@@ -79,8 +79,8 @@ public final class CreateNewTemplateTest {
         );
 
         // Assert
-        Assert.assertNotNull(template);
-        Assert.assertNotNull(template.getTemplateId());
+        Assertions.assertNotNull(template);
+        Assertions.assertNotNull(template.getTemplateId());
 
         testConfig.setTemplateId(template.getTemplateId());
     }
@@ -94,8 +94,8 @@ public final class CreateNewTemplateTest {
                 TEMPLATE_NAME);
 
         // Assert
-        Assert.assertNotNull(envelopeTemplateResults);
-        Assert.assertTrue(Integer.parseInt(envelopeTemplateResults.getResultSetSize()) > 0);
+        Assertions.assertNotNull(envelopeTemplateResults);
+        Assertions.assertTrue(Integer.parseInt(envelopeTemplateResults.getResultSetSize()) > 0);
 
         EnvelopeTemplate template = envelopeTemplateResults.getEnvelopeTemplates().get(0);
         testConfig.setTemplateId(template.getTemplateId());
@@ -154,8 +154,8 @@ public final class CreateNewTemplateTest {
         EnvelopeTemplate envelopeTemplate = CreateTemplateService.makeTemplate(TEMPLATE_NAME);
 
         // Assert
-        Assert.assertNotNull(envelopeTemplate);
-        Assert.assertEquals(expectedEnvelopeTemplate, envelopeTemplate);
+        Assertions.assertNotNull(envelopeTemplate);
+        Assertions.assertEquals(expectedEnvelopeTemplate, envelopeTemplate);
     }
 
     @Test
@@ -184,8 +184,8 @@ public final class CreateNewTemplateTest {
         List list = CreateTemplateService.createList();
 
         // Assert
-        Assert.assertNotNull(list);
-        Assert.assertEquals(expectedList, list);
+        Assertions.assertNotNull(list);
+        Assertions.assertEquals(expectedList, list);
     }
 
     @Test
@@ -201,8 +201,8 @@ public final class CreateNewTemplateTest {
         ListItem listItem = CreateTemplateService.createListItem(color);
 
         // Assert
-        Assert.assertNotNull(listItem);
-        Assert.assertEquals(expectedListItem, listItem);
+        Assertions.assertNotNull(listItem);
+        Assertions.assertEquals(expectedListItem, listItem);
     }
 
     @Test
@@ -230,8 +230,8 @@ public final class CreateNewTemplateTest {
         RadioGroup radioGroup = CreateTemplateService.createRadioGroup();
 
         // Assert
-        Assert.assertNotNull(radioGroup);
-        Assert.assertEquals(expectedRadioGroup, radioGroup);
+        Assertions.assertNotNull(radioGroup);
+        Assertions.assertEquals(expectedRadioGroup, radioGroup);
     }
 
     @Test
@@ -252,8 +252,8 @@ public final class CreateNewTemplateTest {
         Radio radio = CreateTemplateService.createRadio(value, xPosition);
 
         // Assert
-        Assert.assertNotNull(radio);
-        Assert.assertEquals(expectedRadio, radio);
+        Assertions.assertNotNull(radio);
+        Assertions.assertEquals(expectedRadio, radio);
     }
 
     @Test
@@ -274,8 +274,8 @@ public final class CreateNewTemplateTest {
         Checkbox check = CreateTemplateService.createCheckbox(label, xPosition, yPosition);
 
         // Assert
-        Assert.assertNotNull(check);
-        Assert.assertEquals(expectedCheckBox, check);
+        Assertions.assertNotNull(check);
+        Assertions.assertEquals(expectedCheckBox, check);
     }
 
     @Test
@@ -305,8 +305,8 @@ public final class CreateNewTemplateTest {
         Text text = CreateTemplateService.createText(label, xPosition, yPosition);
 
         // Assert
-        Assert.assertNotNull(text);
-        Assert.assertEquals(expectedText, text);
+        Assertions.assertNotNull(text);
+        Assertions.assertEquals(expectedText, text);
     }
 
     @Test
@@ -325,7 +325,7 @@ public final class CreateNewTemplateTest {
         SignHere signHere = CreateTemplateService.createSignHere();
 
         // Assert
-        Assert.assertNotNull(signHere);
-        Assert.assertEquals(expectedSignHere, signHere);
+        Assertions.assertNotNull(signHere);
+        Assertions.assertEquals(expectedSignHere, signHere);
     }
 }

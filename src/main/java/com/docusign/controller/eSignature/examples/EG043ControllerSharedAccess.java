@@ -15,12 +15,11 @@ import com.docusign.esign.client.auth.OAuth;
 import com.docusign.esign.model.EnvelopesInformation;
 import com.docusign.esign.model.NewUsersSummary;
 import com.docusign.esign.model.UserInformation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -49,7 +48,6 @@ public class EG043ControllerSharedAccess extends AbstractEsignatureController {
 
     public static final int ENVELOPES_MOVED_TO_ACCOUNT = 1;
 
-    @Autowired
     public EG043ControllerSharedAccess(DSConfiguration config, Session session, User user) {
         super(config, EG_043, session, user);
     }
@@ -96,7 +94,7 @@ public class EG043ControllerSharedAccess extends AbstractEsignatureController {
         return DONE_EXAMPLE_PAGE;
     }
 
-    @RequestMapping(value = ACTIVATE_USER, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = ACTIVATE_USER, produces = MediaType.APPLICATION_JSON_VALUE)
     public String activateUser(ModelMap model) {
         String basePath = session.getBasePath();
         String accessToken = user.getAccessToken();
@@ -131,7 +129,7 @@ public class EG043ControllerSharedAccess extends AbstractEsignatureController {
         return DONE_EXAMPLE_PAGE;
     }
 
-    @RequestMapping(value = LIST_ENVELOPES, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = LIST_ENVELOPES, produces = MediaType.APPLICATION_JSON_VALUE)
     public String listEnvelopes(ModelMap model) throws ApiException {
         String basePath = session.getBasePath();
         String accessToken = user.getAccessToken();

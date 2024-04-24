@@ -14,7 +14,6 @@ import com.docusign.controller.admin.services.CreateActiveCLMESignUserService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +29,6 @@ import java.util.UUID;
 @RequestMapping("/a002")
 public class A002CreateActiveCLMESignUser extends AbstractAdminController {
 
-    @Autowired
     public A002CreateActiveCLMESignUser(DSConfiguration config, Session session, User user) {
         super(config, "a002", user, session);
     }

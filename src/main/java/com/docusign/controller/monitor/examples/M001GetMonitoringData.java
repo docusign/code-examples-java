@@ -7,7 +7,6 @@ import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import org.json.JSONArray;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +25,6 @@ public class M001GetMonitoringData extends AbstractMonitorController {
 
     private final User user;
 
-    @Autowired
     public M001GetMonitoringData(DSConfiguration config, Session session, User user) {
         super(config, "m001");
         this.session = session;

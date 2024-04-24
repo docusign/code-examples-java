@@ -15,7 +15,6 @@ import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.TemplateRole;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +42,6 @@ public class EG030ControllerApplyBrandToTemplate extends AbstractEsignatureContr
 
     private static final String MODEL_LIST_TEMPLATE = "listTemplates";
 
-    @Autowired
     public EG030ControllerApplyBrandToTemplate(DSConfiguration config, Session session, User user) {
         super(config, "eg030", session, user);
     }
