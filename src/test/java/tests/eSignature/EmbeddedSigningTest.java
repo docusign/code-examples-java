@@ -6,8 +6,8 @@ import com.docusign.core.model.ApiType;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import tests.common.JWTLoginMethodTest;
 import tests.common.TestConfig;
@@ -79,8 +79,8 @@ public final class EmbeddedSigningTest {
                 DOCUMENT_NAME);
 
         // Assert
-        Assert.assertNotNull(envelopeDefinition);
-        Assert.assertEquals(expectedEnvelopeDefinition, envelopeDefinition);
+        Assertions.assertNotNull(envelopeDefinition);
+        Assertions.assertEquals(expectedEnvelopeDefinition, envelopeDefinition);
     }
 
     @Test
@@ -108,8 +108,8 @@ public final class EmbeddedSigningTest {
                 RedirectUrl);
 
         // Assert
-        Assert.assertNotNull(viewRequest);
-        Assert.assertEquals(expectedViewRequest, viewRequest);
+        Assertions.assertNotNull(viewRequest);
+        Assertions.assertEquals(expectedViewRequest, viewRequest);
     }
 
     @Test
@@ -128,7 +128,7 @@ public final class EmbeddedSigningTest {
         String envelopeId = EmbeddedSigningService.createEnvelope(apiClient, testConfig.getAccountId(), envelope);
 
         // Assert
-        Assert.assertNotNull(envelopeId);
+        Assertions.assertNotNull(envelopeId);
     }
 
     @Test
@@ -161,6 +161,6 @@ public final class EmbeddedSigningTest {
         );
 
         // Assert
-        Assert.assertNotNull(viewUrl);
+        Assertions.assertNotNull(viewUrl);
     }
 }

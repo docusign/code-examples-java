@@ -7,7 +7,6 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

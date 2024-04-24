@@ -7,7 +7,6 @@ import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +24,6 @@ import java.io.IOException;
 @RequestMapping("/eg010")
 public class EG010ControllerSendBinaryDocs extends AbstractEsignatureController {
 
-    @Autowired
     public EG010ControllerSendBinaryDocs(DSConfiguration config, Session session, User user) {
         super(config, "eg010", session, user);
     }

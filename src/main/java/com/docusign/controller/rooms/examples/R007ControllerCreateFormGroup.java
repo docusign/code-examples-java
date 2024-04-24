@@ -9,7 +9,6 @@ import com.docusign.core.model.User;
 import com.docusign.rooms.api.FormGroupsApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.FormGroup;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ import java.io.IOException;
 @RequestMapping("/r007")
 public class R007ControllerCreateFormGroup extends AbstractRoomsController {
 
-    @Autowired
     public R007ControllerCreateFormGroup(DSConfiguration config, Session session, User user) {
         super(config, "r007");
         this.session = session;

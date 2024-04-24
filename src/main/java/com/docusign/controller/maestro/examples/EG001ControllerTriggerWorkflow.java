@@ -13,7 +13,6 @@ import com.docusign.maestro.client.ApiClient;
 import com.docusign.maestro.model.NewOrUpdatedWorkflowDefinitionResponse;
 import com.docusign.maestro.model.WorkflowDefinitionList;
 import com.docusign.maestro.model.WorkflowDefinitionMetadata;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +36,6 @@ public class EG001ControllerTriggerWorkflow extends AbstractMaestroController {
 
     public static final String WORKFLOW_NAME = "Example workflow - send invite to signer";
 
-    @Autowired
     public EG001ControllerTriggerWorkflow(DSConfiguration config, Session session, User user) {
         super(config, "mae001", session, user);
     }
