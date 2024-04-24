@@ -9,7 +9,6 @@ import com.docusign.core.model.User;
 import com.docusign.esign.client.ApiException;
 import com.docusign.maestro.client.ApiClient;
 import com.docusign.maestro.model.CancelResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +26,6 @@ public class EG002ControllerCancelWorkflow extends AbstractMaestroController {
 
     private static final String MODEL_INSTANCE_ID = "instanceId";
 
-    @Autowired
     public EG002ControllerCancelWorkflow(DSConfiguration config, Session session, User user) {
         super(config, "mae002", session, user);
     }

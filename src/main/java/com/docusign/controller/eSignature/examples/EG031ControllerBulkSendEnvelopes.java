@@ -10,7 +10,6 @@ import com.docusign.esign.api.BulkEnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.BulkSendBatchStatus;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +29,6 @@ public class EG031ControllerBulkSendEnvelopes extends AbstractEsignatureControll
 
     private static final long BULK_REQUEST_DELAY = 15L;
 
-    @Autowired
     public EG031ControllerBulkSendEnvelopes(DSConfiguration config, Session session, User user) {
         super(config, "eg031", session, user);
     }

@@ -9,7 +9,6 @@ import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.ViewUrl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +28,6 @@ import java.io.IOException;
 @RequestMapping("/eg011")
 public class EG011ControllerEmbeddedSending extends AbstractEsignatureController {
 
-    @Autowired
     public EG011ControllerEmbeddedSending(DSConfiguration config, Session session, User user) {
         super(config, "eg011", session, user);
     }

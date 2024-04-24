@@ -15,7 +15,6 @@ import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.model.GroupInformation;
 import com.docusign.esign.model.PermissionProfileInformation;
 import jakarta.ws.rs.core.HttpHeaders;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +38,6 @@ public class A001AddActiveUser extends AbstractAdminController {
 
     private static final String MODEL_LIST_GROUPS = "listGroups";
 
-    @Autowired
     public A001AddActiveUser(DSConfiguration config, Session session, User user) {
         super(config, "a001", user, session);
     }

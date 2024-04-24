@@ -13,7 +13,6 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.ErrorDetails;
 import com.docusign.esign.model.GroupInformation;
 import com.docusign.esign.model.PermissionProfileInformation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +34,6 @@ public class EG025ControllerPermissionSetUserGroups extends AbstractEsignatureCo
 
     private static final String MODEL_LIST_GROUPS = "listGroups";
 
-    @Autowired
     public EG025ControllerPermissionSetUserGroups(DSConfiguration config, Session session, User user) {
         super(config, "eg025", session, user);
     }

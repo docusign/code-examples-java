@@ -13,7 +13,6 @@ import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.RecipientViewRequest;
 import com.docusign.esign.model.ViewUrl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +32,6 @@ public class EG039ControllerInPersonSigning extends AbstractEsignatureController
 
     private static final int ANCHOR_OFFSET_X = 20;
 
-    @Autowired
     public EG039ControllerInPersonSigning(DSConfiguration config, Session session, User user) {
         super(config, "eg039", session, user);
     }

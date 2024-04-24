@@ -5,7 +5,6 @@ import com.docusign.common.WorkArguments;
 import com.docusign.controller.connect.services.ValidateUsingHmacService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.esign.client.ApiException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +18,6 @@ import java.security.NoSuchAlgorithmException;
 @RequestMapping("/con001")
 public class EG001ControllerValidateUsingHMAC extends AbstractConnectController {
 
-    @Autowired
     public EG001ControllerValidateUsingHMAC(DSConfiguration config) {
         super(config, "con001");
     }

@@ -10,7 +10,6 @@ import com.docusign.esign.api.TemplatesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +26,6 @@ public class EG017ControllerSetTemplateTabValues extends AbstractEsignatureContr
 
     private static final String SIGNER_CLIENT_ID = "1000";
 
-    @Autowired
     public EG017ControllerSetTemplateTabValues(DSConfiguration config, Session session, User user) {
         super(config, "eg017", session, user);
     }

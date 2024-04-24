@@ -9,7 +9,6 @@ import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +25,6 @@ import java.util.UUID;
 public class A003aCheckRequestStatus extends AbstractAdminController {
     private static final String MODEL_EXPORT_OK = "exportOk";
 
-    @Autowired
     public A003aCheckRequestStatus(DSConfiguration config, Session session, User user) {
         super(config, "a003a", user, session);
     }

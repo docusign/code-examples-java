@@ -6,14 +6,13 @@ import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.PermissionProfile;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import tests.common.JWTLoginMethodTest;
 import tests.common.TestConfig;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
@@ -51,7 +50,7 @@ public final class PermissionCreateTest {
                 permissionName);
 
         // Assert
-        Assert.assertNotNull(permissionProfile);
-        Assert.assertEquals(permissionName, permissionProfile.getPermissionProfileName());
+        Assertions.assertNotNull(permissionProfile);
+        Assertions.assertEquals(permissionName, permissionProfile.getPermissionProfileName());
     }
 }

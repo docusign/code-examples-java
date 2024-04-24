@@ -8,7 +8,6 @@ import com.docusign.controller.admin.services.RetrieveDocuSignProfileByUserId;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +22,6 @@ import java.util.UUID;
 @RequestMapping("/a007")
 public class A007RetrieveDocuSignProfileByUserID extends AbstractAdminController {
 
-    @Autowired
     public A007RetrieveDocuSignProfileByUserID(DSConfiguration config, User user, Session session) {
         super(config, "a007", user, session);
     }
