@@ -13,7 +13,6 @@ import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.RoleSummary;
 import com.docusign.rooms.model.Room;
 import com.docusign.rooms.model.RoomTemplatesSummaryList;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +29,6 @@ public class R002ControllerCreateRoomWithTemplate extends AbstractRoomsControlle
 
     private static final String MODEL_TEMPLATES_LIST = "templateList";
 
-    @Autowired
     public R002ControllerCreateRoomWithTemplate(DSConfiguration config, Session session, User user) {
         super(config, "r002");
         this.session = session;

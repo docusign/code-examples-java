@@ -17,7 +17,6 @@ import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +34,6 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EG023ControllerIdvAuthentication.class);
 
-    @Autowired
     public EG020ControllerPhoneAuthentication(DSConfiguration config, Session session, User user) {
         super(config, "eg020", session, user);
     }

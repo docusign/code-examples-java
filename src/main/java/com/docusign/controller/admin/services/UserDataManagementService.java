@@ -12,7 +12,6 @@ import com.docusign.admin.model.MembershipDataRedactionRequest;
 import com.docusign.admin.model.IndividualUserDataRedactionRequest;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 public class UserDataManagementService {

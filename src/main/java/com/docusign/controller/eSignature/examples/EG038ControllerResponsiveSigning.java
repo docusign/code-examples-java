@@ -15,7 +15,6 @@ import com.docusign.esign.model.RecipientViewRequest;
 import com.docusign.esign.model.ViewUrl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +33,6 @@ public class EG038ControllerResponsiveSigning extends AbstractEsignatureControll
 
     private static final String FEATURE_WAS_DISABLED = "Please enable this feature in the developer account and try again.";
 
-    @Autowired
     public EG038ControllerResponsiveSigning(DSConfiguration config, Session session, User user) {
         super(config, "eg038", session, user);
     }

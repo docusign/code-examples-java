@@ -13,7 +13,6 @@ import com.docusign.rooms.model.ExternalFormFillSession;
 import com.docusign.rooms.model.ExternalFormFillSessionForCreate;
 import com.docusign.rooms.model.RoomDocumentList;
 import com.docusign.rooms.model.RoomSummaryList;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +31,6 @@ public class R006ControllerCreateExternalFormFillSession extends AbstractRoomsCo
 
     private static final String MODEL_DOCUMENTS_LIST = "documentsList";
 
-    @Autowired
     public R006ControllerCreateExternalFormFillSession(DSConfiguration config, Session session, User user) {
         super(config, "r006");
         this.session = session;

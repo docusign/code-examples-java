@@ -14,12 +14,11 @@ import com.docusign.controller.admin.services.UpdateUserProductPermissionProfile
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -39,7 +38,6 @@ public class A008UpdateUserProductPermissionProfile extends AbstractAdminControl
 
     private ProductPermissionProfilesResponse productPermissionProfiles;
 
-    @Autowired
     public A008UpdateUserProductPermissionProfile(DSConfiguration config, Session session, User user) {
         super(config, "a008", user, session);
     }
@@ -88,9 +86,9 @@ public class A008UpdateUserProductPermissionProfile extends AbstractAdminControl
         }
     }
 
-    @RequestMapping(value = "/getPermissionProfiles", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getPermissionProfiles", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    List<PermissionProfileResponse21> getPermissionProfiles(@RequestParam(value = "productId") UUID productId) {
+    List<PermissionProfileResponse21> getPermissionProfiles(@RequestParam UUID productId) {
         List<PermissionProfileResponse21> permissionProfiles = null;
         for (ProductPermissionProfileResponse profileResponse : productPermissionProfiles.getProductPermissionProfiles()) {
             if (profileResponse.getProductId().equals(productId)) {
