@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Objects;
-import java.util.Arrays;
 
 /**
  * Abstract base class for all eSignature controllers.

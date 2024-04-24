@@ -5,7 +5,6 @@ import java.net.URI;
 import java.nio.file.FileSystemAlreadyExistsException;
 import java.nio.file.FileSystems;
 import java.util.Collections;
-import java.util.Properties;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
