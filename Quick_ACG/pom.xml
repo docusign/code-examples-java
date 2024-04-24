@@ -163,7 +163,6 @@
                                     <directory>../src/main/java/com/docusign</directory>
                                     <includes>
                                         <include>JsonPropertySourceLoader.java</include>
-                                        <include>OSDetector.java</include>
                                         <include>EG001ControllerEmbeddedSigning.java</include>
                                     </includes>
                                 </resource>
