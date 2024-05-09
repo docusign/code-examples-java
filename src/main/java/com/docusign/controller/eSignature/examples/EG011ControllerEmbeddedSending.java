@@ -58,13 +58,11 @@ public class EG011ControllerEmbeddedSending extends AbstractEsignatureController
                 envelopesApi,
                 accountId,
                 envelopeId,
-                config.getDsReturnUrl());
+                config.getDsReturnUrl(),
+                args.getStartingView());
 
         // Switch to Recipient and Documents view if requested by the user
         String url = viewUrl.getUrl();
-        if ("recipient".equalsIgnoreCase(args.getStartingView())) {
-            url = url.replace("send=1", "send=0");
-        }
 
         return new RedirectView(url);
     }
