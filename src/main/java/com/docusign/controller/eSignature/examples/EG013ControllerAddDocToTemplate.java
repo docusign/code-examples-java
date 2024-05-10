@@ -9,7 +9,6 @@ import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.ViewUrl;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +30,6 @@ public class EG013ControllerAddDocToTemplate extends AbstractEsignatureControlle
 
     private final String SIGNER_CLIENT_ID = "1000";
 
-    @Autowired
     public EG013ControllerAddDocToTemplate(DSConfiguration config, Session session, User user) {
         super(config, "eg013", session, user);
     }

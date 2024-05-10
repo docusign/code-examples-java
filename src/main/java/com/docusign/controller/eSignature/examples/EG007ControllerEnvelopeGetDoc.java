@@ -11,7 +11,6 @@ import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -40,7 +39,6 @@ public class EG007ControllerEnvelopeGetDoc extends AbstractEsignatureController 
 
     private static final String ZIP_EXTENSION = "zip";
 
-    @Autowired
     public EG007ControllerEnvelopeGetDoc(DSConfiguration config, Session session, User user) {
         super(config, "eg007", session, user);
     }

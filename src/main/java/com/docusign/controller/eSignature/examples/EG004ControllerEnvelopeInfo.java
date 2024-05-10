@@ -10,7 +10,6 @@ import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.Envelope;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +30,6 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/eg004")
 public class EG004ControllerEnvelopeInfo extends AbstractEsignatureController {
 
-    @Autowired
     public EG004ControllerEnvelopeInfo(DSConfiguration config, Session session, User user) {
         super(config, "eg004", session, user);
     }

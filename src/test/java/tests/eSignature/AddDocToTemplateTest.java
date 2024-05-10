@@ -9,8 +9,8 @@ import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import tests.common.JWTLoginMethodTest;
 import tests.common.TestConfig;
@@ -87,7 +87,7 @@ public final class AddDocToTemplateTest {
         );
 
         // Assert
-        Assert.assertNotNull(embeddedEnvelope);
+        Assertions.assertNotNull(embeddedEnvelope);
     }
 
     @Test
@@ -114,8 +114,8 @@ public final class AddDocToTemplateTest {
         );
 
         // Assert
-        Assert.assertNotNull(recipientViewRequest);
-        Assert.assertEquals(expectedViewRequest, recipientViewRequest);
+        Assertions.assertNotNull(recipientViewRequest);
+        Assertions.assertEquals(expectedViewRequest, recipientViewRequest);
     }
 
     @Test
@@ -199,8 +199,8 @@ public final class AddDocToTemplateTest {
         );
 
         // Assert
-        Assert.assertNotNull(envelopeDefinition);
-        Assert.assertEquals(expectedEnvelopeDefinition, envelopeDefinition);
+        Assertions.assertNotNull(envelopeDefinition);
+        Assertions.assertEquals(expectedEnvelopeDefinition, envelopeDefinition);
     }
 
     @Test
@@ -222,7 +222,7 @@ public final class AddDocToTemplateTest {
         );
 
         // Assert
-        Assert.assertNotNull(signer);
-        Assert.assertEquals(expectedSigner, signer);
+        Assertions.assertNotNull(signer);
+        Assertions.assertEquals(expectedSigner, signer);
     }
 }

@@ -7,8 +7,8 @@ import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import tests.common.JWTLoginMethodTest;
 import tests.common.TestConfig;
@@ -150,8 +150,8 @@ public final class SetTabValuesTest {
                 testConfig.getSignerName());
 
         // Assert
-        Assert.assertNotNull(envelopeDefinition);
-        Assert.assertEquals(expectedEnvelopeDefinition, envelopeDefinition);
+        Assertions.assertNotNull(envelopeDefinition);
+        Assertions.assertEquals(expectedEnvelopeDefinition, envelopeDefinition);
     }
 
     @Test
@@ -175,8 +175,8 @@ public final class SetTabValuesTest {
                 RedirectUrl);
 
         // Assert
-        Assert.assertNotNull(viewRequest);
-        Assert.assertEquals(expectedViewRequest, viewRequest);
+        Assertions.assertNotNull(viewRequest);
+        Assertions.assertEquals(expectedViewRequest, viewRequest);
     }
 
     @Test
@@ -203,8 +203,8 @@ public final class SetTabValuesTest {
                 RedirectUrl);
 
         // Assert
-        Assert.assertNotNull(viewRequest);
-        Assert.assertEquals(expectedViewRequest, viewRequest);
+        Assertions.assertNotNull(viewRequest);
+        Assertions.assertEquals(expectedViewRequest, viewRequest);
     }
 
     @Test
@@ -221,8 +221,8 @@ public final class SetTabValuesTest {
                 envelope);
 
         // Assert
-        Assert.assertNotNull(envelopeSummary);
-        Assert.assertNotNull(envelopeSummary.getEnvelopeId());
+        Assertions.assertNotNull(envelopeSummary);
+        Assertions.assertNotNull(envelopeSummary.getEnvelopeId());
     }
 
     @Test
@@ -251,6 +251,6 @@ public final class SetTabValuesTest {
                 viewRequest);
 
         // Assert
-        Assert.assertNotNull(viewUrl);
+        Assertions.assertNotNull(viewUrl);
     }
 }

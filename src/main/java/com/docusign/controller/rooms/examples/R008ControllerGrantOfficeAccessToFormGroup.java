@@ -11,7 +11,6 @@ import com.docusign.rooms.api.OfficesApi;
 import com.docusign.rooms.client.ApiException;
 import com.docusign.rooms.model.FormGroupSummaryList;
 import com.docusign.rooms.model.OfficeSummaryList;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +33,6 @@ public class R008ControllerGrantOfficeAccessToFormGroup extends AbstractRoomsCon
 
     private FormGroupsApi formGroupsApi;
 
-    @Autowired
     public R008ControllerGrantOfficeAccessToFormGroup(DSConfiguration config, Session session, User user) {
         super(config, "r008");
         this.session = session;

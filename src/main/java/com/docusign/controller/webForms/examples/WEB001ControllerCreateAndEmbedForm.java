@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +43,6 @@ public class WEB001ControllerCreateAndEmbedForm extends AbstractWebFormsControll
 
     public static final String INTEGRATION_KEY = "integrationKey";
 
-    @Autowired
     public WEB001ControllerCreateAndEmbedForm(DSConfiguration config, Session session, User user) {
         super(config, "web001", session, user);
     }

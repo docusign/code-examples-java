@@ -9,7 +9,6 @@ import com.docusign.controller.admin.services.BulkExportUserDataService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +26,6 @@ public class A003BulkExportUserData extends AbstractAdminController {
 
     private static final int BUFFER_SIZE = 4096;
 
-    @Autowired
     public A003BulkExportUserData(DSConfiguration config, Session session, User user) {
         super(config, "a003", user, session);
     }

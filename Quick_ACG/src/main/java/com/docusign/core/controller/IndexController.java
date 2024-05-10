@@ -49,7 +49,6 @@ public class IndexController {
     @Autowired
     private OAuth2AuthorizedClientService authorizedClientService;
 
-    @Autowired
     public IndexController(DSConfiguration config, Session session, User user, Optional<OAuth.Account> account) {
         this.config = config;
         this.session = session;
@@ -73,7 +72,7 @@ public class IndexController {
     @GetMapping(path = "/ds-return")
     public String returnController(@RequestParam(value = ATTR_STATE, required = false) String state,
             @RequestParam(value = ATTR_EVENT, required = false) String event,
-            @RequestParam(value = "envelopeId", required = false) String envelopeId, ModelMap model, HttpServletResponse response) throws IOException {
+            @RequestParam(required = false) String envelopeId, ModelMap model, HttpServletResponse response) throws IOException {
         String site = "/eg001";
         response.setStatus(response.SC_MOVED_TEMPORARILY);
         response.setHeader("Location", site);
