@@ -10,7 +10,6 @@ import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.RecipientViewRequest;
 import com.docusign.esign.model.ViewUrl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +38,6 @@ public class EG001ControllerEmbeddedSigning extends AbstractEsignatureController
 
     private static final String SIGNER_CLIENT_ID = "1000";
 
-    @Autowired
     public EG001ControllerEmbeddedSigning(DSConfiguration config, Session session, User user) {
         super(config, Boolean.valueOf(config.getQuickACG()) ? "quickEmbeddedSigning" : "eg001", session, user);
     }

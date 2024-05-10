@@ -12,7 +12,6 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.EnvelopeDocument;
 import com.docusign.esign.model.EnvelopeDocumentsResult;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +32,6 @@ import java.util.List;
 @RequestMapping("/eg006")
 public class EG006ControllerEnvelopeDocs extends AbstractEsignatureController {
 
-    @Autowired
     public EG006ControllerEnvelopeDocs(DSConfiguration config, Session session, User user) {
         super(config, "eg006", session, user);
     }

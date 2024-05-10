@@ -6,8 +6,8 @@ import com.docusign.click.client.ApiException;
 import com.docusign.click.model.ClickwrapVersionSummaryResponse;
 import com.docusign.controller.click.services.ActivateClickwrapService;
 import com.docusign.core.model.ApiType;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import tests.common.JWTLoginMethodTest;
 import tests.common.TestConfig;
@@ -50,7 +50,7 @@ public final class ActivateClickwrapTest {
         );
 
         // Assert
-        Assert.assertNotNull(clickwrapVersionSummaryResponse);
-        Assert.assertEquals(statusActive, clickwrapVersionSummaryResponse.getStatus());
+        Assertions.assertNotNull(clickwrapVersionSummaryResponse);
+        Assertions.assertEquals(statusActive, clickwrapVersionSummaryResponse.getStatus());
     }
 }

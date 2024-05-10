@@ -8,8 +8,8 @@ import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import tests.common.JWTLoginMethodTest;
 import tests.common.TestConfig;
@@ -60,8 +60,8 @@ public final class ApplyBrandToEnvelopeTest {
         testConfig.setBrand(brand.getBrands().stream().findFirst().get());
 
         // Assert
-        Assert.assertNotNull(brand);
-        Assert.assertNotNull(brand.getBrands());
+        Assertions.assertNotNull(brand);
+        Assertions.assertNotNull(brand.getBrands());
     }
 
     @Test
@@ -96,8 +96,8 @@ public final class ApplyBrandToEnvelopeTest {
                 testConfig.getBrand().getBrandId());
 
         // Assert
-        Assert.assertNotNull(envelopeDefinition);
-        Assert.assertEquals(expectedEnvelopeDefinition, envelopeDefinition);
+        Assertions.assertNotNull(envelopeDefinition);
+        Assertions.assertEquals(expectedEnvelopeDefinition, envelopeDefinition);
     }
 
     @Test
@@ -115,6 +115,6 @@ public final class ApplyBrandToEnvelopeTest {
                 envelopeDefinition);
 
         // Assert
-        Assert.assertNotNull(envelopeSummary);
+        Assertions.assertNotNull(envelopeSummary);
     }
 }

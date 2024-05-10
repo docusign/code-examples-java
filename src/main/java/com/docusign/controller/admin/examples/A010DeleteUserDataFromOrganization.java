@@ -9,7 +9,6 @@ import com.docusign.controller.admin.services.UserDataManagementService;
 import com.docusign.core.model.DoneExample;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ import java.util.UUID;
 @RequestMapping("/a010")
 public class A010DeleteUserDataFromOrganization extends AbstractAdminController {
 
-    @Autowired
     public A010DeleteUserDataFromOrganization(DSConfiguration config, User user, Session session) {
         super(config, "a010", user, session);
     }

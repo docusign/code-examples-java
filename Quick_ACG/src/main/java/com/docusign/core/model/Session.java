@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.UUID;
 
 @Component
