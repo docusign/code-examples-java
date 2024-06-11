@@ -64,7 +64,8 @@ public final class TriggerWorkflowService {
             String signerName,
             String ccEmail,
             String ccName,
-            String instanceName) throws ApiException, URISyntaxException
+            String instanceName,
+            String worlflowId) throws ApiException, URISyntaxException
     {
         var workflowTriggerApi = new WorkflowTriggerApi(apiClient);
 
@@ -91,7 +92,7 @@ public final class TriggerWorkflowService {
         //ds-snippet-end:Maestro1Step4
 
         //ds-snippet-start:Maestro1Step5
-        return workflowTriggerApi.triggerWorkflow(accountId, payload, options);
+        return workflowTriggerApi.triggerWorkflow(accountId, worlflowId, payload, options);
         //ds-snippet-end:Maestro1Step5
     }
 
