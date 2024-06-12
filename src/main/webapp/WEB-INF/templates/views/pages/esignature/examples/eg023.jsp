@@ -31,8 +31,7 @@
                name="signerEmail"
                aria-describedby="emailHelp"
                placeholder="${example.getForms().get(formNumber).getInputs().get(signerEmailInputNumber).getInputPlaceholder()}"
-               required
-               value="${locals.dsConfig.signerEmail}">
+               required>
 
         <small id="emailHelp" class="form-text text-muted">
             ${launcherTexts.getHelpingTexts().getEmailWontBeShared()}
@@ -48,7 +47,6 @@
                id="signerName"
                placeholder="${example.getForms().get(formNumber).getInputs().get(signerNameInputNumber).getInputPlaceholder()}"
                name="signerName"
-               value="${locals.dsConfig.signerName}"
                required>
     </div>
     <input type="hidden" name="_csrf" value="${csrfToken}">
