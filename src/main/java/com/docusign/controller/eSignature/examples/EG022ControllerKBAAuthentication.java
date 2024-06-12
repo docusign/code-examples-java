@@ -34,7 +34,7 @@ public class EG022ControllerKBAAuthentication extends AbstractEsignatureControll
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws ApiException, IOException {
         if (args.getSignerEmail().equals(config.getSignerEmail())) {
-                throw new ApiException(config.getCodeExamplesText().SupportingTexts.RecipientShouldDifferFromSender);
+                throw new ApiException(config.getCodeExamplesText().SupportingTexts.IdenticalEmailsNotAllowedErrorMessage);
         }
 
         // Step 1: Construct your API headers

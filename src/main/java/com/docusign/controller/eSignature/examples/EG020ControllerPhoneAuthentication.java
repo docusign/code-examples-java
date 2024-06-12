@@ -51,7 +51,7 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response)
             throws ApiException, IOException {
         if (args.getSignerEmail().equals(config.getSignerEmail())) {
-            throw new ApiException(config.getCodeExamplesText().SupportingTexts.RecipientShouldDifferFromSender);
+            throw new ApiException(config.getCodeExamplesText().SupportingTexts.IdenticalEmailsNotAllowedErrorMessage);
         }
 
         String accountId = session.getAccountId();
