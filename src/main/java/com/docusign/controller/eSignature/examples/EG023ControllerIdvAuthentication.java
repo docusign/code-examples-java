@@ -35,6 +35,10 @@ public class EG023ControllerIdvAuthentication extends AbstractEsignatureControll
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws ApiException, IOException {
+        if (args.getSignerEmail().equals(config.getSignerEmail())) {
+            throw new ApiException(config.getCodeExamplesText().SupportingTexts.RecipientShouldDifferFromSender);
+        }
+
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
         String workflowId = IdvAuthenticationService.retrieveWorkflowId(apiClient, session.getAccountId());

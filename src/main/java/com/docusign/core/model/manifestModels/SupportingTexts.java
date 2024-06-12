@@ -34,6 +34,8 @@ public class SupportingTexts {
 
     public String CFRError;
 
+    public String RecipientShouldDifferFromSender;
+
     public LoginPage LoginPage;
 
     public SelectAPIPage SelectAPIPage;
