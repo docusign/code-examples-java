@@ -71,13 +71,5 @@
 
     <p id="download-continue" class="feedback"><a href="/">${launcherTexts.getContinueButton()}</a></p>
 
-    <c:choose>
-        <c:when test="${locals.user == null}">
-            <div class="container-full-bg">
-            <section id="content" style="margin:0 90px 0 90px; padding:0 15px 0 15px;">
-        </c:when>
-        <c:otherwise>
-            <div class="container">
-            <section id="content">
-            </c:otherwise>
-    </c:choose>
+    <div class="container-full-bg">
+    <section id="content">
