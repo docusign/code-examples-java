@@ -1,10 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../../partials/head.jsp"/>
 
-<c:if test="${locals.user == null}">
-  <!-- IF not signed in -->
-  <div>
   <div class="jumbotron jumbotron-fluid"> <table>
+  </br>
     <tbody>
     <tr>
     <td>
@@ -12,13 +10,11 @@
     <p class="Xlead">${launcherTexts.getHomePageText()}</p>
     </td>
     <td>
-        <img src="/assets/banner-code.png" />
     </td>
   </tr>
   </tbody>
   </table>
 </div>
-</c:if>
 
 
 <div class="container" style="margin-top: 40px" id="index-page">
