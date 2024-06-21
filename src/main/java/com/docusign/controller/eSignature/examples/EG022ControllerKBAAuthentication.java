@@ -33,6 +33,10 @@ public class EG022ControllerKBAAuthentication extends AbstractEsignatureControll
     // ***DS.snippet.0.start
     protected Object doWork(WorkArguments args, ModelMap model,
                             HttpServletResponse response) throws ApiException, IOException {
+        if (args.getSignerEmail().equals(config.getSignerEmail())) {
+                throw new ApiException(config.getCodeExamplesText().SupportingTexts.IdenticalEmailsNotAllowedErrorMessage);
+        }
+
         // Step 1: Construct your API headers
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
