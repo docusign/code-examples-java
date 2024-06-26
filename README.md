@@ -1,7 +1,7 @@
 # Java Launcher Code Examples
 
 >
->### PLEASE! Share your feedback in a [two questions survey](https://docs.google.com/forms/d/e/1FAIpQLScPa74hwhJwi7XWDDj4-XZVOQTF9jJWgbIFEpulXokCqYWT4A/viewform?usp=pp_url&entry.680551577=Java).
+>### PLEASE! Share your feedback in a [two-question survey](https://docs.google.com/forms/d/e/1FAIpQLScPa74hwhJwi7XWDDj4-XZVOQTF9jJWgbIFEpulXokCqYWT4A/viewform?usp=pp_url&entry.680551577=Java).
 >
 >
 ### GitHub repo: [code-examples-java](./README.md)
