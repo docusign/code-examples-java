@@ -11,7 +11,7 @@
   "DS_MONITOR_BASE_PATH": "https://lens-d.docusign.net",
   "DS_ADMIN_BASE_PATH": "https://api-d.docusign.net",
   "DS_WEBFORMS_BASE_PATH": "https://apps-d.docusign.com/api/webforms/v1.1",
-  "DS_MAESTRO_BASE_PATH": "https://demo.services.docusign.net/",
+  "DS_MAESTRO_BASE_PATH": "https://apps-d.docusign.com/api/maestro",
 
   "Gateway_Name": "{DS_PAYMENT_GATEWAY_NAME}",
   "Gateway_Account_Id": "{GATEWAY_ACCOUNT_ID}",
