@@ -134,7 +134,8 @@ public class EG001ControllerTriggerWorkflow extends AbstractMaestroController {
                 args.getSignerName(),
                 args.getCcEmail(),
                 args.getCcName(),
-                args.getInstanceName());
+                args.getInstanceName(),
+                session.getWorkflowId());
 
         session.setInstanceId(result.getInstanceId());
 
