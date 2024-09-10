@@ -15,6 +15,7 @@ import java.util.UUID;
 public class CreateAccountService {
 
     private static final String DEFAULT_ACCOUNT_NAME = "CreatedThroughAPI";
+
     private static final String DEFAULT_COUNTRY_CODE = "US";
 
     public static OrganizationSubscriptionResponse getFirstPlanItem(
