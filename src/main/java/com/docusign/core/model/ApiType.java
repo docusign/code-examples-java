@@ -3,14 +3,20 @@ package com.docusign.core.model;
 import java.util.Arrays;
 
 public enum ApiType {
-    ESIGNATURE("eSignature API", new String[]{"signature"}, "eg"),
-    ROOMS("Rooms API", new String[]{"signature", "dtr.rooms.read", "dtr.rooms.write", "dtr.documents.read", "dtr.documents.write", "dtr.profile.read", "dtr.profile.write", "dtr.company.read", "dtr.company.write", "room_forms"}, "r"),
+    ESIGNATURE("eSignature API", new String[] { "signature" }, "eg"),
+    ROOMS("Rooms API", new String[] { "signature", "dtr.rooms.read", "dtr.rooms.write", "dtr.documents.read",
+            "dtr.documents.write", "dtr.profile.read", "dtr.profile.write", "dtr.company.read",
+            "dtr.company.write", "room_forms" }, "r"),
     CONNECT("Connect", new String[] {}, "con"),
-    CLICK("Click API", new String[] {"click.manage", "click.send"}, "c"),
+    CLICK("Click API", new String[] { "click.manage", "click.send" }, "c"),
     MAESTRO("Maestro API", new String[] { "signature", "aow_manage" }, "mae"),
-    MONITOR("Monitor API", new String[] {"signature", "impersonation"}, "m"),
-    ADMIN("Admin API",  new String[] {"user_write", "signature", "impersonation", "group_read", "organization_read", "permission_read", "user_read", "account_read", "domain_read", "identity_provider_read", "user_data_redact", "asset_group_account_read", "asset_group_account_clone_write", "asset_group_account_clone_read"}, "a"),
-    WEBFORMS("WebForms API",  new String[] {"signature", "webforms_read", "webforms_instance_read", "webforms_instance_write"}, "web");
+    MONITOR("Monitor API", new String[] { "signature", "impersonation" }, "m"),
+    ADMIN("Admin API", new String[] { "user_write", "signature", "impersonation", "group_read", "organization_read",
+            "permission_read", "user_read", "account_read", "domain_read", "identity_provider_read", "user_data_redact",
+            "asset_group_account_read", "asset_group_account_clone_write", "asset_group_account_clone_read",
+            "organization_sub_account_read", "organization_sub_account_write" }, "a"),
+    WEBFORMS("WebForms API",
+            new String[] { "signature", "webforms_read", "webforms_instance_read", "webforms_instance_write" }, "web");
 
     final String value;
 
@@ -26,9 +32,9 @@ public enum ApiType {
 
     public static ApiType giveTypeByName(String exampleName) {
         return Arrays.stream(ApiType.values())
-            .filter(x -> exampleName.contains(x.getCodeName()))
-            .findFirst()
-            .get();
+                .filter(x -> exampleName.contains(x.getCodeName()))
+                .findFirst()
+                .get();
     }
 
     public String[] getScopes() {
