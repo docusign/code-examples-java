@@ -252,9 +252,9 @@ public abstract class AbstractAdminController extends AbstractController {
    * @return an instance of the {@link ProvisionAssetGroupApi}
    */
   protected ProvisionAssetGroupApi createProvisionAssetGroupApi(String accessToken, String basePath) {
-    //ds-snippet-start:Admin12Step2
+    //ds-snippet-start:AdminJavaAccountStep2
     ApiClient apiClient = createApiClient(accessToken, basePath);
     return new ProvisionAssetGroupApi(apiClient);
-    //ds-snippet-end:Admin12Step2
+    //ds-snippet-end:AdminJavaAccountStep2
   }
 }
