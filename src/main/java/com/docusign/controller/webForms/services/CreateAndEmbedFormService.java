@@ -103,8 +103,8 @@ public final class CreateAndEmbedFormService {
                     .tabLabel("Yes")
                     .anchorString("/SMS/")
                     .anchorUnits("pixels")
-                    .anchorXOffset("20")
-                    .anchorYOffset("10")
+                    .anchorXOffset("0")
+                    .anchorYOffset("0")
             ))
             .signHereTabs(List.of(
                 new SignHere()
@@ -121,29 +121,29 @@ public final class CreateAndEmbedFormService {
                     .tabLabel("FullName")
                     .anchorString("/FullName/")
                     .anchorUnits("pixels")
-                    .anchorXOffset("20")
-                    .anchorYOffset("10"),
+                    .anchorXOffset("0")
+                    .anchorYOffset("0"),
                 new Text()
                     .documentId("1")
                     .tabLabel("PhoneNumber")
                     .anchorString("/PhoneNumber/")
                     .anchorUnits("pixels")
-                    .anchorXOffset("20")
-                    .anchorYOffset("10"),
+                    .anchorXOffset("0")
+                    .anchorYOffset("0"),
                 new Text()
                     .documentId("1")
                     .tabLabel("Company")
                     .anchorString("/Company/")
                     .anchorUnits("pixels")
-                    .anchorXOffset("20")
-                    .anchorYOffset("10"),
+                    .anchorXOffset("0")
+                    .anchorYOffset("0"),
                 new Text()
                     .documentId("1")
                     .tabLabel("JobTitle")
                     .anchorString("/Title/")
                     .anchorUnits("pixels")
-                    .anchorXOffset("20")
-                    .anchorYOffset("10")
+                    .anchorXOffset("0")
+                    .anchorYOffset("0")
             ))
             .dateSignedTabs(List.of(
                 new DateSigned()
@@ -151,8 +151,8 @@ public final class CreateAndEmbedFormService {
                     .tabLabel("DateSigned")
                     .anchorString("/Date/")
                     .anchorUnits("pixels")
-                    .anchorXOffset("20")
-                    .anchorYOffset("10")
+                    .anchorXOffset("0")
+                    .anchorYOffset("0")
             ))
         );
 
