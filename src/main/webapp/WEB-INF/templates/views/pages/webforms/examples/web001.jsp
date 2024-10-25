@@ -25,7 +25,7 @@
     <c:when test="${templateId != null}">
         <c:forEach var="page" items="${example.getAdditionalPage()}">
             <c:if test="${page.getName() == 'create_web_form'}">
-                <p>${page.getResultsPageText()}</p>
+                <p>${page.getResultsPageText().replaceFirst("\\{0}", "src/main/resources")}</p>
             </c:if>
         </c:forEach>
         <form class="eg" action="" method="post" data-busy="form">
