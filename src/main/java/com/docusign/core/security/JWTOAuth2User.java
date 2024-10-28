@@ -1,4 +1,4 @@
-package com.docusign.core.security.jwt;
+package com.docusign.core.security;
 
 import com.docusign.esign.client.auth.OAuth;
 import com.fasterxml.jackson.databind.ObjectMapper;
