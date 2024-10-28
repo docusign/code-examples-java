@@ -30,9 +30,9 @@
         <rooms.version>1.4.3</rooms.version>
         <click.version>1.5.0</click.version>
         <monitor.version>1.4.0</monitor.version>
-        <admin.version>2.0.0-RC1</admin.version>
-        <webforms.version>1.0.2-RC12</webforms.version>
-        <maestro.version>2.0.0-RC1</maestro.version>
+        <admin.version>2.0.0-RC2</admin.version>
+        <webforms.version>2.0.0-RC1</webforms.version>
+        <maestro.version>2.0.0</maestro.version>
         <swagger-core-version>2.2.22</swagger-core-version>
         <jackson-version>2.17.2</jackson-version>
         <jersey2.version>3.1.8</jersey2.version>

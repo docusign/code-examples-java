@@ -24,27 +24,27 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(authorize -> {
-                    try {
-                        authorize
-                                .antMatchers("/", "/error**", "/assets/**", "/ds/mustAuthenticate**",
-                                        "/ds/authenticate**", "/ds/selectApi**", "/con001", "/pkce")
-                                .permitAll()
-                                .anyRequest().authenticated()
-                                .and()
-                                .exceptionHandling()
-                                .authenticationEntryPoint(
-                                        new LoginUrlAuthenticationEntryPoint("/ds/mustAuthenticate"));
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .requestCache().requestCache(requestCache()).and()
-                .oauth2Login(Customizer.withDefaults())
-                .oauth2Client(Customizer.withDefaults())
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/"))
-                .csrf().disable();
+            .authorizeHttpRequests(authorize -> {
+                try {
+                    authorize
+                        .antMatchers("/", "/error**", "/assets/**", "/ds/mustAuthenticate**",
+                            "/ds/authenticate**", "/ds/selectApi**", "/con001", "/pkce")
+                        .permitAll()
+                        .anyRequest().authenticated()
+                        .and()
+                        .exceptionHandling()
+                        .authenticationEntryPoint(
+                            new LoginUrlAuthenticationEntryPoint("/ds/mustAuthenticate"));
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            })
+            .requestCache().requestCache(requestCache()).and()
+            .oauth2Login(Customizer.withDefaults())
+            .oauth2Client(Customizer.withDefaults())
+            .logout(logout -> logout
+                .logoutSuccessUrl("/"))
+            .csrf().disable();
 
         return http.build();
     }
