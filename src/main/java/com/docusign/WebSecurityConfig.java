@@ -28,14 +28,13 @@ public class WebSecurityConfig {
                     try {
                         authorize
                                 .antMatchers("/", "/error**", "/assets/**", "/ds/mustAuthenticate**",
-                                        "/ds/authenticate**", "/ds/selectApi**", "/con001")
+                                        "/ds/authenticate**", "/ds/selectApi**", "/con001", "/pkce")
                                 .permitAll()
                                 .anyRequest().authenticated()
                                 .and()
                                 .exceptionHandling()
                                 .authenticationEntryPoint(
-                                        new LoginUrlAuthenticationEntryPoint("/ds/mustAuthenticate")
-                                );
+                                        new LoginUrlAuthenticationEntryPoint("/ds/mustAuthenticate"));
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -44,8 +43,7 @@ public class WebSecurityConfig {
                 .oauth2Login(Customizer.withDefaults())
                 .oauth2Client(Customizer.withDefaults())
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/")
-                )
+                        .logoutSuccessUrl("/"))
                 .csrf().disable();
 
         return http.build();
