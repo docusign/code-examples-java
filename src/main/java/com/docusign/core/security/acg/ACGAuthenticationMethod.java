@@ -18,7 +18,7 @@ import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.auth.OAuth;
 
 public class ACGAuthenticationMethod {
-    private static final String REDIRECT_URI = "/pkce";
+    private static final String REDIRECT_URI = "/login/oauth2/code/acg";
     private static final String STATE = "random_state_string";
     private static String codeVerifier;
     private static String codeChallenge;

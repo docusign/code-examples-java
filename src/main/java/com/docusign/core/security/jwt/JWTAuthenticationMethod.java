@@ -10,6 +10,8 @@ import com.docusign.esign.client.auth.OAuth;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -20,7 +22,7 @@ public class JWTAuthenticationMethod {
 
         public static final String REQUEST_CONSENT_LINK = "https://%s/oauth/auth?prompt=login&response_type=code&scope=%s&client_id=%s&redirect_uri=%s";
 
-        public static final String CONSENT_REDIRECT_URL = "http://localhost:8080/login/oauth2/code/jwt";
+        public static final String CONSENT_REDIRECT_URL = "/login/oauth2/code/jwt";
 
         private static final long TOKEN_EXPIRATION_IN_SECONDS = 3600;
 
@@ -58,7 +60,8 @@ public class JWTAuthenticationMethod {
                                                 configuration.getBaseURL(),
                                                 consent_scopes,
                                                 configuration.getUserId(),
-                                                CONSENT_REDIRECT_URL);
+                                                URLEncoder.encode(configuration.getAppUrl() + CONSENT_REDIRECT_URL,
+                                                                StandardCharsets.UTF_8));
 
                                 System.err.println("\nC O N S E N T   R E Q U I R E D" +
                                                 "\nAsk the user who will be impersonated to run the following URL: " +
