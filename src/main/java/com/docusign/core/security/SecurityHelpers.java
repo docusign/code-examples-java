@@ -45,8 +45,13 @@ public class SecurityHelpers {
         return jsonNode.get(field).asText();
     }
 
-    public static void setSpringSecurityAuthentication(List<String> scopes, String oAuthToken, OAuth.UserInfo userInfo,
-            String accountId, Session session, String expiresIn) {
+    public static void setSpringSecurityAuthentication(
+        List<String> scopes,
+        String oAuthToken,
+        OAuth.UserInfo userInfo,
+        String accountId,
+        Session session,
+        String expiresIn) {
         JWTOAuth2User principal = new JWTOAuth2User();
         principal.setAuthorities(scopes);
         principal.setCreated(userInfo.getCreated());

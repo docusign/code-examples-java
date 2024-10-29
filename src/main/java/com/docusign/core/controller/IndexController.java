@@ -95,7 +95,7 @@ public class IndexController {
         }
 
         if (config.getQuickstart().equals("true") && config.getSelectedApiIndex().equals(ApiIndex.ESIGNATURE) &&
-                !(SecurityContextHolder.getContext().getAuthentication() instanceof OAuth2AuthenticationToken)) {
+            !(SecurityContextHolder.getContext().getAuthentication() instanceof OAuth2AuthenticationToken)) {
             String site = ApiIndex.ESIGNATURE.getPathOfFirstExample();
             response.setStatus(response.SC_MOVED_TEMPORARILY);
             response.setHeader(LOCATION_HEADER, site);
@@ -114,7 +114,7 @@ public class IndexController {
 
     @GetMapping(path = "/ds/mustAuthenticate")
     public ModelAndView mustAuthenticateController(ModelMap model, HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
+    throws IOException {
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
         model.addAttribute(ATTR_TITLE, config.getCodeExamplesText().SupportingTexts.LoginPage.LoginButton);
 
@@ -127,8 +127,8 @@ public class IndexController {
             return new ModelAndView(new JWTAuthenticationMethod().loginUsingJWT(config, session, redirectURL));
         }
 
-        boolean isRedirectToMonitor = redirectURL.toLowerCase().contains("/m")
-                && !redirectURL.toLowerCase().contains("/mae");
+        boolean isRedirectToMonitor = redirectURL.toLowerCase().contains("/m") &&
+            !redirectURL.toLowerCase().contains("/mae");
         if (session.isRefreshToken() || config.getQuickstart().equals("true")) {
             config.setQuickstart("false");
 
@@ -153,7 +153,7 @@ public class IndexController {
 
     @GetMapping("/pkce")
     public RedirectView pkce(String code, String state, HttpServletRequest req, HttpServletResponse resp)
-            throws Exception {
+    throws Exception {
         String redirectURL = getRedirectURLForJWTAuthentication(req, resp);
         RedirectView redirect;
         try {
@@ -167,8 +167,8 @@ public class IndexController {
     }
 
     @PostMapping("/ds/authenticate")
-    public RedirectView authenticate(ModelMap model, @RequestBody MultiValueMap<String, String> formParams,
-            HttpServletRequest req, HttpServletResponse resp) throws Exception {
+    public RedirectView authenticate(ModelMap model, @RequestBody MultiValueMap <String, String> formParams,
+        HttpServletRequest req, HttpServletResponse resp) throws Exception {
         if (!formParams.containsKey("selectAuthType")) {
             model.addAttribute("message", "Select option with selectAuthType name must be provided.");
             return new RedirectView("pages/error");
@@ -176,7 +176,7 @@ public class IndexController {
 
         String redirectURL = getRedirectURLForJWTAuthentication(req, resp);
 
-        List<String> selectAuthTypeObject = formParams.get("selectAuthType");
+        List <String> selectAuthTypeObject = formParams.get("selectAuthType");
         AuthType authTypeSelected = AuthType.valueOf(selectAuthTypeObject.get(0));
 
         if (authTypeSelected.equals(AuthType.JWT)) {
@@ -196,7 +196,7 @@ public class IndexController {
         SavedRequest savedRequest = requestCache.getRequest(req, resp);
 
         String[] examplesCodes = new String[] {
-                ApiIndex.CLICK.getExamplesPathCode(),
+            ApiIndex.CLICK.getExamplesPathCode(),
                 ApiIndex.ESIGNATURE.getExamplesPathCode(),
                 ApiIndex.MONITOR.getExamplesPathCode(),
                 ApiIndex.ADMIN.getExamplesPathCode(),
@@ -209,7 +209,7 @@ public class IndexController {
 
             if (indexOfExampleCodeInRedirect != -1) {
                 Boolean hasNumbers = savedRequest.getRedirectUrl().substring(indexOfExampleCodeInRedirect)
-                        .matches(".*\\d.*");
+                    .matches(".*\\d.*");
 
                 return "GET".equals(savedRequest.getMethod()) && hasNumbers ? savedRequest.getRedirectUrl() : "/";
             }
@@ -220,8 +220,8 @@ public class IndexController {
 
     @GetMapping(path = "/ds-return")
     public String returnController(@RequestParam(value = ATTR_STATE, required = false) String state,
-            @RequestParam(value = ATTR_EVENT, required = false) String event,
-            @RequestParam(required = false) String envelopeId, ModelMap model) {
+        @RequestParam(value = ATTR_EVENT, required = false) String event,
+        @RequestParam(required = false) String envelopeId, ModelMap model) {
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
         model.addAttribute(ATTR_TITLE, "Return from DocuSign");
         model.addAttribute(ATTR_EVENT, event);

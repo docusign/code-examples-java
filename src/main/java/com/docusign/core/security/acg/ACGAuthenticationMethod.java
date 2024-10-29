@@ -20,7 +20,9 @@ import com.docusign.esign.client.auth.OAuth;
 public class ACGAuthenticationMethod {
     private static final String REDIRECT_URI = "/login/oauth2/code/acg";
     private static final String STATE = "random_state_string";
+
     private static String codeVerifier;
+
     private static String codeChallenge;
 
     public RedirectView initiateAuthorization(DSConfiguration configuration) throws Exception {
@@ -39,9 +41,11 @@ public class ACGAuthenticationMethod {
         return new RedirectView(authorizationURL);
     }
 
-    public RedirectView exchangeCodeForToken(String oAuthToken, DSConfiguration configuration, Session session,
-            String redirect)
-            throws Exception {
+    public RedirectView exchangeCodeForToken(
+            String oAuthToken,
+            DSConfiguration configuration,
+            Session session,
+            String redirect) throws Exception {
         String requestBody = buildRequestBody(oAuthToken);
         String authHeader = generateAuthHeader(configuration);
 
