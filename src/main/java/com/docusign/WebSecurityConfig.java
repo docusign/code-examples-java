@@ -10,6 +10,8 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 
+import com.docusign.core.security.CustomAuthenticationFailureHandler;
+
 @EnableWebSecurity
 public class WebSecurityConfig {
 
@@ -40,7 +42,7 @@ public class WebSecurityConfig {
                     }
                 })
                 .requestCache().requestCache(requestCache()).and()
-                .oauth2Login(Customizer.withDefaults())
+                .oauth2Login(login -> login.failureHandler(new CustomAuthenticationFailureHandler()))
                 .oauth2Client(Customizer.withDefaults())
                 .logout(logout -> logout
                         .logoutSuccessUrl("/"))
