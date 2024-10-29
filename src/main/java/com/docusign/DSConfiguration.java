@@ -168,7 +168,7 @@ public class DSConfiguration {
 
         try {
             codeExamplesText = new ObjectMapper().readValue(loadFileData(codeExamplesManifest),
-                    ManifestStructure.class);
+                ManifestStructure.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -182,8 +182,8 @@ public class DSConfiguration {
         httpConnection.setRequestMethod(HttpMethod.GET);
 
         httpConnection.setRequestProperty(
-                HttpHeaders.CONTENT_TYPE,
-                String.valueOf(MediaType.APPLICATION_JSON));
+            HttpHeaders.CONTENT_TYPE,
+            String.valueOf(MediaType.APPLICATION_JSON));
 
         int responseCode = httpConnection.getResponseCode();
 
