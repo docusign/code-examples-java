@@ -12,8 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-@Scope(value = WebApplicationContext.SCOPE_SESSION,
-        proxyMode = ScopedProxyMode.TARGET_CLASS)
+@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Data
 public class Session implements Serializable {
     private static final long serialVersionUID = 2695379118371574037L;
@@ -75,4 +74,6 @@ public class Session implements Serializable {
     private String instanceId;
 
     private Boolean isWorkflowPublished = false;
+
+    private Boolean isPKCEWorking = true;
 }
