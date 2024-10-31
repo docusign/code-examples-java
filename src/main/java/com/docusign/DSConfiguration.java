@@ -70,6 +70,15 @@ public class DSConfiguration {
     @Value("${spring.security.oauth2.client.registration.jwt.client-id}")
     private String userId;
 
+    @Value("${spring.security.oauth2.client.registration.acg.client-secret}")
+    private String secretUserId;
+
+    @Value("${spring.security.oauth2.client.provider.acg.token-uri}")
+    private String tokenEndpoint;
+
+    @Value("${spring.security.oauth2.client.provider.acg.authorization-uri}")
+    private String authorizationEndpoint;
+
     @Value("${jwt.grant.sso.redirect-url}")
     private String jwtRedirectURL;
 
@@ -158,7 +167,8 @@ public class DSConfiguration {
         }
 
         try {
-            codeExamplesText = new ObjectMapper().readValue(loadFileData(codeExamplesManifest), ManifestStructure.class);
+            codeExamplesText = new ObjectMapper().readValue(loadFileData(codeExamplesManifest),
+                ManifestStructure.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -172,8 +182,8 @@ public class DSConfiguration {
         httpConnection.setRequestMethod(HttpMethod.GET);
 
         httpConnection.setRequestProperty(
-                HttpHeaders.CONTENT_TYPE,
-                String.valueOf(MediaType.APPLICATION_JSON));
+            HttpHeaders.CONTENT_TYPE,
+            String.valueOf(MediaType.APPLICATION_JSON));
 
         int responseCode = httpConnection.getResponseCode();
 

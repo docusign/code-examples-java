@@ -1,4 +1,4 @@
-package com.docusign.core.security.jwt;
+package com.docusign.core.security;
 
 import com.docusign.esign.client.auth.OAuth;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,9 +9,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import java.util.*;
 
 public class JWTOAuth2User implements OAuth2User {
-    private List<GrantedAuthority> authorities;
+    private List <GrantedAuthority> authorities;
 
-    private Map<String, Object> attributes;
+    private Map <String, Object> attributes;
 
     private String sub;
 
@@ -25,27 +25,27 @@ public class JWTOAuth2User implements OAuth2User {
 
     private String email;
 
-    private List<Map<String, Object>> accounts;
+    private List <Map <String, Object>> accounts;
 
     private String created;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection <? extends GrantedAuthority> getAuthorities() {
         return this.authorities;
     }
 
-    public void setAuthorities(List<String> scopes) {
+    public void setAuthorities(List < String > scopes) {
         String authoritiesString = "ROLE_USER";
-        for (String scope : scopes) {
+        for (String scope: scopes) {
             authoritiesString += ",SCOPE_" + scope;
         }
         authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authoritiesString);
     }
 
     @Override
-    public Map<String, Object> getAttributes() {
+    public Map <String, Object> getAttributes() {
         if (this.attributes == null) {
-            this.attributes = new HashMap<>();
+            this.attributes = new HashMap <> ();
             this.attributes.put("sub", this.getSub());
             this.attributes.put("name", this.getName());
             this.attributes.put("given_name", this.getGivenName());
@@ -115,15 +115,15 @@ public class JWTOAuth2User implements OAuth2User {
         this.email = email;
     }
 
-    public List<Map<String, Object>> getAccounts() {
+    public List <Map <String, Object>> getAccounts() {
         return this.accounts;
     }
 
-    public void setAccounts(List<OAuth.Account> accounts) {
-        this.accounts = new ArrayList<>();
-        for (OAuth.Account account : accounts) {
+    public void setAccounts(List <OAuth.Account> accounts) {
+        this.accounts = new ArrayList <> ();
+        for (OAuth.Account account: accounts) {
             ObjectMapper mapObject = new ObjectMapper();
-            Map<String, Object> mapObj = mapObject.convertValue(account, Map.class);
+            Map <String, Object> mapObj = mapObject.convertValue(account, Map.class);
             this.accounts.add(mapObj);
         }
     }

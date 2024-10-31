@@ -10,6 +10,8 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 
+import com.docusign.core.security.CustomAuthenticationFailureHandler;
+
 @EnableWebSecurity
 public class WebSecurityConfig {
 
@@ -28,24 +30,22 @@ public class WebSecurityConfig {
                     try {
                         authorize
                                 .antMatchers("/", "/error**", "/assets/**", "/ds/mustAuthenticate**",
-                                        "/ds/authenticate**", "/ds/selectApi**", "/con001")
+                                        "/ds/authenticate**", "/ds/selectApi**", "/con001", "/pkce")
                                 .permitAll()
                                 .anyRequest().authenticated()
                                 .and()
                                 .exceptionHandling()
                                 .authenticationEntryPoint(
-                                        new LoginUrlAuthenticationEntryPoint("/ds/mustAuthenticate")
-                                );
+                                        new LoginUrlAuthenticationEntryPoint("/ds/mustAuthenticate"));
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 })
                 .requestCache().requestCache(requestCache()).and()
-                .oauth2Login(Customizer.withDefaults())
+                .oauth2Login(login -> login.failureHandler(new CustomAuthenticationFailureHandler()))
                 .oauth2Client(Customizer.withDefaults())
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/")
-                )
+                        .logoutSuccessUrl("/"))
                 .csrf().disable();
 
         return http.build();
