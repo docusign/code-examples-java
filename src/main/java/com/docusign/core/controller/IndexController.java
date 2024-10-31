@@ -7,6 +7,7 @@ import com.docusign.core.model.ApiType;
 import com.docusign.core.model.AuthType;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.core.security.acg.ACGAuthenticationMethod;
 import com.docusign.core.security.jwt.JWTAuthenticationMethod;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +95,7 @@ public class IndexController {
         }
 
         if (config.getQuickstart().equals("true") && config.getSelectedApiIndex().equals(ApiIndex.ESIGNATURE) &&
-                !(SecurityContextHolder.getContext().getAuthentication() instanceof OAuth2AuthenticationToken)) {
+            !(SecurityContextHolder.getContext().getAuthentication() instanceof OAuth2AuthenticationToken)) {
             String site = ApiIndex.ESIGNATURE.getPathOfFirstExample();
             response.setStatus(response.SC_MOVED_TEMPORARILY);
             response.setHeader(LOCATION_HEADER, site);
@@ -112,7 +113,8 @@ public class IndexController {
     }
 
     @GetMapping(path = "/ds/mustAuthenticate")
-    public ModelAndView mustAuthenticateController(ModelMap model, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public ModelAndView mustAuthenticateController(ModelMap model, HttpServletRequest req, HttpServletResponse resp)
+    throws IOException {
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
         model.addAttribute(ATTR_TITLE, config.getCodeExamplesText().SupportingTexts.LoginPage.LoginButton);
 
@@ -125,7 +127,8 @@ public class IndexController {
             return new ModelAndView(new JWTAuthenticationMethod().loginUsingJWT(config, session, redirectURL));
         }
 
-        boolean isRedirectToMonitor = redirectURL.toLowerCase().contains("/m") && !redirectURL.toLowerCase().contains("/mae");
+        boolean isRedirectToMonitor = redirectURL.toLowerCase().contains("/m") &&
+            !redirectURL.toLowerCase().contains("/mae");
         if (session.isRefreshToken() || config.getQuickstart().equals("true")) {
             config.setQuickstart("false");
 
@@ -148,8 +151,24 @@ public class IndexController {
         return new ModelAndView(new JWTAuthenticationMethod().loginUsingJWT(config, session, redirectURL));
     }
 
+    @GetMapping("/pkce")
+    public RedirectView pkce(String code, String state, HttpServletRequest req, HttpServletResponse resp)
+    throws Exception {
+        String redirectURL = getRedirectURLForJWTAuthentication(req, resp);
+        RedirectView redirect;
+        try {
+            redirect = new ACGAuthenticationMethod().exchangeCodeForToken(code, config, session, redirectURL);
+        } catch (Exception e) {
+            redirect = getRedirectView(AuthType.AGC);
+            this.session.setIsPKCEWorking(false);
+        }
+
+        return redirect;
+    }
+
     @PostMapping("/ds/authenticate")
-    public RedirectView authenticate(ModelMap model, @RequestBody MultiValueMap<String, String> formParams, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public RedirectView authenticate(ModelMap model, @RequestBody MultiValueMap <String, String> formParams,
+        HttpServletRequest req, HttpServletResponse resp) throws Exception {
         if (!formParams.containsKey("selectAuthType")) {
             model.addAttribute("message", "Select option with selectAuthType name must be provided.");
             return new RedirectView("pages/error");
@@ -157,7 +176,7 @@ public class IndexController {
 
         String redirectURL = getRedirectURLForJWTAuthentication(req, resp);
 
-        List<String> selectAuthTypeObject = formParams.get("selectAuthType");
+        List <String> selectAuthTypeObject = formParams.get("selectAuthType");
         AuthType authTypeSelected = AuthType.valueOf(selectAuthTypeObject.get(0));
 
         if (authTypeSelected.equals(AuthType.JWT)) {
@@ -165,15 +184,19 @@ public class IndexController {
             return new JWTAuthenticationMethod().loginUsingJWT(config, session, redirectURL);
         } else {
             this.session.setAuthTypeSelected(AuthType.AGC);
-            return getRedirectView(authTypeSelected);
+            if (this.session.getIsPKCEWorking()) {
+                return new ACGAuthenticationMethod().initiateAuthorization(config);
+            } else {
+                return getRedirectView(authTypeSelected);
+            }
         }
     }
 
     private String getRedirectURLForJWTAuthentication(HttpServletRequest req, HttpServletResponse resp) {
         SavedRequest savedRequest = requestCache.getRequest(req, resp);
 
-        String[] examplesCodes = new String[]{
-                ApiIndex.CLICK.getExamplesPathCode(),
+        String[] examplesCodes = new String[] {
+            ApiIndex.CLICK.getExamplesPathCode(),
                 ApiIndex.ESIGNATURE.getExamplesPathCode(),
                 ApiIndex.MONITOR.getExamplesPathCode(),
                 ApiIndex.ADMIN.getExamplesPathCode(),
@@ -185,10 +208,10 @@ public class IndexController {
             Integer indexOfExampleCodeInRedirect = StringUtils.indexOfAny(savedRequest.getRedirectUrl(), examplesCodes);
 
             if (indexOfExampleCodeInRedirect != -1) {
-                Boolean hasNumbers = savedRequest.getRedirectUrl().substring(indexOfExampleCodeInRedirect).matches(".*\\d.*");
+                Boolean hasNumbers = savedRequest.getRedirectUrl().substring(indexOfExampleCodeInRedirect)
+                    .matches(".*\\d.*");
 
-                return "GET".equals(savedRequest.getMethod()) && hasNumbers ?
-                        savedRequest.getRedirectUrl() : "/";
+                return "GET".equals(savedRequest.getMethod()) && hasNumbers ? savedRequest.getRedirectUrl() : "/";
             }
         }
 
@@ -197,8 +220,8 @@ public class IndexController {
 
     @GetMapping(path = "/ds-return")
     public String returnController(@RequestParam(value = ATTR_STATE, required = false) String state,
-                                   @RequestParam(value = ATTR_EVENT, required = false) String event,
-                                   @RequestParam(required = false) String envelopeId, ModelMap model) {
+        @RequestParam(value = ATTR_EVENT, required = false) String event,
+        @RequestParam(required = false) String envelopeId, ModelMap model) {
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
         model.addAttribute(ATTR_TITLE, "Return from DocuSign");
         model.addAttribute(ATTR_EVENT, event);
