@@ -72,15 +72,38 @@ public class IndexController {
     @GetMapping(path = "/ds-return")
     public String returnController(@RequestParam(value = ATTR_STATE, required = false) String state,
             @RequestParam(value = ATTR_EVENT, required = false) String event,
-            @RequestParam(required = false) String envelopeId, ModelMap model, HttpServletResponse response) throws IOException {
+            @RequestParam(required = false) String envelopeId, ModelMap model, HttpServletResponse response)
+            throws IOException {
         String site = "/eg001";
         response.setStatus(response.SC_MOVED_TEMPORARILY);
         response.setHeader("Location", site);
         return null;
     }
 
+    @GetMapping("/pkce")
+    public RedirectView pkce(String code, String state, HttpServletRequest req, HttpServletResponse resp)
+            throws Exception {
+        String redirectURL = getRedirectURLForJWTAuthentication(req, resp);
+        RedirectView redirect;
+        try {
+            redirect = new ACGAuthenticationMethod().exchangeCodeForToken(code, config, session, redirectURL,
+                    "signature");
+        } catch (Exception e) {
+            redirect = getRedirectView(getLoginPath());
+            this.session.setIsPKCEWorking(false);
+        }
+
+        return redirect;
+    }
+
     private RedirectView getRedirectView() {
-        RedirectView redirect = new RedirectView(getLoginPath());
+        this.session.setAuthTypeSelected(AuthType.AGC);
+        if (this.session.getIsPKCEWorking()) {
+            RedirectView redirect = new ACGAuthenticationMethod().initiateAuthorization(config, "signature");
+        } else {
+            RedirectView redirect = getRedirectView(getLoginPath());
+        }
+
         redirect.setExposeModelAttributes(false);
         return redirect;
     }
@@ -111,8 +134,7 @@ public class IndexController {
         OAuth2User oauthUser = oauth.getPrincipal();
         OAuth2AuthorizedClient oauthClient = authorizedClientService.loadAuthorizedClient(
                 oauth.getAuthorizedClientRegistrationId(),
-                oauthUser.getName()
-        );
+                oauthUser.getName());
 
         if (oauth.isAuthenticated()) {
             user.setName(oauthUser.getAttribute("name"));
@@ -139,7 +161,7 @@ public class IndexController {
 
     private static List<OAuth.Account> getOAuthAccounts(OAuth2User user) {
         List<Map<String, Object>> oauthAccounts = user.getAttribute("accounts");
-        if(oauthAccounts == null){
+        if (oauthAccounts == null) {
             return new ArrayList<>();
         }
 
@@ -152,7 +174,7 @@ public class IndexController {
         String targetAccountId = config.getTargetAccountId();
         if (StringUtils.isNotBlank(targetAccountId)) {
             OAuth.Account account = getAccountById(accounts, targetAccountId);
-            if(account != null) {
+            if (account != null) {
                 return account;
             }
         }
