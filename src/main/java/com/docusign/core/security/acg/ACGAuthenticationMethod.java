@@ -44,7 +44,8 @@ public class ACGAuthenticationMethod {
             String oAuthToken,
             DSConfiguration configuration,
             Session session,
-            String redirect) throws Exception {
+            String redirect,
+            List<String> scopes) throws Exception {
         String requestBody = buildRequestBody(oAuthToken);
         String authHeader = generateAuthHeader(configuration);
 
@@ -59,7 +60,7 @@ public class ACGAuthenticationMethod {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() == 200) {
-            processTokenResponse(response.body(), configuration, session);
+            processTokenResponse(response.body(), configuration, session, scopes);
         } else {
             throw new IOException("Failed to exchange code for token. Status code: " + response.statusCode());
         }
@@ -79,7 +80,8 @@ public class ACGAuthenticationMethod {
                 (configuration.getUserId() + ":" + configuration.getSecretUserId()).getBytes(StandardCharsets.UTF_8));
     }
 
-    private void processTokenResponse(String responseBody, DSConfiguration configuration, Session session)
+    private void processTokenResponse(String responseBody, DSConfiguration configuration, Session session,
+            List<String> scopes)
             throws Exception {
         ApiClient apiClient = new ApiClient(configuration.getBasePath());
         String accessToken = SecurityHelpers.parseJsonField(responseBody, "access_token");
@@ -88,7 +90,7 @@ public class ACGAuthenticationMethod {
         OAuth.UserInfo userInfo = apiClient.getUserInfo(accessToken);
         String accountId = userInfo.getAccounts().size() > 0 ? userInfo.getAccounts().get(0).getAccountId() : "";
 
-        SecurityHelpers.setSpringSecurityAuthentication(SecurityHelpers.getScopeList(), accessToken, userInfo,
+        SecurityHelpers.setSpringSecurityAuthentication(scopes, accessToken, userInfo,
                 accountId, session,
                 expiresIn);
     }
