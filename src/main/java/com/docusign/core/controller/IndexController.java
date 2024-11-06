@@ -159,7 +159,8 @@ public class IndexController {
         String redirectURL = getRedirectURLForJWTAuthentication(req, resp);
         RedirectView redirect;
         try {
-            redirect = new ACGAuthenticationMethod().exchangeCodeForToken(code, config, session, redirectURL);
+            redirect = new ACGAuthenticationMethod().exchangeCodeForToken(code, config, session, redirectURL,
+                    ApiType.getScopeList());
         } catch (Exception e) {
             redirect = getRedirectView(AuthType.AGC);
             this.session.setIsPKCEWorking(false);
