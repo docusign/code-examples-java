@@ -26,9 +26,7 @@ public class ACGAuthenticationMethod {
 
     private static String codeChallenge;
 
-    public RedirectView initiateAuthorization(DSConfiguration configuration) throws Exception {
-        List<String> scopes = SecurityHelpers.getScopeList();
-
+    public RedirectView initiateAuthorization(DSConfiguration configuration, List<String> scopes) throws Exception {
         codeVerifier = SecurityHelpers.generateCodeVerifier();
         codeChallenge = SecurityHelpers.generateCodeChallenge(codeVerifier);
 
