@@ -6,6 +6,9 @@ import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
 import java.io.IOException;
 import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import com.docusign.core.security.acg.ACGAuthenticationMethod;
 
 import com.docusign.core.utils.AccountsConverter;
 import org.apache.commons.lang3.StringUtils;
@@ -26,21 +29,16 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.docusign.esign.client.auth.OAuth;
 import java.util.stream.Collectors;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @ControllerAdvice
 @Scope(WebApplicationContext.SCOPE_SESSION)
 public class IndexController {
-    private static final String ATTR_ENVELOPE_ID = "qpEnvelopeId";
+    private static final List<String> ESIGNATURE_SCOPES = Arrays.asList("signature");
     private static final String ATTR_STATE = "state";
     private static final String ATTR_EVENT = "event";
-    private static final String ATTR_TITLE = "title";
 
     private static final String ERROR_ACCOUNT_NOT_FOUND = "Could not find account information for the user";
-    private static final String SELECTED_API_NOT_SUPPORTED = "Currently selected api is not supported by launcher. Please, check appsettings.json file.";
     private final DSConfiguration config;
     private final Session session;
     private final User user;
@@ -65,7 +63,7 @@ public class IndexController {
     }
 
     @GetMapping(path = "/ds/mustAuthenticate")
-    public ModelAndView mustAuthenticateController(ModelMap model) throws IOException {
+    public ModelAndView mustAuthenticateController(ModelMap model) throws IOException, Exception {
         return new ModelAndView(getRedirectView());
     }
 
@@ -83,25 +81,25 @@ public class IndexController {
     @GetMapping("/pkce")
     public RedirectView pkce(String code, String state, HttpServletRequest req, HttpServletResponse resp)
             throws Exception {
-        String redirectURL = getRedirectURLForJWTAuthentication(req, resp);
+        String redirectURL = "/";
         RedirectView redirect;
         try {
             redirect = new ACGAuthenticationMethod().exchangeCodeForToken(code, config, session, redirectURL,
-                    "signature");
+                    ESIGNATURE_SCOPES);
         } catch (Exception e) {
-            redirect = getRedirectView(getLoginPath());
+            redirect = new RedirectView(getLoginPath());
             this.session.setIsPKCEWorking(false);
         }
 
         return redirect;
     }
 
-    private RedirectView getRedirectView() {
-        this.session.setAuthTypeSelected(AuthType.AGC);
+    private RedirectView getRedirectView() throws Exception {
+        RedirectView redirect;
         if (this.session.getIsPKCEWorking()) {
-            RedirectView redirect = new ACGAuthenticationMethod().initiateAuthorization(config, "signature");
+            redirect = new ACGAuthenticationMethod().initiateAuthorization(config, ESIGNATURE_SCOPES);
         } else {
-            RedirectView redirect = getRedirectView(getLoginPath());
+            redirect = new RedirectView(getLoginPath());
         }
 
         redirect.setExposeModelAttributes(false);
@@ -138,7 +136,12 @@ public class IndexController {
 
         if (oauth.isAuthenticated()) {
             user.setName(oauthUser.getAttribute("name"));
-            user.setAccessToken(oauthClient.getAccessToken().getTokenValue());
+
+            if (oauthClient != null) {
+                user.setAccessToken(oauthClient.getAccessToken().getTokenValue());
+            } else {
+                user.setAccessToken(((OAuth.OAuthToken) oauthUser.getAttribute("access_token")).getAccessToken());
+            }
 
             if (account.isEmpty()) {
                 account = Optional.ofNullable(getDefaultAccountInfo(getOAuthAccounts(oauthUser)));
