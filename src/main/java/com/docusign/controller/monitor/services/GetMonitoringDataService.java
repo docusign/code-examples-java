@@ -18,6 +18,7 @@ public final class GetMonitoringDataService {
 
         LOGGER.info("before optinos");
         DataSetApi.GetStreamOptions options = datasetApi.new GetStreamOptions();
+        options.setLimit(2000);
 
         // First call the endpoint with no cursor to get the first records.
         // After each call, save the cursor and use it to make the next
