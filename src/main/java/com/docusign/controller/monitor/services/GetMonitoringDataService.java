@@ -13,7 +13,8 @@ public final class GetMonitoringDataService {
     public static JSONArray getMonitoringData(DataSetApi datasetApi) throws Exception {
         // Declare variables
         boolean complete = false;
-        String cursorValue = "";
+        LocalDate cursorDate = LocalDate.now().minusYears(1);
+        String cursorValue = cursorDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "T00:00:00Z";
         JSONArray monitoringData = new JSONArray();
 
         LOGGER.info("before optinos");
