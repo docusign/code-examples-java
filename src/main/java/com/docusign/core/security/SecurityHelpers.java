@@ -4,29 +4,18 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Random;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import com.docusign.core.model.ApiType;
 import com.docusign.core.model.Session;
 import com.docusign.esign.client.auth.OAuth;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SecurityHelpers {
-    public static List<String> getScopeList() {
-        List<String> scopes = new ArrayList<>();
-        for (ApiType scope : ApiType.values()) {
-            scopes.addAll(Arrays.asList(scope.getScopes()));
-        }
-        return scopes;
-    }
-
     public static String generateCodeVerifier() {
         byte[] randomBytes = new byte[32];
         new Random().nextBytes(randomBytes);
@@ -46,12 +35,12 @@ public class SecurityHelpers {
     }
 
     public static void setSpringSecurityAuthentication(
-        List<String> scopes,
-        String oAuthToken,
-        OAuth.UserInfo userInfo,
-        String accountId,
-        Session session,
-        String expiresIn) {
+            List<String> scopes,
+            String oAuthToken,
+            OAuth.UserInfo userInfo,
+            String accountId,
+            Session session,
+            String expiresIn) {
         JWTOAuth2User principal = new JWTOAuth2User();
         principal.setAuthorities(scopes);
         principal.setCreated(userInfo.getCreated());
