@@ -1,6 +1,8 @@
 package com.docusign.core.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public enum ApiType {
     ESIGNATURE("eSignature API", new String[] { "signature" }, "eg"),
@@ -35,6 +37,14 @@ public enum ApiType {
                 .filter(x -> exampleName.contains(x.getCodeName()))
                 .findFirst()
                 .get();
+    }
+
+    public static List<String> getScopeList() {
+        List<String> scopes = new ArrayList<>();
+        for (ApiType scope : ApiType.values()) {
+            scopes.addAll(Arrays.asList(scope.getScopes()));
+        }
+        return scopes;
     }
 
     public String[] getScopes() {
