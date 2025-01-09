@@ -29,9 +29,8 @@ public class JWTAuthenticationMethod {
         public RedirectView loginUsingJWT(
                         DSConfiguration configuration,
                         Session session,
-                        String redirectURL) {
-                List<String> scopes = SecurityHelpers.getScopeList();
-
+                        String redirectURL,
+                        List<String> scopes) {
                 try {
                         ApiClient apiClient = new ApiClient(configuration.getBasePath());
                         byte[] privateKeyBytes = Files.readAllBytes(Paths.get(configuration.getPrivateKeyPath()));

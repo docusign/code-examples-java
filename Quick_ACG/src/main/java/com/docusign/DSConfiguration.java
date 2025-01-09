@@ -78,8 +78,20 @@ public class DSConfiguration {
     @Value("${DS_ADMIN_BASE_PATH}")
     private String adminBasePath;
 
+    @Value("${spring.security.oauth2.client.registration.acg.client-secret}")
+    private String secretUserId;
+
+    @Value("${spring.security.oauth2.client.provider.acg.token-uri}")
+    private String tokenEndpoint;
+
+    @Value("${spring.security.oauth2.client.provider.acg.authorization-uri}")
+    private String authorizationEndpoint;
+
+    @Value("${spring.security.oauth2.client.registration.jwt.client-id}")
+    private String userId;
+
     public String examplesApiPath = "examplesApi.json";
-    
+
     public String apiTypeHeader = "ApiType";
 
     @Value("${CodeExamplesManifest}")
@@ -94,14 +106,14 @@ public class DSConfiguration {
     }
 
     public ManifestStructure getCodeExamplesText() {
-        if (codeExamplesText != null){
+        if (codeExamplesText != null) {
             return codeExamplesText;
         }
 
         try {
             String json = loadFileData(codeExamplesManifest);
             codeExamplesText = new ObjectMapper().readValue(json, ManifestStructure.class);
-        } catch (JSONException | IOException e){
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
