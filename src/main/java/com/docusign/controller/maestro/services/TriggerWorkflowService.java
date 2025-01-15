@@ -75,7 +75,6 @@ public final class TriggerWorkflowService {
         emailData.put("ccEmail", ccEmail);
         emailData.put("ccName", ccName);
 
-        //ds-snippet-start:Maestro1Step4
         var payload = new TriggerPayload().instanceName(instanceName)
                 .metadata(new WorkflowDefinitionMetadata())
                 .participants(new ArrayList<Participant>())
@@ -89,11 +88,8 @@ public final class TriggerWorkflowService {
         WorkflowTriggerApi.TriggerWorkflowOptions options = workflowTriggerApi.new TriggerWorkflowOptions();
         options.setMtid(mtid);
         options.setMtsec(mtsec);
-        //ds-snippet-end:Maestro1Step4
 
-        //ds-snippet-start:Maestro1Step5
         return workflowTriggerApi.triggerWorkflow(accountId, worlflowId, payload, options);
-        //ds-snippet-end:Maestro1Step5
     }
 
     private static Map<String, String> parseQueryString(String query) {
