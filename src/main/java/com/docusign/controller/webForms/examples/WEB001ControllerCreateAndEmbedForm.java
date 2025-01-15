@@ -39,6 +39,8 @@ public class WEB001ControllerCreateAndEmbedForm extends AbstractWebFormsControll
 
     public static final String INSTANCE_TOKEN = "instanceToken";
 
+    private static final String EMDEDDED_BY_TEXT = "example";
+
     public static final String URL = "url";
 
     public static final String INTEGRATION_KEY = "integrationKey";
@@ -46,7 +48,7 @@ public class WEB001ControllerCreateAndEmbedForm extends AbstractWebFormsControll
     public WEB001ControllerCreateAndEmbedForm(DSConfiguration config, Session session, User user) {
         super(config, "web001", session, user);
     }
-    
+
     @Override
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
@@ -57,12 +59,11 @@ public class WEB001ControllerCreateAndEmbedForm extends AbstractWebFormsControll
     protected Object doWork(
             WorkArguments args,
             ModelMap model,
-            HttpServletResponse response
-    ) throws ApiException, IOException, com.docusign.webforms.client.ApiException {
+            HttpServletResponse response) throws ApiException, IOException, com.docusign.webforms.client.ApiException {
         if (session.getWebformTemplateId() == null) {
             ApiClient eSignApiClient = createESignApiClient(session.getBasePath(), user.getAccessToken());
             String accountId = session.getAccountId();
-            
+
             EnvelopeTemplateResults envelopeTemplateResults = CreateTemplateService.searchTemplatesByName(
                     eSignApiClient,
                     accountId,
@@ -73,10 +74,9 @@ public class WEB001ControllerCreateAndEmbedForm extends AbstractWebFormsControll
                 session.setWebformTemplateId(template.getTemplateId());
             } else {
                 TemplateSummary template = CreateTemplateService.createTemplate(
-                    eSignApiClient,
-                    accountId,
-                    CreateAndEmbedFormService.prepareEnvelopeTemplate(TEMPLATE_NAME, DOCUMENT_FILE_NAME)
-                );
+                        eSignApiClient,
+                        accountId,
+                        CreateAndEmbedFormService.prepareEnvelopeTemplate(TEMPLATE_NAME, DOCUMENT_FILE_NAME));
 
                 session.setWebformTemplateId(template.getTemplateId());
             }
@@ -89,14 +89,12 @@ public class WEB001ControllerCreateAndEmbedForm extends AbstractWebFormsControll
 
         var webFormsApiClient = createWebFormsApiClient(
                 config.getWebFormsBasePath(),
-                user.getAccessToken()
-        );
+                user.getAccessToken());
 
         WebFormSummaryList forms = CreateAndEmbedFormService.getForms(
                 webFormsApiClient,
                 session.getAccountId(),
-                TEMPLATE_NAME
-        );
+                TEMPLATE_NAME);
 
         if (forms.getItems() == null || forms.getItems().size() == 0) {
             return new RedirectView("web001");
@@ -107,10 +105,10 @@ public class WEB001ControllerCreateAndEmbedForm extends AbstractWebFormsControll
         WebFormInstance form = CreateAndEmbedFormService.createInstance(
                 webFormsApiClient,
                 session.getAccountId(),
-                formId
-        );
+                formId);
 
         session.setWebformTemplateId(null);
+        model.addAttribute(EMDEDDED_BY_TEXT, getTextForCodeExampleByApiType());
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
         model.addAttribute(INSTANCE_TOKEN, form.getInstanceToken());
         model.addAttribute(URL, form.getFormUrl());
