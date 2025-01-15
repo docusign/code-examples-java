@@ -114,17 +114,13 @@ public class EG001ControllerTriggerWorkflow extends AbstractMaestroController {
             ModelMap model,
             HttpServletResponse response
     ) throws ApiException, IOException, NoSuchAlgorithmException, InvalidKeyException, URISyntaxException {
-        //ds-snippet-start:Maestro1Step2
         ApiClient apiClient = createApiClient(config.getMaestroBasePath(), user.getAccessToken());
-        //ds-snippet-end:Maestro1Step2
         String accountId = session.getAccountId();
 
-        //ds-snippet-start:Maestro1Step3
         var workflow = TriggerWorkflowService.getWorkflowDefinition(
                 apiClient,
                 accountId,
                 session.getWorkflowId());
-        //ds-snippet-end:Maestro1Step3
 
         var result = TriggerWorkflowService.triggerWorkflow(
                 apiClient,
