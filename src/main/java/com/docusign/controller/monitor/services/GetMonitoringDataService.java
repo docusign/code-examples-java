@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public final class GetMonitoringDataService {
     private static final Logger LOGGER = LoggerFactory.getLogger(GetMonitoringDataService.class);
@@ -13,11 +15,13 @@ public final class GetMonitoringDataService {
     public static JSONArray getMonitoringData(DataSetApi datasetApi) throws Exception {
         // Declare variables
         boolean complete = false;
-        String cursorValue = "";
+        LocalDate cursorDate = LocalDate.now().minusYears(1);
+        String cursorValue = cursorDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "T00:00:00Z";
         JSONArray monitoringData = new JSONArray();
 
         LOGGER.info("before optinos");
         DataSetApi.GetStreamOptions options = datasetApi.new GetStreamOptions();
+        options.setLimit(2000);
 
         // First call the endpoint with no cursor to get the first records.
         // After each call, save the cursor and use it to make the next

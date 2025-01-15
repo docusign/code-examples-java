@@ -10,7 +10,12 @@
 <body>
 <div id="app">
     <div id="webform-customer-app-area">
-        <h5 id="webforms-heading">The web form has been embedded below using the Docusign JS library.</h5>
+        <c:forEach var="page" items="${example.getAdditionalPage()}">
+            <c:if test="${page.getName() == 'webforms_heading'}">
+                <h5 id="webforms-heading">${page.getResultsPageText()}</h5>
+            </c:if>
+        </c:forEach>
+        
         <div id="docusign" class="webform-iframe-container">
             <p>Web Form will render here</p>
         </div>

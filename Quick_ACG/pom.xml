@@ -158,6 +158,7 @@
                                     <includes>
                                         <include>Locals.java</include>
                                         <include>User.java</include>
+                                        <include>EnvelopeDocumentInfo.java</include>
                                     </includes>
                                 </resource>
                                 <resource>
@@ -199,7 +200,16 @@
                                     <targetPath>${basedir}/src/main/java/com/docusign/core/security</targetPath>
                                     <directory>../src/main/java/com/docusign/core/security</directory>
                                     <includes>
-                                        <include>OAuthProperties.java</include>
+                                        <include>SecurityHelpers.java</include>
+                                        <include>JWTOAuth2User.java</include>
+                                        <include>CustomAuthenticationFailureHandler.java</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <targetPath>${basedir}/src/main/java/com/docusign/core/security/acg</targetPath>
+                                    <directory>../src/main/java/com/docusign/core/security/acg</directory>
+                                    <includes>
+                                        <include>ACGAuthenticationMethod.java</include>
                                     </includes>
                                 </resource>
                                 <resource>
