@@ -73,7 +73,5 @@ public class Session implements Serializable {
 
     private String instanceId;
 
-    private Boolean isWorkflowPublished = false;
-
     private Boolean isPKCEWorking = true;
 }
