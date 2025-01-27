@@ -6,7 +6,6 @@
         ROOMS: 'rooms',
         ADMIN: 'admin',
         CONNECT: 'connect',
-        MAESTRO: "maestro",
         CONNECT: 'connect',
         WEBFORMS: 'webforms'
     };
@@ -130,8 +129,6 @@
                 return "con";
             case API_TYPES.WEBFORMS:
                 return "web";
-            case API_TYPES.MAESTRO:
-                return "mae";
         }
     }
 

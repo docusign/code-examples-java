@@ -11,7 +11,6 @@ public enum ApiType {
             "dtr.company.write", "room_forms" }, "r"),
     CONNECT("Connect", new String[] {}, "con"),
     CLICK("Click API", new String[] { "click.manage", "click.send" }, "c"),
-    MAESTRO("Maestro API", new String[] { "signature", "aow_manage" }, "mae"),
     MONITOR("Monitor API", new String[] { "signature", "impersonation" }, "m"),
     ADMIN("Admin API", new String[] { "user_write", "signature", "impersonation", "group_read", "organization_read",
             "permission_read", "user_read", "account_read", "domain_read", "identity_provider_read", "user_data_redact",
