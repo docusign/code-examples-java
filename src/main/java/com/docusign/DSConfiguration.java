@@ -115,9 +115,6 @@ public class DSConfiguration {
     @Value("${DS_WEBFORMS_BASE_PATH}")
     private String webFormsBasePath;
 
-    @Value("${DS_MAESTRO_BASE_PATH}")
-    private String maestroBasePath;
-
     @Value("${CodeExamplesManifest}")
     private String codeExamplesManifest;
 
@@ -138,8 +135,6 @@ public class DSConfiguration {
             return monitorBasePath;
         } else if (ApiIndex.ADMIN.equals(apiIndex)) {
             return adminBasePath;
-        } else if (ApiIndex.MAESTRO.equals(apiIndex)) {
-            return maestroBasePath;
         }
 
         return oauthAccount.getBaseUri();

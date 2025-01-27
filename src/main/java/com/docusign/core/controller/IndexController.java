@@ -204,7 +204,6 @@ public class IndexController {
                 ApiIndex.MONITOR.getExamplesPathCode(),
                 ApiIndex.ADMIN.getExamplesPathCode(),
                 ApiIndex.ROOMS.getExamplesPathCode(),
-                ApiIndex.MAESTRO.getExamplesPathCode(),
         };
 
         if (savedRequest != null) {
