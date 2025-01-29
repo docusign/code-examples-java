@@ -17,7 +17,8 @@ public enum ApiType {
             "asset_group_account_read", "asset_group_account_clone_write", "asset_group_account_clone_read",
             "organization_sub_account_read", "organization_sub_account_write" }, "a"),
     WEBFORMS("WebForms API",
-            new String[] { "signature", "webforms_read", "webforms_instance_read", "webforms_instance_write" }, "web");
+            new String[] { "signature", "webforms_read", "webforms_instance_read", "webforms_instance_write" }, "web"),
+    NOTARY("Notary API", new String[] { "signature" }, "n");
 
     final String value;
 
