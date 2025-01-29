@@ -7,7 +7,8 @@
         ADMIN: 'admin',
         CONNECT: 'connect',
         CONNECT: 'connect',
-        WEBFORMS: 'webforms'
+        WEBFORMS: 'webforms',
+        NOTARY: 'notary'
     };
 
     let processJSONData = function () {
@@ -129,6 +130,8 @@
                 return "con";
             case API_TYPES.WEBFORMS:
                 return "web";
+            case API_TYPES.NOTARY:
+                return "n";
         }
     }
 
