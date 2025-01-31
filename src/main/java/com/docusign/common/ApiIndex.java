@@ -7,7 +7,7 @@ public enum ApiIndex {
     MONITOR("/pages/monitor/index", "", "/m001", "/m"),
     ADMIN("/pages/admin/index", "/management", "/a001", "/a"),
     CONNECT("/pages/connect/index", "", "/con001", "/con"),
-    NOTARY("/pages/notary/index", "/restapi", "/n001", "/n"),
+    NOTARY("/pages/notary/index", "/restapi", "/n004", "/n"),
     WEBFORMS("/pages/webforms/index", "/restapi", "/web001", "/web");
 
     private final String indexPath;
