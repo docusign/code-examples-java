@@ -20,29 +20,30 @@ import com.docusign.controller.notary.services.SendWithThirdPartyNotaryService;
 @RequestMapping("/n004")
 public class Neg004SendWithThirdPartyNotaryController extends AbstractNotaryController {
 
-    public Neg004SendWithThirdPartyNotaryController(DSConfiguration config, Session session, User user) {
-        super(config, "n004", session, user);
-    }
+	public Neg004SendWithThirdPartyNotaryController(DSConfiguration config, Session session, User user) {
+		super(config, "n004", session, user);
+	}
 
-    @Override
-    protected Object doWork(
-            WorkArguments args,
-            ModelMap model,
-            HttpServletResponse response) throws ApiException, IOException, com.docusign.webforms.client.ApiException {
-        EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
+	@Override
+	protected Object doWork(
+			WorkArguments args,
+			ModelMap model,
+			HttpServletResponse response)
+			throws ApiException, IOException, com.docusign.webforms.client.ApiException {
+		EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
-        // Call the Examples API method to create and send an notary envelope via email
-        var envelopeId = SendWithThirdPartyNotaryService.sendWithNotary(
-                args.getSignerEmail(),
-                args.getSignerName(),
-                this.session.getAccountId(),
-                envelopesApi,
-                args.getStatus());
+		// Call the Examples API method to create and send an notary envelope via email
+		var envelopeId = SendWithThirdPartyNotaryService.sendWithNotary(
+				args.getSignerEmail(),
+				args.getSignerName(),
+				this.session.getAccountId(),
+				envelopesApi,
+				args);
 
-        DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
-                .withMessage(getTextForCodeExampleByApiType().ResultsPageText
-                        .replaceFirst("\\{0}", envelopeId))
-                .addToModel(model, config);
-        return DONE_EXAMPLE_PAGE;
-    }
+		DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
+				.withMessage(getTextForCodeExampleByApiType().ResultsPageText
+						.replaceFirst("\\{0}", envelopeId))
+				.addToModel(model, config);
+		return DONE_EXAMPLE_PAGE;
+	}
 }
