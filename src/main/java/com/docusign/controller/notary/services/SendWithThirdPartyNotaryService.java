@@ -1,62 +1,55 @@
 package com.docusign.controller.notary.services;
 
+import com.docusign.common.WorkArguments;
+import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
+import com.docusign.core.common.DocumentType;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.model.*;
 import com.docusign.webforms.client.ApiException;
+
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
 public final class SendWithThirdPartyNotaryService {
-    public static String sendWithNotary(String signerEmail, String signerName, String accountId,
-            EnvelopesApi envelopesApi, String envStatus) throws ApiException, com.docusign.esign.client.ApiException {
-        EnvelopeDefinition env = makeEnvelope(signerEmail, signerName, envStatus);
+    private static final String HTML_DOCUMENT_FILE_NAME = "order_form.html";
 
-        EnvelopeSummary results = envelopesApi.createEnvelope(accountId, env);
-        return results.getEnvelopeId();
+    private static final String HTML_DOCUMENT_NAME = "Order form";
+
+    public static String sendWithNotary(String signerEmail, String signerName, String accountId,
+            EnvelopesApi envelopesApi, WorkArguments args)
+            throws ApiException, com.docusign.esign.client.ApiException, IOException {
+        EnvelopeDefinition envelopeDefinition = makeEnvelope(signerEmail, signerName, args);
+
+        EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelopeDefinition);
+        return envelopeSummary.getEnvelopeId();
     }
 
-    private static EnvelopeDefinition makeEnvelope(String signerEmail, String signerName, String envStatus) {
-        EnvelopeDefinition env = new EnvelopeDefinition();
-        env.setEmailSubject("Please sign this document set");
+    private static EnvelopeDefinition makeEnvelope(String signerEmail, String signerName, WorkArguments args)
+            throws IOException {
+        EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
+        envelopeDefinition.setEmailSubject("Please sign this document set");
 
-        env.setDocuments(getDocuments(signerEmail, signerName));
+        envelopeDefinition.setDocuments(getDocuments(signerEmail, signerName, args));
 
         Recipients recipients = new Recipients();
         recipients.setSigners(getSigners(signerEmail, signerName));
         recipients.setNotaries(getNotaryRecipients());
 
-        env.setRecipients(recipients);
-        env.setStatus(envStatus);
+        envelopeDefinition.setRecipients(recipients);
+        envelopeDefinition.setStatus("sent");
 
-        return env;
+        return envelopeDefinition;
     }
 
-    private static java.util.List<Document> getDocuments(String signerEmail, String signerName) {
-        Document doc1 = new Document();
-        String b64 = java.util.Base64.getEncoder().encodeToString(getDocumentExample(signerEmail, signerName));
-        doc1.setDocumentBase64(b64);
-        doc1.setName("Order acknowledgement");
-        doc1.setFileExtension("html");
-        doc1.setDocumentId("1");
+    private static java.util.List<Document> getDocuments(String signerEmail, String signerName, WorkArguments args)
+            throws IOException {
+        byte[] htmlDoc = EnvelopeHelpers.createHtmlFromTemplateFile(HTML_DOCUMENT_FILE_NAME, "args", args)
+                .getBytes(StandardCharsets.UTF_8);
+        Document document = EnvelopeHelpers.createDocument(htmlDoc, HTML_DOCUMENT_NAME,
+                DocumentType.HTML.getDefaultFileExtention(), "1");
 
-        return Collections.singletonList(doc1);
-    }
-
-    private static byte[] getDocumentExample(String signerEmail, String signerName) {
-        String document = "<!DOCTYPE html>\n"
-                + "<html>\n"
-                + "    <head>\n"
-                + "      <meta charset=\"UTF-8\">\n"
-                + "    </head>\n"
-                + "    <body style=\"font-family:sans-serif;margin-left:2em;\">\n"
-                + "    <h1 style=\"font-family: 'Trebuchet MS', Helvetica, sans-serif; color: darkblue;margin-bottom: 0;\">World Wide Corp</h1>\n"
-                + "    <h2 style=\"font-family: 'Trebuchet MS', Helvetica, sans-serif; margin-top: 0px;margin-bottom: 3.5em;font-size: 1em; color: darkblue;\">Order Processing Division</h2>\n"
-                + "    <h4>Ordered by " + signerName + "</h4>\n"
-                + "    <p>Email: " + signerEmail + "</p>\n"
-                + "    <h3>Agreed: <span style=\"color:white;\">**signature_1**/</span></h3>\n"
-                + "    </body>\n"
-                + "</html>";
-        return document.getBytes(StandardCharsets.UTF_8);
+        return Collections.singletonList(document);
     }
 
     private static java.util.List<Signer> getSigners(String signerEmail, String signerName) {
