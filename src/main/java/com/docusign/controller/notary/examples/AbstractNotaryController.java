@@ -36,12 +36,14 @@ public abstract class AbstractNotaryController extends AbstractController {
      * @return an instance of the {@link ApiClient}
      */
 
+    //ds-snippet-start:Notary4Step2
     protected static ApiClient createApiClient(String basePath, String userAccessToken) {
         ApiClient apiClient = new ApiClient(basePath);
         apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, BEARER_AUTHENTICATION + userAccessToken);
         apiClient.addAuthorization("docusignAccessCode", new OAuth());
         return apiClient;
     }
+    //ds-snippet-end:Notary4Step2
 
     /**
      * Creates a new instance of the eSignature EnvelopesApi. This method
