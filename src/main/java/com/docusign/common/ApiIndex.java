@@ -7,6 +7,7 @@ public enum ApiIndex {
     MONITOR("/pages/monitor/index", "", "/m001", "/m"),
     ADMIN("/pages/admin/index", "/management", "/a001", "/a"),
     CONNECT("/pages/connect/index", "", "/con001", "/con"),
+    NOTARY("/pages/notary/index", "/restapi", "/n004", "/n"),
     WEBFORMS("/pages/webforms/index", "/restapi", "/web001", "/web");
 
     private final String indexPath;
@@ -17,7 +18,8 @@ public enum ApiIndex {
 
     private final String examplesPathCode;
 
-    ApiIndex(final String indexPath, final String baseUrlSuffix, final String firstExamplePath, final String examplesPathCode) {
+    ApiIndex(final String indexPath, final String baseUrlSuffix, final String firstExamplePath,
+            final String examplesPathCode) {
         this.indexPath = indexPath;
         this.baseUrlSuffix = baseUrlSuffix;
         this.firstExamplePath = firstExamplePath;
