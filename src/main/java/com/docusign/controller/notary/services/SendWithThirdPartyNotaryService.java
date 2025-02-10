@@ -16,6 +16,7 @@ public final class SendWithThirdPartyNotaryService {
 
     private static final String HTML_DOCUMENT_NAME = "Order form";
 
+    //ds-snippet-start:Notary4Step4
     public static String sendWithNotary(String signerEmail, String signerName, String accountId,
             EnvelopesApi envelopesApi, WorkArguments args)
             throws ApiException, com.docusign.esign.client.ApiException, IOException {
@@ -24,7 +25,9 @@ public final class SendWithThirdPartyNotaryService {
         EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelopeDefinition);
         return envelopeSummary.getEnvelopeId();
     }
+    //ds-snippet-end:Notary4Step4
 
+    //ds-snippet-start:Notary4Step3
     private static EnvelopeDefinition makeEnvelope(String signerEmail, String signerName, WorkArguments args)
             throws IOException {
         EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
@@ -99,7 +102,6 @@ public final class SendWithThirdPartyNotaryService {
         notaryTabs.setNotarySealTabs(Collections.singletonList(notarySealTabs));
 
         NotaryRecipient notaryRecipient = new NotaryRecipient();
-        notaryRecipient.setEmail("");
         notaryRecipient.setName("Notary");
         notaryRecipient.setRecipientId("1");
         notaryRecipient.setRoutingOrder("1");
@@ -117,4 +119,5 @@ public final class SendWithThirdPartyNotaryService {
 
         return Collections.singletonList(notaryRecipient);
     }
+    //ds-snippet-end:Notary4Step3
 }
