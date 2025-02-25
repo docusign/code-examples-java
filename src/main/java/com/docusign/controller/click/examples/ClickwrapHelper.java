@@ -22,8 +22,8 @@ public class ClickwrapHelper {
      * @return the {@link Document} object
      * @throws IOException if document cannot be loaded due to some reason
      */
-    public static Document createDocumentFromFile(String fileName, String docName, Integer order) throws IOException {
-        byte[] buffer = FileUtils.readFile(fileName);
+    public Document createDocumentFromFile(String fileName, String docName, Integer order) throws IOException {
+        byte[] buffer = new FileUtils().readFile(fileName);
         String extension = FilenameUtils.getExtension(fileName);
         return createDocument(buffer, docName, extension, order);
     }
