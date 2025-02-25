@@ -55,7 +55,7 @@ public final class CreateClickwrapTest {
         String format = "modal";
         String documentDisplay = "document";
 
-        Document document = ClickwrapHelper.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, DOCUMENT_ORDER);
+        Document document = new ClickwrapHelper().createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, DOCUMENT_ORDER);
         DisplaySettings displaySettings = new DisplaySettings()
                 .displayName(displayName)
                 .consentButtonText(consentButtonText)

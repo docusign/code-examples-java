@@ -18,7 +18,7 @@ public final class CreateClickwrapService {
             String documentName,
             Integer documentOrder
     ) throws IOException {
-        Document document = ClickwrapHelper.createDocumentFromFile(fileName, documentName, documentOrder);
+        Document document = new ClickwrapHelper().createDocumentFromFile(fileName, documentName, documentOrder);
         DisplaySettings displaySettings = new DisplaySettings()
                 .displayName("Terms of Service")
                 .consentButtonText("I Agree")

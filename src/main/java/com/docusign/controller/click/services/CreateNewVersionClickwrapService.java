@@ -33,7 +33,7 @@ public final class CreateNewVersionClickwrapService {
             Integer documentOrder,
             String clickwrapName
     ) throws IOException {
-        Document document = ClickwrapHelper.createDocumentFromFile(fileName, documentName, documentOrder);
+        Document document = new ClickwrapHelper().createDocumentFromFile(fileName, documentName, documentOrder);
         DisplaySettings displaySettings = new DisplaySettings()
                 .displayName(clickwrapName)
                 .consentButtonText("I Agree")
