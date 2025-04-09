@@ -10,6 +10,7 @@ public enum ApiType {
             "dtr.documents.write", "dtr.profile.read", "dtr.profile.write", "dtr.company.read",
             "dtr.company.write", "room_forms" }, "r"),
     CONNECT("Connect", new String[] {}, "con"),
+    CONNECTEDFIELDS("Connected Fields API", new String[] { "signature", "adm_store_unified_repo_read" }, "cf"),
     CLICK("Click API", new String[] { "click.manage", "click.send" }, "c"),
     MONITOR("Monitor API", new String[] { "signature", "impersonation" }, "m"),
     ADMIN("Admin API", new String[] { "user_write", "signature", "impersonation", "group_read", "organization_read",
