@@ -8,7 +8,8 @@ public enum ApiIndex {
     ADMIN("/pages/admin/index", "/management", "/a001", "/a"),
     CONNECT("/pages/connect/index", "", "/con001", "/con"),
     NOTARY("/pages/notary/index", "/restapi", "/n004", "/n"),
-    WEBFORMS("/pages/webforms/index", "/restapi", "/web001", "/web");
+    WEBFORMS("/pages/webforms/index", "/restapi", "/web001", "/web"),
+    CONNECTEDFIELDS("/pages/connectedfields/index", "/restapi", "/cf001", "/cf");
 
     private final String indexPath;
 

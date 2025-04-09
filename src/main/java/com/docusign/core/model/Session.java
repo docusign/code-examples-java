@@ -71,6 +71,8 @@ public class Session implements Serializable {
 
     private String workflowId;
 
+    private String extensionApps;
+
     private String instanceId;
 
     private Boolean isPKCEWorking = true;
