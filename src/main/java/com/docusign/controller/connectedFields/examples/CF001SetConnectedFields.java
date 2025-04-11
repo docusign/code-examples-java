@@ -63,7 +63,7 @@ public class CF001SetConnectedFields extends AbstractConnectedFieldsController {
         JsonNode extensionApp = SetConnectedFieldsService.findAppById(
                 this.session.getExtensionApps(),
                 args.getAppId());
-
+        //ds-snippet-start:ConnectedFields1Step6
         EnvelopesApi envelopesApi = createEnvelopesApi(session.getBasePath(), user.getAccessToken());
 
         EnvelopeDefinition envelope = SetConnectedFieldsService.makeEnvelope(
@@ -74,6 +74,7 @@ public class CF001SetConnectedFields extends AbstractConnectedFieldsController {
                 envelopesApi,
                 session.getAccountId(),
                 envelope);
+        //ds-snippet-end:ConnectedFields1Step6
 
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText
