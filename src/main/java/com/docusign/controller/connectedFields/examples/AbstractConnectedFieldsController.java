@@ -37,10 +37,12 @@ public abstract class AbstractConnectedFieldsController extends AbstractControll
     protected static ApiClient createApiClient(
             String accessToken,
             String basePath) {
+        //ds-snippet-start:ConnectedFields1Step2
         ApiClient apiClient = new ApiClient(basePath);
         apiClient.addDefaultHeader(
                 HttpHeaders.AUTHORIZATION,
                 BEARER_AUTHENTICATION + accessToken);
+        //ds-snippet-end:ConnectedFields1Step2
 
         return apiClient;
     }
@@ -54,8 +56,12 @@ public abstract class AbstractConnectedFieldsController extends AbstractControll
      * @return an instance of the {@link EnvelopesApi}
      */
     protected EnvelopesApi createEnvelopesApi(String basePath, String userAccessToken) {
+    //ds-snippet-start:ConnectedFields1Step6
+
         ApiClient apiClient = createApiClient(userAccessToken, basePath);
         return new EnvelopesApi(apiClient);
+    //ds-snippet-end:ConnectedFields1Step6
+
     }
 
     protected String getExamplePagesPath() {
