@@ -28,7 +28,6 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 
-
 /**
  * Abstract base class for all controllers. It handles all requests which are
  * registered by the derived classes and delegates an example specific action
@@ -104,7 +103,8 @@ public abstract class AbstractController {
             return REDIRECT_AUTHENTICATION_PAGE;
         }
 
-        if(ApiType.giveTypeByName(this.exampleName) == ApiType.MONITOR && session.getAuthTypeSelected() != AuthType.JWT){
+        if (ApiType.giveTypeByName(this.exampleName) == ApiType.MONITOR
+                && session.getAuthTypeSelected() != AuthType.JWT) {
             session.setMonitorExampleRedirect("/" + this.exampleName);
             return REDIRECT_AUTHENTICATION_PAGE;
         }
@@ -113,7 +113,8 @@ public abstract class AbstractController {
             onInitModel(args, model);
             return pagePath;
         } catch (Exception exception) {
-            if (config.getQuickstart().equals("true") && exception.getMessage() == config.getCodeExamplesText().getSupportingTexts().getCFRError()) {
+            if (config.getQuickstart().equals("true")
+                    && exception.getMessage() == config.getCodeExamplesText().getSupportingTexts().getCFRError()) {
                 config.setQuickstart("false");
                 return handleRedirectToCfr(model);
             } else {
@@ -152,8 +153,7 @@ public abstract class AbstractController {
         String viewSourceFile = config.getCodeExamplesText().SupportingTexts
                 .getViewSourceFile().replaceFirst(
                         "\\{0}",
-                        "<a target='_blank' href='" + srcPath + "'>" + clazz.getSimpleName() + ".java" + "</a>"
-                );
+                        "<a target='_blank' href='" + srcPath + "'>" + clazz.getSimpleName() + ".java" + "</a>");
         model.addAttribute("csrfToken", "");
         model.addAttribute("title", title);
         model.addAttribute("viewSourceFile", viewSourceFile);
@@ -164,8 +164,9 @@ public abstract class AbstractController {
 
     public void setTheCurrentApiTypeAndBaseUrl() {
         config.setSelectedApiType(ApiType.giveTypeByName(this.exampleName).toString());
-        String basePath = session.getOauthAccount() != null ?
-                this.config.getBaseUrl(config.getSelectedApiIndex(), session.getOauthAccount()) + config.getSelectedApiIndex().getBaseUrlSuffix()
+        String basePath = session.getOauthAccount() != null
+                ? this.config.getBaseUrl(config.getSelectedApiIndex(), session.getOauthAccount())
+                        + config.getSelectedApiIndex().getBaseUrlSuffix()
                 : null;
         session.setBasePath(basePath);
     }
@@ -178,12 +179,14 @@ public abstract class AbstractController {
      * @param model    page model holder
      * @param response for HTTP-specific functionality in sending a response
      * @return {@link Object}. Possible types and values: <code>null</code>,
-     * {@link String} representation of the URL or Spring RedirectView object,
-     * (see {@link org.springframework.web.servlet.view.RedirectView RedirectView})
+     *         {@link String} representation of the URL or Spring RedirectView
+     *         object,
+     *         (see {@link org.springframework.web.servlet.view.RedirectView
+     *         RedirectView})
      * @throws Exception if calling API has failed or if I/O operation has failed
      */
     protected abstract Object doWork(WorkArguments args, ModelMap model,
-                                     HttpServletResponse response) throws Exception;
+            HttpServletResponse response) throws Exception;
 
     private String handleException(Exception exception, ModelMap model) {
         model.addAttribute(LAUNCHER_TEXTS, config.getCodeExamplesText().SupportingTexts);
@@ -194,8 +197,9 @@ public abstract class AbstractController {
         if (exception != null) {
             exceptionMessage = exception.getMessage();
             if (model.getAttribute("caseForInstructions") != null) {
-                fixingInstructions = exceptionMessage.contains((CharSequence) model.getAttribute("caseForInstructions")) ?
-                        (String) model.getAttribute("fixingInstructions") : null;
+                fixingInstructions = exceptionMessage.contains((CharSequence) model.getAttribute("caseForInstructions"))
+                        ? (String) model.getAttribute("fixingInstructions")
+                        : null;
             }
         }
         new DoneExample()
@@ -219,8 +223,7 @@ public abstract class AbstractController {
         OAuth2User oauthUser = oauth.getPrincipal();
         OAuth2AuthorizedClient oauthClient = authorizedClientService.loadAuthorizedClient(
                 oauth.getAuthorizedClientRegistrationId(),
-                oauthUser.getName()
-        );
+                oauthUser.getName());
 
         if (oauthClient != null) {
             OAuth2AccessToken accessToken = oauthClient.getAccessToken();
@@ -237,7 +240,7 @@ public abstract class AbstractController {
 
     protected CodeExampleText getTextForCodeExample() {
         List<ManifestGroup> manifestGroups = config.getCodeExamplesText().APIs.stream()
-                .filter(x -> ApiType.giveTypeByName(this.exampleName).name().toLowerCase().contains(x.Name.toLowerCase()))
+                .filter(x -> ApiType.giveTypeByName(this.exampleName).name().trim().equalsIgnoreCase(x.Name.trim()))
                 .findFirst()
                 .orElse(null).Groups;
 

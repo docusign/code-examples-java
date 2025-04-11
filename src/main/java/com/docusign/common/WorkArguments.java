@@ -7,7 +7,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.UUID;
 
-
 @Component
 @Scope(value = WebApplicationContext.SCOPE_REQUEST)
 @Data
@@ -65,6 +64,8 @@ public class WorkArguments {
     private String templateId;
 
     private String profileId;
+
+    private String appId;
 
     private String groupId;
 

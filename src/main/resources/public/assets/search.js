@@ -6,9 +6,9 @@
         ROOMS: 'rooms',
         ADMIN: 'admin',
         CONNECT: 'connect',
-        CONNECT: 'connect',
         WEBFORMS: 'webforms',
-        NOTARY: 'notary'
+        NOTARY: 'notary',
+        CONNECTEDFIELDS: 'connectedfields',
     };
 
     let processJSONData = function () {
@@ -132,6 +132,8 @@
                 return "web";
             case API_TYPES.NOTARY:
                 return "n";
+            case API_TYPES.CONNECTEDFIELDS:
+                return "cf";
         }
     }
 
