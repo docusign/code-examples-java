@@ -10,12 +10,11 @@ import java.util.Base64;
 
 public final class ValidateUsingHmacService {
     public static String computeHash(String secret, byte[] payload)
-            throws InvalidKeyException, NoSuchAlgorithmException {
+            throws InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
         String digest = "HmacSHA256";
         Mac mac = Mac.getInstance(digest);
-        mac.init(new SecretKeySpec(secret.getBytes(), digest));
-        String base64Hash = new String(Base64.getEncoder().encode(mac.doFinal(payload)));
-        return base64Hash;
+        mac.init(new SecretKeySpec(secret.getBytes("UTF-8"), digest));
+        return Base64.getEncoder().encodeToString(mac.doFinal(payload));
     }
 
     public static boolean isValid(String secret, byte[] payload, String verify)
