@@ -69,6 +69,8 @@ public class WorkArguments {
 
     private String groupId;
 
+    private String agreementId;
+
     private String permissionProfileName;
 
     private String phoneNumber;

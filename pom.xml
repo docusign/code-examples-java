@@ -32,6 +32,7 @@
         <monitor.version>1.4.0</monitor.version>
         <admin.version>2.0.0-RC2</admin.version>
         <webforms.version>2.0.0-RC1</webforms.version>
+        <iam.version>0.0.1-alpha.1</iam.version>
         <swagger-core-version>2.2.22</swagger-core-version>
         <jackson-version>2.17.2</jackson-version>
         <jersey2.version>3.0.9</jersey2.version>
@@ -65,7 +66,7 @@
             <version>1.18.34</version>
             <scope>provided</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -160,6 +161,12 @@
             <artifactId>docusign-rooms-java</artifactId>
             <version>${rooms.version}</version>
             <classifier>shaded</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>com.docusign</groupId>
+            <artifactId>iam-sdk</artifactId>
+            <version>${iam.version}</version>
         </dependency>
 
         <dependency>
@@ -259,7 +266,6 @@
             <dependency>
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcprov-jdk15on</artifactId>
-                <version>1.78</version>
             </dependency>
 
             <dependency>

@@ -8,6 +8,7 @@
         CONNECT: 'connect',
         WEBFORMS: 'webforms',
         NOTARY: 'notary',
+        NAVIGATOR: 'navigator',
         CONNECTEDFIELDS: 'connectedfields',
     };
 
@@ -132,6 +133,8 @@
                 return "web";
             case API_TYPES.NOTARY:
                 return "n";
+            case API_TYPES.NAVIGATOR:
+                return "nav";
             case API_TYPES.CONNECTEDFIELDS:
                 return "cf";
         }
