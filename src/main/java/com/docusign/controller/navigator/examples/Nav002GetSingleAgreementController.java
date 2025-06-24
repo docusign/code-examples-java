@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Nav002GetSingleAgreementController extends AbstractNavigatorController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Nav002GetSingleAgreementController.class);
+
     private static final String MODEL_AGREEMENTS_LIST = "agreements";
 
     public Nav002GetSingleAgreementController(DSConfiguration config, Session session, User user) {
