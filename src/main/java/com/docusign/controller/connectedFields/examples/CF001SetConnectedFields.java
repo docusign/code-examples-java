@@ -10,16 +10,11 @@ import com.docusign.core.model.User;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
-import com.fasterxml.jackson.databind.JsonNode;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,14 +39,14 @@ public class CF001SetConnectedFields extends AbstractConnectedFieldsController {
         try {
             super.onInitModel(args, model);
 
-            String extensionApps = SetConnectedFieldsService.getConnectedFieldsTabGroups(
+            var extensionApps = SetConnectedFieldsService.getConnectedFieldsTabGroups(
                     session.getAccountId(),
                     user.getAccessToken());
-            String filteredExtensionApps = SetConnectedFieldsService.filterData(extensionApps);
-            this.session.setExtensionApps(filteredExtensionApps);
 
-            List<Map<String, String>> appsList = SetConnectedFieldsService.convertJsonToList(filteredExtensionApps);
-            model.addAttribute(MODEL_APPS_LIST, appsList);
+            var filteredExtensionApps = SetConnectedFieldsService.filterData(extensionApps);
+
+            this.session.setExtensionApps(filteredExtensionApps);
+            model.addAttribute(MODEL_APPS_LIST, filteredExtensionApps);
         } catch (ApiException e) {
             LOGGER.info(String.valueOf(e));
         }
@@ -60,7 +55,7 @@ public class CF001SetConnectedFields extends AbstractConnectedFieldsController {
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
 
-        JsonNode extensionApp = SetConnectedFieldsService.findAppById(
+        var extensionApp = SetConnectedFieldsService.findAppById(
                 this.session.getExtensionApps(),
                 args.getAppId());
         //ds-snippet-start:ConnectedFields1Step6

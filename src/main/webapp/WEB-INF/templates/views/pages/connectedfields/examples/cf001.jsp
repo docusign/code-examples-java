@@ -48,7 +48,7 @@
 
             <select id="appId" name="appId" class="form-control">
                 <c:forEach var="app" items="${appsList}">
-                    <option value="${app.appId}">${app.applicationName}</option>
+                    <option value="${app.appId()}">${app.tabs().get(0).extensionData().applicationName().get()}</option>
                 </c:forEach>
             </select>
         </div>

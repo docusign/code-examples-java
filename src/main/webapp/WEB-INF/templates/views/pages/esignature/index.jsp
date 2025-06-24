@@ -54,6 +54,9 @@
           <c:when test="${apis.getName().equals('WebForms')}">
             <c:set var="linkToCodeExample" value="web" scope="page" />
           </c:when>
+          <c:when test="${apis.getName().equals('Navigator')}">
+            <c:set var="linkToCodeExample" value="nav" scope="page" />
+          </c:when>
           <c:when test="${apis.getName().equals('Notary')}">
             <c:set var="linkToCodeExample" value="n" scope="page" />
           </c:when>

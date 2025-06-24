@@ -19,6 +19,7 @@ public enum ApiType {
             "organization_sub_account_read", "organization_sub_account_write" }, "a"),
     WEBFORMS("WebForms API",
             new String[] { "signature", "webforms_read", "webforms_instance_read", "webforms_instance_write" }, "web"),
+    NAVIGATOR("Navigator API", new String[] { "signature", "adm_store_unified_repo_read" }, "nav"),
     NOTARY("Notary API", new String[] { "signature" }, "n");
 
     final String value;
@@ -34,8 +35,9 @@ public enum ApiType {
     }
 
     public static ApiType giveTypeByName(String exampleName) {
+        String exampleCode = exampleName.replaceAll("[^A-Za-z]", "");
         return Arrays.stream(ApiType.values())
-                .filter(x -> exampleName.contains(x.getCodeName()))
+                .filter(x -> exampleCode.equalsIgnoreCase(x.getCodeName()))
                 .findFirst()
                 .get();
     }
