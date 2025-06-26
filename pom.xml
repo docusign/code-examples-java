@@ -26,15 +26,15 @@
         <oauth2.version>2.5.6</oauth2.version>
         <commonsio.version>2.16.1</commonsio.version>
 
-        <esignature.version>6.1.0-RC1</esignature.version>
+        <esignature.version>6.2.0</esignature.version>
         <rooms.version>1.4.3</rooms.version>
         <click.version>1.5.0</click.version>
         <monitor.version>1.4.0</monitor.version>
-        <admin.version>2.0.0-RC2</admin.version>
+        <admin.version>2.0.0</admin.version>
         <webforms.version>2.0.0-RC1</webforms.version>
         <swagger-core-version>2.2.22</swagger-core-version>
         <jackson-version>2.17.2</jackson-version>
-        <jersey2.version>3.0.9</jersey2.version>
+        <jersey2.version>3.1.10</jersey2.version>
     </properties>
 
     <dependencies>
@@ -56,16 +56,16 @@
         <dependency>
             <groupId>io.github.cdimascio</groupId>
             <artifactId>dotenv-java</artifactId>
-            <version>3.0.1</version>
+            <version>3.2.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.34</version>
+            <version>1.18.38</version>
             <scope>provided</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -123,7 +123,7 @@
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.17.1</version>
+            <version>1.18.0</version>
         </dependency>
 
         <dependency>
@@ -134,7 +134,7 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20240303</version>
+            <version>20250517</version>
         </dependency>
 
         <!-- To compile JSP files -->
@@ -235,7 +235,7 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>1.18.34</version>
+                            <version>1.18.38</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
@@ -244,7 +244,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.4.0</version>
+                <version>3.6.0</version>
                 <configuration>
                     <configLocation>checkstyle.xml</configLocation>
                     <violationSeverity>warning</violationSeverity>
@@ -271,19 +271,19 @@
             <dependency>
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
-                <version>2.2</version>
+                <version>2.4</version>
             </dependency>
 
             <dependency>
                 <groupId>net.minidev</groupId>
                 <artifactId>json-smart</artifactId>
-                <version>2.5.1</version>
+                <version>2.5.2</version>
             </dependency>
 
             <dependency>
                 <groupId>com.nimbusds</groupId>
                 <artifactId>nimbus-jose-jwt</artifactId>
-                <version>9.40</version>
+                <version>10.3</version>
             </dependency>
 
             <dependency>
@@ -313,13 +313,13 @@
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-core</artifactId>
-                <version>1.5.6</version>
+                <version>1.5.18</version>
             </dependency>
 
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.5.6</version>
+                <version>1.5.18</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
