@@ -33,7 +33,7 @@ public class SetConnectedFieldsService {
 		return envelopesApi.createEnvelope(accountId, envelope);
 	}
 
-	// ds-snippet-start:ConnectedFields1Step3
+	//ds-snippet-start:ConnectedFields1Step3
 	public static ConnectedFieldsApiGetTabGroupsResponse getConnectedFieldsTabGroups(String accountId,
 			String accessToken) throws Exception {
 		return IamClient.builder()
@@ -45,9 +45,9 @@ public class SetConnectedFieldsService {
 				.accountId(accountId)
 				.call();
 	}
-	// ds-snippet-end:ConnectedFields1Step3
+	//ds-snippet-end:ConnectedFields1Step3
 
-	// ds-snippet-start:ConnectedFields1Step4
+	//ds-snippet-start:ConnectedFields1Step5
 	public static EnvelopeDefinition makeEnvelope(String signerEmail, String signerName, TabInfo selectedApp)
 			throws Exception {
 		String appId = selectedApp.appId();
@@ -147,8 +147,9 @@ public class SetConnectedFieldsService {
 
 		return envelopeDefinition;
 	}
-	// ds-snippet-end:ConnectedFields1Step5
+	//ds-snippet-end:ConnectedFields1Step5
 
+	//ds-snippet-start:ConnectedFields1Step4
 	public static List<TabInfo> filterData(ConnectedFieldsApiGetTabGroupsResponse connectedFields) {
 		List<TabInfo> filteredList = new ArrayList<>();
 
@@ -179,4 +180,5 @@ public class SetConnectedFieldsService {
 				.findFirst()
 				.orElse(null);
 	}
+	//ds-snippet-end:ConnectedFields1Step4
 }

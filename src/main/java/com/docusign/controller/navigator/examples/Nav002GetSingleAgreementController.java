@@ -48,6 +48,7 @@ public class Nav002GetSingleAgreementController extends AbstractNavigatorControl
     }
 
     @Override
+    //ds-snippet-start:Navigator2Step3
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
         var accountId = session.getAccountId();
         var accessToken = user.getAccessToken();
@@ -55,6 +56,7 @@ public class Nav002GetSingleAgreementController extends AbstractNavigatorControl
 
         var agreement = NavigatorMethodsService.getAgreement(accountId, accessToken, agreementId);
         var jsonAgreement = NavigatorMethodsService.serializeObjectToJson(agreement.agreement().orElseThrow());
+    //ds-snippet-end:Navigator2Step3
 
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                 .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
