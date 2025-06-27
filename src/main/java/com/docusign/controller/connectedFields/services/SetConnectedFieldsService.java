@@ -59,7 +59,7 @@ public class SetConnectedFieldsService {
 		return envelopesApi.createEnvelope(accountId, envelope);
 	}
 
-        //ds-snippet-start:ConnectedFields1Step3
+	// ds-snippet-start:ConnectedFields1Step3
 	public static String getConnectedFieldsTabGroups(String accountId, String accessToken) throws Exception {
 		String url = String.format(
 				"https://api-d.docusign.com/v1/accounts/%s/connected-fields/tab-groups",
@@ -71,8 +71,7 @@ public class SetConnectedFieldsService {
 				.header("Authorization", "Bearer " + accessToken)
 				.header("Accept", "application/json")
 				.build();
-		//ds-snippet-end:ConnectedFields1Step3
-
+		// ds-snippet-end:ConnectedFields1Step3
 
 		try {
 			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -89,12 +88,12 @@ public class SetConnectedFieldsService {
 
 	public static EnvelopeDefinition makeEnvelope(String signerEmail, String signerName, JsonNode selectedApp)
 			throws Exception {
-        //ds-snippet-start:ConnectedFields1Step4
+		// ds-snippet-start:ConnectedFields1Step4
 		String appId = selectedApp.has(APP_ID) ? selectedApp.get(APP_ID).asText() : "";
-	    //ds-snippet-end:ConnectedFields1Step4
+		// ds-snippet-end:ConnectedFields1Step4
 
 		JsonNode tabLabels = selectedApp.get(TABS);
-        //ds-snippet-start:ConnectedFields1Step5
+		// ds-snippet-start:ConnectedFields1Step5
 
 		EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
 		envelopeDefinition.setEmailSubject("Please sign this document set");
@@ -118,10 +117,10 @@ public class SetConnectedFieldsService {
 		signHere.setAnchorUnits("pixels");
 		signHere.setAnchorYOffset("10");
 		signHere.setAnchorXOffset("20");
-        //ds-snippet-end:ConnectedFields1Step5
+		// ds-snippet-end:ConnectedFields1Step5
 
 		List<Text> textTabs = new ArrayList<Text>();
-        //ds-snippet-start:ConnectedFields1Step4
+		// ds-snippet-start:ConnectedFields1Step4
 		if (tabLabels != null && tabLabels.isArray()) {
 			for (JsonNode tab : tabLabels) {
 				JsonNode extensionData = tab.get(EXTENSION_DATA);
@@ -146,9 +145,9 @@ public class SetConnectedFieldsService {
 				String extensionContract = getText(extensionData, "extensionContract");
 				String requiredForExtension = getText(extensionData, "requiredForExtension");
 				String tabLabel = getText(tab, TAB_LABEL);
-        //ds-snippet-end:ConnectedFields1Step4
+				// ds-snippet-end:ConnectedFields1Step4
 
-        //ds-snippet-start:ConnectedFields1Step5
+				// ds-snippet-start:ConnectedFields1Step5
 				Text textTab = new Text();
 				textTab.setRequireInitialOnSharedChange("false");
 				textTab.setRequireAll("false");
@@ -204,7 +203,7 @@ public class SetConnectedFieldsService {
 		envelopeDefinition.setRecipients(recipients);
 
 		return envelopeDefinition;
-		//ds-snippet-end:ConnectedFields1Step5
+		// ds-snippet-end:ConnectedFields1Step5
 	}
 
 	public static List<Map<String, String>> convertJsonToList(String jsonString) throws Exception {
