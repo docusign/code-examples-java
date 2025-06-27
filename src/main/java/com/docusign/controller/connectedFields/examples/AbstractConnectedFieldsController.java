@@ -56,12 +56,8 @@ public abstract class AbstractConnectedFieldsController extends AbstractControll
      * @return an instance of the {@link EnvelopesApi}
      */
     protected EnvelopesApi createEnvelopesApi(String basePath, String userAccessToken) {
-    //ds-snippet-start:ConnectedFields1Step6
-
         ApiClient apiClient = createApiClient(userAccessToken, basePath);
         return new EnvelopesApi(apiClient);
-    //ds-snippet-end:ConnectedFields1Step6
-
     }
 
     protected String getExamplePagesPath() {

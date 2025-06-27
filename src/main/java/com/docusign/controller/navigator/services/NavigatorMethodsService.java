@@ -9,11 +9,13 @@ import org.openapitools.jackson.nullable.JsonNullableModule;
 
 public class NavigatorMethodsService {
 
+	//ds-snippet-start:NavigatorJavaStep2
 	private static IamClient createIamClient(String accessToken) {
 		return IamClient.builder()
 				.accessToken(accessToken)
 				.build();
 	}
+	//ds-snippet-end:NavigatorJavaStep2
 
 	public static GetAgreementsListResponse getAgreements(String accountId, String accessToken) throws Exception {
 		return createIamClient(accessToken)
