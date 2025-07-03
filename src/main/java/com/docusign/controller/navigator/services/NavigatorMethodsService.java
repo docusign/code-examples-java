@@ -9,6 +9,7 @@ import org.openapitools.jackson.nullable.JsonNullableModule;
 
 public class NavigatorMethodsService {
 
+	private static final Integer AGREEMENTS_LIMIT = 25;
 	private static IamClient createIamClient(String accessToken) {
 		return IamClient.builder()
 				.accessToken(accessToken)
@@ -21,6 +22,7 @@ public class NavigatorMethodsService {
 				.agreements()
 				.getAgreementsList()
 				.accountId(accountId)
+				.limit(AGREEMENTS_LIMIT)
 				.call();
 	}
 
