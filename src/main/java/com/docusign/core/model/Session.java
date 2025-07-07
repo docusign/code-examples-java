@@ -1,6 +1,7 @@
 package com.docusign.core.model;
 
 import com.docusign.esign.client.auth.OAuth;
+import com.docusign.iam.sdk.models.components.TabInfo;
 import lombok.Data;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -71,7 +72,7 @@ public class Session implements Serializable {
 
     private String workflowId;
 
-    private String extensionApps;
+    private List<TabInfo> extensionApps;
 
     private String instanceId;
 
