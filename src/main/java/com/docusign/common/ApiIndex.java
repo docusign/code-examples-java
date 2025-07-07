@@ -7,6 +7,7 @@ public enum ApiIndex {
     MONITOR("/pages/monitor/index", "", "/m001", "/m"),
     ADMIN("/pages/admin/index", "/management", "/a001", "/a"),
     CONNECT("/pages/connect/index", "", "/con001", "/con"),
+    NAVIGATOR("/pages/navigator/index", "/restapi", "/nav001", "/nav"),
     NOTARY("/pages/notary/index", "/restapi", "/n004", "/n"),
     WEBFORMS("/pages/webforms/index", "/restapi", "/web001", "/web"),
     CONNECTEDFIELDS("/pages/connectedfields/index", "/restapi", "/cf001", "/cf");
