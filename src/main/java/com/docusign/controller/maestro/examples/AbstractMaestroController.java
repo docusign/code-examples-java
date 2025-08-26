@@ -4,6 +4,9 @@ import com.docusign.DSConfiguration;
 import com.docusign.core.controller.AbstractController;
 import com.docusign.core.model.Session;
 import com.docusign.core.model.User;
+import com.docusign.iam.sdk.IamClient;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -22,6 +25,19 @@ public abstract class AbstractMaestroController extends AbstractController {
         super(config, exampleName);
         this.user = user;
         this.session = session;
+    }
+
+    protected IamClient createAuthenticatedClient(String accessToken) {
+        return IamClient.builder()
+                .accessToken(accessToken)
+                .build();
+    }
+
+    protected String serializeObjectToJson(Object data) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new Jdk8Module());
+
+        return mapper.writeValueAsString(data);
     }
 
     protected String getExamplePagesPath() {

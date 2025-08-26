@@ -2,14 +2,13 @@ package com.docusign.controller.navigator.services;
 
 import com.docusign.iam.sdk.IamClient;
 import com.docusign.iam.sdk.models.operations.GetAgreementResponse;
+import com.docusign.iam.sdk.models.operations.GetAgreementsListRequest;
 import com.docusign.iam.sdk.models.operations.GetAgreementsListResponse;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openapitools.jackson.nullable.JsonNullableModule;
 
 public class NavigatorMethodsService {
-	private static final Integer AGREEMENTS_LIMIT = 25;
-
 	//ds-snippet-start:NavigatorJavaStep2
 	private static IamClient createIamClient(String accessToken) {
 		return IamClient.builder()
@@ -23,8 +22,7 @@ public class NavigatorMethodsService {
 				.navigator()
 				.agreements()
 				.getAgreementsList()
-				.accountId(accountId)
-				.limit(AGREEMENTS_LIMIT)
+				.request(new GetAgreementsListRequest(accountId))
 				.call();
 	}
 

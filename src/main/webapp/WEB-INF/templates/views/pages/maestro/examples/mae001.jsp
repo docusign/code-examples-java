@@ -7,7 +7,7 @@
 <c:set var="signerNameInputNumber" value="2" scope="page" />
 <c:set var="ccEmailInputNumber" value="3" scope="page" />
 <c:set var="ccNameInputNumber" value="4" scope="page" />
-<c:set var="redirectToEigthCodeExample" value="href='eg008'" scope="page" />
+<c:set var="redirectToEightCodeExample" value="href='eg008'" scope="page" />
 <c:set var="redirectNumber" value="0" scope="page" />
 
 <h4>${example.getExampleName()}</h4>
@@ -28,7 +28,7 @@
         <c:choose>
             <c:when test="${templateId == null && workflowId == null}">
                 <p>
-                        ${example.getRedirectsToOtherCodeExamples().get(redirectNumber).getRedirectText().replaceFirst("\\{0}", redirectToEigthCodeExample)}
+                        ${example.getRedirectsToOtherCodeExamples().get(redirectNumber).getRedirectText().replaceFirst("\\{0}", redirectToEightCodeExample)}
                 </p>
 
                 <form class="eg" action="eg008" method="get">
