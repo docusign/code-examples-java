@@ -30,7 +30,7 @@ public class Mae001TriggerWorkflowController extends AbstractMaestroController {
 
     private static final String PUBLISH_LINK = "publishLink";
 
-    public static final String WORKFLOW_NAME = "Example workflow - send invite to signer hahaha";
+    public static final String WORKFLOW_NAME = "Example workflow - send invite to signer";
 
     public static final String STATUS = "active";
 
@@ -45,7 +45,7 @@ public class Mae001TriggerWorkflowController extends AbstractMaestroController {
         try {
             ensureWorkflowExists(model);
         } catch(Exception exception) {
-                throw exception;
+                throw new Exception(getTextForCodeExampleByApiType().CustomErrorTexts.get(0).ErrorMessage);
         }
 
         model.addAttribute(TEMPLATE_ID, session.getTemplateId());
