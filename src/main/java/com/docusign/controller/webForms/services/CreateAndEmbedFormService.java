@@ -78,7 +78,7 @@ public final class CreateAndEmbedFormService {
         CreateInstanceRequestBody options = new CreateInstanceRequestBody()
             .clientUserId(clientUserId)
             .formValues(formValues)
-            .expirationOffset(3600);
+            .expirationOffset(24);
             
         return formManagementApi.createInstance(accountId, formId, options);
        //ds-snippet-end:WebForms1Step5
