@@ -131,11 +131,7 @@ For a list of code examples that use the Web Forms API, see the [How-to guides o
 
 #### Multiple code examples, Authorization Code Grant, and JWT Grant:
 1. $ `cd <Quickstart folder>`
-1. $ `mvn package -Dmaven.test.skip=true`
-1. $ `java -Dspring.profiles.active=dev -jar target/code-examples-java-1.0-SNAPSHOT.war`
- For Windows:   
-1. $ `mvn package -D"maven.test.skip"="true"`  
-1. $ `java -D"spring.profiles.active"="dev" -jar target/code-examples-java-1.0-SNAPSHOT.war`
+1. $ `mvn spring-boot:run`
 
 #### Authorization Code Grant embedded signing example:
 

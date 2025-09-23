@@ -30,11 +30,13 @@ public final class CreateRemoteInstanceService {
             ApiClient apiClient,
             String userAccessToken,
             String name) throws ApiException {
+        //ds-snippet-start:WebForms2Step3
         FormManagementApi formManagementApi = new FormManagementApi(apiClient);
         var option = formManagementApi.new ListFormsOptions();
         option.setSearch(name);
 
         return formManagementApi.listForms(userAccessToken, option);
+        //ds-snippet-end:WebForms2Step3
     }
 
     public static void addTemplateIdToForm(String fileName, String templateId) {
@@ -59,6 +61,7 @@ public final class CreateRemoteInstanceService {
             String formId,
             String signerEmail,
             String signerName) throws ApiException {
+        //ds-snippet-start:WebForms2Step4
         WebFormValues formValues = new WebFormValues();
         formValues.putAll(Map.of(
                 "PhoneNumber", "555-555-5555",
@@ -75,8 +78,11 @@ public final class CreateRemoteInstanceService {
                 .sendOption(SendOption.NOW)
                 .formValues(formValues)
                 .recipients(List.of(recipient));
+        //ds-snippet-end:WebForms2Step4
 
+        //ds-snippet-start:WebForms2Step5
         return new FormInstanceManagementApi(apiClient).createInstance(accountId, formId, options);
+        //ds-snippet-end:WebForms2Step5
     }
 
     public static EnvelopeTemplate prepareEnvelopeTemplate(String templateName, String documentPdf) throws IOException {
