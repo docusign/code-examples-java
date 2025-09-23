@@ -74,10 +74,10 @@ public final class CreateAndEmbedFormService {
         String clientUserId = "1234-5678-abcd-ijkl";
 
         CreateInstanceRequestBody options = new CreateInstanceRequestBody()
-                .clientUserId(clientUserId)
-                .formValues(formValues)
-                .expirationOffset(3600);
-
+            .clientUserId(clientUserId)
+            .formValues(formValues)
+            .expirationOffset(24);
+            
         return formManagementApi.createInstance(accountId, formId, options);
         // ds-snippet-end:WebForms1Step5
     }
