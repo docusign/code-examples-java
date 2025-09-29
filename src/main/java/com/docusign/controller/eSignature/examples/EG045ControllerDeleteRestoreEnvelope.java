@@ -91,6 +91,8 @@ public class EG045ControllerDeleteRestoreEnvelope extends AbstractEsignatureCont
         String accountId = session.getAccountId();
         String folderName = args.getFolderName() != null ? args.getFolderName() : SENT_ITEMS_FOLDER_NAME;
 
+        ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
+
         FoldersResponse availableFolders = DeleteRestoreEnvelopeService.getFolders(apiClient, accountId);
         Folder folder = availableFolders.getFolders().stream()
                 .filter(f -> f.getName().equals(folderName))
@@ -105,8 +107,6 @@ public class EG045ControllerDeleteRestoreEnvelope extends AbstractEsignatureCont
 
             return DONE_EXAMPLE_PAGE;
         }
-
-        ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
 
         DeleteRestoreEnvelopeService.moveEnvelopeToFolder(
                 apiClient,
