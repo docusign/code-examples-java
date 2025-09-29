@@ -26,7 +26,7 @@
         <oauth2.version>2.5.6</oauth2.version>
         <commonsio.version>2.16.1</commonsio.version>
 
-        <esignature.version>6.2.0</esignature.version>
+        <esignature.version>6.4.0</esignature.version>
         <rooms.version>1.4.3</rooms.version>
         <click.version>1.5.0</click.version>
         <monitor.version>1.4.0</monitor.version>
