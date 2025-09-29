@@ -77,4 +77,6 @@ public class Session implements Serializable {
     private String instanceId;
 
     private Boolean isPKCEWorking = true;
+
+    private Boolean isWebFormsInitialRun = true;
 }

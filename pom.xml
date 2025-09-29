@@ -31,7 +31,7 @@
         <click.version>1.5.0</click.version>
         <monitor.version>1.4.0</monitor.version>
         <admin.version>2.0.0</admin.version>
-        <webforms.version>2.0.0-RC1</webforms.version>
+        <webforms.version>2.1.0</webforms.version>
         <iam.version>0.0.1-alpha.1</iam.version>
         <swagger-core-version>2.2.22</swagger-core-version>
         <jackson-version>2.17.2</jackson-version>
