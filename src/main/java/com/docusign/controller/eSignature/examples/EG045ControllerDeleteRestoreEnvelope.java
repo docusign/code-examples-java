@@ -62,7 +62,12 @@ public class EG045ControllerDeleteRestoreEnvelope extends AbstractEsignatureCont
                 null);
 
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
-                .withMessage(getTextForCodeExampleByApiType().AdditionalPage.get(0).ResultsPageText)
+                .withMessage(
+                    MessageFormat.format(
+                        getTextForCodeExampleByApiType().AdditionalPage.get(0).ResultsPageText,
+                        envelopeId
+                    )
+                )
                 .withRedirect(EXAMPLE_NUMBER + RESTORE_ENVELOPE)
                 .addToModel(model, config);
 
@@ -94,14 +99,16 @@ public class EG045ControllerDeleteRestoreEnvelope extends AbstractEsignatureCont
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
 
         FoldersResponse availableFolders = DeleteRestoreEnvelopeService.getFolders(apiClient, accountId);
-        Folder folder = availableFolders.getFolders().stream()
-                .filter(f -> f.getName().equals(folderName))
-                .findFirst()
-                .orElse(null);
+        Folder folder = DeleteRestoreEnvelopeService.getFolderIdByName(availableFolders.getFolders(), folderName);
 
         if(folder == null) {
             DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
-                    .withMessage(getTextForCodeExampleByApiType().AdditionalPage.get(1).ResultsPageText)
+                    .withMessage(
+                        MessageFormat.format(
+                            getTextForCodeExampleByApiType().AdditionalPage.get(1).ResultsPageText,
+                            folderName
+                        )
+                    )
                     .withRedirect(EXAMPLE_NUMBER + RESTORE_ENVELOPE)
                     .addToModel(model, config);
 
@@ -119,6 +126,7 @@ public class EG045ControllerDeleteRestoreEnvelope extends AbstractEsignatureCont
                 .withMessage(
                         MessageFormat.format(
                                 getTextForCodeExampleByApiType().ResultsPageText,
+                                envelopeId,
                                 folder.getType(),
                                 folderName
                         )

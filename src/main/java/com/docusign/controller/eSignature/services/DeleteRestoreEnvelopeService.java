@@ -2,10 +2,12 @@ package com.docusign.controller.eSignature.services;
 
 import com.docusign.esign.api.FoldersApi;
 import com.docusign.esign.client.ApiClient;
+import com.docusign.esign.model.Folder;
 import com.docusign.esign.model.FoldersRequest;
 import com.docusign.esign.model.FoldersResponse;
 
 import java.util.Collections;
+import java.util.List;
 
 public final class DeleteRestoreEnvelopeService {
     public static FoldersResponse moveEnvelopeToFolder(
@@ -30,5 +32,21 @@ public final class DeleteRestoreEnvelopeService {
     ) throws Exception {
         FoldersApi foldersApi = new FoldersApi(apiClient);
         return foldersApi.callList(accountId);
+    }
+
+    public static Folder getFolderIdByName(List<Folder> folders, String targetName) {
+        for (Folder folder : folders) {
+            if (folder.getName().equals(targetName)) {
+                return folder;
+            }
+
+            if (folder.getFolders() != null && !folder.getFolders().isEmpty()) {
+                Folder nestedFolder = DeleteRestoreEnvelopeService.getFolderIdByName(folder.getFolders(), targetName);
+                if (nestedFolder != null) {
+                    return nestedFolder;
+                }
+            }
+        }
+        return null;
     }
 }
