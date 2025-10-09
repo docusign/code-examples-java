@@ -19,15 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletResponse;
 import java.text.MessageFormat;
 
-
 /**
  * Used to delete the envelope and restore it back.
  */
 @Controller
 @RequestMapping("/eg045")
 public class EG045ControllerDeleteRestoreEnvelope extends AbstractEsignatureController {
-    public static final String RECYCLE_BIN_FOLDER_ID = "recyclebin";
-
     public static final String SENT_ITEMS_FOLDER_NAME = "Sent items";
 
     public static final String EXAMPLE_NUMBER = "/eg045";
@@ -36,7 +33,7 @@ public class EG045ControllerDeleteRestoreEnvelope extends AbstractEsignatureCont
 
     public static final String RESTORE_ENVELOPE_PAGE = "pages/esignature/examples/eg045RestoreEnvelope";
 
-    public EG045ControllerDeleteRestoreEnvelope(DSConfiguration config, Session session, User user){
+    public EG045ControllerDeleteRestoreEnvelope(DSConfiguration config, Session session, User user) {
         super(config, "eg045", session, user);
     }
 
@@ -48,26 +45,22 @@ public class EG045ControllerDeleteRestoreEnvelope extends AbstractEsignatureCont
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model,
-                            HttpServletResponse response) throws Exception {
+            HttpServletResponse response) throws Exception {
         String envelopeId = args.getEnvelopeId();
         session.setEnvelopeId(envelopeId);
 
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
 
-        DeleteRestoreEnvelopeService.moveEnvelopeToFolder(
+        DeleteRestoreEnvelopeService.deleteEnvelope(
                 apiClient,
                 session.getAccountId(),
-                envelopeId,
-                RECYCLE_BIN_FOLDER_ID,
-                null);
+                envelopeId);
 
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                 .withMessage(
-                    MessageFormat.format(
-                        getTextForCodeExampleByApiType().AdditionalPage.get(0).ResultsPageText,
-                        envelopeId
-                    )
-                )
+                        MessageFormat.format(
+                                getTextForCodeExampleByApiType().AdditionalPage.get(0).ResultsPageText,
+                                envelopeId))
                 .withRedirect(EXAMPLE_NUMBER + RESTORE_ENVELOPE)
                 .addToModel(model, config);
 
@@ -81,8 +74,7 @@ public class EG045ControllerDeleteRestoreEnvelope extends AbstractEsignatureCont
         String envelopeId = session.getEnvelopeId();
         String restoreEnvelopeText = MessageFormat.format(
                 config.getCodeExamplesText().SupportingTexts.HelpingTexts.EnvelopeWillBeRestored,
-                envelopeId
-        );
+                envelopeId);
 
         model.addAttribute("restoreText", restoreEnvelopeText);
         model.addAttribute("envelopeId", envelopeId);
@@ -101,14 +93,12 @@ public class EG045ControllerDeleteRestoreEnvelope extends AbstractEsignatureCont
         FoldersResponse availableFolders = DeleteRestoreEnvelopeService.getFolders(apiClient, accountId);
         Folder folder = DeleteRestoreEnvelopeService.getFolderIdByName(availableFolders.getFolders(), folderName);
 
-        if(folder == null) {
+        if (folder == null) {
             DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                     .withMessage(
-                        MessageFormat.format(
-                            getTextForCodeExampleByApiType().AdditionalPage.get(1).ResultsPageText,
-                            folderName
-                        )
-                    )
+                            MessageFormat.format(
+                                    getTextForCodeExampleByApiType().AdditionalPage.get(1).ResultsPageText,
+                                    folderName))
                     .withRedirect(EXAMPLE_NUMBER + RESTORE_ENVELOPE)
                     .addToModel(model, config);
 
@@ -128,9 +118,7 @@ public class EG045ControllerDeleteRestoreEnvelope extends AbstractEsignatureCont
                                 getTextForCodeExampleByApiType().ResultsPageText,
                                 envelopeId,
                                 folder.getType(),
-                                folderName
-                        )
-                )
+                                folderName))
                 .addToModel(model, config);
 
         return DONE_EXAMPLE_PAGE;
