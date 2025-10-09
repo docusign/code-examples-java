@@ -25,6 +25,8 @@ import java.text.MessageFormat;
 @Controller
 @RequestMapping("/eg045")
 public class EG045ControllerDeleteRestoreEnvelope extends AbstractEsignatureController {
+    public static final String RECYCLE_BIN_FOLDER_ID = "recyclebin";
+
     public static final String SENT_ITEMS_FOLDER_NAME = "Sent items";
 
     public static final String EXAMPLE_NUMBER = "/eg045";
@@ -59,7 +61,8 @@ public class EG045ControllerDeleteRestoreEnvelope extends AbstractEsignatureCont
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                 .withMessage(
                         MessageFormat.format(
-                                getTextForCodeExampleByApiType().AdditionalPage.get(0).ResultsPageText,
+                                getTextForCodeExampleByApiType().AdditionalPage
+                                        .get(0).ResultsPageText,
                                 envelopeId))
                 .withRedirect(EXAMPLE_NUMBER + RESTORE_ENVELOPE)
                 .addToModel(model, config);
@@ -91,13 +94,15 @@ public class EG045ControllerDeleteRestoreEnvelope extends AbstractEsignatureCont
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
 
         FoldersResponse availableFolders = DeleteRestoreEnvelopeService.getFolders(apiClient, accountId);
-        Folder folder = DeleteRestoreEnvelopeService.getFolderIdByName(availableFolders.getFolders(), folderName);
+        Folder folder = DeleteRestoreEnvelopeService.getFolderIdByName(availableFolders.getFolders(),
+                folderName);
 
         if (folder == null) {
             DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                     .withMessage(
                             MessageFormat.format(
-                                    getTextForCodeExampleByApiType().AdditionalPage.get(1).ResultsPageText,
+                                    getTextForCodeExampleByApiType().AdditionalPage
+                                            .get(1).ResultsPageText,
                                     folderName))
                     .withRedirect(EXAMPLE_NUMBER + RESTORE_ENVELOPE)
                     .addToModel(model, config);
