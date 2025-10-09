@@ -10,13 +10,26 @@ import java.util.Collections;
 import java.util.List;
 
 public final class DeleteRestoreEnvelopeService {
+    public static final String RECYCLE_BIN_FOLDER_ID = "recyclebin";
+
+    public static FoldersResponse deleteEnvelope(
+            ApiClient apiClient,
+            String accountId,
+            String envelopeId) throws Exception {
+        FoldersApi foldersApi = new FoldersApi(apiClient);
+
+        FoldersRequest foldersRequest = new FoldersRequest();
+        foldersRequest.setEnvelopeIds(Collections.singletonList(envelopeId));
+
+        return foldersApi.moveEnvelopes(accountId, RECYCLE_BIN_FOLDER_ID, foldersRequest);
+    }
+
     public static FoldersResponse moveEnvelopeToFolder(
-        ApiClient apiClient,
-        String accountId,
-        String envelopeId,
-        String folderId,
-        String fromFolderId
-    ) throws Exception {
+            ApiClient apiClient,
+            String accountId,
+            String envelopeId,
+            String folderId,
+            String fromFolderId) throws Exception {
         FoldersApi foldersApi = new FoldersApi(apiClient);
 
         FoldersRequest foldersRequest = new FoldersRequest();
@@ -27,9 +40,8 @@ public final class DeleteRestoreEnvelopeService {
     }
 
     public static FoldersResponse getFolders(
-        ApiClient apiClient,
-        String accountId
-    ) throws Exception {
+            ApiClient apiClient,
+            String accountId) throws Exception {
         FoldersApi foldersApi = new FoldersApi(apiClient);
         return foldersApi.callList(accountId);
     }
