@@ -26,6 +26,7 @@ public final class DeleteRestoreEnvelopeService {
         //ds-snippet-end:eSign45Step4
     }
     //ds-snippet-start:eSign45Step6
+
     public static FoldersResponse moveEnvelopeToFolder(
             ApiClient apiClient,
             String accountId,
@@ -41,7 +42,9 @@ public final class DeleteRestoreEnvelopeService {
         return foldersApi.moveEnvelopes(accountId, folderId, foldersRequest);
     }
     //ds-snippet-end:eSign45Step6
+
      //ds-snippet-start:eSign45Step5
+     
     public static FoldersResponse getFolders(
             ApiClient apiClient,
             String accountId) throws Exception {
