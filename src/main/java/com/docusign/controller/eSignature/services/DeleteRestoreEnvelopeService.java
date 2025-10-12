@@ -17,13 +17,15 @@ public final class DeleteRestoreEnvelopeService {
             String accountId,
             String envelopeId) throws Exception {
         FoldersApi foldersApi = new FoldersApi(apiClient);
-
+        //ds-snippet-start:eSign45Step3
         FoldersRequest foldersRequest = new FoldersRequest();
         foldersRequest.setEnvelopeIds(Collections.singletonList(envelopeId));
-
+        //ds-snippet-end:eSign45Step3
+        //ds-snippet-start:eSign45Step4
         return foldersApi.moveEnvelopes(accountId, RECYCLE_BIN_FOLDER_ID, foldersRequest);
+        //ds-snippet-end:eSign45Step4
     }
-
+    //ds-snippet-start:eSign45Step6
     public static FoldersResponse moveEnvelopeToFolder(
             ApiClient apiClient,
             String accountId,
@@ -38,7 +40,8 @@ public final class DeleteRestoreEnvelopeService {
 
         return foldersApi.moveEnvelopes(accountId, folderId, foldersRequest);
     }
-
+    //ds-snippet-end:eSign45Step6
+     //ds-snippet-start:eSign45Step5
     public static FoldersResponse getFolders(
             ApiClient apiClient,
             String accountId) throws Exception {
@@ -61,4 +64,5 @@ public final class DeleteRestoreEnvelopeService {
         }
         return null;
     }
+    //ds-snippet-end:eSign45Step5
 }

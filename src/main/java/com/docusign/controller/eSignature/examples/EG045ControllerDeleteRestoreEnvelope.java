@@ -50,9 +50,9 @@ public class EG045ControllerDeleteRestoreEnvelope extends AbstractEsignatureCont
             HttpServletResponse response) throws Exception {
         String envelopeId = args.getEnvelopeId();
         session.setEnvelopeId(envelopeId);
-
+        //ds-snippet-start:eSign45Step2
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
-
+        //ds-snippet-end:eSign45Step2
         DeleteRestoreEnvelopeService.deleteEnvelope(
                 apiClient,
                 session.getAccountId(),
