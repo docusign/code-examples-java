@@ -35,4 +35,12 @@ public class HelpingTexts {
     public String NOTAGREED;
 
     public String AGREED;
+
+    public String SubmitButtonDeleteText;
+
+    public String SubmitButtonRestoreText;
+
+    public String EnvelopeWillBeRestored;
+
+    public String DefaultEnvelopeId;
 }

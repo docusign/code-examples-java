@@ -71,6 +71,8 @@ public class WorkArguments {
 
     private String agreementId;
 
+    private String envelopeId;
+
     private String permissionProfileName;
 
     private String phoneNumber;
@@ -182,4 +184,6 @@ public class WorkArguments {
     private String jsonPayload;
 
     private String instanceName;
+
+    private String folderName;
 }
