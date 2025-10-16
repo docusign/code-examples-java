@@ -88,8 +88,10 @@ public class Mae001TriggerWorkflowController extends AbstractMaestroController {
         var accessToken = user.getAccessToken();
         var templateId = session.getTemplateId();
 
-        findActiveWorkflow(accessToken, accountId)
+        if (session.getWorkflowId() == null) {
+            findActiveWorkflow(accessToken, accountId)
                 .ifPresent(workflowId -> session.setWorkflowId(workflowId));
+        }
 
         if (session.getIsWorkflowPublished()) {
             publishAndSetLink(model, accessToken, accountId, session.getWorkflowId());
@@ -112,8 +114,7 @@ public class Mae001TriggerWorkflowController extends AbstractMaestroController {
         return workflowsResponse.workflowsListSuccess().stream()
                 .filter(w -> w.data().isPresent())
                 .flatMap(w -> w.data().orElseThrow().stream())
-                .filter(workflow ->
-                        workflow.name().orElseThrow().equals(WORKFLOW_NAME) && workflow.status().orElseThrow().equals(STATUS))
+                .filter(workflow -> workflow.name().orElseThrow().equals(WORKFLOW_NAME))
                 .map(workflow -> workflow.id().orElse(null))
                 .findFirst();
     }
