@@ -26,13 +26,13 @@
         <oauth2.version>2.5.6</oauth2.version>
         <commonsio.version>2.16.1</commonsio.version>
 
-        <esignature.version>6.2.0</esignature.version>
+        <esignature.version>6.4.0</esignature.version>
         <rooms.version>1.4.3</rooms.version>
         <click.version>1.5.0</click.version>
         <monitor.version>1.4.0</monitor.version>
         <admin.version>2.0.0</admin.version>
-        <webforms.version>2.0.0-RC1</webforms.version>
-        <iam.version>1.0.0-beta.4</iam.version>
+        <webforms.version>2.1.0</webforms.version>
+        <iam.version>1.0.0-beta.5</iam.version>
         <swagger-core-version>2.2.22</swagger-core-version>
         <jackson-version>2.17.2</jackson-version>
         <jersey2.version>3.1.10</jersey2.version>

@@ -5,7 +5,8 @@
 <c:choose>
     <c:when test="${templateId == null}">
         <p>${example.getExampleDescription()}</p>
-        <jsp:include page="../../links_to_api_methods.jsp" />
+       <jsp:include page="../../links_to_api_methods.jsp" />
+
         <p>
             ${viewSourceFile}
         </p>
