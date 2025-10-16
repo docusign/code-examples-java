@@ -5,6 +5,8 @@ import com.docusign.iam.sdk.models.components.TriggerInputs;
 import com.docusign.iam.sdk.models.components.TriggerWorkflow;
 import com.docusign.iam.sdk.models.operations.*;
 import org.json.JSONObject;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
 import java.net.URI;
@@ -16,6 +18,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 public class TriggerWorkflowService {
@@ -101,10 +104,10 @@ public class TriggerWorkflowService {
             String triggerId,
             String accountId) throws Exception {
         try {
-            var templateFilePath = TriggerWorkflowService.class.getClassLoader().getResource(fileLocation);
-            var templateFile = Paths.get(Objects.requireNonNull(templateFilePath).toURI());
+            ClassPathResource resource = new ClassPathResource(fileLocation);
+            byte[] buffer = StreamUtils.copyToByteArray(resource.getInputStream());
 
-            String workflowDefinition = new String(Files.readAllBytes(templateFile));
+            String workflowDefinition = new String(buffer);
             return workflowDefinition
                     .replace("TEMPLATE_ID", templateId)
                     .replace("ACCOUNT_ID", accountId)
@@ -147,6 +150,6 @@ public class TriggerWorkflowService {
             String accountId) throws Exception {
         return client.maestro()
                 .workflows()
-                .getWorkflowsList(accountId);
+                .getWorkflowsList(accountId, Optional.of(Status.ACTIVE), Optional.empty());
     }
 }
