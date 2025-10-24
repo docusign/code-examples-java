@@ -205,6 +205,7 @@ public class IndexController {
                 ApiIndex.ADMIN.getExamplesPathCode(),
                 ApiIndex.ROOMS.getExamplesPathCode(),
                 ApiIndex.NOTARY.getExamplesPathCode(),
+                ApiIndex.MAESTRO.getExamplesPathCode(),
                 ApiIndex.CONNECTEDFIELDS.getExamplesPathCode()
         };
 

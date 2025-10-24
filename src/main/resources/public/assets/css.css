@@ -6,6 +6,7 @@ body {
 #index-page h4 {
   z-index: -100;
 }
+
 #index-page h4::before {
   z-index: -100;
   display: block;
@@ -16,8 +17,11 @@ body {
   pointer-events: none;
 }
 
-.jumbotron {
+#content {
+  margin: 0 20px 0 20px;
+}
 
+.jumbotron {
   background-image: url(/assets/banner-code.png) !important;
   background-position: right;
   min-height: 500px;
@@ -25,7 +29,7 @@ body {
   padding-bottom: 0 !important;
   padding-left: 30px !important;
   padding-right: 30px !important;
-  margin: 0 !important;
+  margin: -24px !important;
   color: white;
 }
 
@@ -37,24 +41,30 @@ body {
 .btn-docu {
 
   background-color: #00BAA1;
-  color:#FFF;
+  color: #FFF;
   border-color: #121517;
 }
 
-.btn-docu:hover, .btn-docu:focus, .btn-docu:active, .btn-docu.active, .open .dropdown-toggle.btn-docu {
+.btn-docu:hover,
+.btn-docu:focus,
+.btn-docu:active,
+.btn-docu.active,
+.open .dropdown-toggle.btn-docu {
   background-color: #02d6ba;
-  color:#FFF;
+  color: #FFF;
   border-color: #050607;
 }
 
 hr.styled {
-  overflow: visible; /* For IE */
+  overflow: visible;
+  /* For IE */
   padding: 0;
   border: none;
   border-top: medium double 0;
   color: #000;
   text-align: center;
 }
+
 hr.styled:after {
   content: "§";
   display: inline-block;
@@ -65,23 +75,37 @@ hr.styled:after {
   background: white;
 }
 
-.feedback, .hidden {display: none;}
-span.feedback {margin-left:2em;}
+.feedback,
+.hidden {
+  display: none;
+}
 
-form.eg {max-width: 30em;}
-form.eg label {font-weight: 550;}
+span.feedback {
+  margin-left: 2em;
+}
+
+form.eg {
+  max-width: 30em;
+}
+
+form.eg label {
+  font-weight: 550;
+}
 
 pre.json-display {
   background-color: ghostwhite;
   border: 1px solid silver;
   padding: 10px 20px;
 }
+
 .json-key {
   color: brown;
 }
+
 .json-value {
   color: navy;
 }
+
 .json-string {
   color: olive;
 }
@@ -98,7 +122,7 @@ pre.json-display {
   font-size: 10px;
 }
 
-.spinner > div {
+.spinner>div {
   background-color: blueviolet;
   height: 100%;
   width: 6px;
@@ -129,23 +153,36 @@ pre.json-display {
 }
 
 @-webkit-keyframes sk-stretchdelay {
-  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
-  20% { -webkit-transform: scaleY(1.0) }
+
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4)
+  }
+
+  20% {
+    -webkit-transform: scaleY(1.0)
+  }
 }
 
 @keyframes sk-stretchdelay {
-  0%, 40%, 100% {
-      transform: scaleY(0.4);
-      -webkit-transform: scaleY(0.4);
-  }  20% {
-         transform: scaleY(1.0);
-         -webkit-transform: scaleY(1.0);
-     }
+
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }
+
+  20% {
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
 }
 
-.your-class div{
-float:left;
-margin-left: 10px;
+.your-class div {
+  float: left;
+  margin-left: 10px;
 }
 
 .has-search .form-control {
