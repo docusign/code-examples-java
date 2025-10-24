@@ -5,8 +5,14 @@
 <p>${example.getResultsPageText()}</p>
 
 
+<!--
+//ds-snippet-start:Maestro1Step6
+-->
 <iframe width="900" height="600" src="${url}">
 </iframe>
+<!--
+//ds-snippet-end:Maestro1Step6
+-->
 
 <p><a href="/">${launcherTexts.getContinueButton()}</a></p>
 
