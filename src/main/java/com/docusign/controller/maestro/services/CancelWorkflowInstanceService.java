@@ -4,7 +4,7 @@ import com.docusign.iam.sdk.IamClient;
 import com.docusign.iam.sdk.models.operations.*;
 
 public class CancelWorkflowInstanceService {
-    //ds-snippet-start:Maestro4step3
+    //ds-snippet-start:Maestro4Step3
     public static CancelWorkflowInstanceResponse CancelMaestroWorkflowInstance(
             IamClient client,
             String accountId,
@@ -13,5 +13,5 @@ public class CancelWorkflowInstanceService {
         return client.maestro().workflowInstanceManagement()
                 .cancelWorkflowInstance(accountId, workflowId, instanceId);
     }
-    //ds-snippet-end:Maestro4step3
+    //ds-snippet-end:Maestro4Step3
 }
