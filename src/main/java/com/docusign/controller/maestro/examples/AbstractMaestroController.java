@@ -27,11 +27,13 @@ public abstract class AbstractMaestroController extends AbstractController {
         this.session = session;
     }
 
+    //ds-snippet-start:MaestroJavaStep2
     protected IamClient createAuthenticatedClient(String accessToken) {
         return IamClient.builder()
                 .accessToken(accessToken)
                 .build();
     }
+    //ds-snippet-end:MaestroJavaStep2
 
     protected String serializeObjectToJson(Object data) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
