@@ -31,8 +31,8 @@ public class Work003SendEnvelopeWithRecipientController extends AbstractWorkspac
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
 
-        model.addAttribute(MODEL_WORKSPACE_OK, !session.getWorkspaceId().isEmpty());
-        model.addAttribute(MODEL_DOCUMENT_OK, !session.getDocumentId().isEmpty());
+        model.addAttribute(MODEL_WORKSPACE_OK, session.getWorkspaceId() != null && !session.getWorkspaceId().isEmpty());
+        model.addAttribute(MODEL_DOCUMENT_OK, session.getDocumentId() != null && !session.getDocumentId().isEmpty());
     }
 
     @Override

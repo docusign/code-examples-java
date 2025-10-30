@@ -32,7 +32,7 @@ public class Work002AddDocumentToWorkspaceController extends AbstractWorkspacesC
     protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
 
-        model.addAttribute(MODEL_WORKSPACE_OK, !session.getWorkspaceId().isEmpty());
+        model.addAttribute(MODEL_WORKSPACE_OK, session.getWorkspaceId() != null && !session.getWorkspaceId().isEmpty());
         model.addAttribute(MODEL_DOCUMENT_FOLDER, config.getCodeExamplesText().SupportingTexts.HelpingTexts.SelectPDFFileFromFolder.replaceFirst("\\{0}", Paths.get("src", "main", "resources").toAbsolutePath().toString()));
     }
 
