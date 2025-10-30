@@ -20,6 +20,7 @@ public enum ApiType {
     WEBFORMS("WebForms API",
             new String[] { "signature", "webforms_read", "webforms_instance_read", "webforms_instance_write" }, "web"),
     NAVIGATOR("Navigator API", new String[] { "signature", "adm_store_unified_repo_read" }, "nav"),
+    MAESTRO("Maestro API", new String[] { "signature", "aow_manage" }, "mae"),
     NOTARY("Notary API", new String[] { "signature" }, "n"),
     WORKSPACES("Workspaces API", new String[] { "signature", "dtr.company.read", "dtr.rooms.read", "dtr.rooms.write",
             "dtr.documents.write" }, "work");

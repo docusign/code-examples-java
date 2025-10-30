@@ -24,7 +24,7 @@
 
             <select id="agreementId" name="agreementId" class="form-control">
                 <c:forEach var="app" items="${agreements}">
-                    <option value="${app.id().get()}">${app.fileName().get()}</option>
+                    <option value="${app.id()}">${app.fileName().get()}</option>
                 </c:forEach>
             </select>
         </div>
