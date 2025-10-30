@@ -63,6 +63,9 @@
           <c:when test="${apis.getName().equals('ConnectedFields')}">
             <c:set var="linkToCodeExample" value="cf" scope="page" />
           </c:when>
+          <c:when test="${apis.getName().equals('Workspaces')}">
+            <c:set var="linkToCodeExample" value="work" scope="page" />
+          </c:when>
           <c:otherwise>
             <c:set var="linkToCodeExample" value="a" scope="page" />
           </c:otherwise>

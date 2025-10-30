@@ -163,3 +163,7 @@ margin-left: 10px;
   pointer-events: none;
   color: #aaa;
 }
+
+form .form-group .validation-error {
+  color: red !important;
+}
