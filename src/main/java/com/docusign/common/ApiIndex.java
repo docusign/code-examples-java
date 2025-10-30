@@ -10,6 +10,7 @@ public enum ApiIndex {
     NAVIGATOR("/pages/navigator/index", "/restapi", "/nav001", "/nav"),
     NOTARY("/pages/notary/index", "/restapi", "/n004", "/n"),
     WEBFORMS("/pages/webforms/index", "/restapi", "/web001", "/web"),
+    MAESTRO("/pages/maestro/index", "/restapi", "/mae001", "/mae"),
     CONNECTEDFIELDS("/pages/connectedfields/index", "/restapi", "/cf001", "/cf"),
     WORKSPACES("/pages/workspaces/index", "/restapi", "/work001", "/work");
 
