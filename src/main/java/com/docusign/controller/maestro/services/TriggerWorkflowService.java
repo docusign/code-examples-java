@@ -132,19 +132,24 @@ public class TriggerWorkflowService {
             String ccEmail,
             String ccName,
             String instanceName) throws Exception {
+    //ds-snippet-start:Maestro1Step4
         Map<String, TriggerInputs> triggerInputs = new HashMap<>();
         triggerInputs.put("signerName", createTriggerInput(signerName));
         triggerInputs.put("signerEmail", createTriggerInput(signerEmail));
         triggerInputs.put("ccName", createTriggerInput(ccName));
         triggerInputs.put("ccEmail", createTriggerInput(ccEmail));
+    //ds-snippet-end:Maestro1Step4
 
-        TriggerWorkflow triggerWorkflow = new TriggerWorkflow(instanceName, triggerInputs);
+    //ds-snippet-start:Maestro1Step5
+w = new TriggerWorkflow(instanceName, triggerInputs);
 
         return client.maestro()
                 .workflows()
                 .triggerWorkflow(accountId, workflowId, triggerWorkflow);
     }
+    //ds-snippet-end:Maestro1Step5
 
+    //ds-snippet-start:Maestro1Step3
     public static GetWorkflowsListResponse getMaestroWorkflow(
             IamClient client,
             String accountId) throws Exception {
@@ -152,4 +157,5 @@ public class TriggerWorkflowService {
                 .workflows()
                 .getWorkflowsList(accountId, Optional.of(Status.ACTIVE), Optional.empty());
     }
+    //ds-snippet-end:Maestro1Step3
 }
