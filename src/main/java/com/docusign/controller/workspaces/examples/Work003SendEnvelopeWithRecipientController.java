@@ -46,11 +46,11 @@ public class Work003SendEnvelopeWithRecipientController extends AbstractWorkspac
         var signerName = args.getSignerName();
 
         var envelope = SendEnvelopeWithRecipientInfoService.createWorkspaceEnvelope(accessToken, accountId, workspaceId, documentId);
-        var envelopeId = envelope.createWorkspaceEnvelopeResponse().get().envelopeId().toString();
+        var envelopeId = envelope.createWorkspaceEnvelopeResponse().get().envelopeId().get();
         var results = SendEnvelopeWithRecipientInfoService.sendEnvelope(accessToken, basePath, accountId, envelopeId, signerEmail, signerName);
 
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
-            .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
+            .withMessage(getTextForCodeExampleByApiType().ResultsPageText.replaceFirst("\\{0}", envelopeId))
             .withJsonObject(results)
             .addToModel(model, config);
 

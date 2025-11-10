@@ -30,28 +30,28 @@
     <c:otherwise>
         <form class="eg" action="" method="post" data-busy="form">
             <div class="form-group">
-                <label for="documentName">
-                    ${example.getForms().get(formNumber).getInputs().get(documentNameInputNumber).getInputName()}
+                <label for="signerEmail">
+                    ${example.getForms().get(formNumber).getInputs().get(signerEmailInputNumber).getInputName()}
                 </label>
 
                 <input type="text"
                        class="form-control"
-                       id="documentName"
-                       placeholder="${example.getForms().get(formNumber).getInputs().get(documentNameInputNumber).getInputPlaceholder()}"
-                       name="documentName"
+                       id="signerEmail"
+                       placeholder="${example.getForms().get(formNumber).getInputs().get(signerEmailInputNumber).getInputPlaceholder()}"
+                       name="signerEmail"
                        required>
             </div>
             <div class="form-group">
-                <label for="documentPath">
-                    ${example.getForms().get(formNumber).getInputs().get(documentPathInputNumber).getInputName()}
+                <label for="signerName">
+                    ${example.getForms().get(formNumber).getInputs().get(signerNameInputNumber).getInputName()}
                 </label>
             
-                <input type="file"
+                <input type="text"
                        accept=".pdf"
                        class="form-control"
-                       id="documentPath"
-                       placeholder="${example.getForms().get(formNumber).getInputs().get(documentPathInputNumber).getInputPlaceholder()}"
-                       name="documentPath"
+                       id="signerName"
+                       placeholder="${example.getForms().get(formNumber).getInputs().get(signerNameInputNumber).getInputPlaceholder()}"
+                       name="signerName"
                        required>
             </div>
             <input type="hidden" name="_csrf" value="${csrfToken}">
