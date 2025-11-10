@@ -45,11 +45,12 @@ public class Work002AddDocumentToWorkspaceController extends AbstractWorkspacesC
         var documentPath = args.getDocumentPath();
 
         var results = AddDocumentToWorkspaceService.addDocumentToWorkspace(accessToken, accountId, workspaceId, documentPath, documentName);
-        session.setDocumentId(results.createWorkspaceDocumentResponse().get().documentId().orElse(""));
+        var documentId = results.createWorkspaceDocumentResponse().get().documentId().orElse("");
+        session.setDocumentId(documentId);
 
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
-            .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
-            .withJsonObject(results.createWorkspaceDocumentResponse())
+            .withMessage(getTextForCodeExampleByApiType().ResultsPageText.replaceFirst("\\{0}", documentId))
+            .withJsonObject(results.createWorkspaceDocumentResponse().get())
             .addToModel(model, config);
 
         return DONE_EXAMPLE_PAGE;

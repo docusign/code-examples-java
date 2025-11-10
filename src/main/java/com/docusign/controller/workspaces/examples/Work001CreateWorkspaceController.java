@@ -38,11 +38,12 @@ public class Work001CreateWorkspaceController extends AbstractWorkspacesControll
         var workspaceName = args.getWorkspaceName();
 
         var workspace = CreateWorkspaceService.createWorkspace(accessToken, accountId, workspaceName);
-        session.setWorkspaceId(workspace.createWorkspaceResponse().get().workspaceId().orElse(""));
+        var workspaceId = workspace.createWorkspaceResponse().get().workspaceId().orElse("");
+        session.setWorkspaceId(workspaceId);
     
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
-            .withMessage(getTextForCodeExampleByApiType().ResultsPageText)
-            .withJsonObject(workspace.createWorkspaceResponse())
+            .withMessage(getTextForCodeExampleByApiType().ResultsPageText.replaceFirst("\\{0}", workspaceId))
+            .withJsonObject(workspace.createWorkspaceResponse().get())
             .addToModel(model, config);
             
         return DONE_EXAMPLE_PAGE;
