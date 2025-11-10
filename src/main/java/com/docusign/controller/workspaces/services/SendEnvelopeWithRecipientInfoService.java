@@ -17,9 +17,13 @@ import com.docusign.iam.sdk.models.operations.CreateWorkspaceEnvelopeResponse;
 
 public final class SendEnvelopeWithRecipientInfoService {
     private static final String ENVELOPE_NAME = "Example Workspace Envelope";
+    
     private static final String EMAIL_SUBJECT = "Please sign this document";
+    
     private static final String ANCHOR_STRING = "/sn1/";
+    
     private static final int ANCHOR_OFFSET_Y = 10;
+    
     private static final int ANCHOR_OFFSET_X = 20;
     
     private static IamClient createIamClient(String accessToken) {
