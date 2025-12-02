@@ -192,4 +192,6 @@ public class WorkArguments {
     private String documentName;
 
     private String documentPath;
+
+    private String assigneeEmail;
 }

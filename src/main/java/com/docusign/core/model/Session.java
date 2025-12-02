@@ -84,5 +84,7 @@ public class Session implements Serializable {
 
     private String workspaceId;
 
+    private String creatorId;
+
     private String documentId;
 }
