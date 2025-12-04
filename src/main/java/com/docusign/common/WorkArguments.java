@@ -186,4 +186,10 @@ public class WorkArguments {
     private String instanceName;
 
     private String folderName;
+
+    private String workspaceName;
+
+    private String documentName;
+
+    private String documentPath;
 }

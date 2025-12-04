@@ -43,4 +43,8 @@ public class HelpingTexts {
     public String EnvelopeWillBeRestored;
 
     public String DefaultEnvelopeId;
+
+    public String SpecifyNameWithExtension;
+
+    public String SelectPDFFileFromFolder;
 }
