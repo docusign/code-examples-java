@@ -141,7 +141,7 @@ public class TriggerWorkflowService {
     //ds-snippet-end:Maestro1Step4
 
     //ds-snippet-start:Maestro1Step5
-w = new TriggerWorkflow(instanceName, triggerInputs);
+        var triggerWorkflow = new TriggerWorkflow(instanceName, triggerInputs);
 
         return client.maestro()
                 .workflows()
