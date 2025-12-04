@@ -200,3 +200,7 @@ pre.json-display {
   pointer-events: none;
   color: #aaa;
 }
+
+form .form-group .validation-error {
+  color: red !important;
+}
