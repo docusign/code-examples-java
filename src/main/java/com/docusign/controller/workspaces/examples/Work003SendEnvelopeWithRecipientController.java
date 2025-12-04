@@ -38,16 +38,32 @@ public class Work003SendEnvelopeWithRecipientController extends AbstractWorkspac
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
         var accountId = session.getAccountId();
+
+         //ds-snippet-start:Workspaces3Step2
         var accessToken = user.getAccessToken();
+        //ds-snippet-end:Workspaces3Step2
+
         var basePath = session.getBasePath();
         var workspaceId = session.getWorkspaceId();
+
+        //ds-snippet-start:Workspaces3Step3
         var documentId = session.getDocumentId();
+        //ds-snippet-end:Workspaces3Step3
+
         var signerEmail = args.getSignerEmail();
         var signerName = args.getSignerName();
 
+        //ds-snippet-start:Workspaces3Step4
         var envelope = SendEnvelopeWithRecipientInfoService.createWorkspaceEnvelope(accessToken, accountId, workspaceId, documentId);
+        //ds-snippet-end:Workspaces3Step4
+
+        //ds-snippet-start:Workspaces3Step5
         var envelopeId = envelope.createWorkspaceEnvelopeResponse().get().envelopeId().get();
+        //ds-snippet-end:Workspaces3Step5
+
+        //ds-snippet-start:Workspaces3Step6
         var results = SendEnvelopeWithRecipientInfoService.sendEnvelope(accessToken, basePath, accountId, envelopeId, signerEmail, signerName);
+        //ds-snippet-end:Workspaces3Step6
 
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
             .withMessage(getTextForCodeExampleByApiType().ResultsPageText.replaceFirst("\\{0}", envelopeId))

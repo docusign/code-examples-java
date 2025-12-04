@@ -34,18 +34,25 @@ public class Work001CreateWorkspaceController extends AbstractWorkspacesControll
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
         var accountId = session.getAccountId();
-        var accessToken = user.getAccessToken();
-        var workspaceName = args.getWorkspaceName();
 
+        //ds-snippet-start:Workspaces1Step2
+        var accessToken = user.getAccessToken();
+        //ds-snippet-end:Workspaces1Step2
+        
+        //ds-snippet-start:Workspaces1Step3
+        var workspaceName = args.getWorkspaceName();
+        //ds-snippet-end:Workspaces1Step3
+
+       //ds-snippet-start:Workspaces1Step4
         var workspace = CreateWorkspaceService.createWorkspace(accessToken, accountId, workspaceName);
+        //ds-snippet-end:Workspaces1Step4
+        
         var workspaceId = workspace.createWorkspaceResponse().get().workspaceId().orElse("");
         session.setWorkspaceId(workspaceId);
-    
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
             .withMessage(getTextForCodeExampleByApiType().ResultsPageText.replaceFirst("\\{0}", workspaceId))
             .withJsonObject(workspace.createWorkspaceResponse().get())
             .addToModel(model, config);
-            
         return DONE_EXAMPLE_PAGE;
     }
 }
