@@ -81,4 +81,8 @@ public class Session implements Serializable {
     private Boolean isWorkflowPublished = false;
     
     private Boolean isWebFormsInitialRun = true;
+
+    private String workspaceId;
+
+    private String documentId;
 }
