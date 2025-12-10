@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/mae004")
 public class Mae004CancelWorkflowInstanceController extends AbstractMaestroController {
+    public static final String IN_PROGRESS = "In Progress";
+
     private static final String MODEL_IS_WORKFLOW_ID_PRESENT = "isWorkflowIdPresent";
 
     public static final String NO_WORKFLOW_INSTANCE_AVAILABLE_TO_CANCEL = "No workflow instance available to cancel.";
@@ -46,6 +48,15 @@ public class Mae004CancelWorkflowInstanceController extends AbstractMaestroContr
 
         if (workflowId == null || instanceId == null) {
             throw new IllegalStateException(NO_WORKFLOW_INSTANCE_AVAILABLE_TO_CANCEL);
+        }
+
+        var workflowInstance = CancelWorkflowInstanceService.GetWorkflowInstanceStatus(client,
+                accountId,
+                workflowId,
+                instanceId);
+
+        if(!workflowInstance.workflowInstance().get().workflowStatus().get().equals(IN_PROGRESS)) {
+            throw new IllegalStateException(getTextForCodeExampleByApiType().CustomErrorTexts.get(2).ErrorMessage);
         }
 
         var paused = CancelWorkflowInstanceService.CancelMaestroWorkflowInstance(
