@@ -14,4 +14,13 @@ public class CancelWorkflowInstanceService {
                 .cancelWorkflowInstance(accountId, workflowId, instanceId);
     }
     //ds-snippet-end:Maestro4Step3
+
+    public static GetWorkflowInstanceResponse GetWorkflowInstanceStatus(
+            IamClient client,
+            String accountId,
+            String workflowId,
+            String instanceId) throws Exception {
+        return client.maestro().workflowInstanceManagement()
+                .getWorkflowInstance(accountId, workflowId, instanceId);
+    }
 }
