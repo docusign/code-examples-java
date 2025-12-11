@@ -48,7 +48,9 @@ public class Work001CreateWorkspaceController extends AbstractWorkspacesControll
         //ds-snippet-end:Workspaces1Step4
         
         var workspaceId = workspace.createWorkspaceResponse().get().workspaceId().orElse("");
+        var creatorId = workspace.createWorkspaceResponse().get().createdByUserId().orElse("");
         session.setWorkspaceId(workspaceId);
+        session.setCreatorId(creatorId);
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
             .withMessage(getTextForCodeExampleByApiType().ResultsPageText.replaceFirst("\\{0}", workspaceId))
             .withJsonObject(workspace.createWorkspaceResponse().get())
