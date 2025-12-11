@@ -61,7 +61,6 @@ public class Work005CreateUploadRequestController extends AbstractWorkspacesCont
                     .addToModel(model, config);
         }
 
-
         return DONE_EXAMPLE_PAGE;
     }
 }
