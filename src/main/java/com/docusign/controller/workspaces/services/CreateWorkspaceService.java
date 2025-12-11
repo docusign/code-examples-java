@@ -4,10 +4,12 @@ import com.docusign.iam.sdk.IamClient;
 import com.docusign.iam.sdk.models.components.CreateWorkspaceBody;
 import com.docusign.iam.sdk.models.operations.CreateWorkspaceResponse;
 
-public final class CreateWorkspaceService {    
+public final class CreateWorkspaceService {
+    //ds-snippet-start:WorkspacesStep2    
     private static IamClient createIamClient(String accessToken) {
         return IamClient.builder().accessToken(accessToken).build();
     }
+    //ds-snippet-end:WorkspacesStep2 
 
     public static CreateWorkspaceResponse createWorkspace(
             String accessToken,
