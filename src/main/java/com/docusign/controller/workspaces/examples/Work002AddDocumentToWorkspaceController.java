@@ -39,12 +39,22 @@ public class Work002AddDocumentToWorkspaceController extends AbstractWorkspacesC
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response) throws Exception {
         var accountId = session.getAccountId();
+
+        //ds-snippet-start:Workspaces2Step2
         var accessToken = user.getAccessToken();
+        //ds-snippet-end:Workspaces2Step2
+
         var workspaceId = session.getWorkspaceId();
+
+        //ds-snippet-start:Workspaces2Step3
         var documentName = args.getDocumentName();
         var documentPath = args.getDocumentPath();
+        //ds-snippet-end:Workspaces2Step3
 
+        //ds-snippet-start:Workspaces2Step4
         var results = AddDocumentToWorkspaceService.addDocumentToWorkspace(accessToken, accountId, workspaceId, documentPath, documentName);
+        //ds-snippet-end:Workspaces2Step4
+
         var documentId = results.createWorkspaceDocumentResponse().get().documentId().orElse("");
         session.setDocumentId(documentId);
 
