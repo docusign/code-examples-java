@@ -17,6 +17,7 @@ public final class CreateUploadRequestService {
             String workspaceId,
             String creatorId,
             String assigneeEmail) throws Exception {
+        //ds-snippet-start:Workspaces5Step3
         OffsetDateTime dueDate = OffsetDateTime.now().plusDays(7);
 
         var assignmentFoAssignee = new CreateWorkspaceUploadRequestAssignment(
@@ -36,7 +37,9 @@ public final class CreateUploadRequestService {
                 .withName("Upload Request example " + dueDate)
                 .withDescription("This is an example upload request created via the workspaces API")
                 .withAssignments(assignments);
+        //ds-snippet-end:Workspaces5Step3
 
+        //ds-snippet-start:Workspaces5Step4
         return createIamClient(accessToken)
                 .workspaces()
                 .workspaceUploadRequest()
@@ -45,5 +48,6 @@ public final class CreateUploadRequestService {
                 .workspaceId(workspaceId)
                 .createWorkspaceUploadRequestBody(createWorkspaceUploadRequestBody)
                 .call();
+        //ds-snippet-end:Workspaces5Step4
     }
 }
