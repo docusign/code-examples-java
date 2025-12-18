@@ -4,12 +4,17 @@ import com.docusign.common.WorkArguments;
 import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
 import com.docusign.core.common.DocumentType;
 import com.docusign.esign.api.EnvelopesApi;
+import com.docusign.esign.api.EnvelopesApi.CreateEnvelopeOptions;
+import com.docusign.esign.client.ApiResponse;
 import com.docusign.esign.model.*;
 import com.docusign.webforms.client.ApiException;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public final class SendWithThirdPartyNotaryService {
     private static final String HTML_DOCUMENT_FILE_NAME = "order_form.html";
@@ -22,8 +27,19 @@ public final class SendWithThirdPartyNotaryService {
             throws ApiException, com.docusign.esign.client.ApiException, IOException {
         EnvelopeDefinition envelopeDefinition = makeEnvelope(signerEmail, signerName, args);
 
-        EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelopeDefinition);
-        return envelopeSummary.getEnvelopeId();
+        ApiResponse<EnvelopeSummary> envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelopeDefinition, (CreateEnvelopeOptions)null);
+
+        Map<String, List<String>> headers = envelopeSummary.getHeaders();
+        List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+        
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+
+        return envelopeSummary.getData().getEnvelopeId();
     }
     //ds-snippet-end:Notary4Step4
 

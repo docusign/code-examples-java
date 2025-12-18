@@ -6,12 +6,14 @@ import com.docusign.webforms.api.FormInstanceManagementApi;
 import com.docusign.webforms.api.FormManagementApi;
 import com.docusign.webforms.client.ApiClient;
 import com.docusign.webforms.client.ApiException;
+import com.docusign.webforms.client.ApiResponse;
 import com.docusign.webforms.model.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +37,19 @@ public final class CreateRemoteInstanceService {
         var option = formManagementApi.new ListFormsOptions();
         option.setSearch(name);
 
-        return formManagementApi.listForms(userAccessToken, option);
+        ApiResponse<WebFormSummaryList> response = formManagementApi.listFormsWithHttpInfo(userAccessToken, option);
+
+        Map<String, List<String>> headers = response.getHeaders();
+        List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+        
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+
+        return response.getData();
         //ds-snippet-end:WebForms2Step3
     }
 
@@ -81,7 +95,19 @@ public final class CreateRemoteInstanceService {
         //ds-snippet-end:WebForms2Step4
 
         //ds-snippet-start:WebForms2Step5
-        return new FormInstanceManagementApi(apiClient).createInstance(accountId, formId, options);
+        ApiResponse<WebFormInstance> response = new FormInstanceManagementApi(apiClient).createInstanceWithHttpInfo(accountId, formId, options);
+
+        Map<String, List<String>> headers = response.getHeaders();
+        List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+        
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+
+        return response.getData();
         //ds-snippet-end:WebForms2Step5
     }
 

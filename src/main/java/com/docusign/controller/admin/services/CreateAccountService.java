@@ -2,6 +2,7 @@ package com.docusign.controller.admin.services;
 
 import com.docusign.admin.api.ProvisionAssetGroupApi;
 import com.docusign.admin.client.ApiException;
+import com.docusign.admin.client.ApiResponse;
 import com.docusign.admin.model.OrganizationSubscriptionResponse;
 import com.docusign.admin.model.SubAccountCreateRequest;
 import com.docusign.admin.model.SubAccountCreateRequestSubAccountCreationSubscription;
@@ -9,6 +10,11 @@ import com.docusign.admin.model.SubAccountCreateRequestSubAccountCreationTargetA
 import com.docusign.admin.model.SubAccountCreateRequestSubAccountCreationTargetAccountDetails;
 import com.docusign.admin.model.SubscriptionProvisionModelAssetGroupWorkResult;
 import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.DynamicTest.stream;
+
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -22,7 +28,20 @@ public class CreateAccountService {
     public static OrganizationSubscriptionResponse getFirstPlanItem(
             ProvisionAssetGroupApi provisionAssetGroupApi,
             UUID orgId) throws ApiException {
-        return provisionAssetGroupApi.getOrganizationPlanItems(orgId).stream().findFirst().orElse(null);
+        ApiResponse<List<OrganizationSubscriptionResponse>> response = provisionAssetGroupApi
+                .getOrganizationPlanItemsWithHttpInfo(orgId);
+
+        Map<String, List<String>> headers = response.getHeaders();
+        List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+        
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+
+        return response.getData().stream().findFirst().orElse(null);
     }
     //ds-snippet-end:Admin13Step3
 
@@ -38,7 +57,19 @@ public class CreateAccountService {
         SubAccountCreateRequest subAccountRequest = buildSubAccountRequest(email, firstName, lastName, subscriptionId,
                 planId);
 
-        return provisionAssetGroupApi.createAssetGroupAccount(orgId, subAccountRequest);
+        ApiResponse<SubscriptionProvisionModelAssetGroupWorkResult> response = provisionAssetGroupApi.createAssetGroupAccountWithHttpInfo(orgId, subAccountRequest);
+
+        Map<String, List<String>> headers = response.getHeaders();
+        List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+        
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+
+        return response.getData();
     }
     //ds-snippet-end:Admin13Step5
 

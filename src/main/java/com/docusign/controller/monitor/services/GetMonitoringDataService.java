@@ -1,13 +1,18 @@
 package com.docusign.controller.monitor.services;
 
 import com.docusign.monitor.api.DataSetApi;
+import com.docusign.monitor.client.ApiResponse;
 import com.docusign.monitor.model.CursoredResult;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Map;
 
 public final class GetMonitoringDataService {
     private static final Logger LOGGER = LoggerFactory.getLogger(GetMonitoringDataService.class);
@@ -35,9 +40,20 @@ public final class GetMonitoringDataService {
                 }
 
                 LOGGER.info("options set: " + options);
-                CursoredResult cursoredResult = datasetApi.getStream("2.0", "monitor", options);
-                LOGGER.info("cursor results " + cursoredResult);
-                String endCursor = cursoredResult.getEndCursor();
+                ApiResponse<CursoredResult> cursoredResult = datasetApi.getStreamWithHttpInfo("2.0", "monitor", options);
+
+                Map<String, List<String>> headers = cursoredResult.getHeaders();
+                List<String> remaining = headers.get("X-RateLimit-Remaining");
+                List<String> reset = headers.get("X-RateLimit-Reset");
+
+                if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+                    Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+                    System.out.println("API calls remaining: " + remaining);
+                    System.out.println("Next Reset: " + resetInstant);
+                }
+
+                LOGGER.info("cursor results " + cursoredResult.getData());
+                String endCursor = cursoredResult.getData().getEndCursor();
 
                 // If the endCursor from the response is the same as the one that you already have,
                 // it means that you have reached the end of the records

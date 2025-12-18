@@ -3,11 +3,14 @@ package com.docusign.controller.click.services;
 import com.docusign.click.api.AccountsApi;
 import com.docusign.click.client.ApiException;
 import com.docusign.click.client.ApiResponse;
+import com.docusign.click.model.ClickwrapVersionResponse;
 import com.docusign.click.model.ClickwrapVersionsResponse;
 import com.docusign.click.model.UserAgreementRequest;
 import com.docusign.click.model.UserAgreementResponse;
 
+import java.time.Instant;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public final class EmbedClickwrapService {
@@ -36,6 +39,16 @@ public final class EmbedClickwrapService {
         //ds-snippet-start:Click6Step4
         ApiResponse<UserAgreementResponse> response = accountsApi.createHasAgreedWithHttpInfo(accountId, clickwrapId, userAgreementRequest);
 
+        Map<String, List<String>> headers = response.getHeaders();
+        List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+        
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+
         if (response.getStatusCode() == 201) {
             return response.getData().getAgreementUrl();
         }
@@ -49,6 +62,18 @@ public final class EmbedClickwrapService {
     ) throws ApiException {
         AccountsApi.GetClickwrapsOptions options = accountsApi.new GetClickwrapsOptions();
         options.setStatus("active");
-        return accountsApi.getClickwraps(accountId, options);
+        ApiResponse<ClickwrapVersionsResponse> response = accountsApi.getClickwrapsWithHttpInfo(accountId, options);
+
+        Map<String, List<String>> headers = response.getHeaders();
+        List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+        
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+
+        return response.getData();
     }
 }
