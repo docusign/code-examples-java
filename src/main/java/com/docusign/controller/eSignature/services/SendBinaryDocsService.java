@@ -22,7 +22,9 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 
 public final class SendBinaryDocsService {
     private static final int ANCHOR_OFFSET_Y = 10;
@@ -58,13 +60,24 @@ public final class SendBinaryDocsService {
             String accessToken
     ) throws IOException {
         List<DocumentInfo> documents = List.of(
-                new DocumentInfo(HTML_DOCUMENT_NAME, "1", DocumentType.HTML,
-                        EnvelopeHelpers.createHtmlFromTemplateFile(HTML_DOCUMENT_FILE_NAME, "args", args)
-                                .getBytes(StandardCharsets.UTF_8)),
-                new DocumentInfo(DOCX_DOCUMENT_NAME, "2", DocumentType.DOCX,
-                        EnvelopeHelpers.readFile(DOCX_DOCUMENT_FILE_NAME)),
-                new DocumentInfo(PDF_DOCUMENT_NAME, "3", DocumentType.PDF,
-                        EnvelopeHelpers.readFile(PDF_DOCUMENT_FILE_NAME))
+                new DocumentInfo(
+                    HTML_DOCUMENT_NAME,
+                    "1",
+                    DocumentType.HTML,
+                    EnvelopeHelpers.createHtmlFromTemplateFile(HTML_DOCUMENT_FILE_NAME, "args", args).getBytes(StandardCharsets.UTF_8)
+                ),
+                new DocumentInfo(
+                    DOCX_DOCUMENT_NAME,
+                    "2",
+                    DocumentType.DOCX,
+                    EnvelopeHelpers.readFile(DOCX_DOCUMENT_FILE_NAME)
+                ),
+                new DocumentInfo(
+                    PDF_DOCUMENT_NAME,
+                    "3",
+                    DocumentType.PDF,
+                    EnvelopeHelpers.readFile(PDF_DOCUMENT_FILE_NAME)
+                )
         );
 
         // Make the envelope JSON request body
@@ -103,6 +116,15 @@ public final class SendBinaryDocsService {
 
         SendBinaryDocsService.writeClosingBoundary(buffer);
 
+        Map<String, List<String>> headers = connection.getHeaderFields();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
         int responseCode = connection.getResponseCode();
         if (responseCode < HttpURLConnection.HTTP_OK || responseCode >= HttpURLConnection.HTTP_MULT_CHOICE) {
             String error = StreamUtils.copyToString(connection.getErrorStream(), StandardCharsets.UTF_8);
@@ -211,5 +233,12 @@ public final class SendBinaryDocsService {
         DocumentType docType;
 
         byte[] data;
+
+        public DocumentInfo(String htmlDocumentName, String id, DocumentType documentType, byte[] data) {
+            this.name = htmlDocumentName;
+            this.id = id;
+            this.docType = documentType;
+            this.data = data;
+        }
     }
 }

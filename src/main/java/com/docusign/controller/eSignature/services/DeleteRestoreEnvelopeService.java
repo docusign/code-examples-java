@@ -6,8 +6,10 @@ import com.docusign.esign.model.Folder;
 import com.docusign.esign.model.FoldersRequest;
 import com.docusign.esign.model.FoldersResponse;
 
+import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public final class DeleteRestoreEnvelopeService {
     public static final String RECYCLE_BIN_FOLDER_ID = "recyclebin";
@@ -21,8 +23,19 @@ public final class DeleteRestoreEnvelopeService {
         FoldersRequest foldersRequest = new FoldersRequest();
         foldersRequest.setEnvelopeIds(Collections.singletonList(envelopeId));
         //ds-snippet-end:eSign45Step3
+
         //ds-snippet-start:eSign45Step4
-        return foldersApi.moveEnvelopes(accountId, RECYCLE_BIN_FOLDER_ID, foldersRequest);
+        var moveEnvelopes = foldersApi.moveEnvelopesWithHttpInfo(accountId, RECYCLE_BIN_FOLDER_ID, foldersRequest);
+        Map<String, List<String>> headers = moveEnvelopes.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return moveEnvelopes.getData();
         //ds-snippet-end:eSign45Step4
     }
     //ds-snippet-start:eSign45Step6
@@ -39,7 +52,17 @@ public final class DeleteRestoreEnvelopeService {
         foldersRequest.setFromFolderId(fromFolderId);
         foldersRequest.setEnvelopeIds(Collections.singletonList(envelopeId));
 
-        return foldersApi.moveEnvelopes(accountId, folderId, foldersRequest);
+        var moveEnvelopesResponse = foldersApi.moveEnvelopesWithHttpInfo(accountId, folderId, foldersRequest);
+        Map<String, List<String>> headers = moveEnvelopesResponse.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return moveEnvelopesResponse.getData();
     }
     //ds-snippet-end:eSign45Step6
 
@@ -49,7 +72,18 @@ public final class DeleteRestoreEnvelopeService {
             ApiClient apiClient,
             String accountId) throws Exception {
         FoldersApi foldersApi = new FoldersApi(apiClient);
-        return foldersApi.callList(accountId);
+
+        var callListResponse = foldersApi.callListWithHttpInfo(accountId, foldersApi.new CallListOptions());
+        Map<String, List<String>> headers = callListResponse.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return callListResponse.getData();
     }
 
     public static Folder getFolderIdByName(List<Folder> folders, String targetName) {

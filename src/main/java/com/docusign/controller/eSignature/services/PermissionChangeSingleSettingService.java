@@ -9,6 +9,7 @@ import com.docusign.esign.model.PermissionProfile;
 import com.docusign.esign.model.PermissionProfileInformation;
 import com.google.gson.Gson;
 
+import java.time.Instant;
 import java.util.*;
 
 public final class PermissionChangeSingleSettingService {
@@ -19,9 +20,18 @@ public final class PermissionChangeSingleSettingService {
     ) throws ApiException {
         // Step 3. Construct your request body
         //ds-snippet-start:eSign26Step3
-        PermissionProfileInformation permissionsInfo = accountsApi.listPermissions(accountId);
+        var permissionsInfo = accountsApi.listPermissionsWithHttpInfo(accountId, accountsApi.new ListPermissionsOptions());
+        Map<String, List<String>> headers = permissionsInfo.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
         PermissionProfile profile = PermissionChangeSingleSettingService.findProfile(
-                        permissionsInfo.getPermissionProfiles(), curProfileId)
+                        permissionsInfo.getData().getPermissionProfiles(), curProfileId)
                 .orElseThrow(NoSuchElementException::new);
         //ds-snippet-end:eSign26Step3
 
@@ -30,7 +40,18 @@ public final class PermissionChangeSingleSettingService {
         AccountRoleSettings newSettings = Objects.requireNonNullElse(profile.getSettings(),
                 DsModelUtils.createDefaultRoleSettings());
         profile.setSettings(PermissionChangeSingleSettingService.changeRandomSettings(newSettings));
-        return accountsApi.updatePermissionProfile(accountId, curProfileId, profile);
+
+        var permissionProfile = accountsApi.updatePermissionProfileWithHttpInfo(accountId, curProfileId, profile, accountsApi.new UpdatePermissionProfileOptions());
+        headers = permissionProfile.getHeaders();
+        remaining = headers.get("X-RateLimit-Remaining");
+        reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return permissionProfile.getData();
         //ds-snippet-end:eSign26Step4
     }
 

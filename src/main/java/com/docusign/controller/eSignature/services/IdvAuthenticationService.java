@@ -8,9 +8,11 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public final class IdvAuthenticationService {
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
@@ -20,14 +22,34 @@ public final class IdvAuthenticationService {
             String accountId,
             EnvelopeDefinition envelope
     ) throws ApiException {
-        return envelopesApi.createEnvelope(accountId, envelope);
+        var createEnvelope = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+        Map<String, List<String>> headers = createEnvelope.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return createEnvelope.getData();
     }
 
     public static String retrieveWorkflowId(ApiClient apiClient, String accountId) throws ApiException {
         //ds-snippet-start:eSign23Step3
         AccountsApi workflowDetails = new AccountsApi(apiClient);
-        AccountIdentityVerificationResponse workflowRes = workflowDetails.getAccountIdentityVerification(accountId);
-        List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getIdentityVerification();
+        var workflowRes = workflowDetails.getAccountIdentityVerificationWithHttpInfo(accountId, workflowDetails.new GetAccountIdentityVerificationOptions());
+        Map<String, List<String>> headers = workflowRes.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+
+        List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getData().getIdentityVerification();
         String workflowId = "";
         for (int i = 0; i < identityVerification.size(); i++) {
             if (identityVerification.get(i).getDefaultName().equals("DocuSign ID Verification")) {

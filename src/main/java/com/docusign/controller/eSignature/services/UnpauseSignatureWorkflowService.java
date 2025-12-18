@@ -7,6 +7,10 @@ import com.docusign.esign.model.Envelope;
 import com.docusign.esign.model.EnvelopeUpdateSummary;
 import com.docusign.esign.model.Workflow;
 
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
+
 public class UnpauseSignatureWorkflowService {
     public static EnvelopeUpdateSummary unpauseSignatureWorkflow(
             EnvelopesApi envelopesApi,
@@ -27,12 +31,22 @@ public class UnpauseSignatureWorkflowService {
 
         // Step 4: Call the eSignature REST API
         //ds-snippet-start:eSign33Step4
-        return envelopesApi.update(
+        var updateEnvelopeResponse = envelopesApi.updateWithHttpInfo(
                 accountId,
                 envelopeId,
                 envelope,
                 updateOptions
         );
+        Map<String, List<String>> headers = updateEnvelopeResponse.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return updateEnvelopeResponse.getData();
         //ds-snippet-end:eSign33Step4
     }
 }

@@ -7,7 +7,10 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public final class EmbeddedSigningService {
     public static ViewUrl embeddedSigning(
@@ -18,7 +21,17 @@ public final class EmbeddedSigningService {
     ) throws ApiException {
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
 
-        return envelopesApi.createRecipientView(accountId, envelopeId, viewRequest);
+        var recipientView = envelopesApi.createRecipientViewWithHttpInfo(accountId, envelopeId, viewRequest);
+        Map<String, List<String>> headers = recipientView.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return recipientView.getData();
     }
 
     public static String createEnvelope(
@@ -27,9 +40,18 @@ public final class EmbeddedSigningService {
             EnvelopeDefinition envelope
     ) throws ApiException {
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
-        EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
 
-        return envelopeSummary.getEnvelopeId();
+        var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+        Map<String, List<String>> headers = envelopeSummary.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return envelopeSummary.getData().getEnvelopeId();
     }
 
     //ds-snippet-start:eSign1Step4

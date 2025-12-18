@@ -9,8 +9,10 @@ import com.docusign.esign.model.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Map;
 
 public final class CollectPaymentService {
     private static final String HTML_DOCUMENT_FILE_NAME = "templates/order-form.ftl";
@@ -43,7 +45,17 @@ public final class CollectPaymentService {
             String accountId
     ) throws ApiException {
         // Call Envelopes::create API method
-        return envelopesApi.createEnvelope(accountId, envelope);
+        var createdEnvelope = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+        Map<String, java.util.List<String>> headers = createdEnvelope.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return createdEnvelope.getData();
     }
     //ds-snippet-end:eSign14Step4
     // document 1 (html) has multiple tags:

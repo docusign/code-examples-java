@@ -6,9 +6,11 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public final class SetTabValuesService {
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_salary.docx";
@@ -22,9 +24,18 @@ public final class SetTabValuesService {
             String accountId,
             EnvelopeDefinition envelope
     ) throws ApiException {
-        EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
+        var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
 
-        return envelopeSummary;
+        Map<String, List<String>> headers = envelopeSummary.getHeaders();
+        List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return envelopeSummary.getData();
     }
 
     public static ViewUrl createRecipientView(
@@ -33,7 +44,17 @@ public final class SetTabValuesService {
             String envelopeId,
             RecipientViewRequest viewRequest
     ) throws ApiException {
-        return envelopesApi.createRecipientView(accountId, envelopeId, viewRequest);
+        var recipientView = envelopesApi.createRecipientViewWithHttpInfo(accountId, envelopeId, viewRequest);
+        Map<String, List<String>> headers = recipientView.getHeaders();
+        List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return recipientView.getData();
     }
 
     public static RecipientViewRequest makeRecipientViewRequest(

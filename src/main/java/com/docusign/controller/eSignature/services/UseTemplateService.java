@@ -10,7 +10,10 @@ import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.EnvelopeTemplateResults;
 import com.docusign.esign.model.TemplateRole;
 
+import java.time.Instant;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public final class UseTemplateService {
     //ds-snippet-start:eSign9Step3
@@ -19,7 +22,17 @@ public final class UseTemplateService {
             String accountId,
             EnvelopeDefinition envelope
     ) throws ApiException {
-        return envelopesApi.createEnvelope(accountId, envelope);
+        var createEnvelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+        Map<String, List<String>> headers = createEnvelopeResponse.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return createEnvelopeResponse.getData();
     }
     //ds-snippet-end:eSign9Step3
 
@@ -28,7 +41,18 @@ public final class UseTemplateService {
             String accountId
     ) throws ApiException {
         TemplatesApi templatesApi = new TemplatesApi(apiClient);
-        return templatesApi.listTemplates(accountId);
+
+        var listTemplatesResponse = templatesApi.listTemplatesWithHttpInfo(accountId, templatesApi.new ListTemplatesOptions());
+        Map<String, java.util.List<String>> headers = listTemplatesResponse.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return listTemplatesResponse.getData();
     }
 
     //ds-snippet-start:eSign9Step2
