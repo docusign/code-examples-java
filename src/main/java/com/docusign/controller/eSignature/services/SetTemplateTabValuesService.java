@@ -5,8 +5,10 @@ import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Map;
 
 public final class SetTemplateTabValuesService {
     public static ViewUrl setTemplateTabValues(
@@ -15,7 +17,17 @@ public final class SetTemplateTabValuesService {
             String envelopeId,
             RecipientViewRequest viewRequest
     ) throws ApiException {
-        return envelopesApi.createRecipientView(accountId, envelopeId, viewRequest);
+        var recipientView = envelopesApi.createRecipientViewWithHttpInfo(accountId, envelopeId, viewRequest);
+        Map<String, java.util.List<String>> headers = recipientView.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return recipientView.getData();
     }
 
     public static RecipientViewRequest makeRecipientViewRequest(

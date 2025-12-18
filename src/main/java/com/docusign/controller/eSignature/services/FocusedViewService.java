@@ -13,8 +13,11 @@ import com.docusign.esign.model.Recipients;
 import com.docusign.esign.model.Document;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public class FocusedViewService {
 
@@ -51,15 +54,33 @@ public class FocusedViewService {
 
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
 
-        EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
+        var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+        Map<String, List<String>> headers = envelopeSummary.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        String envelopeId = envelopeSummary.getEnvelopeId();
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+
+        String envelopeId = envelopeSummary.getData().getEnvelopeId();
         //ds-snippet-end:eSign44Step3
 
         //ds-snippet-start:eSign44Step5
         RecipientViewRequest viewRequest = makeRecipientViewRequest(signerEmail, signerName, returnUrl, SIGNER_CLIENT_ID, returnUrl);
-        ViewUrl viewUrl = envelopesApi.createRecipientView(accountId, envelopeId, viewRequest);
-        String redirectUrl = viewUrl.getUrl();
+        var viewUrl = envelopesApi.createRecipientViewWithHttpInfo(accountId, envelopeId, viewRequest);
+        headers = viewUrl.getHeaders();
+        remaining = headers.get("X-RateLimit-Remaining");
+        reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        String redirectUrl = viewUrl.getData().getUrl();
 
         return new String[] { envelopeId, redirectUrl };
         //ds-snippet-end:eSign44Step5

@@ -15,6 +15,9 @@ import com.docusign.esign.model.EnvelopeViewTemplateSettings;
 import com.docusign.esign.model.ViewUrl;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 
 public final class EmbeddedSendingService {
     //ds-snippet-start:eSign11Step3
@@ -62,7 +65,17 @@ public final class EmbeddedSendingService {
         viewRequest.setViewAccess("envelope");
         viewRequest.setSettings(viewSettings);
 
-        return envelopesApi.createSenderView(accountId, envelopeId, viewRequest);
+        var senderViewResponse = envelopesApi.createSenderViewWithHttpInfo(accountId, envelopeId, viewRequest);
+        Map<String, List<String>> headers = senderViewResponse.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return senderViewResponse.getData();
     }
     //ds-snippet-end:eSign11Step3
 
@@ -85,7 +98,17 @@ public final class EmbeddedSendingService {
                 ccName,
                 status,
                 args);
-        return envelopesApi.createEnvelope(accountId, env);
+        var createEnvelope = envelopesApi.createEnvelopeWithHttpInfo(accountId, env, envelopesApi.new CreateEnvelopeOptions());
+        Map<String, List<String>> headers = createEnvelope.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return createEnvelope.getData();
     }
     //ds-snippet-end:eSign11Step2
 }

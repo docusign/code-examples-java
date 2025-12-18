@@ -6,9 +6,11 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class UseConditionalRecipientsService {
     private static final String DOCUMENT_FILE_NAME = "Welcome1.txt";
@@ -23,7 +25,17 @@ public class UseConditionalRecipientsService {
             String accountId,
             EnvelopeDefinition envelope
     ) throws ApiException {
-        return envelopesApi.createEnvelope(accountId, envelope);
+        var createEnvelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+        Map<String, List<String>> headers = createEnvelopeResponse.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return createEnvelopeResponse.getData();
     }
     //ds-snippet-end:eSign34Step4
 

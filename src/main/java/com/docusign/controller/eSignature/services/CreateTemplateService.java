@@ -7,9 +7,11 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Locale;
+import java.util.Map;
 
 public final class CreateTemplateService {
     private static final String PDF_DOCUMENT_FILE_NAME = "World_Wide_Corp_fields.pdf";
@@ -28,7 +30,17 @@ public final class CreateTemplateService {
             EnvelopeTemplate envelopeTemplate
     ) throws ApiException {
         TemplatesApi templatesApi = new TemplatesApi(apiClient);
-        return templatesApi.createTemplate(accountId, envelopeTemplate);
+        var templateResponse = templatesApi.createTemplateWithHttpInfo(accountId, envelopeTemplate);
+        Map<String, java.util.List<String>> headers = templateResponse.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return templateResponse.getData();
     }
 
     public static EnvelopeTemplateResults searchTemplatesByName(
@@ -39,7 +51,18 @@ public final class CreateTemplateService {
         TemplatesApi templatesApi = new TemplatesApi(apiClient);
         TemplatesApi.ListTemplatesOptions options = templatesApi.new ListTemplatesOptions();
         options.setSearchText(templateName);
-        return templatesApi.listTemplates(accountId, options);
+
+        var listTemplateResponse = templatesApi.listTemplatesWithHttpInfo(accountId, options);
+        Map<String, java.util.List<String>> headers = listTemplateResponse.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return listTemplateResponse.getData();
     }
 
     // document 1 (pdf) has tag /sn1/

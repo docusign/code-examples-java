@@ -5,6 +5,10 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.ConsoleViewRequest;
 import com.docusign.esign.model.ViewUrl;
 
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
+
 public final class EmbeddedConsoleService {
     public static ViewUrl createConsoleView(
             EnvelopesApi envelopesApi,
@@ -24,7 +28,17 @@ public final class EmbeddedConsoleService {
         }
 
         // Step 2. Call the CreateSenderView API
-        return envelopesApi.createConsoleView(accountId, viewRequest);
+        var consoleView = envelopesApi.createConsoleViewWithHttpInfo(accountId, viewRequest);
+        Map<String, List<String>> headers = consoleView.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return consoleView.getData();
         //ds-snippet-end:eSign12Step2
     }
 }

@@ -7,8 +7,10 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public final class CfrEmbeddedSigningService {
     //ds-snippet-start:eSign41Step6
@@ -18,7 +20,17 @@ public final class CfrEmbeddedSigningService {
             String envelopeId,
             RecipientViewRequest viewRequest
     ) throws ApiException {
-        return envelopesApi.createRecipientView(accountId, envelopeId, viewRequest);
+        var recipientViewResponse = envelopesApi.createRecipientViewWithHttpInfo(accountId, envelopeId, viewRequest);
+        Map<String, List<String>> headers = recipientViewResponse.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return recipientViewResponse.getData();
     }
     //ds-snippet-end:eSign41Step6
 

@@ -9,8 +9,11 @@ import com.docusign.esign.model.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public final class AddDocToTemplateService {
     private static final String HTML_DOCUMENT_FILE_NAME = "templates/candy-bonbon2.ftl";
@@ -45,7 +48,16 @@ public final class AddDocToTemplateService {
         );
 
         //ds-snippet-start:eSign13Step3
-        EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
+        var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+        Map<String, java.util.List<String>> headers = envelopeSummary.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
         //ds-snippet-end:eSign13Step3
 
         //ds-snippet-start:eSign13Step4
@@ -55,7 +67,17 @@ public final class AddDocToTemplateService {
                 signerName,
                 dsPingUrl
         );
-        return envelopesApi.createRecipientView(accountId, envelopeSummary.getEnvelopeId(), viewRequest);
+        var createRecipientView = envelopesApi.createRecipientViewWithHttpInfo(accountId, envelopeSummary.getData().getEnvelopeId(), viewRequest);
+        headers = envelopeSummary.getHeaders();
+        remaining = headers.get("X-RateLimit-Remaining");
+        reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return createRecipientView.getData();
     }
 
     public static RecipientViewRequest makeRecipientViewRequest(

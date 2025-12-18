@@ -9,8 +9,10 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public final class BulkSendEnvelopesService {
@@ -35,7 +37,17 @@ public final class BulkSendEnvelopesService {
     ) throws ApiException, InterruptedException {
         TimeUnit.SECONDS.sleep(bulkRequestDelay);
         // For 2000 recipients, it can take about an hour
-        return bulkEnvelopesApi.getBulkSendBatchStatus(accountId, batchId);
+        var getBulkSendBatchStatus = bulkEnvelopesApi.getBulkSendBatchStatusWithHttpInfo(accountId, batchId);
+        Map<String, List<String>> headers = getBulkSendBatchStatus.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return getBulkSendBatchStatus.getData();
     }
     //ds-snippet-end:eSign31Step7
 
@@ -63,25 +75,65 @@ public final class BulkSendEnvelopesService {
                 ccEmail2
         );
 
-        String bulkListId = bulkEnvelopesApi.createBulkSendList(accountId, sendingList).getListId();
+        var bulkListResponse = bulkEnvelopesApi.createBulkSendListWithHttpInfo(accountId, sendingList);
+        Map<String, List<String>> headers = bulkListResponse.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        String bulkListId =bulkListResponse.getData().getListId();
 
         // Create an envelope
         //ds-snippet-start:eSign31Step4
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
-        String envelopeId = envelopesApi.createEnvelope(accountId, makeEnvelope()).getEnvelopeId();
+        var envelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, makeEnvelope(), envelopesApi.new CreateEnvelopeOptions());
+        headers = envelopeResponse.getHeaders();
+        remaining = headers.get("X-RateLimit-Remaining");
+        reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        String envelopeId = envelopeResponse.getData().getEnvelopeId();
         //ds-snippet-end:eSign31Step4
 
         // Attach your bulk list ID to the envelope
         //ds-snippet-start:eSign31Step5
         CustomFields customFields = createCustomFields(bulkListId);
-        envelopesApi.createCustomFields(accountId, envelopeId, customFields);
+        var createCustomFields = envelopesApi.createCustomFieldsWithHttpInfo(accountId, envelopeId, customFields);
+        headers = createCustomFields.getHeaders();
+        remaining = headers.get("X-RateLimit-Remaining");
+        reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
         //ds-snippet-end:eSign31Step5
 
         // Initiate bulk send
         //ds-snippet-start:eSign31Step6
         BulkSendRequest request = new BulkSendRequest();
         request.setEnvelopeOrTemplateId(envelopeId);
-        return bulkEnvelopesApi.createBulkSendRequest(accountId, bulkListId, request).getBatchId();
+
+        var bulkSendResponse = bulkEnvelopesApi.createBulkSendRequestWithHttpInfo(accountId, bulkListId, request);
+        headers = createCustomFields.getHeaders();
+        remaining = headers.get("X-RateLimit-Remaining");
+        reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return bulkSendResponse.getData().getBatchId();
         //ds-snippet-end:eSign31Step6
     }
 
