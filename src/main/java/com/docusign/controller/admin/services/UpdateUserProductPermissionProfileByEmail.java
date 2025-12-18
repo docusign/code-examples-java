@@ -1,10 +1,14 @@
 package com.docusign.controller.admin.services;
 
 import com.docusign.admin.api.ProductPermissionProfilesApi;
+import com.docusign.admin.client.ApiResponse;
 import com.docusign.admin.model.ProductPermissionProfileRequest;
 import com.docusign.admin.model.UserProductPermissionProfilesRequest;
 import com.docusign.admin.model.UserProductPermissionProfilesResponse;
 
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class UpdateUserProductPermissionProfileByEmail {
@@ -27,10 +31,22 @@ public class UpdateUserProductPermissionProfileByEmail {
         //ds-snippet-end:Admin8Step3
 
         //ds-snippet-start:Admin8Step4
-        return productPermissionProfilesApi.addUserProductPermissionProfilesByEmail(
+        ApiResponse<UserProductPermissionProfilesResponse> response = productPermissionProfilesApi.addUserProductPermissionProfilesByEmailWithHttpInfo(
                 organizationId,
                 accountId,
                 userProductPermissionProfilesRequest);
+
+        Map<String, List<String>> headers = response.getHeaders();
+        List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+        
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+
+        return response.getData();
         //ds-snippet-end:Admin8Step4
     }
 }

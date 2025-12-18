@@ -2,6 +2,7 @@ package com.docusign.controller.admin.services;
 
 import com.docusign.admin.api.BulkExportsApi;
 import com.docusign.admin.client.ApiException;
+import com.docusign.admin.client.ApiResponse;
 import com.docusign.admin.model.OrganizationExportRequest;
 import com.docusign.admin.model.OrganizationExportResponse;
 import com.docusign.admin.model.OrganizationExportsResponse;
@@ -18,6 +19,9 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -25,14 +29,38 @@ public class BulkExportUserDataService {
     public static OrganizationExportsResponse bulkExportsUserData(
             BulkExportsApi bulkExportsApi,
             UUID organizationId) throws ApiException {
-        return bulkExportsApi.getUserListExports(organizationId);
+        ApiResponse<OrganizationExportsResponse> response = bulkExportsApi.getUserListExportsWithHttpInfo(organizationId);
+
+        Map<String, List<String>> headers = response.getHeaders();
+        List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+        
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+
+        return response.getData();
     }
 
     public static OrganizationExportResponse bulkExportUserData(
             BulkExportsApi bulkExportsApi,
             UUID organizationId,
             UUID exportId) throws ApiException {
-        return bulkExportsApi.getUserListExport(organizationId, exportId);
+        ApiResponse<OrganizationExportResponse> response = bulkExportsApi.getUserListExportWithHttpInfo(organizationId, exportId);
+
+        Map<String, List<String>> headers = response.getHeaders();
+        List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+        
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+
+        return response.getData();
     }
 
     public static OrganizationExportResponse createUserListExport(
@@ -40,7 +68,19 @@ public class BulkExportUserDataService {
             UUID organizationId) throws ApiException {
         OrganizationExportRequest request = new OrganizationExportRequest();
         request.setType("organization_memberships_export");
-        return bulkExportsApi.createUserListExport(organizationId, request);
+        ApiResponse<OrganizationExportResponse> response = bulkExportsApi.createUserListExportWithHttpInfo(organizationId, request);
+
+        Map<String, List<String>> headers = response.getHeaders();
+        List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+        
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+
+        return response.getData();
     }
 
     public static String moveUserListExportToFile(

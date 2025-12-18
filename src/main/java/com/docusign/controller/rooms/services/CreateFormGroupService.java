@@ -1,7 +1,12 @@
 package com.docusign.controller.rooms.services;
 
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
+
 import com.docusign.rooms.api.FormGroupsApi;
 import com.docusign.rooms.client.ApiException;
+import com.docusign.rooms.client.ApiResponse;
 import com.docusign.rooms.model.FormGroup;
 import com.docusign.rooms.model.FormGroupForCreate;
 
@@ -17,7 +22,19 @@ public final class CreateFormGroupService {
         //ds-snippet-end:Rooms7Step3
 
         //ds-snippet-start:Rooms7Step4
-        return formGroupsApi.createFormGroup(accountId, formGroupForCreate);
+        ApiResponse<FormGroup> response = formGroupsApi.createFormGroupWithHttpInfo(accountId, formGroupForCreate);
+
+        Map<String, List<String>> headers = response.getHeaders();
+        List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+        
+        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        
+        return response.getData();
         //ds-snippet-end:Rooms7Step4
     }
 }
