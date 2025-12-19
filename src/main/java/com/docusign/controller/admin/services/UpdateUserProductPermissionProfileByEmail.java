@@ -19,7 +19,7 @@ public class UpdateUserProductPermissionProfileByEmail {
             String emailAddress,
             UUID organizationId,
             UUID accountId) throws Exception {
-        // ds-snippet-start:Admin8Step3
+        //ds-snippet-start:Admin8Step3
         var productPermissionProfileRequest = new ProductPermissionProfileRequest();
         productPermissionProfileRequest.setPermissionProfileId(permissionProfileId);
         productPermissionProfileRequest.setProductId(productId);
@@ -27,9 +27,9 @@ public class UpdateUserProductPermissionProfileByEmail {
         var userProductPermissionProfilesRequest = new UserProductPermissionProfilesRequest();
         userProductPermissionProfilesRequest.email(emailAddress);
         userProductPermissionProfilesRequest.addProductPermissionProfilesItem(productPermissionProfileRequest);
-        // ds-snippet-end:Admin8Step3
+        //ds-snippet-end:Admin8Step3
 
-        // ds-snippet-start:Admin8Step4
+        //ds-snippet-start:Admin8Step4
         ApiResponse<UserProductPermissionProfilesResponse> response = productPermissionProfilesApi
                 .addUserProductPermissionProfilesByEmailWithHttpInfo(
                         organizationId,
@@ -47,6 +47,6 @@ public class UpdateUserProductPermissionProfileByEmail {
         }
 
         return response.getData();
-        // ds-snippet-end:Admin8Step4
+        //ds-snippet-end:Admin8Step4
     }
 }

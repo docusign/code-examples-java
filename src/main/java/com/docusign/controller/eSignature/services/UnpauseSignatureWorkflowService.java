@@ -17,7 +17,7 @@ public class UnpauseSignatureWorkflowService {
             String accountId,
             String envelopeId) throws ApiException {
         // Step 3: Construct your envelope JSON body
-        // ds-snippet-start:eSign33Step3
+        //ds-snippet-start:eSign33Step3
         Workflow workflow = new Workflow();
         workflow.setWorkflowStatus(EnvelopeHelpers.WORKFLOW_STATUS_IN_PROGRESS);
 
@@ -26,10 +26,10 @@ public class UnpauseSignatureWorkflowService {
 
         EnvelopesApi.UpdateOptions updateOptions = envelopesApi.new UpdateOptions();
         updateOptions.setResendEnvelope("true");
-        // ds-snippet-end:eSign33Step3
+        //ds-snippet-end:eSign33Step3
 
         // Step 4: Call the eSignature REST API
-        // ds-snippet-start:eSign33Step4
+        //ds-snippet-start:eSign33Step4
         var updateEnvelopeResponse = envelopesApi.updateWithHttpInfo(
                 accountId,
                 envelopeId,
@@ -45,6 +45,6 @@ public class UnpauseSignatureWorkflowService {
             System.out.println("Next Reset: " + resetInstant);
         }
         return updateEnvelopeResponse.getData();
-        // ds-snippet-end:eSign33Step4
+        //ds-snippet-end:eSign33Step4
     }
 }

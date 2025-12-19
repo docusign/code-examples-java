@@ -21,7 +21,7 @@ public final class ApplyBrandToEnvelopeService {
 
     private static final int ANCHOR_OFFSET_X = 20;
 
-    // ds-snippet-start:eSign29Step4
+    //ds-snippet-start:eSign29Step4
     public static EnvelopeSummary applyBrandToEnvelope(
             EnvelopesApi envelopesApi,
             String accountId,
@@ -40,7 +40,7 @@ public final class ApplyBrandToEnvelopeService {
 
         return createEnvelopeResponse.getData();
     }
-    // ds-snippet-end:eSign29Step4
+    //ds-snippet-end:eSign29Step4
 
     public static BrandsResponse getBrands(
             AccountsApi accountsApi,
@@ -62,7 +62,7 @@ public final class ApplyBrandToEnvelopeService {
     // Creates an envelope. The envelope has one recipient who should sign an
     // attached document. Attached document is read from a local directory.
     // Also the envelope contains a brand Id which is created on EG028 example.
-    // ds-snippet-start:eSign29Step3
+    //ds-snippet-start:eSign29Step3
     public static EnvelopeDefinition makeEnvelope(
             String signerEmail,
             String signerName,
@@ -91,5 +91,5 @@ public final class ApplyBrandToEnvelopeService {
                 .brandId(brandId)
                 .status(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
     }
-    // ds-snippet-end:eSign29Step3
+    //ds-snippet-end:eSign29Step3
 }

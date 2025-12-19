@@ -16,11 +16,11 @@ public final class GetRoomsWithFiltersService {
             String startDate,
             String endDate) throws ApiException {
         // Step 3. Prepare your request parameters
-        // ds-snippet-start:Rooms5Step3
+        //ds-snippet-start:Rooms5Step3
         RoomsApi.GetRoomsOptions options = roomsApi.new GetRoomsOptions();
         options.setFieldDataChangedStartDate(startDate);
         options.setFieldDataChangedEndDate(endDate);
-        // ds-snippet-end:Rooms5Step3
+        //ds-snippet-end:Rooms5Step3
 
         // Call the v2 Rooms API
         ApiResponse<RoomSummaryList> response = roomsApi.getRoomsWithHttpInfo(accountId, options);

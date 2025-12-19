@@ -41,7 +41,7 @@ public class FocusedViewService {
             ApiClient apiClient,
             String accountId,
             String returnUrl) throws ApiException, IOException {
-        // ds-snippet-start:eSign44Step3
+        //ds-snippet-start:eSign44Step3
         EnvelopeDefinition envelope = makeEnvelope(
                 signerEmail,
                 signerName,
@@ -66,9 +66,9 @@ public class FocusedViewService {
         }
 
         String envelopeId = envelopeSummary.getData().getEnvelopeId();
-        // ds-snippet-end:eSign44Step3
+        //ds-snippet-end:eSign44Step3
 
-        // ds-snippet-start:eSign44Step5
+        //ds-snippet-start:eSign44Step5
         RecipientViewRequest viewRequest = makeRecipientViewRequest(signerEmail, signerName, returnUrl,
                 SIGNER_CLIENT_ID, returnUrl);
         var viewUrl = envelopesApi.createRecipientViewWithHttpInfo(accountId, envelopeId, viewRequest);
@@ -84,10 +84,10 @@ public class FocusedViewService {
         String redirectUrl = viewUrl.getData().getUrl();
 
         return new String[] { envelopeId, redirectUrl };
-        // ds-snippet-end:eSign44Step5
+        //ds-snippet-end:eSign44Step5
     }
 
-    // ds-snippet-start:eSign44Step4
+    //ds-snippet-start:eSign44Step4
     public RecipientViewRequest makeRecipientViewRequest(
             String signerEmail, String signerName, String returnUrl, String signerClientId, String pingUrl)
             throws ApiException {
@@ -113,9 +113,9 @@ public class FocusedViewService {
 
         return viewRequest;
     }
-    // ds-snippet-end:eSign44Step4
+    //ds-snippet-end:eSign44Step4
 
-    // ds-snippet-start:eSign44Step2
+    //ds-snippet-start:eSign44Step2
     public EnvelopeDefinition makeEnvelope(
             String signerEmail,
             String signerName,
@@ -149,5 +149,5 @@ public class FocusedViewService {
 
         return envelopeDefinition;
     }
-    // ds-snippet-end:eSign44Step2
+    //ds-snippet-end:eSign44Step2
 }

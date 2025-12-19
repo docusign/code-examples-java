@@ -31,7 +31,7 @@ public final class CreateRoomService {
 
         return response.getData();
     }
-    // ds-snippet-end:Rooms1Step4
+    //ds-snippet-end:Rooms1Step4
 
     public static RoomForCreate createRoomModel(Integer roleId, String roomName) {
         return new RoomForCreate()

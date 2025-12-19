@@ -19,11 +19,11 @@ public class DeleteUserProductPermissionProfileById {
             UUID organizationId,
             UUID accountId) throws Exception {
 
-        // ds-snippet-start:Admin9Step4
+        //ds-snippet-start:Admin9Step4
         var userProductProfileDeleteRequest = new UserProductProfileDeleteRequest();
         userProductProfileDeleteRequest.setProductIds(Collections.singletonList(productId));
         userProductProfileDeleteRequest.setUserEmail(emailAddress);
-        // ds-snippet-end:Admin9Step4
+        //ds-snippet-end:Admin9Step4
 
         ApiResponse<RemoveUserProductsResponse> response = productPermissionProfilesApi
                 .removeUserProductPermissionWithHttpInfo(

@@ -19,7 +19,7 @@ public class UseConditionalRecipientsService {
 
     private static final String DOCUMENT_NAME = "Welcome";
 
-    // ds-snippet-start:eSign34Step4
+    //ds-snippet-start:eSign34Step4
     public static EnvelopeSummary useConditionalRecipients(
             EnvelopesApi envelopesApi,
             String accountId,
@@ -37,9 +37,9 @@ public class UseConditionalRecipientsService {
         }
         return createEnvelopeResponse.getData();
     }
-    // ds-snippet-end:eSign34Step4
+    //ds-snippet-end:eSign34Step4
 
-    // ds-snippet-start:eSign34Step3
+    //ds-snippet-start:eSign34Step3
     public static EnvelopeDefinition createEnvelope(
             String signerNotCheckedName,
             String signerNotCheckedEmail,
@@ -222,5 +222,5 @@ public class UseConditionalRecipientsService {
         recipientRouting.setRules(recipientRules);
         return recipientRouting;
     }
-    // ds-snippet-end:eSign34Step3
+    //ds-snippet-end:eSign34Step3
 }

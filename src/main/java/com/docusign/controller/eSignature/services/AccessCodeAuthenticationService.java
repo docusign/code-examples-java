@@ -20,7 +20,7 @@ public final class AccessCodeAuthenticationService {
             EnvelopesApi envelopesApi,
             String accountId,
             EnvelopeDefinition envelope) throws ApiException {
-        // ds-snippet-start:eSign19Step4
+        //ds-snippet-start:eSign19Step4
         var createdEnvelope = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope,
                 envelopesApi.new CreateEnvelopeOptions());
 
@@ -35,10 +35,10 @@ public final class AccessCodeAuthenticationService {
         }
 
         return createdEnvelope.getData();
-        // ds-snippet-end:eSign19Step4
+        //ds-snippet-end:eSign19Step4
     }
 
-    // ds-snippet-start:eSign19Step3
+    //ds-snippet-start:eSign19Step3
     public static EnvelopeDefinition createEnvelope(
             String signerName,
             String signerEmail,
@@ -61,5 +61,5 @@ public final class AccessCodeAuthenticationService {
 
         return envelope;
     }
-    // ds-snippet-end:eSign19Step3
+    //ds-snippet-end:eSign19Step3
 }

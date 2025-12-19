@@ -20,7 +20,7 @@ public final class KBAAuthenticationService {
             EnvelopesApi envelopesApi,
             String accountId,
             EnvelopeDefinition envelope) throws ApiException {
-        // ds-snippet-start:eSign22Step4
+        //ds-snippet-start:eSign22Step4
         var envelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope,
                 envelopesApi.new CreateEnvelopeOptions());
         Map<String, List<String>> headers = envelopeResponse.getHeaders();
@@ -33,10 +33,10 @@ public final class KBAAuthenticationService {
             System.out.println("Next Reset: " + resetInstant);
         }
         return envelopeResponse.getData();
-        // ds-snippet-end:eSign22Step4
+        //ds-snippet-end:eSign22Step4
     }
 
-    // ds-snippet-start:eSign22Step3
+    //ds-snippet-start:eSign22Step3
     public static Signer setSignHereAndSignerForEnvelope(
             String signerName,
             String signerEmail) throws IOException {
@@ -87,5 +87,5 @@ public final class KBAAuthenticationService {
 
         return envelope;
     }
-    // ds-snippet-end:eSign22Step3
+    //ds-snippet-end:eSign22Step3
 }

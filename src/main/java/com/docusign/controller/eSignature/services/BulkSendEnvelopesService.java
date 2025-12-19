@@ -28,7 +28,7 @@ public final class BulkSendEnvelopesService {
 
     private static final int ANCHOR_OFFSET_X = 15;
 
-    // ds-snippet-start:eSign31Step7
+    //ds-snippet-start:eSign31Step7
     public static BulkSendBatchStatus getBulkSendBatchStatus(
             BulkEnvelopesApi bulkEnvelopesApi,
             String accountId,
@@ -48,7 +48,7 @@ public final class BulkSendEnvelopesService {
         }
         return getBulkSendBatchStatus.getData();
     }
-    // ds-snippet-end:eSign31Step7
+    //ds-snippet-end:eSign31Step7
 
     public static String bulkSendEnvelopes(
             BulkEnvelopesApi bulkEnvelopesApi,
@@ -85,7 +85,7 @@ public final class BulkSendEnvelopesService {
         String bulkListId = bulkListResponse.getData().getListId();
 
         // Create an envelope
-        // ds-snippet-start:eSign31Step4
+        //ds-snippet-start:eSign31Step4
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
         var envelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, makeEnvelope(),
                 envelopesApi.new CreateEnvelopeOptions());
@@ -99,10 +99,10 @@ public final class BulkSendEnvelopesService {
             System.out.println("Next Reset: " + resetInstant);
         }
         String envelopeId = envelopeResponse.getData().getEnvelopeId();
-        // ds-snippet-end:eSign31Step4
+        //ds-snippet-end:eSign31Step4
 
         // Attach your bulk list ID to the envelope
-        // ds-snippet-start:eSign31Step5
+        //ds-snippet-start:eSign31Step5
         CustomFields customFields = createCustomFields(bulkListId);
         var createCustomFields = envelopesApi.createCustomFieldsWithHttpInfo(accountId, envelopeId, customFields);
         headers = createCustomFields.getHeaders();
@@ -114,10 +114,10 @@ public final class BulkSendEnvelopesService {
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
-        // ds-snippet-end:eSign31Step5
+        //ds-snippet-end:eSign31Step5
 
         // Initiate bulk send
-        // ds-snippet-start:eSign31Step6
+        //ds-snippet-start:eSign31Step6
         BulkSendRequest request = new BulkSendRequest();
         request.setEnvelopeOrTemplateId(envelopeId);
 
@@ -132,10 +132,10 @@ public final class BulkSendEnvelopesService {
             System.out.println("Next Reset: " + resetInstant);
         }
         return bulkSendResponse.getData().getBatchId();
-        // ds-snippet-end:eSign31Step6
+        //ds-snippet-end:eSign31Step6
     }
 
-    // ds-snippet-start:eSign31Step3
+    //ds-snippet-start:eSign31Step3
     public static BulkSendingList getSendingList(
             String signerName,
             String signerEmail,
@@ -172,7 +172,7 @@ public final class BulkSendEnvelopesService {
                 .recipients(List.of(recipient1, recipient2))
                 .customFields(Collections.emptyList());
     }
-    // ds-snippet-end:eSign31Step3
+    //ds-snippet-end:eSign31Step3
 
     public static EnvelopeDefinition makeEnvelope() throws IOException {
         Document document = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");

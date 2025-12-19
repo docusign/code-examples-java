@@ -45,7 +45,7 @@ public final class DocumentGenerationService {
 
     public static final String DEFAULT_ID = "1";
 
-    // ds-snippet-start:eSign42Step3
+    //ds-snippet-start:eSign42Step3
     private static EnvelopeDefinition addDocumentTemplate(String offerDocDocx) throws IOException {
         String documentName = "OfferLetterDemo.docx";
         Document document = EnvelopeHelpers.createDocumentFromFile(offerDocDocx, documentName, DEFAULT_ID);
@@ -57,7 +57,7 @@ public final class DocumentGenerationService {
 
         return envelopeDefinition;
     }
-    // ds-snippet-end:eSign42Step3
+    //ds-snippet-end:eSign42Step3
 
     public String generateDocument(
             String accountId,
@@ -71,7 +71,7 @@ public final class DocumentGenerationService {
             String offerDocDocx,
             EnvelopesApi envelopesApi,
             TemplatesApi templatesApi) throws ApiException, IOException {
-        // ds-snippet-start:eSign42Step2
+        //ds-snippet-start:eSign42Step2
         var template = templatesApi.createTemplateWithHttpInfo(accountId, makeTemplate());
         Map<String, List<String>> headers = template.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
@@ -83,9 +83,9 @@ public final class DocumentGenerationService {
             System.out.println("Next Reset: " + resetInstant);
         }
         String templateId = template.getData().getTemplateId();
-        // ds-snippet-end:eSign42Step2
+        //ds-snippet-end:eSign42Step2
 
-        // ds-snippet-start:eSign42Step3
+        //ds-snippet-start:eSign42Step3
         var updateResponse = templatesApi.updateDocumentWithHttpInfo(accountId, templateId, DEFAULT_ID,
                 addDocumentTemplate(offerDocDocx), templatesApi.new UpdateDocumentOptions());
         headers = updateResponse.getHeaders();
@@ -97,9 +97,9 @@ public final class DocumentGenerationService {
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
-        // ds-snippet-end:eSign42Step3
+        //ds-snippet-end:eSign42Step3
 
-        // ds-snippet-start:eSign42Step4
+        //ds-snippet-start:eSign42Step4
         var tabsResponse = templatesApi.createTabsWithHttpInfo(accountId, templateId, DEFAULT_ID, prepareTabs());
         headers = tabsResponse.getHeaders();
         remaining = headers.get("X-RateLimit-Remaining");
@@ -110,9 +110,9 @@ public final class DocumentGenerationService {
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
-        // ds-snippet-end:eSign42Step4
+        //ds-snippet-end:eSign42Step4
 
-        // ds-snippet-start:eSign42Step5
+        //ds-snippet-start:eSign42Step5
         var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(
                 accountId,
                 makeEnvelope(candidateEmail, candidateName, template.getData().getTemplateId()),
@@ -128,9 +128,9 @@ public final class DocumentGenerationService {
         }
         ;
         String envelopeId = envelopeSummary.getData().getEnvelopeId();
-        // ds-snippet-end:eSign42Step5
+        //ds-snippet-end:eSign42Step5
 
-        // ds-snippet-start:eSign42Step6
+        //ds-snippet-start:eSign42Step6
         var formFieldResponse = envelopesApi.getEnvelopeDocGenFormFieldsWithHttpInfo(accountId, envelopeId);
         headers = formFieldResponse.getHeaders();
         remaining = headers.get("X-RateLimit-Remaining");
@@ -150,9 +150,9 @@ public final class DocumentGenerationService {
                 documentId = docGenFormFields.getDocumentId();
             }
         }
-        // ds-snippet-end:eSign42Step6
+        //ds-snippet-end:eSign42Step6
 
-        // ds-snippet-start:eSign42Step7
+        //ds-snippet-start:eSign42Step7
         DocGenFormFieldRequest formFields = getFormFields(
                 documentId,
                 candidateName,
@@ -174,9 +174,9 @@ public final class DocumentGenerationService {
             System.out.println("Next Reset: " + resetInstant);
         }
         ;
-        // ds-snippet-end:eSign42Step7
+        //ds-snippet-end:eSign42Step7
 
-        // ds-snippet-start:eSign42Step8
+        //ds-snippet-start:eSign42Step8
         Envelope envelope = new Envelope();
         envelope.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
 
@@ -192,11 +192,11 @@ public final class DocumentGenerationService {
             System.out.println("Next Reset: " + resetInstant);
         }
         ;
-        // ds-snippet-end:eSign42Step8
+        //ds-snippet-end:eSign42Step8
         return envelopeUpdateSummary.getData().getEnvelopeId();
     }
 
-    // ds-snippet-start:eSign42Step4
+    //ds-snippet-start:eSign42Step4
     private TemplateTabs prepareTabs() {
         SignHere signHere = createSignHere();
         DateSigned dateSigned = createDateSigned();
@@ -228,9 +228,9 @@ public final class DocumentGenerationService {
 
         return dateSigned;
     }
-    // ds-snippet-end:eSign42Step4
+    //ds-snippet-end:eSign42Step4
 
-    // ds-snippet-start:eSign42Step7
+    //ds-snippet-start:eSign42Step7
     private DocGenFormFieldRequest getFormFields(
             String documentId,
             String candidateName,
@@ -298,9 +298,9 @@ public final class DocumentGenerationService {
 
         return docGenFormFieldRequest;
     }
-    // ds-snippet-end:eSign42Step7
+    //ds-snippet-end:eSign42Step7
 
-    // ds-snippet-start:eSign42Step5
+    //ds-snippet-start:eSign42Step5
     private EnvelopeDefinition makeEnvelope(String candidateEmail, String candidateName, String templateId) {
         TemplateRole signerRole = new TemplateRole();
         signerRole.setName(candidateName);
@@ -314,9 +314,9 @@ public final class DocumentGenerationService {
 
         return envelopeDefinition;
     }
-    // ds-snippet-end:eSign42Step5
+    //ds-snippet-end:eSign42Step5
 
-    // ds-snippet-start:eSign42Step2
+    //ds-snippet-start:eSign42Step2
     private EnvelopeTemplate makeTemplate() {
         Signer signer = new Signer();
         signer.setRoleName(EnvelopeHelpers.SIGNER_ROLE_NAME);
@@ -335,5 +335,5 @@ public final class DocumentGenerationService {
 
         return template;
     }
-    // ds-snippet-end:eSign42Step2
+    //ds-snippet-end:eSign42Step2
 }

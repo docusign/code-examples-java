@@ -15,12 +15,12 @@ public final class CreateFormGroupService {
             FormGroupsApi formGroupsApi,
             String accountId,
             String formGroupName) throws ApiException {
-        // ds-snippet-start:Rooms7Step3
+        //ds-snippet-start:Rooms7Step3
         FormGroupForCreate formGroupForCreate = new FormGroupForCreate()
                 .name(formGroupName);
-        // ds-snippet-end:Rooms7Step3
+        //ds-snippet-end:Rooms7Step3
 
-        // ds-snippet-start:Rooms7Step4
+        //ds-snippet-start:Rooms7Step4
         ApiResponse<FormGroup> response = formGroupsApi.createFormGroupWithHttpInfo(accountId, formGroupForCreate);
 
         Map<String, List<String>> headers = response.getHeaders();
@@ -34,6 +34,6 @@ public final class CreateFormGroupService {
         }
 
         return response.getData();
-        // ds-snippet-end:Rooms7Step4
+        //ds-snippet-end:Rooms7Step4
     }
 }

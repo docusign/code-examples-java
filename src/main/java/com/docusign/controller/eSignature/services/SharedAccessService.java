@@ -55,7 +55,7 @@ public final class SharedAccessService {
             String agentEmail,
             String agentName,
             String activation) throws ApiException {
-        // ds-snippet-start:eSign43Step3
+        //ds-snippet-start:eSign43Step3
         UserInformation user = new UserInformation();
         user.email(agentEmail);
         user.userName(agentName);
@@ -75,7 +75,7 @@ public final class SharedAccessService {
             System.out.println("Next Reset: " + resetInstant);
         }
         return createUser.getData();
-        // ds-snippet-end:eSign43Step3
+        //ds-snippet-end:eSign43Step3
     }
 
     public void activateAgent(
@@ -98,7 +98,7 @@ public final class SharedAccessService {
 
         if (userAuthorizations.getData().getAuthorizations() == null
                 || userAuthorizations.getData().getAuthorizations().isEmpty()) {
-            // ds-snippet-start:eSign43Step4
+            //ds-snippet-start:eSign43Step4
             AuthorizationUser user = new AuthorizationUser();
             user.userId(createdUserId);
             user.accountId(accountId);
@@ -118,14 +118,14 @@ public final class SharedAccessService {
                 System.out.println("API calls remaining: " + remaining);
                 System.out.println("Next Reset: " + resetInstant);
             }
-            // ds-snippet-end:eSign43Step4
+            //ds-snippet-end:eSign43Step4
         }
     }
 
     public EnvelopesInformation getEnvelopeInfo(
             EnvelopesApi envelopesApi,
             String accountId) throws ApiException {
-        // ds-snippet-start:eSign43Step5
+        //ds-snippet-start:eSign43Step5
         EnvelopesApi.ListStatusChangesOptions options = envelopesApi.new ListStatusChangesOptions();
         LocalDate date = LocalDate.now().minusDays(FROM_DATE_OFFSET_DAYS);
         options.setFromDate(DateUtils.DATE_WITH_SLASH.format(date));
@@ -141,6 +141,6 @@ public final class SharedAccessService {
             System.out.println("Next Reset: " + resetInstant);
         }
         return listStatusResponse.getData();
-        // ds-snippet-end:eSign43Step5
+        //ds-snippet-end:eSign43Step5
     }
 }

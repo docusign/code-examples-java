@@ -19,7 +19,7 @@ public class CloneAccountService {
             ProvisionAssetGroupApi provisionAssetGroupApi,
             UUID organizationId) throws ApiException {
 
-        // ds-snippet-start:Admin12Step3
+        //ds-snippet-start:Admin12Step3
         ProvisionAssetGroupApi.GetAssetGroupAccountsOptions options = provisionAssetGroupApi.new GetAssetGroupAccountsOptions();
         options.setCompliant(true);
         ApiResponse<AssetGroupAccountsResponse> response = provisionAssetGroupApi
@@ -36,7 +36,7 @@ public class CloneAccountService {
         }
 
         return response.getData();
-        // ds-snippet-end:Admin12Step3
+        //ds-snippet-end:Admin12Step3
     }
 
     public AssetGroupAccountClone getClonedAccount(
@@ -47,7 +47,7 @@ public class CloneAccountService {
             String targetAccountEmail,
             String targetAccountFirstName,
             String targetAccountLastName) throws ApiException {
-        // ds-snippet-start:Admin12Step4
+        //ds-snippet-start:Admin12Step4
         String countryCode = "US";
 
         AssetGroupAccountClone accountData = new AssetGroupAccountClone();
@@ -66,9 +66,9 @@ public class CloneAccountService {
         targetAccount.admin(admin);
         accountData.setSourceAccount(sourceAccount);
         accountData.setTargetAccount(targetAccount);
-        // ds-snippet-end:Admin12Step4
+        //ds-snippet-end:Admin12Step4
 
-        // ds-snippet-start:Admin12Step5
+        //ds-snippet-start:Admin12Step5
         ApiResponse<AssetGroupAccountClone> response = provisionAssetGroupApi
                 .cloneAssetGroupAccountWithHttpInfo(organizationId, accountData);
 
@@ -83,6 +83,6 @@ public class CloneAccountService {
         }
 
         return response.getData();
-        // ds-snippet-end:Admin12Step5
+        //ds-snippet-end:Admin12Step5
     }
 }

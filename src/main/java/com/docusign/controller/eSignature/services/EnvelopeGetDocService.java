@@ -15,7 +15,7 @@ public final class EnvelopeGetDocService {
             String accountId,
             String envelopeId,
             String documentId) throws ApiException {
-        // ds-snippet-start:eSign7Step3
+        //ds-snippet-start:eSign7Step3
         var documentResponse = envelopesApi.getDocumentWithHttpInfo(accountId, envelopeId, documentId,
                 envelopesApi.new GetDocumentOptions());
         Map<String, List<String>> headers = documentResponse.getHeaders();
@@ -28,7 +28,7 @@ public final class EnvelopeGetDocService {
             System.out.println("Next Reset: " + resetInstant);
         }
         return documentResponse.getData();
-        // ds-snippet-end:eSign7Step3
+        //ds-snippet-end:eSign7Step3
     }
 
     public static String addExtension(String fileName, String extension) {

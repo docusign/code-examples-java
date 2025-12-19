@@ -71,12 +71,12 @@ public class EG040ControllerSetDocumentVisibility extends AbstractEsignatureCont
         EnvelopeDefinition envelope = SetDocumentVisibilityService.makeEnvelope(signerEmail, signerName, signer2Email,
                 signer2Name, ccEmail, ccName, DOCUMENT_FILE_NAME_PDF, DOCUMENT_FILE_NAME_DOCX, DOCUMENT_FILE_NAME_HTML);
 
-        // ds-snippet-start:eSign40Step2
+        //ds-snippet-start:eSign40Step2
         ApiClient apiClient = createApiClient(basePath, accessToken);
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
-        // ds-snippet-end:eSign40Step2
+        //ds-snippet-end:eSign40Step2
 
-        // ds-snippet-start:eSign40Step4
+        //ds-snippet-start:eSign40Step4
         var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(
                 accountId,
                 envelope,
@@ -90,7 +90,7 @@ public class EG040ControllerSetDocumentVisibility extends AbstractEsignatureCont
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
-        // ds-snippet-end:eSign40Step4
+        //ds-snippet-end:eSign40Step4
 
         DoneExample.createDefault(title)
                 .withMessage("The envelope has been created and sent!<br />Envelope ID "
