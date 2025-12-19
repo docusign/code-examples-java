@@ -20,14 +20,14 @@ public final class IdvAuthenticationService {
     public static EnvelopeSummary idvAuthentication(
             EnvelopesApi envelopesApi,
             String accountId,
-            EnvelopeDefinition envelope
-    ) throws ApiException {
-        var createEnvelope = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+            EnvelopeDefinition envelope) throws ApiException {
+        var createEnvelope = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope,
+                envelopesApi.new CreateEnvelopeOptions());
         Map<String, List<String>> headers = createEnvelope.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -36,36 +36,37 @@ public final class IdvAuthenticationService {
     }
 
     public static String retrieveWorkflowId(ApiClient apiClient, String accountId) throws ApiException {
-        //ds-snippet-start:eSign23Step3
+        // ds-snippet-start:eSign23Step3
         AccountsApi workflowDetails = new AccountsApi(apiClient);
-        var workflowRes = workflowDetails.getAccountIdentityVerificationWithHttpInfo(accountId, workflowDetails.new GetAccountIdentityVerificationOptions());
+        var workflowRes = workflowDetails.getAccountIdentityVerificationWithHttpInfo(accountId,
+                workflowDetails.new GetAccountIdentityVerificationOptions());
         Map<String, List<String>> headers = workflowRes.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
 
-        List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getData().getIdentityVerification();
+        List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getData()
+                .getIdentityVerification();
         String workflowId = "";
         for (int i = 0; i < identityVerification.size(); i++) {
             if (identityVerification.get(i).getDefaultName().equals("DocuSign ID Verification")) {
                 workflowId = identityVerification.get(i).getWorkflowId();
             }
         }
-        return  workflowId;
-        //ds-snippet-end:eSign23Step3
+        return workflowId;
+        // ds-snippet-end:eSign23Step3
     }
 
-    //ds-snippet-start:eSign23Step4
+    // ds-snippet-start:eSign23Step4
     public static EnvelopeDefinition createEnvelope(
             String signerName,
             String signerEmail,
-            String workflowId
-    ) {
+            String workflowId) {
         EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
         envelopeDefinition.setEmailSubject("Please sign");
         envelopeDefinition.setEmailBlurb("Sample text for email body");
@@ -90,9 +91,11 @@ public final class IdvAuthenticationService {
         signHere1.setTabLabel("SignHereTab");
         signHere1.setPageNumber("1");
         signHere1.setDocumentId("1");
-        // A 1- to 8-digit integer or 32-character GUID to match recipient IDs on your own systems.
-        // This value is referenced in the Tabs element below to assign tabs on a per-recipient basis.
-        signHere1.setRecipientId("1"); //represents your {RECIPIENT_ID}
+        // A 1- to 8-digit integer or 32-character GUID to match recipient IDs on your
+        // own systems.
+        // This value is referenced in the Tabs element below to assign tabs on a
+        // per-recipient basis.
+        signHere1.setRecipientId("1"); // represents your {RECIPIENT_ID}
 
         Tabs signer1Tabs = new Tabs();
         signer1Tabs.setSignHereTabs(Collections.singletonList(signHere1));
@@ -108,7 +111,7 @@ public final class IdvAuthenticationService {
         signer1.setNote("");
         signer1.setStatus(status);
         signer1.setDeliveryMethod(deliveryMethod);
-        signer1.setRecipientId("1"); //represents your {RECIPIENT_ID}
+        signer1.setRecipientId("1"); // represents your {RECIPIENT_ID}
         signer1.setIdentityVerification(workflow);
         signer1.setTabs(signer1Tabs);
 
@@ -119,5 +122,5 @@ public final class IdvAuthenticationService {
         envelopeDefinition.setDocuments(Collections.singletonList(doc1));
         return envelopeDefinition;
     }
-    //ds-snippet-end:eSign23Step4
+    // ds-snippet-end:eSign23Step4
 }

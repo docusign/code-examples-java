@@ -16,16 +16,15 @@ public final class AddingFormsToRoomService {
             RoomsApi roomsApi,
             String accountId,
             UUID formId,
-            Integer roomId
-    ) throws ApiException {
+            Integer roomId) throws ApiException {
         FormForAdd formForAdd = new FormForAdd().formId(formId);
         ApiResponse<RoomDocument> response = roomsApi.addFormToRoomWithHttpInfo(accountId, roomId, formForAdd);
 
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);

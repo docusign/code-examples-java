@@ -15,8 +15,7 @@ public final class PermissionSetUserGroupsService {
             ApiClient apiClient,
             String groupId,
             String profileId,
-            String accountId
-    ) throws ApiException {
+            String accountId) throws ApiException {
         GroupsApi groupsApi = new GroupsApi(apiClient);
 
         // Step 3: Perform request
@@ -31,7 +30,7 @@ public final class PermissionSetUserGroupsService {
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);

@@ -15,14 +15,13 @@ public final class SetTemplateTabValuesService {
             EnvelopesApi envelopesApi,
             String accountId,
             String envelopeId,
-            RecipientViewRequest viewRequest
-    ) throws ApiException {
+            RecipientViewRequest viewRequest) throws ApiException {
         var recipientView = envelopesApi.createRecipientViewWithHttpInfo(accountId, envelopeId, viewRequest);
         Map<String, java.util.List<String>> headers = recipientView.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -35,9 +34,8 @@ public final class SetTemplateTabValuesService {
             String signerName,
             String dsReturnUrl,
             String clientUserId,
-            String dsPingUrl
-    ) {
-        //ds-snippet-start:eSign17Step6
+            String dsPingUrl) {
+        // ds-snippet-start:eSign17Step6
         RecipientViewRequest viewRequest = new RecipientViewRequest();
         // Set the url where you want the recipient to go once they are done signing
         // should typically be a callback route somewhere in your app.
@@ -54,7 +52,7 @@ public final class SetTemplateTabValuesService {
                 signerEmail,
                 signerName,
                 dsPingUrl);
-        //ds-snippet-end:eSign17Step6
+        // ds-snippet-end:eSign17Step6
     }
 
     public static EnvelopeDefinition makeEnvelope(
@@ -63,13 +61,12 @@ public final class SetTemplateTabValuesService {
             String ccEmail,
             String ccName,
             String templateId,
-            String clientUserId
-    ) {
+            String clientUserId) {
         // Create a signer recipient to sign the document, identified by name and email
         // We set the clientUserId to enable embedded signing for the recipient
 
         // Create tabs and CustomFields
-        //ds-snippet-start:eSign17Step3
+        // ds-snippet-start:eSign17Step3
         List list1 = new List();
         list1.setValue("green");
         list1.setDocumentId("1");
@@ -147,14 +144,14 @@ public final class SetTemplateTabValuesService {
         customField.setName("app metadata item");
         customField.setValue("1234567");
         customField.setRequired("false");
-        customField.show("true"); //Yes, include in the CoC
+        customField.show("true"); // Yes, include in the CoC
 
         CustomFields cf = new CustomFields();
         cf.setTextCustomFields(Collections.singletonList(customField));
-        //ds-snippet-end:eSign17Step3
+        // ds-snippet-end:eSign17Step3
 
         // Next, create the top level envelope definition and populate it.
-        //ds-snippet-start:eSign17Step4
+        // ds-snippet-start:eSign17Step4
         EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
         envelopeDefinition.setEmailSubject("Please sign this document from the Java SDK");
         // The Recipients object wants arrays for each recipient type
@@ -166,6 +163,6 @@ public final class SetTemplateTabValuesService {
         envelopeDefinition.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
 
         return envelopeDefinition;
-        //ds-snippet-end:eSign17Step4
+        // ds-snippet-end:eSign17Step4
     }
 }

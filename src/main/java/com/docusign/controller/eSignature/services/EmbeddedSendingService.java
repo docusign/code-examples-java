@@ -20,14 +20,13 @@ import java.util.List;
 import java.util.Map;
 
 public final class EmbeddedSendingService {
-    //ds-snippet-start:eSign11Step3
+    // ds-snippet-start:eSign11Step3
     public static ViewUrl createSenderView(
             EnvelopesApi envelopesApi,
             String accountId,
             String envelopeId,
             String dsReturnUrl,
-            String startingScreen
-    ) throws ApiException {
+            String startingScreen) throws ApiException {
         // Create the sender view.
         // Set the url where you want the recipient to go once they are done
         // signing should typically be a callback route somewhere in your app.
@@ -70,16 +69,16 @@ public final class EmbeddedSendingService {
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
         return senderViewResponse.getData();
     }
-    //ds-snippet-end:eSign11Step3
+    // ds-snippet-end:eSign11Step3
 
-    //ds-snippet-start:eSign11Step2
+    // ds-snippet-start:eSign11Step2
     public static EnvelopeSummary createEnvelopeWithDraftStatus(
             EnvelopesApi envelopesApi,
             String signerEmail,
@@ -88,8 +87,7 @@ public final class EmbeddedSendingService {
             String ccName,
             String status,
             WorkArguments args,
-            String accountId
-    ) throws IOException, ApiException {
+            String accountId) throws IOException, ApiException {
         args.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_CREATED);
         EnvelopeDefinition env = SigningViaEmailService.makeEnvelope(
                 signerEmail,
@@ -98,17 +96,18 @@ public final class EmbeddedSendingService {
                 ccName,
                 status,
                 args);
-        var createEnvelope = envelopesApi.createEnvelopeWithHttpInfo(accountId, env, envelopesApi.new CreateEnvelopeOptions());
+        var createEnvelope = envelopesApi.createEnvelopeWithHttpInfo(accountId, env,
+                envelopesApi.new CreateEnvelopeOptions());
         Map<String, List<String>> headers = createEnvelope.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
         return createEnvelope.getData();
     }
-    //ds-snippet-end:eSign11Step2
+    // ds-snippet-end:eSign11Step2
 }

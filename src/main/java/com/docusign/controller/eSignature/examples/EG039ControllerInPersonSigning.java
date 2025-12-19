@@ -20,6 +20,9 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/eg039")
@@ -63,7 +66,19 @@ public class EG039ControllerInPersonSigning extends AbstractEsignatureController
         ApiClient apiClient = createApiClient(basePath, accessToken);
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
 
-        EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
+        var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(
+                accountId,
+                envelope,
+                envelopesApi.new CreateEnvelopeOptions());
+        Map<String, List<String>> headers = envelopeSummary.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
         //ds-snippet-end:eSign39Step3
         //ds-snippet-start:eSign39Step5
         RecipientViewRequest viewRequest = InPersonSigningService.makeRecipientViewRequest(hostEmail, hostName, config);
@@ -72,7 +87,7 @@ public class EG039ControllerInPersonSigning extends AbstractEsignatureController
         ViewUrl viewUrl = InPersonSigningService.inPersonSigning(
                 envelopesApi,
                 accountId,
-                envelopeSummary.getEnvelopeId(),
+                envelopeSummary.getData().getEnvelopeId(),
                 viewRequest);
 
         return new RedirectView(viewUrl.getUrl());

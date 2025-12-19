@@ -16,39 +16,38 @@ import java.util.UUID;
 
 public class CloneAccountService {
     public AssetGroupAccountsResponse getGroupAccounts(
-        ProvisionAssetGroupApi provisionAssetGroupApi,
-        UUID organizationId
-    ) throws ApiException {
+            ProvisionAssetGroupApi provisionAssetGroupApi,
+            UUID organizationId) throws ApiException {
 
-        //ds-snippet-start:Admin12Step3
+        // ds-snippet-start:Admin12Step3
         ProvisionAssetGroupApi.GetAssetGroupAccountsOptions options = provisionAssetGroupApi.new GetAssetGroupAccountsOptions();
         options.setCompliant(true);
-        ApiResponse<AssetGroupAccountsResponse> response = provisionAssetGroupApi.getAssetGroupAccountsWithHttpInfo(organizationId, options);
+        ApiResponse<AssetGroupAccountsResponse> response = provisionAssetGroupApi
+                .getAssetGroupAccountsWithHttpInfo(organizationId, options);
 
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
 
         return response.getData();
-        //ds-snippet-end:Admin12Step3
+        // ds-snippet-end:Admin12Step3
     }
 
     public AssetGroupAccountClone getClonedAccount(
-        ProvisionAssetGroupApi provisionAssetGroupApi,
-        UUID organizationId,
-        UUID sourceAccountId,
-        String targetAccountName,
-        String targetAccountEmail,
-        String targetAccountFirstName,
-        String targetAccountLastName
-    ) throws ApiException {
-        //ds-snippet-start:Admin12Step4
+            ProvisionAssetGroupApi provisionAssetGroupApi,
+            UUID organizationId,
+            UUID sourceAccountId,
+            String targetAccountName,
+            String targetAccountEmail,
+            String targetAccountFirstName,
+            String targetAccountLastName) throws ApiException {
+        // ds-snippet-start:Admin12Step4
         String countryCode = "US";
 
         AssetGroupAccountClone accountData = new AssetGroupAccountClone();
@@ -67,22 +66,23 @@ public class CloneAccountService {
         targetAccount.admin(admin);
         accountData.setSourceAccount(sourceAccount);
         accountData.setTargetAccount(targetAccount);
-        //ds-snippet-end:Admin12Step4
+        // ds-snippet-end:Admin12Step4
 
-        //ds-snippet-start:Admin12Step5
-        ApiResponse<AssetGroupAccountClone> response = provisionAssetGroupApi.cloneAssetGroupAccountWithHttpInfo(organizationId, accountData);
+        // ds-snippet-start:Admin12Step5
+        ApiResponse<AssetGroupAccountClone> response = provisionAssetGroupApi
+                .cloneAssetGroupAccountWithHttpInfo(organizationId, accountData);
 
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
 
         return response.getData();
-        //ds-snippet-end:Admin12Step5
+        // ds-snippet-end:Admin12Step5
     }
 }

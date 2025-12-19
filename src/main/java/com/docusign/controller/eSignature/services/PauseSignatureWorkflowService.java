@@ -22,14 +22,14 @@ public final class PauseSignatureWorkflowService {
     public static EnvelopeSummary pauseSignatureWorkflow(
             EnvelopesApi envelopesApi,
             String accountId,
-            EnvelopeDefinition envelope
-    ) throws ApiException {
-        var envelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+            EnvelopeDefinition envelope) throws ApiException {
+        var envelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope,
+                envelopesApi.new CreateEnvelopeOptions());
         Map<String, List<String>> headers = envelopeResponse.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -37,13 +37,12 @@ public final class PauseSignatureWorkflowService {
         return envelopeResponse.getData();
     }
 
-    //ds-snippet-start:eSign32Step3
+    // ds-snippet-start:eSign32Step3
     public static EnvelopeDefinition createEnvelope(
             String signerName,
             String signerEmail,
             String signerName2,
-            String signerEmail2
-    ) throws IOException {
+            String signerEmail2) throws IOException {
         Document document = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, DOCUMENT_ID);
 
         WorkflowStep workflowStep = new WorkflowStep();
@@ -96,5 +95,5 @@ public final class PauseSignatureWorkflowService {
 
         return envelope;
     }
-    //ds-snippet-end:eSign32Step3
+    // ds-snippet-end:eSign32Step3
 }

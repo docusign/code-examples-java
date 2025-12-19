@@ -18,9 +18,8 @@ public class UpdateUserProductPermissionProfileByEmail {
             UUID productId,
             String emailAddress,
             UUID organizationId,
-            UUID accountId
-    ) throws Exception {
-        //ds-snippet-start:Admin8Step3
+            UUID accountId) throws Exception {
+        // ds-snippet-start:Admin8Step3
         var productPermissionProfileRequest = new ProductPermissionProfileRequest();
         productPermissionProfileRequest.setPermissionProfileId(permissionProfileId);
         productPermissionProfileRequest.setProductId(productId);
@@ -28,25 +27,26 @@ public class UpdateUserProductPermissionProfileByEmail {
         var userProductPermissionProfilesRequest = new UserProductPermissionProfilesRequest();
         userProductPermissionProfilesRequest.email(emailAddress);
         userProductPermissionProfilesRequest.addProductPermissionProfilesItem(productPermissionProfileRequest);
-        //ds-snippet-end:Admin8Step3
+        // ds-snippet-end:Admin8Step3
 
-        //ds-snippet-start:Admin8Step4
-        ApiResponse<UserProductPermissionProfilesResponse> response = productPermissionProfilesApi.addUserProductPermissionProfilesByEmailWithHttpInfo(
-                organizationId,
-                accountId,
-                userProductPermissionProfilesRequest);
+        // ds-snippet-start:Admin8Step4
+        ApiResponse<UserProductPermissionProfilesResponse> response = productPermissionProfilesApi
+                .addUserProductPermissionProfilesByEmailWithHttpInfo(
+                        organizationId,
+                        accountId,
+                        userProductPermissionProfilesRequest);
 
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
 
         return response.getData();
-        //ds-snippet-end:Admin8Step4
+        // ds-snippet-end:Admin8Step4
     }
 }

@@ -19,29 +19,29 @@ public final class ActivateClickwrapService {
             String accountId,
             String clickwrapId,
             String clickwrapVersionNumber) throws ApiException {
-        //ds-snippet-start:Click2Step3
+        // ds-snippet-start:Click2Step3
         ClickwrapRequest clickwrapRequest = new ClickwrapRequest().status(ClickwrapHelper.STATUS_ACTIVE);
-        //ds-snippet-end:Click2Step3
+        // ds-snippet-end:Click2Step3
 
-        //ds-snippet-start:Click2Step4
+        // ds-snippet-start:Click2Step4
         ApiResponse<ClickwrapVersionSummaryResponse> response = accountsApi.updateClickwrapVersionWithHttpInfo(
                 accountId,
                 clickwrapId,
                 clickwrapVersionNumber,
                 clickwrapRequest);
-        
+
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
 
         return response.getData();
-        //ds-snippet-end:Click2Step4
+        // ds-snippet-end:Click2Step4
     }
 
     public static ClickwrapVersionsResponse getClickwrapsByStatus(
@@ -56,8 +56,8 @@ public final class ActivateClickwrapService {
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);

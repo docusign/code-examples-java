@@ -19,35 +19,34 @@ public class UseConditionalRecipientsService {
 
     private static final String DOCUMENT_NAME = "Welcome";
 
-    //ds-snippet-start:eSign34Step4
+    // ds-snippet-start:eSign34Step4
     public static EnvelopeSummary useConditionalRecipients(
             EnvelopesApi envelopesApi,
             String accountId,
-            EnvelopeDefinition envelope
-    ) throws ApiException {
-        var createEnvelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+            EnvelopeDefinition envelope) throws ApiException {
+        var createEnvelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope,
+                envelopesApi.new CreateEnvelopeOptions());
         Map<String, List<String>> headers = createEnvelopeResponse.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
         return createEnvelopeResponse.getData();
     }
-    //ds-snippet-end:eSign34Step4
+    // ds-snippet-end:eSign34Step4
 
-    //ds-snippet-start:eSign34Step3
+    // ds-snippet-start:eSign34Step3
     public static EnvelopeDefinition createEnvelope(
             String signerNotCheckedName,
             String signerNotCheckedEmail,
             String signerCheckedName,
             String signerCheckedEmail,
             String signerName,
-            String signerEmail
-    ) throws IOException {
+            String signerEmail) throws IOException {
         Document document = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, DOCUMENT_ID);
 
         WorkflowStep workflowStep = new WorkflowStep();
@@ -59,8 +58,7 @@ public class UseConditionalRecipientsService {
                 signerNotCheckedName,
                 signerNotCheckedEmail,
                 signerCheckedName,
-                signerCheckedEmail
-        ));
+                signerCheckedEmail));
 
         Workflow workflow = new Workflow();
         workflow.setWorkflowSteps(Collections.singletonList(workflowStep));
@@ -68,8 +66,7 @@ public class UseConditionalRecipientsService {
         Recipients recipients = new Recipients();
         recipients.setSigners(Arrays.asList(
                 createApprovalSigner(document.getDocumentId()),
-                createPurchaserSigner(signerName, signerEmail, document.getDocumentId())
-        ));
+                createPurchaserSigner(signerName, signerEmail, document.getDocumentId())));
 
         EnvelopeDefinition envelope = new EnvelopeDefinition();
         envelope.setEmailSubject("ApproveIfChecked");
@@ -84,8 +81,7 @@ public class UseConditionalRecipientsService {
     private static Signer createPurchaserSigner(
             String signerName,
             String signerEmail,
-            String documentId
-    ) {
+            String documentId) {
         SignHere signHere = new SignHere();
         signHere.setName("SignHereTabs");
         signHere.setXPosition("200");
@@ -173,8 +169,7 @@ public class UseConditionalRecipientsService {
             String signerNotCheckedName,
             String signerNotCheckedEmail,
             String signerCheckedName,
-            String signerCheckedEmail
-    ) {
+            String signerCheckedEmail) {
         RecipientOption recipientOption1 = new RecipientOption();
         recipientOption1.setRecipientLabel("signer2a");
         recipientOption1.setName(signerNotCheckedName);
@@ -198,8 +193,7 @@ public class UseConditionalRecipientsService {
             String signerNotCheckedName,
             String signerNotCheckedEmail,
             String signerCheckedName,
-            String signerCheckedEmail
-    ) {
+            String signerCheckedEmail) {
         ConditionalRecipientRule conditionalRecipientRule = new ConditionalRecipientRule();
         conditionalRecipientRule.setRecipientId("2");
         conditionalRecipientRule.setOrder("0");
@@ -207,8 +201,7 @@ public class UseConditionalRecipientsService {
                 signerNotCheckedName,
                 signerNotCheckedEmail,
                 signerCheckedName,
-                signerCheckedEmail
-        ));
+                signerCheckedEmail));
         conditionalRecipientRule.setConditions(createConditionalRecipientRuleConditions());
         return conditionalRecipientRule;
     }
@@ -217,19 +210,17 @@ public class UseConditionalRecipientsService {
             String signerNotCheckedName,
             String signerNotCheckedEmail,
             String signerCheckedName,
-            String signerCheckedEmail
-    ) {
+            String signerCheckedEmail) {
         RecipientRules recipientRules = new RecipientRules();
         recipientRules.setConditionalRecipients(Collections.singletonList(createConditionalRecipientRule(
                 signerNotCheckedName,
                 signerNotCheckedEmail,
                 signerCheckedName,
-                signerCheckedEmail
-        )));
+                signerCheckedEmail)));
 
         RecipientRouting recipientRouting = new RecipientRouting();
         recipientRouting.setRules(recipientRules);
         return recipientRouting;
     }
-    //ds-snippet-end:eSign34Step3
+    // ds-snippet-end:eSign34Step3
 }

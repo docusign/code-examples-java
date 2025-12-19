@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -53,8 +56,17 @@ public class EG030ControllerApplyBrandToTemplate extends AbstractEsignatureContr
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
 
         AccountsApi accountsApi = new AccountsApi(apiClient);
-        BrandsResponse brands = accountsApi.listBrands(accountId);
-        model.addAttribute(MODEL_LIST_BRAND, brands.getBrands());
+        var brands = accountsApi.listBrandsWithHttpInfo(accountId, accountsApi.new ListBrandsOptions());
+        Map<String, List<String>> headers = brands.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        model.addAttribute(MODEL_LIST_BRAND, brands.getData().getBrands());
 
         model.addAttribute(MODEL_TEMPLATE_OK, StringUtils.isNotBlank(session.getTemplateId()));
     }

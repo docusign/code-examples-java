@@ -21,18 +21,18 @@ public final class ApplyBrandToEnvelopeService {
 
     private static final int ANCHOR_OFFSET_X = 20;
 
-    //ds-snippet-start:eSign29Step4
+    // ds-snippet-start:eSign29Step4
     public static EnvelopeSummary applyBrandToEnvelope(
             EnvelopesApi envelopesApi,
             String accountId,
-            EnvelopeDefinition envelope
-    ) throws ApiException {
-        var createEnvelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+            EnvelopeDefinition envelope) throws ApiException {
+        var createEnvelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope,
+                envelopesApi.new CreateEnvelopeOptions());
         Map<String, List<String>> headers = createEnvelopeResponse.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -40,18 +40,17 @@ public final class ApplyBrandToEnvelopeService {
 
         return createEnvelopeResponse.getData();
     }
-    //ds-snippet-end:eSign29Step4
+    // ds-snippet-end:eSign29Step4
 
     public static BrandsResponse getBrands(
             AccountsApi accountsApi,
-            String accountId
-    ) throws ApiException {
+            String accountId) throws ApiException {
         var listBrandsResponse = accountsApi.listBrandsWithHttpInfo(accountId, accountsApi.new ListBrandsOptions());
         Map<String, List<String>> headers = listBrandsResponse.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -63,12 +62,11 @@ public final class ApplyBrandToEnvelopeService {
     // Creates an envelope. The envelope has one recipient who should sign an
     // attached document. Attached document is read from a local directory.
     // Also the envelope contains a brand Id which is created on EG028 example.
-    //ds-snippet-start:eSign29Step3
+    // ds-snippet-start:eSign29Step3
     public static EnvelopeDefinition makeEnvelope(
             String signerEmail,
             String signerName,
-            String brandId
-    ) throws IOException {
+            String brandId) throws IOException {
         // Reads a file from a local directory and create Document object.
         Document document = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
 
@@ -93,5 +91,5 @@ public final class ApplyBrandToEnvelopeService {
                 .brandId(brandId)
                 .status(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
     }
-    //ds-snippet-end:eSign29Step3
+    // ds-snippet-end:eSign29Step3
 }

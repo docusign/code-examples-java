@@ -19,18 +19,17 @@ public class ExternalFormSessionService {
     public RoomDocumentList getDocuments(
             RoomsApi roomsApi,
             String accountId,
-            Integer roomId
-    ) throws ApiException {
+            Integer roomId) throws ApiException {
         ApiResponse<RoomDocumentList> response = roomsApi.getDocumentsWithHttpInfo(
                 accountId,
                 roomId,
-            (GetDocumentsOptions)null);
+                (GetDocumentsOptions) null);
 
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -41,15 +40,14 @@ public class ExternalFormSessionService {
 
     public RoomSummaryList getRooms(
             RoomsApi roomsApi,
-            String accountId
-    ) throws ApiException {
-        ApiResponse<RoomSummaryList> response = roomsApi.getRoomsWithHttpInfo(accountId, (GetRoomsOptions)null);
+            String accountId) throws ApiException {
+        ApiResponse<RoomSummaryList> response = roomsApi.getRoomsWithHttpInfo(accountId, (GetRoomsOptions) null);
 
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -61,15 +59,15 @@ public class ExternalFormSessionService {
     public ExternalFormFillSession createSession(
             ExternalFormFillSessionsApi externalFormFillSessionsApi,
             String accountId,
-            ExternalFormFillSessionForCreate sessionForCreate
-    ) throws ApiException {
-        ApiResponse<ExternalFormFillSession> response = externalFormFillSessionsApi.createExternalFormFillSessionWithHttpInfo(accountId, sessionForCreate);
+            ExternalFormFillSessionForCreate sessionForCreate) throws ApiException {
+        ApiResponse<ExternalFormFillSession> response = externalFormFillSessionsApi
+                .createExternalFormFillSessionWithHttpInfo(accountId, sessionForCreate);
 
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);

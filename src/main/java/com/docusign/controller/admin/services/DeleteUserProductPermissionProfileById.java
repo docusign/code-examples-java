@@ -17,25 +17,25 @@ public class DeleteUserProductPermissionProfileById {
             UUID productId,
             String emailAddress,
             UUID organizationId,
-            UUID accountId
-    ) throws Exception {
+            UUID accountId) throws Exception {
 
-        //ds-snippet-start:Admin9Step4
+        // ds-snippet-start:Admin9Step4
         var userProductProfileDeleteRequest = new UserProductProfileDeleteRequest();
         userProductProfileDeleteRequest.setProductIds(Collections.singletonList(productId));
         userProductProfileDeleteRequest.setUserEmail(emailAddress);
-        //ds-snippet-end:Admin9Step4
+        // ds-snippet-end:Admin9Step4
 
-        ApiResponse<RemoveUserProductsResponse> response = productPermissionProfilesApi.removeUserProductPermissionWithHttpInfo(
-                organizationId,
-                accountId,
-                userProductProfileDeleteRequest);
+        ApiResponse<RemoveUserProductsResponse> response = productPermissionProfilesApi
+                .removeUserProductPermissionWithHttpInfo(
+                        organizationId,
+                        accountId,
+                        userProductProfileDeleteRequest);
 
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);

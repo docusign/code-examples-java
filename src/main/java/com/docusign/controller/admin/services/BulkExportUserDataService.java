@@ -29,13 +29,14 @@ public class BulkExportUserDataService {
     public static OrganizationExportsResponse bulkExportsUserData(
             BulkExportsApi bulkExportsApi,
             UUID organizationId) throws ApiException {
-        ApiResponse<OrganizationExportsResponse> response = bulkExportsApi.getUserListExportsWithHttpInfo(organizationId);
+        ApiResponse<OrganizationExportsResponse> response = bulkExportsApi
+                .getUserListExportsWithHttpInfo(organizationId);
 
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -48,13 +49,14 @@ public class BulkExportUserDataService {
             BulkExportsApi bulkExportsApi,
             UUID organizationId,
             UUID exportId) throws ApiException {
-        ApiResponse<OrganizationExportResponse> response = bulkExportsApi.getUserListExportWithHttpInfo(organizationId, exportId);
+        ApiResponse<OrganizationExportResponse> response = bulkExportsApi.getUserListExportWithHttpInfo(organizationId,
+                exportId);
 
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -68,13 +70,14 @@ public class BulkExportUserDataService {
             UUID organizationId) throws ApiException {
         OrganizationExportRequest request = new OrganizationExportRequest();
         request.setType("organization_memberships_export");
-        ApiResponse<OrganizationExportResponse> response = bulkExportsApi.createUserListExportWithHttpInfo(organizationId, request);
+        ApiResponse<OrganizationExportResponse> response = bulkExportsApi
+                .createUserListExportWithHttpInfo(organizationId, request);
 
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -88,7 +91,7 @@ public class BulkExportUserDataService {
             String bearerAuthentication,
             String accessToken,
             Integer bufferSize) throws IOException, URISyntaxException {
-        //ds-snippet-start:Admin3Step5
+        // ds-snippet-start:Admin3Step5
         URL request_url = new URL(csvUri);
 
         // Send Web request to download and save the exported CSV data
@@ -123,7 +126,7 @@ public class BulkExportUserDataService {
         outputStream.close();
         inputStream.close();
         http_conn.disconnect();
-        //ds-snippet-end:Admin3Step5
+        // ds-snippet-end:Admin3Step5
 
         return saveFilePath;
     }

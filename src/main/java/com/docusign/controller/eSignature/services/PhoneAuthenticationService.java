@@ -18,15 +18,15 @@ public final class PhoneAuthenticationService {
     public static EnvelopeSummary phoneAuthentication(
             EnvelopesApi envelopesApi,
             String accountId,
-            EnvelopeDefinition envelope
-    ) throws ApiException {
-        var envelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+            EnvelopeDefinition envelope) throws ApiException {
+        var envelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope,
+                envelopesApi.new CreateEnvelopeOptions());
 
         Map<String, List<String>> headers = envelopeResponse.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -34,9 +34,9 @@ public final class PhoneAuthenticationService {
         return envelopeResponse.getData();
     }
 
-    //ds-snippet-start:eSign20Step4
+    // ds-snippet-start:eSign20Step4
     public static EnvelopeDefinition createEnvelope(String signerName, String signerEmail, String countryCode,
-                                                    String phone, String workFlowId) throws IOException {
+            String phone, String workFlowId) throws IOException {
         Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
 
         SignHere signHere = new SignHere();
@@ -89,5 +89,5 @@ public final class PhoneAuthenticationService {
 
         return envelope;
     }
-    //ds-snippet-end:eSign20Step4
+    // ds-snippet-end:eSign20Step4
 }
