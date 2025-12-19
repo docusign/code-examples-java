@@ -53,7 +53,7 @@ public final class EmbeddedSigningService {
         return envelopeSummary.getData().getEnvelopeId();
     }
 
-    // ds-snippet-start:eSign1Step4
+    //ds-snippet-start:eSign1Step4
     public static RecipientViewRequest makeRecipientViewRequest(
             String signerEmail,
             String signerName,
@@ -95,9 +95,9 @@ public final class EmbeddedSigningService {
 
         return viewRequest;
     }
-    // ds-snippet-end
+    //ds-snippet-end
 
-    // ds-snippet-start:eSign1Step2
+    //ds-snippet-start:eSign1Step2
     public static EnvelopeDefinition makeEnvelope(
             String signerEmail,
             String signerName,
@@ -130,5 +130,5 @@ public final class EmbeddedSigningService {
 
         return envelopeDefinition;
     }
-    // ds-snippet-end
+    //ds-snippet-end
 }

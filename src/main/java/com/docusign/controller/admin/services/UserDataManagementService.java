@@ -23,11 +23,11 @@ public class UserDataManagementService {
             AccountsApi accountsApi,
             UUID userId,
             UUID accountId) throws Exception {
-        // ds-snippet-start:Admin11Step3
+        //ds-snippet-start:Admin11Step3
         IndividualMembershipDataRedactionRequest membershipDataRedaction = new IndividualMembershipDataRedactionRequest();
         membershipDataRedaction.userId(userId);
-        // ds-snippet-end:Admin11Step3
-        // ds-snippet-start:Admin11Step4
+        //ds-snippet-end:Admin11Step3
+        //ds-snippet-start:Admin11Step4
         ApiResponse<IndividualUserDataRedactionResponse> response = accountsApi
                 .redactIndividualMembershipDataWithHttpInfo(accountId, membershipDataRedaction);
 
@@ -42,7 +42,7 @@ public class UserDataManagementService {
         }
 
         return response.getData();
-        // ds-snippet-end:Admin11Step4
+        //ds-snippet-end:Admin11Step4
     }
 
     public IndividualUserDataRedactionResponse deleteUserDataFromOrganizationByEmail(
@@ -78,12 +78,12 @@ public class UserDataManagementService {
             memberships.accountId(user.getMemberships().get(0).getAccountId());
         }
 
-        // ds-snippet-start:Admin10Step3
+        //ds-snippet-start:Admin10Step3
         IndividualUserDataRedactionRequest userRedactionRequest = new IndividualUserDataRedactionRequest();
         userRedactionRequest.setUserId(user.getId());
         userRedactionRequest.setMemberships(Arrays.asList(memberships));
-        // ds-snippet-end:Admin10Step3
-        // ds-snippet-start:Admin10Step4
+        //ds-snippet-end:Admin10Step3
+        //ds-snippet-start:Admin10Step4
         ApiResponse<IndividualUserDataRedactionResponse> response = organizationsApi
                 .redactIndividualUserDataWithHttpInfo(organizationId, userRedactionRequest);
 
@@ -98,6 +98,6 @@ public class UserDataManagementService {
         }
 
         return response.getData();
-        // ds-snippet-end:Admin10Step4
+        //ds-snippet-end:Admin10Step4
     }
 }

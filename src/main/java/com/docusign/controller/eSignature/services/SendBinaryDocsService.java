@@ -99,7 +99,7 @@ public final class SendBinaryDocsService {
 
         // See
         // https://developers.docusign.com/esign-rest-api/guides/requests-and-responses
-        // ds-snippet-start:eSign10Step4
+        //ds-snippet-start:eSign10Step4
         DataOutputStream buffer = new DataOutputStream(connection.getOutputStream());
         SendBinaryDocsService.writeBoundaryHeader(buffer, MediaType.APPLICATION_JSON, "form-data");
         buffer.writeBytes(envelopeJSON.toString(DoneExample.JSON_INDENT_FACTOR));
@@ -130,7 +130,7 @@ public final class SendBinaryDocsService {
 
         return StreamUtils.copyToString(connection.getInputStream(), StandardCharsets.UTF_8);
     }
-    // ds-snippet-end:eSign10Step4
+    //ds-snippet-end:eSign10Step4
 
     private static void writeBoundaryHeader(
             DataOutputStream buffer,
@@ -164,7 +164,7 @@ public final class SendBinaryDocsService {
     // recipient 2 - cc
     // The envelope will be sent first to the signer.
     // After it is signed, a copy is sent to the cc person.
-    // ds-snippet-start:eSign10Step3
+    //ds-snippet-start:eSign10Step3
     private static JSONObject makeEnvelopeJSON(
             String signerName,
             String signerEmail,
@@ -218,7 +218,7 @@ public final class SendBinaryDocsService {
 
         return envelopeJSON;
     }
-    // ds-snippet-end:eSign10Step3
+    //ds-snippet-end:eSign10Step3
 
     @Value
     public static class DocumentInfo {

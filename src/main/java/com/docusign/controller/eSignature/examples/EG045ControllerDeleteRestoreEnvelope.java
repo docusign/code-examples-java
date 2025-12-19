@@ -25,107 +25,107 @@ import java.text.MessageFormat;
 @Controller
 @RequestMapping("/eg045")
 public class EG045ControllerDeleteRestoreEnvelope extends AbstractEsignatureController {
-    public static final String RECYCLE_BIN_FOLDER_ID = "recyclebin";
+	public static final String RECYCLE_BIN_FOLDER_ID = "recyclebin";
 
-    public static final String SENT_ITEMS_FOLDER_NAME = "Sent items";
+	public static final String SENT_ITEMS_FOLDER_NAME = "Sent items";
 
-    public static final String EXAMPLE_NUMBER = "/eg045";
+	public static final String EXAMPLE_NUMBER = "/eg045";
 
-    public static final String RESTORE_ENVELOPE = "/restoreEnvelope";
+	public static final String RESTORE_ENVELOPE = "/restoreEnvelope";
 
-    public static final String RESTORE_ENVELOPE_PAGE = "pages/esignature/examples/eg045RestoreEnvelope";
+	public static final String RESTORE_ENVELOPE_PAGE = "pages/esignature/examples/eg045RestoreEnvelope";
 
-    public EG045ControllerDeleteRestoreEnvelope(DSConfiguration config, Session session, User user) {
-        super(config, "eg045", session, user);
-    }
+	public EG045ControllerDeleteRestoreEnvelope(DSConfiguration config, Session session, User user) {
+		super(config, "eg045", session, user);
+	}
 
-    @Override
-    protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
-        super.onInitModel(args, model);
-        model.addAttribute("envelopeId", session.getEnvelopeId());
-    }
+	@Override
+	protected void onInitModel(WorkArguments args, ModelMap model) throws Exception {
+		super.onInitModel(args, model);
+		model.addAttribute("envelopeId", session.getEnvelopeId());
+	}
 
-    @Override
-    protected Object doWork(WorkArguments args, ModelMap model,
-            HttpServletResponse response) throws Exception {
-        String envelopeId = args.getEnvelopeId();
-        session.setEnvelopeId(envelopeId);
-        //ds-snippet-start:eSign45Step2
-        ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
-        //ds-snippet-end:eSign45Step2
-        DeleteRestoreEnvelopeService.deleteEnvelope(
-                apiClient,
-                session.getAccountId(),
-                envelopeId);
+	@Override
+	protected Object doWork(WorkArguments args, ModelMap model,
+			HttpServletResponse response) throws Exception {
+		String envelopeId = args.getEnvelopeId();
+		session.setEnvelopeId(envelopeId);
+		//ds-snippet-start:eSign45Step2
+		ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
+		//ds-snippet-end:eSign45Step2
+		DeleteRestoreEnvelopeService.deleteEnvelope(
+				apiClient,
+				session.getAccountId(),
+				envelopeId);
 
-        DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
-                .withMessage(
-                        MessageFormat.format(
-                                getTextForCodeExampleByApiType().AdditionalPage
-                                        .get(0).ResultsPageText,
-                                envelopeId))
-                .withRedirect(EXAMPLE_NUMBER + RESTORE_ENVELOPE)
-                .addToModel(model, config);
+		DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
+				.withMessage(
+						MessageFormat.format(
+								getTextForCodeExampleByApiType().AdditionalPage
+										.get(0).ResultsPageText,
+								envelopeId))
+				.withRedirect(EXAMPLE_NUMBER + RESTORE_ENVELOPE)
+				.addToModel(model, config);
 
-        return DONE_EXAMPLE_PAGE;
-    }
+		return DONE_EXAMPLE_PAGE;
+	}
 
-    @GetMapping(value = RESTORE_ENVELOPE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getRestoreEnvelope(WorkArguments args, ModelMap model) throws Exception {
-        super.onInitModel(args, model);
+	@GetMapping(value = RESTORE_ENVELOPE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String getRestoreEnvelope(WorkArguments args, ModelMap model) throws Exception {
+		super.onInitModel(args, model);
 
-        String envelopeId = session.getEnvelopeId();
-        String restoreEnvelopeText = MessageFormat.format(
-                config.getCodeExamplesText().SupportingTexts.HelpingTexts.EnvelopeWillBeRestored,
-                envelopeId);
+		String envelopeId = session.getEnvelopeId();
+		String restoreEnvelopeText = MessageFormat.format(
+				config.getCodeExamplesText().SupportingTexts.HelpingTexts.EnvelopeWillBeRestored,
+				envelopeId);
 
-        model.addAttribute("restoreText", restoreEnvelopeText);
-        model.addAttribute("envelopeId", envelopeId);
+		model.addAttribute("restoreText", restoreEnvelopeText);
+		model.addAttribute("envelopeId", envelopeId);
 
-        return RESTORE_ENVELOPE_PAGE;
-    }
+		return RESTORE_ENVELOPE_PAGE;
+	}
 
-    @PostMapping(value = RESTORE_ENVELOPE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String postRestoreEnvelope(WorkArguments args, ModelMap model) throws Exception {
-        String envelopeId = session.getEnvelopeId();
-        String accountId = session.getAccountId();
-        String folderName = args.getFolderName() != null ? args.getFolderName() : SENT_ITEMS_FOLDER_NAME;
+	@PostMapping(value = RESTORE_ENVELOPE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String postRestoreEnvelope(WorkArguments args, ModelMap model) throws Exception {
+		String envelopeId = session.getEnvelopeId();
+		String accountId = session.getAccountId();
+		String folderName = args.getFolderName() != null ? args.getFolderName() : SENT_ITEMS_FOLDER_NAME;
 
-        ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
+		ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
 
-        FoldersResponse availableFolders = DeleteRestoreEnvelopeService.getFolders(apiClient, accountId);
-        Folder folder = DeleteRestoreEnvelopeService.getFolderIdByName(availableFolders.getFolders(),
-                folderName);
+		FoldersResponse availableFolders = DeleteRestoreEnvelopeService.getFolders(apiClient, accountId);
+		Folder folder = DeleteRestoreEnvelopeService.getFolderIdByName(availableFolders.getFolders(),
+				folderName);
 
-        if (folder == null) {
-            DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
-                    .withMessage(
-                            MessageFormat.format(
-                                    getTextForCodeExampleByApiType().AdditionalPage
-                                            .get(1).ResultsPageText,
-                                    folderName))
-                    .withRedirect(EXAMPLE_NUMBER + RESTORE_ENVELOPE)
-                    .addToModel(model, config);
+		if (folder == null) {
+			DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
+					.withMessage(
+							MessageFormat.format(
+									getTextForCodeExampleByApiType().AdditionalPage
+											.get(1).ResultsPageText,
+									folderName))
+					.withRedirect(EXAMPLE_NUMBER + RESTORE_ENVELOPE)
+					.addToModel(model, config);
 
-            return DONE_EXAMPLE_PAGE;
-        }
+			return DONE_EXAMPLE_PAGE;
+		}
 
-        DeleteRestoreEnvelopeService.moveEnvelopeToFolder(
-                apiClient,
-                accountId,
-                envelopeId,
-                folder.getFolderId(),
-                RECYCLE_BIN_FOLDER_ID);
+		DeleteRestoreEnvelopeService.moveEnvelopeToFolder(
+				apiClient,
+				accountId,
+				envelopeId,
+				folder.getFolderId(),
+				RECYCLE_BIN_FOLDER_ID);
 
-        DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
-                .withMessage(
-                        MessageFormat.format(
-                                getTextForCodeExampleByApiType().ResultsPageText,
-                                envelopeId,
-                                folder.getType(),
-                                folderName))
-                .addToModel(model, config);
+		DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
+				.withMessage(
+						MessageFormat.format(
+								getTextForCodeExampleByApiType().ResultsPageText,
+								envelopeId,
+								folder.getType(),
+								folderName))
+				.addToModel(model, config);
 
-        return DONE_EXAMPLE_PAGE;
-    }
+		return DONE_EXAMPLE_PAGE;
+	}
 }

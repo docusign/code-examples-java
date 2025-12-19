@@ -19,11 +19,11 @@ public final class ActivateClickwrapService {
             String accountId,
             String clickwrapId,
             String clickwrapVersionNumber) throws ApiException {
-        // ds-snippet-start:Click2Step3
+        //ds-snippet-start:Click2Step3
         ClickwrapRequest clickwrapRequest = new ClickwrapRequest().status(ClickwrapHelper.STATUS_ACTIVE);
-        // ds-snippet-end:Click2Step3
+        //ds-snippet-end:Click2Step3
 
-        // ds-snippet-start:Click2Step4
+        //ds-snippet-start:Click2Step4
         ApiResponse<ClickwrapVersionSummaryResponse> response = accountsApi.updateClickwrapVersionWithHttpInfo(
                 accountId,
                 clickwrapId,
@@ -41,7 +41,7 @@ public final class ActivateClickwrapService {
         }
 
         return response.getData();
-        // ds-snippet-end:Click2Step4
+        //ds-snippet-end:Click2Step4
     }
 
     public static ClickwrapVersionsResponse getClickwrapsByStatus(

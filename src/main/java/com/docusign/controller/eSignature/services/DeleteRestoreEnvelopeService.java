@@ -19,12 +19,12 @@ public final class DeleteRestoreEnvelopeService {
             String accountId,
             String envelopeId) throws Exception {
         FoldersApi foldersApi = new FoldersApi(apiClient);
-        // ds-snippet-start:eSign45Step3
+        //ds-snippet-start:eSign45Step3
         FoldersRequest foldersRequest = new FoldersRequest();
         foldersRequest.setEnvelopeIds(Collections.singletonList(envelopeId));
-        // ds-snippet-end:eSign45Step3
+        //ds-snippet-end:eSign45Step3
 
-        // ds-snippet-start:eSign45Step4
+        //ds-snippet-start:eSign45Step4
         var moveEnvelopes = foldersApi.moveEnvelopesWithHttpInfo(accountId, RECYCLE_BIN_FOLDER_ID, foldersRequest);
         Map<String, List<String>> headers = moveEnvelopes.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
@@ -36,9 +36,9 @@ public final class DeleteRestoreEnvelopeService {
             System.out.println("Next Reset: " + resetInstant);
         }
         return moveEnvelopes.getData();
-        // ds-snippet-end:eSign45Step4
+        //ds-snippet-end:eSign45Step4
     }
-    // ds-snippet-start:eSign45Step6
+    //ds-snippet-start:eSign45Step6
 
     public static FoldersResponse moveEnvelopeToFolder(
             ApiClient apiClient,
@@ -64,9 +64,9 @@ public final class DeleteRestoreEnvelopeService {
         }
         return moveEnvelopesResponse.getData();
     }
-    // ds-snippet-end:eSign45Step6
+    //ds-snippet-end:eSign45Step6
 
-    // ds-snippet-start:eSign45Step5
+    //ds-snippet-start:eSign45Step5
 
     public static FoldersResponse getFolders(
             ApiClient apiClient,
@@ -101,5 +101,5 @@ public final class DeleteRestoreEnvelopeService {
         }
         return null;
     }
-    // ds-snippet-end:eSign45Step5
+    //ds-snippet-end:eSign45Step5
 }

@@ -35,7 +35,7 @@ public final class SetTemplateTabValuesService {
             String dsReturnUrl,
             String clientUserId,
             String dsPingUrl) {
-        // ds-snippet-start:eSign17Step6
+        //ds-snippet-start:eSign17Step6
         RecipientViewRequest viewRequest = new RecipientViewRequest();
         // Set the url where you want the recipient to go once they are done signing
         // should typically be a callback route somewhere in your app.
@@ -52,7 +52,7 @@ public final class SetTemplateTabValuesService {
                 signerEmail,
                 signerName,
                 dsPingUrl);
-        // ds-snippet-end:eSign17Step6
+        //ds-snippet-end:eSign17Step6
     }
 
     public static EnvelopeDefinition makeEnvelope(
@@ -66,7 +66,7 @@ public final class SetTemplateTabValuesService {
         // We set the clientUserId to enable embedded signing for the recipient
 
         // Create tabs and CustomFields
-        // ds-snippet-start:eSign17Step3
+        //ds-snippet-start:eSign17Step3
         List list1 = new List();
         list1.setValue("green");
         list1.setDocumentId("1");
@@ -148,10 +148,10 @@ public final class SetTemplateTabValuesService {
 
         CustomFields cf = new CustomFields();
         cf.setTextCustomFields(Collections.singletonList(customField));
-        // ds-snippet-end:eSign17Step3
+        //ds-snippet-end:eSign17Step3
 
         // Next, create the top level envelope definition and populate it.
-        // ds-snippet-start:eSign17Step4
+        //ds-snippet-start:eSign17Step4
         EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
         envelopeDefinition.setEmailSubject("Please sign this document from the Java SDK");
         // The Recipients object wants arrays for each recipient type
@@ -163,6 +163,6 @@ public final class SetTemplateTabValuesService {
         envelopeDefinition.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
 
         return envelopeDefinition;
-        // ds-snippet-end:eSign17Step4
+        //ds-snippet-end:eSign17Step4
     }
 }

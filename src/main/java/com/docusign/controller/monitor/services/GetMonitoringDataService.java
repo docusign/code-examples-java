@@ -33,7 +33,7 @@ public final class GetMonitoringDataService {
         // call from the point where the previous one left off when iterating through
         // the monitoring records
         try {
-            // ds-snippet-start:Monitor1Step3
+            //ds-snippet-start:Monitor1Step3
             do {
                 if (!cursorValue.isEmpty()) {
                     options.setCursor(cursorValue);
@@ -66,7 +66,7 @@ public final class GetMonitoringDataService {
                     monitoringData.put(new JSONObject(cursoredResult));
                 }
             } while (!complete);
-            // ds-snippet-end:Monitor1Step3
+            //ds-snippet-end:Monitor1Step3
         } catch (Exception e) {
             LOGGER.error(String.valueOf(e));
             JSONObject jsonObject = new JSONObject();

@@ -16,10 +16,10 @@ public final class AssignFormToFormGroupService {
             String accountId,
             UUID formId,
             UUID formGroupId) throws ApiException {
-        // ds-snippet-start:Rooms9Step5
+        //ds-snippet-start:Rooms9Step5
         FormGroupFormToAssign formGroupFormToAssignRequest = new FormGroupFormToAssign()
                 .formId(formId);
-        // ds-snippet-end:Rooms9Step5
+        //ds-snippet-end:Rooms9Step5
 
         ApiResponse<FormGroupFormToAssign> response = formGroupsApi.assignFormGroupFormWithHttpInfo(
                 accountId, formGroupId, formGroupFormToAssignRequest);

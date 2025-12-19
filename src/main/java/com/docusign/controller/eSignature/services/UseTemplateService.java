@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public final class UseTemplateService {
-    // ds-snippet-start:eSign9Step3
+    //ds-snippet-start:eSign9Step3
     public static EnvelopeSummary createEnvelopeTemplate(
             EnvelopesApi envelopesApi,
             String accountId,
@@ -34,7 +34,7 @@ public final class UseTemplateService {
         }
         return createEnvelopeResponse.getData();
     }
-    // ds-snippet-end:eSign9Step3
+    //ds-snippet-end:eSign9Step3
 
     public static EnvelopeTemplateResults listTemplates(
             ApiClient apiClient,
@@ -55,7 +55,7 @@ public final class UseTemplateService {
         return listTemplatesResponse.getData();
     }
 
-    // ds-snippet-start:eSign9Step2
+    //ds-snippet-start:eSign9Step2
     public static EnvelopeDefinition makeEnvelope(
             String signerName,
             String signerEmail,
@@ -79,5 +79,5 @@ public final class UseTemplateService {
 
         return envelope;
     }
-    // ds-snippet-end:eSign9Step2
+    //ds-snippet-end:eSign9Step2
 }

@@ -15,7 +15,7 @@ public final class GetListClickwrapsService {
             AccountsApi accountsApi,
             String accountId) throws ApiException {
         // Step 3: Call the v1 Click API
-        // ds-snippet-start:Click4Step3
+        //ds-snippet-start:Click4Step3
         ApiResponse<ClickwrapVersionsResponse> response = accountsApi.getClickwrapsWithHttpInfo(accountId,
                 (GetClickwrapsOptions) null);
 
@@ -30,6 +30,6 @@ public final class GetListClickwrapsService {
         }
 
         return response.getData();
-        // ds-snippet-end:Click4Step3
+        //ds-snippet-end:Click4Step3
     }
 }

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 public final class EmbeddedSendingService {
-    // ds-snippet-start:eSign11Step3
+    //ds-snippet-start:eSign11Step3
     public static ViewUrl createSenderView(
             EnvelopesApi envelopesApi,
             String accountId,
@@ -76,9 +76,9 @@ public final class EmbeddedSendingService {
         }
         return senderViewResponse.getData();
     }
-    // ds-snippet-end:eSign11Step3
+    //ds-snippet-end:eSign11Step3
 
-    // ds-snippet-start:eSign11Step2
+    //ds-snippet-start:eSign11Step2
     public static EnvelopeSummary createEnvelopeWithDraftStatus(
             EnvelopesApi envelopesApi,
             String signerEmail,
@@ -109,5 +109,5 @@ public final class EmbeddedSendingService {
         }
         return createEnvelope.getData();
     }
-    // ds-snippet-end:eSign11Step2
+    //ds-snippet-end:eSign11Step2
 }

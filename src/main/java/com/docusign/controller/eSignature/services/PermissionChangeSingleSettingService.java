@@ -18,7 +18,7 @@ public final class PermissionChangeSingleSettingService {
             String accountId,
             String curProfileId) throws ApiException {
         // Step 3. Construct your request body
-        // ds-snippet-start:eSign26Step3
+        //ds-snippet-start:eSign26Step3
         var permissionsInfo = accountsApi.listPermissionsWithHttpInfo(accountId,
                 accountsApi.new ListPermissionsOptions());
         Map<String, List<String>> headers = permissionsInfo.getHeaders();
@@ -33,10 +33,10 @@ public final class PermissionChangeSingleSettingService {
         PermissionProfile profile = PermissionChangeSingleSettingService.findProfile(
                 permissionsInfo.getData().getPermissionProfiles(), curProfileId)
                 .orElseThrow(NoSuchElementException::new);
-        // ds-snippet-end:eSign26Step3
+        //ds-snippet-end:eSign26Step3
 
         // Step 4. Call the eSignature REST API
-        // ds-snippet-start:eSign26Step4
+        //ds-snippet-start:eSign26Step4
         AccountRoleSettings newSettings = Objects.requireNonNullElse(profile.getSettings(),
                 DsModelUtils.createDefaultRoleSettings());
         profile.setSettings(PermissionChangeSingleSettingService.changeRandomSettings(newSettings));
@@ -53,7 +53,7 @@ public final class PermissionChangeSingleSettingService {
             System.out.println("Next Reset: " + resetInstant);
         }
         return permissionProfile.getData();
-        // ds-snippet-end:eSign26Step4
+        //ds-snippet-end:eSign26Step4
     }
 
     public static Optional<PermissionProfile> findProfile(List<PermissionProfile> profiles, String profileId) {

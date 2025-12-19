@@ -51,7 +51,7 @@ public class EG035ControllerScheduledSending extends AbstractEsignatureControlle
                 args.getStatus());
 
         // Step 3 start
-        // ds-snippet-start:eSign35Step3
+        //ds-snippet-start:eSign35Step3
         var results = envelopesApi.createEnvelopeWithHttpInfo(
                 session.getAccountId(),
                 envelope,
@@ -65,7 +65,7 @@ public class EG035ControllerScheduledSending extends AbstractEsignatureControlle
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
-        // ds-snippet-end:eSign35Step3
+        //ds-snippet-end:eSign35Step3
         // Step 3 end
 
         // process results

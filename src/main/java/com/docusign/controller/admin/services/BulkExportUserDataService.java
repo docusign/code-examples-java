@@ -91,7 +91,7 @@ public class BulkExportUserDataService {
             String bearerAuthentication,
             String accessToken,
             Integer bufferSize) throws IOException, URISyntaxException {
-        // ds-snippet-start:Admin3Step5
+        //ds-snippet-start:Admin3Step5
         URL request_url = new URL(csvUri);
 
         // Send Web request to download and save the exported CSV data
@@ -126,7 +126,7 @@ public class BulkExportUserDataService {
         outputStream.close();
         inputStream.close();
         http_conn.disconnect();
-        // ds-snippet-end:Admin3Step5
+        //ds-snippet-end:Admin3Step5
 
         return saveFilePath;
     }

@@ -110,7 +110,7 @@ public final class SetTabValuesService {
     }
 
     // Construct your request body
-    // ds-snippet-start:eSign16Step3
+    //ds-snippet-start:eSign16Step3
     public static EnvelopeDefinition makeEnvelope(String signerEmail, String signerName) throws IOException {
         // Create a signer recipient to sign the document, identified by name and email
         // We set the clientUserId to enable embedded signing for the recipient
@@ -210,5 +210,5 @@ public final class SetTabValuesService {
 
         return envelopeDefinition;
     }
-    // ds-snippet-end:eSign16Step3
+    //ds-snippet-end:eSign16Step3
 }
