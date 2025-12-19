@@ -22,15 +22,15 @@ public final class SetTabValuesService {
     public static EnvelopeSummary createEnvelope(
             EnvelopesApi envelopesApi,
             String accountId,
-            EnvelopeDefinition envelope
-    ) throws ApiException {
-        var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+            EnvelopeDefinition envelope) throws ApiException {
+        var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope,
+                envelopesApi.new CreateEnvelopeOptions());
 
         Map<String, List<String>> headers = envelopeSummary.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -42,14 +42,13 @@ public final class SetTabValuesService {
             EnvelopesApi envelopesApi,
             String accountId,
             String envelopeId,
-            RecipientViewRequest viewRequest
-    ) throws ApiException {
+            RecipientViewRequest viewRequest) throws ApiException {
         var recipientView = envelopesApi.createRecipientViewWithHttpInfo(accountId, envelopeId, viewRequest);
         Map<String, List<String>> headers = recipientView.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -61,8 +60,7 @@ public final class SetTabValuesService {
             String signerEmail,
             String signerName,
             String dsReturnUrl,
-            String dsPingUrl
-    ) {
+            String dsPingUrl) {
         RecipientViewRequest viewRequest = new RecipientViewRequest();
         // Set the url where you want the recipient to go once they are done signing
         // should typically be a callback route somewhere in your app.
@@ -85,8 +83,7 @@ public final class SetTabValuesService {
             RecipientViewRequest viewRequest,
             String signerEmail,
             String signerName,
-            String dsPingUrl
-    ) {
+            String dsPingUrl) {
         // How has your app authenticated the user? In addition to your app's
         // authentication, you can include authenticate steps from DocuSign.
         // Eg, SMS authentication
@@ -113,7 +110,7 @@ public final class SetTabValuesService {
     }
 
     // Construct your request body
-    //ds-snippet-start:eSign16Step3
+    // ds-snippet-start:eSign16Step3
     public static EnvelopeDefinition makeEnvelope(String signerEmail, String signerName) throws IOException {
         // Create a signer recipient to sign the document, identified by name and email
         // We set the clientUserId to enable embedded signing for the recipient
@@ -213,5 +210,5 @@ public final class SetTabValuesService {
 
         return envelopeDefinition;
     }
-    //ds-snippet-end:eSign16Step3
+    // ds-snippet-end:eSign16Step3
 }

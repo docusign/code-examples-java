@@ -57,28 +57,24 @@ public final class SendBinaryDocsService {
             String ccEmail,
             String basePath,
             String accountId,
-            String accessToken
-    ) throws IOException {
+            String accessToken) throws IOException {
         List<DocumentInfo> documents = List.of(
                 new DocumentInfo(
-                    HTML_DOCUMENT_NAME,
-                    "1",
-                    DocumentType.HTML,
-                    EnvelopeHelpers.createHtmlFromTemplateFile(HTML_DOCUMENT_FILE_NAME, "args", args).getBytes(StandardCharsets.UTF_8)
-                ),
+                        HTML_DOCUMENT_NAME,
+                        "1",
+                        DocumentType.HTML,
+                        EnvelopeHelpers.createHtmlFromTemplateFile(HTML_DOCUMENT_FILE_NAME, "args", args)
+                                .getBytes(StandardCharsets.UTF_8)),
                 new DocumentInfo(
-                    DOCX_DOCUMENT_NAME,
-                    "2",
-                    DocumentType.DOCX,
-                    EnvelopeHelpers.readFile(DOCX_DOCUMENT_FILE_NAME)
-                ),
+                        DOCX_DOCUMENT_NAME,
+                        "2",
+                        DocumentType.DOCX,
+                        EnvelopeHelpers.readFile(DOCX_DOCUMENT_FILE_NAME)),
                 new DocumentInfo(
-                    PDF_DOCUMENT_NAME,
-                    "3",
-                    DocumentType.PDF,
-                    EnvelopeHelpers.readFile(PDF_DOCUMENT_FILE_NAME)
-                )
-        );
+                        PDF_DOCUMENT_NAME,
+                        "3",
+                        DocumentType.PDF,
+                        EnvelopeHelpers.readFile(PDF_DOCUMENT_FILE_NAME)));
 
         // Make the envelope JSON request body
         JSONObject envelopeJSON = SendBinaryDocsService.makeEnvelopeJSON(
@@ -101,8 +97,9 @@ public final class SendBinaryDocsService {
         connection.setRequestProperty(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
         connection.setDoOutput(true);
 
-        // See https://developers.docusign.com/esign-rest-api/guides/requests-and-responses
-        //ds-snippet-start:eSign10Step4
+        // See
+        // https://developers.docusign.com/esign-rest-api/guides/requests-and-responses
+        // ds-snippet-start:eSign10Step4
         DataOutputStream buffer = new DataOutputStream(connection.getOutputStream());
         SendBinaryDocsService.writeBoundaryHeader(buffer, MediaType.APPLICATION_JSON, "form-data");
         buffer.writeBytes(envelopeJSON.toString(DoneExample.JSON_INDENT_FACTOR));
@@ -120,7 +117,7 @@ public final class SendBinaryDocsService {
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -133,13 +130,12 @@ public final class SendBinaryDocsService {
 
         return StreamUtils.copyToString(connection.getInputStream(), StandardCharsets.UTF_8);
     }
-    //ds-snippet-end:eSign10Step4
+    // ds-snippet-end:eSign10Step4
 
     private static void writeBoundaryHeader(
             DataOutputStream buffer,
             String contentType,
-            String contentDisposition
-    ) throws IOException {
+            String contentDisposition) throws IOException {
         buffer.writeBytes(HYPHENS);
         buffer.writeBytes(BOUNDARY_DELIMITER);
         buffer.writeBytes(LINE_DELIMITER);
@@ -168,14 +164,13 @@ public final class SendBinaryDocsService {
     // recipient 2 - cc
     // The envelope will be sent first to the signer.
     // After it is signed, a copy is sent to the cc person.
-    //ds-snippet-start:eSign10Step3
+    // ds-snippet-start:eSign10Step3
     private static JSONObject makeEnvelopeJSON(
             String signerName,
             String signerEmail,
             String ccName,
             String ccEmail,
-            List<DocumentInfo> documents
-    ) {
+            List<DocumentInfo> documents) {
         // The DocuSign platform searches throughout your envelope's documents for
         // matching anchor strings. So the signHere2 tab will be used in both document
         // 2 and 3 since they use the same anchor string for their "signer 1" tabs.
@@ -194,7 +189,8 @@ public final class SendBinaryDocsService {
         signer.setRoutingOrder("1");
         signer.setTabs(signerTabs);
 
-        // create a cc recipient to receive a copy of the documents, identified by name and email
+        // create a cc recipient to receive a copy of the documents, identified by name
+        // and email
         CarbonCopy cc = new CarbonCopy();
         cc.setEmail(ccEmail);
         cc.setName(ccName);
@@ -222,7 +218,7 @@ public final class SendBinaryDocsService {
 
         return envelopeJSON;
     }
-    //ds-snippet-end:eSign10Step3
+    // ds-snippet-end:eSign10Step3
 
     @Value
     public static class DocumentInfo {

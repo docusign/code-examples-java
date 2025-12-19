@@ -40,9 +40,8 @@ public class FocusedViewService {
             String signerName,
             ApiClient apiClient,
             String accountId,
-            String returnUrl
-    ) throws ApiException, IOException {
-        //ds-snippet-start:eSign44Step3
+            String returnUrl) throws ApiException, IOException {
+        // ds-snippet-start:eSign44Step3
         EnvelopeDefinition envelope = makeEnvelope(
                 signerEmail,
                 signerName,
@@ -54,28 +53,30 @@ public class FocusedViewService {
 
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
 
-        var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+        var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope,
+                envelopesApi.new CreateEnvelopeOptions());
         Map<String, List<String>> headers = envelopeSummary.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
 
         String envelopeId = envelopeSummary.getData().getEnvelopeId();
-        //ds-snippet-end:eSign44Step3
+        // ds-snippet-end:eSign44Step3
 
-        //ds-snippet-start:eSign44Step5
-        RecipientViewRequest viewRequest = makeRecipientViewRequest(signerEmail, signerName, returnUrl, SIGNER_CLIENT_ID, returnUrl);
+        // ds-snippet-start:eSign44Step5
+        RecipientViewRequest viewRequest = makeRecipientViewRequest(signerEmail, signerName, returnUrl,
+                SIGNER_CLIENT_ID, returnUrl);
         var viewUrl = envelopesApi.createRecipientViewWithHttpInfo(accountId, envelopeId, viewRequest);
         headers = viewUrl.getHeaders();
         remaining = headers.get("X-RateLimit-Remaining");
         reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -83,13 +84,13 @@ public class FocusedViewService {
         String redirectUrl = viewUrl.getData().getUrl();
 
         return new String[] { envelopeId, redirectUrl };
-        //ds-snippet-end:eSign44Step5
+        // ds-snippet-end:eSign44Step5
     }
 
-    //ds-snippet-start:eSign44Step4
+    // ds-snippet-start:eSign44Step4
     public RecipientViewRequest makeRecipientViewRequest(
-            String signerEmail,String signerName, String returnUrl, String signerClientId, String pingUrl
-    ) throws ApiException {
+            String signerEmail, String signerName, String returnUrl, String signerClientId, String pingUrl)
+            throws ApiException {
         String pingFrequency = "600";
         String linkToLauncher = "http://localhost:8080";
         String linkToDocuSignServer = "https://apps-d.docusign.com";
@@ -102,20 +103,19 @@ public class FocusedViewService {
         viewRequest.setUserName(signerName);
         viewRequest.setClientUserId(signerClientId);
 
-        if (pingUrl != null)
-        {
+        if (pingUrl != null) {
             viewRequest.setPingFrequency(pingFrequency);
             viewRequest.setPingUrl(pingUrl);
         }
 
-        viewRequest.setFrameAncestors(Arrays.asList(new String[]{linkToLauncher, linkToDocuSignServer}));
-        viewRequest.setMessageOrigins(Arrays.asList(new String[]{linkToDocuSignServer}));
+        viewRequest.setFrameAncestors(Arrays.asList(new String[] { linkToLauncher, linkToDocuSignServer }));
+        viewRequest.setMessageOrigins(Arrays.asList(new String[] { linkToDocuSignServer }));
 
         return viewRequest;
     }
-    //ds-snippet-end:eSign44Step4
+    // ds-snippet-end:eSign44Step4
 
-    //ds-snippet-start:eSign44Step2
+    // ds-snippet-start:eSign44Step2
     public EnvelopeDefinition makeEnvelope(
             String signerEmail,
             String signerName,
@@ -123,8 +123,7 @@ public class FocusedViewService {
             Integer anchorOffsetY,
             Integer anchorOffsetX,
             String documentFileName,
-            String documentName
-    ) throws IOException {
+            String documentName) throws IOException {
         String emailSubject = "Please sign this document";
         String recipientId = "1";
         String anchorString = "/sn1/";
@@ -150,5 +149,5 @@ public class FocusedViewService {
 
         return envelopeDefinition;
     }
-    //ds-snippet-end:eSign44Step2
+    // ds-snippet-end:eSign44Step2
 }

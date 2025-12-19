@@ -24,7 +24,7 @@ public class CreateAccountService {
 
     private static final String DEFAULT_COUNTRY_CODE = "US";
 
-    //ds-snippet-start:Admin13Step3
+    // ds-snippet-start:Admin13Step3
     public static OrganizationSubscriptionResponse getFirstPlanItem(
             ProvisionAssetGroupApi provisionAssetGroupApi,
             UUID orgId) throws ApiException {
@@ -34,8 +34,8 @@ public class CreateAccountService {
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -43,9 +43,9 @@ public class CreateAccountService {
 
         return response.getData().stream().findFirst().orElse(null);
     }
-    //ds-snippet-end:Admin13Step3
+    // ds-snippet-end:Admin13Step3
 
-    //ds-snippet-start:Admin13Step5
+    // ds-snippet-start:Admin13Step5
     public static SubscriptionProvisionModelAssetGroupWorkResult createAccountBySubscription(
             ProvisionAssetGroupApi provisionAssetGroupApi,
             UUID orgId,
@@ -57,13 +57,14 @@ public class CreateAccountService {
         SubAccountCreateRequest subAccountRequest = buildSubAccountRequest(email, firstName, lastName, subscriptionId,
                 planId);
 
-        ApiResponse<SubscriptionProvisionModelAssetGroupWorkResult> response = provisionAssetGroupApi.createAssetGroupAccountWithHttpInfo(orgId, subAccountRequest);
+        ApiResponse<SubscriptionProvisionModelAssetGroupWorkResult> response = provisionAssetGroupApi
+                .createAssetGroupAccountWithHttpInfo(orgId, subAccountRequest);
 
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -71,9 +72,9 @@ public class CreateAccountService {
 
         return response.getData();
     }
-    //ds-snippet-end:Admin13Step5
+    // ds-snippet-end:Admin13Step5
 
-    //ds-snippet-start:Admin13Step4
+    // ds-snippet-start:Admin13Step4
     private static SubAccountCreateRequest buildSubAccountRequest(
             String email,
             String firstName,
@@ -103,5 +104,5 @@ public class CreateAccountService {
 
         return subAccountRequest;
     }
-    //ds-snippet-end:Admin13Step4
+    // ds-snippet-end:Admin13Step4
 }

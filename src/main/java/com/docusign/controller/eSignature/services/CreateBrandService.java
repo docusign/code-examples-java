@@ -14,26 +14,25 @@ public final class CreateBrandService {
             AccountsApi accountsApi,
             String brandName,
             String language,
-            String accountId
-    ) throws ApiException {
+            String accountId) throws ApiException {
         Brand brand = new Brand()
                 .brandName(brandName)
                 .defaultBrandLanguage(language)
                 .brandLanguages(List.of(language));
 
         // Step 4. Call the eSignature REST API
-        //ds-snippet-start:eSign28Step4
+        // ds-snippet-start:eSign28Step4
         var brandResponse = accountsApi.createBrandWithHttpInfo(accountId, brand);
         Map<String, List<String>> headers = brandResponse.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
         return brandResponse.getData();
-        //ds-snippet-end:eSign28Step4
+        // ds-snippet-end:eSign28Step4
     }
 }

@@ -32,7 +32,7 @@ public final class SharedAccessService {
             java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
             java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-            if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            if (remaining != null & reset != null) {
                 Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
                 System.out.println("API calls remaining: " + remaining);
                 System.out.println("Next Reset: " + resetInstant);
@@ -54,9 +54,8 @@ public final class SharedAccessService {
             String accountId,
             String agentEmail,
             String agentName,
-            String activation
-    ) throws ApiException {
-        //ds-snippet-start:eSign43Step3
+            String activation) throws ApiException {
+        // ds-snippet-start:eSign43Step3
         UserInformation user = new UserInformation();
         user.email(agentEmail);
         user.userName(agentName);
@@ -70,21 +69,20 @@ public final class SharedAccessService {
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
         return createUser.getData();
-        //ds-snippet-end:eSign43Step3
+        // ds-snippet-end:eSign43Step3
     }
 
     public void activateAgent(
             AccountsApi accountsApi,
             String accountId,
             String userId,
-            String createdUserId
-    ) throws ApiException {
+            String createdUserId) throws ApiException {
         AccountsApi.GetAgentUserAuthorizationsOptions options = accountsApi.new GetAgentUserAuthorizationsOptions();
         options.setPermissions(MANAGE);
         var userAuthorizations = accountsApi.getAgentUserAuthorizationsWithHttpInfo(accountId, createdUserId, options);
@@ -92,14 +90,15 @@ public final class SharedAccessService {
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
 
-        if (userAuthorizations.getData().getAuthorizations() == null || userAuthorizations.getData().getAuthorizations().isEmpty()) {
-            //ds-snippet-start:eSign43Step4
+        if (userAuthorizations.getData().getAuthorizations() == null
+                || userAuthorizations.getData().getAuthorizations().isEmpty()) {
+            // ds-snippet-start:eSign43Step4
             AuthorizationUser user = new AuthorizationUser();
             user.userId(createdUserId);
             user.accountId(accountId);
@@ -108,25 +107,25 @@ public final class SharedAccessService {
             userAuthorizationCreateRequest.agentUser(user);
             userAuthorizationCreateRequest.permission(MANAGE);
 
-            var createAuthorization = accountsApi.createUserAuthorizationWithHttpInfo(accountId, userId, userAuthorizationCreateRequest);
+            var createAuthorization = accountsApi.createUserAuthorizationWithHttpInfo(accountId, userId,
+                    userAuthorizationCreateRequest);
             headers = createAuthorization.getHeaders();
             remaining = headers.get("X-RateLimit-Remaining");
             reset = headers.get("X-RateLimit-Reset");
 
-            if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+            if (remaining != null & reset != null) {
                 Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
                 System.out.println("API calls remaining: " + remaining);
                 System.out.println("Next Reset: " + resetInstant);
             }
-            //ds-snippet-end:eSign43Step4
+            // ds-snippet-end:eSign43Step4
         }
     }
 
     public EnvelopesInformation getEnvelopeInfo(
             EnvelopesApi envelopesApi,
-            String accountId
-    ) throws ApiException {
-        //ds-snippet-start:eSign43Step5
+            String accountId) throws ApiException {
+        // ds-snippet-start:eSign43Step5
         EnvelopesApi.ListStatusChangesOptions options = envelopesApi.new ListStatusChangesOptions();
         LocalDate date = LocalDate.now().minusDays(FROM_DATE_OFFSET_DAYS);
         options.setFromDate(DateUtils.DATE_WITH_SLASH.format(date));
@@ -136,12 +135,12 @@ public final class SharedAccessService {
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
         return listStatusResponse.getData();
-        //ds-snippet-end:eSign43Step5
+        // ds-snippet-end:eSign43Step5
     }
 }

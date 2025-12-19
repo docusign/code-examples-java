@@ -15,10 +15,9 @@ public class UnpauseSignatureWorkflowService {
     public static EnvelopeUpdateSummary unpauseSignatureWorkflow(
             EnvelopesApi envelopesApi,
             String accountId,
-            String envelopeId
-    ) throws ApiException {
+            String envelopeId) throws ApiException {
         // Step 3: Construct your envelope JSON body
-        //ds-snippet-start:eSign33Step3
+        // ds-snippet-start:eSign33Step3
         Workflow workflow = new Workflow();
         workflow.setWorkflowStatus(EnvelopeHelpers.WORKFLOW_STATUS_IN_PROGRESS);
 
@@ -27,26 +26,25 @@ public class UnpauseSignatureWorkflowService {
 
         EnvelopesApi.UpdateOptions updateOptions = envelopesApi.new UpdateOptions();
         updateOptions.setResendEnvelope("true");
-        //ds-snippet-end:eSign33Step3
+        // ds-snippet-end:eSign33Step3
 
         // Step 4: Call the eSignature REST API
-        //ds-snippet-start:eSign33Step4
+        // ds-snippet-start:eSign33Step4
         var updateEnvelopeResponse = envelopesApi.updateWithHttpInfo(
                 accountId,
                 envelopeId,
                 envelope,
-                updateOptions
-        );
+                updateOptions);
         Map<String, List<String>> headers = updateEnvelopeResponse.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
         return updateEnvelopeResponse.getData();
-        //ds-snippet-end:eSign33Step4
+        // ds-snippet-end:eSign33Step4
     }
 }

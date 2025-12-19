@@ -17,8 +17,7 @@ public final class EmbeddedSigningService {
             ApiClient apiClient,
             String accountId,
             String envelopeId,
-            RecipientViewRequest viewRequest
-    ) throws ApiException {
+            RecipientViewRequest viewRequest) throws ApiException {
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
 
         var recipientView = envelopesApi.createRecipientViewWithHttpInfo(accountId, envelopeId, viewRequest);
@@ -26,7 +25,7 @@ public final class EmbeddedSigningService {
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -37,16 +36,16 @@ public final class EmbeddedSigningService {
     public static String createEnvelope(
             ApiClient apiClient,
             String accountId,
-            EnvelopeDefinition envelope
-    ) throws ApiException {
+            EnvelopeDefinition envelope) throws ApiException {
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
 
-        var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+        var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope,
+                envelopesApi.new CreateEnvelopeOptions());
         Map<String, List<String>> headers = envelopeSummary.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -54,14 +53,13 @@ public final class EmbeddedSigningService {
         return envelopeSummary.getData().getEnvelopeId();
     }
 
-    //ds-snippet-start:eSign1Step4
+    // ds-snippet-start:eSign1Step4
     public static RecipientViewRequest makeRecipientViewRequest(
             String signerEmail,
             String signerName,
             String clientUserId,
             String dsReturnURL,
-            String pingURL
-    ) {
+            String pingURL) {
         RecipientViewRequest viewRequest = new RecipientViewRequest();
         // Set the url where you want the recipient to go once they are done signing
         // should typically be a callback route somewhere in your app.
@@ -97,9 +95,9 @@ public final class EmbeddedSigningService {
 
         return viewRequest;
     }
-    //ds-snippet-end
+    // ds-snippet-end
 
-    //ds-snippet-start:eSign1Step2
+    // ds-snippet-start:eSign1Step2
     public static EnvelopeDefinition makeEnvelope(
             String signerEmail,
             String signerName,
@@ -107,8 +105,7 @@ public final class EmbeddedSigningService {
             Integer anchorOffsetY,
             Integer anchorOffsetX,
             String documentFileName,
-            String documentName
-    ) throws IOException {
+            String documentName) throws IOException {
         // Create a signer recipient to sign the document, identified by name and email
         // We set the clientUserId to enable embedded signing for the recipient
         Signer signer = new Signer();
@@ -133,5 +130,5 @@ public final class EmbeddedSigningService {
 
         return envelopeDefinition;
     }
-    //ds-snippet-end
+    // ds-snippet-end
 }

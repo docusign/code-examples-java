@@ -24,27 +24,27 @@ public final class SMSDeliveryService {
 
     private static final int ANCHOR_OFFSET_X = 20;
 
-    //ds-snippet-start:eSign37Step3
+    // ds-snippet-start:eSign37Step3
     public static EnvelopeSummary smsDelivery(
             EnvelopesApi envelopesApi,
             String accountId,
-            EnvelopeDefinition envelope
-    ) throws ApiException {
-        var createEnvelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+            EnvelopeDefinition envelope) throws ApiException {
+        var createEnvelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope,
+                envelopesApi.new CreateEnvelopeOptions());
         Map<String, List<String>> headers = createEnvelopeResponse.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
         return createEnvelopeResponse.getData();
     }
-    //ds-snippet-end:eSign37Step3
+    // ds-snippet-end:eSign37Step3
 
-    //ds-snippet-start:eSign37Step2
+    // ds-snippet-start:eSign37Step2
     // document 2 (docx) has tag /sn1/
     // document 3 (pdf) has tag /sn1/
     //
@@ -87,7 +87,8 @@ public final class SMSDeliveryService {
         signer.setTabs(signerTabs);
         signer.setDeliveryMethod(deliveryMethod);
 
-        // create a cc recipient to receive a copy of the documents, identified by name and phone number
+        // create a cc recipient to receive a copy of the documents, identified by name
+        // and phone number
         RecipientPhoneNumber ccPhoneNumber = new RecipientPhoneNumber();
         ccPhoneNumber.setCountryCode(ccCountryCode);
         ccPhoneNumber.setNumber(carbonCopyPhoneNumber);
@@ -111,6 +112,6 @@ public final class SMSDeliveryService {
         envelope.setStatus(status);
 
         return envelope;
-        //ds-snippet-end:eSign37Step2
+        // ds-snippet-end:eSign37Step2
     }
 }

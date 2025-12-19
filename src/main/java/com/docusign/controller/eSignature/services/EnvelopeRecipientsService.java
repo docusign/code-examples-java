@@ -12,14 +12,14 @@ public final class EnvelopeRecipientsService {
     public static Recipients envelopeRecipients(
             EnvelopesApi envelopesApi,
             String accountId,
-            String envelopeId
-    ) throws ApiException {
-        var recipientsResponse = envelopesApi.listRecipientsWithHttpInfo(accountId, envelopeId, envelopesApi.new ListRecipientsOptions());
+            String envelopeId) throws ApiException {
+        var recipientsResponse = envelopesApi.listRecipientsWithHttpInfo(accountId, envelopeId,
+                envelopesApi.new ListRecipientsOptions());
         Map<String, List<String>> headers = recipientsResponse.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);

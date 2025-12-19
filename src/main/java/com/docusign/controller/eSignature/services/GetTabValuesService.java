@@ -12,14 +12,13 @@ public final class GetTabValuesService {
     public static EnvelopeFormData getTabValues(
             EnvelopesApi envelopesApi,
             String accountId,
-            String envelopeId
-    ) throws ApiException {
+            String envelopeId) throws ApiException {
         var formData = envelopesApi.getFormDataWithHttpInfo(accountId, envelopeId);
         Map<String, List<String>> headers = formData.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);

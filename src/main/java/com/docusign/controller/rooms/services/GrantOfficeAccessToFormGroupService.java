@@ -14,8 +14,7 @@ public final class GrantOfficeAccessToFormGroupService {
             FormGroupsApi formGroupsApi,
             String accountId,
             UUID formGroupId,
-            Integer officeId
-    ) throws ApiException {
+            Integer officeId) throws ApiException {
         ApiResponse<Object> response = formGroupsApi.grantOfficeAccessToFormGroupWithHttpInfo(
                 accountId,
                 formGroupId,
@@ -24,8 +23,8 @@ public final class GrantOfficeAccessToFormGroupService {
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);

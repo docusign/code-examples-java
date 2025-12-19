@@ -22,6 +22,9 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/eg038")
@@ -60,9 +63,21 @@ public class EG038ControllerResponsiveSigning extends AbstractEsignatureControll
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
 
         try {
-            EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
+            var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(
+                    accountId,
+                    envelope,
+                    envelopesApi.new CreateEnvelopeOptions());
+            Map<String, List<String>> headers = envelopeSummary.getHeaders();
+            java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+            List<String> reset = headers.get("X-RateLimit-Reset");
 
-            String envelopeId = envelopeSummary.getEnvelopeId();
+            if (remaining != null & reset != null) {
+                Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+                System.out.println("API calls remaining: " + remaining);
+                System.out.println("Next Reset: " + resetInstant);
+            }
+
+            String envelopeId = envelopeSummary.getData().getEnvelopeId();
 
             RecipientViewRequest viewRequest = ResponsiveSigningService.makeRecipientViewRequest(
                     signerEmail,

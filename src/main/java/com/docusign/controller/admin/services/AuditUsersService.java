@@ -25,11 +25,10 @@ public class AuditUsersService {
     public static ArrayList<UserDrilldownResponse> auditUsers(
             UsersApi usersApi,
             UUID organizationId,
-            UUID accountId
-    ) throws ApiException {
+            UUID accountId) throws ApiException {
         ArrayList<UserDrilldownResponse> auditedUsers = new ArrayList<>();
 
-        //ds-snippet-start:Admin5Step3
+        // ds-snippet-start:Admin5Step3
         UsersApi.GetUsersOptions options = usersApi.new GetUsersOptions();
         options.setAccountId(accountId);
         TimeZone tz = TimeZone.getTimeZone(timeZoneId);
@@ -44,29 +43,30 @@ public class AuditUsersService {
         Map<String, List<String>> headers = modifiedUsers.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
-        //ds-snippet-end:Admin5Step3
+        // ds-snippet-end:Admin5Step3
 
-        //ds-snippet-start:Admin5Step5
+        // ds-snippet-start:Admin5Step5
         for (OrganizationUserResponse user : modifiedUsers.getData().getUsers()) {
-            //ds-snippet-end:Admin5Step5
-            //ds-snippet-start:Admin5Step4
+            // ds-snippet-end:Admin5Step5
+            // ds-snippet-start:Admin5Step4
             UsersApi.GetUserProfilesOptions profilesOptions = usersApi.new GetUserProfilesOptions();
             profilesOptions.setEmail(user.getEmail());
-            //ds-snippet-end:Admin5Step4
-            //ds-snippet-start:Admin5Step5
-            ApiResponse<UsersDrilldownResponse> res = usersApi.getUserProfilesWithHttpInfo(organizationId, profilesOptions);
+            // ds-snippet-end:Admin5Step4
+            // ds-snippet-start:Admin5Step5
+            ApiResponse<UsersDrilldownResponse> res = usersApi.getUserProfilesWithHttpInfo(organizationId,
+                    profilesOptions);
 
             headers = res.getHeaders();
             remaining = headers.get("X-RateLimit-Remaining");
             reset = headers.get("X-RateLimit-Reset");
-            
-            if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+            if (remaining != null & reset != null) {
                 Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
                 System.out.println("API calls remaining: " + remaining);
                 System.out.println("Next Reset: " + resetInstant);
@@ -74,7 +74,7 @@ public class AuditUsersService {
 
             auditedUsers.add(res.getData().getUsers().get(0));
         }
-        //ds-snippet-end:Admin5Step5
+        // ds-snippet-end:Admin5Step5
 
         return auditedUsers;
     }

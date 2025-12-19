@@ -33,20 +33,21 @@ public final class GetMonitoringDataService {
         // call from the point where the previous one left off when iterating through
         // the monitoring records
         try {
-            //ds-snippet-start:Monitor1Step3
+            // ds-snippet-start:Monitor1Step3
             do {
                 if (!cursorValue.isEmpty()) {
                     options.setCursor(cursorValue);
                 }
 
                 LOGGER.info("options set: " + options);
-                ApiResponse<CursoredResult> cursoredResult = datasetApi.getStreamWithHttpInfo("2.0", "monitor", options);
+                ApiResponse<CursoredResult> cursoredResult = datasetApi.getStreamWithHttpInfo("2.0", "monitor",
+                        options);
 
                 Map<String, List<String>> headers = cursoredResult.getHeaders();
                 List<String> remaining = headers.get("X-RateLimit-Remaining");
                 List<String> reset = headers.get("X-RateLimit-Reset");
 
-                if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+                if (remaining != null & reset != null) {
                     Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
                     System.out.println("API calls remaining: " + remaining);
                     System.out.println("Next Reset: " + resetInstant);
@@ -55,7 +56,8 @@ public final class GetMonitoringDataService {
                 LOGGER.info("cursor results " + cursoredResult.getData());
                 String endCursor = cursoredResult.getData().getEndCursor();
 
-                // If the endCursor from the response is the same as the one that you already have,
+                // If the endCursor from the response is the same as the one that you already
+                // have,
                 // it means that you have reached the end of the records
                 if (endCursor.equals(cursorValue)) {
                     complete = true;
@@ -63,13 +65,13 @@ public final class GetMonitoringDataService {
                     cursorValue = endCursor;
                     monitoringData.put(new JSONObject(cursoredResult));
                 }
-            }
-            while (!complete);
-            //ds-snippet-end:Monitor1Step3
+            } while (!complete);
+            // ds-snippet-end:Monitor1Step3
         } catch (Exception e) {
             LOGGER.error(String.valueOf(e));
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("Error", "You do not have Monitor enabled for your account, follow <a target='_blank' href='https://developers.docusign.com/docs/monitor-api/how-to/enable-monitor/'>How to enable Monitor for your account</a> to get it enabled.");
+            jsonObject.put("Error",
+                    "You do not have Monitor enabled for your account, follow <a target='_blank' href='https://developers.docusign.com/docs/monitor-api/how-to/enable-monitor/'>How to enable Monitor for your account</a> to get it enabled.");
             monitoringData.put(jsonObject);
         }
 

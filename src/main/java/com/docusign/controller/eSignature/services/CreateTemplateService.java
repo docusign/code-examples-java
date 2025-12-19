@@ -27,15 +27,14 @@ public final class CreateTemplateService {
     public static TemplateSummary createTemplate(
             ApiClient apiClient,
             String accountId,
-            EnvelopeTemplate envelopeTemplate
-    ) throws ApiException {
+            EnvelopeTemplate envelopeTemplate) throws ApiException {
         TemplatesApi templatesApi = new TemplatesApi(apiClient);
         var templateResponse = templatesApi.createTemplateWithHttpInfo(accountId, envelopeTemplate);
         Map<String, java.util.List<String>> headers = templateResponse.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -46,8 +45,7 @@ public final class CreateTemplateService {
     public static EnvelopeTemplateResults searchTemplatesByName(
             ApiClient apiClient,
             String accountId,
-            String templateName
-    ) throws ApiException {
+            String templateName) throws ApiException {
         TemplatesApi templatesApi = new TemplatesApi(apiClient);
         TemplatesApi.ListTemplatesOptions options = templatesApi.new ListTemplatesOptions();
         options.setSearchText(templateName);
@@ -57,7 +55,7 @@ public final class CreateTemplateService {
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -72,7 +70,7 @@ public final class CreateTemplateService {
     // recipient 2 - cc
     // The template will be sent first to the signer.
     // After it is signed, a copy is sent to the cc person.
-    //ds-snippet-start:eSign8Step2
+    // ds-snippet-start:eSign8Step2
     public static EnvelopeTemplate makeTemplate(String templateName) throws IOException {
         Document doc = EnvelopeHelpers.createDocumentFromFile(PDF_DOCUMENT_FILE_NAME, PDF_DOCUMENT_NAME, "1");
 
@@ -101,7 +99,8 @@ public final class CreateTemplateService {
         signer.setRoutingOrder("1");
         signer.setTabs(signer1Tabs);
 
-        // create a cc recipient to receive a copy of the documents, identified by name and email
+        // create a cc recipient to receive a copy of the documents, identified by name
+        // and email
         CarbonCopy cc1 = new CarbonCopy();
         cc1.setRoleName(EnvelopeHelpers.CC_ROLE_NAME);
         cc1.setRoutingOrder("2");
@@ -138,8 +137,7 @@ public final class CreateTemplateService {
                 createListItem("Green"),
                 createListItem("Blue"),
                 createListItem("Indigo"),
-                createListItem("Violet")
-        ));
+                createListItem("Violet")));
         return list;
     }
 
@@ -158,8 +156,7 @@ public final class CreateTemplateService {
         radioGroup.setRadios(Arrays.asList(
                 createRadio("white", "142"),
                 createRadio("red", "74"),
-                createRadio("blue", "220")
-        ));
+                createRadio("blue", "220")));
         return radioGroup;
     }
 
@@ -222,5 +219,5 @@ public final class CreateTemplateService {
         signHere.setYPosition("148");
         return signHere;
     }
-    //ds-snippet-end:eSign8Step2
+    // ds-snippet-end:eSign8Step2
 }

@@ -45,7 +45,7 @@ public final class DocumentGenerationService {
 
     public static final String DEFAULT_ID = "1";
 
-    //ds-snippet-start:eSign42Step3
+    // ds-snippet-start:eSign42Step3
     private static EnvelopeDefinition addDocumentTemplate(String offerDocDocx) throws IOException {
         String documentName = "OfferLetterDemo.docx";
         Document document = EnvelopeHelpers.createDocumentFromFile(offerDocDocx, documentName, DEFAULT_ID);
@@ -57,7 +57,7 @@ public final class DocumentGenerationService {
 
         return envelopeDefinition;
     }
-    //ds-snippet-end:eSign42Step3
+    // ds-snippet-end:eSign42Step3
 
     public String generateDocument(
             String accountId,
@@ -70,49 +70,49 @@ public final class DocumentGenerationService {
             String startDate,
             String offerDocDocx,
             EnvelopesApi envelopesApi,
-            TemplatesApi templatesApi
-    ) throws ApiException, IOException {
-        //ds-snippet-start:eSign42Step2
+            TemplatesApi templatesApi) throws ApiException, IOException {
+        // ds-snippet-start:eSign42Step2
         var template = templatesApi.createTemplateWithHttpInfo(accountId, makeTemplate());
         Map<String, List<String>> headers = template.getHeaders();
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
         String templateId = template.getData().getTemplateId();
-        //ds-snippet-end:eSign42Step2
+        // ds-snippet-end:eSign42Step2
 
-        //ds-snippet-start:eSign42Step3
-        var updateResponse = templatesApi.updateDocumentWithHttpInfo(accountId, templateId, DEFAULT_ID, addDocumentTemplate(offerDocDocx), templatesApi.new UpdateDocumentOptions());
+        // ds-snippet-start:eSign42Step3
+        var updateResponse = templatesApi.updateDocumentWithHttpInfo(accountId, templateId, DEFAULT_ID,
+                addDocumentTemplate(offerDocDocx), templatesApi.new UpdateDocumentOptions());
         headers = updateResponse.getHeaders();
         remaining = headers.get("X-RateLimit-Remaining");
         reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
-        //ds-snippet-end:eSign42Step3
+        // ds-snippet-end:eSign42Step3
 
-        //ds-snippet-start:eSign42Step4
+        // ds-snippet-start:eSign42Step4
         var tabsResponse = templatesApi.createTabsWithHttpInfo(accountId, templateId, DEFAULT_ID, prepareTabs());
         headers = tabsResponse.getHeaders();
         remaining = headers.get("X-RateLimit-Remaining");
         reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
-        //ds-snippet-end:eSign42Step4
+        // ds-snippet-end:eSign42Step4
 
-        //ds-snippet-start:eSign42Step5
+        // ds-snippet-start:eSign42Step5
         var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(
                 accountId,
                 makeEnvelope(candidateEmail, candidateName, template.getData().getTemplateId()),
@@ -121,25 +121,27 @@ public final class DocumentGenerationService {
         remaining = headers.get("X-RateLimit-Remaining");
         reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
-        };
+        }
+        ;
         String envelopeId = envelopeSummary.getData().getEnvelopeId();
-        //ds-snippet-end:eSign42Step5
+        // ds-snippet-end:eSign42Step5
 
-        //ds-snippet-start:eSign42Step6
+        // ds-snippet-start:eSign42Step6
         var formFieldResponse = envelopesApi.getEnvelopeDocGenFormFieldsWithHttpInfo(accountId, envelopeId);
         headers = formFieldResponse.getHeaders();
         remaining = headers.get("X-RateLimit-Remaining");
         reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
-        };
+        }
+        ;
 
         String documentId = "";
         if (!formFieldResponse.getData().getDocGenFormFields().isEmpty()) {
@@ -148,9 +150,9 @@ public final class DocumentGenerationService {
                 documentId = docGenFormFields.getDocumentId();
             }
         }
-        //ds-snippet-end:eSign42Step6
+        // ds-snippet-end:eSign42Step6
 
-        //ds-snippet-start:eSign42Step7
+        // ds-snippet-start:eSign42Step7
         DocGenFormFieldRequest formFields = getFormFields(
                 documentId,
                 candidateName,
@@ -160,37 +162,41 @@ public final class DocumentGenerationService {
                 rsus,
                 startDate);
 
-        var envelopeDocGenResponse = envelopesApi.updateEnvelopeDocGenFormFieldsWithHttpInfo(accountId, envelopeId, formFields, envelopesApi.new UpdateEnvelopeDocGenFormFieldsOptions());
+        var envelopeDocGenResponse = envelopesApi.updateEnvelopeDocGenFormFieldsWithHttpInfo(accountId, envelopeId,
+                formFields, envelopesApi.new UpdateEnvelopeDocGenFormFieldsOptions());
         headers = envelopeDocGenResponse.getHeaders();
         remaining = headers.get("X-RateLimit-Remaining");
         reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
-        };
-        //ds-snippet-end:eSign42Step7
+        }
+        ;
+        // ds-snippet-end:eSign42Step7
 
-        //ds-snippet-start:eSign42Step8
+        // ds-snippet-start:eSign42Step8
         Envelope envelope = new Envelope();
         envelope.setStatus(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
 
-        var envelopeUpdateSummary = envelopesApi.updateWithHttpInfo(accountId, envelopeId, envelope, envelopesApi.new UpdateOptions());
+        var envelopeUpdateSummary = envelopesApi.updateWithHttpInfo(accountId, envelopeId, envelope,
+                envelopesApi.new UpdateOptions());
         headers = envelopeUpdateSummary.getHeaders();
         remaining = headers.get("X-RateLimit-Remaining");
         reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
-        };
-        //ds-snippet-end:eSign42Step8
+        }
+        ;
+        // ds-snippet-end:eSign42Step8
         return envelopeUpdateSummary.getData().getEnvelopeId();
     }
 
-    //ds-snippet-start:eSign42Step4
+    // ds-snippet-start:eSign42Step4
     private TemplateTabs prepareTabs() {
         SignHere signHere = createSignHere();
         DateSigned dateSigned = createDateSigned();
@@ -214,17 +220,17 @@ public final class DocumentGenerationService {
     }
 
     private DateSigned createDateSigned() {
-      DateSigned dateSigned = new DateSigned();
+        DateSigned dateSigned = new DateSigned();
 
-      dateSigned.setAnchorString("Date Signed");
-      dateSigned.setAnchorUnits(ANCHOR_UNITS);
-      dateSigned.setAnchorYOffset("-22");
+        dateSigned.setAnchorString("Date Signed");
+        dateSigned.setAnchorUnits(ANCHOR_UNITS);
+        dateSigned.setAnchorYOffset("-22");
 
-      return dateSigned;
+        return dateSigned;
     }
-    //ds-snippet-end:eSign42Step4
+    // ds-snippet-end:eSign42Step4
 
-    //ds-snippet-start:eSign42Step7
+    // ds-snippet-start:eSign42Step7
     private DocGenFormFieldRequest getFormFields(
             String documentId,
             String candidateName,
@@ -253,34 +259,30 @@ public final class DocumentGenerationService {
         compensationPackageField.setName(COMPENSATION_PACKAGE);
         compensationPackageField.setType("TableRow");
         compensationPackageField.setRowValues(Arrays.asList(
-            new DocGenFormFieldRowValue()
-                .docGenFormFieldList(Arrays.asList(
-                    new DocGenFormField()
-                        .name(COMPENSATION_COMPONENT)
-                        .value(SALARY),
-                    new DocGenFormField()
-                        .name(DETAILS)
-                        .value("$" + salary)
-                )),
-            new DocGenFormFieldRowValue()
-                .docGenFormFieldList(Arrays.asList(
-                    new DocGenFormField()
-                        .name(COMPENSATION_COMPONENT)
-                        .value(BONUS),
-                    new DocGenFormField()
-                        .name(DETAILS)
-                        .value("20%")
-                )),
-            new DocGenFormFieldRowValue()
-                .docGenFormFieldList(Arrays.asList(
-                    new DocGenFormField()
-                        .name(COMPENSATION_COMPONENT)
-                        .value(RSUS),
-                    new DocGenFormField()
-                        .name(DETAILS)
-                        .value(rsus)
-                ))
-        ));
+                new DocGenFormFieldRowValue()
+                        .docGenFormFieldList(Arrays.asList(
+                                new DocGenFormField()
+                                        .name(COMPENSATION_COMPONENT)
+                                        .value(SALARY),
+                                new DocGenFormField()
+                                        .name(DETAILS)
+                                        .value("$" + salary))),
+                new DocGenFormFieldRowValue()
+                        .docGenFormFieldList(Arrays.asList(
+                                new DocGenFormField()
+                                        .name(COMPENSATION_COMPONENT)
+                                        .value(BONUS),
+                                new DocGenFormField()
+                                        .name(DETAILS)
+                                        .value("20%"))),
+                new DocGenFormFieldRowValue()
+                        .docGenFormFieldList(Arrays.asList(
+                                new DocGenFormField()
+                                        .name(COMPENSATION_COMPONENT)
+                                        .value(RSUS),
+                                new DocGenFormField()
+                                        .name(DETAILS)
+                                        .value(rsus)))));
 
         DocGenFormFields formFields = new DocGenFormFields();
         formFields.setDocGenFormFieldList(Arrays.asList(
@@ -296,9 +298,9 @@ public final class DocumentGenerationService {
 
         return docGenFormFieldRequest;
     }
-    //ds-snippet-end:eSign42Step7
+    // ds-snippet-end:eSign42Step7
 
-    //ds-snippet-start:eSign42Step5
+    // ds-snippet-start:eSign42Step5
     private EnvelopeDefinition makeEnvelope(String candidateEmail, String candidateName, String templateId) {
         TemplateRole signerRole = new TemplateRole();
         signerRole.setName(candidateName);
@@ -312,9 +314,9 @@ public final class DocumentGenerationService {
 
         return envelopeDefinition;
     }
-    //ds-snippet-end:eSign42Step5
+    // ds-snippet-end:eSign42Step5
 
-    //ds-snippet-start:eSign42Step2
+    // ds-snippet-start:eSign42Step2
     private EnvelopeTemplate makeTemplate() {
         Signer signer = new Signer();
         signer.setRoleName(EnvelopeHelpers.SIGNER_ROLE_NAME);
@@ -333,5 +335,5 @@ public final class DocumentGenerationService {
 
         return template;
     }
-    //ds-snippet-end:eSign42Step2
+    // ds-snippet-end:eSign42Step2
 }

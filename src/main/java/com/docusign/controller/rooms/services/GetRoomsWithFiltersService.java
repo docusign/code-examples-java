@@ -14,23 +14,22 @@ public final class GetRoomsWithFiltersService {
             RoomsApi roomsApi,
             String accountId,
             String startDate,
-            String endDate
-    ) throws ApiException {
+            String endDate) throws ApiException {
         // Step 3. Prepare your request parameters
-        //ds-snippet-start:Rooms5Step3
+        // ds-snippet-start:Rooms5Step3
         RoomsApi.GetRoomsOptions options = roomsApi.new GetRoomsOptions();
         options.setFieldDataChangedStartDate(startDate);
         options.setFieldDataChangedEndDate(endDate);
-        //ds-snippet-end:Rooms5Step3
+        // ds-snippet-end:Rooms5Step3
 
-        //Call the v2 Rooms API
+        // Call the v2 Rooms API
         ApiResponse<RoomSummaryList> response = roomsApi.getRoomsWithHttpInfo(accountId, options);
-        
+
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);

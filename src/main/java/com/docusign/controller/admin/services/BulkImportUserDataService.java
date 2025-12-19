@@ -16,26 +16,26 @@ public class BulkImportUserDataService {
     public static OrganizationImportResponse bulkImportUserData(
             BulkImportsApi bulkImportsApi,
             UUID organizationId,
-            UUID accountId
-    ) throws Exception {
+            UUID accountId) throws Exception {
         // Make sure you're using a verified domain for auto-activation to work properly
-        //ds-snippet-start:Admin4Step3
+        // ds-snippet-start:Admin4Step3
         String csvUserData = String.format(BULK_IMPORT_TEXT, accountId, accountId);
         byte[] csvDataInBytes = csvUserData.getBytes(StandardCharsets.UTF_8);
 
-        ApiResponse<OrganizationImportResponse> response = bulkImportsApi.createBulkImportSingleAccountAddUsersRequestWithHttpInfo(organizationId, accountId, csvDataInBytes);
+        ApiResponse<OrganizationImportResponse> response = bulkImportsApi
+                .createBulkImportSingleAccountAddUsersRequestWithHttpInfo(organizationId, accountId, csvDataInBytes);
 
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
         }
 
         return response.getData();
-        //ds-snippet-end:Admin4Step3
+        // ds-snippet-end:Admin4Step3
     }
 }

@@ -15,12 +15,11 @@ public final class AssignFormToFormGroupService {
             FormGroupsApi formGroupsApi,
             String accountId,
             UUID formId,
-            UUID formGroupId
-    ) throws ApiException {
-        //ds-snippet-start:Rooms9Step5
+            UUID formGroupId) throws ApiException {
+        // ds-snippet-start:Rooms9Step5
         FormGroupFormToAssign formGroupFormToAssignRequest = new FormGroupFormToAssign()
                 .formId(formId);
-        //ds-snippet-end:Rooms9Step5
+        // ds-snippet-end:Rooms9Step5
 
         ApiResponse<FormGroupFormToAssign> response = formGroupsApi.assignFormGroupFormWithHttpInfo(
                 accountId, formGroupId, formGroupFormToAssignRequest);
@@ -28,8 +27,8 @@ public final class AssignFormToFormGroupService {
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);

@@ -22,10 +22,9 @@ public final class EmbedClickwrapService {
             String email,
             String company,
             String title,
-            String date
-    ) throws ApiException {
+            String date) throws ApiException {
 
-        //ds-snippet-start:Click6Step3
+        // ds-snippet-start:Click6Step3
         UserAgreementRequest userAgreementRequest = new UserAgreementRequest();
         userAgreementRequest.setClientUserId(email);
         Map<String, String> documentData = new HashMap<String, String>();
@@ -35,15 +34,16 @@ public final class EmbedClickwrapService {
         documentData.put("title", title);
         documentData.put("date", date);
         userAgreementRequest.setDocumentData(documentData);
-        //ds-snippet-end:Click6Step3
-        //ds-snippet-start:Click6Step4
-        ApiResponse<UserAgreementResponse> response = accountsApi.createHasAgreedWithHttpInfo(accountId, clickwrapId, userAgreementRequest);
+        // ds-snippet-end:Click6Step3
+        // ds-snippet-start:Click6Step4
+        ApiResponse<UserAgreementResponse> response = accountsApi.createHasAgreedWithHttpInfo(accountId, clickwrapId,
+                userAgreementRequest);
 
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -53,13 +53,12 @@ public final class EmbedClickwrapService {
             return response.getData().getAgreementUrl();
         }
         return "Already Agreed";
-        //ds-snippet-end:Click6Step4
+        // ds-snippet-end:Click6Step4
     }
 
     public static ClickwrapVersionsResponse getActiveClickwraps(
             AccountsApi accountsApi,
-            String accountId
-    ) throws ApiException {
+            String accountId) throws ApiException {
         AccountsApi.GetClickwrapsOptions options = accountsApi.new GetClickwrapsOptions();
         options.setStatus("active");
         ApiResponse<ClickwrapVersionsResponse> response = accountsApi.getClickwrapsWithHttpInfo(accountId, options);
@@ -67,8 +66,8 @@ public final class EmbedClickwrapService {
         Map<String, List<String>> headers = response.getHeaders();
         List<String> remaining = headers.get("X-RateLimit-Remaining");
         List<String> reset = headers.get("X-RateLimit-Reset");
-        
-        if (remaining != null & reset != null & !remaining.isEmpty() & !reset.isEmpty()) {
+
+        if (remaining != null & reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
