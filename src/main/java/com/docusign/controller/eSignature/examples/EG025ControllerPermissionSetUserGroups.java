@@ -18,6 +18,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -44,13 +47,31 @@ public class EG025ControllerPermissionSetUserGroups extends AbstractEsignatureCo
         String accountId = session.getAccountId();
 
         AccountsApi accountsApi = createAccountsApi(session.getBasePath(), user.getAccessToken());
-        PermissionProfileInformation permissionsInfo = accountsApi.listPermissions(accountId);
-        model.addAttribute(MODEL_LIST_PROFILES, permissionsInfo.getPermissionProfiles());
+        var permissionsInfo = accountsApi.listPermissionsWithHttpInfo(accountId, accountsApi.new ListPermissionsOptions());
+        Map<String, List<String>> headers = permissionsInfo.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        model.addAttribute(MODEL_LIST_PROFILES, permissionsInfo.getData().getPermissionProfiles());
 
         //ds-snippet-start:eSign25Step4
         GroupsApi groupsApi = new GroupsApi(accountsApi.getApiClient());
-        GroupInformation groupInformation = groupsApi.listGroups(accountId);
-        model.addAttribute(MODEL_LIST_GROUPS, groupInformation.getGroups());
+        var groupInformation = groupsApi.listGroupsWithHttpInfo(accountId, groupsApi.new ListGroupsOptions());
+        headers = groupInformation.getHeaders();
+        remaining = headers.get("X-RateLimit-Remaining");
+        reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        model.addAttribute(MODEL_LIST_GROUPS, groupInformation.getData().getGroups());
         //ds-snippet-end:eSign25Step4
     }
 

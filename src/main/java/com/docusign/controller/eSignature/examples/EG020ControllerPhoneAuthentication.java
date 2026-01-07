@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Example 020: Phone Authentication for recipient
@@ -61,8 +63,17 @@ public class EG020ControllerPhoneAuthentication extends AbstractEsignatureContro
 
         //ds-snippet-start:eSign20Step3
         AccountsApi workflowDetails = new AccountsApi(apiClient);
-        AccountIdentityVerificationResponse workflowRes = workflowDetails.getAccountIdentityVerification(session.getAccountId());
-        List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getIdentityVerification();
+        var workflowRes = workflowDetails.getAccountIdentityVerificationWithHttpInfo(session.getAccountId(), workflowDetails.new GetAccountIdentityVerificationOptions());
+        Map<String, List<String>> headers = workflowRes.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getData().getIdentityVerification();
         String workflowId = "";
         for (int i = 0; i < identityVerification.size(); i++) {
             if (identityVerification.get(i).getDefaultName().equals("Phone Authentication")) {

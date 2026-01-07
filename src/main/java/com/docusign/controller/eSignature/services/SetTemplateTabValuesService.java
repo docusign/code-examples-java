@@ -5,17 +5,28 @@ import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Map;
 
 public final class SetTemplateTabValuesService {
     public static ViewUrl setTemplateTabValues(
             EnvelopesApi envelopesApi,
             String accountId,
             String envelopeId,
-            RecipientViewRequest viewRequest
-    ) throws ApiException {
-        return envelopesApi.createRecipientView(accountId, envelopeId, viewRequest);
+            RecipientViewRequest viewRequest) throws ApiException {
+        var recipientView = envelopesApi.createRecipientViewWithHttpInfo(accountId, envelopeId, viewRequest);
+        Map<String, java.util.List<String>> headers = recipientView.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return recipientView.getData();
     }
 
     public static RecipientViewRequest makeRecipientViewRequest(
@@ -23,8 +34,7 @@ public final class SetTemplateTabValuesService {
             String signerName,
             String dsReturnUrl,
             String clientUserId,
-            String dsPingUrl
-    ) {
+            String dsPingUrl) {
         //ds-snippet-start:eSign17Step6
         RecipientViewRequest viewRequest = new RecipientViewRequest();
         // Set the url where you want the recipient to go once they are done signing
@@ -51,8 +61,7 @@ public final class SetTemplateTabValuesService {
             String ccEmail,
             String ccName,
             String templateId,
-            String clientUserId
-    ) {
+            String clientUserId) {
         // Create a signer recipient to sign the document, identified by name and email
         // We set the clientUserId to enable embedded signing for the recipient
 
@@ -135,7 +144,7 @@ public final class SetTemplateTabValuesService {
         customField.setName("app metadata item");
         customField.setValue("1234567");
         customField.setRequired("false");
-        customField.show("true"); //Yes, include in the CoC
+        customField.show("true"); // Yes, include in the CoC
 
         CustomFields cf = new CustomFields();
         cf.setTextCustomFields(Collections.singletonList(customField));

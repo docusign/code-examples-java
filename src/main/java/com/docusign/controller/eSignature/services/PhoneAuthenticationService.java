@@ -6,7 +6,9 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 
 public final class PhoneAuthenticationService {
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
@@ -16,14 +18,25 @@ public final class PhoneAuthenticationService {
     public static EnvelopeSummary phoneAuthentication(
             EnvelopesApi envelopesApi,
             String accountId,
-            EnvelopeDefinition envelope
-    ) throws ApiException {
-        return envelopesApi.createEnvelope(accountId, envelope);
+            EnvelopeDefinition envelope) throws ApiException {
+        var envelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope,
+                envelopesApi.new CreateEnvelopeOptions());
+
+        Map<String, List<String>> headers = envelopeResponse.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return envelopeResponse.getData();
     }
 
     //ds-snippet-start:eSign20Step4
     public static EnvelopeDefinition createEnvelope(String signerName, String signerEmail, String countryCode,
-                                                    String phone, String workFlowId) throws IOException {
+            String phone, String workFlowId) throws IOException {
         Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
 
         SignHere signHere = new SignHere();
@@ -48,10 +61,10 @@ public final class PhoneAuthenticationService {
         inputOption.setValueType("PhoneNumberList");
         inputOption.setPhoneNumberList(List.of(phoneNumber));
 
-        RecipientIdentityVerification identityVerifcation = new RecipientIdentityVerification();
+        RecipientIdentityVerification identityVerification = new RecipientIdentityVerification();
 
-        identityVerifcation.setWorkflowId(workFlowId);
-        identityVerifcation.setInputOptions(List.of(inputOption));
+        identityVerification.setWorkflowId(workFlowId);
+        identityVerification.setInputOptions(List.of(inputOption));
 
         Signer signer = new Signer();
         signer.setName(signerName);
@@ -61,7 +74,7 @@ public final class PhoneAuthenticationService {
         signer.setDeliveryMethod(EnvelopeHelpers.DELIVERY_METHOD_EMAIL);
         signer.setRecipientId(signHere.getRecipientId());
         signer.setTabs(EnvelopeHelpers.createSignerTabs(signHere));
-        signer.setIdentityVerification(identityVerifcation);
+        signer.setIdentityVerification(identityVerification);
 
         Recipients recipients = new Recipients();
         recipients.setSigners(List.of(signer));
