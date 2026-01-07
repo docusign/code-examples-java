@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/eg040")
@@ -50,7 +53,7 @@ public class EG040ControllerSetDocumentVisibility extends AbstractEsignatureCont
 
     @Override
     protected Object doWork(WorkArguments args, ModelMap model,
-                            HttpServletResponse response) throws ApiException, IOException {
+            HttpServletResponse response) throws ApiException, IOException {
         model.addAttribute("fixingInstructions", FIXING_INSTRUCTIONS_FOR_PERMISSIONS);
         model.addAttribute("caseForInstructions", CASE_FOR_INSTRUCTIONS);
 
@@ -74,12 +77,24 @@ public class EG040ControllerSetDocumentVisibility extends AbstractEsignatureCont
         //ds-snippet-end:eSign40Step2
 
         //ds-snippet-start:eSign40Step4
-        EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
+        var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(
+                accountId,
+                envelope,
+                envelopesApi.new CreateEnvelopeOptions());
+        Map<String, List<String>> headers = envelopeSummary.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
         //ds-snippet-end:eSign40Step4
 
         DoneExample.createDefault(title)
                 .withMessage("The envelope has been created and sent!<br />Envelope ID "
-                        + envelopeSummary.getEnvelopeId() + ".")
+                        + envelopeSummary.getData().getEnvelopeId() + ".")
                 .addToModel(model, config);
         return DONE_EXAMPLE_PAGE;
     }

@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This code example demonstrates how to edit individual permission settings on
@@ -49,8 +51,17 @@ public class EG026ControllerPermissionChangeSingleSetting extends AbstractEsigna
         super.onInitModel(args, model);
         AccountsApi accountsApi = createAccountsApi(session.getBasePath(), user.getAccessToken());
 
-        PermissionProfileInformation permissionsInfo = accountsApi.listPermissions(session.getAccountId());
-        List<PermissionProfile> profiles = permissionsInfo.getPermissionProfiles();
+        var permissionsInfo = accountsApi.listPermissionsWithHttpInfo(session.getAccountId(), accountsApi.new ListPermissionsOptions());
+        Map<String, List<String>> headers = permissionsInfo.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        List<PermissionProfile> profiles = permissionsInfo.getData().getPermissionProfiles();
         model.addAttribute(MODEL_LIST_PROFILES, profiles);
 
         model.addAttribute(MODEL_CUR_PROFILE_NAME, profiles.get(0).getPermissionProfileName());

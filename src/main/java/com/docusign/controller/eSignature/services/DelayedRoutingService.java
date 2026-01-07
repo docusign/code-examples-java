@@ -72,8 +72,10 @@ public class DelayedRoutingService {
         EnvelopeDefinition envelope = new EnvelopeDefinition();
         envelope.setEmailSubject("Please sign this document set");
         envelope.setDocuments(Arrays.asList(
-                EnvelopeHelpers.createDocumentFromFile(DOCX_DOCUMENT_FILE_NAME, DOCX_DOCUMENT_NAME, "2"),
-                EnvelopeHelpers.createDocumentFromFile(PDF_DOCUMENT_FILE_NAME, PDF_DOCUMENT_NAME, "3")));
+                EnvelopeHelpers.createDocumentFromFile(DOCX_DOCUMENT_FILE_NAME, DOCX_DOCUMENT_NAME,
+                        "2"),
+                EnvelopeHelpers.createDocumentFromFile(PDF_DOCUMENT_FILE_NAME, PDF_DOCUMENT_NAME,
+                        "3")));
         envelope.setRecipients(EnvelopeHelpers.createTwoSigners(signer, signer2));
 
         // Add the workflow to delay the second recipient

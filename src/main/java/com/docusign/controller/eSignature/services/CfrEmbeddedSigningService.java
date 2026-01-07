@@ -7,8 +7,10 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public final class CfrEmbeddedSigningService {
     //ds-snippet-start:eSign41Step6
@@ -16,9 +18,18 @@ public final class CfrEmbeddedSigningService {
             EnvelopesApi envelopesApi,
             String accountId,
             String envelopeId,
-            RecipientViewRequest viewRequest
-    ) throws ApiException {
-        return envelopesApi.createRecipientView(accountId, envelopeId, viewRequest);
+            RecipientViewRequest viewRequest) throws ApiException {
+        var recipientViewResponse = envelopesApi.createRecipientViewWithHttpInfo(accountId, envelopeId, viewRequest);
+        Map<String, List<String>> headers = recipientViewResponse.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return recipientViewResponse.getData();
     }
     //ds-snippet-end:eSign41Step6
 
@@ -27,8 +38,7 @@ public final class CfrEmbeddedSigningService {
             String signerEmail,
             String signerName,
             DSConfiguration config,
-            String clientUserId
-    ) {
+            String clientUserId) {
         RecipientViewRequest viewRequest = new RecipientViewRequest();
         // Set the url where you want the recipient to go once they are done signing
         // should typically be a callback route somewhere in your app.
@@ -77,8 +87,7 @@ public final class CfrEmbeddedSigningService {
             Integer anchorOffsetY,
             Integer anchorOffsetX,
             String documentFileName,
-            String documentName
-    ) throws IOException {
+            String documentName) throws IOException {
         // Create a signer recipient to sign the document, identified by name and email
         // We set the clientUserId to enable embedded signing for the recipient
         RecipientIdentityPhoneNumber phoneNumber = new RecipientIdentityPhoneNumber();

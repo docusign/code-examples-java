@@ -17,6 +17,9 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/eg017")
@@ -35,8 +38,17 @@ public class EG017ControllerSetTemplateTabValues extends AbstractEsignatureContr
         super.onInitModel(args, model);
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
         TemplatesApi templatesApi = new TemplatesApi(apiClient);
-        EnvelopeTemplateResults templates = templatesApi.listTemplates(session.getAccountId());
-        model.addAttribute(MODEL_LIST_TEMPLATE, templates.getEnvelopeTemplates());
+        var templates = templatesApi.listTemplatesWithHttpInfo(session.getAccountId(), templatesApi.new ListTemplatesOptions());
+        Map<String, java.util.List<String>> headers = templates.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        model.addAttribute(MODEL_LIST_TEMPLATE, templates.getData().getEnvelopeTemplates());
     }
 
     @Override
@@ -67,8 +79,17 @@ public class EG017ControllerSetTemplateTabValues extends AbstractEsignatureContr
 
         // Step 5. Call the eSignature REST API
         //ds-snippet-start:eSign17Step5
-        EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
-        String envelopeId = envelopeSummary.getEnvelopeId();
+        var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+        Map<String, java.util.List<String>> headers = envelopeSummary.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        String envelopeId = envelopeSummary.getData().getEnvelopeId();
         session.setEnvelopeId(envelopeId);
         //ds-snippet-end:eSign17Step5
 

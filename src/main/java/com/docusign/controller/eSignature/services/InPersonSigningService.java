@@ -7,16 +7,28 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public final class InPersonSigningService {
     public static ViewUrl inPersonSigning(
             EnvelopesApi envelopesApi,
             String accountId,
             String envelopeId,
-            RecipientViewRequest viewRequest
-    ) throws ApiException {
-        return envelopesApi.createRecipientView(accountId, envelopeId, viewRequest);
+            RecipientViewRequest viewRequest) throws ApiException {
+        var recipientView = envelopesApi.createRecipientViewWithHttpInfo(accountId, envelopeId, viewRequest);
+        Map<String, List<String>> headers = recipientView.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return recipientView.getData();
     }
 
     //ds-snippet-start:eSign39Step4
@@ -49,8 +61,7 @@ public final class InPersonSigningService {
             Integer anchorOffsetY,
             Integer anchorOffsetX,
             String documentFileName,
-            String documentName
-    ) throws IOException {
+            String documentName) throws IOException {
         InPersonSigner inPersonSigner = new InPersonSigner();
 
         inPersonSigner.setHostEmail(hostEmail);

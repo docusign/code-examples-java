@@ -16,7 +16,10 @@ import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.RecipientViewRequest;
 import com.docusign.esign.model.ViewUrl;
 
+import java.time.Instant;
 import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -65,8 +68,17 @@ public class EG041ControllerCfrEmbeddedSigning extends AbstractEsignatureControl
         ApiClient apiClient = createApiClient(session.getBasePath(), user.getAccessToken());
 
         AccountsApi workflowDetails = new AccountsApi(apiClient);
-        AccountIdentityVerificationResponse workflowRes = workflowDetails.getAccountIdentityVerification(session.getAccountId());
-        List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getIdentityVerification();
+        var workflowRes = workflowDetails.getAccountIdentityVerificationWithHttpInfo(session.getAccountId(), workflowDetails.new GetAccountIdentityVerificationOptions());
+        Map<String, List<String>> headers = workflowRes.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        List<AccountIdentityVerificationWorkflow> identityVerification = workflowRes.getData().getIdentityVerification();
         String workflowId = "";
         for (int i = 0; i < identityVerification.size(); i++) {
             if (identityVerification.get(i).getDefaultName().equals("SMS for access & signatures")) {
@@ -76,7 +88,7 @@ public class EG041ControllerCfrEmbeddedSigning extends AbstractEsignatureControl
         //ds-snippet-end:eSign41Step2
         LOGGER.info("workflowId = " + workflowId);
         if (workflowId.isEmpty()) {
-            throw new ApiException(0, getTextForCodeExample().CustomErrorTexts.get(0).ErrorMessage);
+            throw new ApiException("Workflow ID is empty.");
         }
 
         // Create the envelope definition
@@ -95,9 +107,17 @@ public class EG041ControllerCfrEmbeddedSigning extends AbstractEsignatureControl
 
         // Call DocuSign to create the envelope
         EnvelopesApi envelopesApi = new EnvelopesApi(apiClient);
-        EnvelopeSummary envelopeSummary = envelopesApi.createEnvelope(accountId, envelope);
+        var envelopeSummary = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope, envelopesApi.new CreateEnvelopeOptions());
+        headers = envelopeSummary.getHeaders();
+        remaining = headers.get("X-RateLimit-Remaining");
+        reset = headers.get("X-RateLimit-Reset");
 
-        String envelopeId = envelopeSummary.getEnvelopeId();
+        if (remaining != null & reset != null) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        String envelopeId = envelopeSummary.getData().getEnvelopeId();
         //ds-snippet-end:eSign41Step4
 
         session.setEnvelopeId(envelopeId);

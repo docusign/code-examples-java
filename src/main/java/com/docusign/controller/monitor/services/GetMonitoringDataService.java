@@ -1,13 +1,18 @@
 package com.docusign.controller.monitor.services;
 
 import com.docusign.monitor.api.DataSetApi;
+import com.docusign.monitor.client.ApiResponse;
 import com.docusign.monitor.model.CursoredResult;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Map;
 
 public final class GetMonitoringDataService {
     private static final Logger LOGGER = LoggerFactory.getLogger(GetMonitoringDataService.class);
@@ -35,11 +40,24 @@ public final class GetMonitoringDataService {
                 }
 
                 LOGGER.info("options set: " + options);
-                CursoredResult cursoredResult = datasetApi.getStream("2.0", "monitor", options);
-                LOGGER.info("cursor results " + cursoredResult);
-                String endCursor = cursoredResult.getEndCursor();
+                ApiResponse<CursoredResult> cursoredResult = datasetApi.getStreamWithHttpInfo("2.0", "monitor",
+                        options);
 
-                // If the endCursor from the response is the same as the one that you already have,
+                Map<String, List<String>> headers = cursoredResult.getHeaders();
+                List<String> remaining = headers.get("X-RateLimit-Remaining");
+                List<String> reset = headers.get("X-RateLimit-Reset");
+
+                if (remaining != null & reset != null) {
+                    Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+                    System.out.println("API calls remaining: " + remaining);
+                    System.out.println("Next Reset: " + resetInstant);
+                }
+
+                LOGGER.info("cursor results " + cursoredResult.getData());
+                String endCursor = cursoredResult.getData().getEndCursor();
+
+                // If the endCursor from the response is the same as the one that you already
+                // have,
                 // it means that you have reached the end of the records
                 if (endCursor.equals(cursorValue)) {
                     complete = true;
@@ -47,13 +65,13 @@ public final class GetMonitoringDataService {
                     cursorValue = endCursor;
                     monitoringData.put(new JSONObject(cursoredResult));
                 }
-            }
-            while (!complete);
+            } while (!complete);
             //ds-snippet-end:Monitor1Step3
         } catch (Exception e) {
             LOGGER.error(String.valueOf(e));
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("Error", "You do not have Monitor enabled for your account, follow <a target='_blank' href='https://developers.docusign.com/docs/monitor-api/how-to/enable-monitor/'>How to enable Monitor for your account</a> to get it enabled.");
+            jsonObject.put("Error",
+                    "You do not have Monitor enabled for your account, follow <a target='_blank' href='https://developers.docusign.com/docs/monitor-api/how-to/enable-monitor/'>How to enable Monitor for your account</a> to get it enabled.");
             monitoringData.put(jsonObject);
         }
 
