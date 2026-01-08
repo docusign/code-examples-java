@@ -7,41 +7,54 @@ import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.TemplateRole;
 
+import java.time.Instant;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public final class ApplyBrandToTemplateService {
-    public static EnvelopeSummary applyBrandToTemplate(
-            EnvelopesApi envelopesApi,
-            String accountId,
-            EnvelopeDefinition envelope
-    ) throws ApiException {
-        //ds-snippet-start:eSign30Step4
-        return envelopesApi.createEnvelope(accountId, envelope);
-        //ds-snippet-end:eSign30Step4
-    }
+	public static EnvelopeSummary applyBrandToTemplate(
+			EnvelopesApi envelopesApi,
+			String accountId,
+			EnvelopeDefinition envelope) throws ApiException {
+		//ds-snippet-start:eSign30Step4
+		var createEnvelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope,
+				envelopesApi.new CreateEnvelopeOptions());
+		Map<String, List<String>> headers = createEnvelopeResponse.getHeaders();
+		java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+		List<String> reset = headers.get("X-RateLimit-Reset");
 
-    public static EnvelopeDefinition makeEnvelope(
-            String signerEmail,
-            String signerName,
-            String ccEmail,
-            String ccName,
-            String templateId,
-            String brandId
-    ) {
-        TemplateRole signer = new TemplateRole()
-                .email(signerEmail)
-                .name(signerName)
-                .roleName(EnvelopeHelpers.SIGNER_ROLE_NAME);
+		if (remaining != null & reset != null) {
+			Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+			System.out.println("API calls remaining: " + remaining);
+			System.out.println("Next Reset: " + resetInstant);
+		}
 
-        TemplateRole cc = new TemplateRole()
-                .email(ccEmail)
-                .name(ccName)
-                .roleName(EnvelopeHelpers.CC_ROLE_NAME);
+		return createEnvelopeResponse.getData();
+		//ds-snippet-end:eSign30Step4
+	}
 
-        return new EnvelopeDefinition()
-                .templateId(templateId)
-                .templateRoles(Arrays.asList(signer, cc))
-                .brandId(brandId)
-                .status(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
-    }
+	public static EnvelopeDefinition makeEnvelope(
+			String signerEmail,
+			String signerName,
+			String ccEmail,
+			String ccName,
+			String templateId,
+			String brandId) {
+		TemplateRole signer = new TemplateRole()
+				.email(signerEmail)
+				.name(signerName)
+				.roleName(EnvelopeHelpers.SIGNER_ROLE_NAME);
+
+		TemplateRole cc = new TemplateRole()
+				.email(ccEmail)
+				.name(ccName)
+				.roleName(EnvelopeHelpers.CC_ROLE_NAME);
+
+		return new EnvelopeDefinition()
+				.templateId(templateId)
+				.templateRoles(Arrays.asList(signer, cc))
+				.brandId(brandId)
+				.status(EnvelopeHelpers.ENVELOPE_STATUS_SENT);
+	}
 }

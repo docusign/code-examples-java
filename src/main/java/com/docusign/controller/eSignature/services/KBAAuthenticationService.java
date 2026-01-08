@@ -6,7 +6,10 @@ import com.docusign.esign.client.ApiException;
 import com.docusign.esign.model.*;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public final class KBAAuthenticationService {
     private static final String DOCUMENT_FILE_NAME = "World_Wide_Corp_lorem.pdf";
@@ -16,10 +19,20 @@ public final class KBAAuthenticationService {
     public static EnvelopeSummary kbaAuthentication(
             EnvelopesApi envelopesApi,
             String accountId,
-            EnvelopeDefinition envelope
-    ) throws ApiException {
+            EnvelopeDefinition envelope) throws ApiException {
         //ds-snippet-start:eSign22Step4
-        return envelopesApi.createEnvelope(accountId, envelope);
+        var envelopeResponse = envelopesApi.createEnvelopeWithHttpInfo(accountId, envelope,
+                envelopesApi.new CreateEnvelopeOptions());
+        Map<String, List<String>> headers = envelopeResponse.getHeaders();
+        java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+        java.util.List<String> reset = headers.get("X-RateLimit-Reset");
+
+        if (remaining != null & reset != null) {
+            Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+            System.out.println("API calls remaining: " + remaining);
+            System.out.println("Next Reset: " + resetInstant);
+        }
+        return envelopeResponse.getData();
         //ds-snippet-end:eSign22Step4
     }
 
@@ -35,8 +48,10 @@ public final class KBAAuthenticationService {
         signHere.setTabLabel("SignHereTab");
         signHere.setPageNumber("1");
         signHere.setDocumentId(doc.getDocumentId());
-        // A 1- to 8-digit integer or 32-character GUID to match recipient IDs on your own systems.
-        // This value is referenced in the Tabs element below to assign tabs on a per-recipient basis.
+        // A 1- to 8-digit integer or 32-character GUID to match recipient IDs on your
+        // own systems.
+        // This value is referenced in the Tabs element below to assign tabs on a
+        // per-recipient basis.
         signHere.setRecipientId("1");
 
         Signer signer = new Signer();
@@ -53,8 +68,7 @@ public final class KBAAuthenticationService {
 
     public static EnvelopeDefinition createEnvelope(
             String signerName,
-            String signerEmail
-    ) throws IOException {
+            String signerEmail) throws IOException {
         Document doc = EnvelopeHelpers.createDocumentFromFile(DOCUMENT_FILE_NAME, DOCUMENT_NAME, "1");
         Signer signer = setSignHereAndSignerForEnvelope(signerName, signerEmail);
         signer.setIdCheckConfigurationName("ID Check");
