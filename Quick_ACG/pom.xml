@@ -19,8 +19,8 @@
         <java.version>11</java.version>
         <oauth2.version>2.5.6</oauth2.version>
         <commonsio.version>2.16.1</commonsio.version>
-        <docusign.version>3.17.1</docusign.version>
-        <esignature.version>6.0.0</esignature.version>
+        <esignature.version>6.4.0</esignature.version>
+        <slf4j.version>2.0.17</slf4j.version>
     </properties>
 
     <dependencies>
@@ -52,6 +52,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
         </dependency>
+        
         <!-- To compile JSP files -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
@@ -81,6 +82,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
             <version>2.7.18</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
     </dependencies>
 
