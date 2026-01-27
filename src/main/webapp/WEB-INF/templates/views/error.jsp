@@ -13,8 +13,10 @@
 <c:if test="${done.fixingInstructions != null }">
     <h2>Problem: an error occurred</h2>
 
-    <p>Error information:</p>
-    <p><em>Message: </em>${done.message}</p>
+    <c:if test="${done.message != null }">
+        <p>Error information:</p>
+        <p><em>Message: </em>${done.message}</p>
+    </c:if>
     <p>${done.fixingInstructions}</p>
 </c:if>
 <c:if test="${done.fixingInstructions == null }">
