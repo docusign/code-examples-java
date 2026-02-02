@@ -30,6 +30,7 @@ public final class MultipleDeliveryService {
     
     private static final String CC_ID = "2";
 
+    //ds-snippet-start:eSign46Step3
     public static EnvelopeSummary smsDelivery(
             EnvelopesApi envelopesApi,
             String accountId,
@@ -52,6 +53,7 @@ public final class MultipleDeliveryService {
 
         return createEnvelopeResponse.getData();
     }
+    //ds-snippet-end:eSign46Step3
 
     //ds-snippet-start:eSign46Step2
     public static EnvelopeDefinition makeEnvelope(
