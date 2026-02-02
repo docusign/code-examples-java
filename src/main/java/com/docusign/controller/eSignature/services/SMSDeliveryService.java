@@ -25,7 +25,6 @@ public final class SMSDeliveryService {
     private static final int ANCHOR_OFFSET_X = 20;
 
     //ds-snippet-start:eSign37Step3
-    //ds-snippet-start:eSign46Step3
     public static EnvelopeSummary smsDelivery(
             EnvelopesApi envelopesApi,
             String accountId,
@@ -44,7 +43,6 @@ public final class SMSDeliveryService {
         return createEnvelopeResponse.getData();
     }
     //ds-snippet-end:eSign37Step3
-    //ds-snippet-end:eSign46Step3
 
     //ds-snippet-start:eSign37Step2
     // document 2 (docx) has tag /sn1/
