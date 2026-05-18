@@ -10,7 +10,7 @@ public class CancelWorkflowInstanceService {
             String accountId,
             String workflowId,
             String instanceId) throws Exception {
-        return client.maestro().workflowInstanceManagement()
+        return client.workflowBuilder().workflowInstanceManagement()
                 .cancelWorkflowInstance(accountId, workflowId, instanceId);
     }
     //ds-snippet-end:Maestro4Step3
@@ -20,7 +20,7 @@ public class CancelWorkflowInstanceService {
             String accountId,
             String workflowId,
             String instanceId) throws Exception {
-        return client.maestro().workflowInstanceManagement()
+        return client.workflowBuilder().workflowInstanceManagement()
                 .getWorkflowInstance(accountId, workflowId, instanceId);
     }
 }
