@@ -158,19 +158,25 @@ public class NavigatorMethodsService {
 		}
 
 		switch (extension) {
-			case ".docx":
+			case ".docx": {
 				return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-			case ".pdf":
+			}
+			case ".pdf": {
 				return "application/pdf";
-			case ".html":
+			}
+			case ".html": {
 				return "text/html";
-			case ".txt":
+			}
+			case ".txt": {
 				return "text/plain";
+			}
 			case ".jpg":
-			case ".jpeg":
+			case ".jpeg": {
 				return "image/jpeg";
-			default:
+			}
+			default: {
 				return "application/octet-stream";
+			}	
 		}
 	}
 
