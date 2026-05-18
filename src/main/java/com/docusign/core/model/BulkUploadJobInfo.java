@@ -5,6 +5,7 @@ import java.util.List;
 
 public final class BulkUploadJobInfo {
     private final String jobId;
+    
     private final List<String> uploadUrls;
 
     public BulkUploadJobInfo(String jobId, List<String> uploadUrls) {
