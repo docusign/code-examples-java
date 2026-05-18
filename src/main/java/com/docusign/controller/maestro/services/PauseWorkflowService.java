@@ -9,7 +9,7 @@ public class PauseWorkflowService {
             IamClient client,
             String accountId,
             String workflowId) throws Exception {
-        return client.maestro()
+        return client.workflowBuilder()
                 .workflows().pauseNewWorkflowInstances(accountId, workflowId);
     }
     //ds-snippet-end:Maestro2Step3
