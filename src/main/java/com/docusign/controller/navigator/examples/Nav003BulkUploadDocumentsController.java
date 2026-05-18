@@ -77,10 +77,12 @@ public class Nav003BulkUploadDocumentsController extends AbstractNavigatorContro
         var accountId = session.getAccountId();
         var accessToken = user.getAccessToken();
 
-        NavigatorMethodsService.completeBulkUploadJob(accountId, accessToken, jobId);
+        var completeUploadResult = NavigatorMethodsService.completeBulkUploadJob(accountId, accessToken, jobId);
 
+        var jsonAgreement = NavigatorMethodsService.serializeObjectToJson(completeUploadResult.bulkJob().orElseThrow());
         DoneExample.createDefault(getTextForCodeExampleByApiType().ExampleName)
                 .withMessage(getTextForCodeExampleByApiType().AdditionalPage.get(1).ResultsPageText)
+                .withJsonObject(jsonAgreement)
                 .addToModel(model, config);
 
         return DONE_EXAMPLE_PAGE;

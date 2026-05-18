@@ -9,6 +9,8 @@ import com.docusign.iam.sdk.models.operations.GetAgreementsListResponse;
 import com.docusign.iam.sdk.models.operations.UploadCompleteBulkJobResponse;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.openapitools.jackson.nullable.JsonNullableModule;
 
@@ -54,7 +56,9 @@ public class NavigatorMethodsService {
 	public static String serializeObjectToJson(Object data) throws Exception {
 		var mapper = new ObjectMapper()
 			.setSerializationInclusion(JsonInclude.Include.NON_NULL)
+			.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
 			.registerModule(new JavaTimeModule())
+			.registerModule(new Jdk8Module())
 			.registerModule(new JsonNullableModule());
 
 		return mapper.writeValueAsString(data);
@@ -110,11 +114,11 @@ public class NavigatorMethodsService {
 				continue;
 
 			var docInfo = demoDocs.get(i);
-			var bytes = loadClasspathResource(docInfo[0]);
+			var bytes = loadClasspathResource(docInfo);
 			if (bytes == null)
 				continue;
 
-			uploadToBlobStorage(bytes, docInfo[1], docInfo[2], uploadUrl);
+			uploadToBlobStorage(bytes, getContentType(docInfo), docInfo, uploadUrl);
 		}
 	}
 
@@ -127,24 +131,47 @@ public class NavigatorMethodsService {
 			.uploadCompleteBulkJob(accountId, jobId);
 	}
 
-	private static List<String[]> getAvailableDemoDocuments() {
-		String[][] candidates = {
-			{ "World_Wide_Corp_Battle_Plan_Trafalgar.docx",
-				"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-				"World_Wide_Corp_Battle_Plan_Trafalgar.docx" },
-			{ "World_Wide_Corp_lorem.pdf", "application/pdf", "World_Wide_Corp_lorem.pdf" },
-			{ "doc_1.html", "text/html", "doc_1.html" },
-			{ "Welcome.txt", "text/plain", "Welcome.txt" },
-			{ "Id.jpg", "image/jpeg", "Id.jpg" },
+	private static List<String> getAvailableDemoDocuments() {
+		String[] candidates = {
+			"World_Wide_Corp_Battle_Plan_Trafalgar.docx",
+			"World_Wide_Corp_lorem.pdf",
+			"doc_1.html",
+			"Welcome.txt",
+			"Id.jpg",
 		};
 
-		var available = new ArrayList<String[]>();
+		var available = new ArrayList<String>();
 		for (var doc : candidates) {
-			if (NavigatorMethodsService.class.getClassLoader().getResource(doc[0]) != null) {
+			if (NavigatorMethodsService.class.getClassLoader().getResource(doc) != null) {
 				available.add(doc);
 			}
 		}
 		return available;
+	}
+
+	private static String getContentType(String filename) {
+		String extension = "";
+		int lastDot = filename.lastIndexOf('.');
+
+		if (lastDot >= 0) {
+			extension = filename.substring(lastDot).toLowerCase();
+		}
+
+		switch (extension) {
+			case ".docx":
+				return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+			case ".pdf":
+				return "application/pdf";
+			case ".html":
+				return "text/html";
+			case ".txt":
+				return "text/plain";
+			case ".jpg":
+			case ".jpeg":
+				return "image/jpeg";
+			default:
+				return "application/octet-stream";
+		}
 	}
 
 	private static byte[] loadClasspathResource(String resourcePath) {
