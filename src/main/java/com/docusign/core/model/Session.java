@@ -87,4 +87,8 @@ public class Session implements Serializable {
     private String creatorId;
 
     private String documentId;
+
+    private String bulkJobId;
+
+    private List<String> bulkUploadUrls;
 }
