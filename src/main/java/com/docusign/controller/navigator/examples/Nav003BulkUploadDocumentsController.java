@@ -34,6 +34,7 @@ public class Nav003BulkUploadDocumentsController extends AbstractNavigatorContro
         super(config, "nav003", user, session);
     }
 
+    //ds-snippet-start:Navigator3Step2
     @Override
     protected Object doWork(WorkArguments args, ModelMap model, HttpServletResponse response)
             throws Exception {
@@ -46,7 +47,9 @@ public class Nav003BulkUploadDocumentsController extends AbstractNavigatorContro
 
         return "redirect:/nav003/uploadDocuments";
     }
+    //ds-snippet-end:Navigator3Step2
 
+    //ds-snippet-start:Navigator3Step3
     @GetMapping("/uploadDocuments")
     public String getUploadDocuments(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
@@ -61,7 +64,9 @@ public class Nav003BulkUploadDocumentsController extends AbstractNavigatorContro
         NavigatorMethodsService.uploadDocumentsToJob(session.getBulkUploadUrls());
         return "redirect:/nav003/completeUpload";
     }
+    //ds-snippet-end:Navigator3Step3
 
+    //ds-snippet-start:Navigator3Step4
     @GetMapping("/completeUpload")
     public String getCompleteUpload(WorkArguments args, ModelMap model) throws Exception {
         super.onInitModel(args, model);
@@ -86,5 +91,6 @@ public class Nav003BulkUploadDocumentsController extends AbstractNavigatorContro
                 .addToModel(model, config);
 
         return DONE_EXAMPLE_PAGE;
+        //ds-snippet-end:Navigator3Step4
     }
 }
