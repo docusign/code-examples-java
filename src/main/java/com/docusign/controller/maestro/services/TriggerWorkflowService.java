@@ -143,7 +143,7 @@ public class TriggerWorkflowService {
     //ds-snippet-start:Maestro1Step5
         var triggerWorkflow = new TriggerWorkflow(instanceName, triggerInputs);
 
-        return client.maestro()
+        return client.workflowBuilder()
                 .workflows()
                 .triggerWorkflow(accountId, workflowId, triggerWorkflow);
     }
@@ -153,7 +153,7 @@ public class TriggerWorkflowService {
     public static GetWorkflowsListResponse getMaestroWorkflow(
             IamClient client,
             String accountId) throws Exception {
-        return client.maestro()
+        return client.workflowBuilder()
                 .workflows()
                 .getWorkflowsList(accountId, Optional.of(Status.ACTIVE), Optional.empty());
     }
