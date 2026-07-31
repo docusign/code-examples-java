@@ -25,10 +25,12 @@ public final class SendEnvelopeWithRecipientInfoService {
     private static final int ANCHOR_OFFSET_Y = 10;
     
     private static final int ANCHOR_OFFSET_X = 20;
-    
+
+    //ds-snippet-start:Workspaces3Step2
     private static IamClient createIamClient(String accessToken) {
         return IamClient.builder().accessToken(accessToken).build();
     }
+    //ds-snippet-end:Workspaces3Step2
 
     public static CreateWorkspaceEnvelopeResponse createWorkspaceEnvelope(
             String accessToken,
@@ -36,10 +38,13 @@ public final class SendEnvelopeWithRecipientInfoService {
             String workspaceId,
             String documentId) throws Exception {
 
+        //ds-snippet-start:Workspaces3Step3
         var workspaceEnvelopeForCreate = new WorkspaceEnvelopeForCreate();
         workspaceEnvelopeForCreate.withEnvelopeName(ENVELOPE_NAME);
         workspaceEnvelopeForCreate.withDocumentIds(Arrays.asList(documentId));
-        
+        //ds-snippet-end:Workspaces3Step3
+
+        //ds-snippet-start:Workspaces3Step4
         return createIamClient(accessToken)
             .workspaces()
             .workspaces()
@@ -48,25 +53,10 @@ public final class SendEnvelopeWithRecipientInfoService {
             .workspaceId(workspaceId)
             .workspaceEnvelopeForCreate(workspaceEnvelopeForCreate)
             .call();
+        //ds-snippet-end:Workspaces3Step4
     }
 
-    public static EnvelopeUpdateSummary sendEnvelope(
-        String accessToken,
-        String basePath,
-        String accountId,
-        String envelopeId,
-        String signerEmail,
-        String signerName
-    ) throws ApiException {
-        var client = new ApiClient(basePath);
-        client.addDefaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
-        var envelopesApi = new EnvelopesApi(client);
-
-        var envelope = makeEnvelope(signerEmail, signerName);
-
-        return envelopesApi.update(accountId, envelopeId, envelope);
-    }
-
+    //ds-snippet-start:Workspaces3Step5
     private static Envelope makeEnvelope(
         String signerEmail,
         String signerName
@@ -87,4 +77,24 @@ public final class SendEnvelopeWithRecipientInfoService {
 
         return envelope;
     }
+    //ds-snippet-end:Workspaces3Step5
+
+    //ds-snippet-start:Workspaces3Step6
+    public static EnvelopeUpdateSummary sendEnvelope(
+        String accessToken,
+        String basePath,
+        String accountId,
+        String envelopeId,
+        String signerEmail,
+        String signerName
+    ) throws ApiException {
+        var client = new ApiClient(basePath);
+        client.addDefaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
+        var envelopesApi = new EnvelopesApi(client);
+
+        var envelope = makeEnvelope(signerEmail, signerName);
+
+        return envelopesApi.update(accountId, envelopeId, envelope);
+    }
+    //ds-snippet-end:Workspaces3Step6
 }
