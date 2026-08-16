@@ -141,24 +141,24 @@ public final class EnvelopeHelpers {
      */
     public static Document createDocumentFromFile(String fileName, String docName, String docId) throws IOException {
         byte[] buffer = readFile(fileName);
-        String extention = FilenameUtils.getExtension(fileName);
-        return createDocument(buffer, docName, extention, docId);
+        String extension = FilenameUtils.getExtension(fileName);
+        return createDocument(buffer, docName, extension, docId);
     }
 
     /**
      * Creates a document object from the raw data.
      *
      * @param data          the raw data
-     * @param documentName  the name of the document; it may be differ from the file
-     * @param fileExtention the extension of the creating file
+     * @param documentName  the name of the document; it may differ from the file
+     * @param fileExtension the extension of the creating file
      * @param documentId    identifier of the created document
      * @return the {@link Document} object
      */
-    public static Document createDocument(byte[] data, String documentName, String fileExtention, String documentId) {
+    public static Document createDocument(byte[] data, String documentName, String fileExtension, String documentId) {
         Document document = new Document();
         document.setDocumentBase64(Base64.getEncoder().encodeToString(data));
         document.setName(documentName);
-        document.setFileExtension(fileExtention);
+        document.setFileExtension(fileExtension);
         document.setDocumentId(documentId);
         return document;
     }
