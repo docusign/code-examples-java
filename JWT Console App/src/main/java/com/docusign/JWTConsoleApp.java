@@ -55,7 +55,7 @@ public class JWTConsoleApp {
         System.out.print("Enter the carbon copy's name: ");
         String ccName = scanner. nextLine();
         
-        // Get information fro app.config
+        // Get information from app.config
         Properties prop = new Properties();
         String fileName = "app.config";
         FileInputStream fis = new FileInputStream(fileName);
