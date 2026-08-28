@@ -1,11 +1,15 @@
 package com.docusign.controller.eSignature.services;
 
 import com.docusign.controller.eSignature.examples.EnvelopeHelpers;
+import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
+import com.docusign.esign.model.AccountIdentityVerificationWorkflow;
 import com.docusign.esign.model.EnvelopeDefinition;
-import com.docusign.esign.model.EnvelopeSummary;
+import com.docusign.esign.model.RecipientIdentityInputOption;
+import com.docusign.esign.model.RecipientIdentityPhoneNumber;
+import com.docusign.esign.model.RecipientIdentityVerification;
 import com.docusign.esign.model.RecipientViewRequest;
 import com.docusign.esign.model.ViewUrl;
 import com.docusign.esign.model.Signer;
@@ -27,10 +31,6 @@ public class FocusedViewService {
 
     private static String SIGNER_CLIENT_ID = "1000";
 
-    private static int ANCHOR_OFFSET_Y = 20;
-
-    private static int ANCHOR_OFFSET_X = 10;
-
     public static String STATE_123 = "?state=123";
 
     public static String AUTHENTICATION_METHOD = "none";
@@ -38,16 +38,52 @@ public class FocusedViewService {
     public String[] sendEnvelopeWithFocusedView(
             String signerEmail,
             String signerName,
+            String phoneNumber,
+            String countryCode,
             ApiClient apiClient,
             String accountId,
             String returnUrl) throws ApiException, IOException {
         //ds-snippet-start:eSign44Step3
+        String workflowId = null;
+
+        // Resolve identity verification workflow only when phone auth is requested.
+        if (phoneNumber != null && !phoneNumber.isBlank()) {
+            AccountsApi accountsApi = new AccountsApi(apiClient);
+            var workflowRes = accountsApi.getAccountIdentityVerificationWithHttpInfo(
+                accountId,
+                accountsApi.new GetAccountIdentityVerificationOptions());
+            
+            Map<String, List<String>> headers = workflowRes.getHeaders();
+            java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
+            List<String> reset = headers.get("X-RateLimit-Reset");
+
+            if (remaining != null & reset != null) {
+                Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
+                System.out.println("API calls remaining: " + remaining);
+                System.out.println("Next Reset: " + resetInstant);
+            }
+
+            List<AccountIdentityVerificationWorkflow> identityVerification =
+                    workflowRes.getData().getIdentityVerification();
+            for (AccountIdentityVerificationWorkflow workflow : identityVerification) {
+                if ("Phone Authentication".equals(workflow.getDefaultName())) {
+                    workflowId = workflow.getWorkflowId();
+                    break;
+                }
+            }
+
+            if (workflowId == null) {
+                throw new ApiException("IDENTITY_WORKFLOW_INVALID_ID");
+            }
+        }
+
         EnvelopeDefinition envelope = makeEnvelope(
                 signerEmail,
                 signerName,
                 SIGNER_CLIENT_ID,
-                ANCHOR_OFFSET_Y,
-                ANCHOR_OFFSET_X,
+                workflowId,
+                phoneNumber,
+                countryCode,
                 DOCUMENT_FILE_NAME,
                 DOCUMENT_NAME);
 
@@ -120,13 +156,13 @@ public class FocusedViewService {
             String signerEmail,
             String signerName,
             String signerClientId,
-            Integer anchorOffsetY,
-            Integer anchorOffsetX,
+            String workflowId,
+            String phoneNumber,
+            String countryCode,
             String documentFileName,
             String documentName) throws IOException {
         String emailSubject = "Please sign this document";
         String recipientId = "1";
-        String anchorString = "/sn1/";
         String docId = "3";
 
         Signer signer = new Signer();
@@ -134,7 +170,23 @@ public class FocusedViewService {
         signer.setName(signerName);
         signer.clientUserId(signerClientId);
         signer.recipientId(recipientId);
-        signer.setTabs(EnvelopeHelpers.createSingleSignerTab(anchorString, anchorOffsetY, anchorOffsetX));
+
+        if (phoneNumber != null && !phoneNumber.isBlank()) {
+            RecipientIdentityPhoneNumber recipientIdentityPhoneNumber = new RecipientIdentityPhoneNumber();
+            recipientIdentityPhoneNumber.setCountryCode(countryCode);
+            recipientIdentityPhoneNumber.setNumber(phoneNumber);
+
+            RecipientIdentityInputOption inputOption = new RecipientIdentityInputOption();
+            inputOption.setName("phone_number_list");
+            inputOption.setValueType("PhoneNumberList");
+            inputOption.setPhoneNumberList(List.of(recipientIdentityPhoneNumber));
+
+            RecipientIdentityVerification identityVerification = new RecipientIdentityVerification();
+            identityVerification.setWorkflowId(workflowId);
+            identityVerification.setInputOptions(List.of(inputOption));
+
+            signer.setIdentityVerification(identityVerification);
+        }
 
         Recipients recipients = new Recipients();
         recipients.setSigners(Collections.singletonList(signer));
