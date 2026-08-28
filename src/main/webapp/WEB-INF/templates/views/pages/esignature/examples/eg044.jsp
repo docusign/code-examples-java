@@ -2,7 +2,10 @@
 <jsp:include page="../../../partials/head.jsp"/>
 
 <c:set var="formNumber" value="0" scope="page" />
+<c:set var="phoneFormNumber" value="1" scope="page" />
+<c:set var="countryCodeInputNumber" value="0" scope="page" />
 <c:set var="signerEmailInputNumber" value="0" scope="page" />
+<c:set var="phoneNumberInputNumber" value="1" scope="page" />
 <c:set var="signerNameInputNumber" value="1" scope="page" />
 
 <h4>${example.getExampleName()}</h4>
@@ -49,6 +52,38 @@
                value="${locals.dsConfig.signerName}"
                required>
     </div>
+
+    <br/>
+    <c:if test="${example.getForms().size() gt 1 and not empty example.getForms().get(phoneFormNumber).getFormName()}">
+        ${example.getForms().get(phoneFormNumber).getFormName()}
+    </c:if>
+
+    <c:if test="${example.getForms().size() gt 1 and example.getForms().get(phoneFormNumber).getInputs().size() gt 0}">
+        <div class="form-group">
+            <label for="countryCode">${example.getForms().get(phoneFormNumber).getInputs().get(countryCodeInputNumber).getInputName()}</label>
+            <input type="text"
+                   class="form-control"
+                   id="countryCode"
+                   name="countryCode"
+                   placeholder="${example.getForms().get(phoneFormNumber).getInputs().get(countryCodeInputNumber).getInputPlaceholder()}">
+        </div>
+    </c:if>
+
+    <c:if test="${example.getForms().size() gt 1 and example.getForms().get(1).getInputs().size() gt 1}">
+        <div class="form-group">
+            <label for="phoneNumber">${example.getForms().get(phoneFormNumber).getInputs().get(phoneNumberInputNumber).getInputName()}</label>
+            <input type="text"
+                   class="form-control"
+                   id="phoneNumber"
+                   name="phoneNumber"
+                   aria-describedby="phoneHelp"
+                   placeholder="${example.getForms().get(phoneFormNumber).getInputs().get(phoneNumberInputNumber).getInputPlaceholder()}">
+            <small id="phoneHelp" class="form-text text-muted">
+                Provide a phone number to enable phone authentication for the signer
+            </small>
+        </div>
+    </c:if>
+
     <input type="hidden" name="_csrf" value="${csrfToken}">
     <button type="submit" class="btn btn-docu">${launcherTexts.getSubmitButton()}</button>
 </form>

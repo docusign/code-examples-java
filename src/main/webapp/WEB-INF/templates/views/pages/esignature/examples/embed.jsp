@@ -33,8 +33,6 @@
 </body>
 </html>
 
-<p><a href="/">Continue</a></p>
-
 <script src='https://js.docusign.com/bundle.js'></script>
 <script>
     window.DocuSign.loadDocuSign('${integrationKey}')
@@ -47,7 +45,7 @@
                     branding: {
                         primaryButton: {
                             /** Background color of primary button */
-                            backgroundColor: '#333',
+                            backgroundColor: '#50C878',
                             /** Text color of primary button */
                             color: '#fff',
                         }
@@ -56,8 +54,28 @@
                     /** High-level components we allow specific overrides for */
                     signingNavigationButton: {
                         finishText: 'You have finished the document! Hooray!',
-                        position: 'bottom-center'
-                    }
+                        position: 'bottom-center',
+                        shape: 'pill',
+                    },
+
+                    signingAgreeButton: {
+                        finishText: 'I Agree',
+                    },
+
+                    signingDeclineButton: {
+                        show: true,
+                        finishText: 'Decline',
+                        backgroundColor: '#ff0000',
+                        color: '#ffffff',
+                    },
+
+                    downloadModal: {
+                        show: true,
+                    },
+
+                    declineModal: {
+                        show: true,
+                    },
                 }
             });
 
@@ -68,6 +86,7 @@
             signing.on('sessionEnd', (event) => {
                 /** The event here denotes what caused the sessionEnd to trigger, such as signing_complete, ttl_expired etc../ **/
                 console.log('sessionend', event);
+                window.location.href = '/'
             });
 
             signing.mount('#agreement');

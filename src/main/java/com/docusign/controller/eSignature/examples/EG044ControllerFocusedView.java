@@ -40,10 +40,15 @@ public class EG044ControllerFocusedView extends AbstractEsignatureController {
     }
 
     @Override
-    protected Object doWork(WorkArguments args, ModelMap model,
-                            HttpServletResponse response) throws Exception {
+    protected Object doWork(
+        WorkArguments args,
+        ModelMap model,
+        HttpServletResponse response
+    ) throws Exception {
         String signerName = args.getSignerName();
         String signerEmail = args.getSignerEmail();
+        String phoneNumber = args.getPhoneNumber();
+        String countryCode = args.getCountryCode();
         String accountId = session.getAccountId();
 
         // Call DocuSign to create the envelope
@@ -51,11 +56,13 @@ public class EG044ControllerFocusedView extends AbstractEsignatureController {
 
         // Call the method from Examples API to send envelope and generate url for focused view signing
         String[] envelopeIdAndRedirectUrl = new FocusedViewService().sendEnvelopeWithFocusedView(
-                signerEmail,
-                signerName,
-                apiClient,
-                accountId,
-                config.getDsReturnUrl());
+            signerEmail,
+            signerName,
+            phoneNumber,
+            countryCode,
+            apiClient,
+            accountId,
+            config.getDsReturnUrl());
 
         if(envelopeIdAndRedirectUrl.length == 2){
             model.addAttribute(ENVELOPE_ID, envelopeIdAndRedirectUrl[0]);
