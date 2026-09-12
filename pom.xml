@@ -231,6 +231,9 @@
                     <executable>true</executable>
                 </configuration>
             </plugin>
+               <groupId>org.jacoco</groupId>
+                 <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.4</version>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
