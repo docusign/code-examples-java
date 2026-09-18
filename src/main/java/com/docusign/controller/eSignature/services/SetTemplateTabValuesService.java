@@ -21,7 +21,7 @@ public final class SetTemplateTabValuesService {
         java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
         java.util.List<String> reset = headers.get("X-RateLimit-Reset");
 
-        if (remaining != null & reset != null) {
+        if (remaining != null && reset != null) {
             Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
             System.out.println("API calls remaining: " + remaining);
             System.out.println("Next Reset: " + resetInstant);
@@ -138,7 +138,7 @@ public final class SetTemplateTabValuesService {
         cc.setName(ccName);
         cc.setRoleName("cc");
 
-        // Create an envelope custom field to save our application"s
+        // Create an envelope custom field to save our application's
         // Data about the envelope
         TextCustomField customField = new TextCustomField();
         customField.setName("app metadata item");
