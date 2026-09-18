@@ -52,7 +52,7 @@ public final class AddDocToTemplateService {
 		java.util.List<String> remaining = headers.get("X-RateLimit-Remaining");
 		List<String> reset = headers.get("X-RateLimit-Reset");
 
-		if (remaining != null & reset != null) {
+		if (remaining != null && reset != null) {
 			Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
 			System.out.println("API calls remaining: " + remaining);
 			System.out.println("Next Reset: " + resetInstant);
@@ -71,7 +71,7 @@ public final class AddDocToTemplateService {
 		remaining = headers.get("X-RateLimit-Remaining");
 		reset = headers.get("X-RateLimit-Reset");
 
-		if (remaining != null & reset != null) {
+		if (remaining != null && reset != null) {
 			Instant resetInstant = Instant.ofEpochSecond(Long.parseLong(reset.get(0)));
 			System.out.println("API calls remaining: " + remaining);
 			System.out.println("Next Reset: " + resetInstant);
